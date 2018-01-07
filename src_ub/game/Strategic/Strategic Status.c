@@ -326,7 +326,7 @@ Ja25:  no creatures
 			}
 
 /*
-Ja25 no loyaly
+Ja25 no loyalty
 			// penalize loyalty!
 			if ( gStrategicStatus.usEnricoEmailFlags & ENRICO_EMAIL_SENT_LACK_PROGRESS2 )
 			{

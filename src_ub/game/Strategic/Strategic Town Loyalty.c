@@ -768,7 +768,7 @@ Ja25 no town loayty
 		return;
 	}
 */
-	//return because there is no loyatly 
+	//return because there is no loyalty 
 	return;
 
 /*

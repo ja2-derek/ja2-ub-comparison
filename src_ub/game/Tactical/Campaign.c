@@ -1169,7 +1169,7 @@ void HandleUnhiredMercDeaths( INT32 iProfileID )
 		case DIF_LEVEL_HARD:
 			ubMaxDeaths = 3;
 			break;
-w		default:
+		default:
 			Assert(FALSE);
 			ubMaxDeaths = 0;
 			break;
