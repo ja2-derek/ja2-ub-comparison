@@ -1519,7 +1519,7 @@ INT8 NumberOfPlayerControllableMercsInSquad( INT8 bSquadValue )
 			// yep
 			pSoldier = Squad[ bSquadValue ][ bCounter ] ;
 
-			//Kris:  Fuck, this breaks the CLIENT of this function, tactical traversal.  Do NOT check for EPCS or ROBOT here.
+			//Kris:  This breaks the CLIENT of this function, tactical traversal.  Do NOT check for EPCS or ROBOT here.
 			//if ( !AM_AN_EPC( pSoldier ) && !AM_A_ROBOT( pSoldier ) && 
 			if( !( pSoldier->uiStatusFlags & SOLDIER_VEHICLE ) )
 			{

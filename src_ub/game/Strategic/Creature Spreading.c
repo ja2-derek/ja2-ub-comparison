@@ -1052,7 +1052,7 @@ BOOLEAN MineClearOfMonsters( UINT8 ubMineIndex )
 		}
 	}
 	else
-	{ //mine was previously invaded by creatures.  Don't allow mine production until queen bitch is dead.
+	{ //mine was previously invaded by creatures.  Don't allow mine production until queen is dead.
 		if( giLairID != -1 )
 		{
 			return FALSE;

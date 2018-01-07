@@ -7419,7 +7419,7 @@ SOLDIERTYPE *InternalReduceAttackBusyCount( UINT8 ubID, BOOLEAN fCalledByAttacke
 Ja25 no queen
 	// ATE: IN MEANWHILES, we have 'combat' in realtime....
 	// this is so we DON'T call freeupattacker() which will cancel
-	// the AI guy's meanwhile NPC shit.
+	// the AI guy's meanwhile NPC stuff.
 	// OK< let's NOT do this if it was the queen attacking....
 	if ( AreInMeanwhile( ) && pSoldier != NULL && pSoldier->ubProfile != QUEEN )
 	{

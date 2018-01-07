@@ -4891,7 +4891,6 @@ void EndMultiSoldierSelection( BOOLEAN fAcknowledge )
 
 				if ( pSoldier->fMercAsleep )
 				{
-					// Wake up the slut!
 					PutMercInAwakeState( pSoldier );
 				}
 			}

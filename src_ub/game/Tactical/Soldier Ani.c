@@ -2437,7 +2437,7 @@ BOOLEAN AdjustToNextAnimationFrame( SOLDIERTYPE *pSoldier )
 						UINT8				ubPerson;
 						SOLDIERTYPE	*pRobot;
 
-						// Get pointer to bitch...
+						// Get pointer...
 						ubPerson = WhoIsThere2( pSoldier->sPendingActionData2, pSoldier->bLevel );
 
 						if ( ubPerson != NOBODY && MercPtrs[ ubPerson ]->uiStatusFlags & SOLDIER_ROBOT )

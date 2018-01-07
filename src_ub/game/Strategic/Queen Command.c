@@ -1210,7 +1210,7 @@ void NotifyPlayersOfNewEnemies()
 		}
 	}
 	if( !iSoldiers )
-	{ //Shit, look for an out of breath merc.
+	{ // look for an out of breath merc.
 		fIgnoreBreath = TRUE;
 
 		for( i = gTacticalStatus.Team[ OUR_TEAM ].bFirstID; i <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; i++ )

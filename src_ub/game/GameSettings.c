@@ -289,7 +289,7 @@ BOOLEAN GetCDLocation( )
 	uiRetVal = GetPrivateProfileString( "Ja2 Settings","CD", "", zCdLocation, SGPFILENAME_LEN, GAME_INI_FILE );
 	if( uiRetVal == 0 || !IsDriveLetterACDromDrive( zCdLocation ) )
 	{
-		// the user most likely doesnt have the file, or the user has 'fucked' around with the file
+		// the user most likely doesnt have the file, or the user has messed with the file
 		// build a new one
 		
 		//First delete the old file

@@ -654,12 +654,12 @@ BOOLEAN CreateDestroyMainMenuButtons( BOOLEAN fCreate )
 				iStartLoc = MAINMENU_RECORD_SIZE * 0;  //Ja25 was cnt
 				if( !LoadEncryptedDataFromFile(MAINMENU_TEXT_FILE, zText, iStartLoc, MAINMENU_RECORD_SIZE ) )
 				{
-					//the file was not able to be loaded properly, lets fuck around with the user
+					//the file was not able to be loaded properly
 					SOLDIERTYPE *pSoldier = NULL;
 
 					if( pSoldier->bActive != TRUE )
 					{
-						//something is very wrong, lets fuck around again
+						//something is very wrong
 						pSoldier->bActive = pSoldier->bLife;
 					}
 				}

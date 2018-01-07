@@ -3307,7 +3307,6 @@ BOOLEAN PlayersBetweenTheseSectors( INT16 sSource, INT16 sDest, INT32 *iCountEnt
 
 	if( gpBattleGroup )
 	{
-		//KM:  FUCK OFF!
 		//Assert( gfPreBattleInterfaceActive );
 		sBattleSector = (INT16)SECTOR( gpBattleGroup->ubSectorX, gpBattleGroup->ubSectorY );
 	}
@@ -3315,7 +3314,6 @@ BOOLEAN PlayersBetweenTheseSectors( INT16 sSource, INT16 sDest, INT32 *iCountEnt
 	// debug only
 	if ( gfDisplayPotentialRetreatPaths == TRUE )
 	{
-		//KM:  FUCK OFF!
 		//Assert( gfPreBattleInterfaceActive );
 	}
 

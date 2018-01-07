@@ -394,7 +394,6 @@ void CheckForMeanwhileOKStart( )
       return;
     }
 
-		// OK, here, start the bitch....
 		gfMeanwhileTryingToStart = FALSE;
 
 		guiOldScreen = guiCurrentScreen;

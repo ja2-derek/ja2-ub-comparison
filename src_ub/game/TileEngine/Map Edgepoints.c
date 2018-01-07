@@ -1547,7 +1547,7 @@ BOOLEAN EdgepointsClose( SOLDIERTYPE *pSoldier, INT16 sEdgepoint1, INT16 sEdgepo
 	pSoldier->sGridNo = sEdgepoint1;
 
 	if( gWorldSectorX == 14 && gWorldSectorY == 9 && !gbWorldSectorZ )
-	{ //FUCKING BRUTAL CODE  -- special case map.
+	{ //BRUTAL CODE  -- special case map.
 		iSearchRange = 250;
 	}
 	else

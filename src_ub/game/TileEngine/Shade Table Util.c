@@ -96,7 +96,7 @@ void DetermineRGBDistributionSettings()
 			//1)  The video card has been changed since the last run of JA2.
 			//2)  Certain video cards have different RGB distributions in different operating systems such as
 			//		the Millenium card using Windows NT or Windows 95
-			//3)  The user is a dick and physically modified the RGBDist.dat file.
+			//3)  The user has physically modified the RGBDist.dat file.
 			fSaveRGBDist = TRUE;
 			fCleanShadeTable = TRUE;
 		}

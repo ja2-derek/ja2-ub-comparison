@@ -1001,7 +1001,7 @@ BOOLEAN HandleDoorsOpenClose( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE * 
 			if ( pNode->pAniTile->uiFlags & ANITILE_DOOR )
 			{
 				// ATE: No two doors can exist ( there can be only one )
-				// Update this bitch's value.. ie: prematurely end door animation
+				// Update value.. ie: prematurely end door animation
 				// Update current frame...
 
 				if ( pNode->pAniTile->uiFlags & ANITILE_FORWARD )

@@ -797,7 +797,6 @@ void StartInterrupt( void )
 		StartNPCAI( pSoldier );
 	}
 
-	// ATE: This is for all fuckers
 	if ( !gfHiddenInterrupt )
 	{
 		// Stop this guy....

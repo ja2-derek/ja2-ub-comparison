@@ -1364,7 +1364,7 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 
 			if ( newLoc > GRIDSIZE )
 			{
-				// WHAT THE FUCK??? hack.
+				// WHAT THE??? hack.
 				goto NEXTDIR;
 			}
 			

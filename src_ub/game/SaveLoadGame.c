@@ -1446,7 +1446,7 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 	#endif
 
 
-	//Used in mapescreen to disable to FUCKINGLY annoying 'swoosh' transitions
+	//Used in mapescreen to disable to the annoying 'swoosh' transitions
 	gfDontStartTransitionFromLaptop = TRUE;
 
 	// Reset timer callbacks

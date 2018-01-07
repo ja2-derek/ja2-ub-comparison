@@ -3030,12 +3030,11 @@ Ja25
 //#ifdef JA2DEMO
 	if ( iRange > iMaxRange )
 	{
-		// This is kinda bullshit in my opinion (CJC) but:
 
 		// a bullet WILL travel that far if not blocked, but it's NOT accurate,
 		// because beyond maximum range, the bullet drops rapidly
 
-		// BULLSHIT! This won't cause the bullet to be off to the left or right, only make it
+		// This won't cause the bullet to be off to the left or right, only make it
 		// drop in flight.
 		iChance /= 2;
 	}

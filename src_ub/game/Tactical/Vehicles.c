@@ -1753,7 +1753,7 @@ INT8 RepairVehicle( INT32 iVehicleId, INT8 bRepairPtsLeft, BOOLEAN *pfNothingToR
 	// Calculate pts used;
 	bRepairPtsUsed = ( pVehicleSoldier->bLife - bOldLife ) * VEHICLE_REPAIR_POINTS_DIVISOR;
 
-	// ARM: personally, I'd love to know where in Arulco the mechanic gets the PARTS to do this shit, but hey, it's a game!
+	// ARM: personally, I'd love to know where in Arulco the mechanic gets the PARTS to do this stuff, but hey, it's a game!
 	(*pfNothingToRepair) = !DoesVehicleNeedAnyRepairs( iVehicleId );
 
 	return( bRepairPtsUsed );

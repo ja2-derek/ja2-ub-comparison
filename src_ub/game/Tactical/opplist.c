@@ -486,7 +486,6 @@ void HandleBestSightingPositionInTurnbased( void )
 			{
 				if ( gubBestToMakeSighting[ ubLoop ] == NOBODY )
 				{
-					// shit... 
 					if (gubInterruptProvoker == NOBODY)
 					{
 						// do nothing (for now) - abort!

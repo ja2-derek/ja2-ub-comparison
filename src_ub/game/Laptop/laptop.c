@@ -3903,7 +3903,7 @@ BOOLEAN DisplayLoadPending( void )
 			iUnitTime=ALMOST_FAST_UNIT_TIME;
 		}
 
-		//if we are connecting the MERC site, and the MERC site hasnt yet moved to their new site, have the fuckingly sloooww wait
+		//if we are connecting the MERC site, and the MERC site hasnt yet moved to their new site, have the sloooww wait
 		else if(guiCurrentLaptopMode == LAPTOP_MODE_MERC && !LaptopSaveInfo.fMercSiteHasGoneDownYet )
 		{
 			iUnitTime=LONG_UNIT_TIME;

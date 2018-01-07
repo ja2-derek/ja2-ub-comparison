@@ -6675,7 +6675,7 @@ void HandleShowingOfEnemyForcesInSector( INT16 sSectorX, INT16 sSectorY, INT8 bS
 	}
 
 	// get total number of badguys here
-//Ja25:  Must take into account the UNDER FUCKING GROUND sectors
+//Ja25:  Must take into account the UNDERGROUND sectors
 //	sNumberOfEnemies = NumEnemiesInSector( sSectorX, sSectorY );
 
 	sNumberOfEnemies = NumEnemiesInAnySector( sSectorX, sSectorY, bSectorZ );

@@ -278,7 +278,7 @@ BOOLEAN InternalInitiateConversation( SOLDIERTYPE *pDestSoldier, SOLDIERTYPE *pS
 	// Set pending false
 	gfConversationPending = FALSE;
 
-	// ATE: If we are already in menu, delete the bitch!
+	// ATE: If we are already in menu, delete!
 	if ( gfInTalkPanel )
 	{
 		DeleteTalkingMenu( );

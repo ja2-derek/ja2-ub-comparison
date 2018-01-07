@@ -2816,7 +2816,7 @@ BOOLEAN LoadNPCInfoFromSavedGameFile( HWFILE hFile, UINT32 uiSaveGameVersion )
 
 
 	// If we are trying to restore a saved game prior to version 44, use the
-	// MAX_NUM_SOLDIERS, else use NUM_PROFILES.  Dave fucked up and used the wrong define! 
+	// MAX_NUM_SOLDIERS, else use NUM_PROFILES.  Dave used the wrong define! 
 	if( uiSaveGameVersion >= 44 )
 		uiNumberToLoad = NUM_PROFILES;
 	else
