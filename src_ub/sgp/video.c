@@ -235,7 +235,7 @@ BOOLEAN InitializeVideoManager(HINSTANCE hInstance, UINT16 usCommandShow, void *
   // Register and Realize our display window. The DirectX surface will eventually overlay on top 
   // of this surface. 
   //
-  // <<<<<<<<< Don't change this shit >>>>>>>>
+  // <<<<<<<<< Don't change this >>>>>>>>
   //
   /////////////////////////////////////////////////////////////////////////////////////////////////
   
@@ -253,7 +253,7 @@ BOOLEAN InitializeVideoManager(HINSTANCE hInstance, UINT16 usCommandShow, void *
 
   //
   // Get a window handle for our application (gotta have on of those)
-  // Don't change this shit
+  // Don't change this
   //
 #ifdef WINDOWED_MODE
   hWindow = CreateWindowEx(0, ClassName, "Windowed JA2 !!", WS_POPUP, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, NULL, NULL, hInstance, NULL);
