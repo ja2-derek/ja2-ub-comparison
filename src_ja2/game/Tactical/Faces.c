@@ -887,7 +887,7 @@ void HandleFaceHilights( FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 s
 		    usLineColor = Get16BPPColor( FROMRGB( 255, 255, 255 ) );
 		    RectangleDraw( TRUE, (sFaceX - 2 ), (sFaceY - 1),sFaceX + pFace->usFaceWidth + 1, sFaceY + pFace->usFaceHeight , usLineColor, pDestBuf );
 
-		    SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+		    SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 		    UnLockVideoSurface( uiBuffer );				
 	    }
@@ -911,7 +911,7 @@ void HandleFaceHilights( FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 s
  				    }
     		    RectangleDraw( TRUE, (sFaceX - 2 ), (sFaceY - 1),sFaceX + pFace->usFaceWidth + 1, sFaceY + pFace->usFaceHeight , usLineColor, pDestBuf );
 
-				    SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+				    SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 				    UnLockVideoSurface( uiBuffer );				
 			    }
@@ -927,7 +927,7 @@ void HandleFaceHilights( FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 s
 		    usLineColor = Get16BPPColor( FROMRGB( 0, 0, 0 ) );
 		    RectangleDraw( TRUE, (pFace->usFaceX - 2 ), (pFace->usFaceY - 1), pFace->usFaceX + pFace->usFaceWidth + 1, pFace->usFaceY + pFace->usFaceHeight , usLineColor, pDestBuf );
 
-		    SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+		    SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 		    UnLockVideoSurface( pFace->uiAutoDisplayBuffer );				
       }
@@ -944,7 +944,7 @@ void HandleFaceHilights( FACETYPE *pFace, UINT32 uiBuffer, INT16 sFaceX, INT16 s
 		usLineColor = Get16BPPColor( FROMRGB( 255, 0, 0 ) );
 		RectangleDraw( TRUE, (sFaceX - 2), (sFaceY - 1), sFaceX + pFace->usFaceWidth + 1, sFaceY + pFace->usFaceHeight , usLineColor, pDestBuf );
 
-		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 		UnLockVideoSurface( uiBuffer );				
 	}
@@ -1305,7 +1305,7 @@ void HandleRenderFaceAdjustments( FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLE
 			if ( pSoldier->bOppCnt > 0 )
 #endif
 			{
-				SetFontDestBuffer( uiRenderBuffer, 0, 0, 640, 480, FALSE );
+				SetFontDestBuffer( uiRenderBuffer, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 				swprintf( sString, L"%d", pSoldier->bOppCnt );
 
@@ -1320,11 +1320,11 @@ void HandleRenderFaceAdjustments( FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLE
 				sY2 = sY1 + GetFontHeight( TINYFONT1 ) - 1;
 
 				mprintf( (INT16)( sX1 + 1), (INT16)( sY1 - 1 ), sString );
-				SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+				SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 				// Draw box
 				pDestBuf = LockVideoSurface( uiRenderBuffer, &uiDestPitchBYTES );
-				SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+				SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 				usLineColor = Get16BPPColor( FROMRGB( 105, 8, 9 ) );
 				RectangleDraw( TRUE, sX1, sY1, sX2, sY2, usLineColor, pDestBuf );
@@ -1348,7 +1348,7 @@ void HandleRenderFaceAdjustments( FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLE
 					SetFontBackground( FONT_MCOLOR_BLACK );
 					SetFontForeground( FONT_MCOLOR_WHITE );
 
-					SetFontDestBuffer( uiRenderBuffer, 0, 0, 640, 480, FALSE );
+					SetFontDestBuffer( uiRenderBuffer, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 					VarFindFontCenterCoordinates( sFaceX, sFaceY, pFace->usFaceWidth, pFace->usFaceHeight, TINYFONT1, &sFontX, &sFontY, pFace->zDisplayText );
 
@@ -1363,7 +1363,7 @@ void HandleRenderFaceAdjustments( FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLE
 						pFace->fDisplayTextOver = FACE_NO_TEXT_OVER;
 					}
 
-					SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 				}
 			}
@@ -1512,7 +1512,7 @@ void HandleRenderFaceAdjustments( FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLE
       // ATE: Show numbers only in mapscreen
 			if( fShowNumber )
 			{
-				SetFontDestBuffer( uiRenderBuffer, 0, 0, 640, 480, FALSE );
+				SetFontDestBuffer( uiRenderBuffer, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 				if ( fShowMaximum )
 				{
@@ -1531,7 +1531,7 @@ void HandleRenderFaceAdjustments( FACETYPE *pFace, BOOLEAN fDisplayBuffer, BOOLE
 				SetFontBackground( FONT_BLACK );
 
 				mprintf(  sFaceX + pFace->usFaceWidth - usTextWidth, ( INT16 )( sFaceY + 3 ), sString );
-				SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+				SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 			}
 		}
 	}

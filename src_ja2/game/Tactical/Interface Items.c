@@ -201,7 +201,7 @@
 #define BAD_REPAIR_EASE							-2	
 
 #define KEYRING_X 487
-#define KEYRING_Y 445
+#define KEYRING_Y INV_INTERFACE_START_Y + 105
 #define MAP_KEYRING_X 217
 #define MAP_KEYRING_Y 271
 #define KEYRING_WIDTH 517 - 487
@@ -286,7 +286,7 @@ typedef struct
 	UINT16 y;
 } MoneyLoc;
 
-MoneyLoc			gMoneyButtonLoc =			{ 343, 351 };
+MoneyLoc			gMoneyButtonLoc =			{ 343, INV_INTERFACE_START_Y+11 };
 MoneyLoc			gMoneyButtonOffsets[] = { 0,0,  34,0,  0,32, 34,32, 8,22 };
 MoneyLoc			gMapMoneyButtonLoc =	{ 174, 115 };	
 
@@ -1039,13 +1039,13 @@ void INVRenderINVPanelItem( SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fDirtyLe
 
 				// Draw rectangle!
 				pDestBuf = LockVideoSurface( guiSAVEBUFFER, &uiDestPitchBYTES );
-				SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+				SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 				//usLineColor = Get16BPPColor( FROMRGB( 255, 255, 0 ) );
 				usLineColor = Get16BPPColor( FROMRGB( 230, 215, 196 ) );
 				RectangleDraw( TRUE, (sX+1), (sY+1), (sX + gSMInvData[ sPocket ].sWidth - 2 ),( sY + gSMInvData[ sPocket ].sHeight - 2 ), usLineColor, pDestBuf );
 
-				SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+				SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 				UnLockVideoSurface( guiSAVEBUFFER );
 			}
@@ -1064,7 +1064,7 @@ void INVRenderINVPanelItem( SOLDIERTYPE *pSoldier, INT16 sPocket, UINT8 fDirtyLe
 //			if( guiCurrentScreen != MAP_SCREEN )
 			if( guiCurrentItemDescriptionScreen != MAP_SCREEN )
 			{
-				BltVideoObjectFromIndex( guiSAVEBUFFER, guiSecItemHiddenVO, 0, 217, 448, VO_BLT_SRCTRANSPARENCY, NULL );
+				BltVideoObjectFromIndex( guiSAVEBUFFER, guiSecItemHiddenVO, 0, 217, INV_INTERFACE_START_Y+108, VO_BLT_SRCTRANSPARENCY, NULL );
 				RestoreExternBackgroundRect( 217, 448, 72, 28 );
 			}
 			else
@@ -6016,9 +6016,9 @@ BOOLEAN InitializeItemPickupMenu( SOLDIERTYPE *pSoldier, INT16 sGridNo, ITEM_POO
 		}
 
 		// CHECK FOR LEFT/RIGHT
-		if ( ( sX + gItemPickupMenu.sWidth ) > 640 )
+		if ( ( sX + gItemPickupMenu.sWidth ) > SCREEN_BUFFER_WIDTH )
 		{
-			sX = 640 - gItemPickupMenu.sWidth - ITEMPICK_START_X_OFFSET;
+			sX = SCREEN_BUFFER_WIDTH - gItemPickupMenu.sWidth - ITEMPICK_START_X_OFFSET;
 		}
 		else
 		{
@@ -6065,7 +6065,7 @@ BOOLEAN InitializeItemPickupMenu( SOLDIERTYPE *pSoldier, INT16 sGridNo, ITEM_POO
 
 
 	// Build a mouse region here that is over any others.....
-	MSYS_DefineRegion( &(gItemPickupMenu.BackRegion ), (INT16)( 532 ), (INT16)( 367 ), (INT16)( 640 ),(INT16)( 480 ), MSYS_PRIORITY_HIGHEST,
+	MSYS_DefineRegion( &(gItemPickupMenu.BackRegion ), (INT16)( 532 ), (INT16)( 367 ), (INT16)( SCREEN_BUFFER_WIDTH ),(INT16)( SCREEN_BUFFER_HEIGHT ), MSYS_PRIORITY_HIGHEST,
 						 CURSOR_NORMAL, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK ); 
 	// Add region
 	MSYS_AddRegion( &(gItemPickupMenu.BackRegion ) );

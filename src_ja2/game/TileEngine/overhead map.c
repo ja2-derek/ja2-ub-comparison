@@ -202,8 +202,8 @@ void InitNewOverheadDB( UINT8 ubTilesetID )
 	{
 		INT16 sX1, sY1, sX2, sY2;
 
-		CalculateRestrictedMapCoords( NORTH, &sX1, &sY1, &sX2, &gsStartRestrictedY, 640, 320 );
-		CalculateRestrictedMapCoords( WEST,	 &sX1, &sY1, &gsStartRestrictedX, &sY2, 640, 320 );
+		CalculateRestrictedMapCoords( NORTH, &sX1, &sY1, &sX2, &gsStartRestrictedY, SCREEN_BUFFER_WIDTH, 320 );
+		CalculateRestrictedMapCoords( WEST,	 &sX1, &sY1, &gsStartRestrictedX, &sY2, SCREEN_BUFFER_WIDTH, 320 );
 	}
 
 	// Copy over shade tables from main tileset
@@ -393,7 +393,7 @@ void HandleOverheadMap( )
 	RestoreBackgroundRects( );
 
 	// RENDER!!!!!!!!
-	RenderOverheadMap( 0, (WORLD_COLS/2), 0, 0, 640, 320, FALSE );
+	RenderOverheadMap( 0, (WORLD_COLS/2), 0, 0, SCREEN_BUFFER_WIDTH, 320, FALSE );
 
 	HandleTalkingAutoFaces( );
 
@@ -538,7 +538,7 @@ void GoIntoOverheadMap( )
 
 	gfInOverheadMap = TRUE;
 
-	MSYS_DefineRegion( &OverheadBackgroundRegion, 0, 0 ,640, 360, MSYS_PRIORITY_HIGH,
+	MSYS_DefineRegion( &OverheadBackgroundRegion, 0, 0 ,SCREEN_BUFFER_WIDTH, 360, MSYS_PRIORITY_HIGH,
 						 CURSOR_NORMAL, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 	//Add region
 	MSYS_AddRegion( &OverheadBackgroundRegion );
@@ -721,7 +721,7 @@ void RenderOverheadMap( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 
 
 		// Zero out area!
-		//ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, (INT16)(640), (INT16)(gsVIEWPORT_WINDOW_END_Y), Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
+		//ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, (INT16)(SCREEN_BUFFER_WIDTH), (INT16)(gsVIEWPORT_WINDOW_END_Y), Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
 
 		pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
 

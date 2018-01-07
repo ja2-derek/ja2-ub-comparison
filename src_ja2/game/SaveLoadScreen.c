@@ -321,7 +321,7 @@ UINT32	SaveLoadScreenHandle()
 		PauseGame();
 
 		//save the new rect
-		BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, 639, 439 );
+		BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-41 );
 	}
 
 	RestoreBackgroundRects();
@@ -597,7 +597,7 @@ Removed so that the user can click on it and get displayed a message that the qu
 */
 
 	//Create the screen mask to enable ability to righ click to cancel the sace game
-	MSYS_DefineRegion( &gSLSEntireScreenRegion, 0, 0, 639, 479, MSYS_PRIORITY_HIGH-10,
+	MSYS_DefineRegion( &gSLSEntireScreenRegion, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1, MSYS_PRIORITY_HIGH-10,
 							 CURSOR_NORMAL, MSYS_NO_CALLBACK, SelectedSLSEntireRegionCallBack ); 
 	MSYS_AddRegion(&gSLSEntireScreenRegion); 
 
@@ -798,7 +798,7 @@ void			RenderSaveLoadScreen()
 		// If we are saving a game
 
 		//Display the Title
-//		DrawTextToScreen( zSaveLoadText[SLG_SAVE_GAME], 0, 10, 639, SAVE_LOAD_TITLE_FONT, SAVE_LOAD_TITLE_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);
+//		DrawTextToScreen( zSaveLoadText[SLG_SAVE_GAME], 0, 10, SCREEN_BUFFER_WIDTH-1, SAVE_LOAD_TITLE_FONT, SAVE_LOAD_TITLE_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);
 		GetVideoObject(&hPixHandle, guiBackGroundAddOns);
 		BltVideoObject(FRAME_BUFFER, hPixHandle, 1, SLG_TITLE_POS_X, SLG_TITLE_POS_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 	}
@@ -814,7 +814,7 @@ void			RenderSaveLoadScreen()
 
 	DisplaySaveGameList();
 
-	InvalidateRegion( 0, 0, 639, 479 );
+	InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 );
 }
 
 
@@ -1130,7 +1130,7 @@ BOOLEAN DoSaveLoadMessageBoxWithRect( UINT8 ubStyle, INT16 *zString, UINT32 uiEx
 
 BOOLEAN DoSaveLoadMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-  SGPRect CenteringRect= {0, 0, 639, 479 };
+  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 };
   
 	// do message box and return
   giSaveLoadMessageBox = DoMessageBox(  ubStyle,  zString,  uiExitScreen, ( UINT8 ) ( usFlags| MSG_BOX_FLAG_USE_CENTERING_RECT ),  ReturnCallback,  &CenteringRect );

@@ -680,7 +680,7 @@ void OptDisplayLine( UINT16 usStartX, UINT16 usStartY, UINT16 EndX, UINT16 EndY,
 
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );			
 
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480);
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT);
 
   // draw the line 
 	LineDraw(FALSE, usStartX, usStartY, EndX, EndY, iColor, pDestBuf);

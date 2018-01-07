@@ -873,7 +873,7 @@ INT32 EnterLaptop()
 	
 
 	// clear guiSAVEBUFFER
-	//ColorFillVideoSurfaceArea(guiSAVEBUFFER,	0, 0, 640, 480, Get16BPPColor(FROMRGB(0, 0, 0)) );
+	//ColorFillVideoSurfaceArea(guiSAVEBUFFER,	0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, Get16BPPColor(FROMRGB(0, 0, 0)) );
   // disable characters panel buttons
 
   // reset redraw flag and redraw new mail
@@ -985,7 +985,7 @@ INT32 EnterLaptop()
 
 	fShowAtmPanelStartButton = TRUE;
 
-	InvalidateRegion(0,0,640,480);
+	InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 
 	return( TRUE );
 }
@@ -1823,13 +1823,13 @@ UINT32 LaptopScreenHandle()
 		//         Start transitioning the screen.
 		DstRect.iLeft = 0;
 		DstRect.iTop = 0;
-		DstRect.iRight = 640;
-		DstRect.iBottom = 480;
+		DstRect.iRight = SCREEN_BUFFER_WIDTH;
+		DstRect.iBottom = SCREEN_BUFFER_HEIGHT;
 		uiTimeRange = 1000;
 		iPercentage = iRealPercentage = 0;
 		uiStartTime = GetJA2Clock();
-		BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480 );
-		BlitBufferToBuffer( guiEXTRABUFFER, FRAME_BUFFER, 0, 0, 640, 480 );
+		BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
+		BlitBufferToBuffer( guiEXTRABUFFER, FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 		PlayJA2SampleFromFile( "SOUNDS\\Laptop power up (8-11).wav", RATE_11025, HIGHVOLUME, 1, MIDDLEPAN );
 		while( iRealPercentage < 100  )
 		{
@@ -1848,9 +1848,9 @@ UINT32 LaptopScreenHandle()
 
 			//Mapscreen source rect
 			SrcRect1.iLeft = 464 * iPercentage / 100;
-			SrcRect1.iRight = 640 - 163 * iPercentage / 100;
+			SrcRect1.iRight = SCREEN_BUFFER_WIDTH - 163 * iPercentage / 100;
 			SrcRect1.iTop = 417 * iPercentage / 100;
-			SrcRect1.iBottom = 480 - 55 * iPercentage / 100;
+			SrcRect1.iBottom = SCREEN_BUFFER_HEIGHT - 55 * iPercentage / 100;
 			//Laptop source rect
 			if( iPercentage < 99 )
 				iScalePercentage = 10000 / (100-iPercentage);
@@ -1877,7 +1877,7 @@ UINT32 LaptopScreenHandle()
 			//SetFontShadow( FONT_NEARBLACK );
 			//mprintf( 10, 10, L"%d -> %d", iRealPercentage, iPercentage );
 			//pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-			//SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+			//SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 			//RectangleDraw( TRUE, SrcRect1.iLeft, SrcRect1.iTop, SrcRect1.iRight, SrcRect1.iBottom, Get16BPPColor( FROMRGB( 255, 100, 0 ) ), pDestBuf );
 			//RectangleDraw( TRUE, SrcRect2.iLeft, SrcRect2.iTop, SrcRect2.iRight, SrcRect2.iBottom, Get16BPPColor( FROMRGB( 100, 255, 0 ) ), pDestBuf );
 			//UnLockVideoSurface( FRAME_BUFFER );
@@ -2085,7 +2085,7 @@ UINT32 LaptopScreenHandle()
 	// invalidate screen if redrawn
 	if( fReDrawScreenFlag == TRUE )
 	{
-		InvalidateRegion(0,0,640,480);
+		InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
     fReDrawScreenFlag = FALSE;
 	}
 
@@ -2405,7 +2405,7 @@ BtnOnCallback(GUI_BUTTON *btn,INT32 reason)
 	{
 	 if(!(btn->uiFlags & BUTTON_CLICKED_ON))
 	  btn->uiFlags|=(BUTTON_CLICKED_ON); 
-	  InvalidateRegion(0,0,640,480);
+	  InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
     
 	}
 	else if(reason & MSYS_CALLBACK_REASON_LBUTTON_UP )
@@ -2416,7 +2416,7 @@ BtnOnCallback(GUI_BUTTON *btn,INT32 reason)
 		 {
 //			 btn->uiFlags&=~(BUTTON_CLICKED_ON);
 			 fExitingLaptopFlag = TRUE;
-			 InvalidateRegion(0,0,640,480);
+			 InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 		 }
 	  }
 	 btn->uiFlags&=~(BUTTON_CLICKED_ON);
@@ -2487,16 +2487,16 @@ BOOLEAN LeaveLapTopScreen( void )
 			//         Start transitioning the screen.
 			DstRect.iLeft = 0;
 			DstRect.iTop = 0;
-			DstRect.iRight = 640;
-			DstRect.iBottom = 480;
+			DstRect.iRight = SCREEN_BUFFER_WIDTH;
+			DstRect.iBottom = SCREEN_BUFFER_HEIGHT;
 			uiTimeRange = 1000;
 			iPercentage = iRealPercentage = 100;
 			uiStartTime = GetJA2Clock();
-			BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480 );
+			BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 			PlayJA2SampleFromFile( "SOUNDS\\Laptop power down (8-11).wav", RATE_11025, HIGHVOLUME, 1, MIDDLEPAN );
 			while( iRealPercentage > 0  )
 			{
-				BlitBufferToBuffer( guiEXTRABUFFER, FRAME_BUFFER, 0, 0, 640, 480 );
+				BlitBufferToBuffer( guiEXTRABUFFER, FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 				uiCurrTime = GetJA2Clock();
 				iPercentage = (uiCurrTime-uiStartTime) * 100 / uiTimeRange;
@@ -2514,9 +2514,9 @@ BOOLEAN LeaveLapTopScreen( void )
 
 				//Mapscreen source rect
 				SrcRect1.iLeft = 464 * iPercentage / 100;
-				SrcRect1.iRight = 640 - 163 * iPercentage / 100;
+				SrcRect1.iRight = SCREEN_BUFFER_WIDTH - 163 * iPercentage / 100;
 				SrcRect1.iTop = 417 * iPercentage / 100;
-				SrcRect1.iBottom = 480 - 55 * iPercentage / 100;
+				SrcRect1.iBottom = SCREEN_BUFFER_HEIGHT - 55 * iPercentage / 100;
 				//Laptop source rect
 				if( iPercentage < 99 )
 					iScalePercentage = 10000 / (100-iPercentage);
@@ -2543,7 +2543,7 @@ BOOLEAN LeaveLapTopScreen( void )
 				//SetFontShadow( FONT_NEARBLACK );
 				//mprintf( 10, 10, L"%d -> %d", iRealPercentage, iPercentage );
 				//pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-				//SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+				//SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 				//RectangleDraw( TRUE, SrcRect1.iLeft, SrcRect1.iTop, SrcRect1.iRight, SrcRect1.iBottom, Get16BPPColor( FROMRGB( 255, 100, 0 ) ), pDestBuf );
 				//RectangleDraw( TRUE, SrcRect2.iLeft, SrcRect2.iTop, SrcRect2.iRight, SrcRect2.iBottom, Get16BPPColor( FROMRGB( 100, 255, 0 ) ), pDestBuf );
 				//UnLockVideoSurface( FRAME_BUFFER );
@@ -3032,7 +3032,7 @@ void WWWRegionMvtCallback(MOUSE_REGION * pRegion, INT32 iReason )
 	  BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame,LAPTOP_ICONS_X, LAPTOP_ICONS_WWW_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 	  DrawLapTopText();
 		HighLightRegion(giCurrentRegion);
-		InvalidateRegion(0,0,640,480);
+		InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 	}	
 }
 
@@ -3057,7 +3057,7 @@ void EmailRegionMvtCallback(MOUSE_REGION * pRegion, INT32 iReason )
 		}
 		DrawLapTopText();
 		HighLightRegion(giCurrentRegion);
-		InvalidateRegion(0,0,640,480);
+		InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 	}	
 }
 
@@ -3076,7 +3076,7 @@ void FinancialRegionMvtCallback(MOUSE_REGION * pRegion, INT32 iReason )
 	  BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame,LAPTOP_ICONS_X-4, LAPTOP_ICONS_FINANCIAL_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 	 	DrawLapTopText();
 		HighLightRegion(giCurrentRegion);
-		InvalidateRegion(0,0,640,480);
+		InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 	}	
 }
 
@@ -3095,7 +3095,7 @@ void HistoryRegionMvtCallback(MOUSE_REGION * pRegion, INT32 iReason )
 	  BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame,LAPTOP_ICONS_X, LAPTOP_ICONS_HISTORY_Y, VO_BLT_SRCTRANSPARENCY,NULL);
    	DrawLapTopText();
 		HighLightRegion(giCurrentRegion);
-		InvalidateRegion(0,0,640,480);
+		InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 	}	
 }
 
@@ -3115,7 +3115,7 @@ void FilesRegionMvtCallback(MOUSE_REGION * pRegion, INT32 iReason )
 	  BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame,LAPTOP_ICONS_X, LAPTOP_ICONS_FILES_Y+7, VO_BLT_SRCTRANSPARENCY,NULL);
 		DrawLapTopText();
 		HighLightRegion(giCurrentRegion);
-		InvalidateRegion(0,0,640,480);
+		InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 	}	
 }
 
@@ -3134,7 +3134,7 @@ void PersonnelRegionMvtCallback(MOUSE_REGION * pRegion, INT32 iReason )
 	  BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, (UINT16)iFrame,LAPTOP_ICONS_X, LAPTOP_ICONS_PERSONNEL_Y, VO_BLT_SRCTRANSPARENCY,NULL);
  		DrawLapTopText();
 		HighLightRegion(giCurrentRegion);
-		InvalidateRegion(0,0,640,480);
+		InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 	}	
 }
 
@@ -3389,7 +3389,7 @@ void DisplayBookMarks( void )
 	 mprintf(sX, sY,pBookMarkStrings[CANCEL_STRING] );
 	 	 iCounter++; 
 
-	 SetFontDestBuffer(FRAME_BUFFER,0,0,640,480, FALSE);
+	 SetFontDestBuffer(FRAME_BUFFER,0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT, FALSE);
   
 	//GetVideoObject(&hLapTopIconHandle, guiBOOKBOT);
 	//BltVideoObject(FRAME_BUFFER, hLapTopIconHandle, 0,BOOK_X, 6+BOOK_TOP_Y+(iCounter)*BOOK_HEIGHT, VO_BLT_SRCTRANSPARENCY,NULL);
@@ -3474,7 +3474,7 @@ void ScrollDisplayText(INT32 iY)
 	 mprintf(sCurX, iY, pBookmarkTitle[1]);
 
 	 // reset buffer
-	 SetFontDestBuffer(FRAME_BUFFER, 0,0,640,480, FALSE);	
+	 SetFontDestBuffer(FRAME_BUFFER, 0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT, FALSE);	
 	 
 	 // invalidate region
 	 InvalidateRegion(BOOK_X,iY, BOOK_X+BOOK_WIDTH, iY+BOOK_HEIGHT);
@@ -4014,7 +4014,7 @@ void CreateDestroyErrorButton( void )
 	SetButtonCursor(giErrorButton[0], CURSOR_LAPTOP_SCREEN);
   
 	// define the screen mask
-	MSYS_DefineRegion(&pScreenMask,0, 0,640,480,
+	MSYS_DefineRegion(&pScreenMask,0, 0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT,
 		MSYS_PRIORITY_HIGHEST-3,CURSOR_LAPTOP_SCREEN, MSYS_NO_CALLBACK, LapTopScreenCallBack);
 	
 	// add region 
@@ -4435,7 +4435,7 @@ BOOLEAN DoLapTopSystemMessageBoxWithRect( UINT8 ubStyle, INT16 *zString, UINT32 
 
 BOOLEAN DoLapTopSystemMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-  SGPRect CenteringRect= {0, 0, 640, INV_INTERFACE_START_Y };
+  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH, INV_INTERFACE_START_Y };
 	// reset exit mode
 	fExitDueToMessageBox = TRUE;
 
@@ -4496,7 +4496,7 @@ BOOLEAN InitTitleBarMaximizeGraphics( UINT32 uiBackgroundGraphic, STR16 pTitle, 
 
 	SetFontDestBuffer( guiTitleBarSurface, 0, 0, vs_desc.usWidth, vs_desc.usHeight , FALSE);
 	DrawTextToScreen(pTitle, LAPTOP_TITLE_BAR_TEXT_OFFSET_X, LAPTOP_TITLE_BAR_TEXT_OFFSET_Y, 0, FONT14ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED	);
-	SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE);
+	SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE);
 
 	return( TRUE );
 }
@@ -5715,7 +5715,7 @@ BOOLEAN RenderWWWProgramTitleBar( void )
 
 	DisplayProgramBoundingBox( FALSE );
 	
-	//InvalidateRegion( 0, 0, 640, 480 );
+	//InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	return( TRUE );
 }
 
@@ -5850,7 +5850,7 @@ void DisplayProgramBoundingBox( BOOLEAN fMarkButtons )
 	// new files or email?
 	DisplayTaskBarIcons( );
 
-	//InvalidateRegion( 0,0, 640, 480 );
+	//InvalidateRegion( 0,0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	
 	return;
 }

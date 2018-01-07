@@ -1263,7 +1263,7 @@ void DrawMouseText( )
 
 		mprintf( sX, sY + 12, gzLocation );
 		// reset
-		SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+		SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 	}
 
@@ -1280,7 +1280,7 @@ void DrawMouseText( )
 
 		mprintf( sX, sY + 6, gzIntTileLocation );
 		// reset
-		SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+		SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 	}
 
@@ -1297,7 +1297,7 @@ void DrawMouseText( )
 
 		mprintf( sX, sY - 2, gzIntTileLocation2 );
 		// reset
-		SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+		SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 	}
 
 
@@ -1388,7 +1388,7 @@ void DrawMouseText( )
 			SetFontShadow( DEFAULT_SHADOW );
 
 			// reset
-			SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+			SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 		}
 	}
 
@@ -1415,7 +1415,7 @@ void DrawMouseText( )
 			}
 
 			// reset
-			SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+			SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 		}
 	}
 #endif

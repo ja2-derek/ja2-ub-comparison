@@ -108,7 +108,7 @@ DDSURFACEDESC SurfaceDescription;
 					SmackDoFrame(SmkList[uiCount].SmackHandle);
 					DDUnlockSurface(SmkList[uiCount].lpDDS, SurfaceDescription.lpSurface);
 					// temp til I figure out what to do with it
-					//InvalidateRegion(0,0, 640, 480, FALSE);
+					//InvalidateRegion(0,0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE);
 
 					// Check to see if the flic is done the last frame
 					if(SmkList[uiCount].SmackHandle->FrameNum==(SmkList[uiCount].SmackHandle->Frames-1))
@@ -208,7 +208,7 @@ SMKFLIC *SmkOpenFlic(CHAR8 *cFilename)
 	hFile = GetRealFileHandleFromFileManFileHandle( pSmack->hFileHandle );
 
 	// Allocate a Smacker buffer for video decompression
-	if(!(pSmack->SmackBuffer=SmackBufferOpen(hDisplayWindow,SMACKAUTOBLIT,640,480,0,0)))
+	if(!(pSmack->SmackBuffer=SmackBufferOpen(hDisplayWindow,SMACKAUTOBLIT,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT,0,0)))
 	{
 		ErrorMsg("SMK ERROR: Can't allocate a Smacker decompression buffer");
 		return(NULL);

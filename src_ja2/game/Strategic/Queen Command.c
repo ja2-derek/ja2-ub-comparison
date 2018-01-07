@@ -52,7 +52,7 @@ INT16 gsInterrogationGridNo[3] = { 7756, 7757, 7758 };
 void ValidateEnemiesHaveWeapons()
 {
 	#ifdef JA2BETAVERSION
-		SGPRect CenteringRect= {0, 0, 639, 479 };
+		SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 };
 		INT32 i, iErrorDialog;
 		SOLDIERTYPE *pSoldier;
 		INT32 iNumInvalid = 0;

@@ -319,7 +319,7 @@ void RenderCharProfile()
 
 	 DisplayProgramBoundingBox( TRUE );
 
-	 //InvalidateRegion( 0, 0, 640, 480 );
+	 //InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	 return;
 
 }

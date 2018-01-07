@@ -369,7 +369,7 @@ BOOLEAN LoadTileSurfaces( char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID )
 
 		//uiFillColor = Get16BPPColor(FROMRGB( 100 + uiPercentage , 0, 0 ));
 		//ColorFillVideoSurfaceArea( FRAME_BUFFER, 22, 401, 22 + uiLength, 418, uiFillColor );
-		//InvalidateRegion( 0, 399, 640, 420 );
+		//InvalidateRegion( 0, 399, SCREEN_BUFFER_WIDTH, 420 );
 		//EndFrameBufferRender( );
 
 		// The cost of having to do this check each time through the loop,

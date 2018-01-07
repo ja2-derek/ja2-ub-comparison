@@ -50,7 +50,7 @@ enum
 	NUM_MENU_ITEMS
 };
 
-#define		MAINMENU_X					( (	640 - 214 ) / 2 )
+#define		MAINMENU_X					( (	SCREEN_BUFFER_WIDTH - 214 ) / 2 )
 #define		MAINMENU_TITLE_Y		75
 #define		MAINMENU_Y					277//200
 #define		MAINMENU_Y_SPACE		37
@@ -121,9 +121,9 @@ UINT32	MainMenuScreenHandle( )
 	{ //Fade the splash screen.
 		uiTime = GetJA2Clock();
 		if( guiSplashFrameFade > 2 )
-			ShadowVideoSurfaceRectUsingLowPercentTable( FRAME_BUFFER, 0, 0, 640, 480 );		
+			ShadowVideoSurfaceRectUsingLowPercentTable( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );		
 		else if( guiSplashFrameFade > 1 )
-			ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, 640, 480, 0 );
+			ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, 0 );
 		else
 		{
 			uiTime = GetJA2Clock();
@@ -526,7 +526,7 @@ void CreateDestroyBackGroundMouseMask( BOOLEAN fCreate )
 			return;
 
 		// Make a mouse region
-		MSYS_DefineRegion( &(gBackRegion), 0, 0, 640, 480, MSYS_PRIORITY_HIGHEST,
+		MSYS_DefineRegion( &(gBackRegion), 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST,
 							 CURSOR_NORMAL, MSYS_NO_CALLBACK, SelectMainMenuBackGroundRegionCallBack ); 
 		// Add region
 		MSYS_AddRegion(&(gBackRegion) );
@@ -680,10 +680,10 @@ void RenderMainMenu()
 	DrawTextToScreen( L"BLOCKFONTNARROW: ДАБВЗЛИЙКПЦТУФЬЩЪЫдабвзлийкпцтуфьщъыМОмо"/*gzCopyrightText[ 0 ]*/, 0, 445, 640, BLOCKFONTNARROW, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );	
 	DrawTextToScreen( L"FONT14HUMANIST: ДАБВЗЛИЙКПЦТУФЬЩЪЫдабвзлийкпцтуфьщъыМОмо"/*gzCopyrightText[ 0 ]*/, 0, 465, 640, FONT14HUMANIST, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );	
 #else
-	DrawTextToScreen( gzCopyrightText[ 0 ], 0, 465, 640, FONT10ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED );	
+	DrawTextToScreen( gzCopyrightText[ 0 ], 0, 465, SCREEN_BUFFER_WIDTH, FONT10ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED );	
 #endif
 
-	InvalidateRegion( 0, 0, 640, 480 );
+	InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 }
 
 void RestoreButtonBackGrounds()

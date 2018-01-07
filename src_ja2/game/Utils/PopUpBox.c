@@ -1314,8 +1314,8 @@ BOOLEAN DrawBox(UINT32 uiCounter)
 	}
 
 	// make sure it will fit on screen!
-	Assert( usTopX + usWidth  <= 639 );
-	Assert( usTopY + usHeight <= 479 );
+	Assert( usTopX + usWidth  <= SCREEN_BUFFER_WIDTH-1 );
+	Assert( usTopY + usHeight <= SCREEN_BUFFER_HEIGHT-1 );
 
 	// subtract 4 because the 2 2-pixel corners are handled separately
 	uiNumTilesWide=((usWidth-4)/BORDER_WIDTH);
@@ -1503,7 +1503,7 @@ BOOLEAN DrawBoxText(UINT32 uiCounter)
 		InvalidateRegion( PopUpBoxList[uiCounter]->Position.iX+PopUpBoxList[uiCounter]->uiLeftMargin-1, PopUpBoxList[uiCounter]->Position.iY+PopUpBoxList[uiCounter]->uiTopMargin, PopUpBoxList[uiCounter]->Position.iX+PopUpBoxList[uiCounter]->Dimensions.iRight-PopUpBoxList[uiCounter]->uiRightMargin,PopUpBoxList[uiCounter]->Position.iY+PopUpBoxList[uiCounter]->Dimensions.iBottom-PopUpBoxList[uiCounter]->uiBottomMargin );
 	}
 
-  SetFontDestBuffer(FRAME_BUFFER, 0,0,640,480,FALSE);
+  SetFontDestBuffer(FRAME_BUFFER, 0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT,FALSE);
  
  return TRUE;
 }

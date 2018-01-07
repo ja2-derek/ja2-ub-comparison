@@ -120,7 +120,7 @@ void InitEditorRegions()
 	//By doing this, all of the buttons underneath are blanketed and can't be used anymore.
 	//Any new buttons will cover this up as well.  Think of it as a barrier between the editor buttons,
 	//and the game's interface panel buttons and regions.
-	MSYS_DefineRegion( &EditorRegion, 0, 360, 640, 480, MSYS_PRIORITY_NORMAL, 0, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
+	MSYS_DefineRegion( &EditorRegion, 0, 360, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_NORMAL, 0, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 
 	//Create the regions for the terrain tile selections
 	for( x = 0; x < NUM_TERRAIN_TILE_REGIONS; x++ )
@@ -460,10 +460,10 @@ void ClearTaskbarRegion( INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom )
 		ColorFillVideoSurfaceArea( ButtonDestBuffer, sLeft, 360, sRight, 361, gusEditorTaskbarHiColor );
 		sTop++;
 	}
-	if( sBottom == 480 )
-		ColorFillVideoSurfaceArea( ButtonDestBuffer, sLeft, 479, sRight, 480, gusEditorTaskbarLoColor );
-	if( sRight == 640 )
-		ColorFillVideoSurfaceArea( ButtonDestBuffer, 639, sTop, 640, sBottom, gusEditorTaskbarLoColor );
+	if( sBottom == SCREEN_BUFFER_HEIGHT )
+		ColorFillVideoSurfaceArea( ButtonDestBuffer, sLeft, SCREEN_BUFFER_HEIGHT-1, sRight, SCREEN_BUFFER_HEIGHT, gusEditorTaskbarLoColor );
+	if( sRight == SCREEN_BUFFER_WIDTH )
+		ColorFillVideoSurfaceArea( ButtonDestBuffer, SCREEN_BUFFER_WIDTH-1, sTop, SCREEN_BUFFER_WIDTH, sBottom, gusEditorTaskbarLoColor );
 
 	InvalidateRegion( sLeft, sTop, sRight, sBottom );
 }
@@ -621,7 +621,7 @@ void RenderMapEntryPointsAndLights()
 	if( sGridNo != -1 )
 	{
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
-		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < 640 )
+		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
 			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"North Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
@@ -630,7 +630,7 @@ void RenderMapEntryPointsAndLights()
 	if( sGridNo != -1 )
 	{
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
-		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < 640 )
+		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
 			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"West Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
@@ -639,7 +639,7 @@ void RenderMapEntryPointsAndLights()
 	if( sGridNo != -1 )
 	{
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
-		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < 640 )
+		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
 			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"East Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
@@ -648,7 +648,7 @@ void RenderMapEntryPointsAndLights()
 	if( sGridNo != -1 )
 	{
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
-		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < 640 )
+		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
 			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"South Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
@@ -657,7 +657,7 @@ void RenderMapEntryPointsAndLights()
 	if( sGridNo != -1 )
 	{
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
-		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < 640 )
+		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
 			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"Center Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
@@ -666,7 +666,7 @@ void RenderMapEntryPointsAndLights()
 	if( sGridNo != -1 )
 	{
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
-		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < 640 )
+		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
 			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"Isolated Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
@@ -678,7 +678,7 @@ void RenderMapEntryPointsAndLights()
 		{
 			sGridNo = LightSprites[ i ].iY * WORLD_COLS + LightSprites[ i ].iX;
 			GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
-			if( sScreenY >= -50 && sScreenY < 300 && sScreenX >= -40  && sScreenX < 640 )
+			if( sScreenY >= -50 && sScreenY < 300 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 			{
 				if( LightSprites[ i ].uiFlags & LIGHT_PRIMETIME )
 					DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 50, 2, FONT10ARIAL, FONT_ORANGE, L"Prime", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
@@ -923,7 +923,7 @@ void ProcessEditorRendering()
 	BOOLEAN fSaveBuffer = FALSE;
 	if( gfRenderTaskbar ) //do a full taskbar render.
 	{
-		ClearTaskbarRegion( 0, 360, 640, 480 );
+		ClearTaskbarRegion( 0, 360, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 		RenderTerrainTileButtons();
 		MarkButtonsDirty();
 		gfRenderTaskbar = FALSE;
@@ -969,7 +969,7 @@ void ProcessEditorRendering()
 
 
 	if( fSaveBuffer )
-		BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 360, 640, 120 );
+		BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 360, SCREEN_BUFFER_WIDTH, 120 );
 
 	//Make sure this is TRUE at all times.
 	//It is set to false when before we save the buffer, so the buttons don't get 

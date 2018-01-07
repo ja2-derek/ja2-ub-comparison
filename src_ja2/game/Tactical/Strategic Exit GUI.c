@@ -187,7 +187,7 @@ BOOLEAN InternalInitSectorExitMenu( UINT8 ubDirection, INT16 sAdditionalData )
 	aRect.iTop		= 	0;
 	aRect.iLeft		= 	0;
 	aRect.iBottom = 	INV_INTERFACE_START_Y;
-	aRect.iRight	= 	640;
+	aRect.iRight	= 	SCREEN_BUFFER_WIDTH;
 
 
 	if( gExitDialog.fAllMoveOn )
@@ -315,7 +315,7 @@ BOOLEAN InternalInitSectorExitMenu( UINT8 ubDirection, INT16 sAdditionalData )
 
 	gfInSectorExitMenu = TRUE;
 
-	MSYS_DefineRegion( &(gExitDialog.BackRegion), 0, 0, 640, 480, MSYS_PRIORITY_HIGHEST-1,
+	MSYS_DefineRegion( &(gExitDialog.BackRegion), 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST-1,
 																			CURSOR_NORMAL, MSYS_NO_CALLBACK, SectorExitBackgroundCallback ); 
 
 	gExitDialog.iButtonImages				= LoadButtonImage( "INTERFACE\\popupbuttons.sti", -1,0,-1,1,-1 );

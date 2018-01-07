@@ -1142,7 +1142,7 @@ INT32 DoMapMessageBoxWithRect( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScree
 
 INT32 DoMapMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-  SGPRect CenteringRect= {0, 0, 640, INV_INTERFACE_START_Y };
+  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH, INV_INTERFACE_START_Y };
 
 	// reset the highlighted line
 	giHighLine = -1;
@@ -1385,7 +1385,7 @@ void HandleDisplayOfItemPopUpForSector( INT16 sMapX, INT16 sMapY, INT16 sMapZ )
 void CreateScreenMaskForInventoryPoolPopUp( void )
 {
 	//  a screen mask for the inventory pop up
-	MSYS_DefineRegion( &gInventoryScreenMask, 0, 0 , 640, 480, MSYS_PRIORITY_HIGH - 1,
+	MSYS_DefineRegion( &gInventoryScreenMask, 0, 0 , SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGH - 1,
 						 MSYS_NO_CURSOR, MSYS_NO_CALLBACK, InventoryScreenMaskBtnCallback ); 
 
 }
@@ -2714,7 +2714,7 @@ void DisplayUserDefineHelpTextRegions( FASTHELPREGION *pRegion )
 		iY = (SCREEN_HEIGHT - iH - 15);
 
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	RectangleDraw( TRUE, iX + 1, iY + 1, iX + iW - 1, iY + iH - 1, Get16BPPColor( FROMRGB( 65, 57, 15 ) ), pDestBuf );
 	RectangleDraw( TRUE, iX, iY, iX + iW - 2, iY + iH - 2, Get16BPPColor( FROMRGB( 227, 198, 88 ) ), pDestBuf );
 	UnLockVideoSurface( FRAME_BUFFER );
@@ -2829,7 +2829,7 @@ void SetUpShutDownMapScreenHelpTextScreenMask( void )
 		}
 		else
 		{
-				MSYS_DefineRegion( &gMapScreenHelpTextMask , 0, 0, 640, 480, MSYS_PRIORITY_HIGHEST, 
+				MSYS_DefineRegion( &gMapScreenHelpTextMask , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST, 
 					MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapScreenHelpTextScreenMaskBtnCallback );
 		}
 
@@ -4451,7 +4451,7 @@ void CreateScreenMaskForMoveBox( void )
 	if( fScreenMaskForMoveCreated == FALSE )
 	{
 		// set up the screen mask
-		MSYS_DefineRegion( &gMoveBoxScreenMask, 0, 0, 640, 480, MSYS_PRIORITY_HIGHEST - 4, 
+		MSYS_DefineRegion( &gMoveBoxScreenMask, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST - 4, 
 		MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MoveScreenMaskBtnCallback );
 	
 		fScreenMaskForMoveCreated = TRUE;
@@ -4787,7 +4787,7 @@ void DisplaySoldierUpdateBox( )
 	}
 
 
-	SetFontDestBuffer( guiSAVEBUFFER, 0, 0, 640, 480, FALSE );
+	SetFontDestBuffer( guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 	
 	iUpperLimit = fFourWideMode ? ( iNumberOfMercsOnUpdatePanel + NUMBER_OF_MERC_COLUMNS_FOR_FOUR_WIDE_MODE ) : ( iNumberOfMercsOnUpdatePanel + NUMBER_OF_MERC_COLUMNS_FOR_TWO_WIDE_MODE );
 
@@ -4877,7 +4877,7 @@ void DisplaySoldierUpdateBox( )
 	}
 
 
-	SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+	SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 	// restore extern background rect
 	RestoreExternBackgroundRect( ( INT16 )( iX - 5 ), ( INT16 )( iY - 5 ), ( INT16 )(  iUpdatePanelWidth + 10 ), ( INT16 )(iUpdatePanelHeight + 6 ) );

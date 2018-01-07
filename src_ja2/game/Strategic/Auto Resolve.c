@@ -504,7 +504,7 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve()
 	sEndTop = SrcRect.iTop + gpAR->sHeight / 2;
 
 	//save the prebattle/mapscreen interface background
-	BlitBufferToBuffer( FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480 );
+	BlitBufferToBuffer( FRAME_BUFFER, guiEXTRABUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 	//render the autoresolve panel
 	RenderAutoResolve();
@@ -547,7 +547,7 @@ void DoTransitionFromPreBattleInterfaceToAutoResolve()
 		BlitBufferToBuffer( guiEXTRABUFFER, FRAME_BUFFER, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop, 
 			(UINT16)(DstRect.iRight-DstRect.iLeft+1), (UINT16)(DstRect.iBottom-DstRect.iTop+1) );
 	}
-	//BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480 );
+	//BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 }
 
 void EnterAutoResolveMode( UINT8 ubSectorX, UINT8 ubSectorY )
@@ -639,12 +639,12 @@ UINT32 AutoResolveScreenHandle()
 		//Take the framebuffer, shade it, and save it to the SAVEBUFFER.
 		ClipRect.iLeft = 0;
 		ClipRect.iTop = 0;
-		ClipRect.iRight = 640;
-		ClipRect.iBottom = 480;
+		ClipRect.iRight = SCREEN_BUFFER_WIDTH;
+		ClipRect.iBottom = SCREEN_BUFFER_HEIGHT;
 		pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
 		Blt16BPPBufferShadowRect( (UINT16*)pDestBuf, uiDestPitchBYTES, &ClipRect );
 		UnLockVideoSurface( FRAME_BUFFER );
-		BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480 );
+		BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 		KillPreBattleInterface();
 		CalculateAutoResolveInfo();
 		CalculateSoldierCells( FALSE );
@@ -1195,7 +1195,7 @@ void ExpandWindow()
 
 	//The new rect now determines the state of the current rectangle.
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	RectangleDraw( TRUE, gpAR->ExRect.iLeft, gpAR->ExRect.iTop, gpAR->ExRect.iRight, gpAR->ExRect.iBottom, Get16BPPColor( FROMRGB( 200, 200, 100 ) ), pDestBuf );
 	UnLockVideoSurface( FRAME_BUFFER );
 	//left
@@ -1769,7 +1769,7 @@ void CreateAutoResolveInterface()
 	HVOBJECT hVObject;
 	UINT8 ubGreenMilitia, ubRegMilitia, ubEliteMilitia;
 	//Setup new autoresolve blanket interface.
-	MSYS_DefineRegion( &gpAR->AutoResolveRegion, 0, 0, 640, 480, MSYS_PRIORITY_HIGH-1, 0,
+	MSYS_DefineRegion( &gpAR->AutoResolveRegion, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGH-1, 0,
 		MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 	gpAR->fRenderAutoResolve = TRUE;
 	gpAR->fExitAutoResolve = FALSE;
@@ -2013,7 +2013,7 @@ void CreateAutoResolveInterface()
 	//Build the interface buffer, and blit the "shaded" background.  This info won't
 	//change from now on, but will be used to restore text.
 	BuildInterfaceBuffer();
-	BlitBufferToBuffer( guiSAVEBUFFER, FRAME_BUFFER, 0, 0, 640, 480 );
+	BlitBufferToBuffer( guiSAVEBUFFER, FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 	//If we are bumping up the interface, then also use that piece of info to
 	//move the buttons up by the same amount.
@@ -2834,7 +2834,7 @@ void CalculateRowsAndColumns()
 	}
 
 	if( gpAR->ubMercCols + gpAR->ubEnemyCols == 9 )
-		gpAR->sWidth = 640;
+		gpAR->sWidth = SCREEN_BUFFER_WIDTH;
 	else
 		gpAR->sWidth = 146 + 55 * (max( max( gpAR->ubMercCols, gpAR->ubCivCols ), 2 ) + max( gpAR->ubEnemyCols, 2 ));
 

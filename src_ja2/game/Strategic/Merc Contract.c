@@ -1029,7 +1029,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement( SOLDIERTYPE *pSoldi
 	CHAR16				zShortTownIDString[ 50 ];
 
 	// use YES/NO Pop up box, settup for particular screen
-	SGPRect pCenteringRect= {0, 0, 640, 480};
+	SGPRect pCenteringRect= {0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT};
 
 	//GetSectorIDString( pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ, zTownIDString, TRUE );
 

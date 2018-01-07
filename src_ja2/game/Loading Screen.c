@@ -348,7 +348,7 @@ void DisplayLoadScreenWithID( UINT8 ubLoadScreenID )
 		SetFont( FONT10ARIAL );
 		SetFontForeground( FONT_YELLOW );
 		SetFontShadow( FONT_NEARBLACK );
-		ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, 640, 480, 0 );
+		ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, 0 );
 		mprintf( 5, 5, L"Error loading save, attempting to patch save to version 1.02...", vs_desc.ImageFile );
 	}
 	else if( AddVideoSurface( &vs_desc, &uiLoadScreen ) )
@@ -362,7 +362,7 @@ void DisplayLoadScreenWithID( UINT8 ubLoadScreenID )
 		SetFont( FONT10ARIAL );
 		SetFontForeground( FONT_YELLOW );
 		SetFontShadow( FONT_NEARBLACK );
-		ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, 640, 480, 0 );
+		ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, 0 );
 		mprintf( 5, 5, L"%S loadscreen data file not found...", vs_desc.ImageFile );
 	}
 

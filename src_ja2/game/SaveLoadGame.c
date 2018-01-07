@@ -501,11 +501,11 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 
 	//Place a message on the screen telling the user that we are saving the game
 	iSaveLoadGameMessageBoxID = PrepareMercPopupBox( iSaveLoadGameMessageBoxID, BASIC_MERC_POPUP_BACKGROUND, BASIC_MERC_POPUP_BORDER, zSaveLoadText[ SLG_SAVING_GAME_MESSAGE ], 300, 0, 0, 0, &usActualWidth, &usActualHeight);
-	usPosX = ( 640 - usActualWidth ) / 2 ;
+	usPosX = ( SCREEN_BUFFER_WIDTH - usActualWidth ) / 2 ;
 
 	RenderMercPopUpBoxFromIndex( iSaveLoadGameMessageBoxID, usPosX, 160, FRAME_BUFFER );
 	
-  InvalidateRegion(0,0,640,480);
+  InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 
 	ExecuteBaseDirtyRectQueue( );
 	EndFrameBufferRender( );

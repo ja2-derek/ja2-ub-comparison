@@ -1121,7 +1121,7 @@ void DisplayStringsInMapScreenMessageList( void )
 		ubCurrentStringIndex = ( ubCurrentStringIndex + 1 ) % 256;
 	}
 
-	SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+	SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 }
 
 
@@ -1867,7 +1867,7 @@ void DisplayLastMessage( void )
 			ubCounter++;
 		}
 		// execute text box
-		ExecuteTacticalTextBoxForLastQuote( ( INT16 )( ( 640 - gusSubtitleBoxWidth ) / 2 ),  sString );
+		ExecuteTacticalTextBoxForLastQuote( ( INT16 )( ( SCREEN_BUFFER_WIDTH - gusSubtitleBoxWidth ) / 2 ),  sString );
 	}
 
 	return;

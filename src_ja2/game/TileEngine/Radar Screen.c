@@ -642,7 +642,7 @@ BOOLEAN CreateDestroyMouseRegionsForSquadList( void )
 	  GetVideoObject(&hHandle, uiHandle);
 		BltVideoObject( guiSAVEBUFFER , hHandle, 0,538, 0 + gsVIEWPORT_END_Y, VO_BLT_SRCTRANSPARENCY,NULL );
 
-		RestoreExternBackgroundRect( 538, gsVIEWPORT_END_Y, ( 640 - 538 ),( INT16 ) ( 480 - gsVIEWPORT_END_Y ) );
+		RestoreExternBackgroundRect( 538, gsVIEWPORT_END_Y, ( SCREEN_BUFFER_WIDTH - 538 ),( INT16 ) ( SCREEN_BUFFER_HEIGHT - gsVIEWPORT_END_Y ) );
 		
 		for( sCounter = 0; sCounter < NUMBER_OF_SQUADS; sCounter++ )
 		{

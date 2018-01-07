@@ -818,7 +818,7 @@ void SetUIMouseCursor( )
 				guiNewUICursor = NOEXIT_SOUTH_UICURSOR;
 			}
 
-			if ( gusMouseYPos < 478 )
+			if ( gusMouseYPos < SCREEN_BUFFER_HEIGHT-2 )
 			{
 				gfUIShowExitSouth = FALSE;
 
@@ -844,10 +844,10 @@ void SetUIMouseCursor( )
 					// Adjust viewport to edge of screen!
 					// Define region for viewport
 					MSYS_RemoveRegion( &gViewportRegion );
-					MSYS_DefineRegion( &gViewportRegion, 0, 0 ,gsVIEWPORT_END_X, 480, MSYS_PRIORITY_NORMAL,
+					MSYS_DefineRegion( &gViewportRegion, 0, 0 ,gsVIEWPORT_END_X, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_NORMAL,
 										 VIDEO_NO_CURSOR, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 
-					gsGlobalCursorYOffset = ( 480 - gsVIEWPORT_WINDOW_END_Y );
+					gsGlobalCursorYOffset = ( SCREEN_BUFFER_HEIGHT - gsVIEWPORT_WINDOW_END_Y );
 					SetCurrentCursorFromDatabase( gUICursors[ guiNewUICursor ].usFreeCursorName );
 
           gfViewPortAdjustedForSouth = TRUE;
@@ -4732,7 +4732,7 @@ UINT32 UIHandleLUIBeginLock( UI_EVENT *pUIEvent )
 		RemoveTacticalCursor( );
 		//SetCurrentCursorFromDatabase( VIDEO_NO_CURSOR );
 
-		MSYS_DefineRegion( &gDisableRegion, 0, 0 ,640, 480, MSYS_PRIORITY_HIGHEST,
+		MSYS_DefineRegion( &gDisableRegion, 0, 0 ,SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST,
 							 CURSOR_WAIT, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 		// Add region
 		MSYS_AddRegion( &gDisableRegion );
@@ -5252,7 +5252,7 @@ UINT32 UIHandleLABeginLockOurTurn( UI_EVENT *pUIEvent )
 		//guiNewUICursor = NO_UICURSOR;
 		//SetCurrentCursorFromDatabase( VIDEO_NO_CURSOR );
 
-		MSYS_DefineRegion( &gUserTurnRegion, 0, 0 ,640, 480, MSYS_PRIORITY_HIGHEST,
+		MSYS_DefineRegion( &gUserTurnRegion, 0, 0 ,SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST,
 							 CURSOR_WAIT, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 		// Add region
 		MSYS_AddRegion( &gUserTurnRegion );

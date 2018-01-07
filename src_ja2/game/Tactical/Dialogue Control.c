@@ -2323,7 +2323,7 @@ void RenderFaceOverlay( VIDEO_OVERLAY *pBlitter )
 		if ( pSoldier )
 		{
 		  //reset the font dest buffer
-		  SetFontDestBuffer( pBlitter->uiDestBuff, 0,0,640,480, FALSE);
+		  SetFontDestBuffer( pBlitter->uiDestBuff, 0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT, FALSE);
 
 			VarFindFontCenterCoordinates( (INT16)( pBlitter->sX + 12 ), (INT16)( pBlitter->sY + 55 ), 73, 9, BLOCKFONT2, &sFontX, &sFontY, L"%s", pSoldier->name );
 			mprintf( sFontX, sFontY, L"%s", pSoldier->name );
@@ -2340,7 +2340,7 @@ void RenderFaceOverlay( VIDEO_OVERLAY *pBlitter )
 			}
 
 		  //reset the font dest buffer
-		  SetFontDestBuffer(FRAME_BUFFER, 0,0,640,480, FALSE);
+		  SetFontDestBuffer(FRAME_BUFFER, 0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT, FALSE);
 
 		  // Display bars
 		  DrawLifeUIBarEx( pSoldier, (INT16)( pBlitter->sX + 69 ), (INT16)( pBlitter->sY + 47 ), 3, 42, FALSE, pBlitter->uiDestBuff );

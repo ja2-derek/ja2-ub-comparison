@@ -755,7 +755,7 @@ void DoTransitionFromMapscreenToPreBattleInterface()
 	sEndTop = 180;
 
 	//save the mapscreen buffer
-	BlitBufferToBuffer( FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480 );
+	BlitBufferToBuffer( FRAME_BUFFER, guiEXTRABUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 	if( gfEnterAutoResolveMode )
 	{ //If we are intending on immediately entering autoresolve, change the global flag so that it will actually 
@@ -819,7 +819,7 @@ void DoTransitionFromMapscreenToPreBattleInterface()
 		BlitBufferToBuffer( guiEXTRABUFFER, FRAME_BUFFER, (UINT16)DstRect.iLeft, (UINT16)DstRect.iTop, 
 			(UINT16)(DstRect.iRight-DstRect.iLeft+1), (UINT16)(DstRect.iBottom-DstRect.iTop+1) );
 	}
-	BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, 640, 480 );
+	BlitBufferToBuffer( FRAME_BUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 }
 
 void KillPreBattleInterface()
@@ -971,7 +971,7 @@ void RenderPreBattleInterface()
 	if( gfRenderPBInterface )
 	{
 		// set font destinanation buffer to the save buffer
-		SetFontDestBuffer( guiSAVEBUFFER , 0, 0, 640, 480, FALSE );
+		SetFontDestBuffer( guiSAVEBUFFER , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 		if( gfPBButtonsHidden )
 		{
@@ -1217,7 +1217,7 @@ void RenderPreBattleInterface()
 		RestoreExternBackgroundRect( 0, 0, 261, 359 );
 
 		// restore font destinanation buffer to the frame buffer
-		SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+		SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 	}
 	else if( gfBlinkHeader )
 	{

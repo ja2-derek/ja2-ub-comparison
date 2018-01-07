@@ -277,8 +277,8 @@ UINT32	OptionsScreenHandle()
 		RenderOptionsScreen();
 
 		//Blit the background to the save buffer
-		BlitBufferToBuffer( guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, 640, 480 );
-		InvalidateRegion( 0, 0, 640, 480 );
+		BlitBufferToBuffer( guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
+		InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	}
 
 	RestoreBackgroundRects();
@@ -550,7 +550,7 @@ Uncomment this to enable the check for files to activate the blood and gore opti
 	}
 
 	//Create a mouse region so when the user leaves a togglebox text region we can detect it then unselect the region
-	MSYS_DefineRegion( &gSelectedToggleBoxAreaRegion, 0, 0, 640, 480, MSYS_PRIORITY_NORMAL,
+	MSYS_DefineRegion( &gSelectedToggleBoxAreaRegion, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_NORMAL,
 							 CURSOR_NORMAL, SelectedToggleBoxAreaRegionMovementCallBack, MSYS_NO_CALLBACK ); 
 	MSYS_AddRegion( &gSelectedToggleBoxAreaRegion ); 
 
@@ -859,7 +859,7 @@ void		GetOptionsScreenUserInput()
 					break;
 
 				case 'i':
-					InvalidateRegion( 0, 0, 640, 480 );
+					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 					break;
 
 					//Test keys
@@ -1159,7 +1159,7 @@ BOOLEAN DoOptionsMessageBoxWithRect( UINT8 ubStyle, INT16 *zString, UINT32 uiExi
 
 BOOLEAN DoOptionsMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-  SGPRect CenteringRect= {0, 0, 639, 479 };
+  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 };
   
 	// reset exit mode
 	gfExitOptionsDueToMessageBox = TRUE;

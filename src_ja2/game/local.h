@@ -22,8 +22,8 @@
 #endif
 
 
-#define SCREEN_WIDTH          640
-#define SCREEN_HEIGHT         480
+#define SCREEN_WIDTH          SCREEN_BUFFER_WIDTH
+#define SCREEN_HEIGHT         SCREEN_BUFFER_HEIGHT
 #define PIXEL_DEPTH           16
 
 //

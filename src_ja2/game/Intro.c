@@ -139,7 +139,7 @@ UINT32	IntroScreenHandle( void )
 		gfIntroScreenEntry = FALSE;
 		gfIntroScreenExit = FALSE;
 
-		InvalidateRegion( 0, 0, 640, 480 );
+		InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	}
 
 	RestoreBackgroundRects();
@@ -192,7 +192,7 @@ BOOLEAN EnterIntroScreen()
 	}
 
 	//initialize smacker
-	SmkInitialize( ghWindow, 640, 480);
+	SmkInitialize( ghWindow, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT);
 
 
 	//get the index opf the first video to watch
@@ -312,7 +312,7 @@ void		GetIntroScreenUserInput()
 					break;
 
 				case 'i':
-					InvalidateRegion( 0, 0, 640, 480 );
+					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 					break;
 
 #endif

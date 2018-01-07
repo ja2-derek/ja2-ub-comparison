@@ -226,7 +226,7 @@ void InitPopupMenu( INT32 iButtonID, UINT8 ubPopupMenuID, UINT8 ubDirection )
 			gPopup.usBottom = usY + usMenuHeight + 1;
 			break;
 	}
-	MSYS_DefineRegion( &popupRegion, 0, 0, 640, 480, MSYS_PRIORITY_HIGHEST,
+	MSYS_DefineRegion( &popupRegion, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST,
 						 CURSOR_NORMAL, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK ); 
 
 	RenderPopupMenu();
@@ -247,7 +247,7 @@ void RenderPopupMenu()
 		gPopup.usLeft, gPopup.usTop, gPopup.usRight, gPopup.usBottom, 
 		Get16BPPColor(FROMRGB(128, 128, 128) ) );
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );			
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	usLineColor = Get16BPPColor( FROMRGB( 64, 64, 64 ) );
 	RectangleDraw( TRUE, gPopup.usLeft, gPopup.usTop, gPopup.usRight, gPopup.usBottom, 
 		usLineColor, pDestBuf );

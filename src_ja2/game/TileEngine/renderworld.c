@@ -546,10 +546,10 @@ INT16 SCROLL_Y_STEP	 =		( WORLD_TILE_Y * 2);
 
 INT16 gsVIEWPORT_START_X				= 0;		
 INT16 gsVIEWPORT_START_Y				= 0;		
-INT16 gsVIEWPORT_END_Y					= 360;			
-INT16 gsVIEWPORT_WINDOW_END_Y		= 360;			
+INT16 gsVIEWPORT_END_Y					= INTERFACE_START_Y;			
+INT16 gsVIEWPORT_WINDOW_END_Y		= INTERFACE_START_Y;			
 INT16 gsVIEWPORT_WINDOW_START_Y	= 0;
-INT16 gsVIEWPORT_END_X					= 640;
+INT16 gsVIEWPORT_END_X					= SCREEN_BUFFER_WIDTH;
 
 INT16 gsTopLeftWorldX, gsTopLeftWorldY;
 INT16 gsTopRightWorldX, gsTopRightWorldY;
@@ -600,7 +600,7 @@ INT32				guiScrollDirection;
 // Rendering flags (full, partial, etc.)
 UINT32 gRenderFlags=0;
 
-SGPRect		gClippingRect		  = { 0, 0, 640, 360};
+SGPRect		gClippingRect		  = { 0, 0, SCREEN_BUFFER_WIDTH, INTERFACE_START_Y};
 SGPRect		gOldClipRect;
 INT16			gsRenderCenterX;
 INT16		  gsRenderCenterY;
@@ -2029,10 +2029,10 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 									}
 
 									SetFont( TINYFONT1 );
-									SetFontDestBuffer( guiSAVEBUFFER , 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y, FALSE );
+									SetFontDestBuffer( guiSAVEBUFFER , 0, gsVIEWPORT_WINDOW_START_Y, SCREEN_BUFFER_WIDTH, gsVIEWPORT_WINDOW_END_Y, FALSE );
 									VarFindFontCenterCoordinates( sXPos, sYPos, 1, 1, TINYFONT1, &sX, &sY, L"%d", pNode->uiAPCost );
 									mprintf_buffer( pDestBuf, uiDestPitchBYTES, TINYFONT1, sX,  sY , L"%d", pNode->uiAPCost );
-									SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, 480, FALSE );
+									SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 								}
 								else if ( ( uiLevelNodeFlags  & LEVELNODE_ERASEZ ) && !( uiFlags&TILES_DIRTY ) )
 								{
@@ -2613,10 +2613,10 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 										if ( pSoldier != NULL && pSoldier->ubID >= MAX_NUM_SOLDIERS )
 										{
 											SetFont( TINYFONT1 );
-											SetFontDestBuffer( guiSAVEBUFFER , 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y, FALSE );
+											SetFontDestBuffer( guiSAVEBUFFER , 0, gsVIEWPORT_WINDOW_START_Y, SCREEN_BUFFER_WIDTH, gsVIEWPORT_WINDOW_END_Y, FALSE );
 											VarFindFontCenterCoordinates( sXPos, sYPos, 1, 1, TINYFONT1, &sX, &sY, L"%d", pSoldier->ubPlannedUIAPCost );
 											mprintf_buffer( pDestBuf, uiDestPitchBYTES, TINYFONT1, sX,  sY , L"%d", pSoldier->ubPlannedUIAPCost );
-											SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, 480, FALSE );
+											SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 										}
 									}
 								}
@@ -2646,12 +2646,12 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 							//	only crash on my computer and not Emmons, so this should work.  Also, I changed the color 
 							//	from fluorescent green to black, which is easier on the eyes, and prevent the drawing of the 
 							//	end of the world if it would be drawn on the editor's taskbar.
-							if( iTempPosY_S < 360 )
+							if( iTempPosY_S < INTERFACE_START_Y )
 							{
 								if(!(uiFlags&TILES_DIRTY))
 									UnLockVideoSurface( FRAME_BUFFER );
 								ColorFillVideoSurfaceArea( FRAME_BUFFER, iTempPosX_S, iTempPosY_S, (INT16)(iTempPosX_S + 40), 
-									(INT16)( min( iTempPosY_S + 20, 360 )), Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
+									(INT16)( min( iTempPosY_S + 20, INTERFACE_START_Y )), Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
 								if(!(uiFlags&TILES_DIRTY))
 									pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
 							}
@@ -2752,7 +2752,7 @@ void ScrollBackground(UINT32 uiDirection, INT16 sScrollXIncrement, INT16 sScroll
 	if ( !gfDoVideoScroll )
 	{
 		// Clear z-buffer
-		memset(gpZBuffer, LAND_Z_LEVEL, 1280* gsVIEWPORT_END_Y );
+		memset(gpZBuffer, LAND_Z_LEVEL, SCREEN_BUFFER_WIDTH*2* gsVIEWPORT_END_Y );
 
 		RenderStaticWorldRect( gsVIEWPORT_START_X, gsVIEWPORT_START_Y, gsVIEWPORT_END_X, gsVIEWPORT_END_Y, FALSE );
 
@@ -2797,7 +2797,7 @@ UINT32 cnt = 0;
 	// If we are testing renderer, set background to pink!
 	if ( gTacticalStatus.uiFlags & DEBUGCLIFFS )
 	{
-		ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, gsVIEWPORT_WINDOW_START_Y, 640,	gsVIEWPORT_WINDOW_END_Y, Get16BPPColor( FROMRGB( 0, 255, 0 ) ) );
+		ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, gsVIEWPORT_WINDOW_START_Y, SCREEN_BUFFER_WIDTH,	gsVIEWPORT_WINDOW_END_Y, Get16BPPColor( FROMRGB( 0, 255, 0 ) ) );
 		SetRenderFlags(RENDER_FLAG_FULL);
 	}
 
@@ -2958,7 +2958,7 @@ UINT32 cnt = 0;
 
 		pDestBuf = (INT16*)LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
 
-		for ( cnt = 0; cnt < ( 640 * 480 ); cnt++ )
+		for ( cnt = 0; cnt < ( SCREEN_BUFFER_WIDTH * SCREEN_BUFFER_HEIGHT ); cnt++ )
 		{	
 			// Get Z value
 			zVal = gpZBuffer[ cnt ];
@@ -3087,7 +3087,7 @@ void RenderStaticWorld(  )
 	CalcRenderParameters( gsVIEWPORT_START_X, gsVIEWPORT_START_Y, gsVIEWPORT_END_X, gsVIEWPORT_END_Y );
 
 	// Clear z-buffer
-	memset(gpZBuffer, LAND_Z_LEVEL, 1280* gsVIEWPORT_END_Y );
+	memset(gpZBuffer, LAND_Z_LEVEL, SCREEN_BUFFER_WIDTH*2* gsVIEWPORT_END_Y );
 
 	FreeBackgroundRectType(BGND_FLAG_ANIMATED);
 	InvalidateBackgroundRects();
@@ -3754,14 +3754,14 @@ void ScrollWorld( )
 			}
 			 
 
-			if ( gusMouseYPos >= 479 )
+			if ( gusMouseYPos >= SCREEN_BUFFER_HEIGHT-1 )
 			{
 				fDoScroll = TRUE;
 				ScrollFlags |= SCROLL_DOWN;
 			}
 
 
-			if ( gusMouseXPos >= 639 )
+			if ( gusMouseXPos >= SCREEN_BUFFER_WIDTH-1 )
 			{
 				fDoScroll = TRUE;
 				ScrollFlags |= SCROLL_RIGHT;
@@ -4207,7 +4207,7 @@ BOOLEAN ApplyScrolling( INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOL
 			if ( fOutRight )
 			{
 				// Check where our cursor is!
-				if ( gusMouseXPos >= 639 )
+				if ( gusMouseXPos >= SCREEN_BUFFER_WIDTH-1 )
 				{
 					gfUIShowExitEast = TRUE;
 				}
@@ -4234,7 +4234,7 @@ BOOLEAN ApplyScrolling( INT16 sTempRenderCenterX, INT16 sTempRenderCenterY, BOOL
 			if ( fOutBottom )
 			{
 				// Check where our cursor is!
-				if ( gusMouseYPos >= 479 )
+				if ( gusMouseYPos >= SCREEN_BUFFER_HEIGHT-1 )
 				{
 					gfUIShowExitSouth = TRUE;
 				}
@@ -6469,7 +6469,7 @@ void RenderRoomInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoi
 				if ( gubWorldRoomInfo[ usTileIndex ] != NO_ROOM )
 				{
 					SetFont( SMALLCOMPFONT );
-					SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, gsVIEWPORT_END_Y, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, gsVIEWPORT_END_Y, FALSE );
 					switch( gubWorldRoomInfo[ usTileIndex ] % 5 )
 					{
 						case 0:		SetFontForeground( FONT_GRAY3 );	break;
@@ -6479,7 +6479,7 @@ void RenderRoomInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPoi
 						case 4:   SetFontForeground( FONT_LTGREEN );break;
 					}
 					mprintf_buffer( pDestBuf, uiDestPitchBYTES, TINYFONT1, sX,  sY , L"%d", gubWorldRoomInfo[ usTileIndex ] );
-					SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, 480, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 				}
 			}
 			
@@ -6574,10 +6574,10 @@ void RenderFOVDebugInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStar
 				if ( gubFOVDebugInfoInfo[ usTileIndex ] != 0 )
 				{
 					SetFont( SMALLCOMPFONT );
-					SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, gsVIEWPORT_END_Y, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, gsVIEWPORT_END_Y, FALSE );
 					SetFontForeground( FONT_GRAY3 );
 					mprintf_buffer( pDestBuf, uiDestPitchBYTES, TINYFONT1, sX,  sY , L"%d", gubFOVDebugInfoInfo[ usTileIndex ] );
-					SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, 480, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 
 					Blt8BPPDataTo16BPPBufferTransparentClip((UINT16*)pDestBuf, uiDestPitchBYTES, gTileDatabase[0].hTileSurface, sTempPosX_S, sTempPosY_S, 0, &gClippingRect );
@@ -6587,10 +6587,10 @@ void RenderFOVDebugInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStar
 			  if ( gubGridNoMarkers[ usTileIndex ] == gubGridNoValue )
 				{
 					SetFont( SMALLCOMPFONT );
-					SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, gsVIEWPORT_END_Y, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, gsVIEWPORT_END_Y, FALSE );
 					SetFontForeground( FONT_FCOLOR_YELLOW );
 					mprintf_buffer( pDestBuf, uiDestPitchBYTES, TINYFONT1, sX,  sY + 4 , L"x" );
-					SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, 480, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 				}
 
 			}
@@ -6683,7 +6683,7 @@ void RenderCoverDebugInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSt
 				if (gsCoverValue[ usTileIndex] != 0x7F7F)
 				{
 					SetFont( SMALLCOMPFONT );
-					SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, gsVIEWPORT_END_Y, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, gsVIEWPORT_END_Y, FALSE );
 					if (usTileIndex == gsBestCover)
 					{
 						SetFontForeground( FONT_MCOLOR_RED );
@@ -6697,7 +6697,7 @@ void RenderCoverDebugInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sSt
 						SetFontForeground( FONT_GRAY3 );
 					}
 					mprintf_buffer( pDestBuf, uiDestPitchBYTES, TINYFONT1, sX,  sY , L"%d", gsCoverValue[ usTileIndex ] );
-					SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, 480, FALSE );
+					SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 				}
 
 			}
@@ -6789,7 +6789,7 @@ void RenderGridNoVisibleDebugInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, I
 				sY += gsRenderHeight;
 				
 				SetFont( SMALLCOMPFONT );
-				SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, gsVIEWPORT_END_Y, FALSE );
+				SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, gsVIEWPORT_END_Y, FALSE );
 
 				if ( !GridNoOnVisibleWorldTile( usTileIndex ) )
 				{
@@ -6800,7 +6800,7 @@ void RenderGridNoVisibleDebugInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, I
 					SetFontForeground( FONT_GRAY3 );
 				}
 				mprintf_buffer( pDestBuf, uiDestPitchBYTES, TINYFONT1, sX,  sY , L"%d", usTileIndex );
-				SetFontDestBuffer( FRAME_BUFFER , 0, 0, 640, 480, FALSE );
+				SetFontDestBuffer( FRAME_BUFFER , 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 			}
 			
@@ -7384,9 +7384,9 @@ BOOLEAN IsTileRedundent( UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject
 
 
 	SrcPtr= (UINT8 *)hSrcVObject->pPixData + uiOffset;
-	ZPtr = (UINT8 *)pZBuffer + (1280*iTempY) + (iTempX*2);
+	ZPtr = (UINT8 *)pZBuffer + (SCREEN_BUFFER_WIDTH*2*iTempY) + (iTempX*2);
 	p16BPPPalette = hSrcVObject->pShadeCurrent;
-	LineSkip=(1280-(usWidth*2));
+	LineSkip=(SCREEN_BUFFER_WIDTH*2-(usWidth*2));
 
 	__asm {
 

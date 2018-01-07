@@ -247,7 +247,7 @@ BOOLEAN HandleAutoBandage( )
 		if ( gfBeginningAutoBandage )
 		{
 			//Shadow area
-			ShadowVideoSurfaceRect( FRAME_BUFFER, 0, 0, 640, 480 );		
+			ShadowVideoSurfaceRect( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );		
 			InvalidateScreen( );
 			RefreshScreen( NULL );
 		}
@@ -433,7 +433,7 @@ void AutoBandage( BOOLEAN fStart )
 		aRect.iTop		= 	0;
 		aRect.iLeft		= 	0;
 		aRect.iBottom = 	INV_INTERFACE_START_Y;
-		aRect.iRight	= 	640;
+		aRect.iRight	= 	SCREEN_BUFFER_WIDTH;
 
 		// Determine position ( centered in rect )
 		gsX = (INT16)( ( ( ( aRect.iRight	- aRect.iLeft ) - gusTextBoxWidth ) / 2 ) + aRect.iLeft );
@@ -441,7 +441,7 @@ void AutoBandage( BOOLEAN fStart )
 
 
 		// build a mask
-		MSYS_DefineRegion( &gAutoBandageRegion, 0,0, 640, 480, MSYS_PRIORITY_HIGHEST - 1,
+		MSYS_DefineRegion( &gAutoBandageRegion, 0,0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST - 1,
 						 CURSOR_NORMAL, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 
 		gfBeginningAutoBandage = TRUE;
@@ -726,7 +726,7 @@ void DisplayAutoBandageUpdatePanel( void )
 	iTotalPixelsWide = TACT_UPDATE_MERC_FACE_X_WIDTH * iNumberDoctorsWide;
 
 	// now get the x and y position for the box
-	sXPosition = ( 640 - iTotalPixelsWide ) / 2;
+	sXPosition = ( SCREEN_BUFFER_WIDTH - iTotalPixelsWide ) / 2;
 	sYPosition = ( INV_INTERFACE_START_Y - iTotalPixelsHigh ) / 2;
 
 

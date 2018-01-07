@@ -3194,7 +3194,7 @@ BOOLEAN DrawItemPoolList( ITEM_POOL *pItemPool, INT16 sGridNo, UINT8 bCommand, I
 	}
 
 	// Determine where our mouse is!
-	if ( sXPos > ( 640 - sLargestLineWidth ) )
+	if ( sXPos > ( SCREEN_BUFFER_WIDTH - sLargestLineWidth ) )
 	{
 		sFontX = sXPos - sLargestLineWidth;
 	}

@@ -1863,7 +1863,7 @@ void DrawGoldRectangle( INT8 bCityNum )
 
 	//display the line
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );			
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480);
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT);
 
   // draw the gold highlite line on the top and left
 	LineDraw(FALSE, usPosX, usPosY, usPosX+usWidth, usPosY, Get16BPPColor( FROMRGB( 235, 222, 171 ) ), pDestBuf);

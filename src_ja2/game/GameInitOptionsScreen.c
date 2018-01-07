@@ -41,7 +41,7 @@
 //main title
 #define		GIO_MAIN_TITLE_X										0
 #define		GIO_MAIN_TITLE_Y										68
-#define		GIO_MAIN_TITLE_WIDTH								640
+#define		GIO_MAIN_TITLE_WIDTH								SCREEN_BUFFER_WIDTH
 
 //radio box locations
 #define		GIO_GAP_BN_SETTINGS									35
@@ -248,7 +248,7 @@ UINT32	GameInitOptionsScreenHandle( void )
 		EnterGIOScreen();
 		gfGIOScreenEntry = FALSE;
 		gfGIOScreenExit = FALSE;
-		InvalidateRegion( 0, 0, 640, 480 );
+		InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	}
 
 	GetGIOScreenUserInput();
@@ -480,7 +480,7 @@ BOOLEAN		EnterGIOScreen()
 	//REnder the screen once so we can blt ot to ths save buffer
 	RenderGIOScreen();
 
-	BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, 639, 439 );
+	BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-41 );
 
 	gfGIOButtonsAllocated = TRUE;
 
@@ -721,7 +721,7 @@ void			GetGIOScreenUserInput()
 					break;
 
 				case 'i':
-					InvalidateRegion( 0, 0, 640, 480 );
+					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 					break;
 #endif
 
@@ -1152,7 +1152,7 @@ void DoneFadeInForExitGameInitOptionScreen( void )
 
 BOOLEAN DoGioMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-  SGPRect CenteringRect= {0, 0, 639, 479 };
+  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 };
   
 	// reset exit mode
 //	gfExitGioDueToMessageBox = TRUE;

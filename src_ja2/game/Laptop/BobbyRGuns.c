@@ -325,7 +325,7 @@ void RenderBobbyRGuns()
 	UpdateButtonText(guiCurrentLaptopMode);
   MarkButtonsDirty( );
 	RenderWWWProgramTitleBar( );
-  InvalidateRegion(0,0,640,480);
+  InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 }
 
 

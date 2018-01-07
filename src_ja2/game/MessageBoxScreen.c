@@ -201,8 +201,8 @@ INT32 DoMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 u
 		// Use default!
 		aRect.iTop		= 	0;
 		aRect.iLeft		= 	0;
-		aRect.iBottom = 	480;
-		aRect.iRight	= 	640;
+		aRect.iBottom = 	SCREEN_BUFFER_HEIGHT;
+		aRect.iRight	= 	SCREEN_BUFFER_WIDTH;
 	}
 
 	// Set some values!
@@ -272,7 +272,7 @@ INT32 DoMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 u
 	UnLockVideoSurface( FRAME_BUFFER );
 
 	// Create top-level mouse region
-	MSYS_DefineRegion( &(gMsgBox.BackRegion), 0, 0, 640, 480, MSYS_PRIORITY_HIGHEST,
+	MSYS_DefineRegion( &(gMsgBox.BackRegion), 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST,
 						 usCursor, MSYS_NO_CALLBACK, MsgBoxClickCallback ); 
 
 	if( gGameSettings.fOptions[ TOPTION_DONT_MOVE_MOUSE ] == FALSE )
@@ -1196,21 +1196,21 @@ UINT32	MessageBoxScreenShutdown(  )
 // a basic box that don't care what screen we came from
 void DoScreenIndependantMessageBox( INT16 *zString, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-	SGPRect CenteringRect= {0, 0, 640, INV_INTERFACE_START_Y };
+	SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH, INV_INTERFACE_START_Y };
 	DoScreenIndependantMessageBoxWithRect( zString, usFlags, ReturnCallback, &CenteringRect );
 }
 
 // a basic box that don't care what screen we came from
 void DoUpperScreenIndependantMessageBox( INT16 *zString, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-	SGPRect CenteringRect= {0, 0, 640, INV_INTERFACE_START_Y / 2 };
+	SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH, INV_INTERFACE_START_Y / 2 };
 	DoScreenIndependantMessageBoxWithRect( zString, usFlags, ReturnCallback, &CenteringRect );
 }
 
 // a basic box that don't care what screen we came from
 void DoLowerScreenIndependantMessageBox( INT16 *zString, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-	SGPRect CenteringRect= {0, INV_INTERFACE_START_Y / 2, 640, INV_INTERFACE_START_Y };
+	SGPRect CenteringRect= {0, INV_INTERFACE_START_Y / 2, SCREEN_BUFFER_WIDTH, INV_INTERFACE_START_Y };
 	DoScreenIndependantMessageBoxWithRect( zString, usFlags, ReturnCallback, &CenteringRect );
 }
 

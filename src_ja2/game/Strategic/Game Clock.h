@@ -6,11 +6,11 @@
 
 // where the time string itself is rendered
 #define			CLOCK_X										554
-#define			CLOCK_Y										459
+#define			CLOCK_Y										SCREEN_BUFFER_HEIGHT-21
 
 // the mouse region around the clock (bigger)
 #define			CLOCK_REGION_START_X			552
-#define			CLOCK_REGION_START_Y			456
+#define			CLOCK_REGION_START_Y			SCREEN_BUFFER_HEIGHT - 24
 #define			CLOCK_REGION_WIDTH				( 620 - CLOCK_REGION_START_X )
 #define			CLOCK_REGION_HEIGHT				( 468 - CLOCK_REGION_START_Y )
 

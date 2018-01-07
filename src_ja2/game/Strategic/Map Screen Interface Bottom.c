@@ -292,7 +292,7 @@ void RenderMapScreenInterfaceBottom( void )
 		MarkButtonsDirty( );
 
 		// invalidate region
-		RestoreExternBackgroundRect( MAP_BOTTOM_X, MAP_BOTTOM_Y, 640 - MAP_BOTTOM_X, 480 - MAP_BOTTOM_Y );
+		RestoreExternBackgroundRect( MAP_BOTTOM_X, MAP_BOTTOM_Y, SCREEN_BUFFER_WIDTH - MAP_BOTTOM_X, SCREEN_BUFFER_HEIGHT - MAP_BOTTOM_Y );
 
 		// re render radar map
 		RenderRadarScreen( );
@@ -333,7 +333,7 @@ BOOLEAN CreateButtonsForMapScreenInterfaceBottom( void )
 
 
 #ifdef JA2DEMO
-	MSYS_DefineRegion( &MapScreenmaskForDemo, 0,0, 640, 480, MSYS_PRIORITY_HIGHEST,
+	MSYS_DefineRegion( &MapScreenmaskForDemo, 0,0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST,
 							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 #endif
 	
@@ -613,7 +613,7 @@ void DrawNameOfLoadedSector( void )
   INT16 sFontX, sFontY;
 
 
-  SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+  SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 	SetFont( COMPFONT );
 	SetFontForeground( 183 );
@@ -967,7 +967,7 @@ void DisplayCompressMode( void )
 	}
 
 	RestoreExternBackgroundRect( 489, 456, 522 - 489, 467 - 454 );
-	SetFontDestBuffer( FRAME_BUFFER, 0,0,640,480, FALSE );
+	SetFontDestBuffer( FRAME_BUFFER, 0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT, FALSE );
 	SetFont( COMPFONT );
 	
 	if( GetJA2Clock() - guiCompressionStringBaseTime >= PAUSE_GAME_TIMER )
@@ -1414,7 +1414,7 @@ void DisplayCurrentBalanceTitleForMapBottom( void )
 	INT16 sFontX, sFontY;
 
 	// ste the font buffer
-	SetFontDestBuffer( guiSAVEBUFFER, 0, 0, 640, 480, FALSE );
+	SetFontDestBuffer( guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 	SetFont( COMPFONT );
 	SetFontForeground( MAP_BOTTOM_FONT_COLOR );
@@ -1437,7 +1437,7 @@ void DisplayCurrentBalanceTitleForMapBottom( void )
 	mprintf( sFontX, sFontY, L"%s", sString );
 
 	// ste the font buffer
-	SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+	SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 	return;
 }
 
@@ -1448,7 +1448,7 @@ void DisplayCurrentBalanceForMapBottom( void )
 	INT16 sFontX, sFontY;
 
 	// ste the font buffer
-	SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+	SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 	// set up the font
 	SetFont( COMPFONT );
@@ -1547,7 +1547,7 @@ void DisplayProjectedDailyMineIncome( void )
 		}
 	}
 		// ste the font buffer
-	SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+	SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 	// set up the font
 	SetFont( COMPFONT );
@@ -1893,7 +1893,7 @@ void HandleExitsFromMapScreen( void )
 
 					if( gfExtraBuffer )
 					{ //Then initiate the transition animation from the mapscreen to laptop...
-						BlitBufferToBuffer( FRAME_BUFFER, guiEXTRABUFFER, 0, 0, 640, 480 );
+						BlitBufferToBuffer( FRAME_BUFFER, guiEXTRABUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 						gfStartMapScreenToLaptopTransition = TRUE;
 					}
 					break;

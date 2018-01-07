@@ -41,7 +41,7 @@ void SaveVideoOverlayArea( UINT32 uiSrcBuffer, UINT32 uiCount );
 //UINT32 guiNumTopmostSaves=0;
 
 
-SGPRect		gDirtyClipRect = { 0, 0, 640, 480 };
+SGPRect		gDirtyClipRect = { 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT };
 
 
 BOOLEAN		gfViewportDirty=FALSE;
@@ -65,9 +65,9 @@ void AddBaseDirtyRect( INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom )
 	{
 		iLeft = 0;
 	}
-	if ( iLeft > 640 )
+	if ( iLeft > SCREEN_BUFFER_WIDTH )
 	{
-		iLeft = 640;
+		iLeft = SCREEN_BUFFER_WIDTH;
 	}
 
 
@@ -75,9 +75,9 @@ void AddBaseDirtyRect( INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom )
 	{
 		iTop = 0;
 	}
-	if ( iTop > 480 )
+	if ( iTop > SCREEN_BUFFER_HEIGHT )
 	{
-		iTop = 480;
+		iTop = SCREEN_BUFFER_HEIGHT;
 	}
 
 
@@ -85,9 +85,9 @@ void AddBaseDirtyRect( INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom )
 	{
 		iRight = 0;
 	}
-	if ( iRight > 640 )
+	if ( iRight > SCREEN_BUFFER_WIDTH )
 	{
-		iRight = 640;
+		iRight = SCREEN_BUFFER_WIDTH;
 	}
 
 
@@ -95,9 +95,9 @@ void AddBaseDirtyRect( INT32 iLeft, INT32 iTop, INT32 iRight, INT32 iBottom )
 	{
 		iBottom = 0;
 	}
-	if ( iBottom > 480 )
+	if ( iBottom > SCREEN_BUFFER_HEIGHT )
 	{
-		iBottom = 480;
+		iBottom = SCREEN_BUFFER_HEIGHT;
 	}
 
 	if (  ( iRight - iLeft ) == 0 || ( iBottom - iTop ) == 0 )
@@ -623,7 +623,7 @@ BOOLEAN RestoreExternBackgroundRect( INT16 sLeft, INT16 sTop, INT16 sWidth, INT1
 	UINT8	 *pDestBuf, *pSrcBuf;
 
 
-	Assert( ( sLeft >= 0 ) && ( sTop >= 0 ) && ( sLeft + sWidth <= 640 ) && ( sTop + sHeight <= 480 ) );
+	Assert( ( sLeft >= 0 ) && ( sTop >= 0 ) && ( sLeft + sWidth <= SCREEN_BUFFER_WIDTH ) && ( sTop + sHeight <= SCREEN_BUFFER_HEIGHT ) );
 
 	pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
 	pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
@@ -671,7 +671,7 @@ BOOLEAN RestoreExternBackgroundRectGivenID( INT32 iBack )
 	sWidth	= gBackSaves[iBack].sWidth;
 	sHeight	= gBackSaves[iBack].sHeight;
 
-	Assert( ( sLeft >= 0 ) && ( sTop >= 0 ) && ( sLeft + sWidth <= 640 ) && ( sTop + sHeight <= 480 ) );
+	Assert( ( sLeft >= 0 ) && ( sTop >= 0 ) && ( sLeft + sWidth <= SCREEN_BUFFER_WIDTH ) && ( sTop + sHeight <= SCREEN_BUFFER_HEIGHT ) );
 
 	pDestBuf = LockVideoSurface(guiRENDERBUFFER, &uiDestPitchBYTES);
 	pSrcBuf = LockVideoSurface(guiSAVEBUFFER, &uiSrcPitchBYTES);
@@ -709,7 +709,7 @@ BOOLEAN CopyExternBackgroundRect( INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 s
 	UINT8	 *pDestBuf, *pSrcBuf;
 
 
-	Assert( ( sLeft >= 0 ) && ( sTop >= 0 ) && ( sLeft + sWidth <= 640 ) && ( sTop + sHeight <= 480 ) );
+	Assert( ( sLeft >= 0 ) && ( sTop >= 0 ) && ( sLeft + sWidth <= SCREEN_BUFFER_WIDTH ) && ( sTop + sHeight <= SCREEN_BUFFER_HEIGHT ) );
 
 	pDestBuf = LockVideoSurface(guiSAVEBUFFER, &uiDestPitchBYTES);
 	pSrcBuf = LockVideoSurface(guiRENDERBUFFER, &uiSrcPitchBYTES);
@@ -1294,7 +1294,7 @@ BOOLEAN RestoreShiftedVideoOverlays( INT16 sShiftX, INT16 sShiftY )
 
 	ClipX1= 0;
 	ClipY1= gsVIEWPORT_WINDOW_START_Y;
-	ClipX2= 640;
+	ClipX2= SCREEN_BUFFER_WIDTH;
 	ClipY2= gsVIEWPORT_WINDOW_END_Y - 1;
 
 

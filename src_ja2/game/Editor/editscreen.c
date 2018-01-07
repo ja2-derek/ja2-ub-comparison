@@ -3771,7 +3771,7 @@ void CreateGotoGridNoUI()
 	SpecifyButtonTextOffsets( guiGotoGridNoUIButtonID, 5, 5, FALSE );
 	DisableButton( guiGotoGridNoUIButtonID );
 	//Create a blanket region so nobody can use
-	MSYS_DefineRegion( &GotoGridNoUIRegion, 0, 0, 640, 480,	MSYS_PRIORITY_NORMAL+1, 0, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
+	MSYS_DefineRegion( &GotoGridNoUIRegion, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT,	MSYS_PRIORITY_NORMAL+1, 0, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
 	//Init a text input field.
 	InitTextInputModeWithScheme( DEFAULT_SCHEME );
 	AddTextInputField( 300, 180, 40, 18, MSYS_PRIORITY_HIGH, L"", 6, INPUTTYPE_NUMERICSTRICT );

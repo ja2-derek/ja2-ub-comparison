@@ -654,7 +654,7 @@ void RenderEmail( void )
 	DisplayWhichPageOfEmailProgramIsDisplayed( );
 
 
-	InvalidateRegion(0,0,640,480);
+	InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 	 // invalidate region to force update
 	 return;
 }
@@ -671,7 +671,7 @@ void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 u
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, 640*(iMessageOffset), 640);
+	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, SCREEN_BUFFER_WIDTH*(iMessageOffset), SCREEN_BUFFER_WIDTH);
 
 	//Make a fake email that will contain the codes ( ie the merc ID )
 	FakeEmail.iFirstData = iFirstData;
@@ -705,7 +705,7 @@ void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, 640*(iMessageOffset), 640);
+	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, SCREEN_BUFFER_WIDTH*(iMessageOffset), SCREEN_BUFFER_WIDTH);
 
 	// add message to list
 	AddEmailMessage(iMessageOffset,iMessageLength, pSubject, iDate, ubSender, FALSE, 0, 0 );
@@ -732,7 +732,7 @@ void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, 640*(iMessageOffset), 640);
+	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, SCREEN_BUFFER_WIDTH*(iMessageOffset), SCREEN_BUFFER_WIDTH);
 
 	// add message to list
 	AddEmailMessage(iMessageOffset,iMessageLength, pSubject, iDate, ubSender, TRUE, 0, 0 );
@@ -1388,7 +1388,7 @@ void DrawSubject(INT32 iCounter, STR16 pSubject, BOOLEAN fRead)
 	}
 	SetFontShadow(DEFAULT_SHADOW);
 	// reset font dest buffer
-	SetFontDestBuffer(FRAME_BUFFER, 0, 0, 640, 480, FALSE  );
+	SetFontDestBuffer(FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE  );
 	
 	return;
 }
@@ -2078,7 +2078,7 @@ void CreateDestroyNewMailButton()
 	SetButtonCursor(giNewMailButton[0], CURSOR_LAPTOP_SCREEN);
   
 	// set up screen mask region
-	MSYS_DefineRegion(&pScreenMask,0, 0,640,480,
+	MSYS_DefineRegion(&pScreenMask,0, 0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT,
 		MSYS_PRIORITY_HIGHEST-3,CURSOR_LAPTOP_SCREEN, MSYS_NO_CALLBACK, LapTopScreenCallBack);
 	MSYS_AddRegion(&pScreenMask);
 	MarkAButtonDirty(  giNewMailButton[0] );	
@@ -2544,7 +2544,7 @@ void CreateDestroyDeleteNoticeMailButton()
   SetButtonCursor(giDeleteMailButton[1], CURSOR_LAPTOP_SCREEN);
   
 	// set up screen mask to prevent other actions while delete mail box is destroyed
-	MSYS_DefineRegion(&pDeleteScreenMask,0, 0,640,480,
+	MSYS_DefineRegion(&pDeleteScreenMask,0, 0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT,
 		MSYS_PRIORITY_HIGHEST-3,CURSOR_LAPTOP_SCREEN, MSYS_NO_CALLBACK, LapTopScreenCallBack);
 	MSYS_AddRegion(&pDeleteScreenMask); 
 
@@ -2674,7 +2674,7 @@ void DeleteEmail()
 	 //ReDraw();
 
 	 // invalidate
-	 InvalidateRegion(0,0,640,480);
+	 InvalidateRegion(0,0,SCREEN_BUFFER_WIDTH,SCREEN_BUFFER_HEIGHT);
 }
 
 
@@ -4663,7 +4663,7 @@ BOOLEAN DisplayNumberOfPagesToThisEmail( INT32 iViewerY )
 	// turn off the shadows
 	SetFontShadow(NO_SHADOW);
 
-	SetFontDestBuffer(FRAME_BUFFER, 0 , 0 , 640 , 480,  FALSE  );
+	SetFontDestBuffer(FRAME_BUFFER, 0 , 0 , SCREEN_BUFFER_WIDTH , SCREEN_BUFFER_HEIGHT,  FALSE  );
 
 	FindFontCenterCoordinates(VIEWER_X + INDENT_X_OFFSET, 0,INDENT_X_WIDTH, 0, sString, FONT12ARIAL, &sX, &sY);
 	mprintf( sX, VIEWER_Y + iViewerY + INDENT_Y_OFFSET - 2, sString );

@@ -813,7 +813,7 @@ void ShowDestinationOfPlottedPath( STR16 pLoc )
 {
 	INT16 sFontX, sFontY;
 
-	SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+	SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 	
 	SetFont( COMPFONT );
 	SetFontForeground( 183 );

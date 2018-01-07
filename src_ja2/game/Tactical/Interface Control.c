@@ -49,7 +49,7 @@
 #endif
 
 #define				CLOCK_X								554
-#define				CLOCK_Y								459
+#define				CLOCK_Y								SCREEN_BUFFER_HEIGHT-21
 SGPRect				gOldClippingRect, gOldDirtyClippingRect;
 
 UINT32		guiTacticalInterfaceFlags;
@@ -925,17 +925,17 @@ void StartViewportOverlays( )
 	// Set bottom clipping value for blitter clipping rect
 	ClippingRect.iLeft = INTERFACE_START_X;
 	ClippingRect.iTop = gsVIEWPORT_WINDOW_START_Y;
-	ClippingRect.iRight = 640;
+	ClippingRect.iRight = SCREEN_BUFFER_WIDTH;
 	ClippingRect.iBottom = gsVIEWPORT_WINDOW_END_Y;
 
 	// Set values for dirty rect clipping rect
 	gDirtyClipRect.iLeft = INTERFACE_START_X;
 	gDirtyClipRect.iTop = gsVIEWPORT_WINDOW_START_Y;
-	gDirtyClipRect.iRight = 640;
+	gDirtyClipRect.iRight = SCREEN_BUFFER_WIDTH;
 	gDirtyClipRect.iBottom = gsVIEWPORT_WINDOW_END_Y;
 
 	SaveFontSettings( );
-	SetFontDestBuffer( FRAME_BUFFER, 0, gsVIEWPORT_WINDOW_START_Y, 640, gsVIEWPORT_WINDOW_END_Y, FALSE );
+	SetFontDestBuffer( FRAME_BUFFER, 0, gsVIEWPORT_WINDOW_START_Y, SCREEN_BUFFER_WIDTH, gsVIEWPORT_WINDOW_END_Y, FALSE );
 
 }
 
@@ -955,7 +955,7 @@ void LockTacticalInterface( )
 	// 2) set flag for use in tactical to indicate we are locked
 	if ( !(guiTacticalInterfaceFlags & INTERFACE_LOCKEDLEVEL1 ) )
 	{
-		MSYS_DefineRegion( &gLockPanelOverlayRegion, 0, gsVIEWPORT_WINDOW_END_Y ,640, 480, MSYS_PRIORITY_HIGHEST,
+		MSYS_DefineRegion( &gLockPanelOverlayRegion, 0, gsVIEWPORT_WINDOW_END_Y ,SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST,
 							 CURSOR_NORMAL, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK ); 
 		// Add region
 		MSYS_AddRegion( &gLockPanelOverlayRegion);

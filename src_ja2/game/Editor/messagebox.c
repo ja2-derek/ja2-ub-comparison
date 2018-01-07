@@ -37,8 +37,8 @@ void CreateMessageBox( UINT16 *wzString )
 	if ( sPixLen > 600 )
 		sPixLen = 600;
 
-	sStartX = (640 - sPixLen) / 2;
-	sStartY = (480 - 96) / 2;
+	sStartX = (SCREEN_BUFFER_WIDTH - sPixLen) / 2;
+	sStartY = (SCREEN_BUFFER_HEIGHT - 96) / 2;
 
 	gfMessageBoxResult = FALSE;
 

@@ -76,7 +76,7 @@
 
 // DEFINES FOR VARIOUS PANELS
 #define				CLOCK_X								554
-#define				CLOCK_Y								459
+#define				CLOCK_Y								SCREEN_BUFFER_HEIGHT-21
 #define	SM_ITEMDESC_START_X					214
 #define	SM_ITEMDESC_START_Y					1 + INV_INTERFACE_START_Y
 #define	SM_ITEMDESC_HEIGHT					128
@@ -85,44 +85,44 @@
 // SINGLE MERC SCREEN
 
 #define SM_SELMERC_AP_X							70
-#define SM_SELMERC_AP_Y							393
+#define SM_SELMERC_AP_Y							INV_INTERFACE_START_Y+53
 #define SM_SELMERC_AP_HEIGHT				12
 #define SM_SELMERC_AP_WIDTH					11
 
 #define SM_SELMERC_BREATH_X					75
-#define SM_SELMERC_BREATH_Y					387
+#define SM_SELMERC_BREATH_Y					INV_INTERFACE_START_Y+47
 #define SM_SELMERC_BREATH_WIDTH			3
 #define SM_SELMERC_BREATH_HEIGHT		42
 
 #define SM_SELMERC_HEALTH_X					69
-#define SM_SELMERC_HEALTH_Y					387
+#define SM_SELMERC_HEALTH_Y					INV_INTERFACE_START_Y+47
 #define SM_SELMERC_HEALTH_WIDTH			3
 #define SM_SELMERC_HEALTH_HEIGHT		42
 
 #define SM_SELMERC_MORALE_X					81
-#define SM_SELMERC_MORALE_Y					387
+#define SM_SELMERC_MORALE_Y					INV_INTERFACE_START_Y+47
 #define SM_SELMERC_MORALE_WIDTH			3
 #define SM_SELMERC_MORALE_HEIGHT		42
 
 #define SM_SELMERCNAME_X						7
-#define SM_SELMERCNAME_Y						395
+#define SM_SELMERCNAME_Y						INV_INTERFACE_START_Y+55
 
 #define SM_SELMERCNAME_WIDTH				53
 #define SM_SELMERCNAME_HEIGHT				9
 
 #define	SM_SELMERC_FACE_X						13
-#define	SM_SELMERC_FACE_Y						346
+#define	SM_SELMERC_FACE_Y						INV_INTERFACE_START_Y+6
 #define	SM_SELMERC_FACE_HEIGHT			42
 #define	SM_SELMERC_FACE_WIDTH				48
 
 #define	SM_SELMERC_PLATE_X						4
-#define	SM_SELMERC_PLATE_Y						342
+#define	SM_SELMERC_PLATE_Y						INV_INTERFACE_START_Y+2
 #define	SM_SELMERC_PLATE_HEIGHT				65
 #define	SM_SELMERC_PLATE_WIDTH				83
 
 
 #define SM_BODYINV_X									244
-#define SM_BODYINV_Y									346
+#define SM_BODYINV_Y									INV_INTERFACE_START_Y+6
 
 
 #define STATS_TITLE_FONT_COLOR				6
@@ -130,35 +130,35 @@
 
 
 #define	SM_TALKB_X									155
-#define	SM_TALKB_Y									448
+#define	SM_TALKB_Y									INV_INTERFACE_START_Y +108
 #define	SM_MUTEB_X									91
-#define	SM_MUTEB_Y									448
+#define	SM_MUTEB_Y									INV_INTERFACE_START_Y +108
 #define	SM_STANCEUPB_X							187
-#define SM_STANCEUPB_Y							380
+#define SM_STANCEUPB_Y							INV_INTERFACE_START_Y +40
 #define	SM_UPDOWNB_X								91
-#define SM_UPDOWNB_Y								413
+#define SM_UPDOWNB_Y								INV_INTERFACE_START_Y +73
 #define	SM_CLIMBB_X									187
-#define SM_CLIMBB_Y									348
+#define SM_CLIMBB_Y									INV_INTERFACE_START_Y +8
 #define	SM_STANCEDOWNB_X						187
-#define SM_STANCEDOWNB_Y						448
+#define SM_STANCEDOWNB_Y						INV_INTERFACE_START_Y +108
 #define	SM_HANDCURSORB_X						123
-#define SM_HANDCURSORB_Y						413
+#define SM_HANDCURSORB_Y						INV_INTERFACE_START_Y +73
 #define	SM_PREVMERCB_X							9
-#define SM_PREVMERCB_Y							410
+#define SM_PREVMERCB_Y							INV_INTERFACE_START_Y +70
 #define	SM_NEXTMERCB_X							51
-#define SM_NEXTMERCB_Y							410
+#define SM_NEXTMERCB_Y							INV_INTERFACE_START_Y +70
 #define	SM_OPTIONSB_X								9
-#define SM_OPTIONSB_Y								445
+#define SM_OPTIONSB_Y								INV_INTERFACE_START_Y +105
 #define	SM_BURSTMODEB_X							155
-#define SM_BURSTMODEB_Y							413
+#define SM_BURSTMODEB_Y							INV_INTERFACE_START_Y +73
 #define	SM_LOOKB_X									123
-#define SM_LOOKB_Y									448
+#define SM_LOOKB_Y									INV_INTERFACE_START_Y +108
 #define	SM_STEALTHMODE_X						187
-#define	SM_STEALTHMODE_Y						413
+#define	SM_STEALTHMODE_Y						INV_INTERFACE_START_Y +73
 #define SM_DONE_X										543
-#define SM_DONE_Y										344
+#define SM_DONE_Y										INV_INTERFACE_START_Y +4
 #define SM_MAPSCREEN_X							589
-#define SM_MAPSCREEN_Y							344
+#define SM_MAPSCREEN_Y							INV_INTERFACE_START_Y +4
 
 
 #define	SM_POSITIONB_X							106 + INTERFACE_START_X
@@ -170,52 +170,52 @@
 #define	SM_PERCENT_WIDTH						20
 #define	SM_PERCENT_HEIGHT						10
 #define	SM_ARMOR_X									347
-#define	SM_ARMOR_Y									419
+#define	SM_ARMOR_Y									INV_INTERFACE_START_Y +79
 #define	SM_ARMOR_LABEL_X						363
-#define	SM_ARMOR_LABEL_Y						409
+#define	SM_ARMOR_LABEL_Y						INV_INTERFACE_START_Y +69
 #define	SM_ARMOR_PERCENT_X					368
-#define	SM_ARMOR_PERCENT_Y					419
+#define	SM_ARMOR_PERCENT_Y					INV_INTERFACE_START_Y +79
 
 #define	SM_WEIGHT_LABEL_X						430
-#define	SM_WEIGHT_LABEL_Y						447
+#define	SM_WEIGHT_LABEL_Y						INV_INTERFACE_START_Y +107
 #define	SM_WEIGHT_PERCENT_X					449
-#define	SM_WEIGHT_PERCENT_Y					446
+#define	SM_WEIGHT_PERCENT_Y					INV_INTERFACE_START_Y +106
 #define	SM_WEIGHT_X									428
-#define	SM_WEIGHT_Y									446
+#define	SM_WEIGHT_Y									INV_INTERFACE_START_Y +106
 
 #define	SM_CAMMO_LABEL_X						430
-#define	SM_CAMMO_LABEL_Y						462
+#define	SM_CAMMO_LABEL_Y						INV_INTERFACE_START_Y +122
 #define	SM_CAMMO_PERCENT_X					449
-#define	SM_CAMMO_PERCENT_Y					461
+#define	SM_CAMMO_PERCENT_Y					INV_INTERFACE_START_Y +121
 #define	SM_CAMMO_X									428
-#define	SM_CAMMO_Y									461
+#define	SM_CAMMO_Y									INV_INTERFACE_START_Y +121
 
 
 #define SM_STATS_WIDTH							30
 #define SM_STATS_HEIGHT							8 
 #define	SM_AGI_X										99
-#define	SM_AGI_Y										347
+#define	SM_AGI_Y										INV_INTERFACE_START_Y +7
 #define	SM_DEX_X										99
-#define	SM_DEX_Y										357
+#define	SM_DEX_Y										INV_INTERFACE_START_Y +17
 #define	SM_STR_X										99
-#define	SM_STR_Y										367
+#define	SM_STR_Y										INV_INTERFACE_START_Y +27
 #define	SM_CHAR_X										99
-#define	SM_CHAR_Y										377
+#define	SM_CHAR_Y										INV_INTERFACE_START_Y +37
 #define	SM_WIS_X										99
-#define	SM_WIS_Y										387
+#define	SM_WIS_Y										INV_INTERFACE_START_Y +47
 #define	SM_EXPLVL_X									148
-#define	SM_EXPLVL_Y									347
+#define	SM_EXPLVL_Y									INV_INTERFACE_START_Y +7
 #define	SM_MRKM_X										148
-#define	SM_MRKM_Y										357
+#define	SM_MRKM_Y										INV_INTERFACE_START_Y +17
 #define	SM_EXPL_X										148
-#define	SM_EXPL_Y										367
+#define	SM_EXPL_Y										INV_INTERFACE_START_Y +27
 #define	SM_MECH_X										148
-#define	SM_MECH_Y										377
+#define	SM_MECH_Y										INV_INTERFACE_START_Y +37
 #define	SM_MED_X										148
-#define	SM_MED_Y										387
+#define	SM_MED_Y										INV_INTERFACE_START_Y +47
 
 #define MONEY_X											460
-#define MONEY_Y											445
+#define MONEY_Y											INV_INTERFACE_START_Y +105
 #define MONEY_WIDTH									30
 #define MONEY_HEIGHT								22
 
@@ -350,25 +350,25 @@ BOOLEAN gfDeductPoints;
 // ARRAY FOR INV PANEL INTERFACE ITEM POSITIONS
 INV_REGION_DESC gSMInvPocketXY[] = 
 {
-	344,	347,				// HELMETPOS
-	344,	376,				// VESTPOS
-	344,	436,				// LEGPOS,
-	226,	347,				// HEAD1POS
-	226,	371,				// HEAD2POS
-	226,	424,				// HANDPOS,
-	226,	448,				// SECONDHANDPOS
-	468,	346,				// BIGPOCK1
-	468,	370,				// BIGPOCK2
-	468,	394,				// BIGPOCK3
-	468,	418,				// BIGPOCK4
-	396,	346,				// SMALLPOCK1
-	396,	370,				// SMALLPOCK2
-	396,	394,				// SMALLPOCK3
-	396,	418,				// SMALLPOCK4
-	432,	346,				// SMALLPOCK5
-	432,	370,				// SMALLPOCK6
-	432,	394,				// SMALLPOCK7
-	432,	418					// SMALLPOCK8
+	344,	INV_INTERFACE_START_Y+7,				// HELMETPOS
+	344,	INV_INTERFACE_START_Y+36,				// VESTPOS
+	344,	INV_INTERFACE_START_Y+96,				// LEGPOS,
+	226,	INV_INTERFACE_START_Y+7,				// HEAD1POS
+	226,	INV_INTERFACE_START_Y+31,				// HEAD2POS
+	226,	INV_INTERFACE_START_Y+84,				// HANDPOS,
+	226,	INV_INTERFACE_START_Y+108,				// SECONDHANDPOS
+	468,	INV_INTERFACE_START_Y+6,				// BIGPOCK1
+	468,	INV_INTERFACE_START_Y+30,				// BIGPOCK2
+	468,	INV_INTERFACE_START_Y+54,				// BIGPOCK3
+	468,	INV_INTERFACE_START_Y+78,				// BIGPOCK4
+	396,	INV_INTERFACE_START_Y+6,				// SMALLPOCK1
+	396,	INV_INTERFACE_START_Y+30,				// SMALLPOCK2
+	396,	INV_INTERFACE_START_Y+54,				// SMALLPOCK3
+	396,	INV_INTERFACE_START_Y+78,				// SMALLPOCK4
+	432,	INV_INTERFACE_START_Y+6,				// SMALLPOCK5
+	432,	INV_INTERFACE_START_Y+30,				// SMALLPOCK6
+	432,	INV_INTERFACE_START_Y+54,				// SMALLPOCK7
+	432,	INV_INTERFACE_START_Y+78					// SMALLPOCK8
 };
 
 INV_REGION_DESC gSMCamoXY = 
@@ -390,22 +390,22 @@ INT16 sTEAMAPPanelXY[] =
 
 INT16					sTEAMFacesXY[] = 
 {
-	13,	( 366 ),
-	97, ( 366 ),
-	180, ( 366 ),
-	263, ( 366 ),
-	346, ( 366 ),
-	429, ( 366 ) 
+	13,	( INTERFACE_START_Y+6 ),
+	97, ( INTERFACE_START_Y+6 ),
+	180, ( INTERFACE_START_Y+6 ),
+	263, ( INTERFACE_START_Y+6 ),
+	346, ( INTERFACE_START_Y+6 ),
+	429, ( INTERFACE_START_Y+6 ) 
 };
 
 INT16					sTEAMNamesXY[] = 
 {
-	7,	( 415 ),
-	90, ( 415 ),
-	173, ( 415 ),
-	256, ( 415 ),
-	339, ( 415 ),
-	422, ( 415 ) 
+	7,	( INTERFACE_START_Y+55 ),
+	90, ( INTERFACE_START_Y+55 ),
+	173, ( INTERFACE_START_Y+55 ),
+	256, ( INTERFACE_START_Y+55 ),
+	339, ( INTERFACE_START_Y+55 ),
+	422, ( INTERFACE_START_Y+55 ) 
 };
 
 INT16					sTEAMFaceHighlXY[] = 
@@ -420,54 +420,54 @@ INT16					sTEAMFaceHighlXY[] =
 
 INT16					sTEAMLifeXY[] = 
 {
-	69,	( 365 + TM_LIFEBAR_HEIGHT ),
-	152, ( 365 + TM_LIFEBAR_HEIGHT ),
-	235, ( 365 + TM_LIFEBAR_HEIGHT ),
-	318, ( 365 + TM_LIFEBAR_HEIGHT ),
-	401, ( 365 + TM_LIFEBAR_HEIGHT ),
-	484, ( 365 + TM_LIFEBAR_HEIGHT ),
+	69,	( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	152, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	235, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	318, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	401, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	484, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
 };
 
 INT16					sTEAMBreathXY[] = 
 {
-	75,	( 365 + TM_LIFEBAR_HEIGHT ),
-	158, ( 365 + TM_LIFEBAR_HEIGHT ),
-	241, ( 365 + TM_LIFEBAR_HEIGHT ),
-	324, ( 365 + TM_LIFEBAR_HEIGHT ),
-	407, ( 365 + TM_LIFEBAR_HEIGHT ),
-	490, ( 365 + TM_LIFEBAR_HEIGHT ),
+	75,	( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	158, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	241, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	324, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	407, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	490, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
 };
 
 INT16					sTEAMMoraleXY[] = 
 {
-	81,	( 365 + TM_LIFEBAR_HEIGHT ),
-	164, ( 365 + TM_LIFEBAR_HEIGHT ),
-	247, ( 365 + TM_LIFEBAR_HEIGHT ),
-	330, ( 365 + TM_LIFEBAR_HEIGHT ),
-	413, ( 365 + TM_LIFEBAR_HEIGHT ),
-	496, ( 365 + TM_LIFEBAR_HEIGHT ),
+	81,	( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	164, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	247, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	330, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	413, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
+	496, ( INTERFACE_START_Y+5 + TM_LIFEBAR_HEIGHT ),
 };
 
 
 INT16					sTEAMApXY[] = 
 {
-	70,	( 413 ),
-	153, ( 413 ),
-	235, ( 413 ),
-	319, ( 413 ),
-	402, ( 413 ),
-	485, ( 413 ) 
+	70,	( INTERFACE_START_Y+53 ),
+	153, ( INTERFACE_START_Y+53 ),
+	235, ( INTERFACE_START_Y+53 ),
+	319, ( INTERFACE_START_Y+53 ),
+	402, ( INTERFACE_START_Y+53 ),
+	485, ( INTERFACE_START_Y+53 ) 
 };
 
 
 INT16					sTEAMBarsXY[] = 
 {
-	61,	 ( 363 ),
-	145, ( 363 ),
-	228, ( 363 ),
-	311, ( 363 ),
-	394, ( 363 ),
-	477, ( 362 ) 
+	61,	 ( INTERFACE_START_Y+3 ),
+	145, ( INTERFACE_START_Y+3 ),
+	228, ( INTERFACE_START_Y+3 ),
+	311, ( INTERFACE_START_Y+3 ),
+	394, ( INTERFACE_START_Y+3 ),
+	477, ( INTERFACE_START_Y+2 ) 
 };
 
  
@@ -1351,7 +1351,7 @@ BOOLEAN InitializeSMPanel(  )
 
 	// Set viewports
 	// Define region for panel
-	MSYS_DefineRegion( &gSMPanelRegion, 0, INV_INTERFACE_START_Y ,640, 480, MSYS_PRIORITY_NORMAL,
+	MSYS_DefineRegion( &gSMPanelRegion, 0, INV_INTERFACE_START_Y ,SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_NORMAL,
 						 CURSOR_NORMAL, MSYS_NO_CALLBACK, InvPanelButtonClickCallback ); 
 	// Add region
 	MSYS_AddRegion( &gSMPanelRegion);
@@ -1824,14 +1824,14 @@ void RenderSMPanel( BOOLEAN *pfDirty )
 
 			// Render Values for stats!
 			// Set font drawing to saved buffer
-			SetFontDestBuffer( guiSAVEBUFFER, 0, 0, 640, 480, FALSE );
+			SetFontDestBuffer( guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 			SetFontBackground( FONT_MCOLOR_BLACK );
 			SetFontForeground( STATS_TITLE_FONT_COLOR );
 			for( cnt = 0; cnt < 5; cnt++ )
 			{
-				mprintf( 92, ( INT16 )( 347 + cnt * 10 ), pShortAttributeStrings[ cnt  ] );
-				mprintf( 137, ( INT16 )( 347 + cnt * 10 ), pShortAttributeStrings[ cnt + 5 ] );
+				mprintf( 92, ( INT16 )( INV_INTERFACE_START_Y+7 + cnt * 10 ), pShortAttributeStrings[ cnt  ] );
+				mprintf( 137, ( INT16 )( INV_INTERFACE_START_Y+7 + cnt * 10 ), pShortAttributeStrings[ cnt + 5 ] );
 			}
 
 				mprintf( SM_ARMOR_LABEL_X - StringPixLength( pInvPanelTitleStrings[0], BLOCKFONT2 ) / 2, SM_ARMOR_LABEL_Y, pInvPanelTitleStrings[ 0 ] );
@@ -1931,9 +1931,9 @@ void RenderSMPanel( BOOLEAN *pfDirty )
 
 
 			// reset to frame buffer!
-			SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+			SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
-			RestoreExternBackgroundRect( INTERFACE_START_X, INV_INTERFACE_START_Y, ( 640 - INTERFACE_START_X ) , ( 480 - INV_INTERFACE_START_Y ) );
+			RestoreExternBackgroundRect( INTERFACE_START_X, INV_INTERFACE_START_Y, ( SCREEN_BUFFER_WIDTH - INTERFACE_START_X ) , ( SCREEN_BUFFER_HEIGHT - INV_INTERFACE_START_Y ) );
 
 
 			RenderSoldierFace( gpSMCurrentMerc, SM_SELMERC_FACE_X, SM_SELMERC_FACE_Y, TRUE );
@@ -2058,7 +2058,7 @@ void RenderSMPanel( BOOLEAN *pfDirty )
 		ClipRect.iLeft	 = 87;
 		ClipRect.iRight  = 536;
 		ClipRect.iTop		 = INV_INTERFACE_START_Y;
-		ClipRect.iBottom = 480;
+		ClipRect.iBottom = SCREEN_BUFFER_HEIGHT;
 		pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
 		Blt16BPPBufferHatchRect( (UINT16*)pDestBuf, uiDestPitchBYTES, &ClipRect );
 		UnLockVideoSurface( FRAME_BUFFER );
@@ -2711,7 +2711,7 @@ void SMInvClickCallback( MOUSE_REGION * pRegion, INT32 iReason )
 			{
 
 				//InitItemStackPopup( gpSMCurrentMerc, (UINT8)uiHandPos, SM_ITEMDESC_START_X, SM_ITEMDESC_START_Y, SM_ITEMDESC_WIDTH, SM_ITEMDESC_HEIGHT );
-				InitItemStackPopup( gpSMCurrentMerc, (UINT8)uiHandPos, 216, INV_INTERFACE_START_Y, 314, ( 480 - INV_INTERFACE_START_Y ) );
+				InitItemStackPopup( gpSMCurrentMerc, (UINT8)uiHandPos, 216, INV_INTERFACE_START_Y, 314, ( SCREEN_BUFFER_HEIGHT - INV_INTERFACE_START_Y ) );
 
 			}
 		}
@@ -3413,7 +3413,7 @@ BOOLEAN InitializeTEAMPanel(  )
 
 	// Set viewports
 	// Define region for panel
-	MSYS_DefineRegion( &gTEAM_PanelRegion, 0, gsVIEWPORT_END_Y ,640, 480, MSYS_PRIORITY_NORMAL,
+	MSYS_DefineRegion( &gTEAM_PanelRegion, 0, gsVIEWPORT_END_Y ,SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_NORMAL,
 						 CURSOR_NORMAL, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK ); 
 	// Add region
 	MSYS_AddRegion( &gTEAM_PanelRegion);
@@ -3555,7 +3555,7 @@ void RenderTEAMPanel( BOOLEAN fDirty )
 		//{
 			BltVideoObjectFromIndex( guiSAVEBUFFER, guiTEAMPanel, 0, INTERFACE_START_X, INTERFACE_START_Y, VO_BLT_SRCTRANSPARENCY, NULL );
 		//}
-		RestoreExternBackgroundRect( INTERFACE_START_X, INTERFACE_START_Y, ( 640 - INTERFACE_START_X ) , ( 480 - INTERFACE_START_Y ) );
+		RestoreExternBackgroundRect( INTERFACE_START_X, INTERFACE_START_Y, ( SCREEN_BUFFER_WIDTH - INTERFACE_START_X ) , ( SCREEN_BUFFER_HEIGHT - INTERFACE_START_Y ) );
 
 		// LOOP THROUGH ALL MERCS ON TEAM PANEL
 		for ( cnt = 0, posIndex = 0; cnt < NUM_TEAM_SLOTS; cnt++, posIndex+= 2 )
@@ -3668,12 +3668,12 @@ void RenderTEAMPanel( BOOLEAN fDirty )
 				}
 
 				// RENDER ON SAVE BUFFER!
-				SetFontDestBuffer( guiSAVEBUFFER, 0, 0, 640, 480, FALSE );
+				SetFontDestBuffer( guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 				VarFindFontCenterCoordinates( (INT16)(sTEAMNamesXY[ posIndex ] + 2 ), (INT16)(sTEAMNamesXY[ posIndex + 1 ] ), TM_NAME_WIDTH, TM_NAME_HEIGHT, BLOCKFONT2, &sFontX, &sFontY, L"%s", pSoldier->name );
 				mprintf( sFontX, sFontY, L"%s", pSoldier->name );
 				gprintfRestore( sFontX, sFontY, L"%s", pSoldier->name );
 				// reset to frame buffer!
-				SetFontDestBuffer( FRAME_BUFFER, 0, 0, 640, 480, FALSE );
+				SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 
 			}
 		}
@@ -4982,7 +4982,7 @@ void RenderTownIDString( )
 
 	GetSectorIDString( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, zTownIDString, TRUE );
 	ReduceStringLength( zTownIDString, 80, COMPFONT );
-	VarFindFontCenterCoordinates( 548, 425, 80, 16, COMPFONT, &sFontX, &sFontY, zTownIDString );
+	VarFindFontCenterCoordinates( 548, INTERFACE_START_Y+65, 80, 16, COMPFONT, &sFontX, &sFontY, zTownIDString );
 	mprintf( sFontX, sFontY, L"%s", zTownIDString );
 }
 
@@ -5158,8 +5158,8 @@ void BeginKeyPanelFromKeyShortcut( )
 
 
 	sStartYPosition = INV_INTERFACE_START_Y;
-	sWidth = 640;
-	sHeight = ( 480 - ( INV_INTERFACE_START_Y ) );
+	sWidth = SCREEN_BUFFER_WIDTH;
+	sHeight = ( SCREEN_BUFFER_HEIGHT - ( INV_INTERFACE_START_Y ) );
 	pSoldier = gpSMCurrentMerc;
 
 	//if we are in the shop keeper interface
@@ -5204,8 +5204,8 @@ void KeyRingItemPanelButtonCallback( MOUSE_REGION * pRegion, INT32 iReason )
 		}
 
 		sStartYPosition = INV_INTERFACE_START_Y;
-		sWidth = 640;
-		sHeight = ( 480 - ( INV_INTERFACE_START_Y ) );
+		sWidth = SCREEN_BUFFER_WIDTH;
+		sHeight = ( SCREEN_BUFFER_HEIGHT - ( INV_INTERFACE_START_Y ) );
 		pSoldier = gpSMCurrentMerc;
 	}
 
