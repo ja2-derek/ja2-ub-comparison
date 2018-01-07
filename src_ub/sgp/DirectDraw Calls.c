@@ -436,7 +436,7 @@ HRESULT BltFastDDSurfaceUsingSoftware( LPDIRECTDRAWSURFACE2 pDestSurface, INT32 
 	}
 	else 
 	{
-		// Other funcky shit not supported.....
+		// Not supported.....
 	}
 
 
@@ -526,7 +526,7 @@ HRESULT BltDDSurfaceUsingSoftware( LPDIRECTDRAWSURFACE2 pDestSurface, LPRECT pDe
 	}
 	else
 	{
-		// Other funcky shit not supported.....
+		// Not supported.....
 	}
 
 
