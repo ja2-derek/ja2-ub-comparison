@@ -15,7 +15,7 @@ def run_ret(args):
     
 
 def diff(path1, path2):
-    args = ["diff", "-wq", path1, path2]
+    args = ["diff", "-wBq", path1, path2]
     return run_ret(args)
     #Note: 1 is different, 0 is same
 
@@ -59,6 +59,8 @@ def scan_folder(sub_path):
         #print(item_common_dir)
         
         print("->", item_full_path_common)
+
+        #continue
         
         args = ["git", "mv", item_full_path_ja2, item_full_path_common]
         ret = run_ret(args)
@@ -66,8 +68,6 @@ def scan_folder(sub_path):
         if ret == 0: # success
             args = ["git", "rm", item_full_path_ub]
             run_ret(args)
-            
-        
 
 
 
