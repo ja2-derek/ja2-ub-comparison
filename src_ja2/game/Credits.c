@@ -1272,13 +1272,13 @@ UINT32	GetAndHandleCreditCodeFromCodeString( STR16 pzCode )
 		return( CRDT_FLAG__TITLE );
 	}
 
-	//else its the title code
+	//else its the start of section
 	else if( pzCode[0] == CRDT_START_OF_SECTION )
 	{
 		return( CRDT_FLAG__START_SECTION );
 	}
 
-	//else its the title code
+	//else its the end of section code
 	else if( pzCode[0] == CRDT_END_OF_SECTION )
 	{
 		return( CRDT_FLAG__END_SECTION );
