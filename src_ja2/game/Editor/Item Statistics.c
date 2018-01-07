@@ -602,13 +602,13 @@ void SetupGameTypeFlags()
 	if( gpEditingItemPool )
 	{
 		giBothCheckboxButton = 
-			CreateCheckBoxButton(	573, 365, "EDITOR//radiobutton.sti", MSYS_PRIORITY_NORMAL, BothModesCheckboxCallback );
+			CreateCheckBoxButton(	573, 365, "EDITOR\\radiobutton.sti", MSYS_PRIORITY_NORMAL, BothModesCheckboxCallback );
 		SetButtonFastHelpText( giBothCheckboxButton, L"Item appears in both Sci-Fi and Realistic modes. (|B)" );
 		giRealisticCheckboxButton = 
-			CreateCheckBoxButton(	595, 365, "EDITOR//radiobutton.sti", MSYS_PRIORITY_NORMAL, RealisticOnlyCheckboxCallback );
+			CreateCheckBoxButton(	595, 365, "EDITOR\\radiobutton.sti", MSYS_PRIORITY_NORMAL, RealisticOnlyCheckboxCallback );
 		SetButtonFastHelpText( giRealisticCheckboxButton, L"Item appears in |Realistic mode only." );
 		giSciFiCheckboxButton = 
-			CreateCheckBoxButton(	616, 365, "EDITOR//radiobutton.sti", MSYS_PRIORITY_NORMAL, SciFiOnlyCheckboxCallback );
+			CreateCheckBoxButton(	616, 365, "EDITOR\\radiobutton.sti", MSYS_PRIORITY_NORMAL, SciFiOnlyCheckboxCallback );
 		SetButtonFastHelpText( giSciFiCheckboxButton, L"Item appears in |Sci-Fi mode only." );
 		
 		if( gWorldItems[ gpEditingItemPool->iItemIndex ].usFlags & WORLD_ITEM_REALISTIC_ONLY )
@@ -1208,7 +1208,7 @@ void SetupTriggersGUI()
 		if( gpItem->bFrequency <= PANIC_FREQUENCY && gpItem->bFrequency >= PANIC_FREQUENCY_3 )
 		{
 			giAlarmTriggerButton = 
-				CreateCheckBoxButton(	485, 405, "EDITOR//smCheckBox.sti", MSYS_PRIORITY_NORMAL, AlarmTriggerCheckboxCallback );
+				CreateCheckBoxButton(	485, 405, "EDITOR\\smCheckBox.sti", MSYS_PRIORITY_NORMAL, AlarmTriggerCheckboxCallback );
 			SetButtonFastHelpText( giAlarmTriggerButton, L"If the panic trigger is an alarm trigger,\nenemies won't attempt to use it if they\nare already aware of your presence.");
 			if( gpItem->fFlags & OBJECT_ALARM_TRIGGER )
 				ButtonList[ giAlarmTriggerButton ]->uiFlags |= BUTTON_CLICKED_ON;

@@ -282,12 +282,12 @@ void CreateSummaryWindow()
 	//GiveButtonDefaultStatus( iSummaryButton[ SUMMARY_OKAY ], DEFAULT_STATUS_WINDOWS95 );
 
 	iSummaryButton[ SUMMARY_GRIDCHECKBOX ] = 
-		CreateCheckBoxButton(	MAP_LEFT, ( INT16 ) ( MAP_BOTTOM + 5 ), "EDITOR//smcheckbox.sti", MSYS_PRIORITY_HIGH, SummaryToggleGridCallback );
+		CreateCheckBoxButton(	MAP_LEFT, ( INT16 ) ( MAP_BOTTOM + 5 ), "EDITOR\\smcheckbox.sti", MSYS_PRIORITY_HIGH, SummaryToggleGridCallback );
 	ButtonList[ iSummaryButton[ SUMMARY_GRIDCHECKBOX ] ]->uiFlags |= BUTTON_CLICKED_ON;
 	gfRenderGrid = TRUE;
 
 	iSummaryButton[ SUMMARY_PROGRESSCHECKBOX ] = 
-		CreateCheckBoxButton(	( INT16 ) ( MAP_LEFT + 50 ), ( INT16 ) ( MAP_BOTTOM + 5 ), "EDITOR//smcheckbox.sti", MSYS_PRIORITY_HIGH, SummaryToggleProgressCallback );
+		CreateCheckBoxButton(	( INT16 ) ( MAP_LEFT + 50 ), ( INT16 ) ( MAP_BOTTOM + 5 ), "EDITOR\\smcheckbox.sti", MSYS_PRIORITY_HIGH, SummaryToggleProgressCallback );
 	ButtonList[ iSummaryButton[ SUMMARY_PROGRESSCHECKBOX ] ]->uiFlags |= BUTTON_CLICKED_ON;
 	gfRenderProgress = TRUE;
 	
@@ -323,7 +323,7 @@ void CreateSummaryWindow()
 		ButtonList[ iSummaryButton[ SUMMARY_B3 ] ]->uiFlags |= BUTTON_CLICKED_ON;
 
 	iSummaryButton[ SUMMARY_ALTERNATE ] = 
-		CreateCheckBoxButton(	MAP_LEFT, ( INT16 ) ( MAP_BOTTOM + 25 ), "EDITOR//smcheckbox.sti", MSYS_PRIORITY_HIGH, SummaryToggleAlternateCallback );
+		CreateCheckBoxButton(	MAP_LEFT, ( INT16 ) ( MAP_BOTTOM + 25 ), "EDITOR\\smcheckbox.sti", MSYS_PRIORITY_HIGH, SummaryToggleAlternateCallback );
 	if( gfAlternateMaps )
 		ButtonList[ iSummaryButton[ SUMMARY_ALTERNATE ] ]->uiFlags |= BUTTON_CLICKED_ON;
 

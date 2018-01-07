@@ -529,7 +529,7 @@ void InitDoorEditing( INT32 iMapIndex )
 	AddTextInputField( 210, 175, 25, 16, MSYS_PRIORITY_HIGH, L"0", 2, INPUTTYPE_NUMERICSTRICT );
 	AddTextInputField( 210, 195, 25, 16, MSYS_PRIORITY_HIGH, L"0", 2, INPUTTYPE_NUMERICSTRICT );
 	iDoorButton[ DOOR_LOCKED ] = 
-		CreateCheckBoxButton(	210, 215, "EDITOR//SmCheckbox.sti", MSYS_PRIORITY_HIGH, DoorToggleLockedCallback );
+		CreateCheckBoxButton(	210, 215, "EDITOR\\SmCheckbox.sti", MSYS_PRIORITY_HIGH, DoorToggleLockedCallback );
 
 	pDoor = FindDoorInfoAtGridNo( iDoorMapIndex );
 	if( pDoor )

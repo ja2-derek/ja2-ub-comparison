@@ -449,9 +449,9 @@ void CreateFileDialog( UINT16 *zTitle )
 		BUTTON_USE_DEFAULT, 406, 225, 50, 30, BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, FDlgCancelCallback );
 
 	//Scroll buttons
-	iFileDlgButtons[2] = CreateSimpleButton( 426,92,"EDITOR//uparrow.sti", BUTTON_NO_TOGGLE,
+	iFileDlgButtons[2] = CreateSimpleButton( 426,92,"EDITOR\\uparrow.sti", BUTTON_NO_TOGGLE,
 																MSYS_PRIORITY_HIGH, FDlgUpCallback );
-	iFileDlgButtons[3] = CreateSimpleButton( 426,182,"EDITOR//downarrow.sti", BUTTON_NO_TOGGLE,
+	iFileDlgButtons[3] = CreateSimpleButton( 426,182,"EDITOR\\downarrow.sti", BUTTON_NO_TOGGLE,
 																MSYS_PRIORITY_HIGH, FDlgDwnCallback );
 
 	//File list window
@@ -467,7 +467,7 @@ void CreateFileDialog( UINT16 *zTitle )
 	if( iCurrentAction == ACTION_SAVE_MAP )
 	{	//checkboxes
 		//The update world info checkbox
-		iFileDlgButtons[6] = CreateCheckBoxButton( 183, 229, "EDITOR//smcheckbox.sti", MSYS_PRIORITY_HIGH, UpdateWorldInfoCallback );
+		iFileDlgButtons[6] = CreateCheckBoxButton( 183, 229, "EDITOR\\smcheckbox.sti", MSYS_PRIORITY_HIGH, UpdateWorldInfoCallback );
 		if( gfUpdateSummaryInfo )
 			ButtonList[ iFileDlgButtons[6] ]->uiFlags |= BUTTON_CLICKED_ON;
 	}

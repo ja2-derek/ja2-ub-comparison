@@ -157,8 +157,8 @@ void LoadEditorImages()
 	if( !AddVideoObject( &VObjectDesc, &guiOmertaMap ) )
 		AssertMsg( 0, "Failed to load data\\editor\\omerta.sti" );
 	//Set up the merc directional buttons.
-	giEditMercDirectionIcons[0] = LoadGenericButtonIcon("EDITOR//arrowsoff.sti");
-	giEditMercDirectionIcons[1] = LoadGenericButtonIcon("EDITOR//arrowson.sti");
+	giEditMercDirectionIcons[0] = LoadGenericButtonIcon("EDITOR\\arrowsoff.sti");
+	giEditMercDirectionIcons[1] = LoadGenericButtonIcon("EDITOR\\arrowson.sti");
 
 	giEditMercImage[0] = LoadButtonImage("EDITOR\\leftarrow.sti",0,1,2,3,4);
 	giEditMercImage[1] = LoadButtonImage("EDITOR\\rightarrow.sti",0,1,2,3,4);
