@@ -60,9 +60,9 @@ INT32		FontsLoaded=0;
 // Destination printing parameters
 INT32			FontDefault=(-1);
 UINT32		FontDestBuffer=BACKBUFFER;
-UINT32		FontDestPitch=640*2;
+UINT32		FontDestPitch=SCREEN_BUFFER_WIDTH*2;
 UINT32		FontDestBPP=16;
-SGPRect		FontDestRegion={0,0,640,480};
+SGPRect		FontDestRegion={0,0,SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT};
 BOOLEAN		FontDestWrap=FALSE;
 UINT16		FontForeground16=0;
 UINT16		FontBackground16=0;
@@ -73,9 +73,9 @@ UINT8			FontBackground8=0;
 // Temp, for saving printing parameters
 INT32			SaveFontDefault=(-1);
 UINT32		SaveFontDestBuffer=BACKBUFFER;
-UINT32		SaveFontDestPitch=640*2;
+UINT32		SaveFontDestPitch=SCREEN_BUFFER_WIDTH*2;
 UINT32		SaveFontDestBPP=16;
-SGPRect		SaveFontDestRegion={0,0,640,480};
+SGPRect		SaveFontDestRegion={0,0,SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT};
 BOOLEAN		SaveFontDestWrap=FALSE;
 UINT16		SaveFontForeground16=0;
 UINT16		SaveFontShadow16=0;
@@ -2099,7 +2099,7 @@ SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPa
 	usEffectiveWidth = (UINT16)(siDestPitch / 2);
 	uiFrameCount = siY*usEffectiveWidth + siX;
 	trace += uiFrameCount;
-	modtrace = trace % 640;
+	modtrace = trace % SCREEN_BUFFER_WIDTH;
 	pFrameTrav += uiFrameCount;
 	pTrav += uiOffStart;
 
@@ -2120,7 +2120,7 @@ SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPa
 		  {
 			  pFrameTrav += amount;
 			  trace += amount;
-	          modtrace = trace % 640;
+	          modtrace = trace % SCREEN_BUFFER_WIDTH;
 			  row += amount;
 			  row++;
 		  }
@@ -2130,34 +2130,34 @@ SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPa
 		    {
                 pFrameTrav -= row;
 				trace -= row;
-	            modtrace = trace % 640;
+	            modtrace = trace % SCREEN_BUFFER_WIDTH;
 			    row = amount-((UINT16)uiWidth-row);
 			    pFrameTrav += usEffectiveWidth+row;
 				trace += usEffectiveWidth+row;
-				modtrace = trace % 640;
+				modtrace = trace % SCREEN_BUFFER_WIDTH;
 			    row++;
 		    }
 		    else
 		    {
 			    pFrameTrav += (divamount*usEffectiveWidth);
 				trace += (divamount*usEffectiveWidth);
-				modtrace = trace % 640;
+				modtrace = trace % SCREEN_BUFFER_WIDTH;
 				if(row+modamount > uiWidth)
 				{
 					sub = (UINT8)((row+modamount) % uiWidth);
 					pFrameTrav -= row;
 			  	    trace -= row;
-				    modtrace = trace % 640;
+				    modtrace = trace % SCREEN_BUFFER_WIDTH;
 					pFrameTrav += usEffectiveWidth+sub;
 				    trace += usEffectiveWidth + sub;
-				    modtrace = trace % 640;
+				    modtrace = trace % SCREEN_BUFFER_WIDTH;
 			        row = sub;
 			        row++;
 				}else
 				{
 					pFrameTrav += modamount;
 				    trace += modamount;
-				    modtrace = trace % 640;
+				    modtrace = trace % SCREEN_BUFFER_WIDTH;
 			        row = modamount;
 			        row++;
 				}
@@ -2169,7 +2169,7 @@ SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPa
 		  {
             pFrameTrav += (usEffectiveWidth-uiWidth);
 			trace += (usEffectiveWidth-uiWidth);
-			modtrace = trace % 640;
+			modtrace = trace % SCREEN_BUFFER_WIDTH;
             *pFrameTrav = p16BPPPalette[*pTrav];
 		    row = 1;
 		  }
@@ -2182,7 +2182,7 @@ SGPPaletteEntry *ConvertToPaletteEntry(UINT8 sbStart, UINT8 sbEnd, UINT8 *pOldPa
 
     pFrameTrav++;
 	trace++;
-	modtrace = trace % 640;
+	modtrace = trace % SCREEN_BUFFER_WIDTH;
     pTrav++;
     count++;
 	}

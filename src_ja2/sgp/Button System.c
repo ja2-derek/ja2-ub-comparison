@@ -137,7 +137,7 @@ BUTTON_PICS		ButtonPictures[MAX_BUTTON_PICS];
 INT32					ButtonPicsLoaded;
 
 UINT32 ButtonDestBuffer = BACKBUFFER;
-UINT32 ButtonDestPitch = 640*2;
+UINT32 ButtonDestPitch = SCREEN_BUFFER_WIDTH*2;
 UINT32 ButtonDestBPP = 16;
 
 GUI_BUTTON *ButtonList[MAX_BUTTONS];
@@ -740,7 +740,7 @@ BOOLEAN InitializeButtonImageManager(INT32 DefaultBuffer, INT32 DefaultPitch, IN
 	if(DefaultPitch != BUTTON_USE_DEFAULT)
 		ButtonDestPitch = (UINT32)DefaultPitch;
 	else
-		ButtonDestPitch = 640*2;
+		ButtonDestPitch = SCREEN_BUFFER_WIDTH*2;
 
 	if(DefaultBPP != BUTTON_USE_DEFAULT)
 		ButtonDestBPP = (UINT32)DefaultBPP;
@@ -3142,7 +3142,7 @@ void DrawDefaultOnButton( GUI_BUTTON *b )
 	UINT8 *pDestBuf;
 	UINT32 uiDestPitchBYTES;
 	pDestBuf = LockVideoSurface( ButtonDestBuffer, &uiDestPitchBYTES );
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	if( b->bDefaultStatus == DEFAULT_STATUS_DARKBORDER || b->bDefaultStatus == DEFAULT_STATUS_WINDOWS95 )
 	{ 
 		//left (one thick)

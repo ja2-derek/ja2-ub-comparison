@@ -21,6 +21,8 @@
 #define MAX_CURSOR_HEIGHT     64
 #define VIDEO_NO_CURSOR				0xFFFF
 
+#define SCREEN_BUFFER_WIDTH 800
+#define SCREEN_BUFFER_HEIGHT 600
 
 extern HWND										ghWindow;
 extern UINT32                 guiMouseBufferState;    // BUFFER_READY, BUFFER_DIRTY, BUFFER_DISABLED

@@ -21,7 +21,7 @@
 	#include "shading.h"
 #endif
 
-SGPRect	ClippingRect={0, 0, 640, 480};
+SGPRect	ClippingRect={0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT};
 													//555      565
 UINT32	guiTranslucentMask=0x3def; //0x7bef;		// mask for halving 5,6,5
 
@@ -7015,8 +7015,8 @@ SGPRect *clipregion=NULL;
 	{
 		ClipX1=0; //ClippingRect.iLeft;
 		ClipY1=0; //ClippingRect.iTop;
-		ClipX2=640; //ClippingRect.iRight;
-		ClipY2=480; //ClippingRect.iBottom;
+		ClipX2=SCREEN_BUFFER_WIDTH; //ClippingRect.iRight;
+		ClipY2=SCREEN_BUFFER_HEIGHT; //ClippingRect.iBottom;
 	}
 	else
 	{
@@ -14275,9 +14275,9 @@ UINT8		*startoffset;
 	// clip edges of rect if hanging off screen
 
 	x1real=__max(0, x1);
-	x2real=__min(639, x2);
+	x2real=__min(SCREEN_BUFFER_WIDTH-1, x2);
 	y1real=__max(0, y1);
-	y2real=__min(479, y2);
+	y2real=__min(SCREEN_BUFFER_HEIGHT-1, y2);
 
 	startoffset=pBuffer+(y1real*uiDestPitchBYTES)+x1real;
 	lines=y2real-y1real+1;
@@ -14348,9 +14348,9 @@ UINT16		*startoffset;
 	// clip edges of rect if hanging off screen
 
 	x1real=__max(0, x1);
-	x2real=__min(639, x2);
+	x2real=__min(SCREEN_BUFFER_WIDTH-1, x2);
 	y1real=__max(0, y1);
-	y2real=__min(479, y2);
+	y2real=__min(SCREEN_BUFFER_HEIGHT-1, y2);
 
 	startoffset=pBuffer+(y1real*uiDestPitchBYTES/2)+x1real;
 	lines=y2real-y1real+1;
