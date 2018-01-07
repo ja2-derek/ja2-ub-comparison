@@ -267,7 +267,7 @@ void HandleIMPAttributeSelection( void )
 			sNewX = sNewX - ( SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X );
       iNewValue = ( sNewX * 50 ) / BASE_SKILL_PIXEL_UNIT_SIZE + 35;
 
-			// chenged, move mouse region if change large enough
+			//changed, move mouse region if change large enough
       if( iCurrentAttributeValue != iNewValue )
 			{
          // update screen
