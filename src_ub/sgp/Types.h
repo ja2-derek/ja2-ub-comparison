@@ -12,11 +12,14 @@
 
 	#endif
 
-	// ATE: Include build defines header
-	#include "builddefines.h"
-	
 
 #endif 
+
+
+// build defines header....
+#include "builddefines.h"
+	
+
 
 
 #include <wchar.h>			// for wide-character strings
