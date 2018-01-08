@@ -155,7 +155,15 @@ void SetGridNoRevealedFlag( UINT16 sGridNo )
 			if ( ( (pStructure->fFlags & STRUCTURE_OBSTACLE ) && !( pStructure->fFlags & ( STRUCTURE_PERSON | STRUCTURE_CORPSE ) ) ) || ( pStructure->fFlags & STRUCTURE_SLANTED_ROOF ) )
 			{
 				pBase = FindBaseStructure( pStructure );
-				
+
+				//Ja25: DEF: 10/12/99		Added because ...
+				if( pBase == NULL )
+				{
+					pStructure = pStructure->pNext;
+					Assert( 0 );
+					continue;
+				}
+
 				// Get LEVELNODE for struct and remove!
 				pNode = FindLevelNodeBasedOnStructure( pBase->sGridNo, pBase );
 
