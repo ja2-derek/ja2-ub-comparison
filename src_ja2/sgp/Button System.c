@@ -4304,34 +4304,3 @@ GUI_BUTTON *b;
 	return(b->Area.RegionBottomRightY - b->Area.RegionTopLeftY);
 }
 
-INT32 GetButtonX(INT32 iButtonID)
-{
-GUI_BUTTON *b;
-
-	Assert( iButtonID >= 0 );
-	Assert( iButtonID < MAX_BUTTONS);
-
-	b = ButtonList[ iButtonID ];
-	Assert( b );
-
-	if(b==NULL)
-		return(0);
-
-	return(b->Area.RegionTopLeftX);
-}
-
-INT32 GetButtonY(INT32 iButtonID)
-{
-GUI_BUTTON *b;
-
-	Assert( iButtonID >= 0 );
-	Assert( iButtonID < MAX_BUTTONS);
-
-	b = ButtonList[ iButtonID ];
-	Assert( b );
-
-	if(b==NULL)
-		return(0);
-
-	return(b->Area.RegionTopLeftY);
-}

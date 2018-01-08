@@ -332,10 +332,6 @@ BOOLEAN GetButtonArea(INT32 iButtonID, SGPRect *pRect);
 INT32 GetButtonWidth(INT32 iButtonID);
 INT32 GetButtonHeight(INT32 iButtonID);
 
-// DB 99-08-27
-INT32 GetButtonX(INT32 iButtonID);
-INT32 GetButtonY(INT32 iButtonID);
-
 void BtnGenericMouseMoveButtonCallback(GUI_BUTTON *btn,INT32 reason);
 #define DEFAULT_MOVE_CALLBACK		BtnGenericMouseMoveButtonCallback
 
