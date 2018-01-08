@@ -281,17 +281,6 @@ void HandleLimitedNumExecutions( )
 }
 
 
-#ifdef JA2UB_PRESS_PREVIEW
-
-SGPFILENAME	gCheckFilenames[] =
-{
-  "INSTALL\\PREVIEWDATA\\INTRO.SLF",
-  "INSTALL\\PREVIEWDATA\\LOADSCREENS.SLF",
-	"INSTALL\\PREVIEWDATA\\NPC_SPEECH.SLF",
-	"INSTALL\\PREVIEWDATA\\SPEECH.SLF",
-};
-
-#else
 
 SGPFILENAME	gCheckFilenames[] =
 {
@@ -301,7 +290,6 @@ SGPFILENAME	gCheckFilenames[] =
 	"INSTALL\\DATA\\SPEECH.SLF",
 };
 
-#endif
  
 UINT32 gCheckFileMinSizes[] =
 {

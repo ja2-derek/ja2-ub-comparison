@@ -21,11 +21,7 @@ void InitJA2SplashScreen()
 	GetExecutableDirectory( CurrentDir );
 
 	// Adjust Current Dir
-#ifdef JA2UB_PRESS_PREVIEW
-	sprintf( DataDir, "%s\\PreviewData", CurrentDir );
-#else
 	sprintf( DataDir, "%s\\Data", CurrentDir );
-#endif
 
 	if ( !SetFileManCurrentDirectory( DataDir ) )
 	{

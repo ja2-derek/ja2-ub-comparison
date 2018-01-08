@@ -3873,20 +3873,6 @@ BOOLEAN IsTheCursorAllowedToHighLightThisSector( INT16 sSectorX, INT16 sSectorY 
 void SetUpValidCampaignSectors( void )
 {
 
-#ifdef JA2UB_PRESS_PREVIEW
-
-	INT32			iRow, iCol;
-	
-	for( iRow=1; iRow<=16; iRow++ )
-	{
-		for( iCol=1; iCol<=16; iCol++ )
-		{
-			SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fValidSector = FALSE;	
-			SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fCampaignSector = FALSE;
-		}
-	}
-
-#endif
 
 
 	SectorInfo[ ( SECTOR( 7 , 8 ) ) ].fValidSector = TRUE;		//H7
@@ -3901,12 +3887,10 @@ void SetUpValidCampaignSectors( void )
 	SectorInfo[ ( SECTOR( 10 , 8 ) ) ].fValidSector = TRUE;		//H10
 	SectorInfo[ ( SECTOR( 10 , 8 ) ) ].fCampaignSector = TRUE;		
 
-#ifndef JA2UB_PRESS_PREVIEW
 
 	SectorInfo[ ( SECTOR( 11, 8 ) ) ].fValidSector = TRUE;		//H11
 	SectorInfo[ ( SECTOR( 11, 8 ) ) ].fCampaignSector = TRUE;		
 
-#endif
 
 	SectorInfo[ ( SECTOR( 9 , 9 ) ) ].fValidSector = TRUE;		//I9
 	SectorInfo[ ( SECTOR( 9 , 9 ) ) ].fCampaignSector = TRUE;		
@@ -3914,7 +3898,6 @@ void SetUpValidCampaignSectors( void )
 	SectorInfo[ ( SECTOR( 10 , 9 ) ) ].fValidSector = TRUE;		//I10
 	SectorInfo[ ( SECTOR( 10 , 9 ) ) ].fCampaignSector = TRUE;		
 
-#ifndef JA2UB_PRESS_PREVIEW
 
 	SectorInfo[ ( SECTOR( 11 , 9 ) ) ].fValidSector = TRUE;		//I11
 	SectorInfo[ ( SECTOR( 11 , 9 ) ) ].fCampaignSector = TRUE;	
@@ -3949,7 +3932,6 @@ void SetUpValidCampaignSectors( void )
 	SectorInfo[ ( SECTOR( 15 , 12 ) ) ].fValidSector = TRUE;		//L15
 	SectorInfo[ ( SECTOR( 15 , 12 ) ) ].fCampaignSector = TRUE;		
 
-#endif
 }
 
 

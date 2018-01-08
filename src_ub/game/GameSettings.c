@@ -27,11 +27,7 @@
 
 #define				GAME_INI_FILE					"..\\Ja2.ini"
 
-#ifdef JA2UB_PRESS_PREVIEW
-	#define				CD_ROOT_DIR						"INSTALL\\PREVIEWDATA\\"
-#else
 	#define				CD_ROOT_DIR						"INSTALL\\DATA\\"
-#endif
 
 GAME_SETTINGS		gGameSettings;
 GAME_OPTIONS		gGameOptions;

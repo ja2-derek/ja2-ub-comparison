@@ -38,11 +38,7 @@ void DetermineRGBDistributionSettings()
 	//3-4 seconds to the time of a map load.
 	GetExecutableDirectory( ExecDir );
 
-#ifdef JA2UB_PRESS_PREVIEW
-	sprintf( ShadeTableDir, "%s\\PreviewData\\%s", ExecDir, SHADE_TABLE_DIR );
-#else
 	sprintf( ShadeTableDir, "%s\\Data\\%s", ExecDir, SHADE_TABLE_DIR );
-#endif
 
 	//Check to make sure we have a ShadeTable directory.  If we don't create one!
 	if( !SetFileManCurrentDirectory( ShadeTableDir ) )
@@ -118,11 +114,7 @@ void DetermineRGBDistributionSettings()
 	}
 
 	//We're done, so restore the executable directory to JA2\Data.
-#ifdef JA2UB_PRESS_PREVIEW
-	sprintf( DataDir, "%s\\PreviewData", ExecDir );
-#else
 	sprintf( DataDir, "%s\\Data", ExecDir );
-#endif
 	SetFileManCurrentDirectory( DataDir );
 }
 

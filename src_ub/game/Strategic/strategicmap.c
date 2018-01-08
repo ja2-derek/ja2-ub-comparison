@@ -3362,15 +3362,6 @@ BOOLEAN OKForSectorExit( INT8 bExitDirection, UINT16 usAdditionalData, UINT32 *p
 	}
 	*/
 
-#ifdef JA2UB_PRESS_PREVIEW
-
-	if( gWorldSectorX == 10 && gWorldSectorY == 9 && !gbWorldSectorZ && bExitDirection == EAST_STRATEGIC_MOVE )
-	{
-		gfInvalidTraversal = TRUE;
-		return FALSE;
-	}
-
-#endif
 
 	//
 	// Check to see if we are in the I13 map were Biggens has explosives all around.  If we are, the player can

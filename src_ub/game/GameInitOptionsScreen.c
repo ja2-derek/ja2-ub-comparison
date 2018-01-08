@@ -1068,9 +1068,6 @@ void DisplayMessageToUserAboutPressPreview()
 
 void DisplayMessageToUserAboutGameDifficulty()
 {
-#ifdef JA2UB_PRESS_PREVIEW
-	DisplayMessageToUserAboutPressPreview( );
-#else
 
 	UINT8 ubDiffLevel = GetCurrentDifficultyButtonSetting();
 
@@ -1086,7 +1083,6 @@ void DisplayMessageToUserAboutGameDifficulty()
 			DoGioMessageBox( MSG_BOX_BASIC_STYLE, zGioDifConfirmText[GIO_CFS_EXPERT], GAME_INIT_OPTIONS_SCREEN, MSG_BOX_FLAG_YESNO, ConfirmGioDifSettingMessageBoxCallBack );
 			break;
 	}
-#endif
 }
 
 void DisplayMessageToUserAboutUserCampaign()

@@ -1734,17 +1734,6 @@ void InitStrategicRowI()
 	pSector->ubTraversability[ THROUGH_STRATEGIC_MOVE ] = SPARSE;
 
 
-#ifdef JA2UB_PRESS_PREVIEW
-
-	pSector = &SectorInfo[ SEC_I10 ];
-	pSector->ubTravelRating = 5;
-	pSector->ubTraversability[ NORTH_STRATEGIC_MOVE ]		= PLAINS;
-	pSector->ubTraversability[ EAST_STRATEGIC_MOVE ]		= EDGEOFWORLD;
-	pSector->ubTraversability[ SOUTH_STRATEGIC_MOVE ]		= EDGEOFWORLD;
-	pSector->ubTraversability[ WEST_STRATEGIC_MOVE ]		= PLAINS;
-	pSector->ubTraversability[ THROUGH_STRATEGIC_MOVE ] = EDGEOFWORLD;
-
-#else
 
 	pSector = &SectorInfo[ SEC_I10 ];
 	pSector->ubTravelRating = 5;
@@ -1754,7 +1743,6 @@ void InitStrategicRowI()
 	pSector->ubTraversability[ WEST_STRATEGIC_MOVE ]		= PLAINS;
 	pSector->ubTraversability[ THROUGH_STRATEGIC_MOVE ] = TOWN;
 
-#endif
 
 	pSector = &SectorInfo[ SEC_I11 ];
 	pSector->ubTravelRating = 10;
@@ -2808,11 +2796,6 @@ void AddCustomMap( INT32 iRow, INT32 iCol, BOOLEAN fDisplayMessages, BOOLEAN fMe
 	INT8			bLevel;
 	UNDERGROUND_SECTORINFO *pSector=NULL;
 
-#ifdef JA2UB_PRESS_PREVIEW
-
-	return;
-
-#else
 
 	// if we are the first secotr, ignore!
 	if ( iRow == JA2_5_START_SECTOR_Y && iCol == JA2_5_START_SECTOR_X )
@@ -3167,7 +3150,6 @@ void AddCustomMap( INT32 iRow, INT32 iCol, BOOLEAN fDisplayMessages, BOOLEAN fMe
 		MemFree( pSummary );
 	}	
 
-#endif
 
 }
 

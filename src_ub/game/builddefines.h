@@ -6,21 +6,11 @@
 // If we want to include the editor
 #define JA2EDITOR
 
-//#define JA2UB_PRESS_PREVIEW
-
-// ATE: Disable editor if preview
-#ifdef JA2UB_PRESS_PREVIEW
-	#ifdef JA2EDITOR
-		#undef JA2EDITOR
-	#endif
-#endif
-
 
 // Allow the player to use the editor to make maps and place them in a new map, slot.  
 // The game will allow the new sector to be traversed to.
 #define	JA2UB__QUICK_USE_OF_EDITOR_MAPS
 
-// Do combinations
 
 
 //#define CRIPPLED_VERSION
