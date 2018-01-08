@@ -54,6 +54,88 @@ UINT32	MapUtilScreenInit( )
 	return( TRUE );
 }
 
+
+UINT32	MapUtilScreenHandle( )
+{
+	static INT16		fNewMap = TRUE;
+	static INT16		sFileNum = 0;
+  InputAtom  InputEvent;
+	GETFILESTRUCT FileInfo;
+	static FDLG_LIST *FListNode;
+	static INT16 sFiles = 0, sCurFile = 0;
+	static FDLG_LIST *FileList = NULL;
+	INT8		zFilename[ 260 ];
+
+	if ( fNewMap )
+	{
+		fNewMap = FALSE;
+      
+		// USING BRET's STUFF FOR LOOPING FILES/CREATING LIST, hence AddToFDlgList.....
+		if( GetFileFirst("MAPS\\*.dat", &FileInfo) )
+		{
+			FileList = AddToFDlgList( FileList, &FileInfo );
+			sFiles++;
+			while( GetFileNext(&FileInfo) )
+			{
+				FileList = AddToFDlgList( FileList, &FileInfo );
+				sFiles++;
+			}
+			GetFileClose(&FileInfo);
+		}
+
+		FListNode = FileList;
+
+	}
+
+	//OK, we are here, now loop through files
+	if ( sCurFile == sFiles || FListNode== NULL )
+	{
+    gfProgramIsRunning = FALSE;
+		return( MAPUTILITY_SCREEN );
+	}
+
+	sprintf( zFilename, "%s", FListNode->FileInfo.zFileName );
+
+	// OK, load maps and do overhead shrinkage of them...
+	if ( !LoadWorld( zFilename, FALSE, FALSE ) )
+	{
+		// Set next
+		FListNode = FListNode->pNext;
+		sCurFile++;
+		return( MAPUTILITY_SCREEN );
+	}
+
+	if ( !GenerateRadarMap( zFilename, TRUE, 0 ) )
+	{
+		return( ERROR_SCREEN );
+	}
+
+	SetFont( TINYFONT1 );
+	SetFontBackground( FONT_MCOLOR_BLACK );
+	SetFontForeground( FONT_MCOLOR_DKGRAY );				
+//	mprintf( 10, 340, L"Writing radar image %S", zFilename2 );
+
+	mprintf( 10, 350, L"Using tileset %s", gTilesets[ giCurrentTilesetID ].zName );
+
+	InvalidateScreen( );
+
+  while (DequeueEvent(&InputEvent) == TRUE)
+  {
+      if ((InputEvent.usEvent == KEY_DOWN)&&(InputEvent.usParam == ESC))
+      { // Exit the program
+        gfProgramIsRunning = FALSE;
+      }
+	}
+
+	// Set next
+	FListNode = FListNode->pNext;
+	sCurFile++;
+
+	return( MAPUTILITY_SCREEN );
+
+}
+
+
 BOOLEAN	GenerateRadarMap( INT8 *zFilename, BOOLEAN fSeperateFile, HWFILE pFile )
 {
 	VSURFACE_DESC		vs_desc;
@@ -301,90 +383,13 @@ BOOLEAN	GenerateRadarMap( INT8 *zFilename, BOOLEAN fSeperateFile, HWFILE pFile )
 }
 
 
+
+
 UINT32 MapUtilScreenShutdown( )
 {
 	return( TRUE );
 }
 
-UINT32	MapUtilScreenHandle( )
-{
-	static INT16		fNewMap = TRUE;
-	static INT16		sFileNum = 0;
-  InputAtom  InputEvent;
-	GETFILESTRUCT FileInfo;
-	static FDLG_LIST *FListNode;
-	static INT16 sFiles = 0, sCurFile = 0;
-	static FDLG_LIST *FileList = NULL;
-	INT8		zFilename[ 260 ];
-
-	if ( fNewMap )
-	{
-		fNewMap = FALSE;
-      
-		// USING BRET's STUFF FOR LOOPING FILES/CREATING LIST, hence AddToFDlgList.....
-		if( GetFileFirst("MAPS\\*.dat", &FileInfo) )
-		{
-			FileList = AddToFDlgList( FileList, &FileInfo );
-			sFiles++;
-			while( GetFileNext(&FileInfo) )
-			{
-				FileList = AddToFDlgList( FileList, &FileInfo );
-				sFiles++;
-			}
-			GetFileClose(&FileInfo);
-		}
-
-		FListNode = FileList;
-
-	}
-
-	//OK, we are here, now loop through files
-	if ( sCurFile == sFiles || FListNode== NULL )
-	{
-    gfProgramIsRunning = FALSE;
-		return( MAPUTILITY_SCREEN );
-	}
-
-	sprintf( zFilename, "%s", FListNode->FileInfo.zFileName );
-
-	// OK, load maps and do overhead shrinkage of them...
-	if ( !LoadWorld( zFilename, FALSE, FALSE ) )
-	{
-		// Set next
-		FListNode = FListNode->pNext;
-		sCurFile++;
-		return( MAPUTILITY_SCREEN );
-	}
-
-	if ( !GenerateRadarMap( zFilename, TRUE, 0 ) )
-	{
-		return( ERROR_SCREEN );
-	}
-
-	SetFont( TINYFONT1 );
-	SetFontBackground( FONT_MCOLOR_BLACK );
-	SetFontForeground( FONT_MCOLOR_DKGRAY );				
-//	mprintf( 10, 340, L"Writing radar image %S", zFilename2 );
-
-	mprintf( 10, 350, L"Using tileset %s", gTilesets[ giCurrentTilesetID ].zName );
-
-	InvalidateScreen( );
-
-  while (DequeueEvent(&InputEvent) == TRUE)
-  {
-      if ((InputEvent.usEvent == KEY_DOWN)&&(InputEvent.usParam == ESC))
-      { // Exit the program
-        gfProgramIsRunning = FALSE;
-      }
-	}
-
-	// Set next
-	FListNode = FListNode->pNext;
-	sCurFile++;
-
-	return( MAPUTILITY_SCREEN );
-
-}
 
 #else //non-editor version
 
