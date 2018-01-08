@@ -293,6 +293,14 @@ void BlitString( VIDEO_OVERLAY *pBlitter )
 		return;
 	}
 
+	//if enabled, shadow the text
+	if( gGameSettings.fOptions[ TOPTION_SHADE_TACTICAL_MSGS ] )
+	{
+		UINT32 uiLength = StringPixLength( pBlitter->zText, pBlitter->uiFontID );
+		UINT16 usFontHeight = WFGetFontHeight( pBlitter->uiFontID );
+
+		ShadowVideoSurfaceRect( pBlitter->uiDestBuff, pBlitter->sX, pBlitter->sY+1, pBlitter->sX+uiLength-1, pBlitter->sY+usFontHeight-1 );
+	}
 
 	pDestBuf = LockVideoSurface( pBlitter->uiDestBuff, &uiDestPitchBYTES);
 	SetFont(pBlitter->uiFontID);
