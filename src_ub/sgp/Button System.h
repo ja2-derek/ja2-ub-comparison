@@ -178,9 +178,10 @@ INT16 FindFreeGenericSlot(void);
 INT16 FindFreeIconSlot(void);
 INT32 GetNextButtonNumber(void);
 
+// Now used by Wizardry -- DB
+void SetButtonFastHelpText(INT32 iButton, UINT16 *Text);
 
 #ifdef _JA2_RENDER_DIRTY
-void SetButtonFastHelpText(INT32 iButton, UINT16 *Text);
 void SetBtnHelpEndCallback( INT32 iButton, MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn );
 //void DisplayFastHelp(GUI_BUTTON *b);
 void RenderButtonsFastHelp(void);
