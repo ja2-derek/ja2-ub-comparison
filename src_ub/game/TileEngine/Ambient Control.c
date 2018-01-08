@@ -216,6 +216,13 @@ void HandleNewSectorAmbience( UINT8 ubAmbientID )
 	}
 }
 
+void DeleteAllAmbients()
+{
+	// JA2Gold: it seems that ambient sounds don't get unloaded when we exit a sector!?
+	SoundStopAllRandom();
+	DeleteAllStrategicEventsOfType( EVENT_AMBIENT );
+}
+
 UINT32 SetupNewAmbientSound( UINT32 uiAmbientID )
 {
 	RANDOMPARMS rpParms;
