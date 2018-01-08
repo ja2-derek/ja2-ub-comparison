@@ -13,12 +13,12 @@
 // Basic defines for the video manager. These represent the starting values
 //
 
-#ifdef _DEBUG
-#define WINDOWED_MODE
-#endif
-
 #ifdef BOUNDS_CHECKER
 	#define		WINDOWED_MODE
+#endif
+
+#ifdef _DEBUG
+ #define WINDOWED_MODE
 #endif
 
 #define SCREEN_WIDTH          SCREEN_BUFFER_WIDTH
