@@ -342,10 +342,6 @@ UINT32 UndergroundTacticalTraversalTime( INT8 bExitDirection )
 	return 0xffffffff;
 }
 
-#ifdef JA2DEMOADS
-	extern void DoDemoIntroduction();
-	extern BOOLEAN gfDemoIntro;
-#endif
 
 void BeginLoadScreen( )
 {
@@ -356,16 +352,6 @@ void BeginLoadScreen( )
 	INT32 iLastShadePercentage;
 	UINT8 ubLoadScreenID;
 
-#ifdef JA2DEMOADS
-	if( !(gTacticalStatus.uiFlags & LOADING_SAVED_GAME ) )
-	{
-		DoDemoIntroduction();
-	}
-	else
-	{
-		gfDemoIntro = TRUE;
-	}
-#endif
 
 	SetCurrentCursorFromDatabase( VIDEO_NO_CURSOR );
 
