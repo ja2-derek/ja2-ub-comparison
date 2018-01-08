@@ -13,8 +13,6 @@
 
 
 
-//#define CRIPPLED_VERSION
-
 // Huge speed and memory hog, but thorough -- will work with release builds.
 // #define EXTREME_MEMORY_DEBUGGING 
 

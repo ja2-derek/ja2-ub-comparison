@@ -457,24 +457,6 @@ Ja25 MERC is available from the begining
 		}
 */
 
-/*
-#ifdef CRIPPLED_VERSION
-		{
-			UINT32 cnt;
-
-			//loop through the first 20 AIM mercs and set them to be away
-			for( cnt = 0; cnt < 20; cnt++)
-			{
-				gMercProfiles[ cnt ].bMercStatus = MERC_WORKING_ELSEWHERE;
-				gMercProfiles[ cnt ].uiDayBecomesAvailable = 14;		// 14 days should be ok considering crippled version only goes to day 7
-			}
-		}
-
-		//Add an event to check for the end of the crippled version 
-		AddEveryDayStrategicEvent( EVENT_CRIPPLED_VERSION_END_GAME_CHECK, 0, 0 );
-#endif
-*/
-
 #ifdef	ENABLE_CUSTOM_MAP_INTERFACE
 		//If the player is going to be playing a custom map
 		if( gJa25SaveStruct.fInCustomMap )
