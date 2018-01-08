@@ -27,9 +27,6 @@ LibraryInitHeader gGameLibaries[ ] =
 	{ "LoadScreens.slf",			TRUE,  TRUE },
 	{ "Intro.slf",						TRUE,  TRUE },
 
-#ifdef JA2DEMO
-	{ "DemoAds.slf",					FALSE, TRUE },
-#endif
 
 #ifdef GERMAN
 	{ "German.slf",						FALSE, TRUE },

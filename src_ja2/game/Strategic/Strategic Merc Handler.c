@@ -616,7 +616,6 @@ void MercsContractIsFinished( UINT8	ubID )
 {
 	SOLDIERTYPE *pSoldier;
 
-	#ifndef JA2DEMO
 
 	pSoldier = &Menptr[ ubID ];
 
@@ -666,7 +665,6 @@ void MercsContractIsFinished( UINT8	ubID )
 
 	}
 
-	#endif
 }
 
 // ATE: Called for RPCs who should now complain about no pay...
@@ -674,7 +672,6 @@ void RPCWhineAboutNoPay( UINT8	ubID )
 {
 	SOLDIERTYPE *pSoldier;
 
-	#ifndef JA2DEMO
 
 	pSoldier = &Menptr[ ubID ];
 
@@ -688,7 +685,6 @@ void RPCWhineAboutNoPay( UINT8	ubID )
 		TacticalCharacterDialogue( pSoldier, QUOTE_NOT_GETTING_PAID );
 	}
 
-	#endif
 }
 
 

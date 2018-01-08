@@ -618,9 +618,6 @@ extern void ClearHistoryList( void );
 
 
 //TEMP CHEAT
-#if defined ( JA2DEMO )
-extern	void DemoHiringOfMercs( );
-#endif
 
 
 
@@ -5465,12 +5462,6 @@ void HandleKeyBoardShortCutsForLapTop( UINT16 usEvent, UINT32 usParam, UINT16 us
 	}
 
 
-#if defined ( JA2DEMO )
-	else if ((usEvent == KEY_DOWN )&& ( usParam == 'w' ))
-	{
-		DemoHiringOfMercs( );
-	}
-#endif
 
 
 	//adding money

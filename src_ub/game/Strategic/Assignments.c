@@ -577,10 +577,6 @@ BOOLEAN CanCharacterDoctorButDoesntHaveMedKit( SOLDIERTYPE *pSoldier )
 		return( FALSE );
 	}	
 
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return FALSE;
-	#endif
 
 	// make sure character is alive and conscious
 	if( pSoldier -> bLife < OKLIFE )
@@ -923,10 +919,6 @@ BOOLEAN CanCharacterRepair( SOLDIERTYPE *pSoldier )
 		return( FALSE );
 	}
 
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return FALSE;
-	#endif
 
 	if ( BasicCanCharacterRepair( pSoldier ) == FALSE )
 	{
@@ -956,10 +948,6 @@ BOOLEAN CanCharacterRepair( SOLDIERTYPE *pSoldier )
 // can character be set to patient?
 BOOLEAN CanCharacterPatient( SOLDIERTYPE *pSoldier )
 {
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return FALSE;
-	#endif
 
 	if ( !BasicCanCharacterAssignment( pSoldier, TRUE ) )
 	{
@@ -1021,10 +1009,6 @@ BOOLEAN BasicCanCharacterTrainMilitia( SOLDIERTYPE *pSoldier )
 	// they must be alive/conscious and in the sector with the town
 	BOOLEAN fSamSitePresent = FALSE;
 
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return FALSE;
-	#endif
 
 	if ( !BasicCanCharacterAssignment( pSoldier, TRUE ) )
 	{
@@ -1264,10 +1248,6 @@ BOOLEAN CanCharacterTrainStat( SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrain
 {
 	// is the character capable of training this stat? either self or as trainer
 	
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return FALSE;
-	#endif
 
 	if ( !BasicCanCharacterAssignment( pSoldier, TRUE ) )
 	{
@@ -1496,10 +1476,6 @@ BOOLEAN CanCharacterPractise( SOLDIERTYPE *pSoldier )
 {
 	// can character practise right now?
 
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return FALSE;
-	#endif
 
 	if ( !BasicCanCharacterAssignment( pSoldier, TRUE ) )
 	{
@@ -1607,10 +1583,6 @@ BOOLEAN CanCharacterSleep( SOLDIERTYPE *pSoldier, BOOLEAN fExplainWhyNot )
 	CHAR16 sString[ 128 ];
 
 
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return(FALSE );
-	#endif
 
 	// dead or dying?
 	if( pSoldier -> bLife < OKLIFE )
@@ -1750,10 +1722,6 @@ BOOLEAN CanCharacterVehicle( SOLDIERTYPE *pSoldier )
 {
 	// can character enter/leave vehicle?
 
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return FALSE;
-	#endif
 
 	if ( !BasicCanCharacterAssignment( pSoldier, TRUE ) )
 	{
@@ -1929,10 +1897,6 @@ void UpdateAssignments()
 {
 	INT8 sX,sY, bZ;
 
-	// this assignment is no go in the demo
-	#ifdef JA2DEMO
-		return;
-	#endif
 
 	// init sectors with soldiers list
 	InitSectorsWithSoldiersList( );

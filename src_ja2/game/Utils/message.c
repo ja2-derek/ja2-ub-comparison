@@ -597,9 +597,6 @@ void ScreenMsg( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 		#ifndef _DEBUG
 			return;
 		#endif
-		#ifdef JA2DEMO
-			return;
-		#endif
 	}	
 
 	if( ubPriority == MSG_BETAVERSION )
@@ -758,9 +755,6 @@ void TacticalScreenMsg( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	if ( ubPriority == MSG_DEBUG )
 	{
 		#ifndef _DEBUG
-			return;
-		#endif
-		#ifdef JA2DEMO
 			return;
 		#endif
 		usColor = DEBUG_COLOR;
@@ -957,9 +951,6 @@ void MapScreenMessage( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	if ( ubPriority == MSG_DEBUG )
 	{
 		#ifndef _DEBUG
-			return;
-		#endif
-		#ifdef JA2DEMO
 			return;
 		#endif
 		usColor = DEBUG_COLOR;

@@ -365,7 +365,6 @@ INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LP
 
 
 #if defined( JA2 )
-	#ifndef JA2DEMO
 		case  WM_DEVICECHANGE:
 			{
 				DEV_BROADCAST_HDR  *pHeader = (DEV_BROADCAST_HDR  *)lParam;
@@ -384,7 +383,6 @@ INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LP
 				}
 			}
 			break;
-	#endif
 #endif
 
     default

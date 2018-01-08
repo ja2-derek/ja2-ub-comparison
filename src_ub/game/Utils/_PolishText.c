@@ -3589,10 +3589,6 @@ STR16 pMessageStrings[] =
 	L"Ta pozycja zarezerwowana jest na szybkie zapisy wykonywane podczas gry kombinacj¹ klawiszy ALT+S.",
 	L"Otwarty",
 	L"Zamkniêty",
-#ifdef JA2DEMO
-	L"Tu ju¿ wszystko za³atwione. Mo¿e czas spotkaæ siê z Gabby'm.",
-	L"Nie trzeba by³o go zabijaæ.",
-#endif
 	L"Brak miejsca na dysku twardym.  Na dysku wolne jest %s MB, a wymagane jest przynajmniej %s MB.",
 	L"Najêto - %s z A.I.M.", 
 	L"%s z³apa³(a) %s",		//'Merc name' has caught 'item' -- let SirTech know if name comes after item.
@@ -3643,16 +3639,6 @@ STR16 pMessageStrings[] =
 	L"Wejœcie na %d poziom pod ziemi¹...",
 	L"Wyjœcie z podziemii...",
 
-	#ifdef JA2DEMO
-	
-	//For the demo, the sector exit interface, you'll be able to split your teams up, but the demo
-	//has this feature disabled.  This string is fast help text that appears over "single" button.
-	L"W pe³nej wersji gry bêdzie mo¿na dzieliæ oddzia³y,\nale w wersji demo jest to niemo¿liwe.",
-
-	//The overhead map is a map of the entire sector, which you can go into anytime, except in the demo.
-	L"Ogólna mapa sektora jest niedostêpna w wersji demo.",
-
-	#endif
 
 	L" - ",		// used in the shop keeper inteface to mark the ownership of the item eg Red's gun
 	L"Automatyczne centrowanie ekranu wy³¹czone.",

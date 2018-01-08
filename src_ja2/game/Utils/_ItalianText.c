@@ -3588,10 +3588,6 @@ STR16 pMessageStrings[] =
 	L"Questo slot è riservato ai salvataggi rapidi fatti dalle schermate tattiche e dalla mappa utilizzando ALT+S.",
 	L"Aperto",
 	L"Chiuso",
-#ifdef JA2DEMO
-	L"Siete tutti finiti qui. Forse dovreste andare a trovare Gabby.",
-	L"Troppo crudele per averlo ucciso.",
-#endif
 	L"Lo spazio su disco si sta esaurendo. Avete liberi solo %s MB e Jagged Alliance 2 ne richiede %s.",
 	L"Arruolato %s dall'A.I.M.", 
 	L"%s ha preso %s.",		//'Merc name' has caught 'item' -- let SirTech know if name comes after item.
@@ -3642,16 +3638,6 @@ STR16 pMessageStrings[] =
 	L"Entra nel seminterrato %d...",
 	L"Abbandona il seminterrato...",
 
-	#ifdef JA2DEMO
-	
-	//For the demo, the sector exit interface, you'll be able to split your teams up, but the demo
-	//has this feature disabled.  This string is fast help text that appears over "single" button.
-	L"In pieno gioco, potrete separare\nla vostra squadra, ma non in modalità demo.",
-
-	//The overhead map is a map of the entire sector, which you can go into anytime, except in the demo.
-	L"Mappa generale non attiva nella demo.",
-
-	#endif
 
 	L"di",		// used in the shop keeper inteface to mark the ownership of the item eg Red's gun
 	L"Modalità segui disattiva.",

@@ -2968,7 +2968,6 @@ UINT32 CalcChanceToHitGun(SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime
 
 
 	// CHECK IF TARGET IS WITHIN GUN'S EFFECTIVE MAXIMUM RANGE
-//#ifdef JA2DEMO
 	if ( iRange > iMaxRange )
 	{
 		// a bullet WILL travel that far if not blocked, but it's NOT accurate,
@@ -2978,7 +2977,6 @@ UINT32 CalcChanceToHitGun(SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime
 		// drop in flight.
 		iChance /= 2;
 	}
-//#endif
 	if ( iSightRange > (sDistVis * CELL_X_SIZE) )
 	{
 		// penalize out of sight shots, cumulative to effective range penalty

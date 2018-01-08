@@ -437,9 +437,6 @@ UINT32  MainGameScreenHandle(void)
 		gfBeginEndTurn = FALSE;
 	}
 
-#ifdef JA2DEMO
-		SetGameTimeCompressionLevel( TIME_COMPRESS_X1 );
-#endif
 /*
 	if ( gfExitToNewSector )
 	{

@@ -4426,9 +4426,7 @@ void TestMeanWhile( INT32 iID )
 
 	}
 
-#ifndef JA2DEMO
 	ScheduleMeanwhileEvent( &MeanwhileDef, 10 );
-#endif
 }
 */
 
@@ -4580,7 +4578,6 @@ void TestCapture( )
 
 void PopupAssignmentMenuInTactical( SOLDIERTYPE *pSoldier )
 {
-#ifndef JA2DEMO
 	// do something
 	fShowAssignmentMenu = TRUE;
 	CreateDestroyAssignmentPopUpBoxes( );
@@ -4589,5 +4586,4 @@ void PopupAssignmentMenuInTactical( SOLDIERTYPE *pSoldier )
 	DetermineWhichAssignmentMenusCanBeShown( );
 	fFirstClickInAssignmentScreenMask = TRUE;
 	gfIgnoreScrolling = TRUE;
-#endif
 }

@@ -150,7 +150,6 @@ Ja25: No enrico, therefore, no email
 	if( DidGameJustStart() )
 	{
 		// OK, CHECK FOR FIRST GUY, GIVE HIM SPECIAL ITEM!
-		#ifndef JA2DEMO 
 		if ( iNewIndex == 0 )
 		{
 			// OK, give this item to our merc!
@@ -170,7 +169,6 @@ Ja25: No enrico, therefore, no email
 
 		// ATE: Insert for demo , not using the heli sequence....
 		pHireMerc->ubInsertionCode				= INSERTION_CODE_CHOPPER;
-		#endif
 	}
 */
 
@@ -423,7 +421,6 @@ void MercArrivesCallback(	UINT8	ubSoldierID )
 	}
 
 
-#ifndef JA2DEMO
 	if ( pSoldier->ubStrategicInsertionCode != INSERTION_CODE_CHOPPER )
 	{
 		ScreenMsg( FONT_MCOLOR_WHITE, MSG_INTERFACE, TacticalStr[ MERC_HAS_ARRIVED_STR ], pSoldier->name );
@@ -447,7 +444,6 @@ void MercArrivesCallback(	UINT8	ubSoldierID )
 			TacticalCharacterDialogueWithSpecialEventEx( pSoldier, 0, DIALOGUE_SPECIAL_EVENT_UNSET_ARRIVES_FLAG, 0, 0, 0 );
 		}
 	}
-#endif
 
 	//record how long the merc will be gone for
 	pMerc->bMercStatus = (UINT8)pSoldier->iTotalContractLength;

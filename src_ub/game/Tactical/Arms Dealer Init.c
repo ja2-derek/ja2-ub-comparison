@@ -158,12 +158,6 @@ void InitializeOneArmsDealer( UINT8 ubArmsDealer )
 	UINT8		ubNumItems=0;
 
 
-#ifdef JA2DEMO
-	if ( ubArmsDealer != ARMS_DEALER_JAKE)
-	{
-		return;
-	}
-#endif
 
 	memset( &( gArmsDealerStatus[ ubArmsDealer ] ), 0, sizeof( ARMS_DEALER_STATUS ) );
 	memset( &( gArmsDealersInventory[ ubArmsDealer ] ), 0, sizeof( DEALER_ITEM_HEADER ) * MAXITEMS );
@@ -207,12 +201,6 @@ void ShutDownArmsDealers()
 	for( ubArmsDealer=0; ubArmsDealer<NUM_ARMS_DEALERS; ubArmsDealer++ )
 	{
 
-	#ifdef JA2DEMO
-		if ( ubArmsDealer != ARMS_DEALER_JAKE)
-		{
-			continue;
-		}
-	#endif
 
 		//loop through all the item types
 		for( usItemIndex = 1; usItemIndex < MAXITEMS; usItemIndex++ )
@@ -652,22 +640,6 @@ Ja25: None of these dealers are in exp.
 	}
 */
 
-#ifdef JA2DEMO
-	{
-		// Adjust Jake's inventory (for demo only)
-		SPECIAL_ITEM_INFO SpclItemInfo;
-
-		// create item info describing a perfect item
-		SetSpecialItemInfoToDefaults( &SpclItemInfo );
-
-/*
-Ja25: 
-		// These items are to be in perfect working order (even though he's a junk dealer)
-		AddItemToArmsDealerInventory( ARMS_DEALER_JAKE, SILENCER, &SpclItemInfo, (UINT8)( 2 + Random( 2 ) ) );
-		AddItemToArmsDealerInventory( ARMS_DEALER_JAKE, LOCKSMITHKIT, &SpclItemInfo, 1 );
-*/
-	}
-#endif
 
 	return( TRUE );
 }
@@ -1077,10 +1049,6 @@ BOOLEAN IsMercADealer( UINT8 ubMercID )
 {
 	UINT8	cnt;
 
-#ifdef JA2DEMO		// Gabby is not a dealer in the demo, but is one in the game
-	if( ubMercID == GABBY )
-		return( FALSE );
-#endif
 
 	// Manny is not actually a valid dealer unless a particular event sets that fact
 	if( ( ubMercID == MANNY ) && !CheckFact( FACT_MANNY_IS_BARTENDER, 0 ) )
@@ -1103,10 +1071,6 @@ INT8 GetArmsDealerIDFromMercID( UINT8 ubMercID )
 {
 	INT8	cnt;
 
-#ifdef JA2DEMO		// Gabby is not a dealer in the demo, but is one in the game
-	if( ubMercID == GABBY )
-		return( -1 );
-#endif
 
 	//loop through the list of arms dealers
 	for( cnt=0; cnt<NUM_ARMS_DEALERS; cnt++ )
@@ -2754,7 +2718,6 @@ Ja25:
 	}
 
 
-#ifndef JA2DEMO	// don't halve the gun/silencer prices in the demo...
 /*
 Ja25 no Tony in the exp
 	// Tony specializes in guns, weapons, and ammo, so make others pay much less for that kind of stuff
@@ -2764,7 +2727,6 @@ Ja25 no Tony in the exp
 		usValueToThisDealer /= 2;
 	}
 */
-#endif
 
 
 	// minimum bet $1 !

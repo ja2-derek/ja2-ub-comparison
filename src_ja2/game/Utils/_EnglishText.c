@@ -3595,10 +3595,6 @@ STR16 pMessageStrings[] =
 	L"This slot is reserved for Quick Saves made from the tactical and map screens using ALT+S.",
 	L"Opened",
 	L"Closed",
-#ifdef JA2DEMO
-	L"You're all done down here. Maybe you should go see Gabby.",
-	L"Too bad you killed him.",
-#endif
 	L"You are running low on disk space.  You only have %sMB free and Jagged Alliance 2 requires %sMB.",
 	L"Hired %s from AIM", 
 	L"%s has caught %s.",		//'Merc name' has caught 'item' -- let SirTech know if name comes after item.
@@ -3649,16 +3645,6 @@ STR16 pMessageStrings[] =
 	L"Entering basement level %d...",
 	L"Leaving basement...",
 
-	#ifdef JA2DEMO
-	
-	//For the demo, the sector exit interface, you'll be able to split your teams up, but the demo
-	//has this feature disabled.  This string is fast help text that appears over "single" button.
-	L"In the full game, you'll be able to separate\nyour team, but not in the demo.",
-
-	//The overhead map is a map of the entire sector, which you can go into anytime, except in the demo.
-	L"Overhead map disabled for Demo.",
-
-	#endif
 
 	L"'s",		// used in the shop keeper inteface to mark the ownership of the item eg Red's gun
 	L"Follow mode OFF.",

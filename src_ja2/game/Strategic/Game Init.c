@@ -357,35 +357,6 @@ BOOLEAN InitNewGame( BOOLEAN fReset )
 	// clear mapscreen messages
 	FreeGlobalMessageList();
 
-#ifdef JA2DEMO
-
-	// IF our first time, go into laptop!
-	InitStrategicLayer();
-
-	// Hire demo mercs....
-#if defined ( JA2DEMO )
-	DemoHiringOfMercs( );
-#endif
-
-	// Setup initial money
- 	AddTransactionToPlayersBook( ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), 20500 );
-	#ifdef GERMAN
-	  //The different mercs are slightly more expensive.  This adds that difference.
-		AddTransactionToPlayersBook( ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), 1075 );
-	#endif
-
-
-	if ( !SetCurrentWorldSector( 1, 16, 0 ) )
-	{
-
-	}
-
-	
-	SetLaptopExitScreen( MAP_SCREEN );
-	FadeInGameScreen( );
-	EnterTacticalScreen( );
-
-#else
 
 	// IF our first time, go into laptop!
 	if ( gubScreenCount == 0 )
@@ -517,7 +488,6 @@ BOOLEAN InitNewGame( BOOLEAN fReset )
 	}
 
 	*/
-#endif
 
 	return( TRUE );
 }

@@ -1,3 +1,4 @@
+
 #ifdef PRECOMPILEDHEADERS
 	#include "Tactical All.h"
 #else
@@ -3000,7 +3001,6 @@ Ja25
 
 
 	// CHECK IF TARGET IS WITHIN GUN'S EFFECTIVE MAXIMUM RANGE
-//#ifdef JA2DEMO
 	if ( iRange > iMaxRange )
 	{
 
@@ -3011,7 +3011,6 @@ Ja25
 		// drop in flight.
 		iChance /= 2;
 	}
-//#endif
 	if ( iSightRange > (sDistVis * CELL_X_SIZE) )
 	{
 		// penalize out of sight shots, cumulative to effective range penalty

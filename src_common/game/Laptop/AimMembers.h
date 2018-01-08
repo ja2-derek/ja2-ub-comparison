@@ -26,9 +26,6 @@ extern UINT8 gubVideoConferencingMode;
 //TEMP!!!
 
 
-#if defined ( JA2DEMO )
-	void DemoHiringOfMercs( );
-#endif
 
 
 

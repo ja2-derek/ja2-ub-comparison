@@ -3658,10 +3658,6 @@ STR16 pMessageStrings[] =
 	L"Dieser Slot ist für Quick-Saves aus den Map Screens/Taktik-Bildschirm reserviert. Speichern mit ALT+S",
 	L"Offen",
 	L"Zu",
-#ifdef JA2DEMO
-	L"Hier sind Sie fertig. Vielleicht sollten Sie mit Gabby reden.",
-	L"Vielleicht hätten Sie ihn lieber nicht töten sollen.",
-#endif
 	L"Wennig Festplattenspeicher. Sie haben nur noch %sMB frei und Jagged Alliance 2.5 benötigt %sMB.",
 	L"%s von AIM angeheuert", 
 	L"%s hat sich %s geschnappt.",		//'Merc name' has caught 'item' -- let SirTech know if name comes after item.
@@ -3713,16 +3709,6 @@ STR16 pMessageStrings[] =
 	L"Kellerlevel %d betreten...",
 	L"Keller verlassen...",
 
-	#ifdef JA2DEMO
-	
-	//For the demo, the sector exit interface, you'll be able to split your teams up, but the demo
-	//has this feature disabled.  This string is fast help text that appears over "single" button.
-	L"In der Vollversion können Sie Ihr Team\naufteilen, nicht aber im Demo.",
-
-	//The overhead map is a map of the entire sector, which you can go into anytime, except in the demo.
-	L"Im Demo steht die Overhead-Karte nicht zur Verfügung.",
-
-	#endif
 
 	L"s",		// used in the shop keeper inteface to mark the ownership of the item eg Red's gun
 	L"Autoscrollen AUS.",

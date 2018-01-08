@@ -687,7 +687,6 @@ DEALER_POSSIBLE_INV gJakeInventory[] =
 
 	{ LOCKSMITHKIT,			1 },
 
-#ifndef JA2DEMO
 	// "new" items, presumed unsafe for demo
 	{ TSHIRT_DEIDRANNA,	2 },
 	{	XRAY_BULB,				1 },
@@ -719,7 +718,6 @@ DEALER_POSSIBLE_INV gJakeInventory[] =
 	{ COMPOUND18,				1 },
 	{ CERAMIC_PLATES,		1 },
 
-#endif
 
 
 	{ LAST_DEALER_ITEM,	NO_DEALER_ITEM },		//Last One

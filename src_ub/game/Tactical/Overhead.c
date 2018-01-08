@@ -5662,11 +5662,9 @@ void SetEnemyPresence( )
 	// Check if we previously had no enemys present and we are in a virgin secotr ( no enemys spotted yet )
 	if ( !gTacticalStatus.fEnemyInSector && gTacticalStatus.fVirginSector )
 	{
-#ifndef JA2DEMO
 		// If we have a guy selected, say quote!
 		// For now, display ono status message
 		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, TacticalStr[ ENEMY_IN_SECTOR_STR ] );
-#endif
 
 		// Change music modes..
 		
@@ -6008,14 +6006,6 @@ BOOLEAN CheckForEndOfBattle( BOOLEAN fAnEnemyRetreated )
 	{
 		if ( ! (gTacticalStatus.fEnemyInSector) )
 		{
-		// ATE: For demo, we may be dead....
-#ifdef JA2DEMO
-			if ( CheckForLosingEndOfBattle( ) )
-			{
-				SetMusicMode( MUSIC_TACTICAL_DEATH );	
-			}
-#endif
-
 			return( FALSE );
 		}
 	}
@@ -6160,16 +6150,6 @@ Ja25  no meanwhile
 			ExitCombatMode();
 		}
 
-#ifdef JA2DEMO
-		if (gbWorldSectorZ == 0)
-		{
-			SetFactTrue( FACT_TOP_LEVEL_CLEARED );
-		}
-		else if (gbWorldSectorZ == 1)
-		{
-			SetFactTrue( FACT_BOTTOM_LEVEL_CLEARED );
-		}
-#endif
 
 		if ( gTacticalStatus.bBoxingState == NOT_BOXING ) // if boxing don't do any of this stuff
 		{
@@ -7883,17 +7863,10 @@ void	DoneFadeOutDueToDeath( void )
 void EndBattleWithUnconsciousGuysCallback( UINT8 bExitValue )
 {
 	// Enter mapscreen.....
-#ifdef JA2DEMO
-
-	// Fade screen
-	gFadeOutDoneCallback = DoneFadeOutDueToDeath;
-	FadeOutGameScreen( );
-#else
 	CheckAndHandleUnloadingOfCurrentWorld();
 
 	HandleDisplayingOfPlayerLostDialogue();
 
-#endif
 }
 
 
@@ -7953,38 +7926,10 @@ void	DoneFadeOutDemoCreatureLevel( void )
 
 void DemoEndOKCallback( INT8 bExitCode )
 {
-	#ifdef JA2DEMO
-	// Check if gabby is alive...
-	if ( gMercProfiles[ GABBY ].bLife == 0 )
-	{
-		// Bring up dialogue box...
-		DoMessageBox( MSG_BOX_BASIC_STYLE, pMessageStrings[ MSG_TOO_BAD_YOU_KILLED_GABBY ], GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_OK, NULL, NULL );
-	}
-	#endif
 }
 
 void HandleEndDemoInCreatureLevel( )
 {
-	#ifdef JA2DEMO
-
-	if ( gbWorldSectorZ == 1 )
-	{
-		// Is dynamo recruited?
-		if ( FindSoldierByProfileID( DYNAMO, TRUE ) && NumCapableEnemyInSector( ) == 0 )
-		{
-			// Bring up dialogue box...
-			DoMessageBox( MSG_BOX_BASIC_STYLE, pMessageStrings[ MSG_GO_SEE_GABBY ], GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_OK, DemoEndOKCallback, NULL );
-		}
-	}
-	else if ( gbWorldSectorZ == 2 )
-	{
-		if ( NumCapableEnemyInSector( ) == 0 )
-		{
-			// Bring up dialogue box...
-			DoMessageBox( MSG_BOX_BASIC_STYLE, pMessageStrings[ MSG_GO_SEE_GABBY ], GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_OK, DemoEndOKCallback, NULL );
-		}
-	}
-	#endif JA2DEMO
 }
 
 

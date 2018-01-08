@@ -3,8 +3,5 @@
 
 #include "types.h"
 
-#ifdef JA2DEMO
-	#define JA2DEMOADS
-#endif
 
 #endif

@@ -4002,22 +4002,6 @@ void StartBombMessageBox( SOLDIERTYPE * pSoldier, INT16 sGridNo )
 	}
 	else if (pSoldier->inv[HANDPOS].usItem == REMOTETRIGGER)
 	{
-		#ifdef JA2DEMO
-			{
-				UINT8 ubRoom;
-
-				if ( InARoom( pSoldier->sGridNo, &ubRoom ) && ubRoom == 31 )
-				{
-					SetOffBombsByFrequency( pSoldier->ubID, FIRST_MAP_PLACED_FREQUENCY + 4 );
-
-					DoMercBattleSound( pSoldier, BATTLE_SOUND_OK1 );
-				}
-				else
-				{
-					DoMercBattleSound( pSoldier, BATTLE_SOUND_CURSE1 );
-				}
-			}
-		#else
 			// ATE ignore the commented-out code and add stuff to open the secret passage here
 			/*
 			switch( pSoldier->inv[HANDPOS].ubLocationID )
@@ -4052,7 +4036,6 @@ void StartBombMessageBox( SOLDIERTYPE * pSoldier, INT16 sGridNo )
 				DoMercBattleSound( pSoldier, BATTLE_SOUND_CURSE1 );
 			}
 
-		#endif
 	}
 	else if ( FindAttachment( &(pSoldier->inv[HANDPOS]), DETONATOR) != ITEM_NOT_FOUND )
 	{

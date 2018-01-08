@@ -136,10 +136,6 @@ MOUSE_REGION gMapPauseRegion;
 
 MOUSE_REGION gTimeCompressionMask[ 3 ];
 
-#ifdef JA2DEMO
-	MOUSE_REGION MapButtonScreenMasks[ 14 ];
-	MOUSE_REGION MapScreenmaskForDemo;
-#endif
 
 
 // EXTERNS
@@ -194,11 +190,6 @@ void BtnMessageUpMapScreenCallback( GUI_BUTTON *btn,INT32 reason );
 
 void MapScreenMessageScrollBarCallBack(MOUSE_REGION * pRegion, INT32 iReason );
 
-#ifdef JA2DEMO
-void BuildDemoMouseRegionsForHelpText( void );
-void RemoveDemoMouseRegionsForHelpText( void );
-void MapButtonMaskBtnCallback(MOUSE_REGION * pRegion, INT32 iReason );
-#endif
 
 //void CheckForAndHandleAutoMessageScroll( void );
 
@@ -333,10 +324,6 @@ BOOLEAN CreateButtonsForMapScreenInterfaceBottom( void )
 {
 
 
-#ifdef JA2DEMO
-	MSYS_DefineRegion( &MapScreenmaskForDemo, 0,0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK );
-#endif
 	
 
 
@@ -349,7 +336,6 @@ BOOLEAN CreateButtonsForMapScreenInterfaceBottom( void )
 	// tactical
 	guiMapBottomExitButtonsImage[ MAP_EXIT_TO_TACTICAL ]=  LoadButtonImage( "INTERFACE\\map_border_buttons.sti" ,-1,7,-1,16,-1 );
  
-#ifndef JA2DEMO
 	guiMapBottomExitButtons[ MAP_EXIT_TO_TACTICAL ] = QuickCreateButton( guiMapBottomExitButtonsImage[ MAP_EXIT_TO_TACTICAL ], 496, 410,
 										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
 										(GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnTacticalCallback);
@@ -359,19 +345,6 @@ BOOLEAN CreateButtonsForMapScreenInterfaceBottom( void )
   guiMapBottomExitButtons[ MAP_EXIT_TO_OPTIONS ] = QuickCreateButton( guiMapBottomExitButtonsImage[ MAP_EXIT_TO_OPTIONS ], 458, 372,
 										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
 										(GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnOptionsFromMapScreenCallback);
-#else
-
-	// tactical
-	guiMapBottomExitButtons[ MAP_EXIT_TO_TACTICAL ] = QuickCreateButton( guiMapBottomExitButtonsImage[ MAP_EXIT_TO_TACTICAL ], 496, 410,
-										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
-										(GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnTacticalCallback);
-
-	// options
-	guiMapBottomExitButtonsImage[ MAP_EXIT_TO_OPTIONS ]=  LoadButtonImage( "INTERFACE\\map_border_buttons.sti" ,-1,18,-1,19,-1 );
-  guiMapBottomExitButtons[ MAP_EXIT_TO_OPTIONS ] = QuickCreateButton( guiMapBottomExitButtonsImage[ MAP_EXIT_TO_OPTIONS ], 458, 372,
-										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
-										(GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnOptionsFromMapScreenCallback);
-#endif
 
 
 	
@@ -405,7 +378,6 @@ BOOLEAN CreateButtonsForMapScreenInterfaceBottom( void )
 
 
  // scroll buttons
-#ifndef JA2DEMO
 
   guiMapMessageScrollButtonsImage[ MAP_SCROLL_MESSAGE_UP ]=  LoadButtonImage( "INTERFACE\\map_screen_bottom_arrows.sti" ,11,4,-1,6,-1 );
   guiMapMessageScrollButtons[ MAP_SCROLL_MESSAGE_UP ] = QuickCreateButton( guiMapMessageScrollButtonsImage[ MAP_SCROLL_MESSAGE_UP ], 331, 371,
@@ -419,22 +391,6 @@ BOOLEAN CreateButtonsForMapScreenInterfaceBottom( void )
 
 	
 
-#else
-
-	guiMapMessageScrollButtonsImage[ MAP_SCROLL_MESSAGE_UP ]=  LoadButtonImage( "INTERFACE\\map_screen_bottom_arrows.sti" ,11,4,-1,6,-1 );
-  guiMapMessageScrollButtons[ MAP_SCROLL_MESSAGE_UP ] = QuickCreateButton( guiMapMessageScrollButtonsImage[ MAP_SCROLL_MESSAGE_UP ], 331, 371,
-										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
-										(GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnMessageUpMapScreenCallback);
- 
-	guiMapMessageScrollButtonsImage[ MAP_SCROLL_MESSAGE_DOWN ]=  LoadButtonImage( "INTERFACE\\map_screen_bottom_arrows.sti" ,12,5,-1,7,-1 );
-  guiMapMessageScrollButtons[ MAP_SCROLL_MESSAGE_DOWN ] = QuickCreateButton( guiMapMessageScrollButtonsImage[ MAP_SCROLL_MESSAGE_DOWN ], 331, 452,
-										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST,
-										(GUI_CALLBACK)BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnMessageDownMapScreenCallback);
-
-	// build demo mouse regions
-  BuildDemoMouseRegionsForHelpText( );
-
-#endif
 
 	SetButtonFastHelpText( guiMapMessageScrollButtons[ 0 ], pMapScreenBottomFastHelp[ 5 ] );
   SetButtonFastHelpText( guiMapMessageScrollButtons[ 1 ], pMapScreenBottomFastHelp[ 6 ] );
@@ -460,10 +416,6 @@ void DestroyButtonsForMapScreenInterfaceBottom( void )
 	RemoveButton( guiMapBottomTimeButtons[ 1 ] ); 
 
 
-	#ifdef JA2DEMO
-	MSYS_RemoveRegion( &MapScreenmaskForDemo );
-	RemoveDemoMouseRegionsForHelpText(  );
-	#endif
 	
 
 	UnloadButtonImage( guiMapBottomExitButtonsImage[ 0 ] );
@@ -1034,15 +986,9 @@ void DeleteMessageSliderBar( void )
 
 void CreateMapScreenBottomMessageScrollBarRegion( void )
 {
-	#ifdef JA2DEMO
-		MSYS_DefineRegion( &gMapMessageScrollBarRegion, MESSAGE_SCROLL_AREA_START_X, MESSAGE_SCROLL_AREA_START_Y,
-								MESSAGE_SCROLL_AREA_END_X, MESSAGE_SCROLL_AREA_END_Y,
-								MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapScreenMessageScrollBarCallBack ); 
-	#else
 		MSYS_DefineRegion( &gMapMessageScrollBarRegion, MESSAGE_SCROLL_AREA_START_X, MESSAGE_SCROLL_AREA_START_Y,
 								MESSAGE_SCROLL_AREA_END_X, MESSAGE_SCROLL_AREA_END_Y,
 								MSYS_PRIORITY_NORMAL, MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapScreenMessageScrollBarCallBack ); 
-	#endif
 }
 
 
@@ -1637,114 +1583,6 @@ BOOLEAN AnyUsableRealMercenariesOnTeam( void )
 
 
 
-#ifdef JA2DEMO
-void HandleLeavingOfMapScreenDuringDemo( void )
-{
-	//fFirstTimeInMapScreen = TRUE;
-	SetPendingNewScreen( GAME_SCREEN );
-}
-
-
-void BuildDemoMouseRegionsForHelpText( void )
-{
-	INT32 iCounter = 0;
-	CHAR16 sString[ 128 ];
-
-	// for the laptop button
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 0 ], 456,410,487, 441, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 0 ], pMapScreenBottomFastHelp[ 0 ] );
-
-	// for the time compress more
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 1 ], 465,455,481, 470, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-
-	// for the time compress less 
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 2 ], 526,455,544, 470, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 2 ], pMapScreenBottomFastHelp[ 3 ] );
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 1 ], pMapScreenBottomFastHelp[ 4 ] );
-
-	// the contract button
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 3 ], 191,48,250, 59, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 3 ], pMapScreenMouseRegionHelpText[ 3 ] );
-
-	// the map border buttons
-
-	// town
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 4 ], 272,323,307, 355, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-
-	// mine
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 5 ], 315,323,350, 355, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-	
-	// team
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 6 ], 358,323,( 358 + 35 ), 355, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-	
-	// air
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 7 ], 444,323,( 444 + 35 ),355, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-	
-	// zoom
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 8 ], 547,323,( 547 + 35 ), 355, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-
-	// militia
-	MSYS_DefineRegion( &MapButtonScreenMasks[ 9 ], 402,323,( 402 + 35 ), 355, MSYS_PRIORITY_HIGHEST,
-							MSYS_NO_CURSOR, MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-
-
-	// set up fast help text
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 4 ], pMapScreenBorderButtonHelpText[ 0 ] );
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 5 ], pMapScreenBorderButtonHelpText[ 1 ] );
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 6 ], pMapScreenBorderButtonHelpText[ 2 ] );
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 7 ], pMapScreenBorderButtonHelpText[ 3 ] );
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 8 ], pMapScreenBorderButtonHelpText[ 4 ] );
-	SetRegionFastHelpText( &MapButtonScreenMasks[ 9 ], pMapScreenBorderButtonHelpText[ 5 ] );
-
-
-	// map mine levels
-	for( iCounter = 0; iCounter  < 4 ; iCounter++ )
-	{
-		MSYS_DefineRegion(&MapButtonScreenMasks[ iCounter + 10 ] , MAP_LEVEL_MARKER_X, ( INT16 )( MAP_LEVEL_MARKER_Y + ( MAP_LEVEL_MARKER_DELTA * iCounter ) ),  MAP_LEVEL_MARKER_X + MAP_LEVEL_MARKER_WIDTH, ( INT16 )( MAP_LEVEL_MARKER_Y + ( MAP_LEVEL_MARKER_DELTA * ( iCounter + 1 ) ) ), MSYS_PRIORITY_HIGHEST, MSYS_NO_CURSOR, 
-			MSYS_NO_CALLBACK, MapButtonMaskBtnCallback );
-
-		swprintf( sString, L"%s %d", zMarksMapScreenText[ 0 ], iCounter + 1 );
-		SetRegionFastHelpText( &MapButtonScreenMasks[ iCounter + 10 ], sString );
-  }
-
-	return;
-}
-
-
-void RemoveDemoMouseRegionsForHelpText( void )
-{
-	INT32 iCounter = 0;
-
-	for( iCounter = 0; iCounter < 14; iCounter++ )
-	{
-		MSYS_RemoveRegion( &MapButtonScreenMasks[ iCounter ] );
-	}
-	return;
-}
-
-// invnetory screen mask btn callback
-void MapButtonMaskBtnCallback(MOUSE_REGION * pRegion, INT32 iReason )
-{ 
-  // inventory screen mask btn callback
-  if(iReason & MSYS_CALLBACK_REASON_LBUTTON_UP)
-  {
-	  DoMapMessageBox( MSG_BOX_BASIC_STYLE, zMarksMapScreenText[ 17 ], MAP_SCREEN, MSG_BOX_FLAG_OK, MSYS_NO_CALLBACK );
-  }
-}
-
-#endif // JA2DEMO
 
 
 
@@ -1813,18 +1651,6 @@ Ja25 No meanwhiles
 		return( FALSE );
 	}
 
-	#ifdef JA2DEMO
-		if ( bExitToWhere == MAP_EXIT_TO_TACTICAL )
-		{
-			// always permitted in demo
-			return( TRUE );
-		}
-		else
-		{
-			// always disallowed in demo
-			return( FALSE );
-		}
-	#endif
 
 
 	// if holding an inventory item
@@ -1919,12 +1745,7 @@ void HandleExitsFromMapScreen( void )
 					break;
 
 				case MAP_EXIT_TO_TACTICAL:
-					#ifdef JA2DEMO
-						HandleLeavingOfMapScreenDuringDemo( );
-						gfDontStartTransitionFromLaptop = TRUE;
-					#else
 						SetCurrentWorldSector( sSelMapX, sSelMapY, ( UINT8 )iCurrentMapSectorZ );
-					#endif
 
 					break;
 

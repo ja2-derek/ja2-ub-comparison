@@ -407,34 +407,6 @@ Ja25 no meanwhiles
 	FreeGlobalMessageList();
 
 
-/*
-#ifdef JA2DEMO
-
-	// IF our first time, go into laptop!
-	InitStrategicLayer();
-
-	// Hire demo mercs....
-
-	// Setup initial money
- 	AddTransactionToPlayersBook( ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), 20500 );
-	#ifdef GERMAN
-	  //The different mercs are slightly more expensive.  This adds that difference.
-		AddTransactionToPlayersBook( ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), 1075 );
-	#endif
-
-
-	if ( !SetCurrentWorldSector( 1, 16, 0 ) )
-	{
-
-	}
-
-	
-	SetLaptopExitScreen( MAP_SCREEN );
-	FadeInGameScreen( );
-	EnterTacticalScreen( );
-
-#else
-*/
 	// IF our first time, go into laptop!
 	if ( gubScreenCount == 0 )
 	{
@@ -604,7 +576,6 @@ Ja25 MERC is available from the begining
 	}
 
 	*/
-//#endif
 
 	return( TRUE );
 }

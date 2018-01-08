@@ -63,10 +63,6 @@ void ChangeCurrentMapscreenMessageIndex( UINT8 ubNewMessageIndex );
 void MoveToEndOfMapScreenMessageList( void );
 
 
-#ifdef JA2DEMO
-// handle leaving during the demo
-void HandleLeavingOfMapScreenDuringDemo( void );
-#endif
 
 
 #endif

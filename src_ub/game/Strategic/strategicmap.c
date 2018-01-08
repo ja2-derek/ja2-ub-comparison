@@ -1396,21 +1396,6 @@ Ja25:  only mine in exp. is abandoned
 		}
 	}
 
-#ifdef JA2DEMO
-	// special stuff to make NPCs talk as if the next day, after going down
-	// into mines
-	if (bNewSectorZ > 0)
-	{
-		if ( gMercProfiles[ GABBY ].ubLastDateSpokenTo != 0 )
-		{
-			gMercProfiles[ GABBY ].ubLastDateSpokenTo = 199;
-		}
-		if ( gMercProfiles[ JAKE ].ubLastDateSpokenTo != 0 )
-		{
-			gMercProfiles[ JAKE ].ubLastDateSpokenTo = 199;
-		}
-	}
-#endif
 /*
 Ja25 no assassins and no kingin
 	if ( (gubQuest[ QUEST_KINGPIN_MONEY ] == QUESTINPROGRESS) && CheckFact( FACT_KINGPIN_CAN_SEND_ASSASSINS, 0 ) && (GetTownIdForSector( sNewSectorX, sNewSectorY ) != BLANK_SECTOR) && Random( 10 + GetNumberOfMilitiaInSector( sNewSectorX, sNewSectorY, bNewSectorZ ) ) < 3 )
@@ -2043,11 +2028,6 @@ Ja25 Removerd to add new towns
 void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *zString, BOOLEAN fDetailed )
 {
 
-#ifdef JA2DEMO
-
-	swprintf( zString, L"Demoville" );
-
-#else
 	SECTORINFO *pSector = NULL;
 	UNDERGROUND_SECTORINFO *pUnderground;
 	INT8		bTownNameID; 	
@@ -2302,7 +2282,6 @@ Ja25:  Only 1 mine
 			}
 		}
 	}
-#endif
 }
 
 
@@ -3672,9 +3651,6 @@ Ja25:  No enrico mail
 	AddPeriodStrategicEvent( EVENT_HOURLY_UPDATE, 60, 0 );
 	AddPeriodStrategicEvent( EVENT_QUARTER_HOUR_UPDATE, 15, 0 );
 
-	#ifdef JA2DEMO
-		AddPeriodStrategicEventWithOffset( EVENT_MINUTE_UPDATE, 60, 475, 0 );
-	#endif
 
 	//Clear any possible battle locator
 	gfBlitBattleSectorLocator = FALSE;

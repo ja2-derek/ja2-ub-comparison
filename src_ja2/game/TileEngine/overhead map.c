@@ -526,15 +526,6 @@ void GoIntoOverheadMap( )
   VOBJECT_DESC    VObjectDesc;
 	HVOBJECT				hVObject;
 
-#ifdef JA2DEMO
-
-	if ( gfCaves )
-	{
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[ MSG_OVERHEAD_MAP_DISABLED ] );		
-		return;
-	}
-
-#endif
 
 	gfInOverheadMap = TRUE;
 
