@@ -28,10 +28,6 @@
 	#include "opplist.h"
 #endif
 
-#ifdef JA2BETAVERSION
-	BOOLEAN gfClearCreatureQuest = FALSE;
-	extern UINT32 uiMeanWhileFlags;
-#endif
 
 //GAME BALANCING DEFINITIONS FOR CREATURE SPREADING
 //Hopefully, adjusting these following definitions will ease the balancing of the
@@ -252,9 +248,6 @@ void InitLairGrumm()
 	curr->next = NewDirective( SEC_H3, 1, MINE_EXIT );
 }
 
-#ifdef JA2BETAVERSION
-extern BOOLEAN gfExitViewer;
-#endif
 
 void InitCreatureQuest()
 {
@@ -264,9 +257,6 @@ void InitCreatureQuest()
 	INT32 iChosenMine;
 	INT32 iRandom;
 	INT32 iNumMinesInfectible;
-	#ifdef JA2BETAVERSION
-		INT32 iOrigRandom;
-	#endif
 	BOOLEAN fMineInfectible[4];
 
 	if( giLairID )
@@ -274,14 +264,7 @@ void InitCreatureQuest()
 		return; //already active!
 	}
 
-	#ifdef JA2BETAVERSION
-	if( guiCurrentScreen != AIVIEWER_SCREEN )
-	{ 
 		fPlayMeanwhile = TRUE;
-	}
-	#else
-		fPlayMeanwhile = TRUE;
-	#endif
 
 	if( fPlayMeanwhile && !gfCreatureMeanwhileScenePlayed )
 	{
@@ -336,12 +319,6 @@ void InitCreatureQuest()
 		fMineInfectible[ 3 ] = FALSE;
 	}
 
-	#ifdef JA2BETAVERSION
-	if( guiCurrentScreen == AIVIEWER_SCREEN )
-	{ //If in the AIViewer, allow any mine to get infected
-		memset( fMineInfectible, 1, sizeof( BOOLEAN ) * 4 );
-	}
-	#endif
 
 	iNumMinesInfectible = fMineInfectible[0] + fMineInfectible[1] + fMineInfectible[2] + fMineInfectible[3];
 
@@ -353,9 +330,6 @@ void InitCreatureQuest()
 	//Choose one of the infectible mines randomly
 	iRandom = Random( iNumMinesInfectible ) + 1;
 
-	#ifdef JA2BETAVERSION
-		iOrigRandom = iRandom;
-	#endif
 
 	iChosenMine = 0;
 
@@ -395,14 +369,6 @@ void InitCreatureQuest()
 			curr->uiFlags |= SF_PENDING_ALTERNATE_MAP;
 			break;
 		default:
-			#ifdef JA2BETAVERSION
-			{
-				UINT16 str[512];
-				swprintf( str, L"Creature quest never chose a lair and won't infect any mines.  Infectible mines = %d, iRandom = %d.  "
-											 L"This isn't a bug if you are not receiving income from any mines.", iNumMinesInfectible, iOrigRandom );
-				DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, NULL );
-			}
-			#endif
 			return;	
 	}
 
@@ -1054,9 +1020,6 @@ BOOLEAN MineClearOfMonsters( UINT8 ubMineIndex )
 				break;
 
 			default:
-				#ifdef JA2BETAVERSION
-					ScreenMsg( FONT_RED, MSG_ERROR, L"Attempting to check if mine is clear but mine index is invalid (%d).", ubMineIndex );
-				#endif
 				break;
 		}
 	}
@@ -1255,9 +1218,6 @@ BOOLEAN PrepareCreaturesForBattle()
 			ubAdultFemalePercentage = 20;
 			break;
 		default:
-			#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_RED, MSG_ERROR, L"Invalid creature habitat ID of %d for PrepareCreaturesForBattle.  Ignoring...", ubCreatureHabitat );
-			#endif
 			return FALSE;
 	}
 	
@@ -1461,15 +1421,6 @@ BOOLEAN LoadCreatureDirectives( HWFILE hFile, UINT32 uiSavedGameVersion )
 		giDestroyedLairID = 0;
 	}
 
-	#ifdef JA2BETAVERSION
-		if( gfClearCreatureQuest && giLairID != -1 )
-		{
-			giLairID = 0;
-			gfCreatureMeanwhileScenePlayed = FALSE;
-			uiMeanWhileFlags &= ~(0x00000800);
-		}
-		gfClearCreatureQuest = FALSE;
-	#endif
 
 	switch( giLairID )
 	{
@@ -1480,9 +1431,6 @@ BOOLEAN LoadCreatureDirectives( HWFILE hFile, UINT32 uiSavedGameVersion )
 		case 3:		InitLairAlma();			break;
 		case 4:		InitLairGrumm();		break;
 		default:
-			#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_RED, MSG_ERROR, L"Invalid restoration of creature lair ID of %d.  Save game potentially hosed.", giLairID );
-			#endif
 			break;
 	}
 

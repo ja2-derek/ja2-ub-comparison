@@ -210,9 +210,6 @@
 #include "Game Events.h"
 #include "BobbyR.h"
 
-#ifdef JA2BETAVERSION
-	#include	"Quest Debug System.h"
-#endif
 
 #include "GameVersion.h"
 #include "SaveLoadScreen.h"

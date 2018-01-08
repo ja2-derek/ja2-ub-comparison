@@ -773,9 +773,7 @@ void HandleSight(SOLDIERTYPE *pSoldier, UINT8 ubSightFlags)
 			// update our team's public knowledge
 			RadioSightings(pSoldier,EVERYBODY, pSoldier->bTeam );
 
-#ifdef WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
 			RadioSightings(pSoldier,EVERYBODY, MILITIA_TEAM);
-#endif
 
 			// if it's our local player's merc
 			if (PTR_OURTEAM)
@@ -945,7 +943,6 @@ INT16 TeamNoLongerSeesMan( UINT8 ubTeam, SOLDIERTYPE *pOpponent, UINT8 ubExclude
      return(FALSE);     // that's all I need to know, get out of here
   }
 
-#ifdef WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
 	if ( bIteration == 0 )
 	{
 		if ( ubTeam == gbPlayerNum && gTacticalStatus.Team[ MILITIA_TEAM ].bTeamActive )
@@ -959,7 +956,6 @@ INT16 TeamNoLongerSeesMan( UINT8 ubTeam, SOLDIERTYPE *pOpponent, UINT8 ubExclude
 			return( TeamNoLongerSeesMan( gbPlayerNum, pOpponent, ubExcludeID, 1 ) );
 		}
 	}
-#endif
 
  // none of my friends is currently seeing the guy, so return success
  return(TRUE);
@@ -1164,11 +1160,7 @@ void EndMuzzleFlash( SOLDIERTYPE * pSoldier )
 
 	pSoldier->fMuzzleFlash = FALSE;
 
-#ifdef WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
 	if ( pSoldier->bTeam != gbPlayerNum && pSoldier->bTeam != MILITIA_TEAM )
-#else
-	if ( pSoldier->bTeam != gbPlayerNum )
-#endif
 	{
 		pSoldier->bVisible = 0; // indeterminate state
 	}
@@ -1189,11 +1181,7 @@ void EndMuzzleFlash( SOLDIERTYPE * pSoldier )
 					  HandleManNoLongerSeen( pOtherSoldier, pSoldier, &(pOtherSoldier->bOppList[ pSoldier->ubID ]), &(gbPublicOpplist[ pOtherSoldier->bTeam ][ pSoldier->ubID ] ) );
 				  }
 				  // else this person is still seen, if the looker is on our side or the militia the person should stay visible
-			  #ifdef WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
 				  else if ( pOtherSoldier->bTeam == gbPlayerNum || pOtherSoldier->bTeam == MILITIA_TEAM )
-			  #else
-				  else if ( pOtherSoldier->bTeam == gbPlayerNum )
-			  #endif
 				  {
 					  pSoldier->bVisible = TRUE; // yes, still seen
 				  }
@@ -1531,11 +1519,7 @@ void HandleManNoLongerSeen( SOLDIERTYPE * pSoldier, SOLDIERTYPE * pOpponent, INT
 			*pbPublOL = SEEN_THIS_TURN;
 
 			// ATE: Set visiblity to 0
-#ifdef WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
 			if ( (pSoldier->bTeam == gbPlayerNum || pSoldier->bTeam == MILITIA_TEAM) && !(pOpponent->bTeam == gbPlayerNum || pOpponent->bTeam == MILITIA_TEAM ) )
-#else
-			if ( pSoldier->bTeam == gbPlayerNum && pOpponent->bTeam != gbPlayerNum )
-#endif
 			{
 				pOpponent->bVisible = 0;
 			}
@@ -2272,11 +2256,7 @@ else
 
  // if looker is on local team, and the enemy was invisible or "maybe"
  // visible just prior to this
-#ifdef WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
  if ( ( PTR_OURTEAM || (pSoldier->bTeam == MILITIA_TEAM) ) && (pOpponent->bVisible <= 0))
-#else
- if (PTR_OURTEAM && (pOpponent->bVisible <= 0))
-#endif
   {
    // if opponent was truly invisible, not just turned off temporarily (FALSE)
    if (pOpponent->bVisible == -1)
@@ -2426,11 +2406,7 @@ void OtherTeamsLookForMan(SOLDIERTYPE *pOpponent)
 	//NumMessage("OtherTeamsLookForMan, guy#",oppPtr->guynum);
 
 	// if the guy we're looking for is NOT on our team AND is currently visible
-#ifdef WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
 	if ((pOpponent->bTeam != gbPlayerNum && pOpponent->bTeam != MILITIA_TEAM) && (pOpponent->bVisible >= 0 && pOpponent->bVisible < 2) && pOpponent->bLife)
-#else
-	if ((pOpponent->bTeam != gbPlayerNum) && (pOpponent->bVisible >= 0 && pOpponent->bVisible < 2) && pOpponent->bLife)
-#endif
 	{
 		// assume he's no longer visible, until one of our mercs sees him again
 		pOpponent->bVisible = 0;
@@ -2546,9 +2522,6 @@ void RemoveOneOpponent(SOLDIERTYPE *pSoldier)
 	 if( pSoldier->bLife > 0 )
 	 {
 		 DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("Oppcnt for %d (%s) tried to go below 0", pSoldier->ubID, pSoldier->name ) );
-		 #ifdef JA2BETAVERSION
-			ScreenMsg( MSG_FONT_YELLOW, MSG_UI_FEEDBACK,  L"Opponent counter dropped below 0 for person %d (%s).  Please inform Sir-tech of this, and what has just been happening in the game.", pSoldier->ubID, pSoldier->name );
-		 #endif
 	 }
 	 pSoldier->bOppCnt = 0;
  }
@@ -2921,11 +2894,7 @@ void BetweenTurnsVisibilityAdjustments(void)
 	{
 		if (pSoldier->bActive && pSoldier->bInSector && pSoldier->bLife)
 		{
-#ifdef WE_SEE_WHAT_MILITIA_SEES_AND_VICE_VERSA
 			if (!PTR_OURTEAM && pSoldier->bTeam != MILITIA_TEAM)
-#else
-			if (!PTR_OURTEAM)
-#endif
 			{
 				// check if anyone on our team currently sees him (exclude NOBODY)
 				if (TeamNoLongerSeesMan(gbPlayerNum,pSoldier,NOBODY,0))
@@ -5871,10 +5840,6 @@ void TellPlayerAboutNoise( SOLDIERTYPE *pSoldier, UINT8 ubNoiseMaker, INT16 sGri
 
 	if ( ubNoiseMaker != NOBODY && pSoldier->bTeam == gbPlayerNum && pSoldier->bTeam == Menptr[ubNoiseMaker].bTeam )
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( MSG_FONT_RED, MSG_ERROR, L"ERROR! TAKE SCREEN CAPTURE AND TELL CAMFIELD NOW!" );
-			ScreenMsg( MSG_FONT_RED, MSG_ERROR, L"%s (%d) heard noise from %s (%d), noise at %dL%d, type %d", pSoldier->name, pSoldier->ubID, Menptr[ubNoiseMaker].name, ubNoiseMaker, sGridNo, bLevel, ubNoiseType );
-		#endif
 	}
 
 	if ( bLevel == pSoldier->bLevel || ubNoiseType == NOISE_EXPLOSION || ubNoiseType == NOISE_SCREAM || ubNoiseType == NOISE_ROCK_IMPACT || ubNoiseType == NOISE_GRENADE_IMPACT )
@@ -6631,14 +6596,6 @@ INT8 GetWatchedLocPoints( UINT8 ubID, INT16 sGridNo, INT8 bLevel )
 	bLoc = FindWatchedLoc( ubID, sGridNo, bLevel );
 	if (bLoc != -1)
 	{
-		#ifdef JA2BETAVERSION
-			/*
-			if (gubWatchedLocPoints[ ubID ][ bLoc ] > 1)
-			{
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Soldier %d getting %d points for interrupt in watched location", ubID, gubWatchedLocPoints[ ubID ][ bLoc ] - 1 );
-			}
-			*/
-		#endif
 		// one loc point is worth nothing, so return number minus 1
 
 		// experiment with 1 loc point being worth 1 point

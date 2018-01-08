@@ -207,9 +207,6 @@ void HandleSelectMercSlot( UINT8 ubPanelSlot, INT8 bCode );
 void EscapeUILock( );
 //JA25 void TestCapture( );
 
-#ifdef JA2BETAVERSION
-void ToggleMapEdgepoints();
-#endif
 
 void HandleStealthChangeFromUIKeys( );
 
@@ -1689,12 +1686,6 @@ Ja25 No meanwhiles
 			}
 			else if ( InputEvent.usKeyState & CTRL_DOWN )
       {
-#ifdef JA2BETAVERSION
-				if ( CHEATER_CHEAT_LEVEL( ) )
-				{
-					LeaveTacticalScreen( ANIEDIT_SCREEN );
-				}
-#endif
       }
       else
 			{
@@ -2104,12 +2095,6 @@ Ja25:
 					}
 					else if ( fCtrl )
 					{
-#ifdef JA2BETAVERSION
-						if ( CHEATER_CHEAT_LEVEL( ) )
-						{
-							ToggleNPCRecordDisplay();
-						}
-#endif
 					}
 					break;
 
@@ -2250,11 +2235,7 @@ Ja25:
 				case 'f':
 					if( fCtrl )
 					{ 
-#ifdef JA2BETAVERSION
-						if( 1 )
-#else
 						if ( INFORMATION_CHEAT_LEVEL( ) )
-#endif
 						{
 							//Toggle Frame Rate Display
 							gbFPSDisplay = !gbFPSDisplay;
@@ -2674,11 +2655,6 @@ Ja25:  No strategic AI from Ja2
 
 				case 'p':
 
-#ifdef JA2BETAVERSION
-					if( fAlt )
-						ToggleRealTimeConfirm();
-					else
-#endif
 
 							HandleStanceChangeFromUIKeys( ANIM_PRONE );
 					break;
@@ -3720,9 +3696,6 @@ void ObliterateSector()
 	// Kill everybody!
 	cnt = gTacticalStatus.Team[ gbPlayerNum ].bLastID + 1;
 
-	#ifdef JA2BETAVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Obliterating Sector!" );
-	#endif
 
 	for ( pTSoldier = MercPtrs[ cnt ]; cnt < MAX_NUM_SOLDIERS; pTSoldier++, cnt++ )
 	{
@@ -4487,41 +4460,7 @@ void EscapeUILock( )
 	UIHandleLUIEndLock( NULL );
 }
 
-#ifdef JA2BETAVERSION
-#include "Map Edgepoints.h"
-void ToggleMapEdgepoints()
-{
-	#ifdef JA2EDITOR
-		static BOOLEAN fToggleEdgepointDisplay = FALSE;
-		if( fToggleEdgepointDisplay ^= TRUE )
-		{ //Show edgepoints
-			ShowMapEdgepoints();
-		}
-		else
-		{ //Hide edgepoints
-			HideMapEdgepoints();
-		}
-		SetRenderFlags( RENDER_FLAG_FULL );
-	#endif
-}
-#endif
 
-#ifdef JA2BETAVERSION
-BOOLEAN gfMercsNeverQuit = FALSE;
-void ToggleMercsNeverQuit()
-{
-	if( gfMercsNeverQuit )
-	{
-		gfMercsNeverQuit = FALSE;
-		ScreenMsg( FONT_RED, MSG_BETAVERSION, L"Merc contract expiring enabled." );
-	}
-	else
-	{
-		gfMercsNeverQuit ^= TRUE;
-		ScreenMsg( FONT_RED, MSG_BETAVERSION, L"Merc contract expiring disabled." );
-	}
-}
-#endif
 
 
 void HandleStanceChangeFromUIKeys( UINT8 ubAnimHeight )

@@ -2046,18 +2046,14 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
         {
 					swprintf( zDialogueText, L"I have no text in the EDT file ( %d ) %S", usQuoteNum, pFilename );
 
-#ifndef JA2BETAVERSION
           return( FALSE );
-#endif
         }
 			} 
 			else
 			{
 				swprintf( zDialogueText, L"I have no text in the file ( %d ) %S", usQuoteNum , pFilename );
 
-#ifndef JA2BETAVERSION
           return( FALSE );
-#endif
 			}
    }
 
@@ -2077,13 +2073,9 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
 
 		sprintf( sString, "ERROR PLEASE REPORT THIS!!: Missing file for character # %d, quote # %d", ubCharacterNum, usQuoteNum );
 
-#ifndef JA2BETAVERSION
     ShowCursor(TRUE);
     ShowCursor(TRUE);
     ShutdownWithErrorBox( sString );
-#else
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"ERROR PLEASE REPORT THIS!!: Missing file for character # %d, quote # %d", ubCharacterNum, usQuoteNum );
-#endif
   }
 
 

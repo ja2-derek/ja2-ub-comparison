@@ -207,9 +207,6 @@ void HandleSelectMercSlot( UINT8 ubPanelSlot, INT8 bCode );
 void EscapeUILock( );
 void TestCapture( );
 
-#ifdef JA2BETAVERSION
-void ToggleMapEdgepoints();
-#endif
 
 void HandleStealthChangeFromUIKeys( );
 
@@ -1686,12 +1683,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 			}
 			else if ( InputEvent.usKeyState & CTRL_DOWN )
       {
-#ifdef JA2BETAVERSION
-				if ( CHEATER_CHEAT_LEVEL( ) )
-				{
-					LeaveTacticalScreen( ANIEDIT_SCREEN );
-				}
-#endif
       }
       else
 			{
@@ -2085,12 +2076,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 					}
 					else if ( fCtrl )
 					{
-#ifdef JA2BETAVERSION
-						if ( CHEATER_CHEAT_LEVEL( ) )
-						{
-							ToggleNPCRecordDisplay();
-						}
-#endif
 					}
 					break;
 
@@ -2217,12 +2202,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 							ToggleViewAllItems();
 						}
 					}
-#ifdef JA2BETAVERSION
-					else if( fCtrl )
-					{
-						ToggleMapEdgepoints();
-					}
-#endif
 					else
 					{
 						SOLDIERTYPE *pSoldier;
@@ -2490,19 +2469,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 						}
 						break;
 
-				#ifdef JA2BETAVERSION
-				case 'L':
-					gfDisplayStrategicAILogs ^= TRUE;
-					if( gfDisplayStrategicAILogs )
-					{
-						ScreenMsg( FONT_LTKHAKI, MSG_INTERFACE, L"Strategic AI Log visually enabled." );
-					}
-					else
-					{
-						ScreenMsg( FONT_LTKHAKI, MSG_INTERFACE, L"Strategic AI Log visually disabled." );
-					}
-					break;
-				#endif
 
 				case 'l':
 
@@ -2722,11 +2688,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 
 				case 'p':
 
-#ifdef JA2BETAVERSION
-					if( fAlt )
-						ToggleRealTimeConfirm();
-					else
-#endif
 
 							HandleStanceChangeFromUIKeys( ANIM_PRONE );
 					break;
@@ -3740,9 +3701,6 @@ void ObliterateSector()
 	// Kill everybody!
 	cnt = gTacticalStatus.Team[ gbPlayerNum ].bLastID + 1;
 
-	#ifdef JA2BETAVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Obliterating Sector!" );
-	#endif
 
 	for ( pTSoldier = MercPtrs[ cnt ]; cnt < MAX_NUM_SOLDIERS; pTSoldier++, cnt++ )
 	{
@@ -4503,41 +4461,7 @@ void EscapeUILock( )
 	UIHandleLUIEndLock( NULL );
 }
 
-#ifdef JA2BETAVERSION
-#include "Map Edgepoints.h"
-void ToggleMapEdgepoints()
-{
-	#ifdef JA2EDITOR
-		static BOOLEAN fToggleEdgepointDisplay = FALSE;
-		if( fToggleEdgepointDisplay ^= TRUE )
-		{ //Show edgepoints
-			ShowMapEdgepoints();
-		}
-		else
-		{ //Hide edgepoints
-			HideMapEdgepoints();
-		}
-		SetRenderFlags( RENDER_FLAG_FULL );
-	#endif
-}
-#endif
 
-#ifdef JA2BETAVERSION
-BOOLEAN gfMercsNeverQuit = FALSE;
-void ToggleMercsNeverQuit()
-{
-	if( gfMercsNeverQuit )
-	{
-		gfMercsNeverQuit = FALSE;
-		ScreenMsg( FONT_RED, MSG_BETAVERSION, L"Merc contract expiring enabled." );
-	}
-	else
-	{
-		gfMercsNeverQuit ^= TRUE;
-		ScreenMsg( FONT_RED, MSG_BETAVERSION, L"Merc contract expiring disabled." );
-	}
-}
-#endif
 
 
 void HandleStanceChangeFromUIKeys( UINT8 ubAnimHeight )

@@ -11,17 +11,9 @@ extern	UINT8			gubCheatLevel;
 
 // GLOBALS FOR CHEAT MODE......
 #ifdef GERMAN
-	#if defined JA2BETAVERSION
-		#define						STARTING_CHEAT_LEVEL						5
-	#else
 		#define						STARTING_CHEAT_LEVEL						0
-	#endif
 #else
-	#if defined JA2BETAVERSION
 		#define						STARTING_CHEAT_LEVEL						0
-	#else
-		#define						STARTING_CHEAT_LEVEL						0
-	#endif
 #endif
 
 

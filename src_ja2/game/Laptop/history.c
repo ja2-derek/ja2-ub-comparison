@@ -1024,12 +1024,6 @@ void ProcessHistoryTransactionString(STR16 pString, HistoryUnitPtr pHistory)
 		case HISTORY_MERC_KILLED:
 			if( pHistory->ubSecondCode != NO_PROFILE )
 				swprintf(pString, pHistoryStrings[ HISTORY_MERC_KILLED ], gMercProfiles[pHistory->ubSecondCode].zName );
-#ifdef JA2BETAVERSION
-			else
-			{
-				swprintf(pString, pHistoryStrings[ HISTORY_MERC_KILLED ], L"ERROR!!!  NO_PROFILE" );
-			}
-#endif
 			break;
 
 		case HISTORY_HIRED_MERC_FROM_MERC:

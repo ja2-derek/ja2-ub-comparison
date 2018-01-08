@@ -25,11 +25,6 @@
 
 // Do combinations
 
-#ifdef JA2BETAVERSION
-	#define SGP_DEBUG
-	#define	FORCE_ASSERTS_ON
-	#define SGP_VIDEO_DEBUGGING
-#endif
 
 //#define CRIPPLED_VERSION
 

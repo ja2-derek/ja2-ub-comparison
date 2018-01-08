@@ -10,13 +10,6 @@
 //	Keeps track of the game version
 //
  
-#ifdef JA2BETAVERSION
-
-//BETA/TEST BUILD VERSION
-
-	INT16		zVersionLabel[16]		= { L"v.1.01" }; 
-
-#else
 
 	#ifdef GERMAN 
 
@@ -31,7 +24,6 @@
 	#endif
 
 
-#endif
 
 INT8		czVersionNumber[16]	= { "Build 02.12.01" };
 INT16		zTrackingNumber[16]	= { L"Y" };

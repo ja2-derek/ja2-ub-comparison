@@ -76,10 +76,6 @@ STR16 gzJA2ScreenNames[] =
 	L"DEMO_EXIT_SCREEN",
 	L"INTRO_SCREEN",
 	L"CREDIT_SCREEN",
-#ifdef JA2BETAVERSION
-	L"AIVIEWER_SCREEN",
-	L"QUEST_DEBUG_SCREEN",
-#endif
 };
 #endif
 
@@ -209,25 +205,6 @@ void ShutdownMemoryManager( void )
 		DbgMessage( TOPIC_MEMORY_MANAGER, DBG_LEVEL_0, String(" "));
 
 		#ifndef EXTREME_MEMORY_DEBUGGING
-			#ifdef JA2BETAVERSION
-			{
-				FILE *fp;
-				fp = fopen( "MemLeakInfo.txt", "a" );
-				if( fp )
-				{
-					fprintf( fp, "\n\n" );
-					fprintf( fp, ">>>>> MEMORY LEAK DETECTED!!! <<<<<\n" );
-					fprintf( fp, "  %d bytes memory total was allocated\n", guiMemAlloced );
-					fprintf( fp, "- %d bytes memory total was freed\n", guiMemFreed );
-					fprintf( fp, "_______________________________________________\n" );
-					fprintf( fp, "%d bytes memory total STILL allocated\n", guiMemTotal );
-					fprintf( fp, "%d memory blocks still allocated\n", MemDebugCounter );
-					fprintf( fp, "guiScreenExitedFrom = %S\n", gzJA2ScreenNames[ gMsgBox.uiExitScreen ] );
-					fprintf( fp, "\n\n" );
-				}
-				fclose( fp );
-			}
-			#endif
 		#endif
 	}
 

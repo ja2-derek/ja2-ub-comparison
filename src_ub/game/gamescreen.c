@@ -394,10 +394,6 @@ void InternalLeaveTacticalScreen( UINT32 uiNewScreen )
 
 extern INT32 iInterfaceDialogueBox;
 
-#ifdef JA2BETAVERSION
-	extern BOOLEAN ValidateSoldierInitLinks( UINT8 ubCode );
-	extern BOOLEAN gfDoDialogOnceGameScreenFadesIn;
-#endif
 
 UINT32  MainGameScreenHandle(void)
 {
@@ -417,9 +413,6 @@ UINT32  MainGameScreenHandle(void)
 
 
 	
-#ifdef JA2BETAVERSION
-	DebugValidateSoldierData( );
-#endif
 
 	if ( HandleAutoBandage( ) )
 	{
@@ -634,9 +627,6 @@ UINT32  MainGameScreenHandle(void)
 		// Unset
 		guiTacticalInterfaceFlags &= (~INTERFACE_MAPSCREEN );
 
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_ORANGE, MSG_BETAVERSION, L"MAPSCREEN_INTERFACE flag set: Please remember how you entered Tactical." );
-		#endif
 	}
  
 	if ( HandleFadeOutCallback( ) )
@@ -658,12 +648,6 @@ UINT32  MainGameScreenHandle(void)
 		HandleCannotAffordNpcMsgBox();
 	}
 
-	#ifdef JA2BETAVERSION
-		if( gfDoDialogOnceGameScreenFadesIn )
-		{
-			ValidateSoldierInitLinks( 4 );
-		}
-	#endif
 
 	HandleHeliDrop( );
 

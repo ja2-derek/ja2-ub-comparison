@@ -78,16 +78,9 @@ void			RemoveAllEnemySoldierInitListLinks();
 INT16			GetGridNoEnemyWillSeekWhenAttacking( INT8 bSaiSector );
 void			SetH11NumEnemiesInSector();
 BOOLEAN		HaveMercsEverBeenInComplex();
-#ifdef JA2BETAVERSION
-BOOLEAN		Ja25BetaDateToInvalidateExe();
-#endif
 //ppp
 //void CopyJa25SectorAiData( JA25_SECTOR_AI *pDest, JA25_SECTOR_AI *pSource );
 
-#ifdef JA2BETAVERSION
-	BOOLEAN RecordJa25StrategicAiDecisions( INT16 sSectorAttacked, UINT8 ubNumEnemies );
-	BOOLEAN OutputJA25SaiString( HWFILE hFile, CHAR *pString );
-#endif
 
 
 
@@ -137,9 +130,6 @@ void InitJa25StrategicAi()
 		}
 	#endif
 
-	#ifdef JA2BETAVERSION
-		InitJa25StrategicAiDecisions( FALSE );
-	#endif
 
 	// Init and memset AI struct
 	giNumJA25Sectors = NUM_CAMPAIGN_JA25_SECTORS;
@@ -2106,12 +2096,6 @@ void JA25_HandleUpdateOfStrategicAi()
 	}
 
 	//Debug Check to see if the date is valid
-#ifdef JA2BETAVERSION
-//	if( !Ja25BetaDateToInvalidateExe() )
-//	{
-//		Assert( 0 );
-//	}
-#endif
 
 	//Check wether the minimum prbability is above the current probabilty
 	if( gJa25AiSectorStruct[ bSectorToAttackID ].ubMinimumProbabiltyBeforeAttack >= gJa25AiSectorStruct[ bSectorToAttackID ].bCurrentProbability )
@@ -2198,9 +2182,6 @@ void JA25_HandleUpdateOfStrategicAi()
 				HandleAddEnemiesToSectorPlayerIsntIn( bSectorToAttackID, ubNumEnemies );
 			}
 
-			#ifdef JA2BETAVERSION
-				RecordJa25StrategicAiDecisions( bSectorToAttackID, ubNumEnemies );
-			#endif
 
 		}
 	}
@@ -2482,105 +2463,6 @@ BOOLEAN AreAllPlayerMercTraversingBetweenSectors()
 }
 
 
-#ifdef JA2BETAVERSION
-
-BOOLEAN RecordJa25StrategicAiDecisions( INT16 sSectorAttacked, UINT8 ubNumEnemies )
-{
-	CHAR8			zOutputString[512];
-	HWFILE		hFile;
-
-	//open up the debug file
-	hFile = FileOpen( JA25_SAI_DEBUG_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE );
-	if( !hFile )
-	{
-		FileClose( hFile );
-		return( FALSE );
-	}
-
-	//move the end of the file
-	FileSeek( hFile, 0, FILE_SEEK_FROM_END );
-
-	OutputJA25SaiString( hFile, "\n\n---  Strategic Ai Attack ---\n" );
-
-	//Sector
-	sprintf( zOutputString, "Sector Attacked:         %c%d: Level %d\n", 
-															'A' + SECTORY( gJa25AiSectorStruct[ sSectorAttacked ].iSectorID ) - 1,
-															SECTORX( gJa25AiSectorStruct[ sSectorAttacked ].iSectorID ),
-															gJa25AiSectorStruct[ sSectorAttacked ].bSectorZ );
-	OutputJA25SaiString( hFile, zOutputString );
-
-	//Num enemies
-	sprintf( zOutputString, "Num Enemies:             %d\n", ubNumEnemies );
-	OutputJA25SaiString( hFile, zOutputString );
-
-	//Time since last attack
-	sprintf( zOutputString, "Time Since Last Attack:  %d hours\n", ( GetWorldTotalMin() - gJa25StrategicAi.uiTimeOfLastBattleInMinutes ) / 60  );
-	OutputJA25SaiString( hFile, zOutputString );
-
-	//Probability
-	sprintf( zOutputString, "Probability of Attack:   %d/%d\n", gJa25AiSectorStruct[ sSectorAttacked ].bProbabilityOfAttacking, gJa25AiSectorStruct[ sSectorAttacked ].bCurrentProbability  );
-	OutputJA25SaiString( hFile, zOutputString );
-
-	FileClose( hFile );
-
-	return( TRUE );
-}
-
-BOOLEAN InitJa25StrategicAiDecisions( BOOLEAN fLoadedGame )
-{
-	HWFILE		hFile;
-
-	//open up the debug file
-	hFile = FileOpen( JA25_SAI_DEBUG_FILE, FILE_ACCESS_WRITE | FILE_OPEN_ALWAYS, FALSE );
-	if( !hFile )
-	{
-		FileClose( hFile );
-		return( FALSE );
-	}
-
-	if( fLoadedGame )
-		OutputJA25SaiString( hFile, "\n\n\n\n\n\n****** Loaded Game ******\n\n");
-	else
-		OutputJA25SaiString( hFile, "\n\n\n\n\n\n****** New Game ******\n\n");
-
-	switch( gGameOptions.ubDifficultyLevel )
-	{
-		case DIF_LEVEL_EASY:
-			OutputJA25SaiString( hFile, "Easy Difficulty\n");
-			break;
-		case DIF_LEVEL_MEDIUM:
-			OutputJA25SaiString( hFile, "Normal Difficulty\n");
-			break;
-		case DIF_LEVEL_HARD:
-			OutputJA25SaiString( hFile, "Hard Difficulty\n");
-			break;
-	}
-
-	OutputJA25SaiString( hFile, "\n\n\n");
-
-	FileClose( hFile );
-
-	return( FALSE );
-}
-
-
-BOOLEAN OutputJA25SaiString( HWFILE hFile, CHAR *pString )
-{
-	UINT32 uiNumBytesWritten;
-	UINT32 uiStrLen;
-
-	uiStrLen = strlen( pString );
-
-	FileWrite( hFile, pString, uiStrLen, &uiNumBytesWritten );
-	if( uiNumBytesWritten != uiStrLen )
-	{
-		return( FALSE );
-	}
-
-	return( TRUE );
-}
-
-#endif
 
 UINT32 GetMinimumTimeBetweenAttacks()
 {
@@ -2874,23 +2756,6 @@ BOOLEAN	HaveMercsEverBeenInComplex()
 	return( FALSE );
 }
 
-#ifdef JA2BETAVERSION
-BOOLEAN Ja25BetaDateToInvalidateExe()
-{
-	SYSTEMTIME sSystemTime;
-
-	GetSystemTime( &sSystemTime );
-
-
-	//if according to the system clock, we are past May 12, 2000, quit the game
-	if( sSystemTime.wYear >= 2000 && sSystemTime.wMonth >= 5 && sSystemTime.wDay >= 12 )
-	{
-		return( FALSE );
-	}
-
-	return( TRUE );
-}
-#endif
 
 
 void AddJA25AIDataToSector( JA25_SECTOR_AI *pSectorAIInfo )

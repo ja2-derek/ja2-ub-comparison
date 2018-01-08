@@ -131,9 +131,6 @@ extern void ReduceAmmoDroppedByNonPlayerSoldiers( SOLDIERTYPE *pSoldier, INT32 i
 
 extern void StripEnemyDetailedPlacementsIfSectorWasPlayerLiberated();
 
-#ifdef JA2BETAVERSION
-extern BOOLEAN ValidateSoldierInitLinks( UINT8 ubCode );
-#endif
 
 
 void	SynchronizeItemTempFileVisbleItemsToSectorInfoVisbleItems( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fLoadingGame );
@@ -3089,15 +3086,6 @@ void SynchronizeItemTempFileVisbleItemsToSectorInfoVisbleItems( INT16 sMapX, INT
 		pTotalSectorList = NULL;
 	}
 
-	#ifdef JA2BETAVERSION	
-	if( fLoadingGame && guiSaveGameVersion >= 86 )
-	{
-		UINT32 uiReported = GetNumberOfVisibleWorldItemsFromSectorStructureForSector( sMapX, sMapY, bMapZ );
-
-		if( uiItemCount != uiReported )
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"SynchronizeItemTempFile()  Error!  Reported %d, should be %d", uiReported, uiItemCount  );
-	}
-	#endif
 
 	//record the number of items
 	SetNumberOfVisibleWorldItemsInSectorStructureForSector( sMapX, sMapY, bMapZ, uiItemCount );

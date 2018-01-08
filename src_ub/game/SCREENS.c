@@ -43,9 +43,6 @@ Screens GameScreens[MAX_SCREENS] =
 	{ CMMercChoosingInit,					CMMercChoosingHandle,					CMMercChoosingShutdown				},
 #endif
 
-#ifdef JA2BETAVERSION
-	{ AIViewerScreenInit,					AIViewerScreenHandle,					AIViewerScreenShutdown			},
-#endif
 
 	{ QuestDebugScreenInit,				QuestDebugScreenHandle,				QuestDebugScreenShutdown		},
 	{ ImportJa2SaveScreenInit,		ImportJa2SaveScreenHandle,		ImportJa2SaveScreenShutdown		},

@@ -55,27 +55,6 @@ void HandleNewScreenChange( UINT32 uiNewScreen, UINT32 uiOldScreen );
 // The InitializeGame function is responsible for setting up all data and Gaming Engine
 // tasks which will run the game
 
-#ifdef JA2BETAVERSION
-BOOLEAN gubReportMapscreenLock = 0;
-void ReportMapscreenErrorLock()
-{
-	switch( gubReportMapscreenLock )
-	{
-		case 1:
-			DoScreenIndependantMessageBox( L"You have just loaded the game which is in a state that you shouldn't be able to.  You can still play, but there should be a sector with enemies co-existing with mercs.  Please don't report that.", MSG_BOX_FLAG_OK, NULL );
-			fDisableDueToBattleRoster = FALSE;
-			fDisableMapInterfaceDueToBattle = FALSE;
-			gubReportMapscreenLock = 0;
-			break;
-		case 2:
-			DoScreenIndependantMessageBox( L"You have just saved the game which is in a state that you shouldn't be able to.  Please report circumstances (ex:  merc in other sector pipes up about enemies), etc.  Autocorrected, but if you reload the save, don't report the error appearing in load.", MSG_BOX_FLAG_OK, NULL );
-			fDisableDueToBattleRoster = FALSE;
-			fDisableMapInterfaceDueToBattle = FALSE;
-			gubReportMapscreenLock = 0;
-			break;
-	}
-}
-#endif
 
 BOOLEAN InitializeGame(void)
 { 
@@ -297,12 +276,6 @@ void GameLoop(void)
 
 	UpdateClock();
 
-	#ifdef JA2BETAVERSION
-	if( gubReportMapscreenLock )
-	{
-		ReportMapscreenErrorLock();
-	}
-	#endif
 
 } 
 
@@ -368,14 +341,6 @@ void HandleShortCutExitState( void )
 	{
 
 		// check if error or editor
-#ifdef JA2BETAVERSION
-		if ( guiCurrentScreen == AIVIEWER_SCREEN || guiCurrentScreen == QUEST_DEBUG_SCREEN )
-		{
-			// then don't prompt
-			gfProgramIsRunning = FALSE;
-			return;
-		}
-#endif
 
 		if( ( guiCurrentScreen == ERROR_SCREEN ) || ( guiCurrentScreen == EDIT_SCREEN ) || ( guiCurrentScreen == DEBUG_SCREEN ) )
 		{

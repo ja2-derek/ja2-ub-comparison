@@ -613,9 +613,7 @@ void ScreenMsg( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	if( ubPriority == MSG_BETAVERSION )
 	{
 		usColor = BETAVERSION_COLOR;
-		#ifndef JA2BETAVERSION
 				return;
-		#endif
 
 	}
 
@@ -731,9 +729,7 @@ void TacticalScreenMsg( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	if( ubPriority == MSG_BETAVERSION )
 	{
 		usColor = BETAVERSION_COLOR;
-		#ifndef JA2BETAVERSION
 				return;
-		#endif
 		WriteMessageToFile( DestString );
 
 	}
@@ -885,9 +881,7 @@ void MapScreenMessage( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	if( ubPriority == MSG_BETAVERSION )
 	{
 		usColor = BETAVERSION_COLOR;
-		#ifndef JA2BETAVERSION
 				return;
-		#endif
 
 		WriteMessageToFile( DestString );
 	}
@@ -1438,21 +1432,6 @@ void ClearTacticalMessageQueue( void )
 
 void WriteMessageToFile( STR16 pString )
 {
-#ifdef JA2BETAVERSION
-
-	FILE *fp;
-	
-	fp = fopen( "DebugMessage.txt", "a" );
-	
-	if( fp == NULL )
-	{
-		return;	
-	}
-	
-	fprintf( fp, "%S\n", pString );
-	fclose( fp );
-
-#endif
 }
 
 

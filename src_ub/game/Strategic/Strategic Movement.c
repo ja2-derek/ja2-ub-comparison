@@ -700,28 +700,6 @@ GROUP* CreateNewEnemyGroupDepartingFromSector( UINT32 uiSector, UINT8 ubNumAdmin
 	pNew->ubCreatedSectorID = pNew->ubOriginalSector;
 	pNew->ubSectorIDOfLastReassignment = 255;
 
-#ifdef JA2BETAVERSION
-	{
-		UINT16 str[ 512 ];
-		//if( PlayerMercsInSector( pNew->ubSectorX, pNew->ubSectorY, 0 ) || CountAllMilitiaInSector( pNew->ubSectorX, pNew->ubSectorY ) )
-		//{
-		///	swprintf( str, L"Attempting to send enemy troops from player occupied location.  "
-		//								 L"Please ALT+TAB out of the game before doing anything else and send 'Strategic Decisions.txt' "
-		//								 L"and this message.  You'll likely need to revert to a previous save.  If you can reproduce this "
-		//								 L"with a save close to this event, that would really help me! -- KM:0" );
-		//	DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, NULL );
-		//}
-		if( pNew->ubGroupSize > 25 )
-		{
-			swprintf( str, L"Strategic AI warning:  Creating an enemy group containing %d soldiers "
-										 L"(%d admins, %d troops, %d elites) in sector %c%d.  This message is a temporary test message "
-										 L"to evaluate a potential problems with very large enemy groups.",
-										 pNew->ubGroupSize, ubNumAdmins, ubNumTroops, ubNumElites,
-										 pNew->ubSectorY + 'A' - 1, pNew->ubSectorX );
-			DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, NULL );
-		}
-	}
-#endif
 
 	if( AddGroupToList( pNew ) )
 		return pNew;
@@ -1307,9 +1285,6 @@ BOOLEAN AttemptToMergeSeparatedGroups( GROUP *pGroup, BOOLEAN fDecrementTraversa
 	SOLDIERTYPE *pSoldier = NULL, *pCharacter = NULL;
 	PLAYERGROUP *pPlayer = NULL;
 	BOOLEAN fSuccess = FALSE;
-	#ifdef JA2BETAVERSION
-		INT32 counter = 0;	
-	#endif
 	return FALSE;
 #if 0
 	//First, make sure that we have a player group that isn't empty
@@ -1370,14 +1345,6 @@ BOOLEAN AttemptToMergeSeparatedGroups( GROUP *pGroup, BOOLEAN fDecrementTraversa
 							}
 							while( pGroup->ubGroupSize && curr->ubGroupSize < 6 )
 							{ //while there is room in the new group, move one soldier at a time automatically.
-								#ifdef JA2BETAVERSION
-									counter++;
-									if( counter > 100 )
-									{
-										AssertMsg( FALSE, L"Aborting infinite loop in merge group code #2. (KM : 1)" );
-										return FALSE;
-									}
-								#endif
 								if( curr->pPlayerList->pSoldier->bAssignment < ON_DUTY )
 								{
 									RemoveCharacterFromSquads( pSoldier );
@@ -1427,14 +1394,6 @@ BOOLEAN AttemptToMergeSeparatedGroups( GROUP *pGroup, BOOLEAN fDecrementTraversa
 							}
 							while( curr->ubGroupSize && pGroup->ubGroupSize < 6 )
 							{ //while there is room in the new group, move one soldier at a time automatically.
-								#ifdef JA2BETAVERSION
-									counter++;
-									if( counter > 100 )
-									{
-										AssertMsg( FALSE, L"Aborting infinite loop in merge group code #3. (KM : 1)" );
-										return FALSE;
-									}
-								#endif
 								pSoldier = curr->pPlayerList->pSoldier;
 								if( pGroup->pPlayerList->pSoldier->bAssignment < ON_DUTY )
 								{
@@ -4552,11 +4511,6 @@ void AddFuelToVehicle( SOLDIERTYPE *pSoldier, SOLDIERTYPE *pVehicle )
 	pItem = &pSoldier->inv[ HANDPOS ];
 	if( pItem->usItem != GAS_CAN )
 	{
-		#ifdef JA2BETAVERSION
-			UINT16 str[ 100 ];
-			swprintf( str, L"%s is supposed to have gas can in hand.  ATE:0", pSoldier->name );
-			DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, NULL );
-		#endif
 		return;
 	}
 	//Soldier has gas can, so now add gas to vehicle while removing gas from the gas can.
@@ -5281,28 +5235,6 @@ GROUP* CreateNewEnemyGroupDepartingFromSectorUsingZLevel( UINT32 uiSector, UINT8
 	pNew->ubCreatedSectorID = pNew->ubOriginalSector;
 	pNew->ubSectorIDOfLastReassignment = 255;
 
-#ifdef JA2BETAVERSION
-	{
-		UINT16 str[ 512 ];
-		//if( PlayerMercsInSector( pNew->ubSectorX, pNew->ubSectorY, pNew->ubSectorZ ) || CountAllMilitiaInSector( pNew->ubSectorX, pNew->ubSectorY ) )
-		//{
-		//	swprintf( str, L"Attempting to send enemy troops from player occupied location.  "
-		//								 L"Please ALT+TAB out of the game before doing anything else and send 'Strategic Decisions.txt' "
-		//								 L"and this message.  You'll likely need to revert to a previous save.  If you can reproduce this "
-		//								 L"with a save close to this event, that would really help me! -- KM:0" );
-		//	DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, NULL );
-		//}
-		if( pNew->ubGroupSize > 25 )
-		{
-			swprintf( str, L"Strategic AI warning:  Creating an enemy group containing %d soldiers "
-										 L"(%d admins, %d troops, %d elites) in sector %c%d.  This message is a temporary test message "
-										 L"to evaluate a potential problems with very large enemy groups.",
-										 pNew->ubGroupSize, ubNumAdmins, ubNumTroops, ubNumElites,
-										 pNew->ubSectorY + 'A' - 1, pNew->ubSectorX );
-			DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, NULL );
-		}
-	}
-#endif
 
 	if( AddGroupToList( pNew ) )
 		return pNew;

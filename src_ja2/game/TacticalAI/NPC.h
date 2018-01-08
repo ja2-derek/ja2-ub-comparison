@@ -190,9 +190,6 @@ BOOLEAN NPCWillingToAcceptItem( UINT8 ubNPC, UINT8 ubMerc, OBJECTTYPE * pObj );
 BOOLEAN SaveBackupNPCInfoToSaveGameFile( HWFILE hFile );
 BOOLEAN LoadBackupNPCInfoFromSavedGameFile( HWFILE hFile, UINT32 uiSaveGameVersion );
 
-#ifdef JA2BETAVERSION
-void ToggleNPCRecordDisplay( void );
-#endif
 
 void UpdateDarrelScriptToGoTo( SOLDIERTYPE * pSoldier );
 

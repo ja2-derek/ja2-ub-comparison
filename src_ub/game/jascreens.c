@@ -266,9 +266,6 @@ UINT32 ErrorScreenHandle(void)
 {
   InputAtom  InputEvent;
 	static BOOLEAN	fFirstTime = FALSE;
-#ifdef JA2BETAVERSION
-	UINT16 str[256];
-#endif
 
 	// For quick setting of new video stuff / to be changed
 	StartFrameBufferRender( );
@@ -287,14 +284,6 @@ UINT32 ErrorScreenHandle(void)
 	mprintf( 50, 255, L"%S", gubErrorText );
 	SetFontForeground( FONT_LTRED ); 
 
-#ifdef JA2BETAVERSION
-  
-	  if( gubAssertString[0] )
-	  {
-		  swprintf( str, L"%S", gubAssertString );
-		  DisplayWrappedString( 50, 270, 560, 2, FONT12ARIAL, FONT_RED, str, FONT_BLACK, TRUE, LEFT_JUSTIFIED );
-	  }
-#endif
 
 	if ( !fFirstTime )
 	{
@@ -399,10 +388,6 @@ UINT32 InitScreenHandle(void)
 #ifdef JA2UB_PRESS_PREVIEW
 
 		mprintf( 10, 420, L"(Press Preview Version)" );
-
-#elif defined JA2BETAVERSION 
-
-		mprintf( 10, 420, L"(Beta version error reporting enabled)" );
 
 #endif
 

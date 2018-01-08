@@ -3212,20 +3212,12 @@ STR16			zSaveLoadText[] =
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"Сохр.версия была изменена.Сообщите о проблемах.Продолжить?",
-#else
 	L"Попытка загрузки старой версии. Обновить автоматически и загрузить?",
-#endif
 
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"Сохр.версии и версии игры были изменены. Сообщите о проблемах. Продолжить?",
-#else
 	L"Попытка загрузки старой версии. Обновить автоматически и загрузить?",
-#endif
 
 	L"Вы уверены,что хотите записать сох.игру поверх #%d?",
 	L"Вы хотите загрузить игру из ячейки #",
@@ -3680,9 +3672,6 @@ STR16 pMessageStrings[] =
 	L"Багаж прибыл в Драссен.",
 	L"%s должен прибыть в указанное место высадки (сектор %s) в день %d,примерно в %s.",		//first %s is mercs name, next is the sector location and name where they will be arriving in, lastely is the day an the time of arrival
 	L"История обновлена.",
-#ifdef JA2BETAVERSION
-	L"Игра сохранена в ячейку авто-сохранения.",
-#endif
 };
 
 

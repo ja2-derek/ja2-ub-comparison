@@ -976,12 +976,6 @@ BOOLEAN UseGun( SOLDIERTYPE *pSoldier , INT16 sTargetGridNo )
 	// ROLL DICE
 	uiDiceRoll = PreRandom( 100 );
 
-	#ifdef JA2BETAVERSION
-	if ( gfReportHitChances )
-	{
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Hit chance was %ld, roll %ld (range %d)", uiHitChance, uiDiceRoll, PythSpacesAway( pSoldier->sGridNo, pSoldier->sTargetGridNo ) );
-	}
-	#endif
 
 	fGonnaHit = uiDiceRoll <= uiHitChance;
 
@@ -1464,12 +1458,6 @@ BOOLEAN UseHandToHand( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fStea
 		iDiceRoll = (INT32) PreRandom( 100 );
 		//sprintf( gDebugStr, "Hit Chance: %d %d", (int)uiHitChance, uiDiceRoll );
 
-		#ifdef JA2BETAVERSION
-		if ( gfReportHitChances )
-		{
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Hit chance was %ld, roll %ld", iHitChance, iDiceRoll );
-		}
-		#endif
 
 		// GET TARGET XY VALUES
 		ConvertGridNoToCenterCellXY( sTargetGridNo, &sXMapPos, &sYMapPos );
@@ -1553,9 +1541,6 @@ BOOLEAN UseHandToHand( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fStea
 				}
 			}
 
-			#ifdef JA2BETAVERSION
-				DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("@@@@@@@ Freeing up attacker - steal") );
-			#endif
 			FreeUpAttacker( (UINT8) pSoldier->ubID );
 
 		}
@@ -1666,12 +1651,6 @@ BOOLEAN UseThrown( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo )
 
 	uiDiceRoll = PreRandom( 100 );
 
-	#ifdef JA2BETAVERSION
-	if ( gfReportHitChances )
-	{
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Hit chance was %ld, roll %ld (range %d)", uiHitChance, uiDiceRoll, PythSpacesAway( pSoldier->sGridNo, sTargetGridNo ) );
-	}
-	#endif
 
 	if ( pSoldier->bTeam == gbPlayerNum && gTacticalStatus.uiFlags & INCOMBAT )
 	{
@@ -1815,12 +1794,6 @@ BOOLEAN UseLauncher( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo )
 
 	uiDiceRoll = PreRandom( 100 );
 
-	#ifdef JA2BETAVERSION
-	if ( gfReportHitChances )
-	{
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Hit chance was %ld, roll %ld (range %d)", uiHitChance, uiDiceRoll, PythSpacesAway( pSoldier->sGridNo, sTargetGridNo ) );
-	}
-	#endif
 
 
 	if ( Item[ usItemNum ].usItemClass == IC_LAUNCHER )

@@ -1423,9 +1423,6 @@ void CorpseHit( INT16 sGridNo, UINT16 usStructureID )
 	}
 
 	// Twitch the bugger...
-	#ifdef JA2BETAVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Corpse hit" );
-	#endif
 
 	if ( GridNoOnScreen( sBaseGridNo ) )
 	{

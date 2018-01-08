@@ -371,9 +371,6 @@ void InternalDropBlood( INT16 sGridNo, INT8 bLevel, UINT8 ubType, UINT8 ubStreng
 	// ATE: Send warning if dropping blood nowhere....
 	if ( sGridNo == NOWHERE )
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Attempting to drop blood NOWHERE" );
-		#endif
 		return;
 	}
 

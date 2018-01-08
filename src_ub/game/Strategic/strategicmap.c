@@ -1262,10 +1262,6 @@ Ja25 no creatures or militia
 		}
 		else
 		{
-			#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_RED, MSG_ERROR, L"Ambush aborted in sector %c%d -- no center point in map.  LC:1", 
-					gWorldSectorY + 'A' - 1, gWorldSectorX );
-			#endif
 		}
 	}
 
@@ -1605,13 +1601,6 @@ BOOLEAN EnterSector( INT16 sSectorX, INT16 sSectorY , INT8 bSectorZ )
 
 
 	CreateLoadingScreenProgressBar();
-	#ifdef JA2BETAVERSION
-	//set the font
-	SetProgressBarMsgAttributes( 0, FONT12ARIAL, FONT_MCOLOR_WHITE, 0 );
-
-	//Set the tile so we don see the text come up
-	SetProgressBarTextDisplayFlag( 0, TRUE, TRUE, TRUE );
-	#endif
 
 	//CreateProgressBar( 0, 160, 380, 480, 400 );
 
@@ -1903,14 +1892,6 @@ void UpdateMercInSector( SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY, 
 
 				case INSERTION_CODE_PRIMARY_EDGEINDEX:
 					pSoldier->sInsertionGridNo = SearchForClosestPrimaryMapEdgepoint( pSoldier->sPendingActionData2, (UINT8)pSoldier->usStrategicInsertionData );
-					#ifdef JA2BETAVERSION
-					{
-						UINT8 str[256];
-						sprintf( str, "%S's primary insertion gridno is %d using %d as initial search gridno and %d insertion code.", 
-													pSoldier->name, pSoldier->sInsertionGridNo, pSoldier->sPendingActionData2, pSoldier->usStrategicInsertionData );
-						DebugMsg( TOPIC_JA2, DBG_LEVEL_3, str );	
-					}
-					#endif
 					if( pSoldier->sInsertionGridNo == NOWHERE )
 					{
 						ScreenMsg( FONT_RED, MSG_ERROR, L"Main edgepoint search failed for %s -- substituting entrypoint.", pSoldier->name );
@@ -1920,14 +1901,6 @@ void UpdateMercInSector( SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY, 
 					break;
 				case INSERTION_CODE_SECONDARY_EDGEINDEX:
 					pSoldier->sInsertionGridNo = SearchForClosestSecondaryMapEdgepoint( pSoldier->sPendingActionData2, (UINT8)pSoldier->usStrategicInsertionData );
-					#ifdef JA2BETAVERSION
-					{
-						UINT8 str[256];
-						sprintf( str, "%S's isolated insertion gridno is %d using %d as initial search gridno and %d insertion code.", 
-													pSoldier->name, pSoldier->sInsertionGridNo, pSoldier->sPendingActionData2, pSoldier->usStrategicInsertionData );
-						DebugMsg( TOPIC_JA2, DBG_LEVEL_3, str );	
-					}
-					#endif
 					if( pSoldier->sInsertionGridNo == NOWHERE )
 					{
 						ScreenMsg( FONT_RED, MSG_ERROR, L"Isolated edgepont search failed for %s -- substituting entrypoint.", pSoldier->name );
@@ -2384,10 +2357,6 @@ UINT8 SetInsertionDataFromAdjacentMoveDirection( SOLDIERTYPE *pSoldier, UINT8 ub
 			break;
 		default:
 			// Wrong direction given!
-			#ifdef JA2BETAVERSION
-				DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "Improper insertion direction %d given to SetInsertionDataFromAdjacentMoveDirection", ubTacticalDirection ) );							
-				ScreenMsg( FONT_RED, MSG_ERROR, L"Improper insertion direction %d given to SetInsertionDataFromAdjacentMoveDirection", ubTacticalDirection );
-			#endif
 			ubDirection = EAST_STRATEGIC_MOVE;
 			pSoldier->ubStrategicInsertionCode = INSERTION_CODE_WEST;
 	}
@@ -2425,10 +2394,6 @@ UINT8 GetInsertionDataFromAdjacentMoveDirection( UINT8 ubTacticalDirection, INT1
 			break;
 		default:
 			// Wrong direction given!
-			#ifdef JA2BETAVERSION
-				DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "Improper insertion direction %d given to GetInsertionDataFromAdjacentMoveDirection", ubTacticalDirection ) );							
-				ScreenMsg( FONT_RED, MSG_ERROR, L"Improper insertion direction %d given to GetInsertionDataFromAdjacentMoveDirection", ubTacticalDirection );
-			#endif
 			ubDirection = EAST_STRATEGIC_MOVE;
 	}
 
@@ -2465,10 +2430,6 @@ UINT8 GetStrategicInsertionDataFromAdjacentMoveDirection( UINT8 ubTacticalDirect
 			break;
 		default:
 			// Wrong direction given!
-			#ifdef JA2BETAVERSION
-				DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "Improper insertion direction %d given to SetInsertionDataFromAdjacentMoveDirection", ubTacticalDirection ) );							
-				ScreenMsg( FONT_RED, MSG_ERROR, L"Improper insertion direction %d given to GetStrategicInsertionDataFromAdjacentMoveDirection", ubTacticalDirection );
-			#endif
 			ubDirection = EAST_STRATEGIC_MOVE;
 	}
 
@@ -3297,11 +3258,6 @@ void DoneFadeOutAdjacentSector( )
 				}
 				else
 				{
-					#ifdef JA2BETAVERSION
-						UINT8 str[256];
-						sprintf( str, "%S's gridno is NOWHERE, and is attempting to walk into sector.", curr->pSoldier->name );
-						DebugMsg( TOPIC_JA2, DBG_LEVEL_3, str );	
-					#endif
 				}
 			}
 			curr = curr->next;

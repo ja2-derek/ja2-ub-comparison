@@ -1329,12 +1329,6 @@ INT32 GetSizeOfStashInSector( INT16 sMapX, INT16 sMapY, INT16 sMapZ, BOOLEAN fCo
 			MemFree( pTotalSectorList );
 			pTotalSectorList = NULL;
 
-			#ifdef JA2BETAVERSION	
-			if( uiTotalNumberOfItems == 0 )
-			{
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"pTotalSectorList is NOT NULL when uiTotalNumberOfRealItems is %d.", uiTotalNumberOfRealItems );
-			}
-			#endif
 		}
 	}
 
@@ -2097,12 +2091,6 @@ void CheckGridNoOfItemsInMapScreenMapInventory()
 		}
 	}
 
-#ifdef JA2BETAVERSION	
-	if( uiNumFlagsNotSet > 0 )
-	{
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Item with invalid gridno doesnt have flag set.", uiNumFlagsNotSet );
-	}
-#endif
 }
 
 

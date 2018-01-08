@@ -2507,9 +2507,6 @@ BOOLEAN DoesVehicleGroupHaveAnyPassengers( GROUP *pGroup )
 	iVehicleID = GivenMvtGroupIdFindVehicleId( pGroup->ubGroupID );
 	if( iVehicleID == -1 )
 	{
-		#ifdef JA2BETAVERSION
-			AssertMsg( iVehicleID != -1, "DoesVehicleGroupHaveAnyPassengers() for vehicle group.  Invalid iVehicleID." );
-		#endif
 		return FALSE;
 	}
 

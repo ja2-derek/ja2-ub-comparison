@@ -1817,18 +1817,14 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
         {
 					swprintf( zDialogueText, L"I have no text in the EDT file ( %d ) %S", usQuoteNum, pFilename );
 
-#ifndef JA2BETAVERSION
           return( FALSE );
-#endif
         }
 			} 
 			else
 			{
 				swprintf( zDialogueText, L"I have no text in the file ( %d ) %S", usQuoteNum , pFilename );
 
-#ifndef JA2BETAVERSION
           return( FALSE );
-#endif
 			}
    }
 

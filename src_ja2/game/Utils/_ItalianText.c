@@ -3213,20 +3213,12 @@ STR16			zSaveLoadText[] =
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"La versionbe salvata è cambiata. Fateci avere un report, se incontrate problemi. Continuate?",
-#else
 	L"Tentativo di caricare una versione salvata più vecchia. Aggiornate e caricate automaticamente quella salvata?",
-#endif
 
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"La versione salvata e la versione della partita sono cambiate. Fateci avere un report, se incontrate problemi. Continuate?",
-#else
 	L"Tentativo di caricare una vecchia versione salvata. Aggiornate e caricate automaticamente quella salvata?",
-#endif
 
 	L"Siete sicuri di volere sovrascrivere la partita salvata nello slot #%d?",
 	L"Volete caricare la partita dallo slot #",
@@ -3681,9 +3673,6 @@ STR16 pMessageStrings[] =
 	L"Un pacco è arivato a Drassen.",
  	L"%s dovrebbe arrivare al punto designato di partenza (settore %s) nel giorno %d, approssimativamente alle ore %s.",		//first %s is mercs name, next is the sector location and name where they will be arriving in, lastely is the day an the time of arrival
 	L"Registro aggiornato.",
-#ifdef JA2BETAVERSION
-	L"Salvataggio riuscito della partita nello slot End Turn Auto Save.",
-#endif
 };
 
 

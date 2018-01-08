@@ -222,9 +222,6 @@ INT32 DoMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 u
 
 	if( gMsgBox.iBoxId == -1 )
 	{
-		#ifdef JA2BETAVERSION
-			AssertMsg( 0, "Failed in DoMessageBox().  Probable reason is because the string was too large to fit in max message box size." );
-		#endif
 		return 0;
 	}
 
@@ -1325,11 +1322,7 @@ void DoScreenIndependantMessageBoxWithRect( INT16 *zString, UINT16 usFlags, MSGB
 	/// which screen are we in?
 
 	// Map Screen (excluding AI Viewer)
-#ifdef JA2BETAVERSION
-	if ( (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) && ( guiCurrentScreen != AIVIEWER_SCREEN ) )
-#else
 	if ( (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )
-#endif
 	{
 
 		// auto resolve is a special case

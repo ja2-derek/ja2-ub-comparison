@@ -1472,9 +1472,6 @@ void SyncronizeDoorStatusToStructureData( DOOR_STATUS *pDoorStatus )
 	pNode = FindLevelNodeBasedOnStructure( sBaseGridNo, pBaseStructure );
 	if (!pNode)
 	{
-#ifdef JA2BETAVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Could not find levelnode from door structure at %d", pDoorStatus->sGridNo );
-#endif
 		return;
 	}
 
@@ -1556,9 +1553,6 @@ void InternalUpdateDoorGraphicFromStatus( DOOR_STATUS *pDoorStatus, BOOLEAN fUse
 	pNode = FindLevelNodeBasedOnStructure( sBaseGridNo, pBaseStructure );
 	if (!pNode)
 	{
-#ifdef JA2BETAVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Could not find levelnode from door structure at %d", pDoorStatus->sGridNo );
-#endif
 		return;
 	}
 

@@ -93,18 +93,6 @@ void EndAIGuysTurn( SOLDIERTYPE *pSoldier );
 
 void DebugAI( STR szOutput )
 {
-#ifdef JA2BETAVERSION
-	// Send regular debug msg AND AI debug message
-	FILE *		DebugFile;
-
-	DebugMsg( TOPIC_JA2, DBG_LEVEL_3, szOutput );	
-	if ((DebugFile = fopen( "aidebug.txt", "a+t" )) != NULL)
-	{
-		fputs( szOutput, DebugFile );
-		fputs( "\n", DebugFile );
-		fclose( DebugFile );
-	}
-#endif
 }
 
 
@@ -211,9 +199,6 @@ void HandleSoldierAI( SOLDIERTYPE *pSoldier )
 
 		if ( pSoldier->bTeam != gTacticalStatus.ubCurrentTeam )
 		{
-			#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_ERROR, L"Turning off AI flag for %d because trying to act out of turn", pSoldier->ubID );
-			#endif
 			pSoldier->uiStatusFlags &= ~SOLDIER_UNDERAICONTROL;
 			return;
 		}
@@ -468,10 +453,6 @@ void HandleSoldierAI( SOLDIERTYPE *pSoldier )
       LiveMessage( "Breaking Deadlock" );
 
 
-			// If we are in beta version, also report message!
-#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_ERROR, L"Aborting AI deadlock for %d. Please sent DEBUG.TXT file and SAVE.", pSoldier->ubID );
-#endif
 			// just abort
 			EndAIDeadlock();
 			if ( !(pSoldier->uiStatusFlags & SOLDIER_UNDERAICONTROL) )
@@ -2444,9 +2425,6 @@ INT8 ExecuteAction(SOLDIERTYPE *pSoldier)
 			iRetCode = HandleItem( pSoldier, pSoldier->usActionData, 0, pSoldier->inv[HANDPOS].usItem, FALSE );
 			if ( iRetCode != ITEM_HANDLE_OK)
 			{
-#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_ERROR, L"AI %d got error code %ld from HandleItem, doing action %d... aborting deadlock!", pSoldier->ubID, iRetCode, pSoldier->bAction );
-#endif
 				CancelAIAction( pSoldier, FORCE);
 				#ifdef TESTAICONTROL
 					if (gfTurnBasedAI)

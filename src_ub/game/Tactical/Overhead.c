@@ -1315,9 +1315,6 @@ BOOLEAN ExecuteOverhead( )
 
 												if ( pStructure == NULL )
 												{
-#ifdef JA2BETAVERSION
-														ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Told to open struct at %d and none was found", sGridNo );
-#endif
 														fKeepMoving = FALSE;
 												}
 												else
@@ -1519,9 +1516,6 @@ BOOLEAN ExecuteOverhead( )
 										// ATE: Pop up warning....
 										if ( pSoldier->usPathDataSize != MAX_PATH_LIST_SIZE )
 										{
-											#ifdef JA2BETAVERSION
-												ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Path for %s ( %d ) did not make merc get to dest .", pSoldier->name, pSoldier->ubID );
-											#endif
 										}
 
 										// In case this is an AI person with the path-stored flag set,
@@ -1686,9 +1680,6 @@ BOOLEAN ExecuteOverhead( )
 			if ( ( GetJA2Clock( ) - guiWaitingForAllMercsToExitTimer ) > 2500 )
 			{
 				// OK, set num waiting to 0 
-				#ifdef JA2BETAVERSION
-					ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_DEBUG, L"Waiting too long for Mercs to exit...forcing entry." );
-				#endif
 				gbNumMercsUntilWaitingOver = 0;
 
 				// Reset all waitng codes
@@ -7361,9 +7352,6 @@ SOLDIERTYPE *InternalReduceAttackBusyCount( UINT8 ubID, BOOLEAN fCalledByAttacke
 		if ( (gTacticalStatus.uiFlags & INCOMBAT) )
 		{
 			DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("!!!!!!! &&&&&&& Problem with attacker busy count decrementing past 0.... preventing wrap-around." ) );
-			#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Attack busy problem. Save, exit and send debug.txt + save file to Sir-Tech." );
-			#endif
 		}
 	}
 	else
@@ -7816,9 +7804,6 @@ void RemoveManFromTeam( INT8 bTeam )
 		}
 		else if (gTacticalStatus.Team[ bTeam ].bMenInSector < 0)
 		{
-			#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"Number of people on team %d dropped to %d", bTeam, gTacticalStatus.Team[ bTeam ].bMenInSector );
-			#endif
 			// reset!
 			gTacticalStatus.Team[ bTeam ].bMenInSector = 0;
 		}

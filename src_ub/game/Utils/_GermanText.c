@@ -3283,20 +3283,12 @@ STR16			zSaveLoadText[] =
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"Gespeicherte Version ist verändert. Bitte melden Sie etwaige Probleme. Weiter?",
-#else
 	L"Versuche, Spielstand einer älteren Version zu laden. Automatisch aktualisieren und laden?",
-#endif
 
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"Spielstand- und Spiel-Version wurden geändert. Bitte melden Sie etwaige Probleme. Weiter?",
-#else
 	L"Versuche, Spielstand einer älteren Version zu laden. Automatisch aktualisieren und laden?",
-#endif
 	L"Gespeichertes Spiel in Slot #%d wirklich überschreiben?",
 	L"Wollen Sie das Spiel aus Slot # laden?",
 
@@ -3752,9 +3744,6 @@ STR16 pMessageStrings[] =
 	L"Ein Paket ist in Drassen angekommen.",
 	L"%s erreicht Zielort (Sektor %s), am Tag: %d, um ca. %s Uhr.",		//first %s is mercs name(OK), next is the sector location and name where they will be arriving in, lastely is the day an the time of arrival      
 	L"Logbuch aktualisiert.",
-#ifdef JA2BETAVERSION
-	L"Spiel erfolgreich in Slot 'AutoSave Spielzug-Ende' gespeichert.",
-#endif
 };
 
 

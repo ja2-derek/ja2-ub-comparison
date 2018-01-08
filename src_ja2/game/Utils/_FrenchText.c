@@ -3220,20 +3220,12 @@ STR16			zSaveLoadText[] =
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"La version de la sauvegarde a changé. Désirez-vous continuer ?",
-#else
 	L"Tentative de chargement d'une sauvegarde de version précédente. Voulez-vous effectuer une mise à jour ?",
-#endif
 
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"La version de la sauvegarde a changé. Désirez-vous continuer?",
-#else
 	L"Tentative de chargement d'une sauvegarde de version précédente. Voulez-vous effectuer une mise à jour ?",
-#endif
 
 	L"Etes-vous sûr de vouloir écraser la sauvegarde #%d ?",
 	L"Voulez-vous charger la sauvegarde #%d ?",
@@ -3688,9 +3680,6 @@ STR16 pMessageStrings[] =
 	L"Un colis vient d'arriver à Drassen.",
  	L"%s devrait arriver au point d'entrée (secteur %s) en jour %d vers %s.",		//first %s is mercs name, next is the sector location and name where they will be arriving in, lastely is the day an the time of arrival
 	L"Historique mis à jour.",
-#ifdef JA2BETAVERSION
-	L"Partie enregistrée dans l'emplacement de sauvegarde automatique.",
-#endif
 };
 
 

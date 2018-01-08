@@ -176,13 +176,6 @@ BOOLEAN EnterIntroScreen()
 	// Don't play music....
 	SetMusicMode( MUSIC_NONE );
 
-#ifdef JA2BETAVERSION
-	if( FileExists( "..\\NoIntro.txt" ) )
-	{
-		PrepareToExitIntroScreen();
-		return( TRUE );
-	}
-#endif
 
 	//if the library doesnt exist, exit
 	if( !IsLibraryOpened( LIBRARY_INTRO ) )
@@ -443,12 +436,8 @@ void StartPlayingIntroFlic( INT32 iIndexOfFlicToPlay )
 		else
 		{
 			//do a check
-#ifdef JA2BETAVERSION
-			PrepareToExitIntroScreen();
-#else
 
 			DoScreenIndependantMessageBox( gzIntroScreen[INTRO_TXT__CANT_FIND_INTRO], MSG_BOX_FLAG_OK, CDromEjectionErrorMessageBoxCallBack );
-#endif
 		}
 	}
 }

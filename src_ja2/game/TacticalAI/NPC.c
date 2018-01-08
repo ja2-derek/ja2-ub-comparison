@@ -90,9 +90,6 @@ INT8	gbFirstApproachFlags[4] = { 0x01, 0x02, 0x04, 0x08 };
 UINT8	gubAlternateNPCFileNumsForQueenMeanwhiles[] = { 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176 };
 UINT8	gubAlternateNPCFileNumsForElliotMeanwhiles[] = { 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196 };
 
-#ifdef JA2BETAVERSION
-BOOLEAN gfDisplayScreenMsgOnRecordUsage = FALSE;
-#endif
 
 extern void PauseAITemporarily( void );
 extern void PayOffSkyriderDebtIfAny( );
@@ -1790,12 +1787,6 @@ void Converse( UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT32 uiApproachData 
 			}
 			else
 			{
-#ifdef JA2BETAVERSION
-				if ( gfDisplayScreenMsgOnRecordUsage )
-				{
-					ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, L"Using record %d for %s", ubRecordNum, gMercProfiles[ ubNPC ].zNickname );
-				}
-#endif
 
 				// turn before speech?
 				if ( pQuotePtr->sActionData <= -NPC_ACTION_TURN_TO_FACE_NEAREST_MERC )
@@ -2564,12 +2555,6 @@ BOOLEAN NPCHasUnusedHostileRecord( UINT8 ubNPC, UINT8 ubApproach )
 			{
 				continue;
 			}
-			#ifdef JA2BETAVERSION
-			if ( !(pQuotePtr->fFlags & QUOTE_FLAG_ERASE_ONCE_SAID)  )
-			{
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, L"Warning: possible infinite quote loop to follow." );
-			}
-			#endif
 			return( TRUE );
 		}
 	}
@@ -3226,21 +3211,6 @@ BOOLEAN HandleShopKeepHasBeenShutDown( UINT8 ubCharNum )
 	return( FALSE );
 }
 
-#ifdef JA2BETAVERSION
-void ToggleNPCRecordDisplay( void )
-{
-	if ( gfDisplayScreenMsgOnRecordUsage )
-	{
-		gfDisplayScreenMsgOnRecordUsage = FALSE;
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, L"Turning record reporting OFF" );
-	}
-	else
-	{
-		gfDisplayScreenMsgOnRecordUsage = TRUE;
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, L"Turning record reporting ON" );
-	}
-}
-#endif
 
 void UpdateDarrelScriptToGoTo( SOLDIERTYPE * pSoldier )
 {

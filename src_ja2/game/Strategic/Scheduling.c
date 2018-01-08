@@ -163,17 +163,11 @@ void ProcessTacticalSchedule( UINT8 ubScheduleID )
 	pSchedule = GetSchedule( ubScheduleID );
 	if( !pSchedule )
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_RED, MSG_BETAVERSION, L"Schedule callback:  Schedule ID of %d not found.", ubScheduleID ); 
-		#endif
 		return;
 	}
 	//Attempt to access the soldier involved
 	if( pSchedule->ubSoldierID >= TOTAL_SOLDIERS )
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_RED, MSG_BETAVERSION, L"Schedule callback:  Illegal soldier ID of %d.", pSchedule->ubSoldierID ); 
-		#endif
 		return;
 	}
 
@@ -187,9 +181,6 @@ void ProcessTacticalSchedule( UINT8 ubScheduleID )
 
 	if ( !pSoldier->bActive )
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_RED, MSG_BETAVERSION, L"Schedule callback:  Soldier isn't active.  Name is %s.", pSoldier->name );
-		#endif
 	}
 
 	//Okay, now we have good pointers to the soldier and the schedule.

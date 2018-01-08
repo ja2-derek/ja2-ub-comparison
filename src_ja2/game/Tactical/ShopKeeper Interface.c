@@ -812,9 +812,6 @@ BOOLEAN EnterShopKeeperInterface()
 	vs_desc.ubBitDepth = 16;
 	if( !AddVideoSurface( &vs_desc, &guiCornerWhereTacticalIsStillSeenImage) )
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to create Surface where tactical map shows through" );
-		#endif
 
 		return( FALSE );
 	}
@@ -842,9 +839,6 @@ BOOLEAN EnterShopKeeperInterface()
 	FilenameForBPP("InterFace\\TradeScreen.sti", VObjectDesc.ImageFile);
 	if( !AddVideoObject(&VObjectDesc, &guiMainTradeScreenImage ))
 	{
-#ifdef JA2BETAVERSION
-		ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load TradeScreen.sti" );
-#endif
 
 		return( FALSE );
 	}
@@ -855,9 +849,6 @@ BOOLEAN EnterShopKeeperInterface()
 	FilenameForBPP("InterFace\\itemcrossout.sti", VObjectDesc.ImageFile);
 	if( !AddVideoObject(&VObjectDesc, &guiItemCrossOut ))
 	{
-#ifdef JA2BETAVERSION
-		ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load itemcrossout.sti" );
-#endif
 		return( FALSE );
 	}
 
@@ -892,9 +883,6 @@ ATM:
 			FilenameForBPP( zTemp, VObjectDesc.ImageFile);
 			if(!AddVideoObject(&VObjectDesc, &guiSmallSoldiersFace[ gubNumberMercsInArray ] ))
 			{
-				#ifdef JA2BETAVERSION
-						ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to load %s", zTemp );
-				#endif
 				return( FALSE );
 			}
 
@@ -2287,9 +2275,6 @@ void EnterShopKeeperInterfaceScreen( UINT8	ubArmsDealer )
 
 	if( gbSelectedArmsDealerID == -1 )
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to find Arms Dealer ID From Merc ID #%d", ubArmsDealer );
-		#endif
 		gfSKIScreenExit = TRUE;
 	}
 
@@ -5867,9 +5852,6 @@ void EvaluateItemAddedToPlayersOfferArea( INT8 bSlotID, BOOLEAN fFirstOne )
 				}
 				else
 				{
-					#ifdef JA2BETAVERSION
-						ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Failed to add repair item to ArmsDealerOfferArea.  AM-0");
-					#endif
 					return;
 				}
 			}
@@ -5970,9 +5952,6 @@ void EvaluateItemAddedToPlayersOfferArea( INT8 bSlotID, BOOLEAN fFirstOne )
 				break;
 		
 			default:
-				#ifdef JA2BETAVERSION
-					ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Invalid evaluation result of %d.  AM-0", uiEvalResult );
-				#endif
 				break;
 		}
 

@@ -55,9 +55,6 @@ extern BOOLEAN GetCDromDriveLetter( STR8	pString );
 // The InitializeGame function is responsible for setting up all data and Gaming Engine
 // tasks which will run the game
 
-#ifdef JA2BETAVERSION
-extern	BOOLEAN	gfUseConsecutiveQuickSaveSlots;
-#endif
 
 #if defined( GERMAN ) && !defined( _DEBUG )
 	//#define LASERLOCK_ENABLED
@@ -158,73 +155,10 @@ UINT32 InitializeJA2(void)
 
 	DetermineRGBDistributionSettings();
 
-#ifdef JA2BETAVERSION
-	#ifdef JA2EDITOR
-
-	//UNCOMMENT NEXT LINE TO ALLOW FORCE UPDATES...
-	//LoadGlobalSummary();
-	if( gfMustForceUpdateAllMaps )
-	{
-		ApologizeOverrideAndForceUpdateEverything();
-	}
-	#endif
-#endif
 	
-#ifdef JA2BETAVERSION
-	if( ProcessIfMultilingualCmdLineArgDetected( gzCommandLine ) )
-	{ //If the multilingual text code generator has activated, quit now.
-		gfProgramIsRunning = FALSE;
-		return( INIT_SCREEN );
-	}
-#endif
 
-#ifdef JA2BETAVERSION
-	// CHECK COMMANDLINE FOR SPECIAL UTILITY
-	if ( strcmp( gzCommandLine, "-DOMAPS" ) == 0 )
-	{
-		return( MAPUTILITY_SCREEN );
-	}
-#endif
 
-#ifdef JA2BETAVERSION
-	//This allows the QuickSave Slots to be autoincremented, ie everytime the user saves, there will be a new quick save file
-	if ( _stricmp( gzCommandLine, "-quicksave" ) == 0 )
-	{
-		gfUseConsecutiveQuickSaveSlots = TRUE;
-	}
-#endif
 
-#ifdef JA2BETAVERSION
-	#ifdef JA2EDITOR
-		// CHECK COMMANDLINE FOR SPECIAL UTILITY
-		if( !strcmp( gzCommandLine, "-EDITORAUTO" ) )
-		{
-			OutputDebugString( "Beginning JA2 using -EDITORAUTO commandline argument...\n" );
-			//For editor purposes, need to know the default map file.
-			sprintf( gubFilename, "none");
-			//also set the sector
-			gWorldSectorX = 0;
-			gWorldSectorY = 0;
-			gfAutoLoadA9 = TRUE;
-			gfIntendOnEnteringEditor = TRUE;
-			gGameOptions.fGunNut = TRUE;
-			return( GAME_SCREEN );
-		}
-		if ( strcmp( gzCommandLine, "-EDITOR" ) == 0 )
-		{
-			OutputDebugString( "Beginning JA2 using -EDITOR commandline argument...\n" );
-			//For editor purposes, need to know the default map file.
-			sprintf( gubFilename, "none");
-			//also set the sector
-			gWorldSectorX = 0;
-			gWorldSectorY = 0;
-			gfAutoLoadA9 = FALSE;
-			gfIntendOnEnteringEditor = TRUE;
-			gGameOptions.fGunNut = TRUE;
-			return( GAME_SCREEN );
-		}
-	#endif
-#endif
 
 	return( INIT_SCREEN );
 }

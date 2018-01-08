@@ -629,7 +629,6 @@ BOOLEAN CreateDestroyMainMenuButtons( BOOLEAN fCreate )
 			}
 			ButtonList[ iMenuButtons[ cnt ] ]->UserData[0] = cnt;
 
-			#ifndef JA2BETAVERSION //JA25 was _DEBUG
 			{
 				CHAR16	zText[512];
 
@@ -648,7 +647,6 @@ BOOLEAN CreateDestroyMainMenuButtons( BOOLEAN fCreate )
 					}
 				}
 			}
-			#endif
 
 		}
 

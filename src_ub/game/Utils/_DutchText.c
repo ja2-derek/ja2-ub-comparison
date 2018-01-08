@@ -3217,20 +3217,12 @@ STR16			zSaveLoadText[] =
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"Save version has changed.  Please report if there any problems.  Continue?",
-#else
 	L"Attempting to load an older version save.  Automatically update and load the save?",
-#endif
 
 	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
 	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"Save version and game version have changed.  Please report if there are any problems.  Continue?",
-#else
 	L"Attempting to load an older version save.  Automatically update and load the save?",
-#endif
 
 	L"Weet je zeker dat je het spel in slot #%d wil overschrijven?",
 	L"Wil je het spel laden van slot #",
@@ -3685,9 +3677,6 @@ STR16 pMessageStrings[] =
 	L"Een pakket is in Drassen gearriveerd.",
 	L"%s zou moeten arriveren op het aangewezen punt (sector %s) op dag %d, om ongeveer %s.",
 	L"Geschiedenisverslag bijgewerkt.",
-#ifdef JA2BETAVERSION
-	L"Spel succesvol bewaard in de Einde Beurt Auto Bewaar Slot.",
-#endif
 };
 
 

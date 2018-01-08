@@ -452,9 +452,6 @@ BOOLEAN IsSoldierCloseEnoughToSAMControlPanel( SOLDIERTYPE *pSoldier );
 BOOLEAN IsSoldierCloseEnoughToADoctor( SOLDIERTYPE *pPatient );
 */
 
-#ifdef JA2BETAVERSION
-void VerifyTownTrainingIsPaidFor( void );
-#endif
 
 
 
@@ -1943,10 +1940,6 @@ void UpdateAssignments()
 	HandleRestFatigueAndSleepStatus( );
 
 
-#ifdef JA2BETAVERSION
-	// put this BEFORE training gets handled to avoid detecting an error everytime a sector completes training
-	VerifyTownTrainingIsPaidFor();
-#endif
 
 	// run through sectors and handle each type in sector
 	for(sX = 0 ; sX < MAP_WORLD_X; sX++ )
@@ -1996,42 +1989,6 @@ void UpdateAssignments()
 
 
 
-#ifdef JA2BETAVERSION
-void VerifyTownTrainingIsPaidFor( void )
-{
-	INT32 iCounter = 0;
-	SOLDIERTYPE *pSoldier = NULL;
-
-
- 	for( iCounter = 0; iCounter < MAX_CHARACTER_COUNT; iCounter++ )
-	{
-		// valid character?
-		if( gCharactersList[ iCounter ].fValid == FALSE )
-		{
-			// nope
-			continue;
-		}
-
-		pSoldier = &Menptr[ gCharactersList[ iCounter ].usSolID ];
-			
-		if( pSoldier->bActive && ( pSoldier->bAssignment == TRAIN_TOWN ) )
-		{
-			// make sure that sector is paid up!
-			if( SectorInfo[ SECTOR( pSoldier -> sSectorX, pSoldier -> sSectorY ) ].fMilitiaTrainingPaid == FALSE )
-			{
-				// NOPE!  We've got a bug somewhere
-				StopTimeCompression();
-
-				// report the error
-				DoScreenIndependantMessageBox( L"ERROR: Unpaid militia training. Describe *how* you're re-assigning mercs, how many/where/when! Send *prior* save!", MSG_BOX_FLAG_OK, NULL );
-
-				// avoid repeating this
-				break;
-			}
-		}
-	}
-}
-#endif
 
 
 
@@ -3725,10 +3682,6 @@ INT16 GetBonusTrainingPtsDueToInstructor( SOLDIERTYPE *pInstructor, SOLDIERTYPE 
 		break;
 		// NOTE: Wisdom can't be trained!
 		default:
-			// BETA message
-			#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_ORANGE, MSG_BETAVERSION, L"GetBonusTrainingPtsDueToInstructor: ERROR - Unknown bTrainStat %d", bTrainStat);
-			#endif
 			return(0);
 	}
 
@@ -3780,10 +3733,6 @@ INT16 GetBonusTrainingPtsDueToInstructor( SOLDIERTYPE *pInstructor, SOLDIERTYPE 
 			break;
 			// NOTE: Wisdom can't be trained!
 			default:
-				// BETA message
-				#ifdef JA2BETAVERSION
-					ScreenMsg( FONT_ORANGE, MSG_BETAVERSION, L"GetBonusTrainingPtsDueToInstructor: ERROR - Unknown bTrainStat %d", bTrainStat);
-				#endif
 				return(0);
 		}
 
@@ -3893,10 +3842,6 @@ INT16 GetSoldierTrainingPts( SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAt
 		break;
 		// NOTE: Wisdom can't be trained!
 		default:
-			// BETA message
-			#ifdef JA2BETAVERSION
-				ScreenMsg( FONT_ORANGE, MSG_BETAVERSION, L"GetSoldierTrainingPts: ERROR - Unknown bTrainStat %d", bTrainStat);
-			#endif
 				return(0);
 	}
 
@@ -3974,11 +3919,7 @@ INT16 GetSoldierStudentPts( SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtG
 		break;
 		// NOTE: Wisdom can't be trained!
 		default:
-			// BETA message
-			#ifdef JA2BETAVERSION
-	      ScreenMsg( FONT_ORANGE, MSG_BETAVERSION, L"GetSoldierTrainingPts: ERROR - Unknown bTrainStat %d", bTrainStat);
-			#endif
-      return(0);
+		      return(0);
 	}
 
 	// if skill 0 or at/beyond the training cap, can't train
@@ -4087,11 +4028,7 @@ void TrainSoldierWithPts( SOLDIERTYPE *pSoldier, INT16 sTrainPts )
 			break;
 		// NOTE: Wisdom can't be trained!
 		default:
-			// BETA message
-			#ifdef JA2BETAVERSION
-	      ScreenMsg( FONT_ORANGE, MSG_BETAVERSION, L"TrainSoldierWithPts: ERROR - Unknown bTrainStat %d", pSoldier -> bTrainStat);
-			#endif
-      return;
+		      return;
 	}
 
 	// give this merc a few chances to increase a stat (TRUE means it's training, reverse evolution doesn't apply)

@@ -403,11 +403,6 @@ void ReinitializeUnvisitedGarrisons();
 //Records any decisions that I deem important enough into an automatically appending AI log file called
 //"Strategic Decisions.txt" in the JA2\Data directory.  This also records the time that each log entry 
 //was made.
-#ifdef JA2BETAVERSION
-void LogStrategicEvent( UINT8 *str, ... ); //adds a timestamp.
-void LogStrategicMsg( UINT8 *str, ... ); //doesn't use the time stamp
-void ClearStrategicLog();
-#endif
 
 //Recalculates a group's weight based on any changes.  
 //@@@Alex, this is possibly missing in some areas.  It is hard to ensure it is 
@@ -464,11 +459,7 @@ void MassFortifyTowns();
 void UpgradeAdminsToTroops();
 
 
-#ifdef JA2BETAVERSION
-void SAIReportError( STR16 wErrorString );
-#else
 #define SAIReportError( a ) //define it out
-#endif
 
 enum SAIMOVECODE
 {

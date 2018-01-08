@@ -510,7 +510,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 	INT32 iWaterToWater;
 	UINT8 ubCurAPCost,ubAPCost;
 	UINT8 ubNewAPCost=0;
-	#ifdef VEHICLE
 		//BOOLEAN fTurnSlow = FALSE;
 		//BOOLEAN fReverse = FALSE; // stuff for vehicles turning
 		BOOLEAN fMultiTile, fVehicle;
@@ -520,7 +519,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 		STRUCTURE_FILE_REF * pStructureFileRef=NULL;
 		UINT16							 usAnimSurface;
 		//INT32 iCnt2, iCnt3;
-	#endif
 
 	INT32			iLastDir = 0;
 
@@ -574,16 +572,10 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 
 	if (iOrigination < 0 || iOrigination > WORLD_MAX)
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_MCOLOR_RED, MSG_TESTVERSION, L"ERROR!  Trying to calculate path from off-world gridno %d to %d", iOrigination, sDestination );
-		#endif
 		return( 0 );
 	}
 	else if (!GridNoOnVisibleWorldTile( (INT16) iOrigination ) )
 	{
-		#ifdef JA2BETAVERSION
-			ScreenMsg( FONT_MCOLOR_RED, MSG_TESTVERSION, L"ERROR!  Trying to calculate path from non-visible gridno %d to %d", iOrigination, sDestination );
-		#endif
 		return( 0 );
 	}
 	else if (s->bLevel != ubLevel)
@@ -699,7 +691,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 	guiTotalPathChecks++;
 #endif
 
-#ifdef VEHICLE	
 
 	fMultiTile = ((s->uiStatusFlags & SOLDIER_MULTITILE) != 0);
 	if (fMultiTile)
@@ -755,7 +746,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 		fContinuousTurnNeeded = FALSE;
 	}
 
-#endif
 
 	if (!fContinuousTurnNeeded)
 	{
@@ -866,7 +856,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 		}
 #endif
 
-#ifdef VEHICLE
 		/*
 		if (fTurnSlow)
 		{
@@ -891,7 +880,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 
 		}
 		*/
-#endif
 
 		if (gubNPCAPBudget)
 		{
@@ -938,7 +926,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 		for ( iCnt = iLoopStart; ; )
 		{
 
-#ifdef VEHICLE
 			/*
 			if (fTurnSlow)
 			{
@@ -1020,7 +1007,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 				}
 			}
 
-#endif
 
 			newLoc = curLoc + dirDelta[iCnt];
 
@@ -1348,7 +1334,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 				}
 			}
 
-#ifdef VEHICLE
 			if (fMultiTile)
 			{
 				// vehicle test for obstacles: prevent movement to next tile if
@@ -1387,7 +1372,6 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 				}
 				*/
 			}
-#endif
 
 			// NEW Apr 21 by Ian: abort if cost exceeds budget
 			if (gubNPCAPBudget)

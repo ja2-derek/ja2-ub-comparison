@@ -39,9 +39,6 @@
 	#include "Strategic Status.h"
 #endif
 
-#ifdef JA2BETAVERSION
-extern BOOLEAN gfMercsNeverQuit;
-#endif
 
 extern void ValidateGameEvents();
 extern void HandleHourlyUpdate();
@@ -88,34 +85,6 @@ BOOLEAN ExecuteStrategicEvent( STRATEGICEVENT *pEvent )
 		return FALSE;
 	}
 
-	#ifdef JA2BETAVERSION
-		//If we are currently in the AIViewer, only process the events that we want to process.
-		//The rest of the events will be delayed until AFTER we leave the viewer.
-		if( guiCurrentScreen == AIVIEWER_SCREEN )
-		{
-			if( pEvent->ubCallbackID != EVENT_BEGIN_CREATURE_QUEST &&
-					pEvent->ubCallbackID != EVENT_CREATURE_SPREAD &&
-					pEvent->ubCallbackID != EVENT_DELAYED_HIRING_OF_MERC &&
-					pEvent->ubCallbackID != EVENT_GROUP_ARRIVAL	&&
-					pEvent->ubCallbackID != EVENT_EVALUATE_QUEEN_SITUATION &&
-					pEvent->ubCallbackID != EVENT_CHECK_ENEMY_CONTROLLED_SECTOR	)
-			{
-				gfPreventDeletionOfAnyEvent = fOrigPreventFlag;
-				return FALSE;
-			}
-		}
-	#endif
-	#ifdef JA2BETAVERSION
-		if( gfMercsNeverQuit )
-		{
-			if( pEvent->ubCallbackID == EVENT_MERC_ABOUT_TO_LEAVE_COMMENT ||
-				  pEvent->ubCallbackID == EVENT_MERC_CONTRACT_OVER )
-			{
-				gfPreventDeletionOfAnyEvent = fOrigPreventFlag;
-				return FALSE;
-			}
-		}
-	#endif
 	// Look at the ID of event and do stuff according to that!
 	switch( pEvent->ubCallbackID )
 	{

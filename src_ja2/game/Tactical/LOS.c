@@ -251,22 +251,7 @@ FLOAT Distance2D( FLOAT dDeltaX, FLOAT dDeltaY )
 
 //#define DEBUGLOS
 
-#if defined( JA2BETAVERSION ) && defined( DEBUGLOS )
-void DebugLOS( STR szOutput )
-{
-	FILE *		DebugFile;
-
-	if ((DebugFile = fopen( "losdebug.txt", "a+t" )) != NULL)
-	{
-		fputs( szOutput, DebugFile );
-		fputs( "\n", DebugFile );
-		fclose( DebugFile );
-	}
-
-}
-#else
 #define DebugLOS( a )
-#endif
 
 enum 
 {

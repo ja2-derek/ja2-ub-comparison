@@ -553,10 +553,6 @@ BOOLEAN IsDriveLetterACDromDrive( STR pDriveLetter )
 	switch( uiDriveType )
 	{
 		// The drive is a CD-ROM drive. 
-#ifdef JA2BETAVERSION
-		case DRIVE_NO_ROOT_DIR:
-		case DRIVE_REMOTE:
-#endif
 		case DRIVE_CDROM:
 			return( TRUE );
 			break;

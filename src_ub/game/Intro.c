@@ -573,12 +573,8 @@ void StartPlayingIntroFlic( INT32 iIndexOfFlicToPlay )
 		else
 		{
 			//do a check
-#ifdef JA2BETAVERSION
-			PrepareToExitIntroScreen();
-#else
 
 			DoScreenIndependantMessageBox( gzIntroScreen[INTRO_TXT__CANT_FIND_INTRO], MSG_BOX_FLAG_OK, CDromEjectionErrorMessageBoxCallBack );
-#endif
 		}
 	}
 }

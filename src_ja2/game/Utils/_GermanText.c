@@ -3033,20 +3033,12 @@ STR16 zSaveLoadText[] =
 	//Translators, the next two strings are for the same thing. The first one is for beta version releases and the second one
 	//is used for the final version. Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed. It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"Gespeicherte Version wurde geändert. Bitte melden Sie etwaige Probleme. Weiter?",
-#else
 	L"Versuche, älteren Spielstand zu laden. Laden und automatisch aktualisieren?",
-#endif
 
 	//Translators, the next two strings are for the same thing. The first one is for beta version releases and the second one
 	//is used for the final version. Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
 	//used by the compiler and will cause program errors if modified/removed. It's okay to translate the strings though.
-#ifdef JA2BETAVERSION
-	L"Spielstand und Spieleversion wurden geändert. Bitte melden Sie etwaige Probleme. Weiter?",
-#else
 	L"Versuche, älteren Spielstand zu laden. Laden und automatisch aktualisieren?",
-#endif
 	
 	L"Gespeichertes Spiel in Slot #%d wirklich überschreiben?",
 	L"Wollen Sie das Spiel aus Slot # speichern?",
@@ -3500,9 +3492,6 @@ STR16 pMessageStrings[] =
 	L"Paket in Drassen angekommen.",
 	L"%s kommt am %d. um ca. %s am Zielort an (Sektor %s).",		//first %s is mercs name(OK), next is the sector location and name where they will be arriving in, lastely is the day an the time of arrival       !!!7 It should be like this: first one is merc (OK), next is day of arrival (OK) , next is time of the day for ex. 07:00 (not OK, now it is still sector), next should be sector (not OK, now it is still time of the day)
 	L"Logbuch aktualisiert.",
-#ifdef JA2BETAVERSION
-	L"Spiel erfolgreich in Slot End Turn Auto Save gespeichert.",
-#endif
 };
 
 UINT16 ItemPickupHelpPopup[][40] =

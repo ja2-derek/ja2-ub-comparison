@@ -2343,9 +2343,6 @@ Ja25 no loyalty
 				// Vince or Willis asks about payment? for medical attention
 				if (ubTargetNPC != gpDestSoldier->ubProfile)
 				{
-					#ifdef JA2BETAVERSION
-						ScreenMsg( FONT_MCOLOR_RED, MSG_ERROR, L"Inconsistency between HandleNPCDoAction and target profile IDs" );
-					#endif
 				}
 				else
 				{

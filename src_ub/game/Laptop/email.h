@@ -442,8 +442,5 @@ void ShutDownEmailList();
 void AddMessageToPages(INT32 iMessageId);
 void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 iDate, INT32 iFirstData, UINT32 uiSecondData );
 
-#ifdef JA2BETAVERSION
-	void AddAllEmails();
-#endif
 
 #endif

@@ -5566,19 +5566,6 @@ void HandleKeyBoardShortCutsForLapTop( UINT16 usEvent, UINT32 usParam, UINT16 us
 	}
 #endif
 
-#ifdef JA2BETAVERSION
-	//adding all emails
-	else if ((usEvent == KEY_DOWN )&& ( usParam == 'e' ))
-	{
-		if( CHEATER_CHEAT_LEVEL( ) )
-		{
-			if( ( usKeyState & ALT_DOWN ) )
-			{
-				AddAllEmails();
-			}
-		}
-	}
-#endif
 
 	//adding money
 	else if ((usEvent == KEY_DOWN )&& ( usParam == '=' ))

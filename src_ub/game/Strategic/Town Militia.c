@@ -64,9 +64,6 @@ void PayForTrainingInSector( UINT8 ubSector );
 void ResetDoneFlagForAllMilitiaTrainersInSector( UINT8 ubSector );
 
 
-#ifdef JA2BETAVERSION
-void VerifyTownTrainingIsPaidFor( void );
-#endif
 
 
 
@@ -618,10 +615,6 @@ void PayMilitiaTrainingYesNoBoxCallback( UINT8 bExitValue )
 				StartTrainingInAllUnpaidTrainableSectors();
 			}
 
-#ifdef JA2BETAVERSION
-			// put this BEFORE training gets handled to avoid detecting an error everytime a sector completes training
-			VerifyTownTrainingIsPaidFor();
-#endif
 
 			// this completes the training prompt sequence
 			pMilitiaTrainerSoldier = NULL;
@@ -667,10 +660,6 @@ void MilitiaTrainingRejected( void )
 		ResetAssignmentsForMercsTrainingUnpaidSectorsInSelectedList( 0 );
 	}
 
-#ifdef JA2BETAVERSION
-	// put this BEFORE training gets handled to avoid detecting an error everytime a sector completes training
-	VerifyTownTrainingIsPaidFor();
-#endif
 
 	// this completes the training prompt sequence
 	pMilitiaTrainerSoldier = NULL;

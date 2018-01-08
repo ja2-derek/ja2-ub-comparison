@@ -39,9 +39,6 @@ typedef enum ScreenTypes
 	CUSTOM_MAP_MERC_CHOOSING_SCREEN,
 #endif
 
-#ifdef JA2BETAVERSION
-	AIVIEWER_SCREEN,
-#endif
 
 //#ifdef JA2BETAVERSION
 	QUEST_DEBUG_SCREEN,

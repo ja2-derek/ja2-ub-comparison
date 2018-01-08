@@ -316,9 +316,6 @@ void		SetEnemiesToFindThePlayerMercs();
 
 void HandleSayingDontStayToLongWarningInSectorH8();
 
-#ifdef JA2BETAVERSION
-	BOOLEAN InitJa25StrategicAiDecisions( BOOLEAN fLoadedGame );
-#endif
 
 void HandleEnricosUnderstandingEmail();
 

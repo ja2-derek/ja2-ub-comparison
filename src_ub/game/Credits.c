@@ -404,12 +404,6 @@ BOOLEAN		EnterCreditsScreen()
 	UINT32 uiCnt;
   VOBJECT_DESC    VObjectDesc;
 
-#ifdef JA2BETAVERSION
-	if( gfKeyState[ CTRL ] )
-		gfPlayersLaptopWasntWorkingAtEndOfGame = TRUE;
-
-	gfOverideToListenToSoundsInCreditSceen = TRUE;
-#endif
 
 
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
