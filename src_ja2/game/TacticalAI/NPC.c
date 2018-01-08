@@ -218,33 +218,10 @@ BOOLEAN EnsureQuoteFileLoaded( UINT8 ubNPC )
 		gpNPCQuoteInfoArray[ubNPC] = LoadQuoteFile( ubNPC );
 		if (gpNPCQuoteInfoArray[ubNPC] == NULL)
 		{
-#ifdef CRIPPLED_VERSION
-			// make sure we're not trying to load NOPROFILE for some stupid reason
-			if ( ubNPC != NO_PROFILE )
-			{
-				SOLDIERTYPE * pNull = NULL;
-				pNull->bLife = 0; // crash!
-			}
-#else
 
-#endif
 			// error message at this point!
 			return( FALSE );
 		}
-#ifdef CRIPPLED_VERSION
-	// check a random record to make sure the bytes are set right in the header
-	if ( gpNPCQuoteInfoArray[ubNPC][ 0 ].ubIdentifier[0] != '9')
-	{
-		if ( gpNPCQuoteInfoArray[ubNPC][ 0 ].ubIdentifier[2] != '5')
-		{
-			// crash!
-			SOLDIERTYPE * pNull = NULL;
-			pNull->bLife = 0;
-		}
-	}
-
-
-#endif
 	}
 
 	return( TRUE );

@@ -385,11 +385,6 @@ UINT32 InitScreenHandle(void)
 		mprintf( 10, 430, L"%s: %s (%S)", pMessageStrings[ MSG_VERSION ], zVersionLabel, czVersionNumber );
 #endif
 
-#ifdef CRIPPLED_VERSION
-
-		mprintf( 10, 420, L"(LIMITED PRESS PREVIEW VERSION)" );
-
-#endif
 
 #ifdef _DEBUG 
 		mprintf( 10, 440, L"SOLDIERTYPE: %d bytes", sizeof( SOLDIERTYPE ) );

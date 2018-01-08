@@ -36,7 +36,7 @@
 typedef struct
 {
 
-#if defined( CRIPPLED_VERSION ) || defined( RUSSIAN )
+#if defined( RUSSIAN )
 	UINT8		ubIdentifier[4];
 #endif
 
@@ -71,7 +71,7 @@ typedef struct
 	UINT16	usGoToGridno;
 	INT16		sActionData;		// special action value	
 
-#if !defined( CRIPPLED_VERSION ) && !defined( RUSSIAN )
+#if !defined( RUSSIAN )
 	UINT8		ubUnused[4];
 #endif
 
