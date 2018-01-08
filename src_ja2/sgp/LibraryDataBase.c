@@ -12,23 +12,12 @@
 	#include "WCheck.h"
 	#include "Debug.h"
 
-	#if defined(JA2) || defined( UTIL )
 		#include "video.h"
-	#else
-		#include "video2.h"
-	#endif
 #endif
 
 //NUMBER_OF_LIBRARIES
-#ifdef JA2
 	#include	"Ja2 Libs.c"
 	#include	"GameSettings.h"
-#elif defined(UTIL)
-	LibraryInitHeader gGameLibaries[ ] = { 0 };
-#else
-// We link it as an .obj file
-//	#include "WizLibs.c"
-#endif
 
 
 
@@ -65,11 +54,7 @@ BOOLEAN InitializeFileDatabase( )
 	UINT32		uiSize;
 	BOOLEAN		fLibraryInited = FALSE;
 
-#ifdef JA2
 	GetCDLocation( );
-#else
-	gzCdDirectory[ 0 ] = '.';
-#endif
 
 	//if all the libraries exist, set them up
 	gFileDataBase.usNumberOfLibraries = NUMBER_OF_LIBRARIES;

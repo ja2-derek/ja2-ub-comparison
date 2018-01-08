@@ -35,13 +35,11 @@
 	#include "WizShare.h"
 
 	//Kris addition
-	#ifdef JA2
 		#include "screenids.h"
 		#include "Sys Globals.h"
 		#include "jascreens.h"
 		#include "gameloop.h"
 		#include "input.h"
-	#endif
 
 	// CJC added
 	#ifndef _NO_DEBUG_TXT
@@ -70,7 +68,6 @@ UINT8 gubAssertString[128];
 UINT8		gbTmpDebugString[8][MAX_MSG_LENGTH2];
 UINT8		gubStringIndex = 0;
 
-#ifdef SGP_DEBUG
 
 //**************************************************************************
 //
@@ -487,7 +484,6 @@ void _Null(void)
 
 extern HVOBJECT FontObjs[25];
 
-#ifdef JA2 //JAGGED ALLIANCE 2 VERSION ONLY
 void _FailMessage( UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile )
 { 
 	MSG Message;
@@ -557,52 +553,7 @@ void _FailMessage( UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile )
 	exit(0);
 }
 
-#else //NOT JAGGED ALLIANCE 2
 
-void _FailMessage(UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile)
-{
-	UINT8 ubOutputString[512];
-	BOOLEAN fDone = FALSE;
-
-#ifndef _NO_DEBUG_TXT
-	FILE *DebugFile;
-#endif
-
-
-	// Build the output string
-	sprintf( ubOutputString, "{ %ld } Assertion Failure: %s [Line %d in %s]\n", GetTickCount(), pString, uiLineNum, pSourceFile );
-	if( pString )
-		sprintf( gubAssertString, pString );
-	// Output to debugger
-	if (gfRecordToDebugger)
-	{
-		OutputDebugString( ubOutputString );
-		if( pString )
-		{ //tag on the assert message
-			OutputDebugString( gubAssertString );
-		}
-	}
-	// Record to file if required
-#ifndef _NO_DEBUG_TXT
-	if (gfRecordToFile)
-	{
-		if ((DebugFile = fopen( gpcDebugLogFileName, "a+t" )) != NULL)
-		{
-			fputs( ubOutputString, DebugFile );
-			if( pString )
-			{ //tag on the assert message
-				fputs( gubAssertString, DebugFile );
-			}
-			fclose( DebugFile );
-		}
-	}
-#endif
-	exit( 0 );
-}
-
-#endif
-
-#endif
 
 // This is NOT a _DEBUG only function! It is also needed in
 // release mode builds. -- DB

@@ -29,11 +29,7 @@
 #include "Cinematics.h"
 #include "soundman.h"
 
-#ifdef JA2
 	#include "video.h"
-#else
-	#include "video2.h"
-#endif
 
 #include "vsurface_private.h"
 

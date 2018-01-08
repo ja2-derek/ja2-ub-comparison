@@ -11,11 +11,7 @@ extern "C" {
 #endif
 
 
-#if defined( JA2 ) || defined( UTIL )
 #include "Video.h"
-#else
-#include "video2.h"
-#endif  
 
 
 extern UINT32		GetCursorHandle(UINT32 uiCursorIndex);

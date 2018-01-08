@@ -12,23 +12,12 @@
 	#include "WCheck.h"
 	#include "Debug.h"
 
-	#if defined(JA2) || defined( UTIL )
 		#include "video.h"
-	#else
-		#include "video2.h"
-	#endif
 #endif
 
 //NUMBER_OF_LIBRARIES
-#ifdef JA2
 	#include	"Ja2 Libs.c"
 	#include	"GameSettings.h"
-#elif defined(UTIL)
-	LibraryInitHeader gGameLibaries[ ] = { 0 };
-#else
-// We link it as an .obj file
-//	#include "WizLibs.c"
-#endif
 
 
 //#define DB_WRITE_INIT_LOG_FILE
@@ -81,11 +70,7 @@ BOOLEAN InitializeFileDatabase( )
 	FILE			*LogFile;
 #endif
 
-#ifdef JA2
 	GetCDLocation( );
-#else
-	gzCdDirectory[ 0 ] = '.';
-#endif
 
 
 #ifdef DB_WRITE_INIT_LOG_FILE

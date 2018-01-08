@@ -12,9 +12,7 @@
 #include "ExceptionHandling.h"
 
 
-#ifdef JA2
 	#include "GameVersion.h"
-#endif
 
 
 
@@ -99,7 +97,6 @@ INT32 RecordExceptionInfo( EXCEPTION_POINTERS *pExceptInfo )
 	//
 	// Display the version number
 	//
-#ifdef JA2
 
 	//Dispay Ja's version number
 	ErrorLog( hFile, "%S: %s.  %S",zVersionLabel, czVersionNumber, zTrackingNumber );
@@ -109,7 +106,6 @@ INT32 RecordExceptionInfo( EXCEPTION_POINTERS *pExceptInfo )
 
 	//Insert a new line
 	ErrorLog( hFile, zNewLine );
-#endif
 
 
 

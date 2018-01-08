@@ -7,11 +7,7 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include "debug.h"
-	#if defined( JA2 ) || defined( UTIL )
 		#include "video.h"
-	#else
-		#include "video2.h"
-	#endif
 	#include "himage.h"
 	#include "vsurface.h"
 	#include "vsurface_private.h"
@@ -260,7 +256,6 @@ BYTE *LockVideoSurface( UINT32 uiVSurface, UINT32 *puiPitch )
   //
   // Check if given backbuffer or primary buffer
   //
-#ifdef JA2
   if ( uiVSurface == PRIMARY_SURFACE )
   {
     return LockPrimarySurface( puiPitch );
@@ -270,7 +265,6 @@ BYTE *LockVideoSurface( UINT32 uiVSurface, UINT32 *puiPitch )
   {
     return LockBackBuffer( puiPitch );
   }
-#endif
 
   if ( uiVSurface == FRAME_BUFFER )
   {
@@ -315,7 +309,6 @@ void UnLockVideoSurface( UINT32 uiVSurface )
   //
   // Check if given backbuffer or primary buffer
   //
-#ifdef JA2
   if ( uiVSurface == PRIMARY_SURFACE )
   {
     UnlockPrimarySurface();
@@ -327,7 +320,6 @@ void UnLockVideoSurface( UINT32 uiVSurface )
     UnlockBackBuffer();
     return;
   }
-#endif
 
   if ( uiVSurface == FRAME_BUFFER )
   {
@@ -486,7 +478,6 @@ BOOLEAN SetPrimaryVideoSurfaces( )
   //
 	// Get Primary surface
   //
-#ifdef JA2
 	pSurface = GetPrimarySurfaceObject();
 	CHECKF( pSurface != NULL );
 
@@ -512,7 +503,6 @@ BOOLEAN SetPrimaryVideoSurfaces( )
 	ghMouseBuffer = CreateVideoSurfaceFromDDSurface( pSurface );
 	CHECKF( ghMouseBuffer != NULL );
 
-#endif
 
   //
 	// Get frame buffer surface
@@ -807,11 +797,7 @@ HVSURFACE CreateVideoSurface( VSURFACE_DESC *VSurfaceDesc )
   //
 	// The description structure contains memory usage flag
   //
-#ifdef JA2
 	fMemUsage = VSurfaceDesc->fCreateFlags;
-#else
-	fMemUsage = VSURFACE_SYSTEM_MEM_USAGE;
-#endif
 
   //
 	// Check creation options
@@ -1172,10 +1158,6 @@ BYTE *LockVideoSurfaceBuffer( HVSURFACE hVSurface, UINT32 *pPitch )
 	Assert( hVSurface != NULL );
 	Assert( pPitch != NULL );
 
-#ifndef JA2
-	if(hVSurface==ghFrameBuffer)
-		return(LockFrameBuffer(pPitch));
-#endif
 
 	DDLockSurface( (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, NULL, &SurfaceDescription, 0, NULL);
 
@@ -1188,13 +1170,6 @@ void UnLockVideoSurfaceBuffer( HVSURFACE hVSurface )
 {
 	Assert( hVSurface != NULL );
 
-#ifndef JA2
-	if(hVSurface==ghFrameBuffer)
-	{
-		UnlockFrameBuffer();
-		return;
-	}
-#endif
 
 	DDUnlockSurface( (LPDIRECTDRAWSURFACE2)hVSurface->pSurfaceData, NULL );
 
@@ -1863,28 +1838,6 @@ BOOLEAN BltVideoSurfaceToVideoSurface( HVSURFACE hDestVSurface, HVSURFACE hSrcVS
 			return(TRUE);
 		}
 // For testing with non-DDraw blitting, uncomment to test -- DB
-#ifndef JA2
-		else
-		{
-			if((pSrcSurface16=(UINT16 *)LockVideoSurfaceBuffer(hSrcVSurface, &uiSrcPitch))==NULL)
-			{
-				DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, String( "Failed on lock of 16BPP surface for blitting" ));
-				return(FALSE);
-			}
-
-			if((pDestSurface16=(UINT16 *)LockVideoSurfaceBuffer(hDestVSurface, &uiDestPitch))==NULL)
-			{
-				UnLockVideoSurfaceBuffer(hSrcVSurface);
-				DbgMessage(TOPIC_VIDEOSURFACE, DBG_LEVEL_2, String( "Failed on lock of 16BPP dest surface for blitting" ));
-				return(FALSE);
-			}
-
-			Blt16BPPTo16BPP(pDestSurface16, uiDestPitch, pSrcSurface16, uiSrcPitch, iDestX, iDestY, SrcRect.left, SrcRect.top, uiWidth, uiHeight);
-			UnLockVideoSurfaceBuffer(hSrcVSurface);
-			UnLockVideoSurfaceBuffer(hDestVSurface);
-			return(TRUE);
-		}
-#endif
 
 		CHECKF( BltVSurfaceUsingDD( hDestVSurface, hSrcVSurface, fBltFlags, iDestX, iDestY, &SrcRect ) );
 

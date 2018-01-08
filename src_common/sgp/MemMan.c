@@ -46,7 +46,6 @@
 //
 //**************************************************************************
 
-#ifdef JA2
 #include "mousesystem.h"
 #include "MessageBoxScreen.h"
 STR16 gzJA2ScreenNames[] = 
@@ -77,7 +76,6 @@ STR16 gzJA2ScreenNames[] =
 	L"INTRO_SCREEN",
 	L"CREDIT_SCREEN",
 };
-#endif
 
 #ifdef EXTREME_MEMORY_DEBUGGING
 	typedef struct MEMORY_NODE

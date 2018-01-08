@@ -24,13 +24,8 @@
 	#include "input.h"
 	#include "memman.h"
 	#include "line.h"
-	#if (defined( JA2 ) || defined( UTIL ))
 		#include "video.h"
 		#define BASE_REGION_FLAGS		(MSYS_REGION_ENABLED | MSYS_SET_CURSOR)
-	#else
-		#include "video2.h"
-		#define BASE_REGION_FLAGS		MSYS_REGION_ENABLED				// Wiz doesn't ever want MSYS_SET_CURSOR to be on...
-	#endif
 	#ifdef _JA2_RENDER_DIRTY
 		#include "render dirty.h"
 		#include "\JA2\Build\utils\Font Control.h"
@@ -109,13 +104,11 @@ BOOLEAN					gfRefreshUpdate = FALSE;
 //an already deleted region.  It will also ensure that you don't create an identical region
 //that already exists.
 //TO REMOVE ALL DEBUG FUNCTIONALITY:  simply comment out MOUSESYSTEM_DEBUGGING definition
-#ifdef JA2
   #ifdef _DEBUG
 	#ifndef BOUNDS_CHECKER
 	  #define MOUSESYSTEM_DEBUGGING
 	#endif
   #endif
-#endif
 
 #ifdef MOUSESYSTEM_DEBUGGING
 BOOLEAN gfIgnoreShutdownAssertions;
@@ -244,9 +237,7 @@ void MSYS_SGP_Mouse_Handler_Hook(UINT16 Type,UINT16 Xcoord, UINT16 Ycoord, BOOLE
 				//you release inside of the button, the action is selected -- but later in the code.
 				//NOTE:  It has to be here, because the mouse can be released anywhere regardless of
 				//regions, buttons, etc.
-				#ifdef JA2
 					ReleaseAnchorMode();
-				#endif
 			}
 			else if(Type == RIGHT_BUTTON_DOWN)
 				MSYS_Action |= MSYS_DO_RBUTTON_DWN;
@@ -1192,10 +1183,8 @@ void SetRegionFastHelpText( MOUSE_REGION *region, UINT16 *szText )
   // ATE: We could be replacing already existing, active text
   // so let's remove the region so it be rebuilt...
 
-	#ifdef JA2
 	if ( guiCurrentScreen != MAP_SCREEN )
 	{
-	#endif
 
 	#ifdef _JA2_RENDER_DIRTY
 	  if( region->uiFlags & MSYS_GOT_BACKGROUND )
@@ -1205,9 +1194,7 @@ void SetRegionFastHelpText( MOUSE_REGION *region, UINT16 *szText )
   region->uiFlags &= (~MSYS_GOT_BACKGROUND);
   region->uiFlags &= (~MSYS_FASTHELP_RESET);
 
-	#ifdef JA2
 	}
-	#endif
 
 	//region->FastHelpTimer = FASTHELP_TIMEDELAY;
 }

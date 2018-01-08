@@ -6,11 +6,7 @@
 	#include "DirectDraw Calls.h"
 	#include <stdio.h>
 	#include "debug.h"
-	#if defined( JA2 ) || defined( UTIL )
 		#include "video.h"													// JA2
-	#else
-		#include "video2.h"				// Wiz8
-	#endif
 	#include "himage.h"
 	#include "vobject.h"
 	#include "vobject_private.h"
