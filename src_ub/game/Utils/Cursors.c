@@ -1297,7 +1297,7 @@ void DrawMouseText( )
 
 		mprintf( sX, sY - 2, gzIntTileLocation2 );
 		// reset
-		SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_WIDTH, FALSE );
+		SetFontDestBuffer( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE );
 	}
 
 
