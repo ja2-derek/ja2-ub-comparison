@@ -3054,11 +3054,7 @@ void RenderItemDescriptionBox( )
 		SetFontShadow( ITEMDESC_FONTSHADOW3 );
 
 		// Render name
-		#ifdef JA2TESTVERSION 
-			mprintf( MAP_ITEMDESC_NAME_X, MAP_ITEMDESC_NAME_Y, L"%s (%d)", gzItemName, gpItemDescObject->usItem );
-		#else
 			mprintf( MAP_ITEMDESC_NAME_X, MAP_ITEMDESC_NAME_Y, L"%s", gzItemName );
-		#endif
 
 		SetFontForeground( FONT_BLACK );
 		SetFontShadow( ITEMDESC_FONTSHADOW2 );
@@ -3512,11 +3508,7 @@ void RenderItemDescriptionBox( )
 
 		// Render name
 		// SET CLIPPING RECT FOR FONTS
-		#ifdef JA2TESTVERSION 
-			mprintf( ITEMDESC_NAME_X, ITEMDESC_NAME_Y, L"%s (%d)", gzItemName, gpItemDescObject->usItem );
-		#else
 			mprintf( ITEMDESC_NAME_X, ITEMDESC_NAME_Y, L"%s", gzItemName );
-		#endif
 
 		// Render caliber and description
 

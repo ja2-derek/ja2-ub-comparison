@@ -702,15 +702,6 @@ void			GetGIOScreenUserInput()
 					gubGameOptionScreenHandler = GIO_CANCEL;
 					break;
 
-#ifdef JA2TESTVERSION
-				case 'r':
-					gfReRenderGIOScreen=TRUE;
-					break;
-
-				case 'i':
-					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
-					break;
-#endif
 
 				case ENTER:
 					gubGameOptionScreenHandler = GIO_EXIT;
@@ -1052,21 +1043,6 @@ void DoneFadeOutForExitGameInitOptionScreen( void )
 	gubGIOExitScreen = INIT_SCREEN;
 
 	//set the fact that we should do the intro videos
-/*
-#ifdef JA2TESTVERSION
-	if( gfKeyState[ ALT ] )
-	{
-		if( gfKeyState[ CTRL ] )
-		{
-			gMercProfiles[ MIGUEL ].bMercStatus = MERC_IS_DEAD;
-			gMercProfiles[ SKYRIDER ].bMercStatus = MERC_IS_DEAD;
-		}
-
-		SetIntroType( INTRO_ENDING );
-	}
-	else
-#endif
-*/
 /*
 Ja25: No intro videos
 		SetIntroType( INTRO_BEGINING );

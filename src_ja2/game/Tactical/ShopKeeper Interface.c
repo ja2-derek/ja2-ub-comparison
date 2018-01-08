@@ -658,10 +658,6 @@ void HatchOutInvSlot( UINT16 usPosX, UINT16 usPosY );
 extern BOOLEAN ItemIsARocketRifle( INT16 sItemIndex );
 
 
-#ifdef JA2TESTVERSION
-BOOLEAN gfTestDisplayDealerCash = FALSE;
-void DisplayAllDealersCash();
-#endif;
 
 //ppp
 
@@ -1125,12 +1121,7 @@ BOOLEAN InitShopKeepersFace( UINT8 ubMercID )
 
 	if( pSoldier == NULL )
 	{
-		#ifdef JA2TESTVERSION
-			//Create the facial index
-			giShopKeeperFaceIndex = InitFace( ubMercID, NOBODY, FACE_BIGFACE );
-		#else
 			return( FALSE );
-		#endif
 	}
 	else
 	{
@@ -1346,10 +1337,6 @@ void HandleShopKeeperInterface()
 		gfAlreadySaidTooMuchToRepair = FALSE;
 	}
 
-#ifdef JA2TESTVERSION
-	if ( gfTestDisplayDealerCash )
-		DisplayAllDealersCash();
-#endif
 
 	//if the Ski dirty flag was changed to a lower value, make sure it is set properly
 	if( ubStatusOfSkiRenderDirtyFlag > gubSkiDirtyLevel )
@@ -1531,10 +1518,6 @@ void		GetShopKeeperInterfaceUserInput()
 					// clean exits - does quotes, shuts up shopkeeper, etc.
 					ExitSKIRequested();
 
-#ifdef JA2TESTVERSION
-					//Instant exit - doesn't clean up much
-//					gfSKIScreenExit = TRUE;
-#endif
 					break;
 
 				case 'x':
@@ -1561,21 +1544,6 @@ void		GetShopKeeperInterfaceUserInput()
 					}
 					break;
 
-#ifdef JA2TESTVERSION
-
-				case 'r':
-					gubSkiDirtyLevel = SKI_DIRTY_LEVEL2;
-					break;
-				case 'i':
-					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
-					break;
-
-				case 'd':
-					//Test key to toggle the display of the money each dealer has on hand
-					gfTestDisplayDealerCash ^= 1;
-					break;
-
-#endif
 			}
 		}
 	}
@@ -1583,31 +1551,6 @@ void		GetShopKeeperInterfaceUserInput()
 
 
 
-#ifdef JA2TESTVERSION
-void DisplayAllDealersCash()
-{
-	INT8		bArmsDealer;
-	UINT16	usPosY=0;
-	CHAR16	zTemp[512];
-	UINT8		ubForeColor;
-
-	//loop through all the shopkeeper's and display their money
-	for( bArmsDealer=0; bArmsDealer<NUM_ARMS_DEALERS; bArmsDealer++ )
-	{
-		//Display the shopkeeper's name
-		DrawTextToScreen( gMercProfiles[ ArmsDealerInfo[ bArmsDealer ].ubShopKeeperID ].zNickname, 540, usPosY, 0, FONT10ARIAL, SKI_TITLE_COLOR, FONT_MCOLOR_BLACK, TRUE, LEFT_JUSTIFIED );
-
-		//Display the arms dealer cash on hand
-		swprintf( zTemp, L"%d", gArmsDealerStatus[ bArmsDealer ].uiArmsDealersCash );
-
-		InsertCommasForDollarFigure( zTemp );
-		InsertDollarSignInToString( zTemp );
-		ubForeColor = ( UINT8 ) ( ( bArmsDealer == gbSelectedArmsDealerID ) ? SKI_BUTTON_COLOR : SKI_TITLE_COLOR );
-		DrawTextToScreen( zTemp, 590, usPosY, 0, FONT10ARIAL, ubForeColor, FONT_MCOLOR_BLACK, TRUE, LEFT_JUSTIFIED );
-		usPosY += 17;
-	}
-}
-#endif
 
 void BtnSKI_InvPageUpButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
@@ -7057,34 +7000,6 @@ BOOLEAN CanMercInteractWithSelectedShopkeeper( SOLDIERTYPE *pSoldier )
 
 
 
-#ifdef JA2TESTVERSION
-
-void AddShopkeeperToGridNo( UINT8 ubProfile, INT16 sGridNo )
-{
-	SOLDIERCREATE_STRUCT		MercCreateStruct;
-	INT16										sSectorX, sSectorY;
-	UINT8									ubID;
-
-	GetCurrentWorldSector( &sSectorX, &sSectorY );
-
-	memset( &MercCreateStruct, 0, sizeof( MercCreateStruct ) );
-	MercCreateStruct.bTeam				= CIV_TEAM;
-	MercCreateStruct.ubProfile		= ubProfile;
-	MercCreateStruct.sSectorX			= sSectorX;
-	MercCreateStruct.sSectorY			= sSectorY;
-	MercCreateStruct.bSectorZ			= gbWorldSectorZ;
-	MercCreateStruct.sInsertionGridNo		= sGridNo;
-
-	if ( TacticalCreateSoldier( &MercCreateStruct, &ubID ) )
-	{
-		AddSoldierToSector( ubID );
-
-		// So we can see them!
-		AllTeamsLookForAll(NO_INTERRUPTS);
-	}
-}
-
-#endif
 
 
 void ExitSKIRequested()

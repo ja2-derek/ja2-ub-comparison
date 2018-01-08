@@ -852,65 +852,6 @@ void		GetOptionsScreenUserInput()
 					break;
 
 
-#ifdef JA2TESTVERSION
-
-				case 'r':
-					gfRedrawOptionsScreen = TRUE;
-					break;
-
-				case 'i':
-					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
-					break;
-
-					//Test keys
-
-				case 'y':
-					{
-					static	UINT32	uiTest2 = NO_SAMPLE;
-					if( !SoundIsPlaying( uiTest2 ) )
-						uiTest2 = PlayJA2SampleFromFile( "Sounds\\RAID Dive.wav", RATE_11025, HIGHVOLUME, 1 , MIDDLEPAN );
-					}
-					break;
-				case 't':
-				{
-/*
-					{
-						CHAR8		zCdromRootDrive[512];
-						HWFILE	hFile;
-
-						if( !GetCdromLocationFromIniFile( zCdromRootDrive ) )
-							return;
-
-						//Check if a file exists on the cdrom
-						sprintf( zCdromRootDrive, "%sData\\NPC_Speech.slf", zCdromRootDrive );
-
-				//		if( FileExistsNoDB( zCdromRootDrive ) )
-						hFile = FileOpen( zCdromRootDrive, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE );
-						if( hFile != 0 )
-						{
-							FileClose( hFile );
-							sprintf( zCdromRootDrive, "%sData\\NPC_Speech.slf", zCdromRootDrive );
-						}
-						else
-						{
-							sprintf( zCdromRootDrive, "%sData\\NPC_Speech.slf", zCdromRootDrive );
-						}
-
-						uiLastTimeToCheckCDromDrive = GetJA2Clock();
-					}
-*/
-				}
-				break;
-
-
-				case 'z':
-					 SetErrorMode( SEM_FAILCRITICALERRORS );
-					break;
-
-				case 'q':
-//					ShouldMercSayPrecedentToRepeatOneSelf( 11, 99 );
-					break;
-#endif
 			}
 		}
 	}

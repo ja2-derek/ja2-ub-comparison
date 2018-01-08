@@ -417,11 +417,6 @@ void DecideActiveTerrorists( void )
 		}
 	}
 
-	// ifdefs added by CJC
-	#ifdef JA2TESTVERSION
-		ubNumAdditionalTerrorists = 4;
-	#endif
-
 	while ( ubNumTerroristsAdded < ubNumAdditionalTerrorists )
 	{
 

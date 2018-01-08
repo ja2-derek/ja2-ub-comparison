@@ -1233,9 +1233,6 @@ void SetLastTimePlayerWasInSector()
 			}
 			pTempNode = pTempNode->next;
 		}
-		#ifdef JA2TESTVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Failed to Set the 'uiTimeCurrentSectorWasLastLoaded' for an underground sector" );
-		#endif
 	}
 }
 
@@ -1264,9 +1261,6 @@ UINT32 GetLastTimePlayerWasInSector()
 			pTempNode = pTempNode->next;
 		}
 
-		#ifdef JA2TESTVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Failed to Get the 'uiTimeCurrentSectorWasLastLoaded' from an underground sector" );
-		#endif
 
 		return( 0 );
 	}

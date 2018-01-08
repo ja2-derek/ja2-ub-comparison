@@ -43,9 +43,6 @@ extern void EndCreatureQuest();
 extern GARRISON_GROUP *gGarrisonGroup;
 extern INT32 giGarrisonArraySize;
 
-#ifdef JA2TESTVERSION
-extern BOOLEAN gfOverrideSector;
-#endif
 
 INT16 gsInterrogationGridNo[3] = { 7756, 7757, 7758 };
 
@@ -472,17 +469,6 @@ BOOLEAN PrepareEnemyForSectorBattle()
 	pSector->ubTroopsInBattle += ubTotalTroops;
 	pSector->ubElitesInBattle += ubTotalElites;
 
-	#ifdef JA2TESTVERSION 
-	if( gfOverrideSector )
-	{
-		//if there are no troops in the current groups, then we're done.
-		if( !ubTotalAdmins && !ubTotalTroops && !ubTotalElites )
-			return FALSE;
-		AddSoldierInitListEnemyDefenceSoldiers( ubTotalAdmins, ubTotalTroops, ubTotalElites );
-		ValidateEnemiesHaveWeapons();
-		return TRUE;
-	}
-	#endif
 
 	//Search for movement groups that happen to be in the sector.
 	sNumSlots = NumFreeEnemySlots();
@@ -1244,9 +1230,6 @@ void AddEnemiesToBattle( GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ub
 		case INSERTION_CODE_WEST:		bDesiredDirection = NORTHEAST;										break;
 		default:  AssertMsg( 0, "Illegal direction passed to AddEnemiesToBattle()" );	break;
 	}
-	#ifdef JA2TESTVERSION
-		ScreenMsg( FONT_RED, MSG_INTERFACE, L"Enemy reinforcements have arrived!  (%d admins, %d troops, %d elite)", ubNumAdmins, ubNumTroops, ubNumElites );
-	#endif
 
 	if( fMagicallyAppeared )
 	{ //update the strategic counters 

@@ -367,16 +367,6 @@ void		GetIntroScreenUserInput()
 					BinkCloseFlic( gpBinkFlic );
 					break;
 
-#ifdef JA2TESTVERSION
-
-				case 'r':
-					break;
-
-				case 'i':
-					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
-					break;
-
-#endif
 			}
 		}
 	}
@@ -534,9 +524,6 @@ Ja25: no begining intro
 
 		case INTRO_SPLASH:
 
-//#ifdef JA2TESTVERSION
-//	return( -1 );
-//#endif
 
 			// CJC Nov 18 2002: disabled Interplay screen
 

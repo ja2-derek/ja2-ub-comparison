@@ -781,57 +781,6 @@ UINT32  MainGameScreenHandle(void)
 	// Render Interface
 	RenderTopmostTacticalInterface( );
 
-#ifdef JA2TESTVERSION
-	if ( gTacticalStatus.uiFlags & ENGAGED_IN_CONV )
-	{
-		SetFont( MILITARYFONT1 );
-		SetFontBackground( FONT_MCOLOR_BLACK );
-		SetFontForeground( FONT_MCOLOR_LTGREEN );		
-
-		mprintf( 0, 0, L"IN CONVERSATION %d", giNPCReferenceCount );
-		gprintfdirty( 0, 0, L"IN CONVERSATION %d", giNPCReferenceCount );
-	}
-
-#ifdef JA2BETAVERSION
-
-	if ( GamePaused() == TRUE )
-	{
-		SetFont( MILITARYFONT1 );
-		SetFontBackground( FONT_MCOLOR_BLACK );
-		SetFontForeground( FONT_MCOLOR_LTGREEN );		
-
-		mprintf( 0, 10, L"Game Clock Paused" );
-		gprintfdirty( 0, 10, L"Game Clock Paused" );
-	}
-
-#endif
-
-
-
-	if ( gTacticalStatus.uiFlags & SHOW_ALL_MERCS )
-	{
-		INT32 iSchedules;
-		SCHEDULENODE *curr;
-
-		SetFont( MILITARYFONT1 );
-		SetFontBackground( FONT_MCOLOR_BLACK );
-		SetFontForeground( FONT_MCOLOR_LTGREEN );		
-
-		mprintf( 0, 15, L"Attacker Busy Count: %d", gTacticalStatus.ubAttackBusyCount );
-		gprintfdirty( 0, 15, L"Attacker Busy Count: %d", gTacticalStatus.ubAttackBusyCount );
-
-		curr = gpScheduleList;
-		iSchedules = 0;
-		while( curr )
-		{
-			iSchedules++;
-			curr = curr->next;
-		}
-
-		mprintf( 0, 25, L"Schedules: %d", iSchedules );
-		gprintfdirty( 0, 25, L"Schedules: %d", iSchedules );
-	}
-#endif
   
   
 	// Render view window

@@ -1356,12 +1356,6 @@ void SetDriver( INT32 iID, UINT8 ubID )
 }
 
 
-#ifdef JA2TESTVERSION
-void VehicleTest( void )
-{
-	SetUpHelicopterForPlayer( 9,1 );
-}
-#endif
 
 
 BOOLEAN IsEnoughSpaceInVehicle( INT32 iID )

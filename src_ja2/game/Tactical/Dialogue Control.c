@@ -1841,8 +1841,6 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
 
   // Double check it exists....
 
-//#ifndef JA2TESTVERSION
-
 /*
   if ( !FileExists( pFilename ) )
   {
@@ -1854,8 +1852,6 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
     ShutdownWithErrorBox( sString );
   }
 */
-
-//#endif
 
   // get speech if applicable
 	if ( gGameSettings.fOptions[ TOPTION_SPEECH ] )

@@ -175,16 +175,6 @@ void GetCMMercChoosingUserInput()
 		{
 			switch( InputEvent.usParam )
 			{
-#ifdef JA2TESTVERSION
-				case 'r':
-					gfRenderCMMercChoosing = TRUE;
-					break;
-
-				//TEST:  use current settings and enter game
-				case '1':
-					TestChooseMercsAndEnterGame();
-					break;
-#endif
 				case ESC:
 					//Cancel back to the briefing
 					SetCMMercChoosingExitScreen( CUSTOM_MAP_BRIEFING_SCREEN );

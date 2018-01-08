@@ -20,9 +20,6 @@
 #endif
 
 
-#ifdef JA2TESTVERSION
-	#define BR_INVENTORY_TURNOVER_DEBUG
-#endif
 
 
 #define BOBBIES_SIGN_FONT							FONT14ARIAL

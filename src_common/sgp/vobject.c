@@ -213,12 +213,6 @@ BOOLEAN AddStandardVideoObject( VOBJECT_DESC *pVObjectDesc, UINT32 *puiIndex )
 	guiVObjectSize++;
 	guiVObjectTotalAdded++;
 
-	#ifdef JA2TESTVERSION
-		if( CountVideoObjectNodes() != guiVObjectSize )
-		{
-			guiVObjectSize = guiVObjectSize;
-		}
-	#endif
 
 	return TRUE ;
 }
@@ -343,12 +337,6 @@ BOOLEAN DeleteVideoObjectFromIndex( UINT32 uiVObject  )
 			MemFree( curr );
 			curr = NULL;
 			guiVObjectSize--;
-			#ifdef JA2TESTVERSION
-				if( CountVideoObjectNodes() != guiVObjectSize )
-				{
-					guiVObjectSize = guiVObjectSize;
-				}
-			#endif
 			return TRUE;
 		}
 		curr = curr->next;

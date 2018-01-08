@@ -360,9 +360,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 	//Allocate enough memory for the library header
 	pLibHeader->pFileHeader = MemAlloc( sizeof( FileHeaderStruct ) * usNumEntries );
 
-	#ifdef JA2TESTVERSION
-		pLibHeader->uiTotalMemoryAllocatedForLibrary = sizeof( FileHeaderStruct ) * usNumEntries;
-	#endif
 
 
 	//place the file pointer at the begining of the file headers ( they are at the end of the file )
@@ -413,9 +410,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 #endif
 
 
-			#ifdef JA2TESTVERSION
-				pLibHeader->uiTotalMemoryAllocatedForLibrary += strlen( DirEntry.sFileName ) + 1;
-			#endif
 
 
 			//copy the file name, offset and length into the header
@@ -461,9 +455,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 	}
 
 
-	#ifdef JA2TESTVERSION
-		pLibHeader->uiTotalMemoryAllocatedForLibrary += strlen( LibFileHeader.sPathToLibrary ) + 1;
-	#endif
 
 
 	//allocate space for the open files array
@@ -476,9 +467,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 
 	memset( pLibHeader->pOpenFiles, 0, INITIAL_NUM_HANDLES * sizeof( FileOpenStruct ) );
 
-	#ifdef JA2TESTVERSION
-		pLibHeader->uiTotalMemoryAllocatedForLibrary += INITIAL_NUM_HANDLES * sizeof( FileOpenStruct );
-	#endif
 
 
 
@@ -1025,10 +1013,6 @@ BOOLEAN CloseLibrary( INT16 sLibraryID )
 	if( !IsLibraryOpened( sLibraryID ) )
 		return( FALSE );
 
-	#ifdef JA2TESTVERSION
-		FastDebugMsg( String("ShutDownFileDatabase( ): %d bytes of ram used for the Library #%3d, path '%s',  in the File Database System\n", gFileDataBase.pLibraries[ sLibraryID ].uiTotalMemoryAllocatedForLibrary, sLibraryID, gFileDataBase.pLibraries[ sLibraryID ].sLibraryPath ));
-		gFileDataBase.pLibraries[ sLibraryID ].uiTotalMemoryAllocatedForLibrary = 0;
-	#endif
 
 	//if there are any open files, loop through the library and close down whatever file is still open
 	if( gFileDataBase.pLibraries[ sLibraryID ].iNumFilesOpen )

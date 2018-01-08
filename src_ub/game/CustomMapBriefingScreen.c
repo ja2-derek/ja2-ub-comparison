@@ -172,15 +172,6 @@ void GetCMBriefingScreenUserInput()
 		{
 			switch( InputEvent.usParam )
 			{
-#ifdef JA2TESTVERSION
-				case 'r':
-					gfRenderCMBriefingScreen = TRUE;
-					break;
-				case 'm':
-					//goto the merc choosing screen
-					SetCMBriefingScreenExitScreen( CUSTOM_MAP_MERC_CHOOSING_SCREEN );
-					break;
-#endif
 				case '1':
 					break;
 				case ESC:

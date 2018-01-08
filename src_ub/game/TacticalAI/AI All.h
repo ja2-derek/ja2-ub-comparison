@@ -78,10 +78,6 @@
 #include "Soldier Tile.h"
 #include "meanwhile.h"
 #include "Campaign Types.h"
-#ifdef JA2TESTVERSION
-	#include	"Quest Debug System.h"
-	#include	"QuestText.h"
-#endif
 
 #include "stdarg.h"
 #include <stdio.h>

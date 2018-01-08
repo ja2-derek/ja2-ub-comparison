@@ -24,12 +24,9 @@ void DisplayPopUpBoxExplainingMercArrivalLocationAndTime( );
 extern UINT8 gubVideoConferencingMode;
 
 //TEMP!!!
-#ifdef JA2TESTVERSION
-void TempHiringOfMercs( UINT8 ubNumberOfMercs, BOOLEAN fReset );
-#endif
 
 
-#if defined ( JA2TESTVERSION ) || defined ( JA2DEMO )
+#if defined ( JA2DEMO )
 	void DemoHiringOfMercs( );
 #endif
 

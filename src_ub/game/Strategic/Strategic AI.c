@@ -1043,11 +1043,7 @@ void ValidatePlayersAreInOneGroupOnly()
 void SAIReportError( STR16 wErrorString )
 {
 	// runtime static only, don't save
-	#ifdef JA2TESTVERSION
-		static BOOLEAN fReportedAlready = FALSE;
-	#else
 		BOOLEAN fReportedAlready = FALSE; //so it can loop
-	#endif
 
 	if ( !fReportedAlready )
 	{

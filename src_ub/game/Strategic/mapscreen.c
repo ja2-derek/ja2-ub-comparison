@@ -697,10 +697,6 @@ extern CHAR16		gzUserDefinedButton2[ 128 ];
 
 extern BOOLEAN gfMilitiaPopupCreated;
 
-#ifdef JA2TESTVERSION
-	extern INT16 MSYS_CurrentMX;
-	extern INT16 MSYS_CurrentMY;
-#endif
 
 extern void MakeBadSectorListFromMapsOnHardDrive( BOOLEAN fDisplayMessages );
 extern void AddCustomMap( INT32 iRow, INT32 iCol, BOOLEAN fDisplayMessages, BOOLEAN fMessageIfNotExist );
@@ -1025,11 +1021,6 @@ extern BOOLEAN CanRedistributeMilitiaInSector( INT16 sClickedSectorX, INT16 sCli
 extern INT32 GetNumberOfMercsInUpdateList( void );
 
 
-#ifdef JA2TESTVERSION
-void TestDumpStatChanges( void );
-void DumpSectorDifficultyInfo( void );
-void DumpItemsList( void );
-#endif
 
 #ifdef JA2DEMO
 //void MapScreenDemoOkBoxCallback( UINT8 bExitValue );
@@ -3890,23 +3881,6 @@ Ja25 no orta
 	// render clock
 	RenderClock(CLOCK_X, CLOCK_Y + 1 );
 
-	#ifdef JA2TESTVERSION
-	if( !gfWorldLoaded )
-	{
-		SetFont( FONT10ARIAL );
-		if( GetJA2Clock() % 1000 < 500 )
-			SetFontForeground( FONT_DKRED );
-		else
-			SetFontForeground( FONT_RED );
-		mprintf( 530, 2, L"TESTVERSION MSG" );
-		if( GetJA2Clock() % 1000 < 500 )
-			SetFontForeground( FONT_DKYELLOW );
-		else
-			SetFontForeground( FONT_YELLOW );
-		mprintf( 530, 12, L"NO WORLD LOADED" );
-		InvalidateRegion( 530, 2, SCREEN_BUFFER_WIDTH, 23 );
-	}
-	#endif
 
 	if( fEndShowInventoryFlag == TRUE )
 	{
@@ -5207,80 +5181,19 @@ void GetMapKeyboardInput( UINT32 *puiNewEvent )
 					break;
 
 				case F7:
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							if ( bSelectedInfoChar != -1 )
-							{
-								SOLDIERTYPE *pSoldier = MercPtrs[ gCharactersList[ bSelectedInfoChar ].usSolID ];
-								if ( pSoldier->inv[ HANDPOS ].usItem != 0 )
-								{
-									pSoldier->inv[ HANDPOS ].bStatus[ 0 ] = 2;
-								}
-							}
-						}
-						if( fCtrl )
-						{
-							if ( bSelectedInfoChar != -1 )
-							{
-								SOLDIERTYPE *pSoldier = MercPtrs[ gCharactersList[ bSelectedInfoChar ].usSolID ];
-								if ( pSoldier->inv[ HANDPOS ].usItem != 0 )
-								{
-									pSoldier->inv[ HANDPOS ].usItem = GUN_BARREL_EXTENDER;
-								}
-							}
-						}
-					#endif
 					break;
 
 				case F8:
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							// reduce balance to $500
-							AddTransactionToPlayersBook( PAYMENT_TO_NPC, SKYRIDER, GetWorldTotalMin( ), - ( LaptopSaveInfo.iCurrentBalance - 500 ) );
-						}
-					#endif
 					break;
 
 				case F9:
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							UINT8 ubSamIndex;
-
-							// ALT-F9: Reveal all SAM sites
-							for( ubSamIndex = 0; ubSamIndex < NUMBER_OF_SAM_SITES; ubSamIndex++ )
-							{
-								SetSAMSiteAsFound( ubSamIndex );
-							}
-						}
-					#endif
 					break;
 
 				case F10:
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							if ( bSelectedInfoChar != -1 )
-							{
-								// ALT-F10: force selected character asleep (ignores breathmax)
-								PutMercInAsleepState( MercPtrs[ gCharactersList[ bSelectedInfoChar ].usSolID ] );
-							}
-						}
-					#endif
 					break;
 
 /*
 				case F11:
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							// ALT-F11: make all sectors player controlled
-							ClearMapControlledFlags( );
-							fMapPanelDirty = TRUE;
-						}
-					#endif
 					break;
 */
 
@@ -5316,57 +5229,18 @@ void GetMapKeyboardInput( UINT32 *puiNewEvent )
 					break;
 
 				case '`':
-/*
-Ja25 no militia
-					#ifdef JA2TESTVERSION
-						if( fCtrl )
-						{
-							if( bSelectedInfoChar != -1 )
-							{
-								TownMilitiaTrainingCompleted( &Menptr[ gCharactersList[ bSelectedInfoChar ].usSolID ], sSelMapX, sSelMapY );
-							}
-						}
-					#endif
-*/
 					break;
 
 				case '\\':
-					#ifdef JA2TESTVERSION
-						if( fCtrl )
-						{
-							DumpItemsList();
-						}
-					#endif
 					break;
 
 				case '>':
-					#ifdef JA2TESTVERSION
-						if( fCtrl )
-						{
-							// free
-						}
-					#endif
 					break;
 
 				case '?':
-					#ifdef JA2TESTVERSION
-						if( fCtrl )
-						 MapScreenMessage( 0, MSG_DEBUG, L"JA2Clock = %d", GetJA2Clock() );
-						else
-						 MapScreenMessage( 0, MSG_DEBUG, L"Mouse X,Y = %d,%d", MSYS_CurrentMX, MSYS_CurrentMY );
-					#endif
 					break;
 
 				case '/':
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							if( bSelectedInfoChar != -1 )
-							{
-								StatChange( &Menptr[ gCharactersList[ bSelectedInfoChar ].usSolID ], EXPERAMT, 1000, FROM_SUCCESS );
-							}
-						}
-					#endif
 					break;
 
 
@@ -5503,13 +5377,6 @@ Ja25 no militia
 					break;
 
 				case 'd':
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							// prints out a text file in C:\TEMP telling you how many stat change chances/successes each profile merc got
-							TestDumpStatChanges();
-						}
-					#endif
 					break;
 
 				case 'e':
@@ -5519,23 +5386,6 @@ Ja25 no militia
 					}
 					break;
 				case 'f':
-#ifdef JA2TESTVERSION
-					// CTRL-F: Refuel vehicle
-					if( ( fCtrl ) && ( bSelectedInfoChar != -1 ) )
-					{
-						SOLDIERTYPE *pSoldier = MercPtrs[ gCharactersList[ bSelectedInfoChar ].usSolID ];
-
-						if ( pSoldier->uiStatusFlags & SOLDIER_VEHICLE )
-						{
-							pSoldier->sBreathRed = 10000;
-							pSoldier->bBreath = 100;
-							ScreenMsg( FONT_MCOLOR_RED, MSG_TESTVERSION, L"Vehicle refueled" );
-
-							fTeamPanelDirty = TRUE;
-							fCharacterInfoPanelDirty = TRUE;
-						}
-					}
-#endif
 					if( fAlt )
 					{
 						if ( INFORMATION_CHEAT_LEVEL( ) )
@@ -5548,23 +5398,6 @@ Ja25 no militia
 					break;
 				#endif
 				case 'h':
-/*
-Ja25: No drassen
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							// set up the helicopter over Omerta (if it's not already set up)
-							SetUpHelicopterForPlayer( 9,1 );
-							// raise Drassen loyalty to minimum that will allow Skyrider to fly
-							if ( gTownLoyalty[ DRASSEN ].fStarted && ( gTownLoyalty[ DRASSEN ].ubRating < LOYALTY_LOW_THRESHOLD ) )
-							{
-								SetTownLoyalty( DRASSEN, LOYALTY_LOW_THRESHOLD );
-							}
-							TurnOnAirSpaceMode( );
-						}
-						else
-					#endif
-*/
 						{
 							// ARM: Feb01/98 - Cancel out of mapscreen movement plotting if Help subscreen is coming up
 							if( ( bSelectedDestChar != -1 ) || ( fPlotForHelicopter == TRUE ) )
@@ -5580,34 +5413,11 @@ Ja25: No drassen
 
 				#ifndef JA2DEMO
 				case 'i':
-					#ifdef JA2TESTVERSION
-/*
-						if( fAlt )
-						{
-							InitializeMines();
-							fMapPanelDirty = TRUE;
-						}
-						else
-*/
-						if( fCtrl )
-						{
-							fDisableJustForIan = ! fDisableJustForIan;
-						}
-						else
-						{
-							// only handle border button keyboard equivalents if the button is visible!
-							if ( !fShowMapInventoryPool )
-							{
-								ToggleItemsFilter();
-							}
-						}
-					#else
 						// only handle border button keyboard equivalents if the button is visible!
 						if ( !fShowMapInventoryPool )
 						{
 							ToggleItemsFilter();
 						}
-					#endif
 
 					break;
 				case 'l':
@@ -5654,38 +5464,10 @@ Ja25: No drassen
 					}
 					break;
 				case 'n':
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							static UINT16 gQuoteNum = 0;
-							// Get Soldier
-							TacticalCharacterDialogue( MercPtrs[ gCharactersList[ bSelectedInfoChar ].usSolID ], gQuoteNum );
-							gQuoteNum++;
-						}
-						else if( fCtrl )
-						{
-							static UINT16 gQuoteNum = 0;
-							// Get Soldier
-							if ( giHighLine != -1 )
-							{
-								TacticalCharacterDialogue( MercPtrs[ gCharactersList[ giHighLine ].usSolID ], gQuoteNum );
-								gQuoteNum++;
-							}
-						}
-					#endif
 					break;
 				case 'o':
 					if( fAlt )
 					{	
-/*
-JA25: no orta and tixa
-						// toggle if Orta & Tixa have been found
-						#ifdef JA2TESTVERSION
-							fFoundOrta = !fFoundOrta;
-							fFoundTixa = !fFoundTixa;
-							fMapPanelDirty = TRUE;
-						#endif
-*/
 					}
 					else
 					{
@@ -5695,48 +5477,10 @@ JA25: no orta and tixa
 					break;
 
 					case 'p':
-					#ifdef JA2TESTVERSION
-						#ifndef JA2DEMO
-							if( fCtrl )
-							{
-								// CTRL-P: Display player's highest progress percentage
-								DumpSectorDifficultyInfo();
-							}
-						#endif
-					#endif
 
-/*
-					#ifdef JA2TESTVERSION
-						// ALT-P: Make the selected character a POW!
-						if( ( fAlt ) && ( bSelectedInfoChar != -1 ) )
-						{
-							SOLDIERTYPE *pSoldier = MercPtrs[ gCharactersList[ bSelectedInfoChar ].usSolID ];
-
-							EnemyCapturesPlayerSoldier( pSoldier );
-
-							if ( pSoldier->bInSector )
-							{
-								RemoveSoldierFromTacticalSector( pSoldier, TRUE );
-							}
-
-							fTeamPanelDirty = TRUE;
-							fCharacterInfoPanelDirty = TRUE;
-							fMapPanelDirty = TRUE;
-						}
-					#endif
-*/
 					break;
 
 				case 'q':
-					#ifdef JA2TESTVERSION
-						if( fAlt )
-						{
-							// initialize miners if not already done so (fakes entering Drassen mine first)
-							HandleQuestCodeOnSectorEntry( 13, 4, 0);
-							// test miner quote system
-							IssueHeadMinerQuote( (INT8) (1 + Random(MAX_NUMBER_OF_MINES - 1)), (UINT8) (1 + Random(2)));
-						}
-					#endif
 					break;
 				case 'r':
 					if( gfPreBattleInterfaceActive )
@@ -5869,21 +5613,6 @@ JA25: no orta and tixa
 					}
 					break;
 				case 'u':
-					#ifdef JA2TESTVERSION
-					{
-						if( fAlt )
-						{
-							UINT32 uiCnt;
-							// initialize miners if not already done so (fakes entering Drassen mine first)
-							HandleQuestCodeOnSectorEntry( 13, 4, 0);
-							// test running out
-							for (uiCnt = 0; uiCnt < 10; uiCnt++)
-							{
-								HandleIncomeFromMines();
-							}
-						}
-					}
-					#endif
 					break;
 				case 'v':
 					if( fCtrl )
@@ -5920,9 +5649,6 @@ JA25: no orta and tixa
 					// ALT-Y: toggles SAM sites disable
 					if( fAlt )
 					{
-						#ifdef JA2TESTVERSION
-							fSAMSitesDisabledFromAttackingPlayer = !fSAMSitesDisabledFromAttackingPlayer;
-						#endif
 					}
 					break;
 
@@ -12459,32 +12185,6 @@ void HandleMilitiaRedistributionClick( void )
 */
 
 
-#ifdef JA2TESTVERSION
-void DumpSectorDifficultyInfo( void )
-{
-	// NOTE: This operates on the selected map sector!
-	CHAR16 wSectorName[ 128 ];
-
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Playing Difficulty: %s", gzGIOScreenText[ GIO_DIF_LEVEL_TEXT + gGameOptions.ubDifficultyLevel ] );
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Highest Progress (0-100) = %d%%", HighestPlayerProgressPercentage() );
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Player Kills = %d", gStrategicStatus.usPlayerKills );
-
-	GetSectorIDString( sSelMapX, sSelMapY, ( INT8 ) iCurrentMapSectorZ, wSectorName, TRUE );
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"SECTOR: %s", wSectorName );
-
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Pyth. Distance From Meduna (0-20) = %d", GetPythDistanceFromPalace( sSelMapX, sSelMapY ) );
-
-	if ( ( gWorldSectorX == sSelMapX ) && ( gWorldSectorY == sSelMapY ) && ( gbWorldSectorZ == iCurrentMapSectorZ ) )
-	{
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Enemy Difficulty Factor (0 to 100) = %d%%", CalcDifficultyModifier( SOLDIER_CLASS_ARMY ) );
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Avg Regular Enemy Exp. Level (2-6) = %d", 2 + ( CalcDifficultyModifier( SOLDIER_CLASS_ARMY ) / 20 ) );
-	}
-	else
-	{
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"--Must load sector to calculate difficulty--" );
-	}
-}
-#endif
 
 
 

@@ -86,9 +86,6 @@ typedef struct
 //
 //	Temp:	Total memory used for each library ( all memory allocated
 //
-	#ifdef JA2TESTVERSION
-		UINT32	uiTotalMemoryAllocatedForLibrary;
-	#endif
 
 } LibraryHeaderStruct;
 

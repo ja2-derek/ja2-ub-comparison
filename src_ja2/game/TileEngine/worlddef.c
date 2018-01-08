@@ -136,16 +136,6 @@ INT16		gsRecompileAreaRight = 0;
 INT16		gsRecompileAreaBottom = 0;
 
 //TIMER TESTING STUFF
-#ifdef JA2TESTVERSION
-	extern UINT32 uiLoadWorldTime;
-	extern UINT32 uiTrashWorldTime;
-	extern UINT32 uiLoadMapTilesetTime;
-	extern UINT32 uiLoadMapLightsTime;
-	extern UINT32 uiBuildShadeTableTime;
-	extern UINT32 uiNumTablesLoaded;
-	extern UINT32 uiNumTablesSaved;
-	extern UINT32 uiNumImagesReloaded;
-#endif
 
 BOOLEAN DoorAtGridNo( UINT32 iMapIndex )
 {
@@ -514,17 +504,8 @@ void BuildTileShadeTables(  )
 	CHAR8 	      cRootFile[ 128 ];
   BOOLEAN       fForceRebuildForSlot = FALSE;
 
-#ifdef JA2TESTVERSION
-	UINT32				uiStartTime;
-#endif
 	static UINT8 ubLastRed = 255, ubLastGreen = 255, ubLastBlue = 255;
 
-	#ifdef JA2TESTVERSION
-		uiNumTablesLoaded = 0;
-		uiNumTablesSaved = 0;
-		uiNumImagesReloaded = 0;
-		uiStartTime = GetJA2Clock();
-	#endif
 
 
 	//Set the directory to the shadetable directory
@@ -586,9 +567,6 @@ void BuildTileShadeTables(  )
             fForceRebuildForSlot = TRUE;
           }
 
-					#ifdef JA2TESTVERSION
-						uiNumImagesReloaded++;
-					#endif
 					RenderProgressBar( 0, uiLoop * 100 / NUMBEROFTILETYPES );
 					CreateTilePaletteTables( gTileSurfaceArray[ uiLoop ]->vo, uiLoop, fForceRebuildForSlot );
         }
@@ -602,9 +580,6 @@ void BuildTileShadeTables(  )
 	ubLastGreen = gpLightColors[0].peGreen;
 	ubLastBlue = gpLightColors[0].peBlue;
 
-	#ifdef JA2TESTVERSION
-		uiBuildShadeTableTime = GetJA2Clock() - uiStartTime;
-	#endif
 }
 
 void DestroyTileShadeTables( )
@@ -2625,10 +2600,6 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 	UINT32					uiSoldierSize;
 	UINT32					uiFileSize;
 	UINT32					fp, offset;
-#ifdef JA2TESTVERSION
-	UINT32					uiStartTime;
-	UINT32					uiLoadWorldStartTime;
-#endif
 	INT32						cnt, cnt2;
 	INT32						iTilesetID;
 	UINT16					usTileIndex;
@@ -2642,9 +2613,6 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 	INT8						*pBufferHead;
 	BOOLEAN					fGenerateEdgePoints = FALSE;
 	UINT8						ubMinorMapVersion;
-#ifdef JA2TESTVERSION
-	uiLoadWorldStartTime = GetJA2Clock();
-#endif
 
 	LoadShadeTablesFromTextFile();
 
@@ -2672,15 +2640,9 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 	}
 
 	SetRelativeStartAndEndPercentage( 0, 0, 1, L"Trashing world..." );
-#ifdef JA2TESTVERSION
-	uiStartTime = GetJA2Clock();
-#endif
 
 	TrashWorld();
 
-#ifdef JA2TESTVERSION
-	uiTrashWorldTime = GetJA2Clock() - uiStartTime;
-#endif
 
 	LightReset();
 
@@ -2718,13 +2680,7 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 
 	LOADDATA( &iTilesetID, pBuffer, sizeof( INT32 ) );
 
-#ifdef JA2TESTVERSION
-	uiStartTime = GetJA2Clock();
-#endif
 	CHECKF( LoadMapTileset( iTilesetID ) != FALSE );
-#ifdef JA2TESTVERSION
-	uiLoadMapTilesetTime = GetJA2Clock() - uiStartTime;
-#endif
 
 	// Load soldier size
 	LOADDATA( &uiSoldierSize, pBuffer, sizeof( INT32 ) );
@@ -3046,9 +3002,6 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 			ubAmbientLightLevel = 4;
 		}
 	}
-#ifdef JA2TESTVERSION
-	uiStartTime = GetJA2Clock();
-#endif
 	if( uiFlags & MAP_WORLDLIGHTS_SAVED )
 	{
 		LoadMapLights( &pBuffer );
@@ -3059,9 +3012,6 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 		SetDefaultWorldLightingColors( );
 	}
 	LightSetBaseLevel( ubAmbientLightLevel );
-#ifdef JA2TESTVERSION
-	uiLoadMapLightsTime = GetJA2Clock() - uiStartTime;
-#endif
 
 
 	SetRelativeStartAndEndPercentage( 0, 85, 86, L"Loading map information..." );
@@ -3167,19 +3117,7 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 	//Remove this rather large chunk of memory from the system now!
 	MemFree( pBufferHead );
 
-#ifdef JA2TESTVERSION
-	uiLoadWorldTime = GetJA2Clock() - uiLoadWorldStartTime;
-#endif
 
-#ifdef JA2TESTVERSION
-
-  // ATE: Not while updating maps!
-  if ( guiCurrentScreen != MAPUTILITY_SCREEN )
-  {
-  	GenerateBuildings();
-  }
-
-#endif
 
 	RenderProgressBar( 0, 100 );
 

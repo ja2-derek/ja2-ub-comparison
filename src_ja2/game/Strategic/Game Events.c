@@ -12,102 +12,6 @@
 	#include "Text.h"
 #endif
 
-#ifdef JA2TESTVERSION
-	
-UINT16 gEventName[NUMBER_OF_EVENT_TYPES_PLUS_ONE][40]={
-	//1234567890123456789012345678901234567890 (increase size of array if necessary)
-	L"Null",
-	L"ChangeLightValue",
-	L"WeatherStart",
-	L"WeatherEnd",
-	L"CheckForQuests",
-	L"Ambient",
-	L"AIMResetMercAnnoyance",
-	L"BobbyRayPurchase",
-	L"DailyUpdateBobbyRayInventory",
-	L"UpdateBobbyRayInventory",
-	//1234567890123456789012345678901234567890 (increase size of array if necessary)
-	L"DailyUpdateOfMercSite",
-	L"Day3AddEMailFromSpeck",
-	L"DelayedHiringOfMerc",
-	L"HandleInsuredMercs",
-	L"PayLifeInsuranceForDeadMerc",
-	L"MercDailyUpdate",
-	L"MercAboutToLeaveComment",
-	L"MercContractOver",
-	L"GroupArrival",
-	L"Day2AddEMailFromIMP",
-	//1234567890123456789012345678901234567890 (increase size of array if necessary)
-	L"MercComplainEquipment",
-	L"HourlyUpdate",
-	L"HandleMineIncome",
-	L"SetupMineIncome",
-	L"QueuedBattle",
-	L"LeavingMercArriveInDrassen",
-	L"LeavingMercArriveInOmerta",
-	L"SetByNPCSystem",
-	L"SecondAirportAttendantArrived",
-	L"HelicopterHoverTooLong",
-	//1234567890123456789012345678901234567890 (increase size of array if necessary)
-	L"HelicopterHoverWayTooLong",
-	L"HelicopterDoneRefuelling",
-	L"MercLeaveEquipInOmerta",
-	L"MercLeaveEquipInDrassen",
-	L"DailyEarlyMorningEvents",
-	L"GroupAboutToArrive",
-	L"ProcessTacticalSchedule",
-	L"BeginRainStorm",
-	L"EndRainStorm",
-	L"HandleTownOpinion",
-	//1234567890123456789012345678901234567890 (increase size of array if necessary)
-	L"SetupTownOpinion",
-	L"DelayedDeathHandling",
-	L"BeginAirRaid",
-	L"TownLoyaltyUpdate",
-	L"Meanwhile",
-	L"BeginCreatureQuest",
-	L"CreatureSpread",
-	L"DecayCreatures",
-	L"CreatureNightPlanning",
-	L"CreatureAttack",
-	//1234567890123456789012345678901234567890 (increase size of array if necessary)
-	L"EvaluateQueenSituation",
-	L"CheckEnemyControlledSector",
-	L"TurnOnNightLights",
-	L"TurnOffNightLights",
-	L"TurnOnPrimeLights",
-	L"TurnOffPrimeLights",
-	L"MercAboutToLeaveComment",
-	L"ForceTimeInterupt",
-	L"EnricoEmailEvent",
-	L"InsuranceInvestigationStarted",
-	//1234567890123456789012345678901234567890 (increase size of array if necessary)
-	L"InsuranceInvestigationOver",
-	L"HandleMinuteUpdate",
-	L"TemperatureUpdate",
-	L"Keith going out of business",
-	L"MERC site back online",
-	L"Investigate Sector",
-	L"CheckIfMineCleared",
-	L"RemoveAssassin",
-	L"BandageBleedingMercs",
-	L"ShowUpdateMenu",
-	//1234567890123456789012345678901234567890 (increase size of array if necessary)
-	L"SetMenuReason",
-	L"AddSoldierToUpdateBox",
-	L"BeginContractRenewalSequence",
-	L"RPC_WHINE_ABOUT_PAY",
-	L"HaventMadeImpCharacterEmail",
-	L"Rainstorm",
-	L"Quarter Hour Update",
-	L"MERC Merc went up level email delay",
-	L".",
-#ifdef CRIPPLED_VERSION
-	L"Crippled version end game check",
-#endif
-};
-
-#endif
 
 void ValidateGameEvents();
 
@@ -355,16 +259,6 @@ STRATEGICEVENT* AddAdvancedStrategicEvent( UINT8 ubEventType, UINT8 ubCallbackID
 	if( gfProcessingGameEvents && uiTimeStamp <= guiTimeStampOfCurrentlyExecutingEvent )
 	{ //Prevents infinite loops of posting events that are the same time or earlier than the event
 		//currently being processed.
-		#ifdef JA2TESTVERSION
-			//if( ubCallbackID == EVENT_PROCESS_TACTICAL_SCHEDULE )
-			{
-				ScreenMsg( FONT_RED, MSG_DEBUG, L"%s Event Rejected:  Can't post events <= time while inside an event callback.  This is a special case situation that isn't a bug.", gEventName[ ubCallbackID ] );
-			}
-			//else
-			//{
-			//	AssertMsg( 0, String( "%S Event Rejected:  Can't post events <= time while inside an event callback.", gEventName[ ubCallbackID ] ) );
-			//}
-		#endif
 		return NULL;
 	}
 

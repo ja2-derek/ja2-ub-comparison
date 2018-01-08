@@ -1406,9 +1406,6 @@ void CorpseHit( INT16 sGridNo, UINT16 usStructureID )
 
 	if ( pCorpse == NULL )
 	{
-	#ifdef JA2TESTVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Bullet hit corpse but corpse cannot be found at: %d", sBaseGridNo );
-	#endif
 		return;
 	}
 
@@ -1457,9 +1454,6 @@ void VaporizeCorpse( INT16 sGridNo, UINT16 usStructureID )
 
 	if ( pCorpse == NULL )
 	{
-	#ifdef JA2TESTVERSION
-		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Vaporize corpse but corpse cannot be found at: %d", sBaseGridNo );
-	#endif
 		return;
 	}
 

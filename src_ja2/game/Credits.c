@@ -647,31 +647,6 @@ void			GetCreditScreenUserInput()
 					SetCreditsExitScreen( MAINMENU_SCREEN );
 					break;
 
-#ifdef JA2TESTVERSION
-				case 'r':
-					gubCreditScreenRenderFlags = CRDT_RENDER_ALL;
-					break;
-
-				case 'i':
-					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
-					break;
-
-				case UPARROW:
-					guiCrdtNodeScrollSpeed+=5;
-					break;
-				case DNARROW:
-					if( guiCrdtNodeScrollSpeed > 5 )
-						guiCrdtNodeScrollSpeed-=5;
-					break;
-
-				case PAUSE:
-				case SPACE:
-					if( gfPauseCreditScreen )
-						gfPauseCreditScreen = FALSE;
-					else
-						gfPauseCreditScreen = TRUE;
-					break;
-#endif
 			}
 		}
 	}

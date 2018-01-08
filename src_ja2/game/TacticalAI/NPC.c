@@ -31,10 +31,6 @@
 	#include "Weapons.h"
 	#include "meanwhile.h"
 
-#ifdef JA2TESTVERSION
-	#include	"Quest Debug System.h"
-	#include	"QuestText.h"
-	#endif
 #endif
 
 #define NUM_CIVQUOTE_SECTORS 20
@@ -77,10 +73,6 @@ NPCQuoteInfo *	gpNPCQuoteInfoArray[NUM_PROFILES] = { NULL };
 NPCQuoteInfo *	gpBackupNPCQuoteInfoArray[NUM_PROFILES] = { NULL };
 NPCQuoteInfo *	gpCivQuoteInfoArray[NUM_CIVQUOTE_SECTORS] = { NULL };
 
-#ifdef JA2TESTVERSION
-	// Warning: cheap hack approaching
-	BOOLEAN					gfTriedToLoadQuoteInfoArray[NUM_PROFILES] = { FALSE };
-#endif
 
 UINT8 gubTeamPenalty;
 
@@ -238,14 +230,6 @@ BOOLEAN EnsureQuoteFileLoaded( UINT8 ubNPC )
 			}
 #else
 
-		#ifdef JA2TESTVERSION
-			if (!gfTriedToLoadQuoteInfoArray[ubNPC]) // don't report the error a second time
-			{
-
-				ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"ERROR: NPC.C - NPC needs NPC file: %d.", ubNPC );
-				gfTriedToLoadQuoteInfoArray[ubNPC] = TRUE;
-			}
-		#endif
 #endif
 			// error message at this point!
 			return( FALSE );
@@ -1256,19 +1240,9 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 
 	pNPCQuoteInfo = &(pNPCQuoteInfoArray[ubQuoteNum]);
 
-	#ifdef JA2TESTVERSION
-		if ( ubNPC != NO_PROFILE && ubMerc != NO_PROFILE )
-		{
-			NpcRecordLoggingInit( ubNPC, ubMerc, ubQuoteNum, ubApproach );
-		}
-	#endif
 
 	if (CHECK_FLAG( pNPCQuoteInfo->fFlags, QUOTE_FLAG_SAID ))
 	{
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-			NpcRecordLogging( ubApproach, "Quote Already Said, leaving");
-		#endif
 		// skip quotes already said
 		return( FALSE );
 	}
@@ -1276,10 +1250,6 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 	// if the quote is quest-specific, is the player on that quest?
 	if (pNPCQuoteInfo->ubQuest != NO_QUEST)
 	{
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-			NpcRecordLogging( ubApproach, "Quest(%d:'%S') Must be in Progress, status is %d. %s", pNPCQuoteInfo->ubQuest, QuestDescText[ pNPCQuoteInfo->ubQuest ], gubQuest[pNPCQuoteInfo->ubQuest], (gubQuest[pNPCQuoteInfo->ubQuest] != QUESTINPROGRESS) ? "False, return" : "True" );
-		#endif
 
 		if (pNPCQuoteInfo->ubQuest > QUEST_DONE_NUM)	
 		{
@@ -1308,10 +1278,6 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 	if (pNPCQuoteInfo->usFactMustBeTrue != NO_FACT)
 	{
 		fTrue = CheckFact( pNPCQuoteInfo->usFactMustBeTrue, ubNPC );
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-			NpcRecordLogging( ubApproach, "Fact (%d:'%S') Must be True, status is %s", pNPCQuoteInfo->usFactMustBeTrue, FactDescText[pNPCQuoteInfo->usFactMustBeTrue], (fTrue == FALSE) ? "False, returning" : "True" );
-		#endif		
 		if (fTrue == FALSE)
 		{
 			return( FALSE );
@@ -1324,10 +1290,6 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 	{
 		fTrue = CheckFact( pNPCQuoteInfo->usFactMustBeFalse, ubNPC );
 
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-			NpcRecordLogging( ubApproach, "Fact(%d:'%S') Must be False status is  %s", pNPCQuoteInfo->usFactMustBeFalse, FactDescText[pNPCQuoteInfo->usFactMustBeFalse], (fTrue == TRUE) ? "True, return" : "FALSE" );
-		#endif
 		
 		if (fTrue == TRUE)
 		{
@@ -1341,10 +1303,6 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 	// with the other value that is stored!	
 	if ( pNPCQuoteInfo->ubApproachRequired || !(ubApproach == APPROACH_FRIENDLY || ubApproach == APPROACH_DIRECT || ubApproach == TRIGGER_NPC ) )
 	{
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-		NpcRecordLogging( ubApproach, "Approach Taken(%d) must equal required Approach(%d) = %s", ubApproach, pNPCQuoteInfo->ubApproachRequired, (ubApproach != pNPCQuoteInfo->ubApproachRequired) ? "TRUE, return" : "FALSE" );
-		#endif
 
 		if ( pNPCQuoteInfo->ubApproachRequired == APPROACH_ONE_OF_FOUR_STANDARD )
 		{
@@ -1370,10 +1328,6 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 	// check time constraints on the quotes
 	if (pNPCProfile != NULL && pNPCQuoteInfo->ubFirstDay == MUST_BE_NEW_DAY)
 	{
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-			NpcRecordLogging( ubApproach, "Time constraints. Current Day(%d) must <= Day last spoken too (%d) : %s", uiDay, pNPCProfile->ubLastDateSpokenTo, (uiDay <= pNPCProfile->ubLastDateSpokenTo) ? "TRUE, return" : "FALSE" );
-		#endif
 
 		if (uiDay <= pNPCProfile->ubLastDateSpokenTo)
 		{
@@ -1383,20 +1337,12 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 	}
 	else if (uiDay < pNPCQuoteInfo->ubFirstDay)
 	{
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-		NpcRecordLogging( ubApproach, "Current Day(%d) is before Required first day(%d) = %s", uiDay, pNPCQuoteInfo->ubFirstDay, (uiDay < pNPCQuoteInfo->ubFirstDay) ? "False, returning" : "True" );
-		#endif
 		// too early!
 		return( FALSE );
 	}
 
 	if (uiDay > pNPCQuoteInfo->ubLastDay && uiDay < 255 )
 	{
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-		NpcRecordLogging( ubApproach, "Current Day(%d) is after Required first day(%d) = %s", uiDay, pNPCQuoteInfo->ubFirstDay, (uiDay > pNPCQuoteInfo->ubLastDay) ? "TRUE, returning" : "FALSE" );
-		#endif
 
 		// too late!
 		return( FALSE );
@@ -1405,10 +1351,6 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 	// check opinion required
 	if ((pNPCQuoteInfo->ubOpinionRequired != IRRELEVANT) && (ubApproach != TRIGGER_NPC))
 	{
-		#ifdef JA2TESTVERSION
-			//Add entry to the quest debug file
-		NpcRecordLogging( ubApproach, "Opinion Required.  Talk Desire (%d), Opinion Required(%d) : %s", ubTalkDesire, pNPCQuoteInfo->ubOpinionRequired, (ubTalkDesire < pNPCQuoteInfo->ubOpinionRequired) ? "False, return" : "False, continue" );
-		#endif
 
 		if (ubTalkDesire < pNPCQuoteInfo->ubOpinionRequired )
 		{
@@ -1418,10 +1360,6 @@ UINT8 NPCConsiderQuote( UINT8 ubNPC, UINT8 ubMerc, UINT8 ubApproach, UINT8 ubQuo
 
 
 
-	#ifdef JA2TESTVERSION
-		//Add entry to the quest debug file
-	NpcRecordLogging( ubApproach, "Return the quote opinion value! = TRUE");
-	#endif
 
 	// Return the quote opinion value!
 	return( TRUE );

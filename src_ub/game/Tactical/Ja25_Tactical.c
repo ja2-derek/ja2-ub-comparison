@@ -1507,12 +1507,6 @@ void HandleInitialEventsInHeliCrash()
 			pSoldier->bActionPoints = 0;
 		}
 	}
-/*
-#ifdef JA2TESTVERSION
-	//Add a smoke effect behind the heli
-	NewSmokeEffect( 15102, SMOKE_GRENADE, 0, NOBODY );
-#endif
-*/
 }
 
 

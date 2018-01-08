@@ -3520,9 +3520,6 @@ BOOLEAN CreateSoldierShadedPalette( SOLDIERTYPE *pSoldier, UINT32 uiBase, SGPPal
 	adjust automagically.
 
 **********************************************************************************************/
-#ifdef JA2TESTVERSION
-	extern UINT32 uiNumTablesSaved;
-#endif
 
 UINT16 CreateTilePaletteTables(HVOBJECT pObj, UINT32 uiTileIndex, BOOLEAN fForce )
 {
@@ -3560,10 +3557,6 @@ UINT16 CreateTilePaletteTables(HVOBJECT pObj, UINT32 uiTileIndex, BOOLEAN fForce
 			{
 				SaveShadeTable( pObj, uiTileIndex );
 			}
-			#ifdef JA2TESTVERSION
-			else
-				uiNumTablesSaved++;
-			#endif
 		}
 
 		// if two lights are active

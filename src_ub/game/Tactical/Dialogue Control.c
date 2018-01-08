@@ -2070,7 +2070,6 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
 
   // Double check it exists....
 
-//#ifndef JA2TESTVERSION
 
   if ( !FileExists( pFilename ) )
   {
@@ -2078,7 +2077,6 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
 
 		sprintf( sString, "ERROR PLEASE REPORT THIS!!: Missing file for character # %d, quote # %d", ubCharacterNum, usQuoteNum );
 
-//#ifndef JA2TESTVERSION
 #ifndef JA2BETAVERSION
     ShowCursor(TRUE);
     ShowCursor(TRUE);
@@ -2088,7 +2086,6 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
 #endif
   }
 
-//#endif
 
   // get speech if applicable
 	if ( gGameSettings.fOptions[ TOPTION_SPEECH ] )

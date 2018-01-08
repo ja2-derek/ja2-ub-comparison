@@ -449,22 +449,6 @@ void HandleMainMenuInput()
 					break;
 */
 
-#ifdef JA2TESTVERSION
-				case 'q':
-					gGameOptions.ubDifficultyLevel = DIF_LEVEL_MEDIUM;
-
-					gbHandledMainMenu = NEW_GAME;
-					gfMainMenuScreenExit = TRUE;
-					SetMainMenuExitScreen( INIT_SCREEN );
-
-//						gfDoHelpScreen = 1;
-					break;
-
-				case 'i':
-					SetPendingNewScreen( INTRO_SCREEN );
-					gfMainMenuScreenExit = TRUE;
-					break;
-#endif
 
 				case 'c':
 					gbHandledMainMenu = LOAD_GAME;

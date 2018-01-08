@@ -89,9 +89,6 @@ void InitNPCs( void )
 			break;
 	}
 
-	#ifdef JA2TESTVERSION
-		ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"Skyrider in %c %d", 'A' + pProfile->sSectorY - 1, pProfile->sSectorX );
-	#endif
 	// use alternate map, with Skyrider's shack, in this sector
 	SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
 
@@ -147,9 +144,6 @@ void InitNPCs( void )
 			break;
 	}
 
-	#ifdef JA2TESTVERSION
-		ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s in %c %d", pProfile->zNickname, 'A' + pProfile->sSectorY - 1, pProfile->sSectorX );
-	#endif
 
 	// use alternate map in this sector
 	//SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
@@ -181,9 +175,6 @@ void InitNPCs( void )
 				break;
 		}
 
-		#ifdef JA2TESTVERSION
-			ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s in %c %d", pProfile->zNickname, 'A' + pProfile->sSectorY - 1, pProfile->sSectorX );
-		#endif
 
 		// use alternate map in this sector
 		SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
@@ -372,7 +363,7 @@ BOOLEAN InitNewGame( BOOLEAN fReset )
 	InitStrategicLayer();
 
 	// Hire demo mercs....
-#if defined ( JA2TESTVERSION ) || defined ( JA2DEMO )
+#if defined ( JA2DEMO )
 	DemoHiringOfMercs( );
 #endif
 
@@ -819,10 +810,6 @@ void ReStartingGame()
 		EndAirRaid( );
 	}	
 
-#ifdef JA2TESTVERSION
-	//Reset so we can use the 'cheat key' to start with mercs
-	TempHiringOfMercs( 0, TRUE );
-#endif
 
 	//Make sure the game starts in the TEAM panel ( it wasnt being reset )
 	gsCurInterfacePanel = TEAM_PANEL;

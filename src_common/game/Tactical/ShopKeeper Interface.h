@@ -115,9 +115,6 @@ BOOLEAN		CanMercInteractWithSelectedShopkeeper( SOLDIERTYPE *pSoldier );
 void			DealerGetsBribed( UINT8 ubProfileId, UINT32 uiMoneyAmount );
 
 
-#ifdef JA2TESTVERSION
-void AddShopkeeperToGridNo( UINT8 ubProfile, INT16 sGridNo );
-#endif
 
 void			RestrictSkiMouseCursor();
 

@@ -2781,9 +2781,7 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 	
 	SetMusicMode( gMusicModeToPlay );
 
-#ifndef JA2TESTVERSION
 	RESET_CHEAT_LEVEL( );
-#endif
 
 #ifdef JA2BETAVERSION
 	if( fDisableDueToBattleRoster || fDisableMapInterfaceDueToBattle )

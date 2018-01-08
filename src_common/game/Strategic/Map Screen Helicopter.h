@@ -129,9 +129,6 @@ extern UINT8 gubPlayerProgressSkyriderLastCommentedOn;
 BOOLEAN AddSoldierToHelicopter( SOLDIERTYPE *pSoldier );
 BOOLEAN RemoveSoldierFromHelicopter( SOLDIERTYPE *pSoldier );
 
-#ifdef JA2TESTVERSION
-extern BOOLEAN	fSAMSitesDisabledFromAttackingPlayer;
-#endif
 
 
 /* ARM: Max. fuel range system removed

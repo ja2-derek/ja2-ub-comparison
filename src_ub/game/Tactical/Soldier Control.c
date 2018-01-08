@@ -6679,9 +6679,6 @@ Ja25: No meanwhiles
 			sChanceToDrop -= 30;
 		}
 
-#ifdef JA2TESTVERSION
-		//ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Chance To Drop Weapon: str: %d Dam: %d Chance: %d", sTestOne, sTestTwo, sChanceToDrop );
-#endif
 
 		if ( Random( 100 ) < (UINT16) sChanceToDrop )
 		{

@@ -547,11 +547,6 @@ UINT8	GetStatColor( INT8 bStat );
 
 
 
-#ifdef JA2TESTVERSION
-	BOOLEAN QuickHireMerc();
-	void TempHandleAimMemberKeyBoardInput();
-	extern	void SetFlagToForceHireMerc( BOOLEAN fForceHire );
-#endif
 
 
 void WaitForMercToFinishTalkingOrUserToClick();
@@ -872,9 +867,6 @@ void HandleAIMMembers()
 		gfRedrawScreen = FALSE;
 	}
 
-	#ifdef JA2TESTVERSION
-	TempHandleAimMemberKeyBoardInput();
-	#endif
 
 
   MarkButtonsDirty( );
@@ -4001,84 +3993,6 @@ BOOLEAN DisplayMovingTitleBar(BOOLEAN fForward, BOOLEAN fInit )
 }
 
 
-#ifdef JA2TESTVERSION
-//TEMP:  
-void TempHiringOfMercs( UINT8 ubNumberOfMercs, BOOLEAN fReset )
-{
-	INT16	i;
-	UINT8	MercID[]={11,16,29,36,2,10,17,6,7,12,0,1,3,4,5,8,9,13,14,15,18,19 };
-	MERC_HIRE_STRUCT HireMercStruct;
-	static BOOLEAN	fHaveCalledBefore=FALSE;
-
-	//if we should reset the global variable
-	if( fReset )
-	{
-		fHaveCalledBefore = FALSE;
-		return;
-	}
-
-
-	if( fHaveCalledBefore )
-		return;
-
-	if( guiCurrentLaptopMode != LAPTOP_MODE_NONE )
-		return;
-
-	fHaveCalledBefore = TRUE;
-
-	for( i=0; i<ubNumberOfMercs; i++)
-	{
-		memset(&HireMercStruct, 0, sizeof(MERC_HIRE_STRUCT));
-
-		if( !IsMercHireable( MercID[i] ) )
-		{
-			ubNumberOfMercs++;
-			continue;
-		}
-
-		HireMercStruct.ubProfileID = MercID[i];
-
-		//DEF: temp
-		HireMercStruct.sSectorX = gsMercArriveSectorX;
-		HireMercStruct.sSectorY = gsMercArriveSectorY;
-		HireMercStruct.fUseLandingZoneForArrival = TRUE;
-		HireMercStruct.ubInsertionCode	= INSERTION_CODE_ARRIVING_GAME;
-
-		HireMercStruct.fCopyProfileItemsOver = TRUE;
-		gMercProfiles[ MercID[i] ].ubMiscFlags |= PROFILE_MISC_FLAG_ALREADY_USED_ITEMS;
-
-
-		if( gfKeyState[ ALT ] )
-			HireMercStruct.iTotalContractLength = 14;
-		else if( gfKeyState[ CTRL ] )
-			HireMercStruct.iTotalContractLength = 7;
-		else
-			HireMercStruct.iTotalContractLength = 1;
-
-		//specify when the merc should arrive
-		HireMercStruct.uiTimeTillMercArrives = GetMercArrivalTimeOfDay( );// + MercID[i];
-
-		//since this is only a testing function, make the merc available
-		gMercProfiles[ MercID[i] ].bMercStatus = 0;
-
-		//if we succesfully hired the merc
-		HireMerc( &HireMercStruct );
-
-		//add an entry in the finacial page for the hiring of the merc
-		AddTransactionToPlayersBook(HIRED_MERC, MercID[i], GetWorldTotalMin(), -(INT32)( gMercProfiles[MercID[i]].sSalary ) );
-		
-		if( gMercProfiles[ MercID[i] ].bMedicalDeposit )
-		{
-				//add an entry in the finacial page for the medical deposit
-			AddTransactionToPlayersBook(	MEDICAL_DEPOSIT, MercID[i], GetWorldTotalMin(), -(gMercProfiles[MercID[i]].sMedicalDepositAmount) );
-		}
-
-		//add an entry in the history page for the hiring of the merc
-		AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, MercID[i], GetWorldTotalMin(), -1, -1 );
-	}
-}
-
-#endif
 
 
 void DelayMercSpeech( UINT8 ubMercID, UINT16 usQuoteNum, UINT16 usDelay, BOOLEAN fNewQuote, BOOLEAN fReset )
@@ -4136,113 +4050,6 @@ void DelayMercSpeech( UINT8 ubMercID, UINT16 usQuoteNum, UINT16 usDelay, BOOLEAN
 
 
 
-#ifdef JA2TESTVERSION
-
-//TEMP!!!  
-BOOLEAN QuickHireMerc()
-{
-	INT8	bReturnCode;
-	MERC_HIRE_STRUCT HireMercStruct;
-	UINT8		ubCurrentSoldier = AimMercArray[gbCurrentIndex];
-
-	giContractAmount = 0;
-
-//	if( !IsMercHireable( ubCurrentSoldier ) )
-//		return( FALSE );
-	if( FindSoldierByProfileID( ubCurrentSoldier, TRUE ) != NULL )
-		return( FALSE );
-
-	HireMercStruct.ubProfileID = ubCurrentSoldier;
-
-	//DEF: temp
-	HireMercStruct.sSectorX = gsMercArriveSectorX;
-	HireMercStruct.sSectorY = gsMercArriveSectorY;
-	HireMercStruct.bSectorZ = 0;
-	HireMercStruct.fUseLandingZoneForArrival = TRUE;
-	HireMercStruct.ubInsertionCode	= INSERTION_CODE_ARRIVING_GAME;
-
-	HireMercStruct.fCopyProfileItemsOver = TRUE;
-	gMercProfiles[ ubCurrentSoldier ].ubMiscFlags |= PROFILE_MISC_FLAG_ALREADY_USED_ITEMS;
-
-
-
-	if( gfKeyState[ ALT ] )
-		HireMercStruct.iTotalContractLength = 14;
-	else if( gfKeyState[ CTRL ] )
-		HireMercStruct.iTotalContractLength = 7;
-	else
-		HireMercStruct.iTotalContractLength = 1;
-
-
-	//specify when the merc should arrive
-	HireMercStruct.uiTimeTillMercArrives = GetMercArrivalTimeOfDay( );// + ubCurrentSoldier;
-
-	SetFlagToForceHireMerc( TRUE );
-	bReturnCode = HireMerc( &HireMercStruct );
-	SetFlagToForceHireMerc( FALSE );
-	if( bReturnCode == MERC_HIRE_OVER_20_MERCS_HIRED )
-	{
-		//display a warning saying u cant hire more then 20 mercs
-		DoLapTopMessageBox( MSG_BOX_LAPTOP_DEFAULT, AimPopUpText[ AIM_MEMBER_ALREADY_HAVE_20_MERCS ], LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL);
-		return(FALSE);
-	}
-	else if( bReturnCode == MERC_HIRE_FAILED )
-	{
-		return(FALSE);
-	}
-
-	//add an entry in the finacial page for the hiring of the merc
-	giContractAmount = gMercProfiles[gbCurrentSoldier].sSalary;
-
-	AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(), -( giContractAmount ) );//- gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount
-	
-	if( gMercProfiles[ gbCurrentSoldier ].bMedicalDeposit )
-	{
-		//add an entry in the finacial page for the medical deposit
-		AddTransactionToPlayersBook(	MEDICAL_DEPOSIT, ubCurrentSoldier, GetWorldTotalMin(), -(gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount) );
-	}
-
-	//add an entry in the history page for the hiring of the merc
-	AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, ubCurrentSoldier, GetWorldTotalMin(), -1, -1 );
-
-	gfRedrawScreen = TRUE;
-
-	return( TRUE );
-}
-
-
-void TempHandleAimMemberKeyBoardInput()
-{
-	InputAtom					InputEvent;
-
-	while (DequeueEvent(&InputEvent) == TRUE)
-	{//!HandleTextInput( &InputEvent ) && 
-		if( InputEvent.usEvent == KEY_DOWN )
-		{
-			switch (InputEvent.usParam)
-			{
-#ifdef JA2TESTVERSION
-				case SPACE:
-					QuickHireMerc();
-					break;
-
-				case '~':
-					// to test going on other assignments, unhired merc improvements & deaths
-					if (guiDay == 1) guiDay++;
-					MercDailyUpdate();
-					gfRedrawScreen = TRUE;
-					break;
-#endif
-
-				default:
-					HandleKeyBoardShortCutsForLapTop( InputEvent.usEvent, InputEvent.usParam, InputEvent.usKeyState );
-					break;
-			}
-		}
-	}
-}
-
-#endif
 
 
 void WaitForMercToFinishTalkingOrUserToClick()
@@ -4297,7 +4104,7 @@ BOOLEAN DisplayShadedStretchedMercFace( UINT8 ubMercID, UINT16 usPosX, UINT16 us
 
 
 
-#if defined ( JA2TESTVERSION ) || defined ( JA2DEMO )
+#if defined ( JA2DEMO )
 
 void DemoHiringOfMercs( )
 {

@@ -210,12 +210,6 @@ void TestCapture( );
 #ifdef JA2BETAVERSION
 void ToggleMapEdgepoints();
 #endif
-#ifdef JA2TESTVERSION
-void ToggleMercsNeverQuit();
-#endif
-#ifdef JA2TESTVERSION
-void DumpSectorDifficultyInfo( void );
-#endif
 
 void HandleStealthChangeFromUIKeys( );
 
@@ -1598,12 +1592,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
     if ((InputEvent.usEvent == KEY_DOWN )&& ( InputEvent.usParam == ESC ))
     { 
 			//EscapeUILock( );
-#ifdef JA2TESTVERSION
-			if ( InAirRaid( ) )
-			{
-				EndAirRaid( );
-			}	
-#endif
 
   		// Cancel out of spread burst...
 			gfBeginBurstSpreadTracking = FALSE;
@@ -1714,23 +1702,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 			}
 		}
 
-#ifdef JA2TESTVERSION
-    if ((InputEvent.usEvent == KEY_DOWN )&& ( InputEvent.usParam == '0') && ( InputEvent.usKeyState & ALT_DOWN ))
-    {
-			INT32 i = 0;
-			INT16	sGridNo;
-			INT32 iTime = GetJA2Clock( );
-			UINT8	ubLevel;
-
-			for ( i = 0; i < 1000; i++ )
-			{
-				CalculateLaunchItemChanceToGetThrough( MercPtrs[ gusSelectedSoldier ], &(MercPtrs[ gusSelectedSoldier ]->inv[ HANDPOS ] ), usMapPos, 0, 0, &sGridNo, TRUE, &ubLevel, TRUE );
-			}
-
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"Physics 100 times: %d", ( GetJA2Clock( ) - iTime )  );
-
-		}
-#endif
 
 
 #ifdef NETWORKED
@@ -1836,163 +1807,45 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 					{
 						HandleSelectMercSlot( 0, LOCATE_MERC_ONCE );
 					}
-#ifdef JA2TESTVERSION
-					else if( fAlt )
-					{
-						TestMeanWhile( 15 );
-					}
-					else if( fCtrl )
-					{
-						TestMeanWhile( 10 );
-					}
-#endif
 					else
 						HandleSelectMercSlot( 0, LOCATEANDSELECT_MERC );
 					break;
 				case F2:
 					if( fShift )
 						HandleSelectMercSlot( 1, LOCATE_MERC_ONCE );
-#ifdef JA2TESTVERSION
-					else if( fAlt )
-					{
-						TestMeanWhile( 1 );
-					}
-					else if( fCtrl )
-					{
-						TestMeanWhile( 11 );
-					}
-#endif
 					else
 						HandleSelectMercSlot( 1, LOCATEANDSELECT_MERC );
 					break;
 				case F3:
 					if( fShift )
 						HandleSelectMercSlot( 2, LOCATE_MERC_ONCE );
-#ifdef JA2TESTVERSION
-					else if( fAlt )
-					{
-						TestMeanWhile( 2 );
-					}
-					else if( fCtrl )
-					{
-						TestMeanWhile( 12 );
-					}
-#endif
 					else
 						HandleSelectMercSlot( 2, LOCATEANDSELECT_MERC );
 					break;
 				case F4:
 					if( fShift )
 						HandleSelectMercSlot( 3, LOCATE_MERC_ONCE );
-#ifdef JA2TESTVERSION
-					else if( fAlt )
-					{
-						TestMeanWhile( 3 );
-					}
-					else if( fCtrl )
-					{
-						TestMeanWhile( 13 );
-					}
-#endif
 					else
 						HandleSelectMercSlot( 3, LOCATEANDSELECT_MERC );
 					break;
 				case F5:
 					if( fShift )
 						HandleSelectMercSlot( 4, LOCATE_MERC_ONCE );
-#ifdef JA2TESTVERSION
-					else if( fAlt )
-					{
-						TestMeanWhile( 4 );
-					}
-					else if( fCtrl )
-					{
-						TestMeanWhile( 14 );
-					}
-#endif
 					else
 						HandleSelectMercSlot( 4, LOCATEANDSELECT_MERC );
 					break;
 				case F6:
 					if( fShift )
 						HandleSelectMercSlot( 5, LOCATE_MERC_ONCE );
-#ifdef JA2TESTVERSION
-					else if( fAlt )
-					{
-						TestMeanWhile( 5 );
-					}
-					else if( fCtrl )
-					{
-						TestMeanWhile( 15 );
-					}
-#endif
 					else
 						HandleSelectMercSlot( 5, LOCATEANDSELECT_MERC );
 					break;
 
-#ifdef JA2TESTVERSION
-				case F7:
-					if( fAlt )
-					{
-						TestMeanWhile( 16 );
-					}
-					break;
-				case F8:
-
-					if( fAlt )
-					{
-						TestMeanWhile( 7 );
-					}
-					break;
-
-				case F9:
-
-					if( fCtrl )
-					{
-						TestMeanWhile( 8 );
-					}
-					else
-					{
-						#ifdef JA2EDITOR
-							*puiNewEvent = I_ENTER_EDIT_MODE;
-							gfMercResetUponEditorEntry = !fAlt;
-						#endif
-					}
-					break;
-				case F10:
-
-					if( fAlt )
-					{
-						TestMeanWhile( 9 );
-					}
-					break;
-#endif
 
 				case F11:
 
 					if( fAlt )
 					{
-#ifdef JA2TESTVERSION
-						SOLDIERTYPE *pSoldier;
-
-						// Get selected soldier
-						if( GetSoldier( &pSoldier, gusSelectedSoldier ) )
-						{
-							if( pSoldier->ubID == 46 )
-							{
-								// Change guy to drunk larry
-								ForceSoldierProfileID( pSoldier, 47 );
-							}
-							else
-							{
-								// Change guy to normal larry
-								ForceSoldierProfileID( pSoldier, 46 );
-							}
-
-							// Dirty interface
-							DirtyMercPanelInterface( pSoldier, DIRTYLEVEL2 );
-						}
-#endif
 					}
 
 					else
@@ -2007,16 +1860,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 
 				case F12: 
 
-#ifdef JA2TESTVERSION
-					if( fAlt )
-					{
-						UINT8 ubProfile = TONY;
-
-						GetMouseMapPos( &gsQdsEnteringGridNo );
-						AddShopkeeperToGridNo( ubProfile, gsQdsEnteringGridNo );
-						EnterShopKeeperInterfaceScreen( ubProfile );
-					}
-#endif
 					//clear tactical of messages
 					if( fCtrl )
 					{
@@ -2224,20 +2067,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 					}
 					else if ( fAlt )
 					{
-#ifdef JA2TESTVERSION
-					//	ToggleMercsNeverQuit();
-            static UINT8 ubAmbientSound = 0;
-
-            ubAmbientSound++;
-
-            if ( ubAmbientSound >= NUM_STEADY_STATE_AMBIENCES )
-            {
-              ubAmbientSound = 1;
-            }
-
-            SetSteadyStateAmbience( ubAmbientSound );
-
-#endif
 					}
 					else
 					{
@@ -2375,10 +2204,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 							}
 						}
 					}
-#ifdef JA2TESTVERSION
-					else if( fCtrl )
-						AdvanceToNextDay();
-#endif
 					break;
 
 
@@ -2903,16 +2728,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 					else
 #endif
 
-#ifdef JA2TESTVERSION
-	#ifndef JA2DEMO
-						if( fCtrl )
-						{
-							// CTRL-P: Display player's highest progress percentage
-							DumpSectorDifficultyInfo();
-						}
-						else
-	#endif
-#endif
 							HandleStanceChangeFromUIKeys( ANIM_PRONE );
 					break;
 
@@ -3038,13 +2853,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 					else
 					{
 
-						#ifdef JA2TESTVERSION
-							if( fAlt )
-							{
-								WarpGameTime( 60, TRUE );
-								break;
-							}
-						#endif
 
 							  // ATE: This key will select everybody in the sector
 							  if (! (gTacticalStatus.uiFlags & INCOMBAT) )
@@ -3119,12 +2927,6 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 				case 'v':
 					if( fAlt )
 					{
-#ifdef JA2TESTVERSION
-						if( gfDoVideoScroll ^= TRUE )
-							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Video Scroll ON"  );
-						else
-							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Video Scroll OFF"  );
-#endif
 					}
 					else if( fCtrl )
 					{
@@ -3292,41 +3094,14 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 						}
 						else if( fCtrl )
 						{
-	#ifdef JA2TESTVERSION
-							gTacticalStatus.bRealtimeSpeed = max( 1, gTacticalStatus.bRealtimeSpeed - 1 );
-							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Decreasing Realtime speed to %d", gTacticalStatus.bRealtimeSpeed );
-	#endif
 						}
 						else
 						{
-	#ifdef JA2TESTVERSION
-							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Using Normal Scroll Speed"  );
-							gubCurScrollSpeedID = 1;
-	#endif
 						}
 					}
 					break;
 				case '+':
 
-#ifdef JA2TESTVERSION
-					if( fAlt )
-					{
-						if(MusicGetVolume() <= 107)
-							MusicSetVolume(MusicGetVolume()+20);
-						else
-							MusicSetVolume(127);				
-					}
-					else if( fCtrl )
-					{
-						gTacticalStatus.bRealtimeSpeed = min( MAX_REALTIME_SPEED_VAL, gTacticalStatus.bRealtimeSpeed+1 );
-						ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Increasing Realtime speed to %d", gTacticalStatus.bRealtimeSpeed );
-					}
-					else 
-					{
-						ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Using Higher Scroll Speed"  );
-						gubCurScrollSpeedID = 2;
-					}
-#endif
 					break;
 				case '`':
 					

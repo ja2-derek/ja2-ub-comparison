@@ -611,9 +611,6 @@ void AddCreaturesToBattle( UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8
 		default:  AssertMsg( 0, "Illegal direction passed to AddCreaturesToBattle()" );	break;
 	}
 
-	#ifdef JA2TESTVERSION
-		ScreenMsg( FONT_RED, MSG_INTERFACE, L"Creature attackers have arrived!" );
-	#endif
 
 	if( gsCreatureInsertionCode != INSERTION_CODE_GRIDNO )
 	{

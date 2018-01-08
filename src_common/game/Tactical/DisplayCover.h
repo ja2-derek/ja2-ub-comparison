@@ -10,9 +10,6 @@ void DisplayRangeToTarget( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo );
 void RemoveVisibleGridNoAtSelectedGridNo();
 void DisplayGridNoVisibleToSoldierGrid( );
 
-#ifdef JA2TESTVERSION
-	void DisplayLosAndDisplayCoverUsageScreenMsg();
-#endif
 
 void ChangeSizeOfDisplayCover( INT32 iNewSize );
 

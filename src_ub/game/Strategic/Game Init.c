@@ -96,9 +96,6 @@ Ja25:	no skyrider
 			break;
 	}
 
-	#ifdef JA2TESTVERSION
-		ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"Skyrider in %c %d", 'A' + pProfile->sSectorY - 1, pProfile->sSectorX );
-	#endif
 	// use alternate map, with Skyrider's shack, in this sector
 	SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
 */
@@ -160,9 +157,6 @@ Ja25: No mickey
 			break;
 	}
 
-	#ifdef JA2TESTVERSION
-		ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s in %c %d", pProfile->zNickname, 'A' + pProfile->sSectorY - 1, pProfile->sSectorX );
-	#endif
 
 	// use alternate map in this sector
 	//SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
@@ -196,9 +190,6 @@ Ja25: no bob and gabby
 				break;
 		}
 
-		#ifdef JA2TESTVERSION
-			ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"%s in %c %d", pProfile->zNickname, 'A' + pProfile->sSectorY - 1, pProfile->sSectorX );
-		#endif
 
 		// use alternate map in this sector
 		SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
@@ -423,9 +414,6 @@ Ja25 no meanwhiles
 	InitStrategicLayer();
 
 	// Hire demo mercs....
-#if defined ( JA2TESTVERSION ) || defined ( JA2DEMO )
-	DemoHiringOfMercs( );
-#endif
 
 	// Setup initial money
  	AddTransactionToPlayersBook( ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), 20500 );
@@ -912,10 +900,6 @@ void ReStartingGame()
 		EndAirRaid( );
 	}	
 
-#ifdef JA2TESTVERSION
-	//Reset so we can use the 'cheat key' to start with mercs
-	TempHiringOfMercs( 0, TRUE );
-#endif
 
 	//Make sure the game starts in the TEAM panel ( it wasnt being reset )
 	gsCurInterfacePanel = TEAM_PANEL;

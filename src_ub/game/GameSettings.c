@@ -595,10 +595,6 @@ ja25 no sci fi styles
 		ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzLateLocalizedString[58], CurrentPlayerProgressPercentage(), HighestPlayerProgressPercentage() );
 	}
 
-	#ifdef JA2TESTVERSION
-		//Display the num times LOS and Display cover feature has been used
-		DisplayLosAndDisplayCoverUsageScreenMsg();
-	#endif
 }
 
 /*

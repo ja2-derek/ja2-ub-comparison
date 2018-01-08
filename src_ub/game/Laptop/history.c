@@ -125,9 +125,6 @@ void		GetQuestEndedString( UINT8 ubQuestValue, STR16 sQuestString );
 INT32		GetNumberOfHistoryPages();
 
 
-#ifdef JA2TESTVERSION
-void PerformCheckOnHistoryRecord( UINT32 uiErrorCode, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ );
-#endif
 
 
 // callbacks
@@ -674,10 +671,6 @@ void OpenAndReadHistoryFile( void )
 		FileRead( hFileHandle, &bSectorZ, sizeof(INT8), &iBytesRead );
 		FileRead( hFileHandle, &ubColor, sizeof( UINT8 ), &iBytesRead );
 
-		#ifdef JA2TESTVERSION
-		//perform a check on the data to see if it is pooched
-		PerformCheckOnHistoryRecord( 1, sSectorX, sSectorY, bSectorZ );
-		#endif
 
 		// add transaction
 	  ProcessAndEnterAHistoryRecord( ubCode, uiDate, ubSecondCode, sSectorX, sSectorY, bSectorZ, ubColor );
@@ -713,10 +706,6 @@ BOOLEAN OpenAndWriteHistoryFile( void )
   while(pHistoryList)
 	{
 
-		#ifdef JA2TESTVERSION
-		//perform a check on the data to see if it is pooched
-		PerformCheckOnHistoryRecord( 2, pHistoryList->sSectorX, pHistoryList->sSectorY, pHistoryList->bSectorZ );
-		#endif
 
     	// now write date and amount, and code
     FileWrite( hFileHandle, &(pHistoryList->ubCode ),  sizeof ( UINT8 ), NULL );
@@ -1295,10 +1284,6 @@ BOOLEAN LoadInHistoryRecords( UINT32 uiPage )
 		FileRead( hFileHandle, &bSectorZ, sizeof(INT8), &iBytesRead );
 		FileRead( hFileHandle, &ubColor, sizeof(UINT8), &iBytesRead );
 
-		#ifdef JA2TESTVERSION
-		//perform a check on the data to see if it is pooched
-		PerformCheckOnHistoryRecord( 3, sSectorX, sSectorY, bSectorZ );
-		#endif
 
 		// add transaction
     ProcessAndEnterAHistoryRecord(ubCode, uiDate,  ubSecondCode, sSectorX, sSectorY, bSectorZ, ubColor);
@@ -1392,10 +1377,6 @@ BOOLEAN WriteOutHistoryRecords( UINT32 uiPage )
   while( ( iCount < NUM_RECORDS_PER_PAGE )&&( fOkToContinue ) )
 	{
 
-		#ifdef JA2TESTVERSION
-		//perform a check on the data to see if it is pooched
-		PerformCheckOnHistoryRecord( 4, pList->sSectorX, pList->sSectorY, pList->bSectorZ );
-		#endif
     
 		FileWrite( hFileHandle, &(pList->ubCode ),  sizeof ( UINT8 ), NULL );
     FileWrite( hFileHandle, &(pList->ubSecondCode ),  sizeof ( UINT8 ), NULL );
@@ -1577,10 +1558,6 @@ BOOLEAN AppendHistoryToEndOfFile( HistoryUnitPtr pHistory )
 		return( FALSE );
 	}
 
-		#ifdef JA2TESTVERSION
-		//perform a check on the data to see if it is pooched
-		PerformCheckOnHistoryRecord( 5, pHistoryList->sSectorX, pHistoryList->sSectorY, pHistoryList->bSectorZ );
-		#endif
 
 	
 	 	// now write date and amount, and code
@@ -1705,18 +1682,6 @@ void GetQuestEndedString( UINT8 ubQuestValue, STR16 sQuestString )
 }
 
 
-#ifdef JA2TESTVERSION
-void PerformCheckOnHistoryRecord( UINT32 uiErrorCode, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ )
-{
-	CHAR	zString[512];
-
-	if( sSectorX > 16 || sSectorY > 16 || bSectorZ > 3 || sSectorX < -1 || sSectorY < -1 || bSectorZ < 0 )
-	{
-		sprintf( zString, "History page is pooched, please remember what you were just doing, send your latest save to dave, and tell him this number, Error #%d.", uiErrorCode );
-		AssertMsg( 0, zString );
-	}
-}
-#endif
 
 INT32 GetNumberOfHistoryPages()
 {

@@ -1251,9 +1251,6 @@ BOOLEAN	IsDoorOpen( INT16 sGridNo )
 		}
 	}
 
-	#ifdef JA2TESTVERSION
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"WARNING! Failed to find the Door Open Status on Gridno %s", sGridNo );
-	#endif
 
 	return( FALSE );
 }
@@ -1764,12 +1761,6 @@ BOOLEAN	IsDoorPerceivedOpen( INT16 sGridNo )
 	}
 	else
 	{
-		#ifdef JA2TESTVERSION
-			if (!pDoorStatus)
-			{
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_TESTVERSION, L"WARNING! Failed to find the Perceived Open Door Status on Gridno %s", sGridNo );
-			}
-		#endif
 
 		return( FALSE );
 	}

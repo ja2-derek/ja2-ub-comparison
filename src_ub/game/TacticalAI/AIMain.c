@@ -111,9 +111,6 @@ void DebugAI( STR szOutput )
 
 BOOLEAN InitAI( void )
 {
-#ifdef JA2TESTVERSION
-	FILE *		DebugFile;
-#endif
 
 #ifdef _DEBUG
 	if (gfDisplayCoverValues)
@@ -129,14 +126,6 @@ BOOLEAN InitAI( void )
 		InitPanicSystem();
 	}
 
-#ifdef JA2TESTVERSION
-	// Clear the AI debug txt file to prevent it from getting huge
-	if ((DebugFile = fopen( "aidebug.txt", "w" )) != NULL)
-	{
-		fputs( "\n", DebugFile );
-		fclose( DebugFile );
-	}
-#endif
 
 	return( TRUE );
 }
@@ -478,12 +467,6 @@ void HandleSoldierAI( SOLDIERTYPE *pSoldier )
       // ATE: Display message that deadlock occured...
       LiveMessage( "Breaking Deadlock" );
 
-#ifdef JA2TESTVERSION		
-			// display deadlock message
-			gfUIInDeadlock = TRUE;
-			gUIDeadlockedSoldier = pSoldier->ubID;
-			DebugAI( String("DEADLOCK soldier %d action %s ABC %d", pSoldier->ubID, gzActionStr[pSoldier->bAction], gTacticalStatus.ubAttackBusyCount ) );
-#else
 
 			// If we are in beta version, also report message!
 #ifdef JA2BETAVERSION
@@ -495,7 +478,6 @@ void HandleSoldierAI( SOLDIERTYPE *pSoldier )
 			{
 				return;
 			}
-#endif
 		}
 	}
 
@@ -2508,9 +2490,6 @@ INT8 ExecuteAction(SOLDIERTYPE *pSoldier)
 				pStructure = FindStructure( sDoorGridNo, STRUCTURE_ANYDOOR );
 				if (pStructure == NULL)
 				{
-#ifdef JA2TESTVERSION
-					ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_ERROR, L"AI %d tried to open door it could not then find in %d", pSoldier->ubID, sDoorGridNo );
-#endif
 					CancelAIAction( pSoldier, FORCE);
 					#ifdef TESTAICONTROL
 						if (gfTurnBasedAI)
@@ -2664,9 +2643,6 @@ void HandleInitialRedAlert( INT8 bTeam, UINT8 ubCommunicate)
 
  if ( gTacticalStatus.Team[bTeam].bAwareOfOpposition == FALSE )
  {
-	#ifdef JA2TESTVERSION
-		ScreenMsg( FONT_MCOLOR_RED, MSG_ERROR, L"Enemies on team %d prompted to go on RED ALERT!", bTeam );
-	#endif
  }
 
 	// if there is a stealth mission in progress here, and a panic trigger exists

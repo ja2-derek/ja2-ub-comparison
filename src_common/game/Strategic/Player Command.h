@@ -15,9 +15,6 @@ BOOLEAN SetThisSectorAsEnemyControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
 BOOLEAN SetThisSectorAsPlayerControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fContested );
 
 
-#ifdef JA2TESTVERSION
-void ClearMapControlledFlags( void );
-#endif
 
 /*
 // is this sector under player control

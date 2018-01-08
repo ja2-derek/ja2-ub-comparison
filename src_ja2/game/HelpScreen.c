@@ -1062,20 +1062,6 @@ void	GetHelpScreenUserInput()
 */
 
 
-#ifdef JA2TESTVERSION
-				//rerender the hepl screen
-				case 'r':
-					gHelpScreen.ubHelpScreenDirty = HLP_SCRN_DRTY_LVL_REFRESH_ALL;
-					break;
-
-				case 'i':
-					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
-					break;
-
-				case 'd':
-				  InvalidateRegion( gHelpScreen.usScreenLocX, gHelpScreen.usScreenLocY, gHelpScreen.usScreenLocX+gHelpScreen.usScreenWidth, gHelpScreen.usScreenLocY + gHelpScreen.usScreenHeight );
-					break;
-#endif
 			}
 		}
 

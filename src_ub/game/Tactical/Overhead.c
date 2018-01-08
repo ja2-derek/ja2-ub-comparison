@@ -1933,9 +1933,6 @@ BOOLEAN HandleGotoNewGridNo( SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving, BOOLE
 		}
 		else
 		{
-#ifdef JA2TESTVERSION
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"ERROR: Invalid Direction to approach door. (Soldier loc: %d, dir: %d).", pSoldier->sGridNo, bDirection );			
-#endif
 			DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("HandleGotoNewGridNo() Failed: Open door - invalid approach direction") );
 
 			HaltGuyFromNewGridNoBecauseOfNoAPs( pSoldier );
@@ -1949,9 +1946,6 @@ BOOLEAN HandleGotoNewGridNo( SOLDIERTYPE *pSoldier, BOOLEAN *pfKeepMoving, BOOLE
 
 		if ( pStructure == NULL )
 		{
-#ifdef JA2TESTVERSION
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"ERROR: Told to open door that does not exist at %d.", sDoorGridNo );			
-#endif
 			DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("HandleGotoNewGridNo() Failed: Door does not exist") );
 			HaltGuyFromNewGridNoBecauseOfNoAPs( pSoldier );
 			pSoldier->bEndDoorOpenCode = FALSE;
@@ -7250,12 +7244,6 @@ Ja25: No carmen
 
 		if ( pTarget->ubCivilianGroup && ( (pTarget->bTeam == gbPlayerNum) || pTarget->bNeutral ) )
 		{
-#ifdef JA2TESTVERSION
-			if (pTarget->uiStatusFlags & SOLDIER_PC)
-			{
-				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_BETAVERSION, L"%s is changing teams", pTarget->name );
-			}
-#endif
 			// member of a civ group, either recruited or neutral, so should
 			// change sides individually or all together
 

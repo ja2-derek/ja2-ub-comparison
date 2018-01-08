@@ -365,17 +365,6 @@ void GetCustomMapUserInput()
 		{
 			switch( InputEvent.usParam )
 			{
-#ifdef JA2TESTVERSION
-				case 'r':
-					gfRenderCustomMap = TRUE;
-					break;
-				case 'b':
-					SetCustumMapExitScreen( CUSTOM_MAP_BRIEFING_SCREEN );
-					break;
-				case '1':
-					TempSelectMap();
-					break;
-#endif
 
 				case ESC:
 					//Cancel back to the Mainmenu

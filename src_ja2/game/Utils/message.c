@@ -606,9 +606,7 @@ void ScreenMsg( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	{
 		usColor = BETAVERSION_COLOR;
 		#ifndef JA2BETAVERSION
-			#ifndef JA2TESTVERSION
 				return;
-			#endif
 		#endif
 
 	}
@@ -617,9 +615,7 @@ void ScreenMsg( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	{
 		usColor = TESTVERSION_COLOR;
 
-		#ifndef JA2TESTVERSION
 			 return;
-		#endif
 
 	}
 
@@ -728,9 +724,7 @@ void TacticalScreenMsg( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	{
 		usColor = BETAVERSION_COLOR;
 		#ifndef JA2BETAVERSION
-			#ifndef JA2TESTVERSION
 				return;
-			#endif
 		#endif
 		WriteMessageToFile( DestString );
 
@@ -740,9 +734,7 @@ void TacticalScreenMsg( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	{
 		usColor = TESTVERSION_COLOR;
 
-		#ifndef JA2TESTVERSION
 			 return;
-		#endif
 
 		WriteMessageToFile( DestString );
 
@@ -886,9 +878,7 @@ void MapScreenMessage( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	{
 		usColor = BETAVERSION_COLOR;
 		#ifndef JA2BETAVERSION
-			#ifndef JA2TESTVERSION
 				return;
-			#endif
 		#endif
 
 		WriteMessageToFile( DestString );
@@ -898,9 +888,7 @@ void MapScreenMessage( UINT16 usColor, UINT8 ubPriority, STR16 pStringA, ... )
 	{
 		usColor = TESTVERSION_COLOR;
 
-		#ifndef JA2TESTVERSION
 			 return;
-		#endif
 		WriteMessageToFile( DestString );
 	}
 	// OK, check if we are ani imeediate feedback message, if so, do something else!

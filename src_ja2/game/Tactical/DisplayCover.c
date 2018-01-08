@@ -111,15 +111,7 @@ void DisplayCoverOfSelectedGridNo( )
 				//if it is the first time in here
 
 				//pop up a message to say we are in the display cover routine
-#ifdef JA2TESTVERSION
-				{
-					CHAR16	zString[512];
-					swprintf( zString, L"%s, (%d)", zNewTacticalMessages[ TCTL_MSG__DISPLAY_COVER ], gGameSettings.ubSizeOfDisplayCover );
-					ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zString );
-				}
-#else
 				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zNewTacticalMessages[ TCTL_MSG__DISPLAY_COVER ] );
-#endif
 
 				//increment the display cover counter ( just seeing how many times people use it )
 				//gJa25SaveStruct.uiDisplayCoverCounter++;
@@ -653,16 +645,8 @@ void DisplayGridNoVisibleToSoldierGrid( )
 			}
 			else
 			{
-#ifdef JA2TESTVERSION
-				{
-					CHAR16	zString[512];
-					swprintf( zString, L"%s, (%d)", zNewTacticalMessages[ TCTL_MSG__LOS ], gGameSettings.ubSizeOfLOS );
-					ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zString );
-				}
-#else
 				//pop up a message to say we are in the display cover routine
 				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zNewTacticalMessages[ TCTL_MSG__LOS ] );
-#endif
 				//increment the display LOS counter ( just seeing how many times people use it )
 				//gJa25SaveStruct.uiDisplayLosCounter++;
 			}
@@ -980,23 +964,6 @@ BOOLEAN IsTheRoofVisible( INT16 sGridNo )
 	return( FALSE );
 }
 
-#ifdef JA2TESTVERSION
-/*
-void DisplayLosAndDisplayCoverUsageScreenMsg()
-{
-	CHAR16	zString[512];
-
-	swprintf( zString, L"Display Cover: %d", gJa25SaveStruct.uiDisplayCoverCounter );
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zString );
-
-	swprintf( zString, L"LOS: %d", gJa25SaveStruct.uiDisplayLosCounter );
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zString );
-
-	swprintf( zString, L"Gun Range: %d", gJa25SaveStruct.uiDisplayGunRangeCounter );
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zString );
-}
-*/
-#endif
 
 void ChangeSizeOfDisplayCover( INT32 iNewSize )
 {

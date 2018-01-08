@@ -118,19 +118,6 @@ BOOLEAN HandleLoyaltyAdjustmentForRobbery( SOLDIERTYPE *pSoldier );
 // handle loyalty adjustments for dmg/destruction of buildings
 void HandleLoyaltyForDemolitionOfBuilding( SOLDIERTYPE *pSoldier, INT16 sPointsDmg );
 
-#ifdef JA2TESTVERSION
-
-	// calculate shortest distances between towns
-	void CalcDistancesBetweenTowns( void );
-
-	// write out distances between towns to a data file
-	void WriteOutDistancesBetweenTowns( void );
-
-	// dumps the calc'ed distances into a text file table for easy verification
-	void DumpDistancesBetweenTowns(void);
-
-#endif // JA2TESTVERSION
-
 
 /* Delayed loyalty effects elimininated.  Sep.12/98.  ARM
 // delayed town loyalty event

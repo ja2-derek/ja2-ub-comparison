@@ -306,16 +306,6 @@ void		GetIntroScreenUserInput()
 					SmkCloseFlic( gpSmackFlic );
 					break;
 
-#ifdef JA2TESTVERSION
-
-				case 'r':
-					break;
-
-				case 'i':
-					InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
-					break;
-
-#endif
 			}
 		}
 	}

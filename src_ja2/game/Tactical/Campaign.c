@@ -29,10 +29,6 @@
 extern	UINT8	gbPlayerNum;
 
 
-#ifdef JA2TESTVERSION
-// comment out to get rid of stat change msgs
-//#define STAT_CHANGE_DEBUG
-#endif
 
 #ifdef STAT_CHANGE_DEBUG
 STR16 wDebugStatStrings[]={
@@ -1356,102 +1352,6 @@ void HourlyProgressUpdate(void)
 
 
 
-#ifdef JA2TESTVERSION
-void TestDumpStatChanges(void)
-{
-  UINT32 uiProfileId;
-	UINT8 ubStat;
-  CHAR8 zPrintFileName[60];
-  FILE *FDump;
-  MERCPROFILESTRUCT *pProfile;
-	BOOLEAN fMercUsed;
-	CHAR8 cEvolutionChars[3] = { '+', '=', '-' };
-	UINT32 uiTotalSuccesses[ 12 ];
-	UINT32 uiTotalChances[ 12 ];
-
-
-	// clear totals
-	memset( uiTotalSuccesses, 0, sizeof( uiTotalSuccesses ) );
-	memset( uiTotalChances,   0, sizeof( uiTotalChances ) );
-
-  // open output file
- 	strcpy(zPrintFileName, "C:\\Temp\\StatChanges.TXT");
-  FDump = fopen(zPrintFileName, "wt");
-
-  if (FDump == NULL)
-    return;
-
-
-	// print headings
-	fprintf(FDump, "   NAME   SRV EVL ");
-	fprintf(FDump, "---HEALTH-- --AGILITY-- -DEXTERITY- ---WISDOM-- --MEDICAL-- --EXPLOSIV- --MECHANIC- --MARKSMAN- -EXP.LEVEL- --STRENGTH- -LEADERSHIP");
-	fprintf(FDump, "\n");
-
-
-  // loop through profiles
-	for (uiProfileId = 0; uiProfileId < NUM_PROFILES; uiProfileId++)
-  {
-    pProfile = &(gMercProfiles[uiProfileId]);
-
-		fMercUsed = FALSE;
-
-		// see if this guy should be printed at all (only mercs actually used are dumped)
-		for( ubStat = FIRST_CHANGEABLE_STAT; ubStat <= LAST_CHANGEABLE_STAT; ubStat++ )
-		{
-			if ( pProfile->usStatChangeChances[ ubStat ] > 0 )
-			{
-				fMercUsed = TRUE;
-				break;
-			}
-    }
-
-		if (fMercUsed)
-		{
-			// print nickname
-			fprintf(FDump, "%-10ls ", pProfile->zNickname);
-			// print days served
-			fprintf(FDump, "%3d ", pProfile->usTotalDaysServed);
-			// print evolution type
-			fprintf(FDump, "%c ", cEvolutionChars[ pProfile->bEvolution ]);
-
-			// now print all non-zero stats
-			for( ubStat = FIRST_CHANGEABLE_STAT; ubStat <= LAST_CHANGEABLE_STAT; ubStat++ )
-			{
-				if ( pProfile->usStatChangeChances[ ubStat ] > 0 )
-				{
-					// print successes/chances
-					fprintf(FDump, " %5d/%-5d", pProfile->usStatChangeSuccesses[ ubStat ], pProfile->usStatChangeChances[ ubStat ]);
-				}
-				else
-				{
-					//
-					fprintf(FDump, "            ");
-				}
-
-				uiTotalSuccesses[ ubStat ] += pProfile->usStatChangeSuccesses[ ubStat ];
-				uiTotalChances[ ubStat ]   += pProfile->usStatChangeChances[ ubStat ];
-			}
-
-			// newline
-			fprintf(FDump, "\n");
-		}
-  }
-
-
-	// print totals:
-	fprintf(FDump, "TOTAL        ");
-
-	for( ubStat = FIRST_CHANGEABLE_STAT; ubStat <= LAST_CHANGEABLE_STAT; ubStat++ )
-	{
-		fprintf(FDump, " %5d/%-5d", uiTotalSuccesses[ ubStat ], uiTotalChances[ ubStat ]);
-	}
-
-	fprintf(FDump, "\n");
-
-
-  fclose(FDump);
-}
-#endif
 
 
 

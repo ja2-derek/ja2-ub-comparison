@@ -2928,9 +2928,7 @@ Ja25  no meanwhile
 	
 	SetMusicMode( gMusicModeToPlay );
 
-#ifndef JA2TESTVERSION
 	RESET_CHEAT_LEVEL( );
-#endif
 
 #ifdef JA2BETAVERSION
 	if( fDisableDueToBattleRoster || fDisableMapInterfaceDueToBattle )
@@ -2964,22 +2962,12 @@ Ja25  no meanwhile
 	//Reinit the movement costs
 //	InitStrategicMovementCosts();
 
-#ifdef JA2TESTVERSION
-	InitializeStrategicMapSectorTownNames( );
-#endif
 
 	//The above function LightSetBaseLevel adjusts ALL the level node light values including the merc node,
 	//we must reset the values
 	HandlePlayerTogglingLightEffects( FALSE );
 
 
-#ifdef JA2TESTVERSION
-	{
-		CHAR16 zString[512];
-		swprintf( zString, L"Game Version from save:  %s, %S", SaveGameHeader.zVersionLabel, SaveGameHeader.zGameVersionNumber );
-		ScreenMsg( FONT_MCOLOR_WHITE, MSG_TESTVERSION, zString );
-	}
-#endif
 
 #ifdef JA2BETAVERSION
 	InitJa25StrategicAiDecisions( TRUE );

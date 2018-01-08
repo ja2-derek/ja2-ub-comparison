@@ -3058,9 +3058,6 @@ void SnapshotSmall(void)
 
 void VideoCaptureToggle(void)
 {
-#ifdef JA2TESTVERSION
-	VideoMovieCapture( (BOOLEAN)!gfVideoCapture);
-#endif
 }
 
 void VideoMovieCapture( BOOLEAN fEnable )
