@@ -1081,8 +1081,7 @@ void ChooseMapEdgepoints( MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategic
 	UINT16 usArraySize=0;
 	INT32 i=-1;
 	UINT16 usSlots, usCurrSlot;
-
-
+	INT16 *psTempArray = NULL;
 
 	AssertMsg( ubNumDesiredPoints > 0  && ubNumDesiredPoints <= 32,
 		String( "ChooseMapEdgepoints:  Desired points = %d, valid range is 1-32", ubNumDesiredPoints ) );
@@ -1116,11 +1115,43 @@ void ChooseMapEdgepoints( MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategic
 		pMapEdgepointInfo->ubNumPoints = 0;
 		return;
 	}
+
+	// JA2 Gold: don't place people in the water.
+	// If any of the waypoints is on a water spot, we're going to have to remove it
+	psTempArray = MemAlloc( sizeof(INT16) * usArraySize );
+	memcpy(psTempArray, psArray, sizeof(INT16) * usArraySize );
+	psArray = psTempArray;
+	for (i = 0; i < usArraySize; i++)
+	{
+		if (GetTerrainType(psArray[ i ]) == MED_WATER || GetTerrainType(psArray[ i ]) == DEEP_WATER)
+		{
+			if (i == usArraySize - 1)
+			{
+				// just axe it and we're done.
+				psArray[ i ] = 0;
+				usArraySize--;
+				break;
+			}
+			else
+			{
+				// replace this element in the array with the LAST element in the array, then decrement
+				// the array size
+				psArray[ i ] = psArray[usArraySize-1];
+				usArraySize--;
+				// we're going to have to check the array element we just copied into this spot, too
+				i--;
+			}
+		}
+	}
+
 	if( ubNumDesiredPoints >= usArraySize )
 	{ //We don't have enough points for everyone, return them all.
 		pMapEdgepointInfo->ubNumPoints = (UINT8)usArraySize;
 		for( i = 0; i < usArraySize; i++ )
 			pMapEdgepointInfo->sGridNo[i] = psArray[i];
+
+		// JA2Gold: free the temp array
+		MemFree(psTempArray);
 		return;
 	}
 	//We have more points, so choose them randomly.
@@ -1136,6 +1167,10 @@ void ChooseMapEdgepoints( MAPEDGEPOINTINFO *pMapEdgepointInfo, UINT8 ubStrategic
 		}
 		usSlots--;
 	}
+
+	// JA2Gold: free the temp array
+	MemFree(psTempArray);
+
 }
 
 INT16 *gpReservedGridNos = NULL;
