@@ -7,6 +7,7 @@
 
 //Flags for DrawTextToScreen()
 
+
 // Defines for coded text For use with IanDisplayWrappedString()
 #define				TEXT_SPACE					 32
 #define				TEXT_CODE_NEWLINE		177
@@ -63,6 +64,10 @@ void ShadowText(UINT32 uiDestVSurface, STR16 pString, UINT32 uiFont, UINT16 usPo
 
 
 BOOLEAN ReduceStringLength( STR16 pString, UINT32 uiWidth, UINT32 uiFont );
+
+
+void UseSingleCharWordsForWordWrap( BOOLEAN fUseSingleCharWords );
+WRAPPED_STRING *LineWrapForSingleCharWords(UINT32 ulFont, UINT16 usLineWidthPixels, UINT16 *pusLineWidthIfWordIsWiderThenWidth, STR16 pString, ...);
 
 
 #endif
