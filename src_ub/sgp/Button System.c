@@ -34,7 +34,6 @@
 #endif
 
 
-//ATE: Added to let Wiz default creating mouse regions with no cursor, JA2 default to a cursor ( first one )
 	#define		MSYS_STARTING_CURSORVAL		0
 #define		COLOR_DKGREY				136
 
@@ -2853,8 +2852,6 @@ void RenderButtons(void)
 				DrawButtonFromPtr(b);
 
 				InvalidateRegion(b->Area.RegionTopLeftX, b->Area.RegionTopLeftY, b->Area.RegionBottomRightX, b->Area.RegionBottomRightY);
-//#else
-//				InvalidateRegion(b->Area.RegionTopLeftX, b->Area.RegionTopLeftY, b->Area.RegionBottomRightX, b->Area.RegionBottomRightY, FALSE);
 
 			}
 		}
