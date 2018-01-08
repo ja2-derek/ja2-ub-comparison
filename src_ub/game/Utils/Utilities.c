@@ -300,106 +300,12 @@ UINT32 gCheckFileMinSizes[] =
   200000000
 };
 
-#if defined( _DEBUG )
-	#define NOCDCHECK
-#endif
 
 
-// Dec 4 2002 -  turned off CD check for "RussianGold" only
-#ifdef RUSSIANGOLD
-	
-#else
-	#define NOCDCHECK
-#endif
  
 
-BOOLEAN HandleJA2CDCheck( )
-{
-
-#ifdef NOCDCHECK
-
-	return( TRUE );
-
-#else
-	BOOLEAN fFailed = FALSE;
-	CHAR8		zCdLocation[ SGPFILENAME_LEN ];
-
-	// Check for a file on CD....
-	if( !GetCDromDriveLetter( zCdLocation ) )
-	{
-		CHAR8	zErrorMessage[256];
-
-		sprintf( zErrorMessage, "%S", gzLateLocalizedString[ 56 ] );
-		// Pop up message boc and get answer....
-		if ( MessageBox( NULL, zErrorMessage, "Jagged Alliance 2:UB", MB_OK ) == IDOK )
-		{
-			return( FALSE );
-		}
-	}
-
-  return( TRUE );
-	
-#endif
-
-}
 
 
-
-BOOLEAN PerformTimeLimitedCheck()
-{
-#ifndef TIME_LIMITED_VERSION
-		return( TRUE );
-
-#else
-	SYSTEMTIME sSystemTime;
-
-	GetSystemTime( &sSystemTime );
-
-
-	//if according to the system clock, we are past july 1999, quit the game
-	if( sSystemTime.wYear > 1999 || sSystemTime.wMonth > 7 )
-	{
-		//spit out an error message
-		MessageBox( NULL, "This time limited version of Jagged Alliance 2.5 has expired.", "Ja2 Error!", MB_OK  );
-		return( FALSE );
-	}
-
-	return( TRUE );
-#endif
-}
-
-
-void runElectronicRegistration(BOOL bWaitUntilDone)
-{   
-     BOOL bReturn;
-     STARTUPINFO si;
-     PROCESS_INFORMATION pi;
-     char originalPath[MAX_PATH + 1], eregPath[MAX_PATH + 1];
- 
-     // Save the current directory.  Ereg requires the working directory to be   
-     // set to the working directory of the ereg program because it loads DLL's  
-     // and initialization information from that directory.
-
-     _getcwd(originalPath, MAX_PATH);
-     lstrcpy(eregPath, originalPath);
-     lstrcat(eregPath, "\\ereg");
-     _chdir(eregPath);
- 
-     memset(&si, 0, sizeof(STARTUPINFO));
-     si.cb = sizeof(si);
- 
-     // Execute the ereg program
-     bReturn = CreateProcess("reg32.exe", "reg32.exe FALSE", NULL, NULL, FALSE, 
-                             CREATE_DEFAULT_ERROR_MODE, NULL, NULL, &si, &pi);   
-       
-     // If it executed, and we should block execution until the ereg process has      
-		 // either been inputted or cancelled, suspend this thread.
-     if (bReturn && bWaitUntilDone)
-         WaitForSingleObject (pi.hProcess, INFINITE);
- 
-     // Return to the previous working directory
-     _chdir(originalPath);
-}
 
 
 

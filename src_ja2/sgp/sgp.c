@@ -453,11 +453,6 @@ int PASCAL HandledWinMain(HINSTANCE hInstance,  HINSTANCE hPrevInstance, LPSTR p
 	giStartMem = MemGetFree(  ) / 1024;
   
 
-	// Handle Check for CD
-	if ( !HandleJA2CDCheck( ) )
-	{
-		return( 0 );
-	}
 
   ShowCursor(FALSE);
 

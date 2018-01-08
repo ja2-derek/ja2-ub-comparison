@@ -81,7 +81,6 @@ UINT32 InitializeJA2(void)
 	HandleLaserLockResult( PrepareLaserLockSystem() );
 #endif
 
-  HandleJA2CDCheck( );
 
 	gfWorldLoaded = FALSE;
 

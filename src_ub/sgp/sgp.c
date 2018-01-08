@@ -47,7 +47,6 @@ extern BOOLEAN gfIntendOnEnteringEditor;
 extern	BOOLEAN	CheckIfGameCdromIsInCDromDrive();
 
 
-extern 	void runElectronicRegistration(BOOL bWaitUntilDone);
 
 
 // Prototype Declarations
@@ -383,10 +382,6 @@ int PASCAL WinMain(HINSTANCE hInstance,  HINSTANCE hPrevInstance, LPSTR pCommand
 	int Result = -1;
 
 
-	// CJC Nov 18 2002: disabled as requested
-#ifdef ENGLISH
-	//runElectronicRegistration( TRUE );
-#endif
 
 	__try
 	{
@@ -440,12 +435,6 @@ int PASCAL HandledWinMain(HINSTANCE hInstance,  HINSTANCE hPrevInstance, LPSTR p
 	// Mem Usage
 	giStartMem = MemGetFree(  ) / 1024;
   
-
-	// Handle Check for CD
-	if ( !HandleJA2CDCheck( ) )
-	{
-		return( 0 );
-	}
 
 	if ( !LoadCampaignString( ) )
 	{

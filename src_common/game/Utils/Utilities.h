@@ -18,8 +18,5 @@ BOOLEAN IfWin95(void);
 
 void HandleLimitedNumExecutions( );
 
-BOOLEAN HandleJA2CDCheck( );
-BOOLEAN HandleJA2CDCheckTwo( );
-
 
 #endif
