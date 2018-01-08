@@ -3211,14 +3211,8 @@ STR16			zSaveLoadText[] =
 	L"Wersja gry w zapisanym pliku ró¿ni siê od bie¿¹cej. Prawdopodobnie mo¿na bezpiecznie kontynuowaæ. Kontynuowaæ?",
 	L"Zapisane pliki gier mog¹ byæ uszkodzone. Czy chcesz je usun¹æ?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.	
 	L"Próba odczytu starszej wersji zapisu gry.  Zaktualizowaæ ten zapis i odczytaæ grê?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Próba odczytu starszej wersji zapisu gry.  Zaktualizowaæ ten zapis i odczytaæ grê?",
 
 	L"Czy na pewno chcesz nadpisaæ grê na pozycji %d?",

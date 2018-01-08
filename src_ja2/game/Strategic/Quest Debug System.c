@@ -39,7 +39,6 @@
 	#include  "Message.h"
 #endif
 
-//#ifdef JA2BETAVERSION
 
 
 //*******************************
@@ -4056,4 +4055,3 @@ void GetDebugLocationString( UINT16 usProfileID, STR16 pzText )
 
 
 
-//#endif

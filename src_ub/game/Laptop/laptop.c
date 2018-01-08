@@ -835,11 +835,6 @@ INT32 EnterLaptop()
 	if( gRadarRegion.uiFlags & MSYS_REGION_ENABLED )
 	{
 		MSYS_DisableRegion( &gRadarRegion );
-/*
-		#ifdef JA2BETAVERSION
-			DoLapTopMessageBox( MSG_BOX_LAPTOP_DEFAULT, L"Mapscreen's radar region is still active, please tell Dave how you entered Laptop.", LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL );
-		#endif
-*/
 	}
 
 	gfDontStartTransitionFromLaptop = FALSE;

@@ -221,13 +221,11 @@ BOOLEAN EnterIntroScreen()
 	// Don't play music....
 	SetMusicMode( MUSIC_NONE );
 
-//#ifdef JA2BETAVERSION
 	if( FileExists( "..\\NoIntro.txt" ) )
 	{
 		PrepareToExitIntroScreen();
 		return( TRUE );
 	}
-//#endif
 
 	//if the library doesnt exist, exit
 	if( !IsLibraryOpened( LIBRARY_INTRO ) )

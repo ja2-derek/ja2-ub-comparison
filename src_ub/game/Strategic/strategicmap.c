@@ -839,17 +839,6 @@ BOOLEAN	SetCurrentWorldSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 
 	SyncStrategicTurnTimes();
 	
-/*
-Ja25 No Strategic ai
-	#ifdef JA2BETAVERSION
-	if( gfOverrideSector )
-	{
-		//skip the cancel, and force load the sector.  This is used by the AIViewer to "reset" a level with
-		//different numbers of various types of enemies.
-	}
-	else
-	#endif
-*/
 
 	// is the sector already loaded?
 	if( ( gWorldSectorX == sMapX ) && ( sMapY == gWorldSectorY) && ( bMapZ == gbWorldSectorZ) )

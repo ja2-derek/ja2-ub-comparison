@@ -41,12 +41,6 @@ extern void InitializeTacticalStatusAtBattleStart();
 extern BOOLEAN gfDelayAutoResolveStart;
 extern BOOLEAN gfTransitionMapscreenToAutoResolve;
 
-/*
-Ja25 No Strategic ai
-#ifdef JA2BETAVERSION
-extern BOOLEAN gfExitViewer;
-#endif
-*/
 
 
 BOOLEAN ShouldAutoResolveButtonBeDisabled( UINT8 ubSectorX, UINT8 ubSectorY, INT8 bSectorZ );

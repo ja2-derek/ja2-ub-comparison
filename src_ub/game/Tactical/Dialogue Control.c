@@ -1724,11 +1724,7 @@ BOOLEAN ExecuteCharacterDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, INT32
 					 gMercProfiles[ubCharacterNum].bPersonalityTrait == NONSWIMMER ||
 					 gMercProfiles[ubCharacterNum].bPersonalityTrait == FEAR_OF_INSECTS)) 
 					//usQuoteNum == QUOTE_STARTING_TO_WHINE || 
-#ifdef JA2BETAVERSION
-					|| usQuoteNum == QUOTE_WHINE_EQUIPMENT) && (guiCurrentScreen != QUEST_DEBUG_SCREEN) )
-#else
-          ) )
-#endif
+	          ) )
 
 		{
 			// This quote might spawn another quote from someone

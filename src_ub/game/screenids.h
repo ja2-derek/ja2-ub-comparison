@@ -40,9 +40,7 @@ typedef enum ScreenTypes
 #endif
 
 
-//#ifdef JA2BETAVERSION
 	QUEST_DEBUG_SCREEN,
-//#endif
 
 	IMPORT_SCREEN,	
 

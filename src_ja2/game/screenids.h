@@ -30,9 +30,7 @@ typedef enum ScreenTypes
 	CREDIT_SCREEN,
 
 
-//#ifdef JA2BETAVERSION
 	QUEST_DEBUG_SCREEN,
-//#endif
 
 	MAX_SCREENS
 };

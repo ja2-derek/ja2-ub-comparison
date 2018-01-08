@@ -944,9 +944,6 @@ Ja25:	No town loyalty
 	{
 		goto FAILED_TO_SAVE;
 	}
-	#ifdef JA2BETAVERSION
-		SaveGameFilePosition( FileGetPos( hFile ), "Town Loyalty" );
-	#endif
 */
 
 
@@ -998,9 +995,6 @@ Ja25:	no creatures
 	{
 		goto FAILED_TO_SAVE;
 	}
-	#ifdef JA2BETAVERSION
-		SaveGameFilePosition( FileGetPos( hFile ), "Creature Spreading" );
-	#endif
 */
 
 	if( !SaveStrategicStatusToSaveGameFile( hFile ) )
@@ -1014,9 +1008,6 @@ Ja25:  No Strategic AI
 	{
 		goto FAILED_TO_SAVE;
 	}
-	#ifdef JA2BETAVERSION
-		SaveGameFilePosition( FileGetPos( hFile ), "Strategic AI" );
-	#endif
 */
 
 	if( !SaveLightEffectsToSaveGameFile( hFile ) )
@@ -1050,9 +1041,6 @@ Ja25:  No Strategic AI
 	{
 		goto FAILED_TO_SAVE;
 	}
-	#ifdef JA2BETAVERSION
-		SaveGameFilePosition( FileGetPos( hFile ), "Meanwhile Definitions" );
-	#endif
 */
 	// save meanwhiledefs
 
@@ -1129,12 +1117,10 @@ Ja25:  No Strategic AI
 	{
 		ScreenMsg( FONT_MCOLOR_WHITE, MSG_INTERFACE, pMessageStrings[ MSG_SAVESUCCESS ] );
 	}
-//#ifdef JA2BETAVERSION
 	else if( ubSaveGameID == SAVE__END_TURN_NUM )
 	{
 //		ScreenMsg( FONT_MCOLOR_WHITE, MSG_INTERFACE, pMessageStrings[ MSG_END_TURN_AUTO_SAVE ] );
 	}
-//#endif
 	else
 	{
 		ScreenMsg( FONT_MCOLOR_WHITE, MSG_INTERFACE, pMessageStrings[ MSG_SAVESLOTSUCCESS ] );
@@ -1324,9 +1310,6 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 		FileClose( hFile );
 		return(FALSE);
 	}
-	#ifdef JA2BETAVERSION
-		LoadGameFilePosition( FileGetPos( hFile ), "Misc info" );
-	#endif
 */
 
 
@@ -1847,9 +1830,6 @@ Ja25:	no town loyalty
 			guiSaveGameVersion=0;
 			return(FALSE);
 		}
-		#ifdef JA2BETAVERSION
-			LoadGameFilePosition( FileGetPos( hFile ), "Town Loyalty" );
-		#endif
 	}
 */
 
@@ -1989,9 +1969,6 @@ Ja25:	no creatures
 			guiSaveGameVersion=0;
 			return(FALSE);
 		}
-		#ifdef JA2BETAVERSION
-			LoadGameFilePosition( FileGetPos( hFile ), "Creature Spreading" );
-		#endif
 	}
 */
 
@@ -2034,9 +2011,6 @@ Ja25:  No Strategic AI
 			guiSaveGameVersion=0;
 			return(FALSE);
 		}
-		#ifdef JA2BETAVERSION
-			LoadGameFilePosition( FileGetPos( hFile ), "Strategic AI" );
-		#endif
 	}
 */
 
@@ -2155,9 +2129,6 @@ Ja25  no meanwhile
 			guiSaveGameVersion=0;
 			return( FALSE );
 		}
-		#ifdef JA2BETAVERSION
-			LoadGameFilePosition( FileGetPos( hFile ), "Meanwhile definitions" );
-		#endif
 	}
 	else
 	{
@@ -3784,7 +3755,6 @@ void CreateSavedGameFileNameFromNumber( UINT8 ubSaveGameID, STR pzNewFileName )
 	{
 			sprintf( pzNewFileName , "%S\\%S.%S", pMessageStrings[ MSG_SAVEDIRECTORY ], pMessageStrings[ MSG_QUICKSAVE_NAME ], pMessageStrings[ MSG_SAVEEXTENSION ] );
 	}
-//#ifdef JA2BETAVERSION
 	else if( ubSaveGameID == SAVE__END_TURN_NUM )
 	{
 		//The name of the file
@@ -3799,7 +3769,6 @@ void CreateSavedGameFileNameFromNumber( UINT8 ubSaveGameID, STR pzNewFileName )
 			guiLastSaveGameNum = 0;
 		}
 	}
-//#endif
 
 	else
 		sprintf( pzNewFileName , "%S\\%S%02d.%S", pMessageStrings[ MSG_SAVEDIRECTORY ], pMessageStrings[ MSG_SAVE_NAME ], ubSaveGameID, pMessageStrings[ MSG_SAVEEXTENSION ] );

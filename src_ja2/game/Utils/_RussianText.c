@@ -3209,14 +3209,8 @@ STR16			zSaveLoadText[] =
 	L"Сохраненная версия игры отличается от текущей.Надежнее всего продолжить.Продолжить?",
 	L"Файлы сохраненной игры могут быть с ошибкой.Уничтожить их все?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Попытка загрузки старой версии. Обновить автоматически и загрузить?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Попытка загрузки старой версии. Обновить автоматически и загрузить?",
 
 	L"Вы уверены,что хотите записать сох.игру поверх #%d?",

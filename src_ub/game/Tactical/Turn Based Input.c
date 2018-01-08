@@ -2436,22 +2436,6 @@ Ja25:
 						}
 						break;
 
-/*
-Ja25:  No strategic AI from Ja2
-				#ifdef JA2BETAVERSION
-				case 'L':
-					gfDisplayStrategicAILogs ^= TRUE;
-					if( gfDisplayStrategicAILogs )
-					{
-						ScreenMsg( FONT_LTKHAKI, MSG_INTERFACE, L"Strategic AI Log visually enabled." );
-					}
-					else
-					{
-						ScreenMsg( FONT_LTKHAKI, MSG_INTERFACE, L"Strategic AI Log visually disabled." );
-					}
-					break;
-				#endif
-*/
 
 				case 'l':
 

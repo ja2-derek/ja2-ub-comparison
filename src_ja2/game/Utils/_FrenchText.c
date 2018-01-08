@@ -3217,14 +3217,8 @@ STR16			zSaveLoadText[] =
 	L"La version de la sauvegarde est différente de celle du jeu. Désirez-vous continuer ?",
 	L"Les fichiers de sauvegarde sont peut-être altérés. Voulez-vous les effacer ?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Tentative de chargement d'une sauvegarde de version précédente. Voulez-vous effectuer une mise à jour ?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Tentative de chargement d'une sauvegarde de version précédente. Voulez-vous effectuer une mise à jour ?",
 
 	L"Etes-vous sûr de vouloir écraser la sauvegarde #%d ?",

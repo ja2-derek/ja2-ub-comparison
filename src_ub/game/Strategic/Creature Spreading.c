@@ -251,12 +251,6 @@ void InitLairGrumm()
 	curr->next = NewDirective( SEC_H3, 1, MINE_EXIT );
 }
 
-/*
-Ja25 No Strategic ai
-#ifdef JA2BETAVERSION
-extern BOOLEAN gfExitViewer;
-#endif
-*/
 
 void InitCreatureQuest()
 {
@@ -1011,9 +1005,6 @@ BOOLEAN MineClearOfMonsters( UINT8 ubMineIndex )
 				break;
 
 			default:
-				#ifdef JA2BETAVERSION
-					ScreenMsg( FONT_RED, MSG_ERROR, L"Attempting to check if mine is clear but mine index is invalid (%d).", ubMineIndex );
-				#endif
 				break;
 		}
 	}

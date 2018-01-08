@@ -3210,14 +3210,8 @@ STR16			zSaveLoadText[] =
 	L"La versione del gioco nel file della partita salvata è diverso dalla versione attuale. È abbastanza sicuro proseguire. Continuate?",
 	L"I file della partita salvata potrebbero essere annullati. Volete cancellarli tutti?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Tentativo di caricare una versione salvata più vecchia. Aggiornate e caricate automaticamente quella salvata?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Tentativo di caricare una vecchia versione salvata. Aggiornate e caricate automaticamente quella salvata?",
 
 	L"Siete sicuri di volere sovrascrivere la partita salvata nello slot #%d?",

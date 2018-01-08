@@ -1301,16 +1301,6 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame( HWFILE hFile )
 
 	}
 
-/*
-no creatures
-#ifdef JA2BETAVERSION
-	if( !uiNumOfRecords )
-	{
-		BuildUndergroundSectorInfoList();
-		gfClearCreatureQuest = TRUE;
-	}
-#endif
-*/
 
 	return( TRUE );
 }

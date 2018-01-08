@@ -3,9 +3,6 @@
 
 #include "Language Defines.h"
 
-// Beta version
-// #define	JA2BETAVERSION
-
 // If we want to include the editor
 #define JA2EDITOR
 

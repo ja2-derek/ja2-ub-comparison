@@ -301,14 +301,6 @@ void		EnableDisableSoldierLightEffects( BOOLEAN fEnableLights );
 void		SetSoldierPersonalLightLevel( SOLDIERTYPE *pSoldier );
 
 
-/*
-Ja25 No strategic ai
-#ifdef JA2BETAVERSION
-extern void ValidatePlayersAreInOneGroupOnly();
-extern void MapScreenDefaultOkBoxCallback( UINT8 bExitValue );
-void SAIReportError( STR16 wErrorString );
-#endif
-*/
 
 UINT32 SleepDartSuccumbChance( SOLDIERTYPE * pSoldier );
 

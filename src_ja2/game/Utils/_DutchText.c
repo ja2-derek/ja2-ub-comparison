@@ -3226,14 +3226,8 @@ STR16			zSaveLoadText[] =
 	L"De spelversie van het bewaarde spel verschilt van de huidige versie. Waarschijnlijk is het veilig om door te gaan. Doorgaan?",
 	L"De bewaarde spelen zijn waarschijnlijk ongeldig. Deze verwijderen?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Attempting to load an older version save.  Automatically update and load the save?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Attempting to load an older version save.  Automatically update and load the save?",
 
 	L"Weet je zeker dat je het spel in slot #%d wil overschrijven?",

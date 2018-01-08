@@ -3280,14 +3280,8 @@ STR16			zSaveLoadText[] =
 	L"Die Spiel-Version des gespeicherten Spielstands unterscheidet sich von der aktuellen Spiel-Version.  Wahrscheinlich wird nichts passieren. Fortfahren?",
 	L"Die gespeicherten Spielstände könnten beschädigt sein.  Wollen Sie alle löschen?", 
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Versuche, Spielstand einer älteren Version zu laden. Automatisch aktualisieren und laden?",
 
-	//Translators, the next two strings are for the same thing.  The first one is for beta version releases and the second one
-	//is used for the final version.  Please don't modify the "#ifdef JA2BETAVERSION" or the "#else" or the "#endif" as they are
-	//used by the compiler and will cause program errors if modified/removed.  It's okay to translate the strings though.
 	L"Versuche, Spielstand einer älteren Version zu laden. Automatisch aktualisieren und laden?",
 	L"Gespeichertes Spiel in Slot #%d wirklich überschreiben?",
 	L"Wollen Sie das Spiel aus Slot # laden?",
