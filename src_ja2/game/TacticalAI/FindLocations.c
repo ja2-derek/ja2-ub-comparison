@@ -54,15 +54,6 @@ INT32 CalcPercentBetter(INT32 iOldValue, INT32 iNewValue, INT32 iOldScale, INT32
  // here, the change in cover HAS to be an improvement over current cover
  if (iValueChange <= 0)
   {
-#ifdef BETAVERSION
-   sprintf(tempstr,"CalcPercentBetter: ERROR - invalid valueChange = %d",valueChange);
-
-#ifdef RECORDNET
-   fprintf(NetDebugFile,"\n\t%s\n\n",tempstr);
-#endif
-
-   PopMessage(tempstr);
-#endif
 
    return(NOWHERE);
   }
@@ -73,15 +64,6 @@ INT32 CalcPercentBetter(INT32 iOldValue, INT32 iNewValue, INT32 iOldScale, INT32
  // here, the change in cover HAS to be an improvement over current cover
  if (iScaleSum <= 0)
   {
-#ifdef BETAVERSION
-   sprintf(tempstr,"CalcPercentBetter: ERROR - invalid scaleSum = %d",iScaleSum);
-
-#ifdef RECORDNET
-   fprintf(NetDebugFile,"\n\t%s\n\n",tempstr);
-#endif
-
-   PopMessage(tempstr);
-#endif
 
    return(NOWHERE);
   }
@@ -1084,9 +1066,6 @@ INT16 FindBestNearbyCover(SOLDIERTYPE *pSoldier, INT32 morale, INT32 *piPercentB
 			DebugAI( String( "Found Cover: current %ld, best %ld, %%%%Better %ld\n", iCurrentCoverValue,iBestCoverValue,*piPercentBetter ) );
 #endif
 
-#ifdef BETAVERSION
-			SnuggleDebug(pSoldier,"Found Cover");
-#endif
 
 			return((INT16)sBestCover);       // return the gridno of that cover
 		}

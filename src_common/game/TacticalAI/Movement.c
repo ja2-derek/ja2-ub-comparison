@@ -37,9 +37,6 @@ int LegalNPCDestination(SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubPathMode, 
    fprintf(NetDebugFile,"LegalNPC->sDestination: ERROR - rcvd invalid gridno %d",gridno);
 #endif
 
-#ifdef BETAVERSION
-   NumMessage("LegalNPC->sDestination: ERROR - rcvd invalid gridno ",gridno);
-#endif
 
    return(FALSE);
   }
@@ -102,9 +99,6 @@ int LegalNPCDestination(SOLDIERTYPE *pSoldier, INT16 sGridno, UINT8 ubPathMode, 
 			case ENSURE_PATH_COST:	return(PlotPath(pSoldier,sGridno,FALSE,FALSE,FALSE,WALKING,FALSE,FALSE,0));
 
       default              :
-#ifdef BETAVERSION
-			     NumMessage("LegalNPC->sDestination: ERROR - illegal pathMode = ",ubPathMode);
-#endif
 			     return(FALSE);
      }
    }
@@ -143,16 +137,6 @@ int TryToResumeMovement(SOLDIERTYPE *pSoldier, INT16 sGridno)
 		}
 		else
 		{
-#ifdef BETAVERSION
-			sprintf(tempstr,"TryToResumeMovement: ERROR - NewDest failed for %s, action CANCELED",pSoldier->name);
-
-#ifdef RECORDNET
-			fprintf(NetDebugFile,"\n\t%s\n",tempstr);
-#endif
-
-			PopMessage(tempstr);
-			SaveGame(ERROR_SAVE);
-#endif
 
 			// must work even for escorted civs, can't just set the flag
 			CancelAIAction(pSoldier,FORCE);
@@ -164,18 +148,6 @@ int TryToResumeMovement(SOLDIERTYPE *pSoldier, INT16 sGridno)
 		// don't black-list anything here, this situation can come up quite
 		// legally if another soldier gets in the way between turns
 
-#ifdef BETAVERSION
-		sprintf(tempstr,"TryToResumeMovement: %d can't continue to gridno %d, no longer legal!",pSoldier->ubID,gridno);
-
-#ifdef RECORDNET
-		fprintf(NetDebugFile,"\n\t%s\n",tempstr);
-#endif
-
-#ifdef DEBUGDECISIONS
-		AIPopMessage(tempstr);
-#endif
-
-#endif
 
 
 		if (!pSoldier->bUnderEscort)
@@ -232,10 +204,6 @@ INT16 NextPatrolPoint(SOLDIERTYPE *pSoldier)
  // patrol slot 0 is UNUSED, so max patrolCnt is actually only 9
  if ((pSoldier->bPatrolCnt < 1) || (pSoldier->bPatrolCnt >= MAXPATROLGRIDS))
   {
-#ifdef BETAVERSION
-   sprintf(tempstr,"NextPatrolPoint: ERROR: Invalid patrol count = %d for %s",pSoldier->bPatrolCnt,pSoldier->name);
-   PopMessage(tempstr);
-#endif
 
    return(NOWHERE);
   }
@@ -274,9 +242,6 @@ INT8 PointPatrolAI(SOLDIERTYPE *pSoldier)
    // if we're back where we started, then ALL other patrol points are junk!
    if (pSoldier->sGridNo == sPatrolPoint)
     {
-#ifdef BETAVERSION
-     NumMessage("PROBLEM WITH SCENARIO: All other patrol points are invalid for guynum ",pSoldier->ubID);
-#endif
      // force change of orders & an abort
      sPatrolPoint = NOWHERE;
     }
@@ -285,9 +250,6 @@ INT8 PointPatrolAI(SOLDIERTYPE *pSoldier)
  // if we don't have a legal patrol point
  if (sPatrolPoint == NOWHERE)
   {
-#ifdef BETAVERSION
-   NumMessage("PointPatrolAI: ERROR - no legal patrol point for %d",pSoldier->ubID);
-#endif
 
    // over-ride orders to something safer
    pSoldier->bOrders = FARPATROL;
@@ -373,9 +335,6 @@ INT8 RandomPointPatrolAI(SOLDIERTYPE *pSoldier)
 	// if we don't have a legal patrol point
 	if (sPatrolPoint == NOWHERE)
 	{
-#ifdef BETAVERSION
-		NumMessage("PointPatrolAI: ERROR - no legal patrol point for %d",pSoldier->ubID);
-#endif
 
 		// over-ride orders to something safer
 		pSoldier->bOrders = FARPATROL;
@@ -602,16 +561,6 @@ INT16 InternalGoAsFarAsPossibleTowards(SOLDIERTYPE *pSoldier, INT16 sDesGrid, IN
    // this should NEVER be out of bounds
    if (sTempDest == sGoToGrid)
     {
-#ifdef BETAVERSION
-     sprintf(tempstr,"GoAsFarAsPossibleTowards: ERROR - gridno along valid route is invalid!  guynum %d, sTempDest = %d",pSoldier->ubID,sTempDest);
-
-#ifdef RECORDNET
-     fprintf(NetDebugFile,"\n\t%s\n",tempstr);
-#endif
-
-     PopMessage(tempstr);
-     SaveGame(ERROR_SAVE);
-#endif
 
      break;           // quit here, sGoToGrid is where we are going
     }

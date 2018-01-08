@@ -22,9 +22,6 @@ void MakeClosestEnemyChosenOne()
 
 	if ( ! (gTacticalStatus.fPanicFlags & PANIC_TRIGGERS_HERE) )
 	{
-#ifdef BETAVERSION
-		PopMessage("MakeClosestEnemyChosenOne: ERROR - Panic Trigger is NOWHERE");
-#endif
 
 		return;
 	}
@@ -320,9 +317,6 @@ INT8 PanicAI(SOLDIERTYPE *pSoldier, UINT8 ubCanMove)
        // make sure it's not in water (those triggers can't be pulled)
        if (Water(Terrain(gTacticalStatus.sHandGrid),Structure(gTacticalStatus.sHandGrid)))
 	{
-#ifdef BETAVERSION
-         PopMessage("BAD SCENARIO DESIGN: Enemies can't use this panic trigger!");
-#endif
          gTacticalStatus.ubTheChosenOne = NOBODY;   // strip him of his Chosen One status
 	 // don't bother replacing him either, the next won't have more luck!
          return(-1);

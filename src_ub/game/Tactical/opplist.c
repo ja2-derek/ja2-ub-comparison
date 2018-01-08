@@ -1550,17 +1550,11 @@ INT16 ManLooksForMan(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ubCall
  /*
  if (ptr->guynum >= NOBODY)
   {
-#ifdef BETAVERSION
-   NumMessage("ManLooksForMan: ERROR - ptr->guynum = ",ptr->guynum);
-#endif
    return(success);
   }
 
  if (oppPtr->guynum >= NOBODY)
   {
-#ifdef BETAVERSION
-   NumMessage("ManLooksForMan: ERROR - oppPtr->guynum = ",oppPtr->guynum);
-#endif
    return(success);
   }
 
@@ -1569,18 +1563,6 @@ INT16 ManLooksForMan(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ubCall
  // if we're somehow looking while inactive, at base, dead or dying
  if (!pSoldier->bActive || !pSoldier->bInSector || (pSoldier->bLife < OKLIFE))
  {
-/*
-#ifdef BETAVERSION
-   sprintf(tempstr,"ManLooksForMan: ERROR - %s is looking while inactive/at base/dead/dying.  Caller %s",
-		   	ExtMen[ptr->guynum].name,LastCaller2Text[caller]);
-
-#ifdef RECORDNET
-   fprintf(NetDebugFile,"\n\t%s\n\n",tempstr);
-#endif
-
-   PopMessage(tempstr);
-#endif
-*/
 
 #ifdef TESTOPPLIST
 	DebugMsg( TOPIC_JA2OPPLIST, DBG_LEVEL_3, 
@@ -1595,18 +1577,6 @@ INT16 ManLooksForMan(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ubCall
  // if we're somehow looking for a guy who is inactive, at base, or already dead
  if (!pOpponent->bActive || !pOpponent->bInSector || pOpponent->bLife <= 0 || pOpponent->sGridNo == NOWHERE )
  {
-/*
-#ifdef BETAVERSION
-   sprintf(tempstr,"ManLooksForMan: ERROR - %s looks for %s, who is inactive/at base/dead.  Caller %s",
-   	ExtMen[ptr->guynum].name,ExtMen[oppPtr->guynum].name,LastCaller2Text[caller]);
-
-#ifdef RECORDNET
-   fprintf(NetDebugFile,"\n\t%s\n\n",tempstr);
-#endif
-
-   PopMessage(tempstr);
-#endif
-*/
 
 #ifdef TESTOPPLIST
 	 DebugMsg( TOPIC_JA2OPPLIST, DBG_LEVEL_3, 
@@ -1620,17 +1590,6 @@ INT16 ManLooksForMan(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ubCall
  // if he's looking for a guy who is on the same team
  if (pSoldier->bTeam == pOpponent->bTeam)
   {
-/*
-#ifdef BETAVERSION
-   sprintf(tempstr,"ManLooksFormMan: ERROR - on SAME TEAM.  ptr->guynum = %d, oppPtr->guynum = %d",
-					ptr->guynum,oppPtr->guynum);
-#ifdef RECORDNET
-   fprintf(NetDebugFile,"\n\t%s\n\n",tempstr);
-#endif
-
-   PopMessage(tempstr);
-#endif
-*/
 
 #ifdef TESTOPPLIST
 	DebugMsg( TOPIC_JA2OPPLIST, DBG_LEVEL_3, 
@@ -1811,45 +1770,23 @@ void ManSeesMan(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, INT16 sOppGridno,
 
  if (pSoldier->ubID >= NOBODY)
   {
-	 /*
-#ifdef BETAVERSION
-   NumMessage("ManSeesMan: ERROR - ptr->guynum = ",ptr->guynum);
-#endif
-	 */
    return;
   }
 
  if (pOpponent->ubID >= NOBODY)
   {
-	 /*
-#ifdef BETAVERSION
-   NumMessage("ManSeesMan: ERROR - oppPtr->guynum = ",oppPtr->guynum);
-#endif
-	 */
    return;
   }
 
  // if we're somehow looking while inactive, at base, dying or already dead
  if (!pSoldier->bActive || !pSoldier->bInSector || (pSoldier->bLife < OKLIFE))
   {
-	 /*
-#ifdef BETAVERSION
-   sprintf(tempstr,"ManSeesMan: ERROR - %s is SEEING ManSeesMan while inactive/at base/dead/dying",ExtMen[ptr->guynum].name);
-   PopMessage(tempstr);
-#endif
-	*/
    return;
   }
 
  // if we're somehow seeing a guy who is inactive, at base, or already dead
  if (!pOpponent->bActive || !pOpponent->bInSector || pOpponent->bLife <= 0)
   {
-	 /*
-#ifdef BETAVERSION
-   sprintf(tempstr,"ManSeesMan: ERROR - %s sees %s, ManSeesMan, who is inactive/at base/dead",ExtMen[ptr->guynum].name,ExtMen[oppPtr->guynum].name);
-   PopMessage(tempstr);
-#endif
-	 */
    return;
   }
 
@@ -1857,13 +1794,6 @@ void ManSeesMan(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, INT16 sOppGridno,
  // if we're somehow seeing a guy who is on the same team
  if (pSoldier->bTeam == pOpponent->bTeam)
   {
-	 /*
-#ifdef BETAVERSION
-   sprintf(tempstr,"ManSeesMan: ERROR - on SAME TEAM.  ptr->guynum = %d, oppPtr->guynum = %d",
-					ptr->guynum,oppPtr->guynum);
-   PopMessage(tempstr);
-#endif
-	 */
    return;
   }
 
@@ -4825,16 +4755,6 @@ void OurNoise( UINT8 ubNoiseMaker, INT16 sGridNo, INT8 bLevel, UINT8 ubTerrType,
 #endif
 
 
-#ifdef BETAVERSION
-	sprintf(tempstr,"OurNoise: ubNoiseType = %s, ubNoiseMaker = %d, ubNoiseMode = %d, sGridNo = %d, ubVolume = %d",
-		 	NoiseTypeStr[ubNoiseType],ubNoiseMaker,ubNoiseMode,sGridNo,ubVolume);
-#ifdef RECORDNET
-	fprintf(NetDebugFile,"\t%s\n",tempstr);
-#endif
-#ifdef TESTNOISE
-	PopMessage(tempstr);
-#endif
-#endif
 
 	// see if anyone actually hears this noise, sees ubNoiseMaker, etc.
 	ProcessNoise(ubNoiseMaker, sGridNo, bLevel, ubTerrType,	ubVolume,	ubNoiseType);
@@ -4864,17 +4784,6 @@ void TheirNoise(UINT8 ubNoiseMaker, INT16 sGridNo, INT8 bLevel, UINT8 ubTerrType
 #endif
 
 
-#ifdef BETAVERSION
-	sprintf(tempstr,"TheirNoise: ubNoiseType = %s, ubNoiseMaker = %d, ubNoiseMode = %d, sGridNo = %d, ubVolume = %d",
-		 	NoiseTypeStr[ubNoiseType],ubNoiseMaker,ubNoiseMode,sGridNo,ubVolume);
-#ifdef RECORDNET
-	fprintf(NetDebugFile,"\t%s\n",tempstr);
-#endif
-
-#ifdef TESTNOISE
-	PopMessage(tempstr);
-#endif
-#endif
 
 	// see if anyone actually hears this noise, sees noiseMaker, etc.
 	ProcessNoise(ubNoiseMaker,sGridNo,bLevel,ubTerrType,ubVolume,ubNoiseType);
@@ -4949,18 +4858,12 @@ void ProcessNoise(UINT8 ubNoiseMaker, INT16 sGridNo, INT8 bLevel, UINT8 ubTerrTy
 		if (!Menptr[ubNoiseMaker].bActive || !Menptr[ubNoiseMaker].bInSector ||
         Menptr[ubNoiseMaker].uiStatusFlags & SOLDIER_DEAD)
 		{
-#ifdef BETAVERSION
-			NumMessage("ProcessNoise: ERROR - Noisemaker is inactive/not in sector/dead, Guy #",ubNoiseMaker);
-#endif
 			return;
 		}
 
 		// if he's out of life, and this isn't just his "dying scream" which is OK
 		if (!Menptr[ubNoiseMaker].bLife && (ubNoiseType != NOISE_SCREAM))
 		{
-#ifdef BETAVERSION
-			NumMessage("ProcessNoise: ERROR - Noisemaker is lifeless, Guy #",ubNoiseMaker);
-#endif
 			return;
 		}
 	}
@@ -5904,21 +5807,6 @@ void VerifyAndDecayOpplist(SOLDIERTYPE *pSoldier)
 	// if any new opponents were seen earlier and not yet radioed
 	if (pSoldier->bNewOppCnt)
 	{
-#ifdef BETAVERSION
-		sprintf(tempstr,"VerifyAndDecayOpplist: WARNING - %d(%s) still has %d NEW OPPONENTS - lastCaller %s/%s",
-			pSoldier->guynum,ExtMen[pSoldier->guynum].name,pSoldier->newOppCnt,
-			LastCallerText[ExtMen[pSoldier->guynum].lastCaller],
-			LastCaller2Text[ExtMen[pSoldier->guynum].lastCaller2]);
-
-#ifdef TESTVERSION	// make this ERROR/BETA again when it's fixed!
-		PopMessage(tempstr);
-#endif
-
-#ifdef RECORDNET
-		fprintf(NetDebugFile,"\n\t%s\n\n",tempstr);
-#endif
-
-#endif
 
 		if (pSoldier->uiStatusFlags & SOLDIER_PC)
 		{

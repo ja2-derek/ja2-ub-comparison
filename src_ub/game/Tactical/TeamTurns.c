@@ -1115,9 +1115,6 @@ BOOLEAN StandardInterruptConditionsMet( SOLDIERTYPE * pSoldier, UINT8 ubOpponent
 		// ALEX
 		if (gsWhoThrewRock >= NOBODY)
 		{
-#ifdef BETAVERSION
-			NumMessage("StandardInterruptConditions: ERROR - ubOpponentID is NOBODY, don't know who threw rock, guynum = ",pSoldier->guynum);
-#endif
 
 			return(FALSE);
 		}
@@ -1511,9 +1508,6 @@ INT8 CalcInterruptDuelPts( SOLDIERTYPE * pSoldier, UINT8 ubOpponentID, BOOLEAN f
 
 	if (bPoints >= AUTOMATIC_INTERRUPT)
 	{
-#ifdef BETAVERSION
-		NumMessage("CalcInterruptDuelPts: ERROR - Invalid bInterruptDuelPts calculated for soldier ",pSoldier->guynum);
-#endif
 		bPoints = AUTOMATIC_INTERRUPT - 1;	// hack it to one less than max so its legal
 	}
 

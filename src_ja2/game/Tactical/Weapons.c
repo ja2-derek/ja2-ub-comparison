@@ -2935,9 +2935,6 @@ UINT32 CalcChanceToHitGun(SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime
 			 case LAKETYPE  :
 			 case OCEANTYPE : break;
 
-#ifdef BETAVERSION
-			 default        : NumMessage("CHANCE TO HIT ERROR: Unknown camo terrtype ",vicpSoldier->terrtype);
-#endif
 			}
 		 }
 	 }
@@ -3732,9 +3729,6 @@ UINT32 CalcChanceHTH( SOLDIERTYPE * pAttacker,SOLDIERTYPE *pDefender, UINT8 ubAi
 		// safety check
 		if (Weapon[usInHand].ubWeaponClass != KNIFECLASS)
 		 {
-			#ifdef BETAVERSION
-			NumMessage("CalcChanceToStab: ERROR - Attacker isn't holding a knife, usInHand = ",usInHand);
-			#endif
 			return(0);
 		 }
 	}
@@ -4176,13 +4170,6 @@ UINT32 CalcThrownChanceToHit(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAimTi
 
 /*
 	// CJC: Grenade Launchers don't fire in a straight line!
-	#ifdef BETAVERSION
-	if (usHandItem == GLAUNCHER)
-	{
-		PopMessage("CalcThrownChanceToHit: DOESN'T WORK ON GLAUNCHERs!");
-		return(0);
-	}
-	#endif
 */
 
 	if ( Item[ usHandItem ].usItemClass != IC_LAUNCHER && pSoldier->bWeaponMode != WM_ATTACHED )

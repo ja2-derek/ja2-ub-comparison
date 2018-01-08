@@ -47,9 +47,6 @@ void LoadWeaponIfNeeded(SOLDIERTYPE *pSoldier)
 		bPayloadPocket = FindObj( pSoldier, MORTAR_SHELL );
 		if (bPayloadPocket == NO_SLOT)
 		{
-#ifdef BETAVERSION
-			NumMessage("LoadWeaponIfNeeded: ERROR - no mortar shells found to load MORTAR!  Guynum",pSoldier->ubID);
-#endif
 			return;	// no shells, can't fire the MORTAR
 		}
 	}
@@ -59,9 +56,6 @@ void LoadWeaponIfNeeded(SOLDIERTYPE *pSoldier)
 		bPayloadPocket = FindGLGrenade( pSoldier );
 		if (bPayloadPocket == NO_SLOT)
 		{
-#ifdef BETAVERSION
-			NumMessage("LoadWeaponIfNeeded: ERROR - no grenades found to load GLAUNCHER!  Guynum",pSoldier->ubID);
-#endif
 			return;	// no grenades, can't fire the GLAUNCHER
 		}
 	}
@@ -717,9 +711,6 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 				// this shouldn't ever happen
 				if ((sGridNo < 0) || (sGridNo >= GRIDSIZE))
 				{
-					#ifdef BETAVERSION
-						NumMessage("CalcBestThrow: ERROR - invalid gridno being tested ",sGridNo);
-					#endif
 					continue;
 				}
 

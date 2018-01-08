@@ -1275,15 +1275,6 @@ void ActionTimeoutExceeded(SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
  UCHAR attackAction = FALSE;
 
 
-#ifdef BETAVERSION
- if (ConvertedMultiSave)
-  {
-   // re-start real-time NPC action timer
-   EnemyTimedOut = FALSE;
-   EnemyTimerCnt = ENEMYWAITTOLERANCE;
-   return;
-  }
-#endif
 
 
  // check if it's a problem with a offensive combat action
@@ -1297,17 +1288,6 @@ void ActionTimeoutExceeded(SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
    // OTHERS ARE VERY SERIOUS, SINCE THEY ARE LIKELY TO REPEAT THEMSELVES
 
 
-#ifdef BETAVERSION
- sprintf(tempstr,"ActionInProgress - ERROR: %s's timeout limit exceeded.  Action #%d (%d)",
-		pSoldier->name,pSoldier->bAction,pSoldier->usActionData);
-
-#ifdef RECORDNET
- fprintf(NetDebugFile,"\n%s\n\n",tempstr);
-#endif
-
- PopMessage(tempstr);
- SaveGame(ERROR_SAVE);
-#endif
 
 #ifdef TESTVERSION
  PopMessage("FULL SOLDIER INFORMATION DUMP COMING UP, BRACE THYSELF!");
@@ -1321,9 +1301,6 @@ void ActionTimeoutExceeded(SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
 
  if (attackAction)
   {
-#ifdef BETAVERSION
-   NameMessage(pSoldier,"will now be freed up from attacking...",2000);
-#endif
 
 
    // free up ONLY players from whom we haven't received an AI_ACTION_DONE yet
@@ -1344,9 +1321,6 @@ void ActionTimeoutExceeded(SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
   }
  else if (pSoldier->bAction == AI_ACTION_CHANGE_FACING)
   {
-#ifdef BETAVERSION
-   NameMessage(pSoldier,"will now be freed up from turning...",2000);
-#endif
 
    // force him to face in the right direction (as long as it's legal)
    if ((pSoldier->bDesiredDirection >= 1) && (pSoldier->bDesiredDirection <= 8))
@@ -1375,9 +1349,6 @@ void ActionTimeoutExceeded(SOLDIERTYPE *pSoldier, UCHAR alreadyFreedUp)
   }
  else
   {
-#ifdef BETAVERSION
-   NameMessage(pSoldier,"is having the remainder of his turn canceled...",1000);
-#endif
 
    // cancel the remainder of the offender's turn as a penalty!
    pSoldier->bActionPoints = 0;
@@ -1460,15 +1431,6 @@ void MarkDetectableMines(SOLDIERTYPE *pSoldier)
  // this should happen, means we missed a clean-up cycle last time!
  if (MarkedNPCMines)
   {
-#ifdef BETAVERSION
-   sprintf(tempstr,"MarkDetectableMines: ERROR - mines still marked!  Guynum %d",pSoldier->ubID);
-
-#ifdef RECORDNET
-   fprintf(NetDebugFile,"\n\t%s\n\n",tempstr);
-#endif
-
-   PopMessage(tempstr);
-#endif
 
    RestoreMarkedMines();
   }
@@ -2009,11 +1971,6 @@ INT8 ExecuteAction(SOLDIERTYPE *pSoldier)
 /*
 			if (!StartTurn(pSoldier,pSoldier->usActionData,FASTTURN))
 			{
-#ifdef BETAVERSION
-				sprintf(tempstr,"ERROR: %s tried TURN to direction %d, StartTurn failed, action %d CANCELED",
-						pSoldier->name,pSoldier->usActionData,pSoldier->bAction);
-				PopMessage(tempstr);
-#endif
 
 				// ZAP NPC's remaining action points so this isn't likely to repeat
 				pSoldier->bActionPoints = 0;
@@ -2213,22 +2170,6 @@ INT8 ExecuteAction(SOLDIERTYPE *pSoldier)
 			// make sure it worked (check that pSoldier->sDestination == pSoldier->usActionData)
 			if (pSoldier->sFinalDestination != pSoldier->usActionData)
 			{
-#ifdef BETAVERSION
-				// this should NEVER happen, indicates AI picked an illegal spot!
-				sprintf(tempstr,"ExecuteAction: ERROR - %s tried MOVE to gridno %d, NewDest failed, action %d CANCELED",
-					pSoldier->name,pSoldier->usActionData,pSoldier->bAction);
-
-#ifdef RECORDNET
-				fprintf(NetDebugFile,"\n%s\n\n",tempstr);
-#endif
-
-				PopMessage(tempstr);
-
-				sprintf(tempstr,"BLACK-LISTING gridno %d for %s",pSoldier->usActionData,pSoldier->name);
-				PopMessage(tempstr);
-
-				SaveGame(ERROR_SAVE);
-#endif
 				// temporarily black list this gridno to stop enemy from going there
 				pSoldier->sBlackList = (INT16) pSoldier->usActionData;
 
@@ -2531,9 +2472,6 @@ Ja25: No surrenders
 */
 
 		default:
-#ifdef BETAVERSION
-			NumMessage("ExecuteAction - Illegal action type = ",pSoldier->bAction);
-#endif
 			return(FALSE);
 	}
 

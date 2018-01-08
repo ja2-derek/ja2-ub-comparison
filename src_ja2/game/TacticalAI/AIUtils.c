@@ -482,16 +482,6 @@ BOOLEAN IsActionAffordable(SOLDIERTYPE *pSoldier)
 			// only FIRE_GUN currently actually pays extra turning costs!
 			bMinPointsNeeded = MinAPsToAttack(pSoldier,pSoldier->usActionData,ADDTURNCOST);
 
-#ifdef BETAVERSION
-			if (ptsNeeded > pSoldier->bActionPoints)
-			{
-			/*
-				sprintf(tempstr,"AI ERROR: %s has insufficient points for attack action %d at grid %d",
-							pSoldier->name,pSoldier->bAction,pSoldier->usActionData);
-				PopMessage(tempstr);
-				*/
-			}
-#endif
 			break;
 
 		case AI_ACTION_PULL_TRIGGER:          // activate an adjacent panic trigger
@@ -537,9 +527,6 @@ BOOLEAN IsActionAffordable(SOLDIERTYPE *pSoldier)
 			break;
 			
 		default:
-#ifdef BETAVERSION
-			//NumMessage("AffordableAction - Illegal action type = ",pSoldier->bAction);
-#endif
 			break;
 	}
 
@@ -584,9 +571,6 @@ INT16 RandomFriendWithin(SOLDIERTYPE *pSoldier)
 	// if range is restricted, make sure origin is a legal gridno!
 	if (fRangeRestricted && ((usOrigin < 0) || (usOrigin >= GRIDSIZE)))
 	{
-#ifdef BETAVERSION
-		NameMessage(pSoldier,"has illegal origin, but his roaming range is restricted!",1000);
-#endif
 		return(FALSE);
 	}
 
@@ -805,13 +789,6 @@ INT16 RandDestWithinRange(SOLDIERTYPE *pSoldier)
 
 				sRandDest = usOrigin + sXOffset + (MAXCOL * sYOffset);
 
-	#ifdef BETAVERSION
-				if ((sRandDest < 0) || (sRandDest >= GRIDSIZE))
-				{
-					NumMessage("RandDestWithinRange: ERROR - Gridno out of range! = ",sRandDest);
-					sRandDest = random(GRIDSIZE);
-				}
-	#endif
 			}
 			else
 			{
@@ -2181,22 +2158,6 @@ INT32 CalcManThreatValue( SOLDIERTYPE *pEnemy, INT16 sMyGrid, UINT8 ubReduceForC
 	//sprintf(tempstr,"%s's iThreatValue = ",pEnemy->name);
 	//NumMessage(tempstr,iThreatValue);
 
-#ifdef BETAVERSION	// unnecessary for real release
-	// NOTE: maximum is about 200 for a healthy Mike type with a mortar!
-	if (iThreatValue > 250)
-	{
-		sprintf(tempstr,"CalcManThreatValue: WARNING - %d has a very high threat value of %d",pEnemy->ubID,iThreatValue);
-
-#ifdef RECORDNET
-		fprintf(NetDebugFile,"\t%s\n",tempstr);
-#endif
-
-#ifdef TESTVERSION
-		PopMessage(tempstr);
-#endif
-
-	}
-#endif
 
 	return(iThreatValue);
 }
@@ -2256,10 +2217,6 @@ INT16 RoamingRange(SOLDIERTYPE *pSoldier, INT16 * pusFromGridNo)
 		case SEEKENEMY:				*pusFromGridNo = pSoldier->sGridNo; // from current position!
 													return(MAX_ROAMING_RANGE);
 		default:
-#ifdef BETAVERSION
-			sprintf(tempstr,"%s has invalid orders = %d",pSoldier->name,pSoldier->bOrders);
-			PopMessage(tempstr);
-#endif
 			return(0);
 	}
 }

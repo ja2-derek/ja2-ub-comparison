@@ -1151,9 +1151,6 @@ INT8 DecideActionYellow(SOLDIERTYPE *pSoldier)
    fprintf(NetDebugFile,"\nDecideActionYellow: ERROR - No important noise known by guynum %d\n\n",pSoldier->ubID);
 #endif
 
-#ifdef BETAVERSION
-   NumMessage("DecideActionYellow: ERROR - No important noise known by guynum ",pSoldier->ubID);
-#endif
 		
 		return(AI_ACTION_NONE);
 	}
