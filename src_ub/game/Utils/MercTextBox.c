@@ -553,7 +553,10 @@ INT32 PrepareMercPopupBox( INT32 iBoxId, UINT8 ubBackgroundIndex, UINT8 ubBorder
 #ifdef SINGLE_CHAR_WORDS
 	{
 		//Enable the use of single word wordwrap
-		UseSingleCharWordsForWordWrap( TRUE );
+		if( gfUseWinFonts )
+		{
+			UseSingleCharWordsForWordWrap( TRUE );
+		}
 
 		//Display the text
 		DisplayWrappedString( sDispTextXPos, (INT16)(( MERC_TEXT_POPUP_WINDOW_TEXT_OFFSET_Y + usMarginTopY ) ), usTextWidth, 2, MERC_TEXT_FONT, ubFontColor,  pString, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
