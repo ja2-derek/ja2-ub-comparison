@@ -1,6 +1,5 @@
 #ifndef __TILEDAT_H
 #define __TILEDAT_H
-#pragma warning (disable:4292)
 enum TileDefines
 {
 	FIRSTTEXTURE1 = 0,
