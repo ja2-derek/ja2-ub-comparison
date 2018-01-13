@@ -1755,7 +1755,7 @@ INT32 CreateTextButton(UINT16 *string, UINT32 uiFont, INT16 sForeColor, INT16 sS
 	MSYS_SetRegionUserData(&b->Area,0,ButtonNum);
 
 	// Set the flags for this button
-	b->uiFlags |= ( BUTTON_ENABLED | BType | BUTTON_GENERIC );
+	b->uiFlags |= ( BUTTON_ENABLED | BType | BUTTON_GENERIC);
 
 #ifdef _JA2_RENDER_DIRTY
 	b->BackRect = -1;
@@ -2756,7 +2756,7 @@ void QuickButtonCallbackMButn( MOUSE_REGION *reg, INT32 reason )
 			(b->ClickCallback)(b,reason);
 		gfDelayButtonDeletion = FALSE;
 	}
-	else if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN)
+	else if((reason & MSYS_CALLBACK_REASON_LBUTTON_DWN) && !(b->uiFlags & BUTTON_IGNORE_CLICKS))
 	{
 		// Otherwise, do default action with this button.
 		b->uiFlags^=BUTTON_CLICKED_ON;
@@ -2959,7 +2959,11 @@ BOOLEAN DrawButton(INT32 iButtonID )
 	if( ButtonList[ iButtonID ]->string )
 		SaveFontSettings();
 	// Draw this button
-	DrawButtonFromPtr( ButtonList[ iButtonID ] );
+  if( ButtonList[ iButtonID ]->Area.uiFlags & MSYS_REGION_ENABLED )
+  {
+	  DrawButtonFromPtr( ButtonList[ iButtonID ] );
+  }
+
 	if( ButtonList[ iButtonID ]->string )
 		RestoreFontSettings();
 	return TRUE;
@@ -4299,3 +4303,4 @@ GUI_BUTTON *b;
 
 	return(b->Area.RegionBottomRightY - b->Area.RegionTopLeftY);
 }
+
