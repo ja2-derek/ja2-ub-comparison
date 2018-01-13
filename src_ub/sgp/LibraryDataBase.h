@@ -15,7 +15,6 @@
 
 #define	REAL_FILE_LIBRARY_ID					1022			
 
-
 #define	DB_BITS_FOR_LIBRARY							10
 #define	DB_BITS_FOR_FILE_ID							22
 
@@ -24,7 +23,6 @@
 
 #define DB_ADD_LIBRARY_ID( exp )				( exp << DB_BITS_FOR_FILE_ID )
 #define DB_ADD_FILE_ID( exp )						( exp & 0xC00000 )
-
 
 typedef	UINT32	HWFILE;
 
@@ -175,6 +173,7 @@ BOOLEAN CheckForLibraryExistence( STR pLibraryName );
 BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibheader, BOOLEAN fCanBeOnCDrom );
 
 BOOLEAN InitializeFileDatabase( );
+BOOLEAN ReopenCDLibraries(void);
 BOOLEAN ShutDownFileDatabase( );
 BOOLEAN CheckIfFileExistInLibrary( STR pFileName );
 INT16 GetLibraryIDFromFileName( STR pFileName );

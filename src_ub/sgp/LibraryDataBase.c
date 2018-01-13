@@ -22,7 +22,6 @@
 
 
 
-
 //used when doing the binary search of the libraries
 INT16	gsCurrentLibrary = -1;
 
@@ -57,9 +56,6 @@ BOOLEAN InitializeFileDatabase( )
 
 	GetCDLocation( );
 
-
-
-
 	//if all the libraries exist, set them up
 	gFileDataBase.usNumberOfLibraries = NUMBER_OF_LIBRARIES;
 
@@ -80,8 +76,6 @@ BOOLEAN InitializeFileDatabase( )
 			//if you want to init the library at the begining of the game
 			if( gGameLibaries[i].fInitOnStart )
 			{
-
-
 				//if the library exists
 				if( OpenLibrary( i ) )
 					fLibraryInited = TRUE;
@@ -115,6 +109,33 @@ BOOLEAN InitializeFileDatabase( )
 }
 
 
+//*****************************************************************************************
+// ReopenCDLibraries
+// 
+// Closes all CD libraries, then reopens them. This function needs to be called when CDs
+// are changed.
+// 
+// Returns BOOLEAN            - TRUE, always
+// 
+// Created:  3/21/00 Derek Beland
+//*****************************************************************************************
+BOOLEAN ReopenCDLibraries(void)
+{
+INT16 i;
+
+	//Load up each library
+	for(i=0; i < NUMBER_OF_LIBRARIES; i++ )
+	{
+		if(gFileDataBase.pLibraries[ i ].fLibraryOpen && gGameLibaries[i].fOnCDrom)
+			CloseLibrary(i);
+
+		if(gGameLibaries[i].fOnCDrom)
+			OpenLibrary( i );
+	}
+
+	return(TRUE);
+}
+
 //************************************************************************
 //
 //	 ShutDownFileDatabase():  Call this function to close down the file
@@ -127,7 +148,7 @@ BOOLEAN ShutDownFileDatabase( )
 	UINT16 sLoop1;
 
 	// Free up the memory used for each library
-	for( sLoop1=0; sLoop1<gFileDataBase.usNumberOfLibraries; sLoop1++ )
+	for(sLoop1=0; sLoop1 < gFileDataBase.usNumberOfLibraries; sLoop1++)
 		CloseLibrary( sLoop1 );
 
 	//Free up the memory used for all the library headers
@@ -196,17 +217,13 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 	UINT32	uiCount=0;	
 	CHAR8		zTempPath[ SGPFILENAME_LEN ];
 
-
 	//open the library for reading ( if it exists )
 	hFile = CreateFile( pLibraryName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_FLAG_RANDOM_ACCESS, NULL );
 	if( hFile == INVALID_HANDLE_VALUE )
 	{
-
 		//if it failed finding the file on the hard drive, and the file can be on the cdrom
 		if( fCanBeOnCDrom )
 		{
-
-
 			// Add the path of the cdrom to the path of the library file
 			sprintf( zTempPath, "%s%s", gzCdDirectory, pLibraryName );
 
@@ -220,6 +237,8 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 
 				return( FALSE );
 			}
+			else
+				FastDebugMsg( String("CD Library %s opened.", zTempPath));
 		}
 		else
 		{
@@ -255,7 +274,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 	}
 
 
-
 	//Allocate enough memory for the library header
 	pLibHeader->pFileHeader = MemAlloc( sizeof( FileHeaderStruct ) * usNumEntries );
 
@@ -279,7 +297,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 			if( ( strlen( DirEntry.sFileName ) + 1 ) >= FILENAME_SIZE )
 				FastDebugMsg(String("\n*******InitializeLibrary():  Warning!:  '%s' from the library '%s' has name whose size (%d) is bigger then it should be (%s)", DirEntry.sFileName, pLibHeader->sLibraryPath, ( strlen( DirEntry.sFileName ) + 1 ), FILENAME_SIZE ) );
 
- 
 
 			//allocate memory for the files name
 			pLibHeader->pFileHeader[ uiCount ].pFileName = MemAlloc( strlen( DirEntry.sFileName ) + 1 );
@@ -294,12 +311,10 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 
 
 
-
 			//copy the file name, offset and length into the header
 			strcpy( pLibHeader->pFileHeader[ uiCount ].pFileName, DirEntry.sFileName);
 			pLibHeader->pFileHeader[ uiCount ].uiFileOffset = DirEntry.uiOffset;
 			pLibHeader->pFileHeader[ uiCount ].uiFileLength = DirEntry.uiLength;
-
 
 			uiCount++;
 		}
@@ -320,8 +335,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 	{
 		pLibHeader->sLibraryPath = MemAlloc( strlen( LibFileHeader.sPathToLibrary ) + 1 );
 		strcpy( pLibHeader->sLibraryPath, LibFileHeader.sPathToLibrary );
-
-
 	}
 	else
 	{
@@ -441,7 +454,7 @@ BOOLEAN CheckIfFileExistInLibrary( STR pFileName )
 //************************************************************************
 INT16 GetLibraryIDFromFileName( STR pFileName )
 {
-	INT16 sLoop1;
+INT16 sLoop1, sBestMatch=-1;
 
 	//loop through all the libraries to check which library the file is in
 	for( sLoop1=0; sLoop1<gFileDataBase.usNumberOfLibraries; sLoop1++)
@@ -463,17 +476,19 @@ INT16 GetLibraryIDFromFileName( STR pFileName )
 			//compare the library name to the file name that is passed in
 			else 
 			{
+				// if the directory paths are the same, to the length of the lib's path
 				if( _strnicmp( gFileDataBase.pLibraries[ sLoop1 ].sLibraryPath, pFileName, strlen( gFileDataBase.pLibraries[ sLoop1 ].sLibraryPath ) ) == 0 )
 				{
-					//the correct library was found, return it
-					return( sLoop1 );
+					// if we've never matched, or this match's path is longer than the previous match (meaning it's more exact)
+					if((sBestMatch==(-1)) || (strlen(gFileDataBase.pLibraries[ sLoop1 ].sLibraryPath) > strlen(gFileDataBase.pLibraries[ sBestMatch ].sLibraryPath)))
+						sBestMatch = sLoop1;
 				}
 			}
 		}
 	}
 
 	//no library was found, return an error
-	return( -1 );
+	return(sBestMatch);
 }
 
 
@@ -598,7 +613,7 @@ HWFILE OpenFileFromLibrary( STR pName )
 		{
 			// Temp removed
 //			FastDebugMsg(String("\n*******\nOpenFileFromLibrary():  Warning!:  Trying to load file '%s' from the library '%s' which already has a file open\n", pName, gGameLibaries[ sLibraryID ].sLibraryName ) );
-			FastDebugMsg(String("\n*******\nOpenFileFromLibrary():  Warning!:  Trying to load file '%s' from the library '%s' which already has a file open ( file open is '%s')\n", pName, gGameLibaries[ sLibraryID ].sLibraryName, gFileDataBase.pLibraries[ sLibraryID ].pOpenFiles[ gFileDataBase.pLibraries[ sLibraryID ].uiIdOfOtherFileAlreadyOpenedLibrary ].pFileHeader->pFileName ) );
+//			FastDebugMsg(String("\n*******\nOpenFileFromLibrary():  Warning!:  Trying to load file '%s' from the library '%s' which already has a file open ( file open is '%s')\n", pName, gGameLibaries[ sLibraryID ].sLibraryName, gFileDataBase.pLibraries[ sLibraryID ].pOpenFiles[ gFileDataBase.pLibraries[ sLibraryID ].uiIdOfOtherFileAlreadyOpenedLibrary ].pFileHeader->pFileName ) );
 		}
 
 		//check if the file is already open
@@ -847,6 +862,7 @@ BOOLEAN OpenLibrary( INT16 sLibraryID )
 	//if we are trying to do something with an invalid library id
 	if( sLibraryID >= gFileDataBase.usNumberOfLibraries )
 		return( FALSE );
+
 
 	//if we cant open the library
 	if( !InitializeLibrary( gGameLibaries[ sLibraryID ].sLibraryName, &gFileDataBase.pLibraries[ sLibraryID ], gGameLibaries[ sLibraryID ].fOnCDrom ) )
