@@ -11,10 +11,4 @@
 
 #define BLOOD_N_GORE_ENABLED
 
-//ATE: New, Country flags
-//#define		USA
-//#define		UK
-//#define		AUSSIE
-//#define		GERMANY
-
 #endif
