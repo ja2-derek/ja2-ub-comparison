@@ -121,6 +121,7 @@ extern UINT32 GetWidth(HVOBJECT hSrcVObject, INT16 ssIndex);
 extern INT16 StringPixLengthArgFastHelp( INT32 usUseFont, INT32 usBoldFont, UINT32 uiCharCount, UINT16 *pFontString );
 extern INT16 StringPixLengthArg(INT32 usUseFont, UINT32 uiCharCount, UINT16 *pFontString, ...);
 extern INT16 StringPixLength(UINT16 *string,INT32 UseFont);
+extern INT16 StringNPixLength(UINT16 *string, UINT32 uiMaxCount, INT32 UseFont);
 extern void SaveFontSettings(void);
 extern void RestoreFontSettings(void);
 

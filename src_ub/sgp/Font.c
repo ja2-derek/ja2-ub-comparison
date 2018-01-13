@@ -485,6 +485,38 @@ INT16 StringPixLengthArgFastHelp(INT32 usUseFont, INT32 usBoldFont, UINT32 uiCha
 	return StringPixLength(string, usUseFont) + sBoldDiff;
 }
 
+//*****************************************************************************************
+//
+//  StringNPixLength
+//
+//  Return the length of the of the string or count characters in the 
+//  string, which ever comes first.
+//
+//  Returns INT16
+//
+//  Created by:     Gilles Beauparlant
+//  Created on:     12/1/99
+//
+//*****************************************************************************************
+INT16 StringNPixLength(UINT16 *string, UINT32 uiMaxCount, INT32 UseFont)
+{
+	UINT32 Cur, uiCharCount;
+	UINT16 *curletter,transletter;
+
+	Cur = 0;
+	uiCharCount = 0;
+	curletter = string;
+
+	while((*curletter) != L'\0' && uiCharCount < uiMaxCount )
+	{
+		transletter=GetIndex(*curletter++);
+		Cur+=GetWidth(FontObjs[UseFont], transletter);
+		uiCharCount++;
+	}
+	return((INT16)Cur);
+}
+
+
 //*****************************************************************************
 //
 // StringPixLength
