@@ -14271,9 +14271,9 @@ UINT8		*startoffset;
 	// clip edges of rect if hanging off screen
 
 	x1real=__max(0, x1);
-	x2real=__min(SCREEN_BUFFER_WIDTH, x2);
+	x2real=__min(SCREEN_BUFFER_WIDTH-1, x2); //OFFSET: UB uses SCREEN_BUFFER_WIDTH
 	y1real=__max(0, y1);
-	y2real=__min(SCREEN_BUFFER_HEIGHT, y2);
+	y2real=__min(SCREEN_BUFFER_HEIGHT-1, y2); //OFFSET: UB uses SCREEN_BUFFER_HEIGHT
 
 	startoffset=pBuffer+(y1real*uiDestPitchBYTES)+x1real;
 	lines=y2real-y1real+1;
@@ -14344,9 +14344,9 @@ UINT16		*startoffset;
 	// clip edges of rect if hanging off screen
 
 	x1real=__max(0, x1);
-	x2real=__min(SCREEN_BUFFER_WIDTH, x2);
+	x2real=__min(SCREEN_BUFFER_WIDTH-1, x2); //OFFSET: UB uses SCREEN_BUFFER_WIDTH
 	y1real=__max(0, y1);
-	y2real=__min(SCREEN_BUFFER_HEIGHT, y2);
+	y2real=__min(SCREEN_BUFFER_HEIGHT-1, y2); //OFFSET: UB uses SCREEN_BUFFER_HEIGHT
 
 	startoffset=pBuffer+(y1real*uiDestPitchBYTES/2)+x1real;
 	lines=y2real-y1real+1;
