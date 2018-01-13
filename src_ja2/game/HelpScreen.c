@@ -3,6 +3,7 @@
 	#include "HelpScreen.h"
 	#include "HelpScreenText.h"
 	#include	"Line.h"
+	#include "PreBattle Interface.h"
 #else
 	#include "sgp.h"
 	#include "sys globals.h"
@@ -408,6 +409,18 @@ void InitHelpScreenSystem()
 
 BOOLEAN ShouldTheHelpScreenComeUp( UINT8 ubScreenID, BOOLEAN fForceHelpScreenToComeUp )
 {
+
+	//if we are about to go to auto resolve, dont display it
+	if( fDisableMapInterfaceDueToBattle )
+	{
+		return( FALSE );
+	}
+
+	//if someone is talking or about to talk
+	if( !DialogueQueueIsEmpty() || DialogueActive( ) ) //gfWaitingForTriggerTimer || 
+	{
+		return( FALSE );
+	}
 
 	//if the screen is being forsced to come up ( user pressed 'h' )
 	if( fForceHelpScreenToComeUp )
