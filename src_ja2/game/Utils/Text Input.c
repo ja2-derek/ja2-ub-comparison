@@ -69,6 +69,7 @@ typedef struct TEXTINPUTNODE{
 	BOOLEAN fUserField;
 	MOUSE_REGION region;
 	INPUT_CALLBACK InputCallback;
+	BOOLEAN	fShowRed;
 	struct TEXTINPUTNODE *next, *prev;
 }TEXTINPUTNODE;
 
@@ -291,6 +292,7 @@ void AddTextInputField( INT16 sLeft, INT16 sTop, INT16 sWidth, INT16 sHeight, IN
 	}
 	pNode->fUserField = FALSE;
 	pNode->fEnabled = TRUE;
+	pNode->fShowRed = FALSE;
 	//Setup the region.
 	MSYS_DefineRegion( &pNode->region, sLeft, sTop, (INT16)(sLeft+sWidth), (INT16)(sTop+sHeight), bPriority,
 						 gusTextInputCursor, MouseMovedInTextRegionCallback, MouseClickedInTextRegionCallback ); 
@@ -732,6 +734,8 @@ BOOLEAN HandleTextInput( InputAtom *Event )
 		return FALSE;
 	if( Event->usParam == ENTER )
 	{
+		gpActive->fShowRed = FALSE;
+
 		PlayJA2Sample( REMOVING_TEXT, RATE_11025, BTNVOLUME, 1, MIDDLEPAN );
 		return FALSE;
 	}
@@ -884,6 +888,8 @@ BOOLEAN HandleTextInput( InputAtom *Event )
 				PlayJA2Sample( ENTERING_TEXT, RATE_11025, BTNVOLUME, 1, MIDDLEPAN );
 			else
 				RemoveChar( gubCursorPos );
+
+			gpActive->fShowRed = TRUE;
 			break;
 		case BACKSPACE:
 			//Will delete the selected text, or the character to the left of the cursor if applicable.
@@ -897,8 +903,12 @@ BOOLEAN HandleTextInput( InputAtom *Event )
 				PlayJA2Sample( ENTERING_TEXT, RATE_11025, BTNVOLUME, 1, MIDDLEPAN );
 				RemoveChar( --gubCursorPos );
 			}
+			gpActive->fShowRed = TRUE;
 			break;
 		default:  //check for typing keys
+
+			gpActive->fShowRed = TRUE;
+
 			if( gfHiliteMode )
 				DeleteHilitedText();
 			if( gpActive->usInputType >= INPUTTYPE_EXCLUSIVE_BASEVALUE )
@@ -1277,7 +1287,14 @@ void RenderActiveTextField()
 			}
 			else
 			{ //in regular part of text
-				SetFontForeground( pColors->ubForeColor );
+				if ( gpActive->fShowRed && guiCurrentScreen == EDIT_SCREEN )
+				{
+					SetFontForeground( FONT_RED );
+				}
+				else
+				{
+					SetFontForeground( pColors->ubForeColor );
+				}
 				SetFontShadow( pColors->ubShadowColor );
 				SetFontBackground( 0 );
 			}
@@ -1293,7 +1310,14 @@ void RenderActiveTextField()
 	}
 	else
 	{
-		SetFontForeground( pColors->ubForeColor );
+		if ( gpActive->fShowRed && guiCurrentScreen == EDIT_SCREEN )
+		{
+			SetFontForeground( FONT_RED );
+		}
+		else
+		{
+			SetFontForeground( pColors->ubForeColor );
+		}
 		SetFontShadow( pColors->ubShadowColor );
 		SetFontBackground( 0 );
 		DoublePercentileCharacterFromStringIntoString( gpActive->szString, str );
