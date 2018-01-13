@@ -1464,9 +1464,9 @@ INT16 GetWidthOfString( STR16 pStringA )
 
 	while( pToken != NULL )
   {
-		if( sWidth < StringPixLength( pToken, ghTinyMonoFont ) )
+		if( sWidth < StringPixLength( pToken, FONT10ARIAL ) )
 		{
-			sWidth = StringPixLength( pToken, ghTinyMonoFont );
+			sWidth = StringPixLength( pToken, FONT10ARIAL );
 		}
 
 		pToken = wcstok( NULL, L"\n" );
@@ -1524,19 +1524,19 @@ void DisplayHelpTokenizedString( STR16 pStringA, INT16 sX, INT16 sY )
 		iLength = (INT32)wcslen( pToken );
 		for( i = 0; i < iLength; i++ )
 		{
-			uiCursorXPos = StringPixLengthArgFastHelp( ghTinyMonoFont, ghTinyMonoFont, i, pToken );
+			uiCursorXPos = StringPixLengthArgFastHelp( FONT10ARIAL, FONT10ARIALBOLD, i, pToken );
 			if( pToken[ i ] == '|' )
 			{
 				i++;
-				SetFont(ghTinyMonoFont);
+				SetFont(FONT10ARIALBOLD);
 				SetFontForeground( 2 );
 			}
 			else
 			{
-				SetFont( ghTinyMonoFont );
+				SetFont( FONT10ARIAL );
 				SetFontForeground( 2 );
 			}
-			mprintf( sX + uiCursorXPos, sY + iCounter * (GetFontHeight(ghTinyMonoFont)+1), L"%c", pToken[ i ] );
+			mprintf( sX + uiCursorXPos, sY + iCounter * (GetFontHeight(FONT10ARIAL)+1), L"%c", pToken[ i ] );
 		}
 		pToken = wcstok( NULL, L"\n" );
 		iCounter++;
