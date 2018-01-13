@@ -1655,7 +1655,7 @@ void RefreshScreen(void *DummyVariable)
 					{
 						DirectXAttempt ( ReturnCode, __LINE__, __FILE__ );
 
-						if (ReturnCode == DDERR_SURFACELOST)
+						if (ReturnCode == DDERR_SURFACELOST || ReturnCode == DDERR_INVALIDRECT ) // AA this is for Windowed mode
 						{
 							goto ENDOFLOOP;
 						}
@@ -2125,7 +2125,7 @@ void RefreshScreen(void *DummyVariable)
     {
       DirectXAttempt ( ReturnCode, __LINE__, __FILE__ );
 
-      if (ReturnCode == DDERR_SURFACELOST)
+      if (ReturnCode == DDERR_SURFACELOST || ReturnCode == DDERR_INVALIDRECT) // AA
       {
         goto ENDOFLOOP;
       }
