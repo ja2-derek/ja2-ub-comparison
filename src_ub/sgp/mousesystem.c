@@ -44,6 +44,21 @@
 #endif
 
 
+
+//Kris:	Nov 31, 1999 -- Added support for double clicking
+//
+//Max double click delay (in milliseconds) to be considered a double click
+#define MSYS_DOUBLECLICK_DELAY		400
+//
+//Records and stores the last place the user clicked.  These values are compared to the current
+//click to determine if a double click event has been detected.
+MOUSE_REGION	*gpRegionLastLButtonDown = NULL;
+MOUSE_REGION	*gpRegionLastLButtonUp = NULL;
+UINT32				guiRegionLastLButtonDownTime = 0;
+
+
+
+
 extern void ReleaseAnchorMode();  //private function used here (implemented in Button System.c)
 
 // number of lines in height help text will be
@@ -80,7 +95,8 @@ MOUSE_REGION *MSYS_CurrRegion = NULL;
 //cleared as soon as the cursor moves into no region or a region with no helptext.
 BOOLEAN gfPersistantFastHelpMode;
 
-#define FASTHELP_TIMEDELAY	600			// In timer ticks
+INT16   gsFastHelpDelay = 600; // In timer ticks
+BOOLEAN gfShowFastHelp  = TRUE;
 
 // help text is done, now execute callback, if there is one
 void ExecuteMouseHelpEndCallBack( MOUSE_REGION *region );
@@ -492,7 +508,8 @@ void MSYS_DeleteRegionFromList(MOUSE_REGION *region)
 	}
 	else
 	{
-		region->prev->next = region->next;
+		if(region->prev)
+			region->prev->next = region->next;
 		// If not last node in list, adjust following node's ->prev entry.
 		if( region->next )
 			region->next->prev = region->prev;
@@ -593,7 +610,7 @@ void MSYS_UpdateMouseRegion(void)
 				//	region->uiFlags |= BUTTON_DIRTY;
 			}
 
-			MSYS_CurrRegion->FastHelpTimer = FASTHELP_TIMEDELAY;
+			MSYS_CurrRegion->FastHelpTimer = gsFastHelpDelay;
 
 			// Force a callbacks to happen on previous region to indicate that
 			// the mouse has left the old region
@@ -614,7 +631,7 @@ void MSYS_UpdateMouseRegion(void)
 				if( MSYS_CurrRegion->FastHelpText && !( MSYS_CurrRegion->uiFlags & MSYS_FASTHELP_RESET ) )
 				{
 				  //ExecuteMouseHelpEndCallBack( MSYS_CurrRegion );
-					MSYS_CurrRegion->FastHelpTimer = FASTHELP_TIMEDELAY;
+					MSYS_CurrRegion->FastHelpTimer = gsFastHelpDelay;
 					#ifdef _JA2_RENDER_DIRTY
 						if( MSYS_CurrRegion->uiFlags & MSYS_GOT_BACKGROUND )
 							FreeBackgroundRectPending( MSYS_CurrRegion->FastHelpRect );
@@ -682,7 +699,7 @@ void MSYS_UpdateMouseRegion(void)
 			}
 
 			//ExecuteMouseHelpEndCallBack( MSYS_CurrRegion );
-			//MSYS_CurrRegion->FastHelpTimer = FASTHELP_TIMEDELAY;
+			//MSYS_CurrRegion->FastHelpTimer = gsFastHelpDelay;
 
 			MSYS_Action &= (~MSYS_DO_MOVE);
 
@@ -743,11 +760,48 @@ void MSYS_UpdateMouseRegion(void)
 							MSYS_CurrRegion->uiFlags &= (~MSYS_GOT_BACKGROUND);
 
 							//ExecuteMouseHelpEndCallBack( MSYS_CurrRegion );
-							MSYS_CurrRegion->FastHelpTimer = FASTHELP_TIMEDELAY;
+							MSYS_CurrRegion->FastHelpTimer = gsFastHelpDelay;
 							MSYS_CurrRegion->uiFlags &= (~MSYS_FASTHELP_RESET);
 
 							//if( b->uiFlags & BUTTON_ENABLED )
 							//	b->uiFlags |= BUTTON_DIRTY;
+						}
+
+						//Kris: Nov 31, 1999 -- Added support for double click events.
+						//This is where double clicks are checked and passed down.
+						if( ButtonReason == MSYS_CALLBACK_REASON_LBUTTON_DWN )
+						{
+							UINT32 uiCurrTime = GetClock();
+							if( gpRegionLastLButtonDown == MSYS_CurrRegion &&
+									gpRegionLastLButtonUp == MSYS_CurrRegion &&
+									uiCurrTime <= guiRegionLastLButtonDownTime + MSYS_DOUBLECLICK_DELAY )
+							{ //Sequential left click on same button within the maximum time allowed for a double click
+								//Double click check succeeded, set flag and reset double click globals.
+								ButtonReason |= MSYS_CALLBACK_REASON_LBUTTON_DOUBLECLICK;
+								gpRegionLastLButtonDown = NULL;
+								gpRegionLastLButtonUp = NULL;
+								guiRegionLastLButtonDownTime = 0;
+							}
+							else 
+							{ //First click, record time and region pointer (to check if 2nd click detected later)
+								gpRegionLastLButtonDown = MSYS_CurrRegion;
+								guiRegionLastLButtonDownTime = GetClock();
+							}
+						}
+						else if( ButtonReason == MSYS_CALLBACK_REASON_LBUTTON_UP )
+						{
+							UINT32 uiCurrTime = GetClock();
+							if( gpRegionLastLButtonDown == MSYS_CurrRegion &&
+									uiCurrTime <= guiRegionLastLButtonDownTime + MSYS_DOUBLECLICK_DELAY )
+							{ //Double click is Left down, then left up, then left down.  We have just detected the left up here (step 2).
+								gpRegionLastLButtonUp = MSYS_CurrRegion;
+							}
+							else 
+							{ //User released mouse outside of current button, so kill any chance of a double click happening.
+								gpRegionLastLButtonDown = NULL;
+								gpRegionLastLButtonUp = NULL;
+								guiRegionLastLButtonDownTime = 0;
+							}
 						}
 
 						(*(MSYS_CurrRegion->ButtonCallback))(MSYS_CurrRegion,ButtonReason);
@@ -930,7 +984,9 @@ void MSYS_RemoveRegion(MOUSE_REGION *region)
 
 	// Get rid of the FastHelp text (if applicable)
 	if( region->FastHelpText )
+	{
 		MemFree( region->FastHelpText );
+	}
 	region->FastHelpText = NULL;
 
 	MSYS_DeleteRegionFromList(region);
@@ -1196,8 +1252,30 @@ void SetRegionFastHelpText( MOUSE_REGION *region, UINT16 *szText )
 
 	}
 
-	//region->FastHelpTimer = FASTHELP_TIMEDELAY;
+	//region->FastHelpTimer = gsFastHelpDelay;
 }
+
+INT16 GetNumberOfLinesInHeight( STR16 pStringA )
+{
+	STR16 pToken;
+	INT16 sCounter = 0;
+	CHAR16 pString[ 512 ];
+
+	wcscpy( pString, pStringA );
+
+	// tokenize
+	pToken = wcstok( pString, L"\n" );
+
+	while( pToken != NULL )
+  {
+		 pToken = wcstok( NULL, L"\n" );
+		 sCounter++;
+	}
+
+	return( sCounter );
+}
+
+
 
 #ifdef _JA2_RENDER_DIRTY
 //=============================================================================
@@ -1260,27 +1338,6 @@ void DisplayFastHelp( MOUSE_REGION *region )
 }
 
 
-INT16 GetNumberOfLinesInHeight( STR16 pStringA )
-{
-	STR16 pToken;
-	INT16 sCounter = 0;
-	CHAR16 pString[ 512 ];
-
-	wcscpy( pString, pStringA );
-
-	// tokenize
-	pToken = wcstok( pString, L"\n" );
-
-	while( pToken != NULL )
-  {
-		 pToken = wcstok( NULL, L"\n" );
-		 sCounter++;
-	}
-
-	return( sCounter );
-}
-
-
 INT16 GetWidthOfString( STR16 pStringA )
 {
 	CHAR16 pString[ 512 ];
@@ -1328,12 +1385,12 @@ void DisplayHelpTokenizedString( STR16 pStringA, INT16 sX, INT16 sY )
 			{
 				i++;
 				SetFont( FONT10ARIALBOLD );
-				SetFontForeground( 2 ); //OFFSET: UB uses 146
+				SetFontForeground( 146 );
 			}
 			else
 			{
 				SetFont( FONT10ARIAL );
-				SetFontForeground( 2 ); //OFFSET: UB uses FONT_BEIGE == 130
+				SetFontForeground( FONT_BEIGE );
 			}
 			mprintf( sX + uiCursorXPos, sY + iCounter * (GetFontHeight(FONT10ARIAL)+1), L"%c", pToken[ i ] );
 		}
@@ -1371,6 +1428,151 @@ void RenderFastHelp()
 				//Do I really need this?
 				//MSYS_CurrRegion->uiFlags |= REGION_DIRTY;
 				DisplayFastHelp( MSYS_CurrRegion );
+			}
+		}
+		else
+		{
+			if( MSYS_CurrRegion->uiFlags & ( MSYS_ALLOW_DISABLED_FASTHELP | MSYS_REGION_ENABLED ) )
+			{
+				if ( MSYS_CurrRegion->uiFlags & MSYS_MOUSE_IN_AREA &&
+						!MSYS_CurrRegion->ButtonState)// & (MSYS_LEFT_BUTTON|MSYS_RIGHT_BUTTON)) )
+				{
+					MSYS_CurrRegion->FastHelpTimer -= (INT16)max( iTimeDifferential, 0 );
+
+					if( MSYS_CurrRegion->FastHelpTimer < 0 )
+					{
+						MSYS_CurrRegion->FastHelpTimer = 0;
+					}
+				}
+			}
+		}
+	}
+}
+#else
+
+// **********Wiz8 Versions**************************************************************************
+
+INT16 GetWidthOfString( STR16 pStringA )
+{
+	CHAR16 pString[ 512 ];
+	STR16 pToken;
+	INT16 sWidth = 0;
+	wcscpy( pString, pStringA );
+
+	// tokenize
+	pToken = wcstok( pString, L"\n" );
+
+	while( pToken != NULL )
+  {
+		if( sWidth < StringPixLength( pToken, FONT10ARIAL ) )
+		{
+			sWidth = StringPixLength( pToken, FONT10ARIAL );
+		}
+
+		pToken = wcstok( NULL, L"\n" );
+	}
+
+	return( sWidth );
+
+}
+
+void DisplayFastHelp( MOUSE_REGION *region )
+{
+	INT32 iX,iY,iW,iH;
+
+	if ( region->uiFlags & MSYS_FASTHELP )
+	{
+		VideoToolTip(region->FastHelpText);
+
+		iW = VideoGetToolTipWidth();
+		iH = VideoGetToolTipHeight();
+
+		iX = (INT32)region->RegionTopLeftX + 10;
+
+		if (iX < 0)
+			iX = 0;
+
+		if ( (iX + iW) >= SCREEN_WIDTH )
+			iX = (SCREEN_WIDTH - iW - 4);
+
+		iY = (INT32)region->RegionTopLeftY - (iH * 3 / 4);
+		if (iY < 0)
+			iY = 0;
+
+		if ( (iY + iH) >= SCREEN_HEIGHT )
+			iY = (SCREEN_HEIGHT - iH - 15);
+
+		VideoPositionToolTip(iX, iY);
+	}
+}
+
+void DisplayHelpTokenizedString( STR16 pStringA, INT16 sX, INT16 sY )
+{
+	STR16 pToken;
+	INT32 iCounter = 0, i;
+	UINT32 uiCursorXPos;
+	CHAR16 pString[ 512 ];
+	INT32 iLength;
+
+	wcscpy( pString, pStringA );
+
+	// tokenize
+	pToken = wcstok( pString, L"\n" );
+
+	while( pToken != NULL )
+  {
+		iLength = (INT32)wcslen( pToken );
+		for( i = 0; i < iLength; i++ )
+		{
+			uiCursorXPos = StringPixLengthArgFastHelp( FONT10ARIAL, FONT10ARIALBOLD, i, pToken );
+			if( pToken[ i ] == '|' )
+			{
+				i++;
+				SetFont(FONT10ARIALBOLD);
+				SetFontForeground( 2 ); //OFFSET: UB uses 146
+			}
+			else
+			{
+				SetFont( FONT10ARIAL );
+				SetFontForeground( 2 ); //OFFSET: UB uses FONT_BEIGE
+			}
+			mprintf( sX + uiCursorXPos, sY + iCounter * (GetFontHeight(FONT10ARIAL)+1), L"%c", pToken[ i ] );
+		}
+		pToken = wcstok( NULL, L"\n" );
+		iCounter++;
+	}
+}
+
+void RenderFastHelp()
+{
+	static INT32 iLastClock;
+	INT32 iTimeDifferential, iCurrentClock;
+
+	if( !gfRenderHilights )
+		return;
+
+	iCurrentClock = GetClock();
+	iTimeDifferential = iCurrentClock - iLastClock;
+	if (iTimeDifferential < 0)
+		iTimeDifferential += 0x7fffffff;
+	iLastClock = iCurrentClock;
+
+	if( MSYS_CurrRegion && MSYS_CurrRegion->FastHelpText && gfShowFastHelp )
+	{
+		if( !MSYS_CurrRegion->FastHelpTimer )
+		{
+			if( MSYS_CurrRegion->uiFlags & ( MSYS_ALLOW_DISABLED_FASTHELP | MSYS_REGION_ENABLED ) )
+			{
+				if( MSYS_CurrRegion->uiFlags & MSYS_MOUSE_IN_AREA )
+				{
+					MSYS_CurrRegion->uiFlags |= MSYS_FASTHELP;
+					DisplayFastHelp( MSYS_CurrRegion );
+				}
+				else
+				{
+					MSYS_CurrRegion->uiFlags &= ( ~( MSYS_FASTHELP | MSYS_FASTHELP_RESET ) );
+					VideoRemoveToolTip();
+				}
 			}
 		}
 		else
@@ -1454,4 +1656,25 @@ void ExecuteMouseHelpEndCallBack( MOUSE_REGION *region )
 	//( *( region->HelpDoneCallback ) )( );
 
 	return;
+}
+
+
+void SetFastHelpDelay( INT16 sFastHelpDelay )
+{
+  gsFastHelpDelay = sFastHelpDelay;
+}
+
+void EnableMouseFastHelp( void )
+{
+  gfShowFastHelp = TRUE;
+}
+
+void DisableMouseFastHelp( void )
+{
+  gfShowFastHelp = FALSE;
+}
+
+void ResetClickedMode(void)
+{
+	gfClickedModeOn = FALSE;
 }

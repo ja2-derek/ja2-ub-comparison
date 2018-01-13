@@ -118,20 +118,29 @@ typedef struct _MOUSE_REGION {
 #define MSYS_NO_CURSOR					65534
 
 // Mouse system callback reasons
-#define MSYS_CALLBACK_REASON_NONE					0
-#define MSYS_CALLBACK_REASON_INIT					1
-#define MSYS_CALLBACK_REASON_MOVE					2
-#define MSYS_CALLBACK_REASON_LBUTTON_DWN	4
-#define MSYS_CALLBACK_REASON_LBUTTON_UP		8
-#define MSYS_CALLBACK_REASON_RBUTTON_DWN	16
-#define MSYS_CALLBACK_REASON_RBUTTON_UP		32
-#define MSYS_CALLBACK_REASON_BUTTONS			(MSYS_CALLBACK_REASON_LBUTTON_DWN|MSYS_CALLBACK_REASON_LBUTTON_UP| \
-																					 MSYS_CALLBACK_REASON_RBUTTON_DWN|MSYS_CALLBACK_REASON_RBUTTON_UP)
-#define MSYS_CALLBACK_REASON_LOST_MOUSE		64
-#define MSYS_CALLBACK_REASON_GAIN_MOUSE   128
+#define MSYS_CALLBACK_REASON_NONE									0
+#define MSYS_CALLBACK_REASON_INIT									1
+#define MSYS_CALLBACK_REASON_MOVE									2
+#define MSYS_CALLBACK_REASON_LBUTTON_DWN					4
+#define MSYS_CALLBACK_REASON_LBUTTON_UP						8
+#define MSYS_CALLBACK_REASON_RBUTTON_DWN					16
+#define MSYS_CALLBACK_REASON_RBUTTON_UP						32
+#define MSYS_CALLBACK_REASON_BUTTONS							(MSYS_CALLBACK_REASON_LBUTTON_DWN|MSYS_CALLBACK_REASON_LBUTTON_UP| \
+																									MSYS_CALLBACK_REASON_RBUTTON_DWN|MSYS_CALLBACK_REASON_RBUTTON_UP)
+#define MSYS_CALLBACK_REASON_LOST_MOUSE						64
+#define MSYS_CALLBACK_REASON_GAIN_MOUSE						128
 
-#define	MSYS_CALLBACK_REASON_LBUTTON_REPEAT	256
-#define	MSYS_CALLBACK_REASON_RBUTTON_REPEAT	512
+#define	MSYS_CALLBACK_REASON_LBUTTON_REPEAT				256
+#define	MSYS_CALLBACK_REASON_RBUTTON_REPEAT				512
+
+//Kris:  Nov 31, 1999
+//Added support for double clicks.  The DOUBLECLICK event is passed combined with
+//the LBUTTON_DWN event if two LBUTTON_DWN events are detected on the same button/region
+//within the delay defined by MSYS_DOUBLECLICK_DELAY (in milliseconds).  If your button/region
+//supports double clicks and single clicks, make sure the DOUBLECLICK event is checked first (rejecting
+//the LBUTTON_DWN event if detected)
+#define MSYS_CALLBACK_REASON_LBUTTON_DOUBLECLICK	1024
+
 
 // Mouse grabbing return codes
 #define MSYS_GRABBED_OK						0
@@ -192,10 +201,16 @@ void SetRegionFastHelpText( MOUSE_REGION *region, UINT16 *szText );
 
 void SetRegionHelpEndCallback( MOUSE_REGION *region, MOUSE_HELPTEXT_DONE_CALLBACK CallbackFxn );
 
-
-
+// Now also used by Wizardry -- DB
 void DisplayFastHelp( MOUSE_REGION *region );
 void RenderFastHelp();
+
+void SetFastHelpDelay( INT16 sFastHelpDelay );
+void EnableMouseFastHelp( void );
+void DisableMouseFastHelp( void );
+
+void ResetClickedMode(void);
+
 
 BOOLEAN	SetRegionSavedRect( MOUSE_REGION *region);
 void		FreeRegionSavedRect( MOUSE_REGION *region );
