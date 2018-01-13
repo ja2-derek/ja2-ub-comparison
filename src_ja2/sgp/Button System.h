@@ -147,8 +147,6 @@ typedef struct _GUI_BUTTON {
 
 extern GUI_BUTTON			*ButtonList[MAX_BUTTONS];									// Button System's Main Button List
 
-#define GetButtonPtr(x)	(((x>=0) && (x<MAX_BUTTONS))? ButtonList[x] : NULL)
-
 // Struct definition for the QuickButton pictures.
 typedef struct {
 	HVOBJECT	vobj;						// The Image itself
