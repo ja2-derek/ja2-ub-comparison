@@ -526,18 +526,21 @@ INT16 StringNPixLength(UINT16 *string, UINT32 uiMaxCount, INT32 UseFont)
 //*****************************************************************************
 INT16 StringPixLength(UINT16 *string, INT32 UseFont)
 {
-	UINT32 Cur, Count;
+	UINT32 Cur;
 	UINT16 *curletter,transletter;
 
+	if (string == NULL)
+	{
+		return(0);
+	}
+
 	Cur=0;
-	Count=0;
 	curletter=string;
 
-	while((*curletter)!=0)
+	while((*curletter) != L'\0')
 	{
 		transletter=GetIndex(*curletter++);
 		Cur+=GetWidth(FontObjs[UseFont], transletter);
-		Count++;
 	}
 	return((INT16)Cur);
 }
