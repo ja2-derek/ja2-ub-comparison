@@ -20,9 +20,6 @@
 	#include	"GameSettings.h"
 
 
-//#define DB_WRITE_INIT_LOG_FILE
-
-#define DB_LOG_FILENAME							"Library Database Log.txt"
 
 
 
@@ -57,28 +54,10 @@ BOOLEAN InitializeFileDatabase( )
 	INT16			i;
 	UINT32		uiSize;
 	BOOLEAN		fLibraryInited = FALSE;
-#ifdef DB_WRITE_INIT_LOG_FILE
-	FILE			*LogFile;
-#endif
 
 	GetCDLocation( );
 
 
-#ifdef DB_WRITE_INIT_LOG_FILE
-	
-	// Clear log file
-	if ((LogFile = fopen( DB_LOG_FILENAME, "w")) != NULL)
-	{
-		fclose( LogFile );
-	}
-
-	if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-	{
-		fprintf(LogFile, "Initializing Library Database:\n" );
-		fclose( LogFile );
-	}
-
-#endif
 
 
 	//if all the libraries exist, set them up
@@ -101,29 +80,12 @@ BOOLEAN InitializeFileDatabase( )
 			//if you want to init the library at the begining of the game
 			if( gGameLibaries[i].fInitOnStart )
 			{
-#ifdef DB_WRITE_INIT_LOG_FILE	
-				if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-				{
-					fprintf(LogFile, "\nLoading %s\n", gGameLibaries[i].sLibraryName );
-					fclose( LogFile );
-				}
-#endif
 
 
 				//if the library exists
 				if( OpenLibrary( i ) )
-				{
 					fLibraryInited = TRUE;
 
-#ifdef DB_WRITE_INIT_LOG_FILE	
-					if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-					{
-						fprintf(LogFile, "Success\n" );
-						fclose( LogFile );
-					}
-#endif
-
-				}
 				//else the library doesnt exist
 				else
 				{
@@ -166,9 +128,7 @@ BOOLEAN ShutDownFileDatabase( )
 
 	// Free up the memory used for each library
 	for( sLoop1=0; sLoop1<gFileDataBase.usNumberOfLibraries; sLoop1++ )
-	{
 		CloseLibrary( sLoop1 );
-	}
 
 	//Free up the memory used for all the library headers
 	if( gFileDataBase.pLibraries )
@@ -236,39 +196,16 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 	UINT32	uiCount=0;	
 	CHAR8		zTempPath[ SGPFILENAME_LEN ];
 
-#ifdef DB_WRITE_INIT_LOG_FILE	
-	FILE *LogFile;
-#endif
 
 	//open the library for reading ( if it exists )
 	hFile = CreateFile( pLibraryName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_FLAG_RANDOM_ACCESS, NULL );
 	if( hFile == INVALID_HANDLE_VALUE )
 	{
-#ifdef DB_WRITE_INIT_LOG_FILE	
-		UINT32 uiLastError = GetLastError();
-		char zString[1024];
-		FILE			*LogFile;
-
-		FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM, 0, uiLastError, 0, zString, 1024, NULL);
-
-		if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-		{
-			fprintf(LogFile, "Warning: Cannot get file handle from HD - %s", zString );
-			fclose( LogFile );
-		}
-#endif
 
 		//if it failed finding the file on the hard drive, and the file can be on the cdrom
 		if( fCanBeOnCDrom )
 		{
 
-#ifdef DB_WRITE_INIT_LOG_FILE	
-			if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-			{
-				fprintf(LogFile, "Loading from CD\n" );
-				fclose( LogFile );
-			}
-#endif
 
 			// Add the path of the cdrom to the path of the library file
 			sprintf( zTempPath, "%s%s", gzCdDirectory, pLibraryName );
@@ -281,13 +218,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 				char zString[1024];
 				FormatMessage( FORMAT_MESSAGE_FROM_SYSTEM, 0, uiLastError, 0, zString, 1024, NULL);
 
-#ifdef DB_WRITE_INIT_LOG_FILE	
-				if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-				{
-					fprintf(LogFile, "Error: Cannot load library from CD - %s", zString );
-					fclose( LogFile );
-				}
-#endif
 				return( FALSE );
 			}
 		}
@@ -324,13 +254,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 			usNumEntries++;
 	}
 
-#ifdef DB_WRITE_INIT_LOG_FILE	
-	if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-	{
-		fprintf(LogFile, "Number of file entries: %d\n", usNumEntries );
-		fclose( LogFile );
-	}
-#endif
 
 
 	//Allocate enough memory for the library header
@@ -354,18 +277,9 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 		{
 			//Check to see if the file is not longer then it should be
 			if( ( strlen( DirEntry.sFileName ) + 1 ) >= FILENAME_SIZE )
-			{
 				FastDebugMsg(String("\n*******InitializeLibrary():  Warning!:  '%s' from the library '%s' has name whose size (%d) is bigger then it should be (%s)", DirEntry.sFileName, pLibHeader->sLibraryPath, ( strlen( DirEntry.sFileName ) + 1 ), FILENAME_SIZE ) );
 
-#ifdef DB_WRITE_INIT_LOG_FILE	
-				if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-				{
-					fprintf(LogFile, " Warning!: '%s' has name whose size (%d) is bigger then it should be (%s) \n", DirEntry.sFileName, ( strlen( DirEntry.sFileName ) + 1 ), FILENAME_SIZE );
-					fclose( LogFile );
-				}
-#endif
  
-			}
 
 			//allocate memory for the files name
 			pLibHeader->pFileHeader[ uiCount ].pFileName = MemAlloc( strlen( DirEntry.sFileName ) + 1 );
@@ -377,13 +291,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 				return(FALSE);
 			}
 
-#ifdef DB_WRITE_INIT_LOG_FILE	
-		//	if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-		//	{
-		//		fprintf(LogFile, "FILE: %s %d bytes\n", DirEntry.sFileName, DirEntry.uiLength );
-		//		fclose( LogFile );
-		//	}
-#endif
 
 
 
@@ -414,13 +321,6 @@ BOOLEAN InitializeLibrary( STR pLibraryName, LibraryHeaderStruct *pLibHeader, BO
 		pLibHeader->sLibraryPath = MemAlloc( strlen( LibFileHeader.sPathToLibrary ) + 1 );
 		strcpy( pLibHeader->sLibraryPath, LibFileHeader.sPathToLibrary );
 
-#ifdef DB_WRITE_INIT_LOG_FILE	
-		if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-		{
-			fprintf(LogFile, "Path To Library: %s\n", pLibHeader->sLibraryPath );
-			fclose( LogFile );
-		}
-#endif
 
 	}
 	else
@@ -942,34 +842,11 @@ BOOLEAN OpenLibrary( INT16 sLibraryID )
 {
 	//if the library is already opened, report an error
 	if( gFileDataBase.pLibraries[ sLibraryID ].fLibraryOpen )
-	{
-#ifdef DB_WRITE_INIT_LOG_FILE	
-		FILE			*LogFile;
-
-		if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-		{
-			fprintf(LogFile, "Error: Library Already Open\n" );
-			fclose( LogFile );
-		}
-#endif
-
 		return( FALSE );
-	}
 
 	//if we are trying to do something with an invalid library id
 	if( sLibraryID >= gFileDataBase.usNumberOfLibraries )
-	{
-#ifdef DB_WRITE_INIT_LOG_FILE	
-		FILE			*LogFile;
-
-		if ((LogFile = fopen(DB_LOG_FILENAME, "a+t")) != NULL)
-		{
-			fprintf(LogFile, "Error: Invalid Library ID\n" );
-			fclose( LogFile );
-		}
-#endif
 		return( FALSE );
-	}
 
 	//if we cant open the library
 	if( !InitializeLibrary( gGameLibaries[ sLibraryID ].sLibraryName, &gFileDataBase.pLibraries[ sLibraryID ], gGameLibaries[ sLibraryID ].fOnCDrom ) )
