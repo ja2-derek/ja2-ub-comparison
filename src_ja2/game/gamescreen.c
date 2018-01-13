@@ -391,7 +391,6 @@ extern INT32 iInterfaceDialogueBox;
 UINT32  MainGameScreenHandle(void)
 {
 	UINT32		uiNewScreen = GAME_SCREEN;
-	BOOLEAN		fEnterDemoMode = FALSE;
 
 
 	//DO NOT MOVE THIS FUNCTION CALL!!!
