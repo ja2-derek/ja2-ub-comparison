@@ -77,7 +77,13 @@ extern UINT8			gubAssertString[128];
 
 //*******************************************************************************************
 #endif
+ 
+// Moved these out of the defines - debug mgr always initialized
+#define InitializeDebugManager()		DbgInitialize()
+#define ShutdownDebugManager()			DbgShutdown()
 
+extern	BOOLEAN	DbgInitialize(void);
+extern	void		DbgShutdown(void);
 
 
 #ifdef SGP_DEBUG
@@ -95,9 +101,6 @@ extern BOOLEAN		gfDebugTopics[MAX_TOPICS_ALLOTED];
 #define DebugBreakpoint()						__asm { int 3 }
 
 
-#define InitializeDebugManager()		DbgInitialize()
-#define ShutdownDebugManager()			DbgShutdown()
-
 #define DbgMessage(a, b, c)					DbgMessageReal( (UINT16)(a), (UINT8)(TOPIC_MESSAGE), (UINT8)(b), (CHAR8 *)(c) )
 #define FastDebugMsg(a)							_DebugMessage( (UINT8 *)(a), (UINT32)(__LINE__), (UINT8 *)(__FILE__) )
 
@@ -112,8 +115,6 @@ extern BOOLEAN		gfDebugTopics[MAX_TOPICS_ALLOTED];
 #define DebugMsg(a, b, c)						DbgMessageReal( (a), TOPIC_MESSAGE, (b), (c) )
 
 // public interface to debug methods:
-extern	BOOLEAN	DbgInitialize(void);
-extern	void		DbgShutdown(void);
 extern	void		DbgMessageReal(UINT16 TopicId, UINT8 uiCommand, UINT8 uiDebugLevel, CHAR8 *Str);
 extern	BOOLEAN	DbgSetDebugLevel(UINT16 TopicId, UINT8 uiDebugLevel);
 extern	void		DbgFailedAssertion( BOOLEAN fExpression, char *szFile, int nLine );
@@ -131,8 +132,6 @@ extern	void		_DebugMessage(UINT8 *pSourceFile, UINT32 uiLineNum, UINT8 *pString)
 //*******************************************************************************************
 #define DebugBreakpoint()
 
-#define InitializeDebugManager( )
-#define ShutdownDebugManager( )
 #define RegisterDebugTopic(a, b)
 #define UnRegisterDebugTopic(a, b)
 #define ClearAllDebugTopics( )

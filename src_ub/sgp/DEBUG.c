@@ -14,6 +14,11 @@
 //
 //**************************************************************************
 
+// Because we're in a library, define SGP_DEBUG here - the client may not always
+// use the code to write text, because the header switches on the define
+#define SGP_DEBUG
+
+
 #ifdef JA2_PRECOMPILED_HEADERS
 	#include "JA2 SGP ALL.H"
 #elif defined( WIZ8_PRECOMPILED_HEADERS )
@@ -63,7 +68,6 @@ UINT8 gubAssertString[128];
 UINT8		gbTmpDebugString[8][MAX_MSG_LENGTH2];
 UINT8		gubStringIndex = 0;
 
-#ifdef SGP_DEBUG
 
 //**************************************************************************
 //
@@ -292,14 +296,7 @@ void DbgTopicRegistration( UINT8 ubCmd, UINT16 *usTopicID, CHAR8 *zMessage )
 
 void RemoveDebugText( void )
 {
-	FILE      *OutFile;
-
-	if ((OutFile = fopen( gpcDebugLogFileName, "w")) != NULL)
-	{
-		fclose( OutFile );
-	}
-
-	return;
+	DeleteFile( gpcDebugLogFileName );
 }
 
 
@@ -485,6 +482,7 @@ void _Null(void)
 {
 }
 
+extern HVOBJECT FontObjs[25];
 
 void _FailMessage( UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile )
 { 
@@ -516,6 +514,16 @@ void _FailMessage( UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile )
 		}
 	}
 	
+#if 0
+	if( !FontObjs[0] )
+	{ //Font manager hasn't yet been initialized so use the windows error system
+		sprintf( gubErrorText, "Assertion Failure -- Line %d in %s", uiLineNum, pSourceFile );
+		MessageBox( NULL, gubErrorText, "Jagged Alliance 2", MB_OK );
+		gfProgramIsRunning = FALSE;
+		return;
+	}
+#endif
+
 	//Kris:
 	//NASTY HACK, THE GAME IS GOING TO DIE ANYWAY, SO WHO CARES WHAT WE DO.
 	//This will actually bring up a screen that prints out the assert message
@@ -546,7 +554,6 @@ void _FailMessage( UINT8 *pString, UINT32 uiLineNum, UINT8 *pSourceFile )
 }
 
 
-#endif
 
 // This is NOT a _DEBUG only function! It is also needed in
 // release mode builds. -- DB
