@@ -18,6 +18,7 @@
 #define RIGHT_BUTTON_UP						0x0100
 #define RIGHT_BUTTON_REPEAT				0x0200
 #define MOUSE_POS									0x0400
+#define MOUSE_WHEEL								0x0800
 
 #define SHIFT_DOWN								0x01
 #define CTRL_DOWN									0x02
@@ -37,6 +38,11 @@ typedef struct
   UINT32 uiParam;
 
 } InputAtom;
+
+//Mouse pos extracting macros from InputAtom
+#define GETYPOS(a) HIWORD(((a)->uiParam))
+#define GETXPOS(a) LOWORD(((a)->uiParam))
+
 
 typedef struct StringInput
 {
@@ -61,6 +67,8 @@ extern "C" {
 extern BOOLEAN			InitializeInputManager(void);
 extern void					ShutdownInputManager(void);
 extern BOOLEAN			DequeueEvent(InputAtom *Event);
+extern void					QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
+
 extern void					KeyDown(UINT32 usParam, UINT32 uiParam);
 extern void					KeyUp(UINT32 usParam, UINT32 uiParam);
 
@@ -91,6 +99,8 @@ extern void         RestoreCursorClipRect( void );
 
 void SimulateMouseMovement( UINT32 uiNewXPos, UINT32 uiNewYPos );
 BOOLEAN InputEventInside(InputAtom *Event, UINT32 uiX1, UINT32 uiY1, UINT32 uiX2, UINT32 uiY2);
+
+INT16 GetMouseWheelDeltaValue( UINT32 wParam );
 
 extern void DequeueAllKeyBoardEvents();
 

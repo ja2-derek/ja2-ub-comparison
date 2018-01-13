@@ -15,6 +15,8 @@
 	#include "local.h"
 #endif
 
+#include "zmouse.h"
+
 // Make sure to refer to the translation table which is within one of the following files (depending
 // on the language used). ENGLISH.C, JAPANESE.C, FRENCH.C, GERMAN.C, SPANISH.C, etc...
 
@@ -215,7 +217,7 @@ BOOLEAN InitializeInputManager(void)
   gfAltState   = FALSE;
   gfCtrlState  = FALSE;
   // Initialize variables pertaining to DOUBLE CLIK stuff
-  gfTrackDblClick = FALSE;
+  gfTrackDblClick = TRUE;
   guiDoubleClkDelay = DBL_CLK_TIME;
   guiSingleClickTimer = 0;
   gfRecordedLeftButtonUp = FALSE;
@@ -317,56 +319,19 @@ void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam)
     guiRightButtonRepeatTimer = 0;
   }
 
-  if ((gfTrackDblClick)&&(ubInputEvent == LEFT_BUTTON_UP)&&(guiSingleClickTimer > 0))
+  if ( (ubInputEvent == LEFT_BUTTON_UP) )
   {
-    gfRecordedLeftButtonUp = TRUE;
-    return;
-  }
+		// Do we have a double click
+		if ( ( uiTimer - guiSingleClickTimer ) < DBL_CLK_TIME )
+		{
+				guiSingleClickTimer = 0;
 
-  if ((gfTrackDblClick)&&(ubInputEvent == LEFT_BUTTON_DOWN))
-  {
-    if (guiSingleClickTimer > 0)
-    {
-      if (guiSingleClickTimer > uiTimer)
-      {
-        //
-        // We have a double click in progress
-        //
-
-        ubInputEvent = LEFT_BUTTON_DBL_CLK;
-        guiSingleClickTimer = 0;
-        gfRecordedLeftButtonUp = FALSE;
-      }
-			else
-			{
-  			// Okey Dokey, we can queue up the event, so we do it
+				// Add a button up first...
 				gEventQueue[gusTailIndex].uiTimeStamp = uiTimer;
-				gEventQueue[gusTailIndex].usKeyState = gusRecordedKeyState ;
-				gEventQueue[gusTailIndex].usEvent = LEFT_BUTTON_DOWN;
-				gEventQueue[gusTailIndex].usParam = guiRecordedWParam;
-				gEventQueue[gusTailIndex].uiParam = guiRecordedLParam;
-
-				// Increment the number of items on the input queue
-				gusQueueCount++;
-
-				// Increment the gusTailIndex pointer
-				if (gusTailIndex == 255)
-				{ // The gusTailIndex is about to wrap around the queue ring
-					gusTailIndex = 0;
-				}
-				else
-				{ // We simply increment the gusTailIndex
-					gusTailIndex++;
-				}
-
-        gfRecordedLeftButtonUp = FALSE;
-
-        // Okey Dokey, we can queue up the event, so we do it
-				gEventQueue[gusTailIndex].uiTimeStamp = uiTimer;
-				gEventQueue[gusTailIndex].usKeyState = gusRecordedKeyState ;
+				gEventQueue[gusTailIndex].usKeyState = gusRecordedKeyState;
 				gEventQueue[gusTailIndex].usEvent = LEFT_BUTTON_UP;
-				gEventQueue[gusTailIndex].usParam = guiRecordedWParam;
-				gEventQueue[gusTailIndex].uiParam = guiRecordedLParam;
+				gEventQueue[gusTailIndex].usParam = usParam;
+				gEventQueue[gusTailIndex].uiParam = uiParam;
 
 				// Increment the number of items on the input queue
 				gusQueueCount++;
@@ -381,30 +346,35 @@ void QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam)
 					gusTailIndex++;
 				}
 
-        //
-        // Make sure we record the current state
-        //
 
-        guiSingleClickTimer = uiTimer + DBL_CLK_TIME;
-        gfRecordedLeftButtonUp = FALSE;
-        guiRecordedWParam = usParam;
-        guiRecordedLParam = uiParam;
-				gusRecordedKeyState = usKeyState;
+				// Now do double click
+				gEventQueue[gusTailIndex].uiTimeStamp = uiTimer;
+				gEventQueue[gusTailIndex].usKeyState = gusRecordedKeyState ;
+				gEventQueue[gusTailIndex].usEvent = LEFT_BUTTON_DBL_CLK;
+				gEventQueue[gusTailIndex].usParam = usParam;
+				gEventQueue[gusTailIndex].uiParam = uiParam;
 
-        return;
-			}
-    }
+				// Increment the number of items on the input queue
+				gusQueueCount++;
+
+				// Increment the gusTailIndex pointer
+				if (gusTailIndex == 255)
+				{ // The gusTailIndex is about to wrap around the queue ring
+					gusTailIndex = 0;
+				}
+				else
+				{ // We simply increment the gusTailIndex
+					gusTailIndex++;
+				}
+
+				return;
+		}
 		else
 		{
-			guiSingleClickTimer = uiTimer + DBL_CLK_TIME;
-      gfRecordedLeftButtonUp = FALSE;
-      guiRecordedWParam = usParam;
-		  guiRecordedLParam = uiParam;
-      gusRecordedKeyState = usKeyState;
-
-			return;
+			// Save time
+			guiSingleClickTimer = uiTimer;
 		}
-	}
+  }
 
   // Okey Dokey, we can queue up the event, so we do it
   gEventQueue[gusTailIndex].uiTimeStamp = uiTimer;
@@ -969,24 +939,12 @@ void KeyUp(UINT32 usParam, UINT32 uiParam)
 
 void EnableDoubleClk(void)
 {
-  gfTrackDblClick = TRUE;
-  guiSingleClickTimer = 0;
-  gfRecordedLeftButtonUp = FALSE;
+	// Obsolete
 }
 
 void DisableDoubleClk(void)
 {
-  if (guiSingleClickTimer > 0)
-  {
-    QueuePureEvent(LEFT_BUTTON_DOWN, guiRecordedWParam, guiRecordedLParam);
-    if (gfRecordedLeftButtonUp)
-    {
-      QueuePureEvent(LEFT_BUTTON_UP, guiRecordedWParam, guiRecordedLParam);
-      gfRecordedLeftButtonUp = FALSE;
-    }
-    guiSingleClickTimer = 0;
-  }
-  gfTrackDblClick = FALSE;
+	// Obsolete
 }
 
 void GetMousePos(SGPPoint *Point)
@@ -1529,21 +1487,6 @@ void HandleSingleClicksAndButtonRepeats( void )
 
   uiTimer = GetTickCount();
 
-  // Is there a single click in the queue
-  if ((guiSingleClickTimer > 0)&&(guiSingleClickTimer <= uiTimer))
-  {
-    QueuePureEvent(LEFT_BUTTON_DOWN, guiRecordedWParam, guiRecordedLParam);
-
-    if (gfRecordedLeftButtonUp)
-    {
-      QueuePureEvent(LEFT_BUTTON_UP, guiRecordedWParam, guiRecordedLParam);
-      gfRecordedLeftButtonUp = FALSE;
-    }
-
-    guiSingleClickTimer = 0;
-  }
-
- 
   // Is there a LEFT mouse button repeat
   if (gfLeftButtonState)
   {
@@ -1584,3 +1527,10 @@ void HandleSingleClicksAndButtonRepeats( void )
   }
 }
 
+
+INT16 GetMouseWheelDeltaValue( UINT32 wParam )
+{
+	INT16 sDelta = HIWORD( wParam );
+
+	return( sDelta / WHEEL_DELTA );
+}
