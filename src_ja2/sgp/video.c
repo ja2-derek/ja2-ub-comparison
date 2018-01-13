@@ -28,7 +28,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define MAX_DIRTY_REGIONS     128
+#define MAX_DIRTY_REGIONS     180
 
 #define VIDEO_OFF             0x00
 #define VIDEO_ON              0x01
