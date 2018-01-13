@@ -1529,12 +1529,12 @@ void DisplayHelpTokenizedString( STR16 pStringA, INT16 sX, INT16 sY )
 			{
 				i++;
 				SetFont(FONT10ARIALBOLD);
-				SetFontForeground( 2 );
+				SetFontForeground( 2 ); //OFFSET: UB uses 146
 			}
 			else
 			{
 				SetFont( FONT10ARIAL );
-				SetFontForeground( 2 );
+				SetFontForeground( 2 ); //OFFSET: UB uses FONT_BEIGE
 			}
 			mprintf( sX + uiCursorXPos, sY + iCounter * (GetFontHeight(FONT10ARIAL)+1), L"%c", pToken[ i ] );
 		}
