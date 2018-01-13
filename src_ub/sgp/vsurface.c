@@ -2422,6 +2422,8 @@ VSURFACE_DESC hDesc;
 
 	if(GetVideoObject(&hSrcVObject, uiVObject))
 	{
+		// ATE: Memset
+		memset( &hDesc, 0, sizeof( VSURFACE_DESC ) );
 		hDesc.fCreateFlags=VSURFACE_CREATE_DEFAULT;
 		hDesc.usWidth=hSrcVObject->pETRLEObject[ usSubIndex ].usWidth;
 		hDesc.usHeight=hSrcVObject->pETRLEObject[ usSubIndex ].usHeight;
