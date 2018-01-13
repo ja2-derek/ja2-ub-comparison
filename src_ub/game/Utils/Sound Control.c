@@ -1093,7 +1093,7 @@ void SetPositionSndsVolumeAndPanning( )
                }
             }
 
-						if( pPositionSnd->uiFlags & POSITION_SOUND_STATIONATY_OBJECT )
+						if( pPositionSnd->uiFlags & POSITION_SOUND_STATIONARY_OBJECT )
 						{
               // make sure you can always hear it
               if ( bVolume < 5 )

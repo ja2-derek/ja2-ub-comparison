@@ -456,7 +456,7 @@ void PlayDelayedJA2Sample( UINT32 uiDelay, UINT32 usNum, UINT32 usRate, UINT32 u
 
 
 #define POSITION_SOUND_FROM_SOLDIER							0x00000001
-#define POSITION_SOUND_STATIONATY_OBJECT				0x00000002
+#define POSITION_SOUND_STATIONARY_OBJECT				0x00000002
 
 INT32 NewPositionSnd( INT16 sGridNo, UINT32 uiFlags, UINT32 uiData, UINT32 iSoundToPlay );
 void DeletePositionSnd( INT32 iPositionSndIndex );
