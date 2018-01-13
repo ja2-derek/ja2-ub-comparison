@@ -1,7 +1,7 @@
 #ifndef SMACKH
 #define SMACKH
 
-#define SMACKVERSION "3.1n"
+#define SMACKVERSION "3.2f"
 
 #ifndef __RADRES__
 
@@ -99,7 +99,7 @@ typedef struct SmackSumTag {
 
 #define SMACKAUTOEXTRA 0xffffffffL // NOT A FLAG! - Use as extrabuf param 
 //=======================================================================
-  
+
 #define SMACKSURFACEFAST             0
 #define SMACKSURFACESLOW             1
 #define SMACKSURFACEDIRECT           2
@@ -117,7 +117,7 @@ RADEXPFUNC void RADEXPLINK SmackNextFrame(Smack PTR4* smk);
 RADEXPFUNC u32  RADEXPLINK SmackWait(Smack PTR4* smk);
 RADEXPFUNC void RADEXPLINK SmackClose(Smack PTR4* smk);
 
-RADEXPFUNC void RADEXPLINK SmackVolumePan(Smack PTR4* smk, u32 trackflag,u32 volume,u32 pan);    
+RADEXPFUNC void RADEXPLINK SmackVolumePan(Smack PTR4* smk, u32 trackflag,u32 volume,u32 pan);
 
 RADEXPFUNC void RADEXPLINK SmackSummary(Smack PTR4* smk,SmackSum PTR4* sum);
 
@@ -132,7 +132,8 @@ RADEXPFUNC void RADEXPLINK SmackToBuffer(Smack PTR4* smk,u32 left,u32 top,u32 Pi
 RADEXPFUNC u32  RADEXPLINK SmackToBufferRect(Smack PTR4* smk, u32 SmackSurface);
 
 RADEXPFUNC void RADEXPLINK SmackGoto(Smack PTR4* smk,u32 frame);
-RADEXPFUNC void RADEXPLINK SmackColorRemap(Smack PTR4* smk,const void PTR4* remappal,u32 numcolors,u32 paltype);
+RADEXPFUNC void RADEXPLINK SmackColorRemapWithTrans(Smack PTR4* smk,const void PTR4* remappal,u32 numcolors,u32 paltype,u32 transindex);
+#define SmackColorRemap(smk,remappal,numcolors,paltype) SmackColorRemapWithTrans(smk,remappal,numcolors,paltype,1000)
 RADEXPFUNC void RADEXPLINK SmackColorTrans(Smack PTR4* smk,const void PTR4* trans);
 RADEXPFUNC void RADEXPLINK SmackFrameRate(u32 forcerate);
 RADEXPFUNC void RADEXPLINK SmackSimulate(u32 sim);
