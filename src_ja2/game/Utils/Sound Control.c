@@ -1074,6 +1074,16 @@ void SetPositionSndsVolumeAndPanning( )
                }
             }
 
+			if( pPositionSnd->uiFlags & POSITION_SOUND_STATIONARY_OBJECT )
+			{
+				// make sure you can always hear it
+				if ( bVolume < 5 )
+				{
+					bVolume = 5;
+				}
+			}
+
+
             SoundSetVolume( pPositionSnd->iSoundSampleID, bVolume );
 
             bPan = PositionSoundDir( pPositionSnd->sGridNo );
