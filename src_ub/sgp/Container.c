@@ -401,6 +401,59 @@ BOOLEAN Pop(HSTACK hStack, void *pdata)
 }
 //*****************************************************************************
 //
+// PeekStack
+//
+// Parameter List : void * - buffer to hold data
+//									
+//								 
+// Return Value : TRUE if stack not empty
+//
+// Modification History :
+// Apr 14 2000 SCT -> Created
+//
+//*****************************************************************************
+BOOLEAN PeekStack(HSTACK hStack, void *pdata)
+{
+	StackHeader *pTemp_cont;
+	UINT32 uiOffset;
+	UINT32 uiSize_of_each;
+	UINT32 uiTotal;
+	void *pvoid;
+	BYTE *pbyte;
+
+	// check for a NULL queue
+
+	if (hStack == NULL)
+	{
+		DbgMessage(TOPIC_STACK_CONTAINERS, DBG_LEVEL_0, "This is not a valid pointer to the stack");
+		return FALSE;
+	}
+	if (pdata == NULL)
+	{
+		DbgMessage(TOPIC_STACK_CONTAINERS, DBG_LEVEL_0, "Variable where data is to be stored is NULL");
+		return FALSE;
+	}	
+	pTemp_cont = (StackHeader *)hStack;
+		uiTotal = pTemp_cont->uiTotal_items;
+		uiSize_of_each = pTemp_cont->uiSiz_of_elem;
+	if (uiTotal == 0)
+	{
+			DbgMessage(TOPIC_STACK_CONTAINERS, DBG_LEVEL_0, "There is no data in stack to pop");
+		return FALSE;
+	}
+
+	// calculate offsets to decide if the page should be rezied
+	uiOffset = (uiSize_of_each * uiTotal) + sizeof(StackHeader);
+	uiOffset -= uiSize_of_each;
+	pbyte = (BYTE *)hStack;
+	pbyte += uiOffset; 
+	pvoid = (void *)pbyte;
+	// get the data from pvoid and store in pdata
+	memmove(pdata, pvoid, uiSize_of_each);
+	return TRUE;
+}
+//*****************************************************************************
+//
 // DeleteStack
 //
 // Parameter List : pointer to memory

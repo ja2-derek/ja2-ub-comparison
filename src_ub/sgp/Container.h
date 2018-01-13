@@ -64,6 +64,7 @@ extern HSTACK Push(HSTACK hStack, void *data);
 extern BOOLEAN Pop(HSTACK hStack, void *data);
 extern UINT32 StackSize(HSTACK hStack);
 extern BOOLEAN DeleteStack(HSTACK hStack);
+extern BOOLEAN PeekStack(HSTACK hStack, void *data);
 
 // Queue Functions
 // CreateQueue(estimated number of items in queue, size of each item
