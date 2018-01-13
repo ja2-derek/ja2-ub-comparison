@@ -1,9 +1,7 @@
 #ifndef _LIBRARY_DATABASE_H
 #define _LIBRARY_DATABASE_H
 
-#include "Types.h"
 #include "windows.h"
-#include "FileMan.h"
 
 #define	FILENAME_SIZE									256
 
