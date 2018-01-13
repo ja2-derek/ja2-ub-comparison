@@ -1065,8 +1065,7 @@ void SetPositionSndsVolumeAndPanning( )
   UINT32 cnt;
 	POSITIONSND *pPositionSnd;
   INT8        bVolume, bPan;
-  SOLDIERTYPE *pSoldier=NULL;
-	INT16				sGridNo=NOWHERE;
+  SOLDIERTYPE *pSoldier;
 
   for ( cnt = 0; cnt < guiNumPositionSnds; cnt++ )
   {
@@ -1080,7 +1079,6 @@ void SetPositionSndsVolumeAndPanning( )
          {
             bVolume = PositionSoundVolume( 15, pPositionSnd->sGridNo );
 
-						//if the osund is from a soldier
             if ( pPositionSnd->uiFlags & POSITION_SOUND_FROM_SOLDIER )
             {
                pSoldier = (SOLDIERTYPE*)pPositionSnd->uiData;
@@ -1095,7 +1093,6 @@ void SetPositionSndsVolumeAndPanning( )
                }
             }
 
-						//if the sound is from a stationay object
 						if( pPositionSnd->uiFlags & POSITION_SOUND_STATIONATY_OBJECT )
 						{
               // make sure you can always hear it
