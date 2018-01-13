@@ -832,11 +832,6 @@ UINT8 ErrorLoadScreen( BOOLEAN fNight, UINT32 uiLineNumber )
 
 	sprintf( zString, "Error in LoadScreen.c, actual line #%d", uiLineNumber );
 
-//#ifndef JA2UB__QUICK_USE_OF_EDITOR_MAPS
-	// shouldn't ever happen
-//	AssertMsg( FALSE, zString );
-//#endif
-
 	if( fNight )
 	{
 		return LOADINGSCREEN_NIGHTGENERIC;
