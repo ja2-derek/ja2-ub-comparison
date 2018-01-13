@@ -357,7 +357,13 @@ void InternalLeaveTacticalScreen( UINT32 uiNewScreen )
 	// ATE: Disable messages....
 	DisableScrollMessages( );
 
-	
+	if ( uiNewScreen == OPTIONS_SCREEN )
+	{
+		UnLockPauseState();
+		UnPauseGame( );
+		EmptyDialogueQueue( );
+	}
+
 	if ( uiNewScreen == MAINMENU_SCREEN )
 	{
 		//We want to reinitialize the game
