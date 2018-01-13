@@ -2699,7 +2699,7 @@ void QuickButtonCallbackMButn( MOUSE_REGION *reg, INT32 reason )
 			b->uiFlags &= (~BUTTON_CLICKED_ON);
 		}
 	}
-	else if( b->uiFlags & BUTTON_CHECKBOX )
+	else if( b->uiFlags & BUTTON_CHECKBOX && b->uiFlags & BUTTON_ENABLED )
 	{
 		if( reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
 		{	//the check box button gets anchored, though it doesn't actually use the anchoring move callback.
