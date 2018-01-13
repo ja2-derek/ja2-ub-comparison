@@ -25,15 +25,6 @@
 #define DB_LOG_FILENAME							"Library Database Log.txt"
 
 
-#define	DB_BITS_FOR_LIBRARY							10
-#define	DB_BITS_FOR_FILE_ID							22
-
-#define	DB_EXTRACT_LIBRARY( exp )				( exp >> DB_BITS_FOR_FILE_ID )
-#define	DB_EXTRACT_FILE_ID( exp )				( exp & 0x3FFFFF )
-
-#define DB_ADD_LIBRARY_ID( exp )				( exp << DB_BITS_FOR_FILE_ID )
-#define DB_ADD_FILE_ID( exp )						( exp & 0xC00000 )
-
 
 //used when doing the binary search of the libraries
 INT16	gsCurrentLibrary = -1;
