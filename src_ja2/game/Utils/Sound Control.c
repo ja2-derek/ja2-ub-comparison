@@ -209,6 +209,19 @@ char szSoundEffects[NUM_SAMPLES][255] =
 		"SOUNDS\\WEAPONS\\BURSTTYPE1.WAV",
 		"SOUNDS\\WEAPONS\\AUTOMAG SINGLE.WAV",
 
+		//Ja25 new weapons
+		"SOUNDS\\WEAPONS\\50cal.WAV",			// S_BARRET		.5 cal
+		"SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",		// S_CALICO_960		9mm
+		"SOUNDS\\WEAPONS\\7,62 NATO SINGLE SHOT.WAV",	// S_PSG1		5.56mm
+		"SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",	// S_L85		5.56mm
+		"SOUNDS\\WEAPONS\\5,56 SINGLE SHOT.WAV",	// S_TAR21		5.56mm
+		"SOUNDS\\WEAPONS\\ValSilent.WAV",		// S_VAL_SILENT		9mm
+		"SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",		// S_CALICO_950		9mm
+		"SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",		// S_CALICO_900		9mm
+		"SOUNDS\\WEAPONS\\9mm SINGLE SHOT.WAV",		// S_MICRO_UZI		9mm
+		"SOUNDS\\WEAPONS\\HandCannon.WAV",		// S_HAND_CANNON	Cannon ball
+		"SOUNDS\\WEAPONS\\357 SINGLE SHOT.WAV",		// S_HARTFORD_6		Tex's custom guns
+
 		"SOUNDS\\WEAPONS\\SILENCER 02.WAV",
 		"SOUNDS\\WEAPONS\\SILENCER 03.WAV",
 
@@ -359,6 +372,10 @@ char szSoundEffects[NUM_SAMPLES][255] =
 		"SOUNDS\\x ray activated.WAV",
     "SOUNDS\\catch object.wav",
     "SOUNDS\\fence open.wav",
+
+	//New for Ja25
+	"SOUNDS\\PowerGenFan.wav",
+	"SOUNDS\\BreakLight.wav",
 };
 
 char szAmbientEffects[NUM_AMBIENTS][255] =

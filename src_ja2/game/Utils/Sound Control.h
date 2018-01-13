@@ -208,6 +208,19 @@ enum SoundDefines
 	S_BURSTTYPE1,
   S_AUTOMAG,
 
+	//Ja25 new weapons
+	S_BARRET,
+	S_CALICO_960,
+	S_PSG1,
+	S_L85,
+	S_TAR21,
+	S_VAL_SILENT,
+	S_CALICO_950,
+	S_CALICO_900,
+	S_MICRO_UZI,
+	S_HAND_CANNON,
+	S_HARTFORD_6,	//Tex's custom gun
+
 	S_SILENCER_1,
 	S_SILENCER_2,
 
@@ -367,6 +380,10 @@ enum SoundDefines
   USE_X_RAY_MACHINE,
   CATCH_OBJECT,
   FENCE_OPEN,
+
+	//New for Ja25
+	POWER_GEN_FAN_SOUND,
+	BREAK_LIGHT_IGNITING,
 
 	NUM_SAMPLES
 };
