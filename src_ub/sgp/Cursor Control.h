@@ -6,6 +6,11 @@
 #include "VObject.h"
 #include "VSurface.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #include "Video.h"
 
 
@@ -79,19 +84,19 @@ typedef struct
 
 } CursorData;
 
-INT16					 gsGlobalCursorYOffset;
+extern INT16					 gsGlobalCursorYOffset;
 
 // Globals for cursor database offset values
-INT16					 gsCurMouseOffsetX;
-INT16 				 gsCurMouseOffsetY;
-UINT16				 gsCurMouseHeight;
-UINT16				 gsCurMouseWidth;
+extern INT16					 gsCurMouseOffsetX;
+extern INT16 				 gsCurMouseOffsetY;
+extern UINT16				 gsCurMouseHeight;
+extern UINT16				 gsCurMouseWidth;
 
-UINT32				 guiExternVo;
-UINT16				 gusExternVoSubIndex;
-UINT32				 guiExtern2Vo;
-UINT16				 gusExtern2VoSubIndex;
-BOOLEAN				 gfExternUse2nd;
+extern UINT32				 guiExternVo;
+extern UINT16				 gusExternVoSubIndex;
+extern UINT32 				 guiExtern2Vo;
+extern UINT16				 gusExtern2VoSubIndex;
+extern BOOLEAN				 gfExternUse2nd;
 
 typedef void (*MOUSEBLT_HOOK)( void );
 
@@ -101,4 +106,10 @@ void SetMouseBltHook( MOUSEBLT_HOOK pMouseBltOverride );
 void SetExternVOData( UINT32 uiCursorIndex, HVOBJECT hVObject, UINT16 usSubIndex );
 void RemoveExternVOData( UINT32 uiCursorIndex );
 
+
+#ifdef __cplusplus
+}
 #endif
+
+#endif
+
