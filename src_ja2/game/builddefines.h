@@ -4,7 +4,7 @@
 #include "Language Defines.h"
 
 // If we want to include the editor
-//#define JA2EDITOR
+#define JA2EDITOR
 
 
 // Huge speed and memory hog, but thorough -- will work with release builds.
