@@ -1,7 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Laptop All.h"
 	#include "Language Defines.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 	#include "Ja25 Strategic Ai.h"
 #else
 	#include "email.h"

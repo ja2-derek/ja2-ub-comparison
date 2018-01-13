@@ -1,7 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Tactical All.h"
 	#include "Ja25_Tactical.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 	#include "Ja25 Strategic Ai.h"
 	#include "end game.h"
 #else

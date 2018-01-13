@@ -1,6 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Laptop All.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 	#include "Ja25 Strategic Ai.h"
 #else
 	#include "laptop.h"

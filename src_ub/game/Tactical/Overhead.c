@@ -3,7 +3,7 @@
 	#include "PreBattle Interface.h"
   #include "creature spreading.h"
 	#include "Ja25_Tactical.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 	#include "Ja25 Strategic Ai.h"
 	#include "Ja25_Tactical.h"
 #else

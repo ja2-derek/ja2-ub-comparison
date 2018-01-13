@@ -5,7 +5,7 @@
 	#include "Prebattle Interface.h"
   #include "ambient control.h"
 	#include "DisplayCover.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 #else
 	#include <stdio.h>
 	#include <string.h>

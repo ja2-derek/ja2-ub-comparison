@@ -2,7 +2,7 @@
 	#include "JA2 All.h"
 	#include "ImportJa2SaveScreen.h"
 	#include "Ja25Update.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 	#include "Ja25 Strategic Ai.h"
 #endif
 

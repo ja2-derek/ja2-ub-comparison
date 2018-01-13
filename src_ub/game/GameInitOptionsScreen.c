@@ -1,7 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "JA2 All.h"
 	#include "Intro.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 #else
 	#include "Types.h"
 	#include "GameInitOptionsScreen.h"

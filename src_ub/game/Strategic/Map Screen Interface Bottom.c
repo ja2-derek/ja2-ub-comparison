@@ -1,7 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Strategic All.h"
 	#include "MapScreen Quotes.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 #else
 	#include "Map Screen Interface Bottom.h"
 	#include "Map Screen Interface Border.h"

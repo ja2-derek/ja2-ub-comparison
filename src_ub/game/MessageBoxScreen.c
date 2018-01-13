@@ -1,6 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "JA2 All.h"
-	#include "_Ja25Englishtext.h"
+	#include "_Ja25EnglishText.h"
 #else
 	#include "sgp.h"
 	#include "screenids.h"

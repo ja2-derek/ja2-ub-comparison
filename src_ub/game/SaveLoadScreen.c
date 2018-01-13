@@ -38,7 +38,7 @@
 #endif
 
 #include "Campaign Init.h"
-#include "_Ja25Englishtext.h"
+#include "_Ja25EnglishText.h"
 
 
 BOOLEAN gfSchedulesHosed = FALSE;
