@@ -3701,7 +3701,7 @@ void DrawGenericButton(GUI_BUTTON *b)
 			Blt8BPPDataTo16BPPBufferTransparentClip( (UINT16*)pDestBuf,
 											uiDestPitchBYTES, BPic,
 											(INT32)b->XLoc,
-											(INT32)(b->YLoc + (q*iBorderHeight) - (iBorderHeight-hremain)),
+											(INT32)(b->YLoc + (q*iBorderHeight) - (iBorderHeight-hremain)), //OFFSET: UB has only hremain instead of (iBorderHeight-hremain)
 											3, &ClipRect );
 		}
 		else if(gbPixelDepth==8)
@@ -3709,7 +3709,7 @@ void DrawGenericButton(GUI_BUTTON *b)
 			Blt8BPPDataTo8BPPBufferTransparentClip( (UINT16*)pDestBuf,
 											uiDestPitchBYTES, BPic,
 											(INT32)b->XLoc,
-											(INT32)(b->YLoc + (q*iBorderHeight) - (iBorderHeight-hremain)),
+											(INT32)(b->YLoc + (q*iBorderHeight) - (iBorderHeight-hremain)), //OFFSET: UB has only hremain instead of (iBorderHeight-hremain)
 											3, &ClipRect );
 		}
 
@@ -3717,14 +3717,14 @@ void DrawGenericButton(GUI_BUTTON *b)
 		{
 			Blt8BPPDataTo16BPPBufferTransparentClip( (UINT16*)pDestBuf,
 											uiDestPitchBYTES, BPic,
-											cx,	(INT32)(b->YLoc + (q*iBorderHeight) - (iBorderHeight-hremain)),
+											cx,	(INT32)(b->YLoc + (q*iBorderHeight) - (iBorderHeight-hremain)), //OFFSET: UB has only hremain instead of (iBorderHeight-hremain)
 											4, &ClipRect );
 		}
 		else if(gbPixelDepth==8)
 		{
 			Blt8BPPDataTo8BPPBufferTransparentClip((UINT16*)pDestBuf,
 											uiDestPitchBYTES, BPic,
-											cx,	(INT32)(b->YLoc + (q*iBorderHeight) - (iBorderHeight-hremain)),
+											cx,	(INT32)(b->YLoc + (q*iBorderHeight) - (iBorderHeight-hremain)), //OFFSET: UB has only hremain instead of (iBorderHeight-hremain)
 											4, &ClipRect );
 		}
 	}
