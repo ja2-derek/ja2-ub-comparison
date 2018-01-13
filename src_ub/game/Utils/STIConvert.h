@@ -2,7 +2,6 @@
 #define __STCICONVERT_H
 
 
-#define CONVERT_ETRLE_COMPRESS_SINGLE					0x0040
 #define CONVERT_ETRLE_COMPRESS							0x0020
 #define CONVERT_TO_8_BIT								0x1000
 
