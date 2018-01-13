@@ -101,8 +101,22 @@ void ConvertRGBDistribution555To565( UINT16 * p16BPPData, UINT32 uiNumberOfPixel
 
 void WriteSTIFile( INT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 sHeight,  STR cOutputName, UINT32 fFlags, UINT32 uiAppDataSize )
 {
+	HWFILE 							pOutput;
 
-	FILE *							pOutput;
+	pOutput = FileOpen( cOutputName, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE );
+	if ( !pOutput )
+	{
+		return;
+	}
+
+	WriteSTIFileEx( pData, pPalette, sWidth, sHeight, fFlags, uiAppDataSize, pOutput );
+
+	FileClose( pOutput );
+}
+
+
+void WriteSTIFileEx( INT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 sHeight,  UINT32 fFlags, UINT32 uiAppDataSize, HWFILE pOutput )
+{
 
 	UINT32							uiOriginalSize;
 	UINT8 *							pOutputBuffer = NULL;
@@ -118,6 +132,7 @@ void WriteSTIFile( INT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 s
 	STCISubImage *			pSubImageBuffer;
 	UINT16							usNumberOfSubImages;
 	UINT32							uiSubImageBufferSize=0;
+	UINT32							uiBytesWritten;
 
 	//UINT16							usLoop;
 	
@@ -164,13 +179,9 @@ void WriteSTIFile( INT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 s
 	// save file
 	//
 
-	pOutput = fopen( cOutputName, "wb" );
-	if (pOutput == NULL )
-	{
-		return;
-	}
   // write header
-	fwrite( &Header, STCI_HEADER_SIZE, 1, pOutput );
+	FileWrite( pOutput, &Header, STCI_HEADER_SIZE, &uiBytesWritten );
+
 	// write palette and subimage structs, if any
 	if (Header.fFlags & STCI_INDEXED)
 	{
@@ -183,23 +194,24 @@ void WriteSTIFile( INT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 s
 				STCIPaletteEntry.ubRed = pSGPPaletteEntry[uiLoop].peRed;
 				STCIPaletteEntry.ubGreen = pSGPPaletteEntry[uiLoop].peGreen;
 				STCIPaletteEntry.ubBlue = pSGPPaletteEntry[uiLoop].peBlue;
-				fwrite( &STCIPaletteEntry, STCI_PALETTE_ELEMENT_SIZE, 1, pOutput );
+
+				FileWrite( pOutput, &STCIPaletteEntry, STCI_PALETTE_ELEMENT_SIZE, &uiBytesWritten );
 			}
 		}
 		if (Header.fFlags & STCI_ETRLE_COMPRESSED)
 		{
-			fwrite( pSubImageBuffer, uiSubImageBufferSize, 1, pOutput );
+			FileWrite( pOutput, pSubImageBuffer, uiSubImageBufferSize, &uiBytesWritten );
 		}
 	}
 
 	// write file data
 	if (Header.fFlags & STCI_ZLIB_COMPRESSED || Header.fFlags & STCI_ETRLE_COMPRESSED)
 	{
-		fwrite( pOutputBuffer, Header.uiStoredSize, 1, pOutput );
+		FileWrite( pOutput, pOutputBuffer, Header.uiStoredSize, &uiBytesWritten );
 	}
 	else
 	{
-		fwrite( Image.pImageData, Header.uiStoredSize, 1, pOutput );
+		FileWrite( pOutput, Image.pImageData, Header.uiStoredSize, &uiBytesWritten );
 	}
 
 	// write app-specific data (blanked to 0)
@@ -209,16 +221,16 @@ void WriteSTIFile( INT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 s
 		{
 			for (uiLoop = 0; uiLoop < Header.uiAppDataSize; uiLoop++)
 			{
-				fputc( 0, pOutput );
+				UINT8 bData = 0;
+
+				FileWrite( pOutput, &bData, 1, &uiBytesWritten );
 			}
 		}
 	}
 	else
 	{
-		fwrite( Image.pAppData, Header.uiAppDataSize, 1, pOutput );
+		FileWrite( pOutput, Image.pAppData, Header.uiAppDataSize, &uiBytesWritten );
 	}
-
-	fclose( pOutput );
 
 	if( pOutputBuffer != NULL )
 	{

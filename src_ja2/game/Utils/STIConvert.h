@@ -7,5 +7,7 @@
 
 void WriteSTIFile( INT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 sHeight,  STR cOutputName, UINT32 fFlags, UINT32 uiAppDataSize );
 
+void WriteSTIFileEx( INT8 *pData, SGPPaletteEntry *pPalette, INT16 sWidth, INT16 sHeight,  UINT32 fFlags, UINT32 uiAppDataSize, HWFILE pOutput );
+
 
 #endif
