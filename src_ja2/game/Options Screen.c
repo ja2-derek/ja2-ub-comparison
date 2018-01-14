@@ -1100,7 +1100,7 @@ BOOLEAN DoOptionsMessageBoxWithRect( UINT8 ubStyle, INT16 *zString, UINT32 uiExi
 
 BOOLEAN DoOptionsMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 };
+  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 }; //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT
   
 	// reset exit mode
 	gfExitOptionsDueToMessageBox = TRUE;
