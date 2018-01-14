@@ -349,6 +349,9 @@ void ShutdownStandardGamingPlatform(void)
 	// Shut down the different components of the SGP
 	//
 
+	// TEST
+	SoundServiceStreams();
+	
 	if (gfGameInitialized)
 	{
 		ShutdownGame();  
