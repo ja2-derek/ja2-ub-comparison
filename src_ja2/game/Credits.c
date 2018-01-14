@@ -441,19 +441,6 @@ BOOLEAN		EnterCreditsScreen()
 {
 	UINT32 uiCnt;
   VOBJECT_DESC    VObjectDesc;
-/*
-
-	VSURFACE_DESC		vs_desc;
-
-	vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
-
-	strcpy(vs_desc.ImageFile, "INTERFACE\\Credits.sti");
-
-	if( !AddVideoSurface( &vs_desc, &guiCreditBackGroundImage ) )
-	{ 
-		return( FALSE );
-	}
-*/
 
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 	FilenameForBPP("INTERFACE\\Credits.sti", VObjectDesc.ImageFile);
@@ -976,11 +963,6 @@ void HandleNode_Default( CRDT_NODE	*pCurrent )
 			//mark the node to be deleted this frame
 			pCurrent->fDelete = TRUE;
 		}
-
-		//Update the last time to be the current time
-//		pCurrent->uiLastTime = uiCurrentTime + ( uiCurrentTime - ( pCurrent->uiLastTime + guiCrdtNodeScrollSpeed ) );
-
-//		pCurrent->uiLastTime = ( uiCurrentTime - ( uiCurrentTime - pCurrent->uiLastTime - guiCrdtNodeScrollSpeed) );
 
 		pCurrent->uiLastTime = GetJA2Clock();
 	}
