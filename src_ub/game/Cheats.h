@@ -35,7 +35,6 @@ extern	UINT8			gubCheatLevel;
 	#define						DEBUG_CHEAT_LEVEL( )					  ( gubCheatLevel >= 7 )
 
 	#define						RESET_CHEAT_LEVEL( )						( gubCheatLevel = 0 )
-
 #endif
 
 #endif
