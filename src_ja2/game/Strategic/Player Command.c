@@ -111,11 +111,13 @@ BOOLEAN SetThisSectorAsPlayerControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, B
 	INT8 bTownId = 0;
 	UINT8 ubSectorID;
 
-
+/*
+Ja25: No meanwhiles
 	if( AreInMeanwhile( ) )
 	{
 		return FALSE;
 	}
+*/
 
 	if( bMapZ == 0 )
 	{
@@ -196,11 +198,14 @@ BOOLEAN SetThisSectorAsPlayerControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, B
 			// if it's a SAM site sector
 			if( IsThisSectorASAMSector( sMapX, sMapY, bMapZ ) )
 			{
+/*
+JA25 No meanwhiles
 				if ( 1 /*!GetSectorFlagStatus( sMapX, sMapY, bMapZ, SF_SECTOR_HAS_BEEN_LIBERATED_ONCE ) */)
 				{
 					// SAM site liberated for first time, schedule meanwhile					
 					HandleMeanWhileEventPostingForSAMLiberation( GetSAMIdFromSector( sMapX, sMapY, bMapZ ) );
 				}
+*/
 
 				HandleMoraleEvent( NULL, MORALE_SAM_SITE_LIBERATED, sMapX, sMapY, bMapZ );
 				HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_GAIN_SAM, sMapX, sMapY, bMapZ );
@@ -233,10 +238,13 @@ BOOLEAN SetThisSectorAsPlayerControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, B
 			}
 
 //			SetSectorFlag( sMapX, sMapY, bMapZ, SF_SECTOR_HAS_BEEN_LIBERATED_ONCE );
+/*
+Ja25 No meanwhiles
 			if ( bMapZ == 0 && ( ( sMapY == MAP_ROW_M && (sMapX >= 2 && sMapX <= 6) ) || sMapY == MAP_ROW_N && sMapX == 6) )
 			{
 				HandleOutskirtsOfMedunaMeanwhileScene();
 			}
+*/
 		}
 
 		if( fContested )

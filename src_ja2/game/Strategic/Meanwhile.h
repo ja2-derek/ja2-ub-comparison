@@ -1,6 +1,7 @@
 #ifndef MEANWHILE_H
 #define MEANWHILE_H
 
+#ifdef MEANWHILES_INCLUDED
 
 enum
 {
@@ -95,5 +96,7 @@ extern	BOOLEAN								gfMeanwhileScheduled;
 extern	BOOLEAN								gfMeanwhileTryingToStart;
 extern	BOOLEAN								gfInMeanwhile;
 extern	UINT32								uiMeanWhileFlags;
+
+#endif
 
 #endif

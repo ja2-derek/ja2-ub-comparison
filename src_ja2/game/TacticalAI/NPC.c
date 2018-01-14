@@ -119,6 +119,8 @@ NPCQuoteInfo * LoadQuoteFile( UINT8 ubNPC )
 		sprintf( zFileName, "NPCData\\%03d.npc", ubNPC );
 	}
 
+/*
+Ja25:  No meanwhiles
 	// ATE: Put some stuff i here to use a different NPC file if we are in a meanwhile.....
 	if ( AreInMeanwhile( ) )
 	{
@@ -135,6 +137,7 @@ NPCQuoteInfo * LoadQuoteFile( UINT8 ubNPC )
 		}
 
 	}
+*/
 
 	CHECKN( FileExists( zFileName ) );
 

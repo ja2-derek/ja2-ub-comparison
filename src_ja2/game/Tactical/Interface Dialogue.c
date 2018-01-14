@@ -2570,36 +2570,35 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 				}
 				break;
 
-
-			case NPC_ACTION_REMOVE_ELLIOT_END_MEANWHILE:
-
-				// Find queen and joe and remove from sector...
-				pSoldier = FindSoldierByProfileID( ELLIOT, FALSE );
-
-				if ( pSoldier != NULL )
-				{
-					TacticalRemoveSoldier( pSoldier->ubID ); 
-				}
-
-				// End meanwhile....
-				// End meanwhile....
-				DeleteTalkingMenu();
-				EndMeanwhile( );
-				break;
-			case NPC_ACTION_NO_SCI_FI_END_MEANWHILE:
-
-				if ( !( gGameOptions.fSciFi ) )
-				{
-					// End meanwhile....
-					// End meanwhile....
-					DeleteTalkingMenu();
-					EndMeanwhile( );
-				}
-				else
-				{
-					TriggerNPCRecord( QUEEN, 8 );
-				}
-			break;
+//			case NPC_ACTION_REMOVE_ELLIOT_END_MEANWHILE:
+//
+//				// Find queen and joe and remove from sector...
+//				pSoldier = FindSoldierByProfileID( ELLIOT, FALSE );
+//
+//				if ( pSoldier != NULL )
+//				{
+//					TacticalRemoveSoldier( pSoldier->ubID ); 
+//				}
+//
+//				// End meanwhile....
+//				// End meanwhile....
+//				DeleteTalkingMenu();
+//				EndMeanwhile( );
+//				break;
+//			case NPC_ACTION_NO_SCI_FI_END_MEANWHILE:
+//
+//				if ( !( gGameOptions.fSciFi ) )
+//				{
+//					// End meanwhile....
+//					// End meanwhile....
+//					DeleteTalkingMenu();
+//					EndMeanwhile( );
+//				}
+//				else
+//				{
+//					TriggerNPCRecord( QUEEN, 8 );
+//				}
+//			break;
 			case NPC_ACTION_TRIGGER_MARRY_DARYL_PROMPT:
 				DeleteTalkingMenu();
 				StartDialogueMessageBox( ubTargetNPC, usActionCode );
@@ -2936,12 +2935,15 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 				}
 				break;
 
+/*
+Ja25 No meanwhiles
 			case NPC_ACTION_END_MEANWHILE:
 
 				// End meanwhile....
 				DeleteTalkingMenu();
 				EndMeanwhile( );
 				break;
+*/
 
 			case NPC_ACTION_START_BLOODCAT_QUEST:
 				StartQuest( QUEST_BLOODCATS, gWorldSectorX, gWorldSectorY );

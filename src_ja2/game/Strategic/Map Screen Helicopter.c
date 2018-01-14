@@ -645,8 +645,12 @@ void LandHelicopter( void )
 	}
 	else
 	{
+		Assert( 0 );
+/*
+No meanwhiles
 		// play meanwhile scene if it hasn't been used yet
 		HandleKillChopperMeanwhileScene();
+*/
 	}
 }
 

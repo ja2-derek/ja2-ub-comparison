@@ -574,6 +574,8 @@ void DisplayGameSettings( )
 	}
 }
 
+/*
+Ja25 no meanwhiles
 BOOLEAN MeanwhileSceneSeen( UINT8 ubMeanwhile )
 {
 	UINT32	uiCheckFlag;
@@ -608,6 +610,7 @@ BOOLEAN SetMeanwhileSceneSeen( UINT8 ubMeanwhile )
 	gGameSettings.uiMeanwhileScenesSeenFlags |= uiCheckFlag;
 	return( TRUE );
 }
+*/
 
 BOOLEAN	CanGameBeSaved()
 {

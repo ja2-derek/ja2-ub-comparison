@@ -1616,7 +1616,11 @@ void RenderAutoResolve()
 					SetFactTrue( FACT_FIRST_BATTLE_WON );
 				}
 				SetTheFirstBattleSector( ( INT16 ) (gpAR->ubSectorX + gpAR->ubSectorY * MAP_WORLD_X ) );
+
+/* Ja25 no meanwhiles
+IMPortant:
 				HandleFirstBattleEndingWhileInTown( gpAR->ubSectorX, gpAR->ubSectorY, 0, TRUE );
+*/
 			}
 
 			switch( gpAR->ubBattleStatus )

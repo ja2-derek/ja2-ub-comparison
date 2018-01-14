@@ -266,12 +266,15 @@ void InitCreatureQuest()
 
 		fPlayMeanwhile = TRUE;
 
+/*
+Ja25 No meanwhiles 
 	if( fPlayMeanwhile && !gfCreatureMeanwhileScenePlayed )
 	{
 		//Start the meanwhile scene for the queen ordering the release of the creatures.
 		HandleCreatureRelease();
 		gfCreatureMeanwhileScenePlayed = TRUE;
 	}
+*/
 
 	giHabitatedDistance = 0;	
 	switch( gGameOptions.ubDifficultyLevel )

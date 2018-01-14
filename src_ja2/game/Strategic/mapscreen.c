@@ -3903,8 +3903,11 @@ UINT32 MapScreenHandle(void)
 		RenderKeyRingPopup( FALSE );
 	}
 	
+/*
+Ja25 No meanwhiles
 	CheckForMeanwhileOKStart( );
-	
+*/
+
 	// save background rects
 	// ATE: DO this BEFORE rendering help text....
 	SaveBackgroundRects( );

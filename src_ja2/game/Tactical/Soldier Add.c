@@ -1086,6 +1086,8 @@ BOOLEAN InternalAddSoldierToSector( UINT8 ubID, BOOLEAN fCalculateDirection, BOO
 	
 	if ( pSoldier->bActive  )
 	{
+/*
+Ja25 No meanwhiles in exp
     // ATE: Make sure life of elliot is OK if from a meanwhile
     if ( AreInMeanwhile() && pSoldier->ubProfile == ELLIOT )
     {
@@ -1094,6 +1096,7 @@ BOOLEAN InternalAddSoldierToSector( UINT8 ubID, BOOLEAN fCalculateDirection, BOO
         pSoldier->bLife = 25;
       }
     }
+*/
 
 		// ADD SOLDIER TO SLOT!
 		if (pSoldier->uiStatusFlags & SOLDIER_OFF_MAP)

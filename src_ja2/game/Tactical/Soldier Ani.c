@@ -1089,7 +1089,8 @@ BOOLEAN AdjustToNextAnimationFrame( SOLDIERTYPE *pSoldier )
 							}
 							else
 							{
-								if ( fMartialArtist && !AreInMeanwhile( ) )
+//Ja25 No meanwhiles								if ( fMartialArtist && !AreInMeanwhile( ) )
+								if ( fMartialArtist )
 								{
 									ChangeSoldierState( pSoldier, NINJA_BREATH, 0, FALSE );
 									return( TRUE );
@@ -3357,6 +3358,8 @@ void CheckForAndHandleSoldierIncompacitated( SOLDIERTYPE *pSoldier )
 				break;
 		}
 
+/*
+ja25:
 		// OK, if we are in a meanwhile and this is elliot...
 		if ( AreInMeanwhile( ) )
 		{
@@ -3369,6 +3372,7 @@ void CheckForAndHandleSoldierIncompacitated( SOLDIERTYPE *pSoldier )
 				TriggerNPCWithGivenApproach( QUEEN, APPROACH_DONE_SLAPPED, FALSE );
 			}
 		}
+*/
 
 		// We are unconscious now, play randomly, this animation continued, or a new death
 		if ( CheckSoldierHitRoof( pSoldier ) )
@@ -3379,7 +3383,7 @@ void CheckForAndHandleSoldierIncompacitated( SOLDIERTYPE *pSoldier )
 		// If guy is now dead, play sound!
 		if ( pSoldier->bLife == 0  )
 		{
-			if ( !AreInMeanwhile() )
+//Ja25 No meanwhiles			if ( !AreInMeanwhile() )
 			{
 				DoMercBattleSound( pSoldier, BATTLE_SOUND_DIE1 );
   			pSoldier->fDeadSoundPlayed = TRUE;

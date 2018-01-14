@@ -796,7 +796,7 @@ BOOLEAN AddItemsToUnLoadedSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ, INT16 sG
 	return( TRUE );
 }
 
-extern BOOLEAN gfInMeanwhile;
+//Ja25 no meanwhiles extern BOOLEAN gfInMeanwhile;
 
 BOOLEAN SaveCurrentSectorsInformationToTempItemFile( )
 {
@@ -806,11 +806,14 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile( )
 		gfWasInMeanwhile = FALSE;
 		return TRUE;
 	}
+/*
+Ja25v No meanwhiles
 	else if( AreInMeanwhile() )
 	{
 		gfInMeanwhile = FALSE;
 		fShouldBeInMeanwhile = TRUE;
 	}
+*/
 
 	//If we havent been to tactical yet
 	if( ( gWorldSectorX == 0 ) && ( gWorldSectorY == 0 ) )
@@ -902,11 +905,13 @@ BOOLEAN SaveCurrentSectorsInformationToTempItemFile( )
 	//Save the time the player was last in the sector
 	SetLastTimePlayerWasInSector();
 
-
+/*
+Ja25 no meanwhile
 	if( fShouldBeInMeanwhile )
 	{
 		gfInMeanwhile = TRUE;
 	}
+*/
 
 	return( TRUE );
 }
@@ -1064,6 +1069,8 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile()
 	// Load in the sectors ITems
 	//
 
+/*
+Ja25v no meanwhiles
 	if( AreInMeanwhile() )
 	{ //There will never be a temp file for the meanwhile scene, so return TRUE.  However,
 		//set a flag to not save it either!
@@ -1084,7 +1091,7 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile()
 		}
 		return TRUE;
 	}
-
+*/
 	//if we are in an above ground sector
 
 	//If there is a file, load in the Items array

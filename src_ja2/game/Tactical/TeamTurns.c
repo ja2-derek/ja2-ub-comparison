@@ -510,10 +510,13 @@ void DisplayHiddenTurnbased( SOLDIERTYPE * pActingSoldier )
 	// whose pointer has been passed in as an argument (we were in non-combat and the AI is doing
 	// something visible, i.e. making an attack)
 
+/*
+Ja25 No meanwhiles
 	if ( AreInMeanwhile( ) )
 	{
 		return;
 	}
+*/
 
 	if (gTacticalStatus.uiFlags & REALTIME || gTacticalStatus.uiFlags & INCOMBAT)
 	{

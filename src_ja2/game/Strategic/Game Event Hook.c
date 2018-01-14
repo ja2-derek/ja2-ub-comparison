@@ -258,6 +258,8 @@ BOOLEAN ExecuteStrategicEvent( STRATEGICEVENT *pEvent )
 		case EVENT_BEGIN_AIR_RAID:
 			BeginAirRaid( );
 			break;
+/*
+Ja25 No meanwhiles
 		case EVENT_MEANWHILE:
 			if( !DelayEventIfBattleInProgress( pEvent ) )
 			{
@@ -265,6 +267,7 @@ BOOLEAN ExecuteStrategicEvent( STRATEGICEVENT *pEvent )
 				InterruptTime();
 			}
 			break;
+*/
 		case EVENT_BEGIN_CREATURE_QUEST:
 			break;
 		case EVENT_CREATURE_SPREAD:

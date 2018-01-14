@@ -351,7 +351,11 @@ void BeginLoadScreen( )
 
 	SetCurrentCursorFromDatabase( VIDEO_NO_CURSOR );
 
+/*
+Ja25: No meanwhiles
 	if( guiCurrentScreen == MAP_SCREEN && !(gTacticalStatus.uiFlags & LOADING_SAVED_GAME) && !AreInMeanwhile() )
+*/
+	if( guiCurrentScreen == MAP_SCREEN && !(gTacticalStatus.uiFlags & LOADING_SAVED_GAME) )
 	{
 		DstRect.iLeft = 0;
 		DstRect.iTop = 0;
@@ -589,6 +593,8 @@ void GetMapFileName(INT16 sMapX,INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLEA
 		}
 	}
 
+/*
+Ja25: No meanwhiles
 	// If we are in a meanwhile...
 	if ( AreInMeanwhile( ) && sMapX == 3 && sMapY == 16 && !bSectorZ )//GetMeanwhileID() != INTERROGATION )
 	{
@@ -597,6 +603,7 @@ void GetMapFileName(INT16 sMapX,INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLEA
 			strcat( bExtensionString, "_m" );
 		}
 	}
+*/
 
 	// This is the string to return, but...
 	sprintf( bString, "%s%s%s.DAT", pVertStrings[sMapY], pHortStrings[sMapX], bExtensionString );
@@ -971,7 +978,7 @@ void PrepareLoadedSector()
 	BOOLEAN fAddCivs = TRUE;
 	INT8 bMineIndex = -1;
 
-	if( AreInMeanwhile( ) == FALSE )
+//Ja25 No meanwhiles	if( AreInMeanwhile( ) == FALSE )
 	{
 		if( gbWorldSectorZ == 0 )
 		{
@@ -995,7 +1002,8 @@ void PrepareLoadedSector()
 	//if we are loading a 'pristine' map ( ie, not loading a saved game )
 	if( !(gTacticalStatus.uiFlags & LOADING_SAVED_GAME ))
 	{
-		if ( !AreReloadingFromMeanwhile( ) )
+//Ja25 No meanwhiles
+//		if ( !AreReloadingFromMeanwhile( ) )
 		{
 			SetPendingNewScreen(GAME_SCREEN);
 
@@ -1045,7 +1053,7 @@ void PrepareLoadedSector()
 		}
 		AddProfilesNotUsingProfileInsertionData();
 		
-		if( !AreInMeanwhile() || GetMeanwhileID() == INTERROGATION )
+//Ja25 No meanwhiles		if( !AreInMeanwhile() || GetMeanwhileID() == INTERROGATION )
 		{
 			fEnemyPresenceInThisSector = PrepareEnemyForSectorBattle();
 		}
@@ -1316,7 +1324,7 @@ BOOLEAN EnterSector( INT16 sSectorX, INT16 sSectorY , INT8 bSectorZ )
 	// This has tobe done before loadworld, as it will remmove old gridnos if present
 	RemoveMercsInSector( );
 	
-	if( AreInMeanwhile() == FALSE )
+//Ja25 No meanwhiles	if( AreInMeanwhile() == FALSE )
 	{
 		SetSectorFlag( sSectorX, sSectorY, bSectorZ, SF_ALREADY_VISITED );
 	}

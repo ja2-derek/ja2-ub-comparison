@@ -967,11 +967,14 @@ BOOLEAN UseGun( SOLDIERTYPE *pSoldier , INT16 sTargetGridNo )
 	  uiHitChance = CalcChanceToHitGun( pSoldier, sTargetGridNo, pSoldier->bAimTime, pSoldier->bAimShotLocation );
 	}
 
+/*
+Ja25 No meanwhiles
 	//ATE: Added if we are in meanwhile, we always hit...
 	if ( AreInMeanwhile( ) )
 	{
 		uiHitChance = 100;
 	}
+*/
 
 	// ROLL DICE
 	uiDiceRoll = PreRandom( 100 );
@@ -1601,7 +1604,8 @@ BOOLEAN UseHandToHand( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fStea
 				}
 			}
 
-			if ( iDiceRoll <= iHitChance || AreInMeanwhile( ) )
+//Ja25 no meanwhiles			if ( iDiceRoll <= iHitChance || AreInMeanwhile( ) )
+			if ( iDiceRoll <= iHitChance )
 			{
 				// CALCULATE DAMAGE!
 				iImpact = HTHImpact( pSoldier, pTargetSoldier, (iHitChance - iDiceRoll), FALSE );

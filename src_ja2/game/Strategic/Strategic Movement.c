@@ -1574,7 +1574,7 @@ void GroupArrivedAtSector( UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNe
 	if( fExceptionQueue || fCheckForBattle && gTacticalStatus.fEnemyInSector && 
 			FindMovementGroupInSector( (UINT8)gWorldSectorX, (UINT8)gWorldSectorY, TRUE ) && 
 		  (pGroup->ubNextX != gWorldSectorX || pGroup->ubNextY != gWorldSectorY || gbWorldSectorZ > 0 ) || 
-			AreInMeanwhile() || 
+//Ja25: NO meanwhiles			AreInMeanwhile() || 
 			//KM : Aug 11, 1999 -- Patch fix:  Added additional checks to prevent a 2nd battle in the case
 			//     where the player is involved in a potential battle with bloodcats/civilians
 			fCheckForBattle && HostileCiviliansPresent() ||
@@ -1584,12 +1584,15 @@ void GroupArrivedAtSector( UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNe
 		//QUEUE BATTLE!
 		//Delay arrival by a random value ranging from 3-5 minutes, so it doesn't get the player
 		//too suspicious after it happens to him a few times, which, by the way, is a rare occurrence.
+/*
+Ja25: No meanwhiles
 		if( AreInMeanwhile() )
 		{
 			pGroup->uiArrivalTime ++; //tack on only 1 minute if we are in a meanwhile scene.  This effectively
 			                          //prevents any battle from occurring while inside a meanwhile scene.
 		}
 		else
+*/
 		{
 			pGroup->uiArrivalTime += Random(3) + 3;
 		}

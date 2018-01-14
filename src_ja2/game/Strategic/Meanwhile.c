@@ -23,6 +23,8 @@
 	#include "text.h"
 #endif
 
+#ifdef JA25_MEANWHILES_INCLUDED
+
 #define MAX_MEANWHILE_PROFILES	10
 
 INT8 gzMeanwhileStr[][30] = 
@@ -1309,3 +1311,5 @@ void HandleFirstMeanWhileSetUpWithTrashWorld( void )
 	}
 
 }
+
+#endif

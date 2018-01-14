@@ -3393,11 +3393,14 @@ void EVENT_SoldierGotHit( SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT16 sDa
 		// is actually how much breath we'll take away
 		sBreathLoss = sDamage * 100;
 		sDamage = sDamage / PUNCH_REAL_DAMAGE_PORTION;
+/*
+Ja25: No meanwhiles
 		if ( AreInMeanwhile() && gCurrentMeanwhileDef.ubMeanwhileID == INTERROGATION )
 		{
 			sBreathLoss = 0;
 			sDamage /= 2;
 		}
+*/
 		ubReason = TAKE_DAMAGE_HANDTOHAND;
 	}
 	else if ( Item[ usWeaponIndex ].usItemClass & IC_EXPLOSV )
@@ -6139,11 +6142,14 @@ void BeginSoldierGetup( SOLDIERTYPE *pSoldier )
 		return;
 	}
 
+/*
+Ja25: No meanwhiles
 	// ATE: Don't getup if we are in a meanwhile
 	if ( AreInMeanwhile( ) )
 	{
 		return;
 	}
+*/
 
 	if ( pSoldier->bCollapsed )
 	{
@@ -6375,12 +6381,14 @@ UINT8 SoldierTakeDamage( SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeDeduct,
 		pSoldier->uiStatusFlags &= ( ~SOLDIER_NPC_SHOOTING );
 	}
 
+/*
+Ja25: No meanwhiles
 	// CJC: make sure Elliot doesn't bleed to death!
 	if ( ubReason == TAKE_DAMAGE_BLOODLOSS && AreInMeanwhile() )
 	{
 		return( 0 );
 	}
-
+*/
 
 	// Calculate bandage
 	bBandage = pSoldier->bLifeMax - pSoldier->bLife - pSoldier->bBleeding;
@@ -8362,7 +8370,9 @@ void EVENT_SoldierBeginPunchAttack( SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 
 	}
 
 
-	if ( fMartialArtist && !AreInMeanwhile( ) && usItem != CROWBAR )
+//Ja25 No meanwhiles
+//	if ( fMartialArtist && !AreInMeanwhile( ) && usItem != CROWBAR )
+	if ( fMartialArtist && usItem != CROWBAR )
 	{
 		// Are we in attack mode yet?
 		if ( pSoldier->usAnimState != NINJA_BREATH && gAnimControl[ pSoldier->usAnimState ].ubHeight == ANIM_STAND && gAnimControl[ pTSoldier->usAnimState ].ubHeight != ANIM_PRONE )

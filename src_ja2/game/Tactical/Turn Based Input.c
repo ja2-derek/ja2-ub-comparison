@@ -200,7 +200,7 @@ void ToggleRealTimeConfirm();
 void GrenadeTest1();
 void GrenadeTest2();
 void GrenadeTest3();
-void TestMeanWhile( INT32 iID );
+//Ja25: void TestMeanWhile( INT32 iID );
 void CreatePlayerControlledMonster();
 void ChangeCurrentSquad( INT32 iSquad );
 void HandleSelectMercSlot( UINT8 ubPanelSlot, INT8 bCode );
@@ -1492,6 +1492,8 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 			//*puiNewEvent = I_EXIT;
     }
 
+/*
+Ja25 No meanwhiles
 		if ((InputEvent.usEvent == KEY_UP )&& ( InputEvent.usParam == ESC) )
 		{
 			if ( AreInMeanwhile() && gCurrentMeanwhileDef.ubMeanwhileID != INTERROGATION )
@@ -1500,6 +1502,7 @@ void GetKeyboardInput( UINT32 *puiNewEvent )
 				EndMeanwhile();
 			}
 		}
+*/
 
 		// Break of out IN CONV...
 		if ( CHEATER_CHEAT_LEVEL( ) )
@@ -4407,6 +4410,8 @@ void HandleSelectMercSlot( UINT8 ubPanelSlot, INT8 bCode )
 	}
 }
 
+/*
+Ja25 got rid of test
 void TestMeanWhile( INT32 iID )
 {
 	MEANWHILE_DEFINITION MeanwhileDef;
@@ -4446,6 +4451,7 @@ void TestMeanWhile( INT32 iID )
 
 	ScheduleMeanwhileEvent( &MeanwhileDef, 10 );
 }
+*/
 
 void EscapeUILock( )
 {

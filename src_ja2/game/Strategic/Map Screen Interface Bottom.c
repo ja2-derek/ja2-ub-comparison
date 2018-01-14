@@ -1260,11 +1260,14 @@ BOOLEAN AllowedToTimeCompress( void )
 		return( FALSE );
 	}
 
+/*
+Ja25 no meanwhiles
 	// meanwhile coming up
 	if ( gfMeanwhileTryingToStart )
 	{
 		return( FALSE );
 	}
+*/
 
 	// someone has something to say
 	if ( !DialogueQueueIsEmpty() )
@@ -1619,11 +1622,14 @@ BOOLEAN AllowedToExitFromMapscreenTo( INT8 bExitToWhere )
 		return( FALSE );
 	}
 
+/*
+Ja25 No meanwhiles
 	// meanwhile coming up
 	if ( gfMeanwhileTryingToStart )
 	{
 		return( FALSE );
 	}
+*/
 
 	// if we're locked into paused time compression by some event that enforces that
 	if ( PauseStateLocked() )

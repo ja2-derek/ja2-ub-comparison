@@ -291,11 +291,14 @@ void EnterTacticalScreen( )
 	// Select current guy...
 	//gfGameScreenLocateToSoldier = TRUE;
 
+/*
+Ja25 No meanwhiles
 	// Locate if in meanwhile...
 	if ( AreInMeanwhile( ) )
 	{
 		LocateToMeanwhileCharacter( );
 	}
+*/
 
 	if ( gTacticalStatus.uiFlags & IN_DEIDRANNA_ENDGAME )
 	{
@@ -785,7 +788,7 @@ UINT32  MainGameScreenHandle(void)
 	// Display Framerate
 	DisplayFrameRate( );
 
-	CheckForMeanwhileOKStart( );
+//Ja25	CheckForMeanwhileOKStart( );
 
   ScrollString( );
   

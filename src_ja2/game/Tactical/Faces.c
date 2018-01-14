@@ -2082,10 +2082,13 @@ BOOLEAN SetFaceTalking( INT32 iFaceIndex, CHAR8 *zSoundFile, STR16 zTextString, 
 	pFace->fAnimatingTalking = TRUE;
 	pFace->fFinishTalking = FALSE;
 
-  if ( !AreInMeanwhile( ) )
+/* 
+Ja25: No Meanwhiles
+if ( !AreInMeanwhile( ) )
   {
     TurnOnSectorLocator( pFace->ubCharacterNum );
   }
+*/
 
 	// Play sample
 	if( gGameSettings.fOptions[ TOPTION_SPEECH ] )

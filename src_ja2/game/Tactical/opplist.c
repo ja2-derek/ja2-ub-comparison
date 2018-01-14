@@ -2837,10 +2837,13 @@ void SaySeenQuote( SOLDIERTYPE *pSoldier, BOOLEAN fSeenCreature, BOOLEAN fVirgin
 	UINT8				ubNumAllies = 0;
 	UINT32			cnt;
 
+/*
+Ja25 No meanwhiles
 	if ( AreInMeanwhile( ) )
 	{
 		return;
 	}
+*/
 
 	// Check out for our under large fire quote
 	if ( !(pSoldier->usQuoteSaidFlags & SOLDIER_QUOTE_SAID_IN_SHIT ) )
@@ -5750,7 +5753,11 @@ void TellPlayerAboutNoise( SOLDIERTYPE *pSoldier, UINT8 ubNoiseMaker, INT16 sGri
 	// if the quote was faint, say something
 	if (ubVolumeIndex == 0)
 	{
+/*
+Ja25 No meanwhiles
 		if ( !AreInMeanwhile( ) && !( gTacticalStatus.uiFlags & ENGAGED_IN_CONV) && pSoldier->ubTurnsUntilCanSayHeardNoise == 0)
+*/
+		if ( !( gTacticalStatus.uiFlags & ENGAGED_IN_CONV) && pSoldier->ubTurnsUntilCanSayHeardNoise == 0 )
 		{
 			TacticalCharacterDialogue( pSoldier, QUOTE_HEARD_SOMETHING );
 			if ( gTacticalStatus.uiFlags & INCOMBAT )

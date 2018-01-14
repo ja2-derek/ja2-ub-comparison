@@ -132,7 +132,7 @@ extern		BOOLEAN				gfLoadedGame;
 extern		HELP_SCREEN_STRUCT gHelpScreen;
 extern		UINT8					gubDesertTemperature;
 extern		UINT8					gubGlobalTemperature;
-extern		BOOLEAN				gfCreatureMeanwhileScenePlayed;
+//extern		BOOLEAN				gfCreatureMeanwhileScenePlayed;
 
 BOOLEAN				gMusicModeToPlay = FALSE;
 
@@ -262,14 +262,16 @@ typedef struct
 	BOOLEAN fSkyRiderSetUp;
 	BOOLEAN fRefuelingSiteAvailable[ NUMBER_OF_REFUEL_SITES ];
 
-
+/*
+Ja25 no meanwhiles
 	//Meanwhile stuff
 	MEANWHILE_DEFINITION	gCurrentMeanwhileDef;
 
-	BOOLEAN ubPlayerProgressSkyriderLastCommentedOn;
-
 	BOOLEAN								gfMeanwhileTryingToStart;
 	BOOLEAN								gfInMeanwhile;
+*/
+
+	BOOLEAN ubPlayerProgressSkyriderLastCommentedOn;
 
 	// list of dead guys for squads...in id values -> -1 means no one home 
 	INT16 sDeadMercs[ NUMBER_OF_SQUADS ][ NUMBER_OF_SOLDIERS_PER_SQUAD ];
@@ -337,7 +339,7 @@ typedef struct
 	BOOLEAN fExplosionQueueActive;
 	UINT8	ubUnused[1];
 
-	UINT32	uiMeanWhileFlags;
+//ja25 no meanwhiles	UINT32	uiMeanWhileFlags;
 
 	INT8 bSelectedInfoChar;
 	INT8 bHospitalPriceModifier;
@@ -413,8 +415,11 @@ BOOLEAN		LoadPreRandomNumbersFromSaveGameFile( HWFILE hFile );
 BOOLEAN SaveWatchedLocsToSavedGame( HWFILE hFile );
 BOOLEAN LoadWatchedLocsFromSavedGame( HWFILE hFile );
 
+/*
+Ja25 no meanwhiles
 BOOLEAN LoadMeanwhileDefsFromSaveGameFile( HWFILE hFile );
 BOOLEAN SaveMeanwhileDefsFromSaveGameFile( HWFILE hFile );
+*/
 
 void	PauseBeforeSaveGame( void );
 void	UnPauseAfterSaveGame( void );
@@ -1012,10 +1017,12 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 		goto FAILED_TO_SAVE;
 	}
 
+/*
 	if ( !SaveMeanwhileDefsFromSaveGameFile( hFile ) )
 	{
 		goto FAILED_TO_SAVE;
 	}
+*/
 
 	// save meanwhiledefs
 
@@ -2005,7 +2012,8 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 	}
 
 
-
+/*
+Ja25  no meanwhile
 	uiRelEndPerc += 1;
 	SetRelativeStartAndEndPercentage( 0, uiRelStartPerc, uiRelEndPerc, L"Meanwhile definitions..." );
 	RenderProgressBar( 0, 100 );
@@ -2026,7 +2034,7 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 	{
 		memcpy( &gMeanwhileDef[gCurrentMeanwhileDef.ubMeanwhileID], &gCurrentMeanwhileDef, sizeof( MEANWHILE_DEFINITION ) );
 	}
-
+*/
 
 
 
@@ -3883,13 +3891,17 @@ BOOLEAN SaveGeneralInfo( HWFILE hFile )
 
 	memcpy( &sGeneralInfo.fRefuelingSiteAvailable, &fRefuelingSiteAvailable, NUMBER_OF_REFUEL_SITES * sizeof( BOOLEAN ) );
 
-
+/*
+Ja25 no meanwhiles
 	//Meanwhile stuff
 	memcpy( &sGeneralInfo.gCurrentMeanwhileDef, &gCurrentMeanwhileDef, sizeof( MEANWHILE_DEFINITION ) );
 	//sGeneralInfo.gfMeanwhileScheduled = gfMeanwhileScheduled;
 	sGeneralInfo.gfMeanwhileTryingToStart = gfMeanwhileTryingToStart;
 	sGeneralInfo.gfInMeanwhile = gfInMeanwhile;
 
+	//used for the mean while screen
+	sGeneralInfo.uiMeanWhileFlags = uiMeanWhileFlags;
+*/
 
 	// list of dead guys for squads...in id values -> -1 means no one home 
 	memcpy( &sGeneralInfo.sDeadMercs, &sDeadMercs, sizeof( INT16 ) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD );
@@ -3900,9 +3912,6 @@ BOOLEAN SaveGeneralInfo( HWFILE hFile )
 	//The screen count for the initscreen
 	sGeneralInfo.gubScreenCount = gubScreenCount;
 
-
-	//used for the mean while screen
-	sGeneralInfo.uiMeanWhileFlags = uiMeanWhileFlags;
 
 	//Imp portrait number
 	sGeneralInfo.iPortraitNumber = iPortraitNumber;
@@ -3947,7 +3956,7 @@ BOOLEAN SaveGeneralInfo( HWFILE hFile )
 	sGeneralInfo.sMercArriveSectorX	 = gsMercArriveSectorX;
 	sGeneralInfo.sMercArriveSectorY	 = gsMercArriveSectorY;
 
-	sGeneralInfo.fCreatureMeanwhileScenePlayed = gfCreatureMeanwhileScenePlayed;
+//	sGeneralInfo.fCreatureMeanwhileScenePlayed = gfCreatureMeanwhileScenePlayed;
 
 	//save the global player num
 	sGeneralInfo.ubPlayerNum = gbPlayerNum;
@@ -4136,21 +4145,13 @@ BOOLEAN LoadGeneralInfo( HWFILE hFile )
 
 	memcpy( &fRefuelingSiteAvailable, &sGeneralInfo.fRefuelingSiteAvailable, NUMBER_OF_REFUEL_SITES * sizeof( BOOLEAN ) );
 
-
+/*
+Ja25 no meanwhiles
 	//Meanwhile stuff
 	memcpy( &gCurrentMeanwhileDef, &sGeneralInfo.gCurrentMeanwhileDef, sizeof( MEANWHILE_DEFINITION ) );
 //	gfMeanwhileScheduled = sGeneralInfo.gfMeanwhileScheduled;
 	gfMeanwhileTryingToStart = sGeneralInfo.gfMeanwhileTryingToStart;
 	gfInMeanwhile = sGeneralInfo.gfInMeanwhile;
-
-	// list of dead guys for squads...in id values -> -1 means no one home 
-	memcpy( &sDeadMercs, &sGeneralInfo.sDeadMercs, sizeof( INT16 ) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD );
-
-	// level of public noises
-	memcpy( &gbPublicNoiseLevel, &sGeneralInfo.gbPublicNoiseLevel, sizeof( INT8 ) * MAXTEAMS );
-
-	//the screen count for the init screen
-	gubScreenCount = sGeneralInfo.gubScreenCount;
 
 	//used for the mean while screen
 	if ( guiSaveGameVersion < 71 )
@@ -4161,6 +4162,16 @@ BOOLEAN LoadGeneralInfo( HWFILE hFile )
 	{
 		uiMeanWhileFlags = sGeneralInfo.uiMeanWhileFlags;
 	}
+*/
+
+	// list of dead guys for squads...in id values -> -1 means no one home 
+	memcpy( &sDeadMercs, &sGeneralInfo.sDeadMercs, sizeof( INT16 ) * NUMBER_OF_SQUADS * NUMBER_OF_SOLDIERS_PER_SQUAD );
+
+	// level of public noises
+	memcpy( &gbPublicNoiseLevel, &sGeneralInfo.gbPublicNoiseLevel, sizeof( INT8 ) * MAXTEAMS );
+
+	//the screen count for the init screen
+	gubScreenCount = sGeneralInfo.gubScreenCount;
 
 	//Imp portrait number
 	iPortraitNumber = sGeneralInfo.iPortraitNumber;
@@ -4204,7 +4215,7 @@ BOOLEAN LoadGeneralInfo( HWFILE hFile )
 	gsMercArriveSectorX = sGeneralInfo.sMercArriveSectorX;
 	gsMercArriveSectorY = sGeneralInfo.sMercArriveSectorY;
 
-	gfCreatureMeanwhileScenePlayed = sGeneralInfo.fCreatureMeanwhileScenePlayed;
+//	gfCreatureMeanwhileScenePlayed = sGeneralInfo.fCreatureMeanwhileScenePlayed;
 
 	//load the global player num
 	gbPlayerNum = sGeneralInfo.ubPlayerNum;
@@ -4273,6 +4284,8 @@ BOOLEAN LoadPreRandomNumbersFromSaveGameFile( HWFILE hFile )
 	return( TRUE );
 }
 
+/*
+Ja25 No meanwhiles
 BOOLEAN LoadMeanwhileDefsFromSaveGameFile( HWFILE hFile )
 {
 	UINT32	uiNumBytesRead;
@@ -4315,6 +4328,7 @@ BOOLEAN SaveMeanwhileDefsFromSaveGameFile( HWFILE hFile )
 
 	return( TRUE );
 }
+*/
 
 BOOLEAN DoesUserHaveEnoughHardDriveSpace()
 {

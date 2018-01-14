@@ -50,7 +50,7 @@
 void QuickSetupOfMercProfileItems( UINT32 uiCount, UINT8 ubProfileIndex );
 BOOLEAN QuickGameMemberHireMerc( UINT8 ubCurrentSoldier );
 extern UINT32 guiExitScreen;
-extern UINT32 uiMeanWhileFlags;
+//extern UINT32 uiMeanWhileFlags;
 extern BOOLEAN gfGamePaused;
 
 extern UNDERGROUND_SECTORINFO* FindUnderGroundSector( INT16 sMapX, INT16 sMapY, UINT8 bMapZ );
@@ -331,8 +331,11 @@ BOOLEAN InitNewGame( BOOLEAN fReset )
 		return( TRUE );
 	}
 
+/*
+Ja25 no meanwhiles
 	// reset meanwhile flags
 	uiMeanWhileFlags = 0;
+*/
 
 	// Reset the selected soldier
 	gusSelectedSoldier = NOBODY;

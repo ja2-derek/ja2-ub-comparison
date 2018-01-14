@@ -1663,7 +1663,10 @@ void CheckIfEntireTownHasBeenLiberated( INT8 bTownId, INT16 sSectorX, INT16 sSec
 			// set fact is has been lib'ed and set history event
 			AddHistoryToPlayersLog( HISTORY_LIBERATED_TOWN, bTownId, GetWorldTotalMin(), sSectorX, sSectorY );
 
+/*
+Ja25: No meanhwiles
 			HandleMeanWhileEventPostingForTownLiberation( bTownId );
+*/
 		}
 
 		// even taking over non-trainable "towns" like Orta/Tixa for the first time should count as "player activity"
@@ -1687,11 +1690,14 @@ void CheckIfEntireTownHasBeenLost( INT8 bTownId, INT16 sSectorX, INT16 sSectorY 
 	// reported here (and they're the only ones you can protect)
 	if ( MilitiaTrainingAllowedInSector( sSectorX, sSectorY, 0 ) && IsTownUnderCompleteControlByEnemy(bTownId) )
 	{
+/*
+Ja25 No meanwhile
 		// the whole town is under enemy control, check if we libed this town before
 		if ( gTownLoyalty[ bTownId ].fLiberatedAlready )
 		{
 			HandleMeanWhileEventPostingForTownLoss( bTownId );
 		}
+*/
 	}
 }
 

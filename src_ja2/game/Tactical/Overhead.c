@@ -5531,7 +5531,8 @@ void SetEnemyPresence( )
 		// Change music modes..
 		
 		// If we are just starting game, don't do this!
-		if ( !DidGameJustStart() && !AreInMeanwhile( ) )
+//Ja25: no meanwhiles		if ( !DidGameJustStart() && !AreInMeanwhile( ) )
+		if ( !DidGameJustStart() )
 		{
 			SetMusicMode( MUSIC_TACTICAL_ENEMYPRESENT );
 		}
@@ -5948,7 +5949,10 @@ BOOLEAN CheckForEndOfBattle( BOOLEAN fAnEnemyRetreated )
 			SetFactTrue( FACT_FIRST_BATTLE_FOUGHT );
 			SetFactFalse( FACT_FIRST_BATTLE_BEING_FOUGHT );
 			SetTheFirstBattleSector( (INT16) (gWorldSectorX + gWorldSectorY * MAP_WORLD_X) );
+/*
+Ja25  no meanwhile
 			HandleFirstBattleEndingWhileInTown( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE );
+*/
 		}
 
 		if( NumEnemyInSectorExceptCreatures() )
@@ -6162,7 +6166,10 @@ BOOLEAN CheckForEndOfBattle( BOOLEAN fAnEnemyRetreated )
 				SetFactTrue( FACT_FIRST_BATTLE_WON );
 				SetFactFalse( FACT_FIRST_BATTLE_BEING_FOUGHT );
 				SetTheFirstBattleSector( (INT16) (gWorldSectorX + gWorldSectorY * MAP_WORLD_X) );
+/*
+Ja25  no meanwhile
 				HandleFirstBattleEndingWhileInTown( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE );
+*/
 			}
 		}
 
@@ -7231,6 +7238,8 @@ SOLDIERTYPE *InternalReduceAttackBusyCount( UINT8 ubID, BOOLEAN fCalledByAttacke
 		}
 	}
 
+/* 
+Ja25
 	// ATE: IN MEANWHILES, we have 'combat' in realtime....
 	// this is so we DON'T call freeupattacker() which will cancel
 	// the AI guy's meanwhile NPC stuff.
@@ -7239,6 +7248,7 @@ SOLDIERTYPE *InternalReduceAttackBusyCount( UINT8 ubID, BOOLEAN fCalledByAttacke
 	{
 		return( pTarget );
 	}
+*/
 
 	if (pTarget)
 	{
@@ -7372,7 +7382,8 @@ SOLDIERTYPE *InternalReduceAttackBusyCount( UINT8 ubID, BOOLEAN fCalledByAttacke
 			// Go into combat!
 
 			// If we are in a meanwhile... don't enter combat here...
-			if ( !AreInMeanwhile( ) )
+//Ja25 no meanwhiles
+//			if ( !AreInMeanwhile( ) )
 			{
 				EnterCombatMode( pSoldier->bTeam );					
 			}

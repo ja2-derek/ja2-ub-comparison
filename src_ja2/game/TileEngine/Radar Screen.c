@@ -291,11 +291,14 @@ void RenderRadarScreen( )
 		return;
 	}
 
+/*
+JA25 No meanwhiles
 	if( AreInMeanwhile( ) == TRUE )
 	{
 		// in a meanwhile, don't render any map
 		fImageLoaded = FALSE;
 	}
+*/
 
 	if ( fInterfacePanelDirty == DIRTYLEVEL2 && fImageLoaded )
 	{

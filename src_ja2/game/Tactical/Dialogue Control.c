@@ -1278,10 +1278,13 @@ BOOLEAN TacticalCharacterDialogue( SOLDIERTYPE *pSoldier, UINT16 usQuoteNum )
 		return( FALSE );
 	}
 
+/*
+Ja25 no meanwhiles
 	if ( AreInMeanwhile( ) )
 	{
 		return( FALSE );
 	}
+*/
 
   if (pSoldier->bLife < CONSCIOUSNESS )
    return( FALSE );

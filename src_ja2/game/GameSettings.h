@@ -121,9 +121,9 @@ BOOLEAN GetCDLocation( );
 
 void DisplayGameSettings( );
 
-BOOLEAN MeanwhileSceneSeen( UINT8 ubMeanwhile );
+//BOOLEAN MeanwhileSceneSeen( UINT8 ubMeanwhile );
 
-BOOLEAN SetMeanwhileSceneSeen( UINT8 ubMeanwhile );
+//BOOLEAN SetMeanwhileSceneSeen( UINT8 ubMeanwhile );
 
 BOOLEAN	CanGameBeSaved();
 
