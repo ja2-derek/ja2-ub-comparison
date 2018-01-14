@@ -25,6 +25,8 @@
 		#include "Timer Control.h"
 #endif
 
+	#include "input.h"
+	#include "zmouse.h"
 
 #include "ExceptionHandling.h"
 
@@ -45,6 +47,7 @@ extern BOOLEAN gfIntendOnEnteringEditor;
 
 
 extern	BOOLEAN	CheckIfGameCdromIsInCDromDrive();
+extern  void    QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
 
 
 
@@ -76,6 +79,7 @@ RECT				rcWindow;
 UINT32		giStartMem;
 UINT8			gbPixelDepth;					// GLOBAL RUN-TIME SETTINGS
 
+UINT32		guiMouseWheelMsg;			// For mouse wheel messages
 
 BOOLEAN gfApplicationActive;
 BOOLEAN gfProgramIsRunning;
@@ -100,8 +104,21 @@ INT32 FAR PASCAL WindowProcedure(HWND hWindow, UINT16 Message, WPARAM wParam, LP
   if(gfIgnoreMessages)
 		return(DefWindowProc(hWindow, Message, wParam, lParam));
 
+	// ATE: This is for older win95 or NT 3.51 to get MOUSE_WHEEL Messages
+	if ( Message == guiMouseWheelMsg )
+	{
+      QueueEvent(MOUSE_WHEEL, wParam, lParam);
+			return( 0L );
+	}
+
 	switch(Message)
   {
+		case WM_MOUSEWHEEL:
+		{
+			QueueEvent(MOUSE_WHEEL, wParam, lParam);
+			break;
+		}
+		
 #ifdef WINDOWED_MODE
     case WM_MOVE:
 
@@ -315,6 +332,9 @@ BOOLEAN InitializeStandardGamingPlatform(HINSTANCE hInstance, int sCommandShow)
 		FastDebugMsg("FAILED : Initializing Game Manager");
 		return FALSE;
 	}
+
+	// Register mouse wheel message
+	guiMouseWheelMsg = RegisterWindowMessage( MSH_MOUSEWHEEL );
 
 	gfGameInitialized = TRUE;
 	
