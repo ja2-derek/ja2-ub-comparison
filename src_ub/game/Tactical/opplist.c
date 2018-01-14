@@ -4472,7 +4472,7 @@ void DebugSoldierPage4( )
 
 UINT8 MovementNoise( SOLDIERTYPE *pSoldier )
 {
- INT32	bStealthSkill, bRoll;
+ INT32	iStealthSkill, iRoll;
  UINT8	ubMaxVolume, ubVolume, ubBandaged, ubEffLife;
  INT8		bInWater = FALSE;
 
@@ -4481,17 +4481,17 @@ UINT8 MovementNoise( SOLDIERTYPE *pSoldier )
 		return( (UINT8) (MAX_MOVEMENT_NOISE - PreRandom( 2 )) );
 	}
 
-	bStealthSkill = 20 + 4 * EffectiveExpLevel( pSoldier ) + ((EffectiveDexterity( pSoldier ) * 4) / 10); // 24-100
-	//bStealthSkill = (5 * EffectiveExpLevel( pSoldier ) ) + ( EffectiveDexterity( pSoldier ) / 2);	// 5 - 100
+	iStealthSkill = 20 + 4 * EffectiveExpLevel( pSoldier ) + ((EffectiveDexterity( pSoldier ) * 4) / 10); // 24-100
+	//iStealthSkill = (5 * EffectiveExpLevel( pSoldier ) ) + ( EffectiveDexterity( pSoldier ) / 2);	// 5 - 100
 
 	// big bonus for those "extra stealthy" mercs
 	if ( pSoldier->ubBodyType == BLOODCAT )
 	{
-		bStealthSkill += 50;
+		iStealthSkill += 50;
 	}
 	else if (HAS_SKILL_TRAIT( pSoldier, STEALTHY ))
 	{
-		bStealthSkill += 25 * NUM_SKILL_TRAITS( pSoldier, STEALTHY );
+		iStealthSkill += 25 * NUM_SKILL_TRAITS( pSoldier, STEALTHY );
 	}
 
 
@@ -4505,30 +4505,30 @@ UINT8 MovementNoise( SOLDIERTYPE *pSoldier )
 	if (ubEffLife < 50)
 	{
 		// reduce effective stealth skill by up to 50% for low life
-		bStealthSkill -= (bStealthSkill * (50 - ubEffLife)) / 100;
+		iStealthSkill -= (iStealthSkill * (50 - ubEffLife)) / 100;
 	}
 
 	// if breath is below 50%
 	if (pSoldier->bBreath < 50)
 	{
 		// reduce effective stealth skill by up to 50%
-		bStealthSkill -= (bStealthSkill * (50 - pSoldier->bBreath)) / 100;
+		iStealthSkill -= (iStealthSkill * (50 - pSoldier->bBreath)) / 100;
 	}
 
 	// if sneaker is moving through water
 	if (Water( pSoldier->sGridNo ) )
 	{
-		bStealthSkill -= 10; // 10% penalty
+		iStealthSkill -= 10; // 10% penalty
 	}
 	else if (DeepWater( pSoldier->sGridNo ) )
 	{
-		bStealthSkill -= 20; // 10% penalty
+		iStealthSkill -= 20; // 10% penalty
 	}
 
 	if ( pSoldier->bDrugEffect[ DRUG_TYPE_ADRENALINE ] )
 	{
 		// minus 3 percent per bonus AP from adrenaline
-		bStealthSkill -= 3 * pSoldier->bDrugEffect[ DRUG_TYPE_ADRENALINE ];
+		iStealthSkill -= 3 * pSoldier->bDrugEffect[ DRUG_TYPE_ADRENALINE ];
 	}
 
 /*
@@ -4540,11 +4540,11 @@ UINT8 MovementNoise( SOLDIERTYPE *pSoldier )
 */
  //NumMessage("Modified Stealth = ",stealthSkill);
 
-	bStealthSkill = __max( bStealthSkill, 0 );
+	iStealthSkill = __max( iStealthSkill, 0 );
 
 	if (!pSoldier->bStealthMode)	// REGULAR movement
 	{
-		ubMaxVolume = MAX_MOVEMENT_NOISE - (bStealthSkill / 16);	// 9 - (0 to 6) => 3 to 9
+		ubMaxVolume = MAX_MOVEMENT_NOISE - (iStealthSkill / 16);	// 9 - (0 to 6) => 3 to 9
 
 		if (bInWater)
 		{
@@ -4574,20 +4574,20 @@ UINT8 MovementNoise( SOLDIERTYPE *pSoldier )
 	}
 	else			// in STEALTH mode
 	{
-		bRoll = (INT8) PreRandom(100);	// roll them bones!
+		iRoll = (INT8) PreRandom(100);	// roll them bones!
 
-		if (bRoll >= bStealthSkill)   // v1.13 modification: give a second chance!
+		if (iRoll >= iStealthSkill)   // v1.13 modification: give a second chance!
 		{
-			bRoll = (INT8) PreRandom(100);
+			iRoll = (INT8) PreRandom(100);
 		}
 
-		if (bRoll < bStealthSkill)
+		if (iRoll < iStealthSkill)
 		{
 			ubVolume = 0;	// made it, stayed quiet moving through this tile
 		}
 		else	// OOPS!
 		{
-			ubVolume = 1 + ((bRoll - bStealthSkill + 1) / 16);	// volume is 1 - 7 ... 
+			ubVolume = 1 + ((iRoll - iStealthSkill + 1) / 16);	// volume is 1 - 7 ... 
 			switch (pSoldier->usAnimState)
 			{
 				case CRAWLING:
