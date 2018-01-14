@@ -29,9 +29,9 @@ extern	UINT8			gubCheatLevel;
 #else
 
   // ATE: remove cheats unless we're doing a debug build
-	#define						INFORMATION_CHEAT_LEVEL( )			( gubCheatLevel >= 3 )
-	#define						CHEATER_CHEAT_LEVEL( )					( gubCheatLevel >= 5 )
-	#define						DEBUG_CHEAT_LEVEL( )					  ( gubCheatLevel >= 6 )
+	#define						INFORMATION_CHEAT_LEVEL( )			( gubCheatLevel >= 5 )
+	#define						CHEATER_CHEAT_LEVEL( )					( gubCheatLevel >= 6 )
+	#define						DEBUG_CHEAT_LEVEL( )					  ( gubCheatLevel >= 7 )
 	#define						RESET_CHEAT_LEVEL( )						( gubCheatLevel = 0 )
 #endif
 
