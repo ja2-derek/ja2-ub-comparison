@@ -14,6 +14,7 @@
 #define		MSG_BOX_FLAG_OKSKIP									0x0200			// Displays ok or skip (meanwhile) buttons
 #define		MSG_BOX_FLAG_GENERICCONTRACT				0x0400			// displays contract buttoin + 2 user-defined text buttons
 #define		MSG_BOX_FLAG_GENERIC								0x0800			// 2 user-defined text buttons
+#define		MSG_BOX_FLAG_IMPORT_CHARACTERS			0x1000	// 3 buttons.  Ask whether to start fresh, import, cancel
 
 // message box return codes
 #define		MSG_BOX_RETURN_OK									1					// ENTER or on OK button
@@ -21,6 +22,9 @@
 #define		MSG_BOX_RETURN_NO									3					// ESC, Right Click or NO button
 #define		MSG_BOX_RETURN_CONTRACT						4					// contract button
 #define		MSG_BOX_RETURN_LIE								5					// LIE BUTTON
+#define		MSG_BOX_RETURN_START_FRESH			6	//Start fresh
+#define		MSG_BOX_RETURN_IMPORT				7	//Import characters
+
 
 // message box style flags
 enum

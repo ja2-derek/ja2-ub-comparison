@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "JA2 All.h"
+	#include "_Ja25EnglishText.h"
 #else
 	#include "sgp.h"
 	#include "screenids.h"
@@ -56,6 +57,10 @@ void		LieMsgBoxCallback(GUI_BUTTON *btn, INT32 reason );
 void		NOMsgBoxCallback(GUI_BUTTON *btn, INT32 reason );
 void		NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason );
 void		MsgBoxClickCallback( MOUSE_REGION * pRegion, INT32 iReason );
+
+void		StartFreshMsgBoxCallback(GUI_BUTTON *btn, INT32 reason );
+void		ImportMsgBoxCallback(GUI_BUTTON *btn, INT32 reason );
+
 UINT32	ExitMsgBox( INT8 ubExitCode );
 UINT16	GetMSgBoxButtonWidth( INT32 iButtonImage );
 
@@ -624,6 +629,41 @@ INT32 DoMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 u
 			ForceButtonUnDirty( gMsgBox.uiNOButton );
 		}
 
+		if ( usFlags & MSG_BOX_FLAG_IMPORT_CHARACTERS )
+		{
+			sButtonX = ( usTextBoxWidth - ( MSGBOX_BUTTON_WIDTH + MSGBOX_BUTTON_WIDTH + MSGBOX_BUTTON_X_SEP ) ) / 3;
+			sButtonY = usTextBoxHeight - MSGBOX_BUTTON_HEIGHT - 10;
+
+			gMsgBox.uiYESButton = CreateIconAndTextButton( gMsgBox.iButtonImages, zNewButtonText[ NEW_BTN_TXT__START_FRESH ], FONT12ARIAL,
+															 ubFontColor, ubFontShadowColor,
+															 ubFontColor, ubFontShadowColor,
+															 TEXT_CJUSTIFIED,
+															 (INT16)(gMsgBox.sX + sButtonX ), (INT16)(gMsgBox.sY + sButtonY ), BUTTON_TOGGLE ,MSYS_PRIORITY_HIGHEST,
+															 DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)StartFreshMsgBoxCallback );
+			SetButtonCursor(gMsgBox.uiYESButton, usCursor);
+			ForceButtonUnDirty( gMsgBox.uiYESButton );
+
+
+			gMsgBox.uiNOButton = CreateIconAndTextButton( gMsgBox.iButtonImages, zNewButtonText[ NEW_BTN_TXT__IMPORT ], FONT12ARIAL,
+															 ubFontColor, ubFontShadowColor,
+															 ubFontColor, ubFontShadowColor,
+															 TEXT_CJUSTIFIED,
+															 (INT16)(gMsgBox.sX + sButtonX + ( MSGBOX_BUTTON_WIDTH + MSGBOX_BUTTON_X_SEP ) ), (INT16)(gMsgBox.sY + sButtonY ), BUTTON_TOGGLE ,MSYS_PRIORITY_HIGHEST,
+															 DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)ImportMsgBoxCallback );
+			SetButtonCursor(gMsgBox.uiNOButton, usCursor);
+			ForceButtonUnDirty( gMsgBox.uiNOButton );
+
+			gMsgBox.uiOKButton = CreateIconAndTextButton( gMsgBox.iButtonImages, zNewButtonText[ NEW_BTN_TXT__CANCEL ], FONT12ARIAL,
+															 ubFontColor, ubFontShadowColor,
+															 ubFontColor, ubFontShadowColor,
+															 TEXT_CJUSTIFIED,
+															 (INT16)(gMsgBox.sX + sButtonX + 2 * ( MSGBOX_BUTTON_WIDTH + MSGBOX_BUTTON_X_SEP ) ), (INT16)(gMsgBox.sY + sButtonY ), BUTTON_TOGGLE ,MSYS_PRIORITY_HIGHEST,
+															 DEFAULT_MOVE_CALLBACK, (GUI_CALLBACK)NOMsgBoxCallback );
+			SetButtonCursor(gMsgBox.uiOKButton, usCursor);
+			ForceButtonUnDirty( gMsgBox.uiOKButton );
+
+		}
+
 	}
 
 	InterruptTime();
@@ -783,6 +823,52 @@ void NumberedMsgBoxCallback(GUI_BUTTON *btn, INT32 reason )
 	
 }
 
+void ImportMsgBoxCallback(GUI_BUTTON *btn, INT32 reason )
+{
+	static BOOLEAN fLButtonDown = FALSE;
+
+	if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
+	{
+		btn->uiFlags |= BUTTON_CLICKED_ON;
+		fLButtonDown = TRUE;
+	}
+	else if( ( reason & MSYS_CALLBACK_REASON_LBUTTON_UP ) && fLButtonDown )
+	{
+		btn->uiFlags &= (~BUTTON_CLICKED_ON );
+
+		// OK, exit
+		gMsgBox.bHandled = MSG_BOX_RETURN_IMPORT;
+	}
+	else if ( reason & MSYS_CALLBACK_REASON_LOST_MOUSE )
+	{
+		fLButtonDown = FALSE;
+	}
+}
+
+
+void StartFreshMsgBoxCallback(GUI_BUTTON *btn, INT32 reason )
+{
+	static BOOLEAN fLButtonDown = FALSE;
+
+	if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
+	{
+		btn->uiFlags |= BUTTON_CLICKED_ON;
+		fLButtonDown = TRUE;
+	}
+	else if( ( reason & MSYS_CALLBACK_REASON_LBUTTON_UP ) && fLButtonDown )
+	{
+		btn->uiFlags &= (~BUTTON_CLICKED_ON );
+
+		// OK, exit
+		gMsgBox.bHandled = MSG_BOX_RETURN_START_FRESH;
+	}
+	else if ( reason & MSYS_CALLBACK_REASON_LOST_MOUSE )
+	{
+		fLButtonDown = FALSE;
+	}
+}
+
+
 UINT32	ExitMsgBox( INT8 ubExitCode )
 {
 	UINT32 uiDestPitchBYTES, uiSrcPitchBYTES;
@@ -859,6 +945,12 @@ UINT32	ExitMsgBox( INT8 ubExitCode )
 			RemoveButton( gMsgBox.uiNOButton );	
 		}
 
+		if ( gMsgBox.usFlags & MSG_BOX_FLAG_IMPORT_CHARACTERS )
+		{
+			RemoveButton( gMsgBox.uiYESButton );
+			RemoveButton( gMsgBox.uiNOButton );
+			RemoveButton( gMsgBox.uiOKButton );
+		}
 	}
  
 	// Delete button images
@@ -1079,6 +1171,12 @@ UINT32	MessageBoxScreenHandle( )
 			MarkAButtonDirty( gMsgBox.uiNOButton );
 		}
 
+		if ( gMsgBox.usFlags & MSG_BOX_FLAG_IMPORT_CHARACTERS )
+		{
+			MarkAButtonDirty( gMsgBox.uiYESButton );
+			MarkAButtonDirty( gMsgBox.uiNOButton );
+			MarkAButtonDirty( gMsgBox.uiOKButton );
+		}
 
 		RenderMercPopUpBoxFromIndex( gMsgBox.iBoxId, gMsgBox.sX, gMsgBox.sY,  FRAME_BUFFER );
 		//gMsgBox.fRenderBox = FALSE;
