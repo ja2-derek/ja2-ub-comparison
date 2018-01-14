@@ -2461,8 +2461,6 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 
 
 
-						pStructure->
-
 						if (pStructure->fFlags & STRUCTURE_OPEN)
 						{
 							// it's already open - this MIGHT be an error but probably not
