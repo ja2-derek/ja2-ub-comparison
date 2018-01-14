@@ -217,7 +217,7 @@ Ja25:	no loyalty
 			{
 /*
 JA25 No meanwhiles
-				if( 1 ) //!GetSectorFlagStatus( sMapX, sMapY, bMapZ, SF_SECTOR_HAS_BEEN_LIBERATED_ONCE ) )
+				if( 1 /*!GetSectorFlagStatus( sMapX, sMapY, bMapZ, SF_SECTOR_HAS_BEEN_LIBERATED_ONCE ) */)
 				{
 					// SAM site liberated for first time, schedule meanwhile					
 					HandleMeanWhileEventPostingForSAMLiberation( GetSAMIdFromSector( sMapX, sMapY, bMapZ ) );
@@ -257,6 +257,7 @@ Ja25:	no loyalty
 				UpdateRefuelSiteAvailability( );
 			}
 
+			//			SetSectorFlag( sMapX, sMapY, bMapZ, SF_SECTOR_HAS_BEEN_LIBERATED_ONCE );
 /*
 Ja25 No meanwhiles
 			if ( bMapZ == 0 && ( ( sMapY == MAP_ROW_M && (sMapX >= 2 && sMapX <= 6) ) || sMapY == MAP_ROW_N && sMapX == 6) )

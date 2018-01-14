@@ -2566,93 +2566,93 @@ Ja25 no loyalty
 				StartDialogueMessageBox( ubTargetNPC, usActionCode );
 				break;
 
-/*
-			case NPC_ACTION_REMOVE_JOE_QUEEN:
 
-				// Find queen and joe and remove from sector...
-				pSoldier = FindSoldierByProfileID( QUEEN, FALSE );
+//			case NPC_ACTION_REMOVE_JOE_QUEEN:
+//
+//				// Find queen and joe and remove from sector...
+//				pSoldier = FindSoldierByProfileID( QUEEN, FALSE );
+//
+//				if ( pSoldier != NULL )
+//				{
+//					TacticalRemoveSoldier( pSoldier->ubID ); 
+//				}
+//
+//				// Find queen and joe and remove from sector...
+//				pSoldier = FindSoldierByProfileID( JOE, FALSE );
+//
+//				if ( pSoldier != NULL )
+//				{
+//					TacticalRemoveSoldier( pSoldier->ubID ); 
+//				}
+//				break;
+//
+//
+//			case NPC_ACTION_REMOVE_ELLIOT_END_MEANWHILE:
+//
+//				// Find queen and joe and remove from sector...
+//				pSoldier = FindSoldierByProfileID( ELLIOT, FALSE );
+//
+//				if ( pSoldier != NULL )
+//				{
+//					TacticalRemoveSoldier( pSoldier->ubID ); 
+//				}
+//
+//				// End meanwhile....
+//				// End meanwhile....
+//				DeleteTalkingMenu();
+//				EndMeanwhile( );
+//				break;
+//			case NPC_ACTION_NO_SCI_FI_END_MEANWHILE:
+//
+//				if ( !( gGameOptions.fSciFi ) )
+//				{
+//					// End meanwhile....
+//					// End meanwhile....
+//					DeleteTalkingMenu();
+//					EndMeanwhile( );
+//				}
+//				else
+//				{
+//					TriggerNPCRecord( QUEEN, 8 );
+//				}
+//			break;
+//			case NPC_ACTION_TRIGGER_MARRY_DARYL_PROMPT:
+//				DeleteTalkingMenu();
+//				StartDialogueMessageBox( ubTargetNPC, usActionCode );
+//				break;
 
-				if ( pSoldier != NULL )
-				{
-					TacticalRemoveSoldier( pSoldier->ubID ); 
-				}
+//			case NPC_ACTION_HAVE_MARRIED_NPC_LEAVE_TEAM:
+//				
+//				// get the soldier
+//				pSoldier = FindSoldierByProfileID( gMercProfiles[ DARYL ].bNPCData, FALSE );
+//				pSoldier2 = gpDestSoldier;
+//
+//				if ( !pSoldier || !pSoldier2 )
+//				{
+//					return;
+//				}
+//
+//				//set the fact that the merc is being married ( used in the personnel screen )
+//				gMercProfiles[ pSoldier->ubProfile ].ubMiscFlags2 |= PROFILE_MISC_FLAG2_MARRIED_TO_HICKS;
+//
+//				AddHistoryToPlayersLog( HISTORY_MERC_MARRIED_OFF, pSoldier->ubProfile, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
+//
+//				// if Flo is going off with Daryl, then set that fact true
+//				if( pSoldier->ubProfile == 44 )
+//				{
+//					SetFactTrue( FACT_PC_MARRYING_DARYL_IS_FLO );
+//				}
+//
+//				HandleMoraleEvent( pSoldier, MORALE_MERC_MARRIED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+//
+//				UpdateDarrelScriptToGoTo( pSoldier );
+//				TriggerNPCRecord( DARREL, 10 );
+//
+//				//Since the married merc is leaving the team, add them to the departed list for the personnel screen
+//				AddCharacterToOtherList( pSoldier );
+//
+//				break;
 
-				// Find queen and joe and remove from sector...
-				pSoldier = FindSoldierByProfileID( JOE, FALSE );
-
-				if ( pSoldier != NULL )
-				{
-					TacticalRemoveSoldier( pSoldier->ubID ); 
-				}
-				break;
-
-
-			case NPC_ACTION_REMOVE_ELLIOT_END_MEANWHILE:
-
-				// Find queen and joe and remove from sector...
-				pSoldier = FindSoldierByProfileID( ELLIOT, FALSE );
-
-				if ( pSoldier != NULL )
-				{
-					TacticalRemoveSoldier( pSoldier->ubID ); 
-				}
-
-				// End meanwhile....
-				// End meanwhile....
-				DeleteTalkingMenu();
-				EndMeanwhile( );
-				break;
-			case NPC_ACTION_NO_SCI_FI_END_MEANWHILE:
-
-				if ( !( gGameOptions.fSciFi ) )
-				{
-					// End meanwhile....
-					// End meanwhile....
-					DeleteTalkingMenu();
-					EndMeanwhile( );
-				}
-				else
-				{
-					TriggerNPCRecord( QUEEN, 8 );
-				}
-			break;
-			case NPC_ACTION_TRIGGER_MARRY_DARYL_PROMPT:
-				DeleteTalkingMenu();
-				StartDialogueMessageBox( ubTargetNPC, usActionCode );
-				break;
-/*
-			case NPC_ACTION_HAVE_MARRIED_NPC_LEAVE_TEAM:
-				
-				// get the soldier
-				pSoldier = FindSoldierByProfileID( gMercProfiles[ DARYL ].bNPCData, FALSE );
-				pSoldier2 = gpDestSoldier;
-
-				if ( !pSoldier || !pSoldier2 )
-				{
-					return;
-				}
-
-				//set the fact that the merc is being married ( used in the personnel screen )
-				gMercProfiles[ pSoldier->ubProfile ].ubMiscFlags2 |= PROFILE_MISC_FLAG2_MARRIED_TO_HICKS;
-
-				AddHistoryToPlayersLog( HISTORY_MERC_MARRIED_OFF, pSoldier->ubProfile, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
-
-				// if Flo is going off with Daryl, then set that fact true
-				if( pSoldier->ubProfile == 44 )
-				{
-					SetFactTrue( FACT_PC_MARRYING_DARYL_IS_FLO );
-				}
-
-				HandleMoraleEvent( pSoldier, MORALE_MERC_MARRIED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
-
-				UpdateDarrelScriptToGoTo( pSoldier );
-				TriggerNPCRecord( DARREL, 10 );
-
-				//Since the married merc is leaving the team, add them to the departed list for the personnel screen
-				AddCharacterToOtherList( pSoldier );
-
-				break;
-*/
 
 			case NPC_ACTION_TRIGGER_ANGEL_17_OR_18:
 				if (CheckFact( FACT_ANGEL_SOLD_VEST, ANGEL ))

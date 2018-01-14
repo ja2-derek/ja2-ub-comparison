@@ -1094,7 +1094,8 @@ void RemoveMercsInSector( )
 
 	// IF IT'S THE SELECTED GUY, MAKE ANOTHER SELECTED!
 	cnt = gTacticalStatus.Team[ gbPlayerNum ].bFirstID;
-  for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ gbPlayerNum ].bLastID; cnt++, pSoldier++)
+	// ATE: only for OUR guys.. the rest is taken care of in TrashWorld() when a new sector is added...
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ gbPlayerNum ].bLastID; cnt++, pSoldier++)
 	{	
 		if ( pSoldier->bActive  )
 		{

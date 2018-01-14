@@ -3975,7 +3975,7 @@ Ja25 no orta
 	}
 
 /*	
-Ja25 Npo meanwhiles
+Ja25 No meanwhiles
 	CheckForMeanwhileOKStart( );
 */
 	
@@ -11198,7 +11198,7 @@ BOOLEAN CanExtendContractForCharSlot( INT8 bCharNumber )
 
 	// if a vehicle, in transit, or a POW
 	if( ( pSoldier->uiStatusFlags & SOLDIER_VEHICLE ) ||
-//JA25: must allow the playter to be able to dismiss mercs while they are intransit
+//JA25: must allow the player to be able to dismiss mercs while they are intransit
 //			( pSoldier->bAssignment == IN_TRANSIT ) ||
 			( pSoldier->bAssignment == ASSIGNMENT_POW ) )
 	{

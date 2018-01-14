@@ -536,6 +536,7 @@ Ja25 No meanwhiles
 
 	CommonEnterCombatModeCode( );
 
+	//JA2Gold: use function to make sure flags turned off everywhere else
 	//pActingSoldier->uiStatusFlags |= SOLDIER_UNDERAICONTROL;
 	SetSoldierAsUnderAiControl( pActingSoldier );
 

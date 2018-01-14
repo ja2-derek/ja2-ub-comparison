@@ -1839,7 +1839,6 @@ Ja25 No meanwhiles
 
 					if( fCtrl )
 					{
-//Ja25: 						TestMeanWhile( 8 );
 					}
 					else
 					{
@@ -1850,17 +1849,6 @@ Ja25 No meanwhiles
 					}
 					break;
 
-/*
-Ja25: 
-				case F10:
-
-					if( fAlt )
-					{
-						TestMeanWhile( 9 );
-					}
-					break;
-#endif
-*/
 				case F11:
 
 					if( fAlt )

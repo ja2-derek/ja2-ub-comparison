@@ -957,8 +957,7 @@ BOOLEAN CheckConditionsForBattle( GROUP *pGroup )
 		if( !gbWorldSectorZ && PlayerMercsInSector( (UINT8)gWorldSectorX, (UINT8)gWorldSectorY, gbWorldSectorZ ) && 
 				pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY && 
 				curr )
-		{
-			//Reinforcements have arrived!
+		{//Reinforcements have arrived!
 			if( gTacticalStatus.fEnemyInSector )
 			{
 				HandleArrivalOfReinforcements( pGroup );

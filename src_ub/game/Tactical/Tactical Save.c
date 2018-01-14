@@ -1071,8 +1071,7 @@ BOOLEAN LoadCurrentSectorsInformationFromTempItemsFile()
 /*
 Ja25v no meanwhiles
 	if( AreInMeanwhile() )
-	{ 
-		//There will never be a temp file for the meanwhile scene, so return TRUE.  However,
+	{//There will never be a temp file for the meanwhile scene, so return TRUE.  However,
 		//set a flag to not save it either!
 		gfWasInMeanwhile = TRUE;
 

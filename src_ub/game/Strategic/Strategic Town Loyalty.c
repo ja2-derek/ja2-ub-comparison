@@ -133,7 +133,7 @@ UINT32 uiPercentLoyaltyDecreaseForCivMurder[]={
 */
 
 /*
-//Ja25:  New Towns, nio loyalty
+//Ja25:  New Towns, no loyalty
 
 // on a scale of 1-100, this is a measure of how much each town hates the Queen's opression & is willing to stand against it
 // it primarily controls the RATE of loyalty change in each town: the loyalty effect of the same events depends on it
@@ -761,7 +761,7 @@ void HandleMurderOfCivilian( SOLDIERTYPE *pSoldier, BOOLEAN fIntentional )
 	}
 
 /*
-Ja25 no town loayty
+Ja25 no town loyalty
 	// check if this town does use loyalty (to skip a lot of unnecessary computation)
 	if (!gfTownUsesLoyalty[ bTownId ])
 	{
