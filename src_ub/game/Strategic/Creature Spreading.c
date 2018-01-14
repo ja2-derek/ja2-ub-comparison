@@ -614,6 +614,17 @@ void AddCreaturesToBattle( UINT8 ubNumYoungMales, UINT8 ubNumYoungFemales, UINT8
 		}
 		else
 		{
+			gsCreatureInsertionCode = 0;
+			gsCreatureInsertionGridNo = 0;
+			gubNumCreaturesAttackingTown = 0;
+			gubYoungMalesAttackingTown = 0;
+			gubYoungFemalesAttackingTown = 0;
+			gubAdultMalesAttackingTown = 0;
+			gubAdultFemalesAttackingTown = 0;
+			gubCreatureBattleCode = CREATURE_BATTLE_CODE_NONE;
+			gubSectorIDOfCreatureAttack = 0;
+			AllTeamsLookForAll( FALSE );
+
 			Assert(0);
 			return;
 		}
@@ -825,9 +836,13 @@ void CreatureAttackTown( UINT8 ubSectorID, BOOLEAN fOverrideTest )
 		{ //This is the currently loaded sector.  All we have to do is change the music and insert 
 			//the creatures tactically.
 			if( guiCurrentScreen == GAME_SCREEN )
+			{
 				gubCreatureBattleCode = CREATURE_BATTLE_CODE_TACTICALLYADD;
+			}
 			else
+			{
 				gubCreatureBattleCode = CREATURE_BATTLE_CODE_PREBATTLEINTERFACE;
+			}
 		}
 		else
 		{
@@ -919,7 +934,8 @@ void EndCreatureQuest()
 {
 	CREATURE_DIRECTIVE *curr;
 	UNDERGROUND_SECTORINFO *pSector;
-	
+	INT32 i;
+
 	//By setting the lairID to -1, when it comes time to spread creatures,
 	//They will get subtracted instead.
 	giDestroyedLairID = giLairID;
@@ -943,6 +959,14 @@ void EndCreatureQuest()
 	if( pSector )
 	{
 		pSector->ubNumCreatures = 0;
+	}
+
+	//Also find and nuke all creatures on any surface levels!!!
+	//KM: Sept 3, 1999 patch
+	for( i = 0; i < 255; i++ )
+	{
+		SectorInfo[ i ].ubNumCreatures = 0;
+		SectorInfo[ i ].ubCreaturesInBattle = 0;
 	}
 }
 
@@ -1136,9 +1160,13 @@ BOOLEAN PrepareCreaturesForBattle()
 			return FALSE;  //Creatures don't attack overworld with this battle code.
 		pSector = FindUnderGroundSector( gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
 		if( !pSector )
+		{
 			return FALSE;
+		}
 		if( !pSector->ubNumCreatures )
+		{
 			return FALSE;
+		}
 		gfUseCreatureMusic = TRUE; //creatures are here, so play creature music
 		ubCreatureHabitat = pSector->ubCreatureHabitat;
 		ubNumCreatures = pSector->ubNumCreatures;
