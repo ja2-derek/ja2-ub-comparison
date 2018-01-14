@@ -383,9 +383,6 @@ UINT32 PlayVoice( void )
 	  switch( iCurrentVoices )
 		{
 		  case( 0 ):
-				//fVoiceAVisited = TRUE;
-				//swprintf( sString, L"Voice # %d is not done yet", iCurrentVoices + 1 );
-				//DoLapTopSystemMessageBox( MSG_BOX_LAPTOP_DEFAULT, sString, LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL );
 	     return( PlayJA2SampleFromFile( "Speech\\051_001.wav", RATE_11025, MIDVOLUME, 1 , MIDDLEPAN ) );	 
 		  break;
 			case( 1 ):
@@ -401,8 +398,6 @@ UINT32 PlayVoice( void )
     switch( iCurrentVoices )
 		{
 		  case( 0 ):
-				//	swprintf( sString, L"Voice # %d is not done yet", iCurrentVoices + 1 );
-				//DoLapTopSystemMessageBox( MSG_BOX_LAPTOP_DEFAULT, sString, LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL );
 				return( PlayJA2SampleFromFile( "Speech\\054_001.wav", RATE_11025, MIDVOLUME, 1 , MIDDLEPAN ) );	 
 	 
 		  break;
