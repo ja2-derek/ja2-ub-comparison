@@ -651,6 +651,7 @@ void BtnFlowerOrderSendButtonCallback(GUI_BUTTON *btn,INT32 reason)
 			if ( gubCurrentlySelectedFlowerLocation == 7 )
 			{
 /*
+ja25: no meanwhile, no meduna
 				// sent to meduna!
 				if ( gfFLoristCheckBox0Down )
 				{
