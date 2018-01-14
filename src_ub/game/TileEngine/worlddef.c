@@ -2325,7 +2325,9 @@ BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, B
 			strcat( szFilename, str );
 		}
 		if( ubLevel >= 4 )
+		{
 			strcat( szFilename, "_a" );
+		}
 	}
 
 	strcat( szFilename, ".dat" );
@@ -2450,7 +2452,9 @@ BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, B
 		{
 			LOADDATA( &ubRoomNum, pBuffer, 1 );
 			if( ubRoomNum > pSummary->ubNumRooms )
+			{
 				pSummary->ubNumRooms = ubRoomNum;
+			}
 		}
 	}
 
@@ -2469,7 +2473,9 @@ BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, B
 		//Important:  Saves the file position (byte offset) of the position where the numitems
 		//            resides.  Checking this value and comparing to usNumItems will ensure validity.
 		if( pSummary->usNumItems )
+		{
 			pSummary->uiNumItemsPosition = pBuffer - pBufferHead - 4;
+		}
 		//Skip the contents of the world items.
 		pBuffer += sizeof( WORLDITEM ) * pSummary->usNumItems;
 	}
@@ -3319,9 +3325,13 @@ BOOLEAN LoadWorld( UINT8	*puiFilename, BOOLEAN fOldMap, BOOLEAN fFatalErrorOnCao
 		gfBasement = FALSE;
 		gfCaves = FALSE;
 		if( !gfEditMode && guiCurrentScreen != MAPUTILITY_SCREEN )
+		{
 			ubAmbientLightLevel = GetTimeOfDayAmbientLightLevel();
+		}
 		else
+		{
 			ubAmbientLightLevel = 4;
+		}
 	}
 	if( uiFlags & MAP_WORLDLIGHTS_SAVED )
 	{
