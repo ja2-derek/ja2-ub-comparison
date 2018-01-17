@@ -742,7 +742,7 @@ UINT32	QuestDebugScreenHandle()
 		RenderQuestDebugSystem();
 
 		//At this point the background is pure, copy it to the save buffer
-		BlitBufferToBuffer( guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 );
+		BlitBufferToBuffer( guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 ); //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT
 
 	}
 	RestoreBackgroundRects();
@@ -1506,7 +1506,7 @@ void DisplaySectionLine( )
 
 	//draw the horizopntal line under the title
 	usStartX = 0;
-	usEndX = SCREEN_BUFFER_WIDTH-1;
+	usEndX = SCREEN_BUFFER_WIDTH-1; //OFFSET: UB uses SCREEN_BUFFER_WIDTH
 	usStartY = usEndY = 75;
 	LineDraw(FALSE, usStartX, usStartY, usEndX, usEndY, Get16BPPColor( FROMRGB( 255, 255, 255 ) ), pDestBuf);
 
@@ -3563,7 +3563,7 @@ void EnableQDSButtons()
 
 BOOLEAN DoQDSMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT8 ubFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-  SGPRect pCenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 };
+  SGPRect pCenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 }; //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT
   
 	// reset exit mode
 	gfExitQdsDueToMessageBox = TRUE;

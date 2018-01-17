@@ -8795,7 +8795,7 @@ void CheckAndUpdateTacticalAssignmentPopUpPositions( void )
 
 		if( gsAssignmentBoxesX + pDimensions2.iRight + pDimensions.iRight >= SCREEN_BUFFER_WIDTH )
 		{
-            gsAssignmentBoxesX = ( INT16 ) ( SCREEN_BUFFER_WIDTH - ( pDimensions2.iRight + pDimensions.iRight ) );
+            gsAssignmentBoxesX = ( INT16 ) ( SCREEN_BUFFER_WIDTH-1 - ( pDimensions2.iRight + pDimensions.iRight ) ); //OFFSET: UB uses SCREEN_BUFFER_WIDTH
 			SetRenderFlags( RENDER_FLAG_FULL );
 		}
 
@@ -8826,7 +8826,7 @@ void CheckAndUpdateTacticalAssignmentPopUpPositions( void )
 
 		if( gsAssignmentBoxesX + pDimensions2.iRight + pDimensions.iRight >= SCREEN_BUFFER_WIDTH )
 		{
-			gsAssignmentBoxesX = ( INT16 ) ( SCREEN_BUFFER_WIDTH - ( pDimensions2.iRight + pDimensions.iRight ) );
+			gsAssignmentBoxesX = ( INT16 ) ( SCREEN_BUFFER_WIDTH-1 - ( pDimensions2.iRight + pDimensions.iRight ) ); //OFFSET: UB uses SCREEN_BUFFER_WIDTH
 			SetRenderFlags( RENDER_FLAG_FULL );
 		}
 
@@ -8857,7 +8857,7 @@ void CheckAndUpdateTacticalAssignmentPopUpPositions( void )
 
 		if( gsAssignmentBoxesX + pDimensions2.iRight + pDimensions.iRight + pDimensions3.iRight >= SCREEN_BUFFER_WIDTH )
 		{
-			gsAssignmentBoxesX = ( INT16 ) ( SCREEN_BUFFER_WIDTH - ( pDimensions2.iRight + pDimensions.iRight + pDimensions3.iRight ) );
+			gsAssignmentBoxesX = ( INT16 ) ( SCREEN_BUFFER_WIDTH-1 - ( pDimensions2.iRight + pDimensions.iRight + pDimensions3.iRight ) ); //OFFSET: UB uses SCREEN_BUFFER_WIDTH
 			SetRenderFlags( RENDER_FLAG_FULL );
 		}
 

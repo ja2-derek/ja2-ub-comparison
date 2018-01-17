@@ -321,7 +321,7 @@ UINT32	SaveLoadScreenHandle()
 		PauseGame();
 
 		//save the new rect
-		BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT-40 );
+		BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-41 ); //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT-40
 	}
 
 	RestoreBackgroundRects();
@@ -600,8 +600,8 @@ Removed so that the user can click on it and get displayed a message that the qu
 */
 
 	//Create the screen mask to enable ability to righ click to cancel the sace game
-	MSYS_DefineRegion( &gSLSEntireScreenRegion, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, MSYS_PRIORITY_HIGH-10,
-							 CURSOR_NORMAL, MSYS_NO_CALLBACK, SelectedSLSEntireRegionCallBack ); 
+	MSYS_DefineRegion( &gSLSEntireScreenRegion, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1, MSYS_PRIORITY_HIGH-10,
+							 CURSOR_NORMAL, MSYS_NO_CALLBACK, SelectedSLSEntireRegionCallBack );  //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT
 	MSYS_AddRegion(&gSLSEntireScreenRegion); 
 
 
@@ -817,7 +817,7 @@ void			RenderSaveLoadScreen()
 
 	DisplaySaveGameList();
 
-	InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
+	InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 ); //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT
 }
 
 
@@ -1133,7 +1133,7 @@ BOOLEAN DoSaveLoadMessageBoxWithRect( UINT8 ubStyle, INT16 *zString, UINT32 uiEx
 
 BOOLEAN DoSaveLoadMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT16 usFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT };
+  SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 }; //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT
   
 	// do message box and return
   giSaveLoadMessageBox = DoMessageBox(  ubStyle,  zString,  uiExitScreen, ( UINT8 ) ( usFlags| MSG_BOX_FLAG_USE_CENTERING_RECT ),  ReturnCallback,  &CenteringRect );

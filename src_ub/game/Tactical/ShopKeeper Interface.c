@@ -974,8 +974,8 @@ ATM:
 
 
 	//Blanket the entire screen
-	MSYS_DefineRegion( &gSKI_EntireScreenMouseRegions, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT-40, MSYS_PRIORITY_HIGH-2,
-						 CURSOR_NORMAL, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK); 
+	MSYS_DefineRegion( &gSKI_EntireScreenMouseRegions, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-41, MSYS_PRIORITY_HIGH-2,
+						 CURSOR_NORMAL, MSYS_NO_CALLBACK, MSYS_NO_CALLBACK); //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT-40
 	MSYS_AddRegion( &gSKI_EntireScreenMouseRegions );
 
 
@@ -1108,8 +1108,8 @@ ATM:
 
 
 //Region to allow the user to drop items to the ground
-	MSYS_DefineRegion( &gArmsDealersDropItemToGroundMouseRegions, SKI_DROP_ITEM_TO_GROUND_START_X, SKI_DROP_ITEM_TO_GROUND_START_Y, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_WIDTH-40, MSYS_PRIORITY_HIGH,
-						 CURSOR_NORMAL, SelectArmsDealersDropItemToGroundMovementRegionCallBack, SelectArmsDealersDropItemToGroundRegionCallBack ); 
+	MSYS_DefineRegion( &gArmsDealersDropItemToGroundMouseRegions, SKI_DROP_ITEM_TO_GROUND_START_X, SKI_DROP_ITEM_TO_GROUND_START_Y, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-41, MSYS_PRIORITY_HIGH,
+						 CURSOR_NORMAL, SelectArmsDealersDropItemToGroundMovementRegionCallBack, SelectArmsDealersDropItemToGroundRegionCallBack ); //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_WIDTH-40 (!)
 //						 CURSOR_NORMAL, MSYS_NO_CALLBACK, SelectArmsDealersDropItemToGroundRegionCallBack ); 
 	MSYS_AddRegion( &gArmsDealersDropItemToGroundMouseRegions );
 
@@ -6307,7 +6307,7 @@ Ja25: No fredo
 
 BOOLEAN DoSkiMessageBox( UINT8 ubStyle, INT16 *zString, UINT32 uiExitScreen, UINT8 ubFlags, MSGBOX_CALLBACK ReturnCallback )
 {
-	SGPRect pCenteringRect= {0, 0, SCREEN_BUFFER_WIDTH, 339 };
+	SGPRect pCenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, 339 }; //OFFSET: UB uses SCREEN_BUFFER_WIDTH
 
 	// reset exit mode
 	gfExitSKIDueToMessageBox = TRUE;
@@ -6615,7 +6615,7 @@ void StartSKIDescriptionBox( void )
 
 	//if the current merc is too far away, dont shade the SM panel because it is already shaded
 	if( gfSMDisableForItems )
-		DrawHatchOnInventory( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT-178 );
+		DrawHatchOnInventory( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT-142 ); // OFFSET: UB uses SCREEN_BUFFER_HEIGHT-178
 	else
 		DrawHatchOnInventory( FRAME_BUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 

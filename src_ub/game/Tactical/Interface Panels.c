@@ -3677,7 +3677,7 @@ void RenderTEAMPanel( BOOLEAN fDirty )
 				}
 
 				// RENDER ON SAVE BUFFER!
-				SetFontDestBuffer( guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_HEIGHT, SCREEN_BUFFER_WIDTH, FALSE );
+				SetFontDestBuffer( guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, FALSE ); //OFFSET: UB uses SCREEN_BUFFER_HEIGHT (!) and SCREEN_BUFFER_WIDTH (!)
 				VarFindFontCenterCoordinates( (INT16)(sTEAMNamesXY[ posIndex ] + 2 ), (INT16)(sTEAMNamesXY[ posIndex + 1 ] ), TM_NAME_WIDTH, TM_NAME_HEIGHT, BLOCKFONT2, &sFontX, &sFontY, L"%s", pSoldier->name );
 				mprintf( sFontX, sFontY, L"%s", pSoldier->name );
 				gprintfRestore( sFontX, sFontY, L"%s", pSoldier->name );

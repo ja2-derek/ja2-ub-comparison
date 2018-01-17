@@ -468,7 +468,7 @@ BOOLEAN		EnterGIOScreen()
 	//REnder the screen once so we can blt ot to ths save buffer
 	RenderGIOScreen();
 
-	BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-41 );
+	BlitBufferToBuffer(guiRENDERBUFFER, guiSAVEBUFFER, 0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-41 ); //OFFSET: UB uses SCREEN_BUFFER_WIDTH and SCREEN_BUFFER_HEIGHT
 
 	gfGIOButtonsAllocated = TRUE;
 

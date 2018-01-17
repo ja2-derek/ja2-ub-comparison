@@ -3096,7 +3096,7 @@ void CreateTopMessage( UINT32 uiSurface, UINT8 ubType, UINT16 *psString )
 			sBarX++;
 
 			// Check sBarX, ( just as a precaution )
-			if ( sBarX > SCREEN_BUFFER_WIDTH )
+			if ( sBarX > SCREEN_BUFFER_WIDTH-1 ) //OFFSET: UB uses SCREEN_BUFFER_WIDTH
 			{
 				break;
 			}
