@@ -7171,6 +7171,11 @@ BOOLEAN ProcessImplicationsOfPCAttack( SOLDIERTYPE * pSoldier, SOLDIERTYPE ** pp
 		// rebel militia attacked by the player!
 		MilitiaChangesSides();
 	}
+	// JA2 Gold: fix Slay
+	else if ( (pTarget->bTeam == CIV_TEAM && pTarget->bNeutral) && pTarget->ubProfile == SLAY && pTarget->bLife >= OKLIFE && CheckFact( 155, 0 ) == FALSE )
+	{
+		TriggerNPCRecord( SLAY, 1 );
+	}
 	else if ( (pTarget->bTeam == CIV_TEAM) && (pTarget->ubCivilianGroup == 0) && (pTarget->bNeutral) && !( pTarget->uiStatusFlags & SOLDIER_VEHICLE ) )
 	{
 		if ( pTarget->ubBodyType == COW && gWorldSectorX == 10 && gWorldSectorY == MAP_ROW_F )
@@ -7181,10 +7186,6 @@ BOOLEAN ProcessImplicationsOfPCAttack( SOLDIERTYPE * pSoldier, SOLDIERTYPE ** pp
 		else if (pTarget->ubProfile == PABLO && pTarget->bLife >= OKLIFE && CheckFact( FACT_PABLO_PUNISHED_BY_PLAYER, 0 ) && !CheckFact( 38, 0 ) )
 		{
 			TriggerNPCRecord( PABLO, 3 );
-		}
-		else if ( pTarget->ubProfile == SLAY && pTarget->bLife >= OKLIFE && CheckFact( 155, 0 ) == FALSE )
-		{
-			TriggerNPCRecord( SLAY, 1 );
 		}
 		else
 		{
