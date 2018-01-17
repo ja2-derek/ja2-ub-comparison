@@ -671,7 +671,7 @@ void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 u
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, SCREEN_BUFFER_WIDTH*(iMessageOffset), SCREEN_BUFFER_WIDTH);
+	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
 
 	//Make a fake email that will contain the codes ( ie the merc ID )
 	FakeEmail.iFirstData = iFirstData;
@@ -705,7 +705,7 @@ void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, SCREEN_BUFFER_WIDTH*(iMessageOffset), SCREEN_BUFFER_WIDTH);
+	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
 
 	// add message to list
 	AddEmailMessage(iMessageOffset,iMessageLength, pSubject, iDate, ubSender, FALSE, 0, 0 );
@@ -732,7 +732,7 @@ void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, SCREEN_BUFFER_WIDTH*(iMessageOffset), SCREEN_BUFFER_WIDTH);
+	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
 
 	// add message to list
 	AddEmailMessage(iMessageOffset,iMessageLength, pSubject, iDate, ubSender, TRUE, 0, 0 );
