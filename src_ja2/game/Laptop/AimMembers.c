@@ -1057,6 +1057,8 @@ BOOLEAN	UpdateMercInfo(void)
 	DrawMoneyToScreen(gMercProfiles[gbCurrentSoldier].uiWeeklySalary, FEE_WIDTH, FEE_X, AGILITY_Y, AIM_M_NUMBER_FONT, AIM_M_COLOR_DYNAMIC_TEXT	);
 	DrawMoneyToScreen(gMercProfiles[gbCurrentSoldier].uiBiWeeklySalary, FEE_WIDTH, FEE_X, DEXTERITY_Y, AIM_M_NUMBER_FONT, AIM_M_COLOR_DYNAMIC_TEXT	);
 
+/*
+Ja25: no medical deposit required
 	//if medical deposit is required
 	if( gMercProfiles[gbCurrentSoldier].bMedicalDeposit )
 	{
@@ -1078,6 +1080,7 @@ BOOLEAN	UpdateMercInfo(void)
 		else
 			DisplayWrappedString(AIM_MEDICAL_DEPOSIT_X, AIM_MEDICAL_DEPOSIT_Y, AIM_MEDICAL_DEPOSIT_WIDTH, 2, AIM_FONT12ARIAL, AIM_M_COLOR_DYNAMIC_TEXT,  sMedicalString, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 	}
+*/
 
 	LoadMercBioInfo( gbCurrentSoldier, MercInfoString, AdditionalInfoString);
 	if( MercInfoString[0] != 0)
@@ -1805,13 +1808,16 @@ INT8 AimMemberHireMerc()
 
 	
 	//add an entry in the finacial page for the hiring of the merc
-	AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(), -( giContractAmount - gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount ) );
+	AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(), -( giContractAmount ) );
 	
+/*
+Ja25: no medical deposit requireds
 	if( gMercProfiles[ gbCurrentSoldier ].bMedicalDeposit )
 	{
 		//add an entry in the finacial page for the medical deposit
 		AddTransactionToPlayersBook(	MEDICAL_DEPOSIT, ubCurrentSoldier, GetWorldTotalMin(), -(gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount) );
 	}
+*/
 
 	//add an entry in the history page for the hiring of the merc
 	AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_AIM, ubCurrentSoldier, GetWorldTotalMin(), -1, -1 );
@@ -1986,11 +1992,14 @@ UINT32 DisplayMercChargeAmount()
 		else if( gubContractLength == AIM_CONTRACT_LENGTH_TWO_WEEKS)
 			giContractAmount = gMercProfiles[gbCurrentSoldier].uiBiWeeklySalary;
 
+/*
+JA25 no medical deposit required
 		// if there is a medical deposit, add it in
 		if( gMercProfiles[ gbCurrentSoldier ].bMedicalDeposit )
 		{
 			giContractAmount += gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount;
 		}
+*/
 
 		//If hired with the equipment, add it in aswell
 		if( gfBuyEquipment )
@@ -2007,9 +2016,12 @@ UINT32 DisplayMercChargeAmount()
 	//if the merc hasnt just been hired 
 //	if( FindSoldierByProfileID( gbCurrentSoldier, TRUE ) == NULL )
 	{
+/*
+JA25 no medical deposit required
 		if( gMercProfiles[ gbCurrentSoldier ].bMedicalDeposit )
 			swprintf(wTemp, L"%s %s", wDollarTemp, VideoConfercingText[AIM_MEMBER_WITH_MEDICAL] );
 		else
+*/
 			swprintf(wTemp, L"%s", wDollarTemp );
 
 		DrawTextToScreen(wTemp, AIM_CONTRACT_CHARGE_AMOUNNT_X+1, AIM_CONTRACT_CHARGE_AMOUNNT_Y+3, 0, AIM_M_VIDEO_CONTRACT_AMOUNT_FONT, AIM_M_VIDEO_CONTRACT_AMOUNT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);

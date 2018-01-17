@@ -1455,6 +1455,8 @@ void RenderIconsForUpperLeftCornerPiece( INT8 bCharNumber )
 		BltVideoObject( guiSAVEBUFFER, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y, VO_BLT_SRCTRANSPARENCY, NULL );
 	}
 
+/*
+JA25: No medical deposit, and no insurance
 	// if merc has life insurance
 	if( Menptr[ gCharactersList[ bCharNumber ].usSolID ].usLifeInsurance > 0 )
 	{
@@ -1468,6 +1470,7 @@ void RenderIconsForUpperLeftCornerPiece( INT8 bCharNumber )
 		// draw medical deposit icon
 		BltVideoObject( guiSAVEBUFFER, hHandle, 1, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y + ( 2 * CHAR_ICON_SPACING ), VO_BLT_SRCTRANSPARENCY, NULL );	
 	}
+*/
 }
 
 
@@ -2198,13 +2201,16 @@ void DrawCharacterInfo(INT16 sCharNumber)
 
 
 	// medical deposit
-	if( gMercProfiles[ Menptr[ gCharactersList[ sCharNumber ].usSolID ].ubProfile ].sMedicalDepositAmount > 0 )
+//	if( gMercProfiles[ Menptr[ gCharactersList[ sCharNumber ].usSolID ].ubProfile ].sMedicalDepositAmount > 0 )
 	{
-		swprintf(sString, L"%d", gMercProfiles[ Menptr[ gCharactersList[ sCharNumber ].usSolID ].ubProfile ].sMedicalDepositAmount );
+//JA25: No more medical deposit
+//		swprintf(sString, L"%d", gMercProfiles[ Menptr[ gCharactersList[ sCharNumber ].usSolID ].ubProfile ].sMedicalDepositAmount );
+
+		swprintf( sString, L"%s", gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
 
 		// insert commas and dollar sign
-		InsertCommasForDollarFigure( sString );
-		InsertDollarSignInToString( sString );
+//		InsertCommasForDollarFigure( sString );
+//		InsertDollarSignInToString( sString );
 
 		FindFontRightCoordinates(CHAR_MEDICAL_X, CHAR_MEDICAL_Y, CHAR_MEDICAL_WID, CHAR_MEDICAL_HEI, sString, CHAR_FONT, &usX, &usY); 
 		DrawString(sString,usX,CHAR_MEDICAL_Y, CHAR_FONT);

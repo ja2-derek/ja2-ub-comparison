@@ -38,7 +38,7 @@
 #endif
 
 
-void CalculateMedicalDepositRefund( SOLDIERTYPE *pSoldier );
+//JA25: void CalculateMedicalDepositRefund( SOLDIERTYPE *pSoldier );
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement( SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton );
 void MercDepartEquipmentBoxCallBack( UINT8 bExitValue );
 BOOLEAN HandleFiredDeadMerc( SOLDIERTYPE *pSoldier );
@@ -948,7 +948,7 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 	else
 	{
 		//Determine how much of a Medical deposit is going to be refunded to the player
-		CalculateMedicalDepositRefund( pSoldier );
+//Ja25: No medical deposit refund		CalculateMedicalDepositRefund( pSoldier );
 	}
 
 	//remove the merc from the tactical 
@@ -976,6 +976,8 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 }
 
 
+/*
+Ja25: no longer have medical deposit
 void CalculateMedicalDepositRefund( SOLDIERTYPE *pSoldier )
 {
 	INT32		iRefundAmount=0;
@@ -1017,7 +1019,7 @@ void CalculateMedicalDepositRefund( SOLDIERTYPE *pSoldier )
 		AddEmailWithSpecialData( AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND, AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND_LENGTH, AIM_SITE, GetWorldTotalMin(), iRefundAmount, pSoldier->ubProfile );
 	}
 }
-
+*/
 
 
 void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement( SOLDIERTYPE *pSoldier, BOOLEAN fAddRehireButton )
