@@ -123,6 +123,7 @@ void DestroySlideBarMouseRegions( void );
 void SetAttributes( void );
 void DrawBonusPointsRemaining( void );
 void SetGeneratedCharacterAttributes( void );
+INT32 DetermineNewValue( INT32 iNewX );
 
 // callbacks
 void BtnIMPAttributeFinishCallback(GUI_BUTTON *btn,INT32 reason);
@@ -264,8 +265,7 @@ void HandleIMPAttributeSelection( void )
 
 			// get old stat value
 		  iCurrentAttributeValue = GetCurrentAttributeValue( giCurrentlySelectedStat );
-			sNewX = sNewX - ( SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X );
-      iNewValue = ( sNewX * 50 ) / BASE_SKILL_PIXEL_UNIT_SIZE + 35;
+			iNewValue = DetermineNewValue( sNewX );
 
 			//changed, move mouse region if change large enough
       if( iCurrentAttributeValue != iNewValue )
@@ -1420,8 +1420,8 @@ void SliderRegionButtonCallback( MOUSE_REGION * pRegion, INT32 iReason )
 
 			// get old stat value
 		  iCurrentAttributeValue = GetCurrentAttributeValue( iAttribute );
-			sNewX = sNewX - ( SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X );
-      iNewValue = ( sNewX * 50 ) / BASE_SKILL_PIXEL_UNIT_SIZE + 35;
+
+			iNewValue = DetermineNewValue( sNewX );
 
 			// chenged, move mouse region if change large enough
       if( iCurrentAttributeValue != iNewValue )
@@ -1479,7 +1479,7 @@ void SliderRegionButtonCallback( MOUSE_REGION * pRegion, INT32 iReason )
 		iCurrentAttributeValue = GetCurrentAttributeValue( iAttribute );
     
 		// set the new attribute value based on position of mouse click
-    iNewAttributeValue = ( ( sX - SKILL_SLIDE_START_X ) * 50 ) / BASE_SKILL_PIXEL_UNIT_SIZE;
+		iNewAttributeValue = DetermineNewValue( sX );
 
 		// too high, reset to 85
 		if( iNewAttributeValue > 85 )
@@ -1731,3 +1731,27 @@ void StatAtZeroBoxCallBack( UINT8 bExitValue )
 
 	return;
 }
+
+INT32 DetermineNewValue( INT32 iNewX )
+{
+	INT32 iNewValue=0;
+	INT32	iStartLoc = SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X;
+	INT32 iPositionX = iNewX - iStartLoc;
+	FLOAT fPercentOfBar=0.0f;
+
+
+	fPercentOfBar = iPositionX / ( FLOAT)( BAR_WIDTH - SLIDER_BAR_WIDTH );
+
+	iNewValue = (INT32)( fPercentOfBar * ( MAX_ATTIBUTEPOINT - (FLOAT)MIN_ATTIBUTEPOINT ) );
+
+	iNewValue += MIN_ATTIBUTEPOINT;
+
+	// too high, reset to MAX_ATTIBUTEPOINT
+	if( iNewValue > MAX_ATTIBUTEPOINT )
+	{
+		iNewValue = MAX_ATTIBUTEPOINT;
+	}
+
+	return( iNewValue );
+}
+
