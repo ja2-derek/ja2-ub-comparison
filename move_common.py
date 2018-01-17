@@ -12,7 +12,7 @@ def run_ret(args):
     ret = subprocess.run(args, stdout=subprocess.PIPE)
     #print(ret)
     return ret.returncode
-    
+
 
 def diff(path1, path2):
     args = ["diff", "-wBq", path1, path2]
@@ -20,55 +20,75 @@ def diff(path1, path2):
     #Note: 1 is different, 0 is same
 
 
-def scan_folder(sub_path):
-    print("scan_folder", sub_path)
-    for item in sorted(os.listdir(os.path.join(DIR_JA2, sub_path))):
+# Similar to os.walk()
+#   returns pairs of files in both folders
+def scan_folder(sub_path, base1, base2):
+    #print("scan_folder", sub_path, base1, base2)
+    ret = []
+
+    for item in sorted(os.listdir(os.path.join(base1, sub_path))):
         item_full_path = os.path.join(sub_path, item)
-        item_full_path_ja2 = os.path.join(DIR_JA2, item_full_path)
-        #print("item_full_path_ja2", item_full_path_ja2)
+        path1 = os.path.join(base1, item_full_path)
+        #print("path1", path1)
         # Handle directory:
-        if os.path.isdir(item_full_path_ja2):
-            scan_folder(item_full_path)
+        if os.path.isdir(path1):
+            ret += scan_folder(item_full_path, base1, base2)
             continue
 
-        item_full_path_ub = os.path.join(DIR_UB, item_full_path)
+        path2 = os.path.join(base2, item_full_path)
+
+        # Check if file is also in base2:
+        if not os.path.isfile(path2):
+            continue
+
+        ret += [(path1, path2)]
+    return ret
+
+
+def move_common(sub_path):
+    files = scan_folder(sub_path, DIR_JA2, DIR_UB)
+    for no, (path1, path2) in enumerate(files):
+        if no % 25 == 0:
+            print("{: 3}% done".format(int(100*no/len(files))))
 
         # Check if file is also in DIR_UB:
-        if not os.path.isfile(item_full_path_ub):
+        if not os.path.isfile(path2):
             continue
 
-        #print(item_full_path_ja2)
-
-        ret = diff(item_full_path_ja2, item_full_path_ub)
-        #print("  ", ret)
+        ret = diff(path1, path2)
         if ret == 1: # files are different
             continue
 
 
-        print("  ", item_full_path_ja2)
-        
-        item_full_path_common = os.path.join(DIR_COMMON, item_full_path)
-        
-        if os.path.exists(item_full_path_common):
+        print("  ", path1)
+
+        path3 = path1[len(DIR_JA2)+1:]
+
+        path3 = os.path.join(DIR_COMMON, path3)
+
+        if os.path.exists(path3):
             raise Exception("Common file should not exist.")
-        
-        item_common_dir = os.path.dirname(item_full_path_common)
-        
+
+        item_common_dir = os.path.dirname(path3)
+
         if not os.path.isdir(item_common_dir):
             os.makedirs(item_common_dir)
         #print(item_common_dir)
-        
-        print("->", item_full_path_common)
+
+        print("->", path3)
 
         #continue
-        
-        args = ["git", "mv", item_full_path_ja2, item_full_path_common]
-        ret = run_ret(args)
-        
-        if ret == 0: # success
-            args = ["git", "rm", item_full_path_ub]
-            run_ret(args)
 
+        args = ["git", "mv", path1, path3]
+        #print(args)
+        ret = run_ret(args)
+
+        ret = 0
+
+        if ret == 0: # success
+            args = ["git", "rm", path2]
+            #print(args)
+            run_ret(args)
 
 
 def main():
@@ -84,7 +104,7 @@ def main():
     if not os.path.isdir(DIR_UB):
         raise Exception(DIR_UB + " is not a directory.")
 
-    scan_folder("")
+    move_common("")
 
 if __name__ == "__main__":
     main()
