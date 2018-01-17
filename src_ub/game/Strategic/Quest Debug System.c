@@ -422,8 +422,6 @@ UINT16 gusQuestDebugBlue;
 UINT16 gusQuestDebugLtBlue; 
 UINT16 gusQuestDebugDkBlue; 
 
-//UINT16	gusFactAtTopOfList;
-
 //INT16		gsCurScrollBoxY=0;
 
 
