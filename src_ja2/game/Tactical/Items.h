@@ -177,5 +177,7 @@ extern void ActivateXRayDevice( SOLDIERTYPE * pSoldier );
 extern void TurnOffXRayEffects( SOLDIERTYPE * pSoldier );
 extern INT8 FindLaunchableAttachment( OBJECTTYPE * pObj, UINT16 usWeapon );
 
+void DamageObj( OBJECTTYPE * pObj, INT8 bAmount );
+
 #endif
 
