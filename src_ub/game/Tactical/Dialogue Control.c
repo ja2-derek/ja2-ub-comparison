@@ -697,7 +697,7 @@ void HandleDialogue( )
 		}
 /*
 Ja25: no mike
-		if ( gfMikeShouldSayHi )
+		if ( gfMikeShouldSayHi == TRUE )
 		{
 			SOLDIERTYPE * pMike;
 			INT16	sPlayerGridNo;
@@ -714,7 +714,8 @@ Ja25: no mike
 					{
 						InitiateConversation( pMike, MercPtrs[ ubPlayerID ], NPC_INITIAL_QUOTE, 0 );
 						gMercProfiles[ pMike->ubProfile ].ubMiscFlags2 |= PROFILE_MISC_FLAG2_SAID_FIRSTSEEN_QUOTE;
-						gfMikeShouldSayHi = FALSE;
+						// JA2Gold: special hack value of 2 to prevent dialogue from coming up more than once
+						gfMikeShouldSayHi = 2;
 					}
 				}
 			}
@@ -2062,18 +2063,17 @@ BOOLEAN GetDialogue( UINT8 ubCharacterNum, UINT16 usQuoteNum, UINT32 iDataSize, 
 
   // Double check it exists....
 
-
+/*
   if ( !FileExists( pFilename ) )
   {
 		CHAR8 sString[512];
 
-		sprintf( sString, "ERROR PLEASE REPORT THIS!!: Missing file for character # %d, quote # %d", ubCharacterNum, usQuoteNum );
-
+		sprintf( sString, "ERROR: Missing file for character # %d, quote # %d", ubCharacterNum, usQuoteNum );
     ShowCursor(TRUE);
     ShowCursor(TRUE);
     ShutdownWithErrorBox( sString );
   }
-
+*/
 
   // get speech if applicable
 	if ( gGameSettings.fOptions[ TOPTION_SPEECH ] )
