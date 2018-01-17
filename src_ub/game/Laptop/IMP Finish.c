@@ -89,7 +89,7 @@ void EnterIMPFinish( void )
   
 	// set review mode
 	fReviewStats = TRUE;
-	iCurrentProfileMode = IMP__FINISH;
+	iCurrentProfileMode = 5;
 
 	// note that we are in fact done char generation
 	fFinishedCharGeneration = TRUE;
@@ -324,7 +324,7 @@ void BtnIMPFinishDoneCallback(GUI_BUTTON *btn,INT32 reason)
       iCurrentImpPage = IMP_CONFIRM;
 			CreateACharacterFromPlayerEnteredStats( );
 			fButtonPendingFlag = TRUE;
-			iCurrentProfileMode = IMP__REGISTRY;			
+			iCurrentProfileMode = 0;
 			fFinishedCharGeneration = FALSE;
 			//ResetCharacterStats( );
 		}
@@ -400,7 +400,7 @@ void BtnIMPFinishAttributesCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
   // if not this far in char generation, don't alot ANY action
-	if( iCurrentProfileMode < IMP__ATTRIBUTES )
+	if( iCurrentProfileMode < 2 )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		return;
@@ -431,7 +431,7 @@ void BtnIMPFinishPortraitCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
   // if not this far in char generation, don't alot ANY action
-	if( iCurrentProfileMode < IMP__PORTRAIT )
+	if( iCurrentProfileMode < 3 )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 	
@@ -465,7 +465,7 @@ void BtnIMPFinishVoiceCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
   // if not this far in char generation, don't alot ANY action
-	if( iCurrentProfileMode < IMP__PORTRAIT )
+	if( iCurrentProfileMode < 3 )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		fButtonPendingFlag = TRUE;
@@ -681,7 +681,7 @@ void FinishMessageBoxCallBack( UINT8 bExitValue )
 	{
 		iCurrentImpPage = IMP_HOME_PAGE;
 		fButtonPendingFlag = TRUE;
-		iCurrentProfileMode = IMP__REGISTRY;		
+		iCurrentProfileMode = 0;
 		fFinishedCharGeneration = FALSE;
 		ResetCharacterStats( );
 	}

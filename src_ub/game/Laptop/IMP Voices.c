@@ -353,7 +353,7 @@ void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn,INT32 reason)
 			iCurrentImpPage = IMP_MAIN_PAGE;
 
 			// if we are already done, leave
-	    if( iCurrentProfileMode == IMP__FINISH )
+	    if( iCurrentProfileMode == 5 )
 			{
 	      iCurrentImpPage = IMP_FINISH;
 			} 
@@ -365,20 +365,20 @@ void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn,INT32 reason)
 				}
 				else
 				{
-					iCurrentProfileMode = IMP__PERSONALITY;
+					iCurrentProfileMode = 1;
 				}
 			}
 /*
 			// current mode now is voice
-		  else if( iCurrentProfileMode < IMP__PORTRAIT )
+		  else if( iCurrentProfileMode < 3 )
 			{
-				iCurrentProfileMode = IMP__PORTRAIT;
+				iCurrentProfileMode = 3;
 			}
 
-			else if( iCurrentProfileMode == IMP__PORTRAIT )
+			else if( iCurrentProfileMode == 3 )
 			{
 				// all done profiling
-				iCurrentProfileMode = IMP__VOICE;
+				iCurrentProfileMode = 4;
 				iCurrentImpPage = IMP_FINISH;
 			}
 */
@@ -401,8 +401,8 @@ void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn,INT32 reason)
 BOOLEAN CameBackToVoicePageButNotFinished()
 {
 	//if we are in a page that comes after this one
-	if( iCurrentProfileMode == IMP__PERSONALITY ||
-			iCurrentProfileMode == IMP__ATTRIBUTES )
+	if( iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 2 )
 	{
 		return( TRUE );
 	}

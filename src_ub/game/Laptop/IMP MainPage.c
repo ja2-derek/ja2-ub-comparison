@@ -81,7 +81,7 @@ BOOLEAN CheckIfFinishedCharacterGeneration( void );
 	5 - Done
 	*/
 
-INT32 iCurrentProfileMode = IMP__REGISTRY;
+INT32 iCurrentProfileMode = 0;
 
 
 
@@ -191,7 +191,7 @@ void CreateIMPMainPageButtons( void )
 */
 
 	//Registry/Begin button
-	if(( iCurrentProfileMode == IMP__REGISTRY )||( iCurrentProfileMode > IMP__ATTRIBUTES) )
+	if(( iCurrentProfileMode == 0 )||( iCurrentProfileMode > 2) )
 	{
 	  giIMPMainPageButton[1] = CreateIconAndTextButton( giIMPMainPageButtonImage[ 1 ], pImpButtonText[ 1 ], FONT12ARIAL, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
@@ -283,7 +283,7 @@ void CreateIMPMainPageButtons( void )
 										BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageVoiceCallback);
   */
 
-	if( iCurrentProfileMode != IMP__VOICE		&&	iCurrentProfileMode != IMP__PORTRAIT )
+	if( iCurrentProfileMode != 4		&&	iCurrentProfileMode != 3 )
 	{
 		swprintf( sString, pImpButtonText[ 5 ], iCurrentVoices + 1 );
 	}
@@ -380,7 +380,7 @@ void BtnIMPMainPageBackCallback(GUI_BUTTON *btn,INT32 reason)
       btn->uiFlags&=~(BUTTON_CLICKED_ON);
       iCurrentImpPage = IMP_HOME_PAGE;
 			fButtonPendingFlag = TRUE;
-			iCurrentProfileMode = IMP__REGISTRY;
+			iCurrentProfileMode = 0;
 			fFinishedCharGeneration = FALSE;
 		  ResetCharacterStats( );
 		}
@@ -409,7 +409,7 @@ void BtnIMPMainPageBeginCallback(GUI_BUTTON *btn,INT32 reason)
       btn->uiFlags&=~(BUTTON_CLICKED_ON);
 			
 			// are we going to change name, or do we have to start over from scratch
-			if( iCurrentProfileMode > IMP__ATTRIBUTES )
+			if( iCurrentProfileMode > 2 )
 			{
 				// too far along, restart
         DoLapTopMessageBox( MSG_BOX_IMP_STYLE, pImpPopUpStrings[ 1 ], LAPTOP_SCREEN, MSG_BOX_FLAG_YESNO, BeginMessageBoxCallBack);
@@ -449,7 +449,7 @@ void BtnIMPMainPagePersonalityCallback(GUI_BUTTON *btn,INT32 reason)
 
 /*	
   // if not this far in char generation, don't alot ANY action
-	if( iCurrentProfileMode != IMP__PERSONALITY )
+	if( iCurrentProfileMode != 1 )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		return;
@@ -479,7 +479,7 @@ void BtnIMPMainPageAttributesCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
   // if not this far in char generation, don't alot ANY action
-	if( iCurrentProfileMode < IMP__ATTRIBUTES )
+	if( iCurrentProfileMode < 2 )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		return;
@@ -510,7 +510,7 @@ void BtnIMPMainPagePortraitCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
   // if not this far in char generation, don't alot ANY action
-	if( ( iCurrentProfileMode != IMP__PORTRAIT )&&( iCurrentProfileMode != IMP__VOICE ) && ( iCurrentProfileMode > IMP__FINISH ) )
+	if( ( iCurrentProfileMode != 3 )&&( iCurrentProfileMode != 4 ) && ( iCurrentProfileMode > 5 ) )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		return;
@@ -542,7 +542,7 @@ void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
   // if not this far in char generation, don't alot ANY action
-	if( ( iCurrentProfileMode != IMP__PORTRAIT ) && ( iCurrentProfileMode > IMP__FINISH ) )
+	if( ( iCurrentProfileMode != 3 ) && ( iCurrentProfileMode > 5 ) )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		return;
@@ -571,7 +571,7 @@ void NextProfilingMode( void )
   // this function will change to mode the player is in for profiling
 	
 	// if less than done
-  if(iCurrentProfileMode < IMP__VOICE)
+  if(iCurrentProfileMode < 4)
     iCurrentProfileMode++;
 	
 	return;
@@ -582,7 +582,7 @@ BOOLEAN CheckIfFinishedCharacterGeneration( void )
   // this function checks to see if character is done character generation
 	
 	// are we done character generation
-	if( iCurrentProfileMode == IMP__FINISH )
+	if( iCurrentProfileMode == 5 )
 	{
 		// yes
     return ( TRUE );
@@ -631,7 +631,7 @@ void UpDateIMPMainPageButtons( void )
   switch(  iCurrentProfileMode )
 	{
 		//begin
-		case IMP__REGISTRY:
+		case 0:
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
@@ -639,7 +639,7 @@ void UpDateIMPMainPageButtons( void )
 		break;
 
 		//Personality ( 3RD BUTTON )
-		case IMP__PERSONALITY:
+		case 1:
 			EnableButton( giIMPMainPageButton[2] );
 			EnableButton( giIMPMainPageButton[4] );
 			EnableButton( giIMPMainPageButton[5] );
@@ -656,7 +656,7 @@ void UpDateIMPMainPageButtons( void )
 		break;
 
 		//Attributes ( 4th button )
-		case IMP__ATTRIBUTES:
+		case 2:
 			EnableButton( giIMPMainPageButton[2] );
 			EnableButton( giIMPMainPageButton[4] );
 			EnableButton( giIMPMainPageButton[5] );
@@ -674,7 +674,7 @@ void UpDateIMPMainPageButtons( void )
 		break;
 
 		//Portrait ( ist button
-		case IMP__PORTRAIT:
+		case 3:
 //			EnableButton( giIMPMainPageButton[3] );
 		  EnableButton( giIMPMainPageButton[4] );
 			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
@@ -690,7 +690,7 @@ void UpDateIMPMainPageButtons( void )
 		break;
 
 		//Voice ( 2nd button )
-		case IMP__VOICE:
+		case 4:
 			EnableButton( giIMPMainPageButton[4] );
 			EnableButton( giIMPMainPageButton[5] );
 
@@ -716,7 +716,7 @@ void BeginMessageBoxCallBack( UINT8 bExitValue )
   if( bExitValue == MSG_BOX_RETURN_YES )
 	{
 		iCurrentImpPage = IMP_BEGIN;
-    iCurrentProfileMode = IMP__REGISTRY;
+    iCurrentProfileMode = 0;
 	}
   
 	else if( bExitValue == MSG_BOX_RETURN_OK )
@@ -824,10 +824,10 @@ BOOLEAN LoadCharacterPortraitForMainPage( void )
 
 BOOLEAN IMP_CanWeDisplayPortrait( )
 {
-	if( iCurrentProfileMode == IMP__VOICE || 
-			iCurrentProfileMode == IMP__ATTRIBUTES || 
-			iCurrentProfileMode == IMP__PERSONALITY || 
-			iCurrentProfileMode == IMP__FINISH )
+	if( iCurrentProfileMode == 4 ||
+			iCurrentProfileMode == 2 ||
+			iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 5 )
 	{
 		return( TRUE );
 	}
@@ -839,7 +839,7 @@ BOOLEAN IMP_CanWeDisplayPortrait( )
 
 BOOLEAN IMP_CanWeDisplayAttributeGraph( )
 {
-	if(	iCurrentProfileMode == IMP__FINISH )
+	if(	iCurrentProfileMode == 5 )
 	{
 		return( TRUE );
 	}
@@ -853,8 +853,8 @@ BOOLEAN IMP_CanWeDisplayAttributeGraph( )
 
 BOOLEAN IMP_CanWeDisplaySpecialtiesGraph( )
 {
-	if( iCurrentProfileMode == IMP__ATTRIBUTES || 
-			iCurrentProfileMode == IMP__FINISH )
+	if( iCurrentProfileMode == 2 ||
+			iCurrentProfileMode == 5 )
 	{
 		return( TRUE );
 	}
@@ -867,10 +867,10 @@ BOOLEAN IMP_CanWeDisplaySpecialtiesGraph( )
 
 BOOLEAN IMP_CanWeDisplayVoiceGraph( )
 {
-	if( iCurrentProfileMode == IMP__ATTRIBUTES || 
-//			iCurrentProfileMode == IMP__VOICE || 
-			iCurrentProfileMode == IMP__PERSONALITY || 
-			iCurrentProfileMode == IMP__FINISH )
+	if( iCurrentProfileMode == 2 ||
+//			iCurrentProfileMode == 4 ||
+			iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 5 )
 	{
 		return( TRUE );
 	}

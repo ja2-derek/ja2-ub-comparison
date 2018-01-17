@@ -133,19 +133,19 @@ void PrintImpText( void )
 			// set up for IMP text for title box area
 			switch( iCurrentProfileMode )
 			{
-			  case( IMP__REGISTRY ):
+			  case( 0 ):
 				  LoadAndDisplayIMPText( LAPTOP_SCREEN_UL_X + 173, LAPTOP_SCREEN_WEB_UL_Y + 91, ( 329 - 173  ), IMP_MAIN_2, FONT10ARIAL, 142, TRUE, 0);
 				break;
-				case( IMP__PORTRAIT ):
+				case( 3 ):
 					IanDisplayWrappedString( LAPTOP_SCREEN_UL_X + 173, LAPTOP_SCREEN_WEB_UL_Y + 91, ( 329 - 173  ), 2, FONT10ARIAL, 142, pExtraIMPStrings[ 0 ],0,FALSE,0);
 				break;
-				case( IMP__VOICE ):
+				case( 4 ):
 					IanDisplayWrappedString( LAPTOP_SCREEN_UL_X + 173, LAPTOP_SCREEN_WEB_UL_Y + 91, ( 329 - 173  ), 2, FONT10ARIAL, 142, pExtraIMPStrings[ 1 ],0,FALSE,0);
 				break;
-				case( IMP__PERSONALITY ):
+				case( 1 ):
 					IanDisplayWrappedString( LAPTOP_SCREEN_UL_X + 173, LAPTOP_SCREEN_WEB_UL_Y + 91, ( 329 - 173  ), 2, FONT10ARIAL, 142, pExtraIMPStrings[ 2 ],0,FALSE,0);
 				break;
-				case( IMP__ATTRIBUTES ):
+				case( 2 ):
 					IanDisplayWrappedString( LAPTOP_SCREEN_UL_X + 173, LAPTOP_SCREEN_WEB_UL_Y + 91, ( 329 - 173  ), 2, FONT10ARIAL, 142, pExtraIMPStrings[ 3 ],0,FALSE,0);
 				break;
 

@@ -13,16 +13,4 @@ void ShadeUnSelectableButtons( void );
 extern INT32 iCurrentProfileMode;
 
 
-//enums for the various Profile modes
-enum
-{
-	IMP__REGISTRY,
-	IMP__PERSONALITY,
-	IMP__ATTRIBUTES,
-	IMP__PORTRAIT,
-	IMP__VOICE,
-	IMP__FINISH,
-};
-
-
 #endif

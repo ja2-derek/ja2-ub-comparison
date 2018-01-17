@@ -133,7 +133,7 @@ void EnterIMPSkillTrait( void )
 	SetButtonCursor( giIMPSkillTraitFinsihButton, CURSOR_WWW);
 
 	//if we are not DONE and are just reviewing
-	if( iCurrentProfileMode != IMP__FINISH )
+	if( iCurrentProfileMode != 5 )
 	{
 		//Have the NONE trait initially selected
 		gfSkillTraitQuestions[ IMP_SKILL_TRAITS__NONE ] = TRUE;
@@ -202,7 +202,7 @@ void AddImpSkillTraitButtons()
 		giIMPSkillTraitAnswerButton[iCnt] = -1;
 
 		//if we are not DONE and are just reviewing
-		if( iCurrentProfileMode != IMP__FINISH )
+		if( iCurrentProfileMode != 5 )
 		{
 			gfSkillTraitQuestions[ iCnt ] = FALSE;
 		}
@@ -277,7 +277,7 @@ void HandleIMPSkillTraitAnswers( UINT32 uiSkillPressed, BOOLEAN fResetAllButtons
 	UINT32 uiCnt;
 
 	//if we are DONE and are just reviewing
-	if( iCurrentProfileMode == IMP__FINISH )
+	if( iCurrentProfileMode == 5 )
 	{
 		return;
 	}
@@ -495,7 +495,7 @@ void BtnIMPSkillTraitFinishCallback(GUI_BUTTON *btn,INT32 reason)
 		btn->uiFlags|=(BUTTON_CLICKED_ON);
 
 		//if we are just reviewing the page
-		if( iCurrentProfileMode == IMP__FINISH )
+		if( iCurrentProfileMode == 5 )
 		{
 			//go back tot he done screen
 			iCurrentImpPage = IMP_FINISH;
@@ -510,7 +510,7 @@ void BtnIMPSkillTraitFinishCallback(GUI_BUTTON *btn,INT32 reason)
 			else
 			{
 				//We are finished on this page
-				iCurrentProfileMode = IMP__ATTRIBUTES;
+				iCurrentProfileMode = 2;
 			}
 		}
 	}
@@ -520,7 +520,7 @@ void BtnIMPSkillTraitFinishCallback(GUI_BUTTON *btn,INT32 reason)
 BOOLEAN CameBackToSpecialtiesPageButNotFinished()
 {
 	//if we are in a page that comes after this one
-	if( iCurrentProfileMode == IMP__ATTRIBUTES )
+	if( iCurrentProfileMode == 2 )
 	{
 		return( TRUE );
 	}

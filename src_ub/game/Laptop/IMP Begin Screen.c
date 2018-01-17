@@ -132,7 +132,7 @@ void EnterIMPBeginScreen( void )
   memset( pNickNameString, 0, sizeof( pNickNameString ) );
   
 	// if we are not restarting...then copy over name, set cursor and array positions
-	if( iCurrentProfileMode != IMP__REGISTRY )
+	if( iCurrentProfileMode != 0 )
 	{
 	  wcscpy( pFullNameString, pFullName );
 	  wcscpy( pNickNameString, pNickName );
@@ -383,13 +383,13 @@ void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn,INT32 reason)
           CopyFirstNameIntoNickName( );
 				}
 				// ok, now set back to main page, and set the fact we have completed part 1
-				if ( ( iCurrentProfileMode < IMP__PERSONALITY ) &&( bGenderFlag != -1 ) )
+				if ( ( iCurrentProfileMode < 1 ) &&( bGenderFlag != -1 ) )
 				{
-				  iCurrentProfileMode = IMP__PORTRAIT;//IMP__PERSONALITY;
+				  iCurrentProfileMode = 3;//1;
 				}
 				else if( bGenderFlag == -1 )
 				{
-					iCurrentProfileMode = IMP__REGISTRY;
+					iCurrentProfileMode = 0;
 				}
 
 				// no easter egg?...then proceed along
@@ -404,7 +404,7 @@ void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn,INT32 reason)
 			{
 				// invalid name, reset current mode
 				DoLapTopMessageBox( MSG_BOX_IMP_STYLE, pImpPopUpStrings[ 2 ], LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL);
-				iCurrentProfileMode = IMP__REGISTRY;				
+				iCurrentProfileMode = 0;
 			}
 		}
 	}	

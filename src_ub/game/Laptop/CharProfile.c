@@ -657,14 +657,14 @@ void BtnIMPCancelCallback(GUI_BUTTON *btn,INT32 reason)
 			{
 			  iCurrentImpPage = IMP_HOME_PAGE;
 			  fButtonPendingFlag = TRUE;
-			  iCurrentProfileMode = IMP__REGISTRY;
+			  iCurrentProfileMode = 0;
 			  fFinishedCharGeneration = FALSE;
 			  ResetCharacterStats( );
 			}
 			else if( iCurrentImpPage == IMP_FINISH )
 			{     
 				iCurrentImpPage = IMP_MAIN_PAGE;
-				iCurrentProfileMode = IMP__PORTRAIT;
+				iCurrentProfileMode = 3;
 				fFinishedCharGeneration = FALSE;
 			  fButtonPendingFlag = TRUE;
 			  //iCurrentProfileMode = 0;

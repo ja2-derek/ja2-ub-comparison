@@ -154,13 +154,13 @@ void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn,INT32 reason)
       btn->uiFlags&=~(BUTTON_CLICKED_ON);
       // gone far enough
 		  iCurrentImpPage = IMP_MAIN_PAGE;
-//		  if( iCurrentProfileMode < IMP__PORTRAIT )
+//		  if( iCurrentProfileMode < 3 )
 			if( !CameBackToAttributesPageButNotFinished() )
 			{
-        iCurrentProfileMode = IMP__FINISH;//IMP__PORTRAIT;
+        iCurrentProfileMode = 5;//3;
 			}
 		  // if we are already done, leave
-	    if( iCurrentProfileMode == IMP__FINISH)
+	    if( iCurrentProfileMode == 5)
 			{
 	      iCurrentImpPage = IMP_FINISH;
 			}
@@ -175,8 +175,8 @@ void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn,INT32 reason)
 BOOLEAN CameBackToAttributesPageButNotFinished()
 {
 	//if we are in a page that comes after this one
-	if( iCurrentProfileMode == IMP__PERSONALITY ||
-			iCurrentProfileMode == IMP__VOICE )
+	if( iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 4 )
 	{
 		return( TRUE );
 	}

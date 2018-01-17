@@ -372,13 +372,13 @@ void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn,INT32 reason)
 			fButtonPendingFlag = TRUE;
 			iCurrentImpPage = IMP_MAIN_PAGE;
 
-			if( iCurrentProfileMode != IMP__FINISH )
+			if( iCurrentProfileMode != 5 )
 			{
-				iCurrentProfileMode = IMP__ATTRIBUTES;
+				iCurrentProfileMode = 2;
 			}
 			else
 			{
-				iCurrentImpPage = IMP_FINISH;//IMP__ATTRIBUTES;
+				iCurrentImpPage = IMP_FINISH;//2;
 			}
 		}
 	}
