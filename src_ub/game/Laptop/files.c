@@ -1189,7 +1189,6 @@ BOOLEAN HandleSpecialFiles( UINT8 ubFormat )
 	{
 		// title bar
 		VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-//Ja25, new map		FilenameForBPP("LAPTOP\\ArucoFilesMap.sti", VObjectDesc.ImageFile);
 		FilenameForBPP("LAPTOP\\TraconaMap.sti", VObjectDesc.ImageFile);
 		CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
 
