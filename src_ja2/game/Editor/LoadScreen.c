@@ -851,7 +851,7 @@ void SetGlobalSectorValues( UINT16 *szFilename )
 
 void InitErrorCatchDialog()
 {
-	SGPRect CenteringRect= {0, 0, 639, 479 };
+	SGPRect CenteringRect= {0, 0, SCREEN_BUFFER_WIDTH-1, SCREEN_BUFFER_HEIGHT-1 };
 
 	// do message box and return
 	giErrorCatchMessageBox = DoMessageBox( MSG_BOX_BASIC_STYLE, gzErrorCatchString, 

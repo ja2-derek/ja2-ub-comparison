@@ -270,7 +270,7 @@ void CreateSummaryWindow()
 		gfMapFileDirty = TRUE;
 	//Create all of the buttons here
 	iSummaryButton[ SUMMARY_BACKGROUND ] = 
-		CreateTextButton( 0, 0, 0, 0, BUTTON_USE_DEFAULT, 0, 0, 640, 360, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH - 1, 
+		CreateTextButton( 0, 0, 0, 0, BUTTON_USE_DEFAULT, 0, 0, SCREEN_BUFFER_WIDTH, 360, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH - 1, 
 		BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK );
 	SpecifyDisabledButtonStyle( iSummaryButton[ SUMMARY_BACKGROUND ], DISABLED_STYLE_NONE );
 	DisableButton( iSummaryButton[ SUMMARY_BACKGROUND ] );
@@ -986,7 +986,7 @@ void RenderSummaryWindow()
 		}
 
 		DrawButton( iSummaryButton[ SUMMARY_BACKGROUND ] );
-		InvalidateRegion( 0, 0, 640, 360 );
+		InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, 360 );
 		
 		SetFont( BLOCKFONT2 );
 		SetFontForeground( FONT_LTKHAKI );
@@ -1312,7 +1312,7 @@ void RenderSummaryWindow()
 		SetFontForeground( FONT_YELLOW );
 		mprintf( 354, 18, L"Summary" );
 		pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 		RectangleDraw( TRUE, 350, 15, 405, 28, 0, pDestBuf );
 		UnLockVideoSurface( FRAME_BUFFER );
 		ShadowVideoSurfaceRectUsingLowPercentTable( FRAME_BUFFER, 351, 16, 404, 27 );
@@ -1329,7 +1329,7 @@ void RenderSummaryWindow()
 		}
 		mprintf( 354, 33, L"Items" );
 		pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 		RectangleDraw( TRUE, 350, 30, 405, 43, 0, pDestBuf );
 		UnLockVideoSurface( FRAME_BUFFER );
 		if( gpCurrentSectorSummary )
@@ -1371,7 +1371,7 @@ void RenderSummaryWindow()
 		{
 			UINT16 pos;
 			pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-			SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+			SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 			for( i = 1; i <= 15; i++ )
 			{
 				//draw vertical lines
@@ -1458,7 +1458,7 @@ void RenderSummaryWindow()
 	if( gfGlobalSummaryExists )
 	{
 		pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
-		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 		//Render the grid for the map currently residing in memory (blue).
 		if( gfWorldLoaded && !gfTempFile && gsSectorX )
 		{
@@ -2731,13 +2731,13 @@ void ApologizeOverrideAndForceUpdateEverything()
 	//Create one huge assed button
 	gfMajorUpdate = TRUE;
 	iSummaryButton[ SUMMARY_BACKGROUND ] = 
-		CreateTextButton( 0, 0, 0, 0, BUTTON_USE_DEFAULT, 0, 0, 640, 480, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH - 1, 
+		CreateTextButton( 0, 0, 0, 0, BUTTON_USE_DEFAULT, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH - 1, 
 		BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK );
 	SpecifyDisabledButtonStyle( iSummaryButton[ SUMMARY_BACKGROUND ], DISABLED_STYLE_NONE );
 	DisableButton( iSummaryButton[ SUMMARY_BACKGROUND ] );
 	//Draw it
 	DrawButton( iSummaryButton[ SUMMARY_BACKGROUND ] );
-	InvalidateRegion( 0, 0, 640, 480 );
+	InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	SetFont( HUGEFONT );
 	SetFontForeground( FONT_RED );
 	SetFontShadow( FONT_NEARBLACK );

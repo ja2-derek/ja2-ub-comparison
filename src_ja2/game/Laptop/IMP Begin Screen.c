@@ -702,7 +702,7 @@ void DisplayFullNameStringCursor( void )
 
 
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );			
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
   // draw line in current state
 	LineDraw(TRUE, (UINT16) uiFullNameCursorPosition, FULL_NAME_CURSOR_Y - 3, (UINT16)uiFullNameCursorPosition, FULL_NAME_CURSOR_Y + CURSOR_HEIGHT - 2, Get16BPPColor( FROMRGB( GlowColorsList[ iCurrentState ][ 0 ], GlowColorsList[ iCurrentState ][ 1 ], GlowColorsList[ iCurrentState ][ 2 ] ) ), 
@@ -763,7 +763,7 @@ void DisplayNickNameStringCursor( void )
 
 
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );			
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
   // draw line in current state
 	LineDraw(TRUE, (UINT16) uiNickNameCursorPosition, NICK_NAME_CURSOR_Y, (UINT16)uiNickNameCursorPosition, NICK_NAME_CURSOR_Y + CURSOR_HEIGHT, Get16BPPColor( FROMRGB( GlowColorsList[ iCurrentState ][ 0 ], GlowColorsList[ iCurrentState ][ 1 ], GlowColorsList[ iCurrentState ][ 2 ] ) ), 
@@ -887,7 +887,7 @@ void DisplayMaleGlowCursor( void )
 	}
 
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );			
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 	// draw rectangle
   RectangleDraw( TRUE, MALE_BOX_X, MALE_BOX_Y, MALE_BOX_X + MALE_BOX_WIDTH, MALE_BOX_Y + MALE_BOX_HEIGHT, Get16BPPColor( FROMRGB( GlowColorsList[ iCurrentState ][ 0 ], GlowColorsList[ iCurrentState ][ 1 ], GlowColorsList[ iCurrentState ][ 2 ] ) ),  pDestBuf );
@@ -948,7 +948,7 @@ void DisplayFemaleGlowCursor( void )
 	}
 
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );			
-	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, 640, 480 );
+	SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 	// draw rectangle
   RectangleDraw( TRUE, FEMALE_BOX_X, MALE_BOX_Y, FEMALE_BOX_X + MALE_BOX_WIDTH, MALE_BOX_Y + MALE_BOX_HEIGHT, Get16BPPColor( FROMRGB( GlowColorsList[ iCurrentState ][ 0 ], GlowColorsList[ iCurrentState ][ 1 ], GlowColorsList[ iCurrentState ][ 2 ] ) ),  pDestBuf );
