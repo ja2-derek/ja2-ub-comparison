@@ -2798,7 +2798,7 @@ void AddCustomMap( INT32 iRow, INT32 iCol, BOOLEAN fDisplayMessages, BOOLEAN fMe
 
 
 	// if we are the first secotr, ignore!
-	if ( iRow == JA2_5_START_SECTOR_Y && iCol == JA2_5_START_SECTOR_X )
+	if ( iRow == START_SECTOR_Y && iCol == START_SECTOR_X )
 	{
 		return;
 	}

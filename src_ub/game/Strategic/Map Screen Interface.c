@@ -5422,10 +5422,10 @@ BOOLEAN HandleTimeCompressWithTeamJackedInAndGearedToGo( void )
 	}
 
 	// select starting sector (A9 - Omerta)
-	ChangeSelectedMapSector( JA2_5_START_SECTOR_X, JA2_5_START_SECTOR_Y, 0 );
+	ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );
 
 	// load starting sector
-	if ( !SetCurrentWorldSector( JA2_5_START_SECTOR_X, JA2_5_START_SECTOR_Y, 0 ) )
+	if ( !SetCurrentWorldSector( START_SECTOR_X, START_SECTOR_Y, 0 ) )
 	{
 		return( FALSE );
 	}
@@ -5433,8 +5433,8 @@ BOOLEAN HandleTimeCompressWithTeamJackedInAndGearedToGo( void )
 	//Setup variables in the PBI for this first battle.  We need to support the
 	//non-persistant PBI in case the user goes to mapscreen.
 	gfBlitBattleSectorLocator = TRUE;
-	gubPBSectorX = JA2_5_START_SECTOR_X;
-	gubPBSectorY = JA2_5_START_SECTOR_Y;
+	gubPBSectorX = START_SECTOR_X;
+	gubPBSectorY = START_SECTOR_Y;
 	gubPBSectorZ = 0;
 	gubEnemyEncounterCode = ENTERING_ENEMY_SECTOR_CODE;
 	

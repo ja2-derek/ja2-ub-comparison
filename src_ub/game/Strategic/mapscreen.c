@@ -3082,8 +3082,8 @@ UINT32 MapScreenHandle(void)
 		if ( ( gsMercArriveSectorX <  1 ) || ( gsMercArriveSectorY <  1 ) ||
 				 ( gsMercArriveSectorX > 16 ) || ( gsMercArriveSectorY > 16 ) )
 		{
-			gsMercArriveSectorX = JA2_5_START_SECTOR_X;
-			gsMercArriveSectorY = JA2_5_START_SECTOR_Y;
+			gsMercArriveSectorX = START_SECTOR_X;
+			gsMercArriveSectorY = START_SECTOR_Y;
 		}
 
 		gfInConfirmMapMoveMode = FALSE;
@@ -3312,7 +3312,7 @@ Ja25 no orta
 		if( AnyMercsHired( ) == FALSE )
 		{
 			// select starting sector 
-			ChangeSelectedMapSector( JA2_5_START_SECTOR_X, JA2_5_START_SECTOR_Y, 0 );
+			ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );
 		}
 		else if( ( gWorldSectorX > 0 ) && ( gWorldSectorY > 0 ) && ( gbWorldSectorZ != -1 ) )
 		{
@@ -3324,7 +3324,7 @@ Ja25 no orta
 			// only select Starting grid # IF there is no current selection, otherwise leave it as is
 			if ( ( sSelMapX == 0 ) || ( sSelMapY == 0 ) || ( iCurrentMapSectorZ == -1 ) )
 			{
-				ChangeSelectedMapSector( JA2_5_START_SECTOR_X, JA2_5_START_SECTOR_Y, 0 );
+				ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );
 			}
 		}
 

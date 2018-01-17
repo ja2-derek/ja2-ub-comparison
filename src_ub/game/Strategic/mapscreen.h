@@ -7,7 +7,8 @@
 
 #define			MAP_WORLD_X						18
 #define			MAP_WORLD_Y						18
-
+#define START_SECTOR_X  JA2_5_START_SECTOR_X
+#define START_SECTOR_Y  JA2_5_START_SECTOR_Y
 
 /*
 Ja25 Old Town Names

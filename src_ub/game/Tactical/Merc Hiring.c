@@ -67,8 +67,8 @@ BOOLEAN		gfFirstTimeInGameHeliCrash = FALSE;
 // ATE: Globals that dictate where the mercs will land once being hired
 // Default to Omerta
 // Saved in general saved game structure
-INT16	gsMercArriveSectorX = JA2_5_START_SECTOR_X;
-INT16	gsMercArriveSectorY = JA2_5_START_SECTOR_Y;
+INT16	gsMercArriveSectorX = START_SECTOR_X;
+INT16	gsMercArriveSectorY = START_SECTOR_Y;
 
 void CheckForValidArrivalSector( );
 void AddItemToMerc( UINT8 ubNewMerc, INT16 sItemType );
@@ -830,8 +830,8 @@ void InitJerryMiloInfo()
 {
     return; //AA
 	//Set Jerry Milo's Gridno
-	gMercProfiles[ JERRY ].sSectorX = JA2_5_START_SECTOR_X;
-	gMercProfiles[ JERRY ].sSectorY = JA2_5_START_SECTOR_Y;
+	gMercProfiles[ JERRY ].sSectorX = START_SECTOR_X;
+	gMercProfiles[ JERRY ].sSectorY = START_SECTOR_Y;
 	gMercProfiles[ JERRY ].bSectorZ = 0;
 
 	gMercProfiles[ JERRY ].sGridNo = 15109;

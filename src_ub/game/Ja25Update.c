@@ -180,8 +180,8 @@ BOOLEAN ImportOldProfilesAndProcessThem()
 //	UINT8	ubNewIndex;
 
 	//Designate the new arrival point
-	gsMercArriveSectorX = JA2_5_START_SECTOR_X;
-	gsMercArriveSectorY = JA2_5_START_SECTOR_Y;
+	gsMercArriveSectorX = START_SECTOR_X;
+	gsMercArriveSectorY = START_SECTOR_Y;
 
 	//load in the converted save
 	if( !LoadJa2ConvertedSaveAndReplaceProfiles() )

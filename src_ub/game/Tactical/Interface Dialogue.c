@@ -5194,7 +5194,7 @@ void DelayedSayingOfMercQuote( UINT32 uiParam )
 		if( usQuoteNum == QUOTE_DEPARTING_COMMENT_CONTRACT_NOT_RENEWED_OR_48_OR_MORE )
 		{
 			//if the soldier is saying the 'brr its cold' quote, and he has left the sector
-			if( pSoldier->sSectorX != JA2_5_START_SECTOR_X || pSoldier->sSectorY != JA2_5_START_SECTOR_Y && pSoldier->bSectorZ != 0 )
+			if( pSoldier->sSectorX != START_SECTOR_X || pSoldier->sSectorY != START_SECTOR_Y && pSoldier->bSectorZ != 0 )
 			{
 				//dont say the quote
 				return;

@@ -161,9 +161,9 @@ BOOLEAN ShouldEnemiesBeAddedToInitialSector()
 {
 	//if there are still players in the first sector
 	if( gfWorldLoaded && 
-			gWorldSectorX == JA2_5_START_SECTOR_X && 
-			gWorldSectorY == JA2_5_START_SECTOR_Y &&
-			AreAnyPlayerMercsStillInSector( JA2_5_START_SECTOR_X, JA2_5_START_SECTOR_Y, 0 ) )
+			gWorldSectorX == START_SECTOR_X && 
+			gWorldSectorY == START_SECTOR_Y &&
+			AreAnyPlayerMercsStillInSector( START_SECTOR_X, START_SECTOR_Y, 0 ) )
 	{
 		//add enemies to the initial sector
 		if( !AddEnemiesToInitialSectorH7() )
@@ -191,7 +191,7 @@ BOOLEAN	AddEnemiesToInitialSectorH7()
 	UINT8	ubNumRemovedTroops=0;
 	UINT8	ubNumRemovedElites=0;
 
-	ubSector = SECTOR( JA2_5_START_SECTOR_X, JA2_5_START_SECTOR_Y );
+	ubSector = SECTOR( START_SECTOR_X, START_SECTOR_Y );
 
 	//Get the number of enemies in the guard post sector
 	GetNumberOfJA25EnemiesInSector( 8, MAP_ROW_H, 0, &ubNumAdmins, &ubNumTroops, &ubNumElites );
@@ -222,8 +222,8 @@ BOOLEAN	AddEnemiesToInitialSectorH7()
 	}
 
 	//Set the sector to attack
-	pGroup->ubNextX = (UINT8)JA2_5_START_SECTOR_X;
-	pGroup->ubNextY = (UINT8)JA2_5_START_SECTOR_Y;
+	pGroup->ubNextX = (UINT8)START_SECTOR_X;
+	pGroup->ubNextY = (UINT8)START_SECTOR_Y;
 
 	pGroup->uiTraverseTime = 10;
 

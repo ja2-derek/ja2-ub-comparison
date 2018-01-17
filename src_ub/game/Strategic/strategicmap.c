@@ -613,8 +613,8 @@ void InitializeMapStructure()
 void InitializeSAMSites( void )
 {
 	// move the landing zone over to Omerta
-	gsMercArriveSectorX = JA2_5_START_SECTOR_X;
-	gsMercArriveSectorY = JA2_5_START_SECTOR_Y;
+	gsMercArriveSectorX = START_SECTOR_X;
+	gsMercArriveSectorY = START_SECTOR_Y;
 
 	// all SAM sites start game in perfect working condition
 	StrategicMap[(SAM_1_X)+(MAP_WORLD_X*(SAM_1_Y))].bSAMCondition = 100;
@@ -3565,7 +3565,7 @@ void SetupNewStrategicGame( )
 
 	//Ja25
 	// Make the initial sector free of enemies
-	StrategicMap[ CALCULATE_STRATEGIC_INDEX( JA2_5_START_SECTOR_X, JA2_5_START_SECTOR_Y ) ].fEnemyControlled = FALSE;
+	StrategicMap[ CALCULATE_STRATEGIC_INDEX( START_SECTOR_X, START_SECTOR_Y ) ].fEnemyControlled = FALSE;
 
 
 	//Initialize the game time
@@ -3779,8 +3779,8 @@ void UpdateAirspaceControl( void )
 		GetSectorIDString( gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString1, FALSE );
 
 		// move the landing zone over to Omerta
-		gsMercArriveSectorX = JA2_5_START_SECTOR_X;
-		gsMercArriveSectorY = JA2_5_START_SECTOR_Y;
+		gsMercArriveSectorX = START_SECTOR_X;
+		gsMercArriveSectorY = START_SECTOR_Y;
 
 		// get the name of the new sector
 		GetSectorIDString( gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString2, FALSE );

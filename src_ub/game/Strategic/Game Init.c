@@ -339,7 +339,7 @@ Ja25 no loyalty
 	SetGameTimeCompressionLevel( TIME_COMPRESS_X0 );
 
 	// select A9 Omerta as the initial selected sector
-	ChangeSelectedMapSector( JA2_5_START_SECTOR_X, JA2_5_START_SECTOR_Y, 0 );
+	ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );
 
 	// Reset these flags or mapscreen could be disabled and cause major headache.
 	fDisableDueToBattleRoster = FALSE;
