@@ -303,7 +303,7 @@ void InitStrategicLayer( void )
 	SetGameTimeCompressionLevel( TIME_COMPRESS_X0 );
 
 	// select A9 Omerta as the initial selected sector
-	ChangeSelectedMapSector( 9, 1, 0 );
+	ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );
 
 	// Reset these flags or mapscreen could be disabled and cause major headache.
 	fDisableDueToBattleRoster = FALSE;

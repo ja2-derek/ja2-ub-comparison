@@ -62,8 +62,8 @@ extern BOOLEAN		gfFirstHeliRun;
 // ATE: Globals that dictate where the mercs will land once being hired
 // Default to Omerta
 // Saved in general saved game structure
-INT16	gsMercArriveSectorX = 9;
-INT16	gsMercArriveSectorY = 1;
+INT16	gsMercArriveSectorX = START_SECTOR_X;
+INT16	gsMercArriveSectorY = START_SECTOR_Y;
 
 void CheckForValidArrivalSector( );
 

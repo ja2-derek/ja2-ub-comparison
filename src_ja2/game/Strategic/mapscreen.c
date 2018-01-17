@@ -3045,8 +3045,8 @@ UINT32 MapScreenHandle(void)
 		if ( ( gsMercArriveSectorX <  1 ) || ( gsMercArriveSectorY <  1 ) ||
 				 ( gsMercArriveSectorX > 16 ) || ( gsMercArriveSectorY > 16 ) )
 		{
-			gsMercArriveSectorX = 9;
-			gsMercArriveSectorY = 1;
+			gsMercArriveSectorX = START_SECTOR_X;
+			gsMercArriveSectorY = START_SECTOR_Y;
 		}
 
 		gfInConfirmMapMoveMode = FALSE;
@@ -3268,8 +3268,8 @@ UINT32 MapScreenHandle(void)
 		// NOTE: Must come after border buttons are created, since it may toggle them!
 		if( AnyMercsHired( ) == FALSE )
 		{
-			// select starting sector (A9 - Omerta)
-			ChangeSelectedMapSector( 9, 1, 0 );
+			// select starting sector
+			ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );
 		}
 		else if( ( gWorldSectorX > 0 ) && ( gWorldSectorY > 0 ) && ( gbWorldSectorZ != -1 ) )
 		{
@@ -3281,7 +3281,7 @@ UINT32 MapScreenHandle(void)
 			// only select A9 - Omerta IF there is no current selection, otherwise leave it as is
 			if ( ( sSelMapX == 0 ) || ( sSelMapY == 0 ) || ( iCurrentMapSectorZ == -1 ) )
 			{
-				ChangeSelectedMapSector( 9, 1, 0 );
+				ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );
 			}
 		}
 

@@ -7,7 +7,8 @@
 
 #define			MAP_WORLD_X						18
 #define			MAP_WORLD_Y						18
-
+#define START_SECTOR_X  9 // A9 - Omerta
+#define START_SECTOR_Y  1
 
 // Sector name identifiers
 enum {

@@ -543,8 +543,8 @@ void InitializeMapStructure()
 void InitializeSAMSites( void )
 {
 	// move the landing zone over to Omerta
-	gsMercArriveSectorX = 9;
-	gsMercArriveSectorY = 1;
+	gsMercArriveSectorX = START_SECTOR_X;
+	gsMercArriveSectorY = START_SECTOR_Y;
 
 	// all SAM sites start game in perfect working condition
 	StrategicMap[(SAM_1_X)+(MAP_WORLD_X*(SAM_1_Y))].bSAMCondition = 100;
@@ -3344,8 +3344,8 @@ void UpdateAirspaceControl( void )
 		GetSectorIDString( gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString1, FALSE );
 
 		// move the landing zone over to Omerta
-		gsMercArriveSectorX = 9;
-		gsMercArriveSectorY = 1;
+		gsMercArriveSectorX = START_SECTOR_X;
+		gsMercArriveSectorY = START_SECTOR_Y;
 
 		// get the name of the new sector
 		GetSectorIDString( gsMercArriveSectorX, gsMercArriveSectorY, 0, sMsgSubString2, FALSE );
