@@ -708,9 +708,9 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo( SOLDIERTYPE *pSoldier )
 {
 	INT32		cnt;
 	UINT16	usItem;
-	INT16		sBestArmour = -1;
+	INT16		bBestArmour = -1;
 	INT8		bBestArmourIndex = -1;
-	INT16		sBestGun = -1;
+	INT16		bBestGun = -1;
 	INT8		bBestGunIndex = -1;
 
 
@@ -724,20 +724,20 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo( SOLDIERTYPE *pSoldier )
 			// Check if it's a gun
 			if ( Item[ usItem ].usItemClass & IC_GUN )
 			{
-				if ( Weapon[ usItem ].ubDeadliness > sBestGun )
+				if ( Weapon[ usItem ].ubDeadliness > bBestGun )
 				{
 					bBestGunIndex = (INT8)cnt;
-					sBestGun = Weapon[ usItem ].ubDeadliness;
+					bBestGun = Weapon[ usItem ].ubDeadliness;
 				}
 			}
 
 			// If it's armour
 			if ( Item[ usItem ].usItemClass & IC_ARMOUR )
 			{
-				if ( Armour[ Item[ usItem ].ubClassIndex ].ubProtection > sBestArmour )
+				if ( Armour[ Item[ usItem ].ubClassIndex ].ubProtection > bBestArmour )
 				{
 					bBestArmourIndex = (INT8)cnt;
-					sBestArmour = Armour[ Item[ usItem ].ubClassIndex ].ubProtection;
+					bBestArmour = Armour[ Item[ usItem ].ubClassIndex ].ubProtection;
 				}
 			}
 		}
@@ -745,18 +745,18 @@ BOOLEAN SoldierHasWorseEquipmentThanUsedTo( SOLDIERTYPE *pSoldier )
 
 	// Modify these values based on morale - lower opinion of equipment if morale low, increase if high
 	// this of course assumes default morale is 50
-	if ( sBestGun != -1 )
+	if ( bBestGun != -1 )
 	{
-		sBestGun		= (sBestGun		 * (50 + pSoldier->bMorale)) / 100;
+		bBestGun		= (bBestGun		 * (50 + pSoldier->bMorale)) / 100;
 	}
-	if ( sBestArmour != -1 )
+	if ( bBestArmour != -1 )
 	{
-		sBestArmour = (sBestArmour * (50 + pSoldier->bMorale)) / 100;
+		bBestArmour = (bBestArmour * (50 + pSoldier->bMorale)) / 100;
 	}
 
 	// OK, check values!
-	if ( 	(sBestGun != -1 && sBestGun < ( gMercProfiles[ pSoldier->ubProfile ].bMainGunAttractiveness / 2 )) ||
-				(sBestArmour != -1 && sBestArmour < ( gMercProfiles[ pSoldier->ubProfile ].bArmourAttractiveness / 2 )) )
+	if ( 	(bBestGun != -1 && bBestGun < ( gMercProfiles[ pSoldier->ubProfile ].bMainGunAttractiveness / 2 )) ||
+				(bBestArmour != -1 && bBestArmour < ( gMercProfiles[ pSoldier->ubProfile ].bArmourAttractiveness / 2 )) )
 	{
 		// Pipe up!
 		return( TRUE );
