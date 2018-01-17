@@ -672,7 +672,7 @@ void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 u
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-    LoadEncryptedDataFromFile( EMAIL_EDT_FILE, pSubject, SCREEN_BUFFER_WIDTH*(iMessageOffset), SCREEN_BUFFER_WIDTH);
+    LoadEncryptedDataFromFile( EMAIL_EDT_FILE, pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
 
 	//Make a fake email that will contain the codes ( ie the merc ID )
 	FakeEmail.iFirstData = iFirstData;
@@ -733,7 +733,7 @@ void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile(EMAIL_EDT_FILE, pSubject, SCREEN_BUFFER_WIDTH*(iMessageOffset), SCREEN_BUFFER_WIDTH);
+	LoadEncryptedDataFromFile(EMAIL_EDT_FILE, pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
 
 	// add message to list
 	AddEmailMessage(iMessageOffset,iMessageLength, pSubject, iDate, ubSender, TRUE, 0, 0 );
