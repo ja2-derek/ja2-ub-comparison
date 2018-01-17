@@ -140,8 +140,7 @@
 #define		NAME_X						STATS_FIRST_COL
 #define		NAME_Y						STATS_Y + 7
 
-//ja25 #define		FEE_X							PRICE_X + 7
-#define		FEE_X							489
+#define		FEE_X							489 //ja25: PRICE_X + 7
 #define		FEE_Y							NAME_Y
 #define		FEE_WIDTH					37  //33
 
@@ -1853,7 +1852,6 @@ Ja25: 1 time fee
 
 	
 	//add an entry in the finacial page for the hiring of the merc
-//	AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(), -( giContractAmount - gMercProfiles[gbCurrentSoldier].sMedicalDepositAmount ) );
 	AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(), -( giContractAmount ) );
 
 /*
