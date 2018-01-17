@@ -1849,20 +1849,6 @@ STR16 pTransactionText[] =
 
 
 
-//!!! There were UGLY symbols (squares) here... likely to crash the file 
-//!!! (made a copy, (see below) but kept this for checking) Are there some 
-// characters or lines missing???
-//;
-//
-//STR16 pTransactionAlternateText[] =
-//{
-//	L"Insurance for", 				// insur by one day.", 		
-//		// entend mercs contract by a day
-//	L"Ext. %s contract by 1 week.",
-//	Ext. %s contract by 2 weeks.",
-//};
-//!!! (End of that passage with the ugly symbols...) /////////////////////////////////////////////////
-
 
 
 //!!! Here comes the copy! PLEASE CHECK IT!!!! ///////////////////////
