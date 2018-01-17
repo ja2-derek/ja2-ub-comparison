@@ -140,7 +140,7 @@ UINT8 GetMilitiaCountAtLevelAnywhereInTown( UINT8 ubTownValue, UINT8 ubLevelValu
 void PrepareLoadedSector();
 
 // handle for slay...no better place to really put this stuff
-void HandleSlayDailyEvent( void );
+//JA25: void HandleSlayDailyEvent( void );
 
 
 void HandleQuestCodeOnSectorEntry( INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNewSectorZ );

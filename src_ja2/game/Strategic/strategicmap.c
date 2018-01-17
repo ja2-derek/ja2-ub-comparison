@@ -4227,7 +4227,7 @@ void GetLoadedSectorString( UINT16 *pString )
 	}
 }
 
-
+/*
 void HandleSlayDailyEvent( void )
 {
 	SOLDIERTYPE *pSoldier = NULL;
@@ -4257,7 +4257,7 @@ void HandleSlayDailyEvent( void )
 	}
 }
 
-
+*/
 
 BOOLEAN IsSectorDesert( INT16 sSectorX, INT16 sSectorY )
 {

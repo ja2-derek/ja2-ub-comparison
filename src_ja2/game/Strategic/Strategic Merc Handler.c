@@ -494,7 +494,7 @@ void MercDailyUpdate()
 
 	// build quit list
 	//BuildMercQuitList( pQuitList );
-	HandleSlayDailyEvent( );
+//Ja25: 	HandleSlayDailyEvent( );
 
 	// rebuild list for mapscreen
 	ReBuildCharactersList( );	
