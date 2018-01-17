@@ -2419,6 +2419,7 @@ Ja25 no loyalty
 				{
 					DeleteTalkingMenu();
 					PlayJA2Sample( BOXING_BELL, RATE_11025, SoundVolume( MIDVOLUME, 11237 ), 5, SoundDir( 11237 ) );
+					ClearAllBoxerFlags();
 					SetBoxingState( BOXING_WAITING_FOR_PLAYER );
 				}
 				break;

@@ -41,5 +41,6 @@ extern UINT8 BoxersAvailable( void );
 extern void SetBoxingState( INT8 bNewState );
 extern BOOLEAN BoxerExists( void );
 extern UINT8 CountPeopleInBoxingRing( void );
+extern void ClearAllBoxerFlags( void );
 
 #endif
