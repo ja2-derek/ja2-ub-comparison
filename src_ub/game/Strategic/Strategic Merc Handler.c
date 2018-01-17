@@ -56,6 +56,8 @@ void BuildMercQuitList( SOLDIERTYPE *pMercList );
 void StrategicHandlePlayerTeamMercDeath( SOLDIERTYPE *pSoldier )
 {
 	SOLDIERTYPE *pKiller = NULL;
+	INT16 sSectorX, sSectorY;
+
 	//if the soldier HAS a profile
 	if( pSoldier->ubProfile != NO_PROFILE )
 	{
@@ -64,13 +66,27 @@ void StrategicHandlePlayerTeamMercDeath( SOLDIERTYPE *pSoldier )
 		{
 			pKiller = MercPtrs[ pSoldier->ubAttackerID ];
 		}
-		if( pKiller && pKiller->bTeam == OUR_TEAM )
+
+		// CJC Nov 11, 2002
+		// Use the soldier's sector location unless impossible
+		if (pSoldier->sSectorX != 0 && pSoldier->sSectorY != 0)
 		{
-			AddHistoryToPlayersLog( HISTORY_MERC_KILLED_CHARACTER, pSoldier->ubProfile, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
+			sSectorX = pSoldier->sSectorX;
+			sSectorY = pSoldier->sSectorY;
 		}
 		else
 		{
-			AddHistoryToPlayersLog( HISTORY_MERC_KILLED, pSoldier->ubProfile, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
+			sSectorX = gWorldSectorX;
+			sSectorY = gWorldSectorY;
+		}
+
+		if( pKiller && pKiller->bTeam == OUR_TEAM )
+		{
+			AddHistoryToPlayersLog( HISTORY_MERC_KILLED_CHARACTER, pSoldier->ubProfile, GetWorldTotalMin(), sSectorX, sSectorY );
+		}
+		else
+		{
+			AddHistoryToPlayersLog( HISTORY_MERC_KILLED, pSoldier->ubProfile, GetWorldTotalMin(), sSectorX, sSectorY );
 		}
 	}
 
