@@ -26,6 +26,9 @@
 	#include "Assignments.h"
 #endif
 
+#ifdef ENABLE_INSURANCE
+
+
 #define		INS_CTRCT_ORDER_GRID_WIDTH					132
 #define		INS_CTRCT_ORDER_GRID_HEIGHT					216
 #define		INS_CTRCT_ORDER_GRID_OFFSET_X				INS_CTRCT_ORDER_GRID_WIDTH + 2
@@ -1352,7 +1355,7 @@ BOOLEAN AddLifeInsurancePayout( SOLDIERTYPE *pSoldier )
 	return( TRUE );
 }
 
-
+/*
 void StartInsuranceInvestigation( UINT8	ubPayoutID )
 {
 	UINT8 ubDays;
@@ -1386,7 +1389,7 @@ void StartInsuranceInvestigation( UINT8	ubPayoutID )
 	// increment counter of all investigations
 	gStrategicStatus.ubInsuranceInvestigationsCnt++;
 }
-
+*/
 
 void EndInsuranceInvestigation( UINT8	ubPayoutID )
 {
@@ -1743,3 +1746,5 @@ BOOLEAN AreAnyAimMercsOnTeam( )
 
 	return( fIsThereAnyAimMercs );
 }
+
+#endif

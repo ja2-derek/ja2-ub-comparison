@@ -111,7 +111,8 @@ void StrategicHandlePlayerTeamMercDeath( SOLDIERTYPE *pSoldier )
 	// not asleep, DEAD!
 	pSoldier->fMercAsleep = FALSE;
 
-
+/*(
+JA25 no insurance
 	//if the merc had life insurance
 	if( pSoldier->usLifeInsurance )
 	{
@@ -134,6 +135,7 @@ void StrategicHandlePlayerTeamMercDeath( SOLDIERTYPE *pSoldier )
 
 		AddLifeInsurancePayout( pSoldier );
 	}
+*/
 
 
 	// robot and EPCs don't penalize morale - merc don't care about fighting machines and the lives of locals much

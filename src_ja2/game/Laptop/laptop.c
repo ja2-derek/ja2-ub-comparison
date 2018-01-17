@@ -737,8 +737,8 @@ UINT32 LaptopScreenInit()
 	GameInitEmail();
 	GameInitCharProfile();
 	GameInitFlorist();
-	GameInitInsurance();
-	GameInitInsuranceContract();
+//JA25:	GameInitInsurance();
+//	GameInitInsuranceContract();
 	GameInitFuneral();
 	GameInitSirTech();
 	GameInitFiles(); 
@@ -792,7 +792,7 @@ DrawLapTopText()
 //This is only called once at game shutdown.
 UINT32 LaptopScreenShutdown()
 {
-	InsuranceContractEndGameShutDown();
+//JA25:	InsuranceContractEndGameShutDown();
 	BobbyRayMailOrderEndGameShutDown();
 	ShutDownEmailList();
 
@@ -1208,19 +1208,22 @@ void RenderLaptop()
 			break;
 
 		case LAPTOP_MODE_INSURANCE:
-			RenderInsurance();
+			Assert( 0 );
+//JA25:				RenderInsurance();
 			break;
 
 		case LAPTOP_MODE_INSURANCE_INFO:
-			RenderInsuranceInfo();
+			Assert( 0 );
+//JA25:			RenderInsuranceInfo();
 			break;
 
 		case LAPTOP_MODE_INSURANCE_CONTRACT:
-			RenderInsuranceContract();
+//JA25:			RenderInsuranceContract();
 			break;
 
 		case LAPTOP_MODE_INSURANCE_COMMENTS:
-			RenderInsuranceComments();
+			Assert( 0 );
+//JA25:			RenderInsuranceComments();
 			break;
 
 		case LAPTOP_MODE_FUNERAL:
@@ -1564,16 +1567,19 @@ void EnterNewLaptopMode()
 			break;
 
 		case LAPTOP_MODE_INSURANCE:
-			EnterInsurance();
+			Assert( 0 );
+//JA25:			EnterInsurance();
 			break;
 		case LAPTOP_MODE_INSURANCE_INFO:
-			EnterInsuranceInfo();
+			Assert( 0 );
+//JA25:			EnterInsuranceInfo();
 			break;
 		case LAPTOP_MODE_INSURANCE_CONTRACT:
-			EnterInsuranceContract();
+//JA25:			EnterInsuranceContract();
 			break;
 		case LAPTOP_MODE_INSURANCE_COMMENTS:
-			EnterInsuranceComments();
+			Assert( 0 );
+//JA25:			EnterInsuranceComments();
 			break;
 
 		case LAPTOP_MODE_FUNERAL:
@@ -1724,18 +1730,21 @@ void HandleLapTopHandles()
 			break;
 
 		case LAPTOP_MODE_INSURANCE:
-			HandleInsurance();
+			Assert( 0 );
+//JA25:			HandleInsurance();
 			break;
 
 		case LAPTOP_MODE_INSURANCE_INFO:
-			HandleInsuranceInfo();
+			Assert( 0 );
+//JA25:			HandleInsuranceInfo();
 			break;
 
 		case LAPTOP_MODE_INSURANCE_CONTRACT:
-			HandleInsuranceContract();
+//JA25:			HandleInsuranceContract();
 			break;
 		case LAPTOP_MODE_INSURANCE_COMMENTS:
-			HandleInsuranceComments();
+			Assert( 0 );
+//JA25:			HandleInsuranceComments();
 			break;
 		
 		case LAPTOP_MODE_FUNERAL:
@@ -2188,18 +2197,21 @@ UINT32 ExitLaptopMode(UINT32 uiMode)
 			break;
 
 		case LAPTOP_MODE_INSURANCE:
-			ExitInsurance();
+			Assert( 0 );
+//JA25:			ExitInsurance();
 			break;
 
 		case LAPTOP_MODE_INSURANCE_INFO:
-			ExitInsuranceInfo();
+			Assert( 0 );
+//JA25:			ExitInsuranceInfo();
 			break;
 
 		case LAPTOP_MODE_INSURANCE_CONTRACT:
-			ExitInsuranceContract();
+//JA25:			ExitInsuranceContract();
 			break;
 		case LAPTOP_MODE_INSURANCE_COMMENTS:
-			ExitInsuranceComments();
+			Assert( 0 );
+//JA25:			ExitInsuranceComments();
 			break;
 		
 		case LAPTOP_MODE_FUNERAL:
@@ -4101,7 +4113,7 @@ void EnterLaptopInitLaptopPages()
 	EnterInitAimPolicies();
 	EnterInitAimHistory();
 	EnterInitFloristGallery();
-	EnterInitInsuranceInfo();
+//JA25:	EnterInitInsuranceInfo();
 	EnterInitBobbyRayOrder();
 	EnterInitMercSite();
 

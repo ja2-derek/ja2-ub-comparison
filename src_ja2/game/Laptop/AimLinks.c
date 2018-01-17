@@ -139,8 +139,8 @@ void RenderAimLinks()
   BltVideoObject(FRAME_BUFFER, hPixHandle, 0, AIM_LINK_FUNERAL_LINK_X, AIM_LINK_FUNERAL_LINK_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 //	DrawTextToScreen(AimLinkText[AIM_LINK_FUNERAL], AIM_LINK_BOBBY_LINK_X, AIM_LINK_LINK_TEXT_2_Y, AIM_LINK_LINK_WIDTH, AIM_LINK_FONT, AIM_LINK_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
-	GetVideoObject(&hPixHandle, guiInsuranceLink);
-  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, AIM_LINK_INSURANCE_LINK_X, AIM_LINK_INSURANCE_LINK_Y, VO_BLT_SRCTRANSPARENCY,NULL);
+/*	GetVideoObject(&hPixHandle, guiInsuranceLink);
+  BltVideoObject(FRAME_BUFFER, hPixHandle, 0, AIM_LINK_INSURANCE_LINK_X, AIM_LINK_INSURANCE_LINK_Y, VO_BLT_SRCTRANSPARENCY,NULL);*/
 //	DrawTextToScreen(AimLinkText[AIM_LINK_LISTENING], AIM_LINK_BOBBY_LINK_X, AIM_LINK_LINK_TEXT_3_Y, AIM_LINK_LINK_WIDTH, AIM_LINK_FONT, AIM_LINK_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
 	//Draw Link Title
@@ -165,7 +165,15 @@ void SelectLinkRegionCallBack(MOUSE_REGION * pRegion, INT32 iReason )
 
 		gNextLaptopPage = MSYS_GetRegionUserData( pRegion, 0 );
 
+		if( gNextLaptopPage == INSURANCE_BOOKMARK )
+		{
+			//display a warning saying the site is temp. down
+			DoLapTopMessageBox( MSG_BOX_LAPTOP_DEFAULT, gzNewLaptopMessages[ LPTP_MSG__TEMP_UNAVAILABLE ], LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL);
+		}
+		else
+		{
 		GoToWebPage( gNextLaptopPage );
+		}
 	}
 	else if (iReason & MSYS_CALLBACK_REASON_RBUTTON_UP)
 	{

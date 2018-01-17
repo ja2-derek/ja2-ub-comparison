@@ -1,6 +1,8 @@
 #ifndef _INSURANCE_TEXT_H_
 #define _INSURANCE_TEXT_H_
 
+#ifdef ENABLE_INSURANCE
+
 
 #define		INSURANCE_TEXT_SINGLE_LINE_SIZE			80 * 2
 
@@ -93,5 +95,7 @@ enum
 
 
 
+
+#endif
 
 #endif

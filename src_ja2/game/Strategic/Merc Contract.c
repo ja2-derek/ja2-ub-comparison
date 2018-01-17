@@ -391,6 +391,8 @@ BOOLEAN	MercContractHandling( SOLDIERTYPE	*pSoldier, UINT8 ubDesiredAction )
 	//determine the end of the contract
 	pSoldier->iEndofContractTime += ( iContractLength * 1440 );
 
+/*
+JA25: no insurance
 	if( ( pSoldier->usLifeInsurance ) && ( pSoldier->bAssignment != ASSIGNMENT_POW ) )	//  DEF:  Removed cause they can extend a 1 day contract && ( iContractLength > 1 )
 	{
 		// check if player can afford insurance, if not, tell them
@@ -417,6 +419,7 @@ BOOLEAN	MercContractHandling( SOLDIERTYPE	*pSoldier, UINT8 ubDesiredAction )
 		}
 	}
 	else
+*/
 	{
 		// no need to query for life insurance
 		HandleImportantMercQuote( pSoldier, QUOTE_ACCEPT_CONTRACT_RENEWAL );
@@ -1439,6 +1442,9 @@ void HandleNotifyPlayerCanAffordInsurance( SOLDIERTYPE *pSoldier, UINT8 ubLength
 
 void ExtendMercInsuranceContractCallBack( UINT8 bExitValue )
 {
+	Assert( 0 );
+/*
+JA25: no insurance
   if( bExitValue == MSG_BOX_RETURN_YES )
 	{
 		PurchaseOrExtendInsuranceForSoldier( gpInsuranceSoldier, gubContractLength );
@@ -1451,6 +1457,7 @@ void ExtendMercInsuranceContractCallBack( UINT8 bExitValue )
 	}
 
 	gpInsuranceSoldier = NULL;
+*/
 }
 
 void HandleUniqueEventWhenPlayerLeavesTeam( SOLDIERTYPE *pSoldier )

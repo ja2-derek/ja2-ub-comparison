@@ -140,11 +140,13 @@ BOOLEAN ExecuteStrategicEvent( STRATEGICEVENT *pEvent )
 			break;
 		//handles the life insurance contract for a merc from AIM.
 		case EVENT_HANDLE_INSURED_MERCS:
-			DailyUpdateOfInsuredMercs();
+			Assert( 0 );
+//JA25:			DailyUpdateOfInsuredMercs();
 			break;
 		//handles when a merc is killed an there is a life insurance payout
 		case EVENT_PAY_LIFE_INSURANCE_FOR_DEAD_MERC:
-			InsuranceContractPayLifeInsuranceForDeadMerc( (UINT8) pEvent->uiParam );
+			Assert( 0 );
+//JA25:			InsuranceContractPayLifeInsuranceForDeadMerc( (UINT8) pEvent->uiParam );
 			break;
 		//gets called every day at midnight.
 		case EVENT_MERC_DAILY_UPDATE:
@@ -307,10 +309,12 @@ Ja25 No meanwhiles
 			HandleEnricoEmail();
 			break;
 		case EVENT_INSURANCE_INVESTIGATION_STARTED:
-			StartInsuranceInvestigation( (UINT8) pEvent->uiParam );
+			Assert( 0 );
+//JA25			StartInsuranceInvestigation( (UINT8) pEvent->uiParam );
 			break;
 		case EVENT_INSURANCE_INVESTIGATION_OVER:
-			EndInsuranceInvestigation( (UINT8) pEvent->uiParam );
+			Assert( 0 );
+//JA25:			EndInsuranceInvestigation( (UINT8) pEvent->uiParam );
 			break;
 		case EVENT_TEMPERATURE_UPDATE:
 			UpdateTemperature( (UINT8) pEvent->uiParam );

@@ -13,6 +13,9 @@
 #endif
 
 
+#ifdef ENABLE_INSURANCE
+
+
 #define		INS_CMNT_TITLE_Y								52 + LAPTOP_SCREEN_WEB_UL_Y
 
 #define		INS_CMNT_FIRST_BULLET_X					82 + LAPTOP_SCREEN_UL_X
@@ -216,3 +219,4 @@ BOOLEAN DisplayComment( UINT8 ubCommentorsName, UINT8 ubComment, UINT16 usPosY )
 }
 
 
+#endif

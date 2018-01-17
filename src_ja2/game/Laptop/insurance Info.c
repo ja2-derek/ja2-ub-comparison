@@ -13,6 +13,10 @@
 #endif
 
 
+#ifdef ENABLE_INSURANCE
+
+
+
 #define		INS_INFO_FRAUD_TEXT_COLOR					FONT_MCOLOR_RED
 
 
@@ -572,3 +576,4 @@ void DisplayInfoTocPage()
 	usNewLineOffset += INS_INFO_SPACE_BN_PARAGRAPHS;
 }
 
+#endif

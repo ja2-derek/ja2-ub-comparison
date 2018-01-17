@@ -3164,8 +3164,12 @@ void SetupNewStrategicGame( )
 	AddEveryDayStrategicEvent( EVENT_DAILY_UPDATE_BOBBY_RAY_INVENTORY, BOBBYRAY_UPDATE_TIME, 0 );
 	//Daily Update of the M.E.R.C. site.
 	AddEveryDayStrategicEvent( EVENT_DAILY_UPDATE_OF_MERC_SITE, 0, 0 );
+
+/*
+Ja25:  No insurance for mercs
 	//Daily update of insured mercs
 	AddEveryDayStrategicEvent( EVENT_HANDLE_INSURED_MERCS, INSURANCE_UPDATE_TIME,	0 );
+*/
 	//Daily update of mercs
 	AddEveryDayStrategicEvent( EVENT_MERC_DAILY_UPDATE, 0, 0 );
 	// Daily mine production processing events

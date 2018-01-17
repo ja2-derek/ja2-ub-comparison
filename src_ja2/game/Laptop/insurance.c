@@ -15,6 +15,8 @@
 	#include "Multi Language Graphic Utils.h"
 #endif
 
+#ifdef ENABLE_INSURANCE
+
 
 #define		INSURANCE_BACKGROUND_WIDTH					125
 #define		INSURANCE_BACKGROUND_HEIGHT					100
@@ -390,3 +392,5 @@ void SelectInsuranceTitleLinkRegionCallBack(MOUSE_REGION * pRegion, INT32 iReaso
 	{
 	} 
 }
+
+#endif
