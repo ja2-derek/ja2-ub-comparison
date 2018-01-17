@@ -4672,7 +4672,7 @@ void HandleSlayDailyEvent( void )
 	SOLDIERTYPE *pSoldier = NULL;
 
 	// grab slay
-	pSoldier = FindSoldierByProfileID( SLAY, TRUE );
+	pSoldier = FindSoldierByProfileID( 64, TRUE );
 
 	if( pSoldier == NULL )
 	{
