@@ -40,7 +40,7 @@
 #define FILES_LIST_X										FILES_SENDER_TEXT_X
 #define FILES_LIST_Y										( 9 * BLOCK_HEIGHT ) 
 #define FILES_LIST_WIDTH								100
-#define LENGTH_OF_ENRICO_FILE						68
+#define LENGTH_OF_ENRICO_FILE						39	//Ja25 68
 #define MAX_FILE_MESSAGE_PAGE_SIZE			325
 #define VIEWER_MESSAGE_BODY_START_Y			FILES_LIST_Y
 #define PREVIOUS_FILE_PAGE_BUTTON_X			553
@@ -1041,7 +1041,7 @@ BOOLEAN HandleSpecialFiles( UINT8 ubFormat )
 			WidthList = CreateWidthRecordsForAruloIntelFile( );
 		  while( iCounter < LENGTH_OF_ENRICO_FILE )
 			{
-			  LoadEncryptedDataFromFile( "BINARYDATA\\RIS.EDT", sString, FILE_STRING_SIZE * ( iCounter ) * 2, FILE_STRING_SIZE * 2 );
+			  LoadEncryptedDataFromFile( "BINARYDATA\\RIS25.EDT", sString, FILE_STRING_SIZE * ( iCounter ) * 2, FILE_STRING_SIZE * 2 );
 				AddStringToFilesList( sString );
 				iCounter++;
 			}
@@ -1189,7 +1189,7 @@ BOOLEAN HandleSpecialFiles( UINT8 ubFormat )
 	{
 		// title bar
 		VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
-		FilenameForBPP("LAPTOP\\ArucoFilesMap.sti", VObjectDesc.ImageFile);
+		FilenameForBPP("LAPTOP\\TraconaMap.sti", VObjectDesc.ImageFile);
 		CHECKF(AddVideoObject(&VObjectDesc, &uiPicture));
 
 		// get title bar object
@@ -1201,6 +1201,9 @@ BOOLEAN HandleSpecialFiles( UINT8 ubFormat )
 		DeleteVideoObjectFromIndex( uiPicture );
 
 	}
+
+/*
+JA25 : no picture needed
 	else if( giFilesPage == 4 )
 	{
 		// kid pic
@@ -1217,6 +1220,10 @@ BOOLEAN HandleSpecialFiles( UINT8 ubFormat )
 		DeleteVideoObjectFromIndex( uiPicture );
 
 	}
+*/
+
+/*
+Ja25 No picture
 	else if( giFilesPage == 5 )
 	{
 
@@ -1234,7 +1241,7 @@ BOOLEAN HandleSpecialFiles( UINT8 ubFormat )
 	
 		DeleteVideoObjectFromIndex( uiPicture );
 	}
-	
+*/
 	return ( TRUE );
 }
 
