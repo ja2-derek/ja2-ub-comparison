@@ -124,6 +124,7 @@ void SetAttributes( void );
 void DrawBonusPointsRemaining( void );
 void SetGeneratedCharacterAttributes( void );
 INT32 DetermineNewValue( INT32 iNewX );
+INT32 DetermineNewPosition( INT32 iAttribute );
 
 // callbacks
 void BtnIMPAttributeFinishCallback(GUI_BUTTON *btn,INT32 reason);
@@ -961,8 +962,7 @@ void RenderAttributeBoxes( void )
 		{
 		  case (STRENGTH_ATTRIBUTE):
 		    // blt in strength slider
-				sX =  ( ( iCurrentStrength - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE ) / 50;
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentStrength - MIN_ATTIBUTEPOINT );
 				RenderSliderBar( sX, sY );
         
 				// set sliderbar mouse region
@@ -976,8 +976,8 @@ void RenderAttributeBoxes( void )
 		  break;
 			case (DEXTERITY_ATTRIBUTE):
 		    // blt in strength slider
-				sX =  ( ( iCurrentDexterity - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE ) / 50;
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentDexterity - MIN_ATTIBUTEPOINT );
+
 				RenderSliderBar( sX, sY );
 
 				// set sliderbar mouse region
@@ -992,8 +992,7 @@ void RenderAttributeBoxes( void )
 		  break;
 			case (AGILITY_ATTRIBUTE):
 		    // blt in strength slider
-				sX =  ( ( iCurrentAgility - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50;
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentAgility - MIN_ATTIBUTEPOINT );
 				RenderSliderBar( sX, sY );
 
 				// set sliderbar mouse region
@@ -1008,8 +1007,7 @@ void RenderAttributeBoxes( void )
 		  break;
 			case (WISDOM_ATTRIBUTE):
 		    // blt in strength slider
-				sX =  ( ( iCurrentWisdom - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50;
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentWisdom - MIN_ATTIBUTEPOINT );
 				RenderSliderBar( sX, sY );
 
 				// set sliderbar mouse region
@@ -1023,8 +1021,7 @@ void RenderAttributeBoxes( void )
 		  break;
       case (LEADERSHIP_ATTRIBUTE):
 		    // blt in strength slider
-				sX =  ( ( iCurrentLeaderShip - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50;
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentLeaderShip - MIN_ATTIBUTEPOINT );
 				RenderSliderBar( sX, sY );
         // set sliderbar mouse region
 				MSYS_MoveMouseRegionTo( &pSliderBarRegions[ iCnt ], ( INT16 )(sX + LAPTOP_SCREEN_UL_X ), ( INT16 )( sY + LAPTOP_SCREEN_WEB_UL_Y ) );
@@ -1037,8 +1034,7 @@ void RenderAttributeBoxes( void )
 		  break;
 			case (HEALTH_ATTRIBUTE):
 		    // blt in health slider
-				sX =  ( ( iCurrentHealth - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50;
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentHealth - MIN_ATTIBUTEPOINT );
 				RenderSliderBar( sX, sY );
 
         // set sliderbar mouse region
@@ -1053,14 +1049,8 @@ void RenderAttributeBoxes( void )
       case (MARKSMANSHIP_SKILL):
 		    // blt in marksmanship slider
 				
-				sX =  ( ( iCurrentMarkmanship - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50;	
-				// if less than zero..a zero'ed skill...reset to zero
-				if( sX < 0)
-				{
-					sX = 0;
-				}
+				sX =  DetermineNewPosition( iCurrentMarkmanship - MIN_ATTIBUTEPOINT );
 
-				sX += SKILL_SLIDE_START_X;
 				RenderSliderBar( sX, sY );
         // set sliderbar mouse region
 				MSYS_MoveMouseRegionTo( &pSliderBarRegions[ iCnt ], ( INT16 )(sX + LAPTOP_SCREEN_UL_X ), ( INT16 )( sY + LAPTOP_SCREEN_WEB_UL_Y ) );
@@ -1075,14 +1065,7 @@ void RenderAttributeBoxes( void )
       case (MEDICAL_SKILL):
 		    // blt in medical slider
 				
-				sX =  ( ( iCurrentMedical - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50;	
-				// if less than zero..a zero'ed skill...reset to zero
-				if( sX < 0)
-				{
-					sX = 0;
-				}
-
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentMedical - MIN_ATTIBUTEPOINT );
 				RenderSliderBar( sX, sY );
 
 				// set sliderbar mouse region
@@ -1097,14 +1080,7 @@ void RenderAttributeBoxes( void )
       case (MECHANICAL_SKILL):
 		    // blt in mech slider
 				
-				sX =  ( ( iCurrentMechanical - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50;	
-				// if less than zero..a zero'ed skill...reset to zero
-				if( sX < 0)
-				{
-					sX = 0;
-				}
-
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentMechanical - MIN_ATTIBUTEPOINT );
 				RenderSliderBar( sX, sY );
 
 				// set sliderbar mouse region
@@ -1120,14 +1096,7 @@ void RenderAttributeBoxes( void )
 			case (EXPLOSIVE_SKILL):
 		    // blt in explosive slider
 				
-				sX =  ( ( iCurrentExplosives - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50;	
-				// if less than zero..a zero'ed skill...reset to zero
-				if( sX < 0)
-				{
-					sX = 0;
-				}
-
-				sX += SKILL_SLIDE_START_X;
+				sX =  DetermineNewPosition( iCurrentExplosives - MIN_ATTIBUTEPOINT );
 				RenderSliderBar( sX, sY );
 
 				// set sliderbar mouse region
@@ -1308,7 +1277,7 @@ void CreateSliderBarMouseRegions( void )
 	INT16 sX = 0;
 
 	// set the starting X
-	sX = ( ( ( 55 - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE ) / 50 ) + SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X;
+	sX = DetermineNewPosition( START_ATTRIBEPOINT - MIN_ATTIBUTEPOINT );
 
 	for( iCounter = 0; iCounter < 10; iCounter++ )
 	{
@@ -1540,8 +1509,10 @@ void SliderRegionButtonCallback( MOUSE_REGION * pRegion, INT32 iReason )
 		iCurrentAttributeValue = GetCurrentAttributeValue( iAttribute );
     
 		// get the boxes bounding x
-		sNewX =  ( ( iCurrentAttributeValue - 35 ) * BASE_SKILL_PIXEL_UNIT_SIZE )/ 50 + SKILL_SLIDE_START_X + LAPTOP_SCREEN_UL_X;
-    
+		sNewX = DetermineNewPosition( iCurrentAttributeValue - MIN_ATTIBUTEPOINT );
+
+		sNewX += LAPTOP_SCREEN_UL_X;
+
 		// the sNewX is below 0, reset to zero
 		if( sNewX < 0 )
 		{
@@ -1753,5 +1724,25 @@ INT32 DetermineNewValue( INT32 iNewX )
 	}
 
 	return( iNewValue );
+}
+
+
+INT32 DetermineNewPosition( INT32 iAttribute )
+{
+	INT32 iNewLoc=0;
+	INT32	iStartLoc = SKILL_SLIDE_START_X;
+	FLOAT fPercentOfBar=0.0f;
+	FLOAT	fBasePixelScaleWidth = ( ( BAR_WIDTH - SLIDER_BAR_WIDTH ) / (FLOAT)( MAX_ATTIBUTEPOINT - MIN_ATTIBUTEPOINT ) );
+
+	iNewLoc = (INT32)(iAttribute * fBasePixelScaleWidth);
+
+	if( iNewLoc < 0 )
+	{
+		iNewLoc = 0;
+	}
+
+	iNewLoc += iStartLoc;
+
+	return( iNewLoc );
 }
 
