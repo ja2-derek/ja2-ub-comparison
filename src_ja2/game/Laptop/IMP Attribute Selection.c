@@ -30,6 +30,11 @@
 // the sizeof one skill unit on the sliding bar in pixels
 #define BASE_SKILL_PIXEL_UNIT_SIZE ( ( 423 - 230 ) )
 
+#define	MAX_ATTIBUTEPOINT		90
+#define	START_ATTRIBEPOINT		55
+#define	MIN_ATTIBUTEPOINT		35
+
+
 enum{
 	HEALTH_ATTRIBUTE,
 	DEXTERITY_ATTRIBUTE,
@@ -363,54 +368,54 @@ void ProcessAttributes( void )
 	// check any attribute below 35
 
 	// strength
-	if( iCurrentStrength <= 35 )
+	if( iCurrentStrength <= MIN_ATTIBUTEPOINT )
 	{
-		iCurrentStrength = 35;
+		iCurrentStrength = MIN_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
   // dex
-	if( iCurrentDexterity <= 35 )
+	if( iCurrentDexterity <= MIN_ATTIBUTEPOINT )
 	{
-		iCurrentDexterity = 35;
+		iCurrentDexterity = MIN_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
    // agility
-	if( iCurrentAgility <= 35 )
+	if( iCurrentAgility <= MIN_ATTIBUTEPOINT )
 	{
-		iCurrentAgility = 35;
+		iCurrentAgility = MIN_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
 	 // wisdom
-	if( iCurrentWisdom <= 35 )
+	if( iCurrentWisdom <= MIN_ATTIBUTEPOINT )
 	{
-		iCurrentWisdom = 35;
+		iCurrentWisdom = MIN_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
    // leadership
-	if( iCurrentLeaderShip <= 35 )
+	if( iCurrentLeaderShip <= MIN_ATTIBUTEPOINT )
 	{
-		iCurrentLeaderShip = 35;
+		iCurrentLeaderShip = MIN_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
 	 // health
-	if( iCurrentHealth <= 35 )
+	if( iCurrentHealth <= MIN_ATTIBUTEPOINT )
 	{
-		iCurrentHealth = 35;
+		iCurrentHealth = MIN_ATTIBUTEPOINT;
 		// disable button too
 
 	}
@@ -418,56 +423,56 @@ void ProcessAttributes( void )
 
 
 
-	// now check for above 85
+	// now check for above MAX_ATTIBUTEPOINT
   // strength
-	if( iCurrentStrength >= 85 )
+	if( iCurrentStrength >= MAX_ATTIBUTEPOINT )
 	{
-		iCurrentStrength = 85;
+		iCurrentStrength = MAX_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
   // dex
-	if( iCurrentDexterity >= 85 )
+	if( iCurrentDexterity >= MAX_ATTIBUTEPOINT )
 	{
-		iCurrentDexterity = 85;
+		iCurrentDexterity = MAX_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
    // agility
-	if( iCurrentAgility >= 85 )
+	if( iCurrentAgility >= MAX_ATTIBUTEPOINT )
 	{
-		iCurrentAgility = 85;
+		iCurrentAgility = MAX_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
 	 // wisdom
-	if( iCurrentWisdom >= 85 )
+	if( iCurrentWisdom >= MAX_ATTIBUTEPOINT )
 	{
-		iCurrentWisdom = 85;
+		iCurrentWisdom = MAX_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
    // leadership
-	if( iCurrentLeaderShip >= 85 )
+	if( iCurrentLeaderShip >= MAX_ATTIBUTEPOINT )
 	{
-		iCurrentLeaderShip = 85;
+		iCurrentLeaderShip = MAX_ATTIBUTEPOINT;
 		// disable button too
 
 
 	}
 
 	 // health
-	if( iCurrentHealth >= 85 )
+	if( iCurrentHealth >= MAX_ATTIBUTEPOINT )
 	{
-		iCurrentHealth = 85;
+		iCurrentHealth = MAX_ATTIBUTEPOINT;
 		// disable button too
 
 	}
@@ -496,7 +501,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 	switch( iStatToIncrement )
 	{
 		case( STRENGTH_ATTRIBUTE ):
-		  if( iCurrentStrength > 84 )
+		  if( iCurrentStrength > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -508,7 +513,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
     case( DEXTERITY_ATTRIBUTE ):
-		  if( iCurrentDexterity > 84 )
+		  if( iCurrentDexterity > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -520,7 +525,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
 		case( AGILITY_ATTRIBUTE ):
-		  if( iCurrentAgility > 84 )
+		  if( iCurrentAgility > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -532,7 +537,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
 		case( LEADERSHIP_ATTRIBUTE ):
-		  if( iCurrentLeaderShip > 84 )
+		  if( iCurrentLeaderShip > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -544,7 +549,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
 		case( WISDOM_ATTRIBUTE ):
-		  if( iCurrentWisdom > 84 )
+		  if( iCurrentWisdom > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -556,7 +561,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
 		case( HEALTH_ATTRIBUTE ):
-		  if( iCurrentHealth > 84 )
+		  if( iCurrentHealth > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -568,7 +573,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
 		case( MARKSMANSHIP_SKILL ):
-		  if( iCurrentMarkmanship > 84 )
+		  if( iCurrentMarkmanship > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -579,7 +584,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 				{
 					if( DoWeHaveThisManyBonusPoints( 15 ) == TRUE )
 					{
-					  iCurrentMarkmanship+=35;
+					  iCurrentMarkmanship+=MIN_ATTIBUTEPOINT;
 					  iCurrentBonusPoints-=15;
 						fSkillAtZeroWarning = FALSE;
 					}
@@ -596,7 +601,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
 		case( MECHANICAL_SKILL ):
-		  if( iCurrentMechanical > 84 )
+		  if( iCurrentMechanical > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -607,7 +612,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 				{
 					if( DoWeHaveThisManyBonusPoints( 15 ) == TRUE )
 					{
-					  iCurrentMechanical+=35;
+					  iCurrentMechanical+=MIN_ATTIBUTEPOINT;
 					  iCurrentBonusPoints-=15;
 						fSkillAtZeroWarning = FALSE;
 					}
@@ -624,7 +629,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
 		case( MEDICAL_SKILL ):
-		  if( iCurrentMedical > 84 )
+		  if( iCurrentMedical > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -635,7 +640,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 				{
 					if( DoWeHaveThisManyBonusPoints( 15 ) == TRUE )
 					{
-					  iCurrentMedical+=35;
+					  iCurrentMedical+=MIN_ATTIBUTEPOINT;
 					  iCurrentBonusPoints-=15;
 						fSkillAtZeroWarning = FALSE;
 					}
@@ -652,7 +657,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 			}
 		break;
 		case( EXPLOSIVE_SKILL ):
-		  if( iCurrentExplosives > 84 )
+		  if( iCurrentExplosives > MAX_ATTIBUTEPOINT-1 )
 			{
 				// too high, leave
 				return( SLIDER_OUT_OF_RANGE );
@@ -663,7 +668,7 @@ UINT8 IncrementStat( INT32 iStatToIncrement )
 				{
 					if( DoWeHaveThisManyBonusPoints( 15 ) == TRUE )
 					{
-					  iCurrentExplosives+=35;
+					  iCurrentExplosives+=MIN_ATTIBUTEPOINT;
 					  iCurrentBonusPoints-=15;
 						fSkillAtZeroWarning = FALSE;
 					}
@@ -700,7 +705,7 @@ UINT8 DecrementStat( INT32 iStatToDecrement  )
 	switch( iStatToDecrement )
 	{
 		case( STRENGTH_ATTRIBUTE ):
-			if( iCurrentStrength > 35 )
+			if( iCurrentStrength > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentStrength--;
@@ -712,7 +717,7 @@ UINT8 DecrementStat( INT32 iStatToDecrement  )
 			}
 		break;
     case( DEXTERITY_ATTRIBUTE ):
-			if( iCurrentDexterity > 35 )
+			if( iCurrentDexterity > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentDexterity--;
@@ -724,7 +729,7 @@ UINT8 DecrementStat( INT32 iStatToDecrement  )
 			}
 		break;
 		case( AGILITY_ATTRIBUTE ):
-			if( iCurrentAgility > 35 )
+			if( iCurrentAgility > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentAgility--;
@@ -736,7 +741,7 @@ UINT8 DecrementStat( INT32 iStatToDecrement  )
 			}
 		break;
     case( WISDOM_ATTRIBUTE ):
-			if( iCurrentWisdom > 35 )
+			if( iCurrentWisdom > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentWisdom--;
@@ -748,7 +753,7 @@ UINT8 DecrementStat( INT32 iStatToDecrement  )
 			}
 		break;
 		case( LEADERSHIP_ATTRIBUTE ):
-			if( iCurrentLeaderShip > 35 )
+			if( iCurrentLeaderShip > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentLeaderShip--;
@@ -760,7 +765,7 @@ UINT8 DecrementStat( INT32 iStatToDecrement  )
 			}
 		break;
 		case( HEALTH_ATTRIBUTE ):
-			if( iCurrentHealth > 35 )
+			if( iCurrentHealth > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentHealth--;
@@ -772,61 +777,61 @@ UINT8 DecrementStat( INT32 iStatToDecrement  )
 			}
 		break;
     case( MARKSMANSHIP_SKILL ):
-			if( iCurrentMarkmanship > 35 )
+			if( iCurrentMarkmanship > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentMarkmanship--;
         iCurrentBonusPoints++;
 			}
-			else if( iCurrentMarkmanship == 35)
+			else if( iCurrentMarkmanship == MIN_ATTIBUTEPOINT)
 			{
         	// ok to decrement
-				iCurrentMarkmanship-=35;
+				iCurrentMarkmanship-=MIN_ATTIBUTEPOINT;
         iCurrentBonusPoints+=15;
 				fSkillAtZeroWarning = TRUE;
 			}
 		break;
 		case( MEDICAL_SKILL ):
-			if( iCurrentMedical > 35 )
+			if( iCurrentMedical > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentMedical--;
         iCurrentBonusPoints++;
 			}
-			else if( iCurrentMedical == 35)
+			else if( iCurrentMedical == MIN_ATTIBUTEPOINT)
 			{
         	// ok to decrement
-				iCurrentMedical-=35;
+				iCurrentMedical-=MIN_ATTIBUTEPOINT;
         iCurrentBonusPoints+=15;
 				fSkillAtZeroWarning = TRUE;
 			}
 		break;
 		case( MECHANICAL_SKILL ):
-			if( iCurrentMechanical > 35 )
+			if( iCurrentMechanical > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentMechanical--;
         iCurrentBonusPoints++;
 			}
-			else if( iCurrentMechanical == 35)
+			else if( iCurrentMechanical == MIN_ATTIBUTEPOINT)
 			{
         	// ok to decrement
-				iCurrentMechanical-=35;
+				iCurrentMechanical-=MIN_ATTIBUTEPOINT;
         iCurrentBonusPoints+=15;
 				fSkillAtZeroWarning = TRUE;
 			}
 		break;
 		case( EXPLOSIVE_SKILL ):
-			if( iCurrentExplosives > 35 )
+			if( iCurrentExplosives > MIN_ATTIBUTEPOINT )
 			{
 				// ok to decrement
 				iCurrentExplosives--;
         iCurrentBonusPoints++;
 			}
-			else if( iCurrentExplosives == 35)
+			else if( iCurrentExplosives == MIN_ATTIBUTEPOINT)
 			{
         	// ok to decrement
-				iCurrentExplosives-=35;
+				iCurrentExplosives-=MIN_ATTIBUTEPOINT;
         iCurrentBonusPoints+=15;
 				fSkillAtZeroWarning = TRUE;
 			}
@@ -1450,10 +1455,10 @@ void SliderRegionButtonCallback( MOUSE_REGION * pRegion, INT32 iReason )
 		// set the new attribute value based on position of mouse click
 		iNewAttributeValue = DetermineNewValue( sX );
 
-		// too high, reset to 85
-		if( iNewAttributeValue > 85 )
+		// too high, reset to MAX_ATTIBUTEPOINT
+		if( iNewAttributeValue > MAX_ATTIBUTEPOINT )
     {
-			iNewAttributeValue = 85;
+			iNewAttributeValue = MAX_ATTIBUTEPOINT;
 		}
 			
 		// get the delta
