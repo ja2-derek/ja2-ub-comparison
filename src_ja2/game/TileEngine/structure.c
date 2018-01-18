@@ -1766,7 +1766,11 @@ void DebugStructurePage1( void )
 		}
 
 		#ifndef LOS_DEBUG
-		gprintf( 0, LINE_HEIGHT * 4, L"Structure ID %d", pStructure->usStructureID );
+		gprintf( 0, LINE_HEIGHT * 4, L"Structure ID %d, from DB index %d", pStructure->usStructureID, pStructure->pDBStructureRef->pDBStructure->usStructureNumber );
+		if( pStructure->pDBStructureRef->pDBStructure->bPartnerDelta != 0 )
+		{
+			gprintf( 0, LINE_HEIGHT * 5, L"Structure has partner delta %d", pStructure->pDBStructureRef->pDBStructure->bPartnerDelta ); 
+		}
 		#endif
 
 		pStructure = gpWorldLevelData[sGridNo].pStructureHead;
