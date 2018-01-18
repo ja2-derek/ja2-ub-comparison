@@ -47,6 +47,7 @@ def scan_folder(sub_path, base1, base2):
 
 def move_common(sub_path):
     files = scan_folder(sub_path, DIR_JA2, DIR_UB)
+    something_changed = False
     for no, (path1, path2) in enumerate(files):
         if no % 25 == 0:
             print("{: 3}% done".format(int(100*no/len(files))))
@@ -89,6 +90,13 @@ def move_common(sub_path):
             args = ["git", "rm", path2]
             #print(args)
             run_ret(args)
+            something_changed = True
+        if something_changed:
+            print("\n Some files have been moved.")
+            rep = input("Commit changes (Y)?")
+            if rep == "Y":
+                args = ["git", "commit", "-m", "Use script to move shared files to src_common"]
+                run_ret(args)
 
 
 def main():
