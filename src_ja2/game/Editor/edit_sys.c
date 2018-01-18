@@ -555,6 +555,12 @@ void PasteStructureCommon( UINT32 iMapIndex )
 	INT32					iRandSelIndex;
 	BOOLEAN				fOkayToAdd;
 
+
+	if ( *pNumSelList == 0 )
+	{
+		return;
+	}
+
 	if ( iMapIndex < 0x8000 )
 	{  
 	/*
