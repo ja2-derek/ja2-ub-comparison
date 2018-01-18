@@ -159,7 +159,6 @@ UINT16 gusShadeLevels[16][3]={{500, 500, 500},				// green table
 															{48, 222, 48}};
 */
 
-/*
 //Linda's final version
 
 UINT16 gusShadeLevels[16][3] =	
@@ -181,8 +180,8 @@ UINT16 gusShadeLevels[16][3] =
 	18, 18, 224,
 	48, 222, 48,
 };
-*/
 
+/*
 // JA2 Gold:
 UINT16 gusShadeLevels[16][3] =	
 { 
@@ -203,6 +202,7 @@ UINT16 gusShadeLevels[16][3] =
 	18, 18, 224,
 	48, 222, 48,
 };
+*/
 
 //Set this true if you want the shadetables to be loaded from the text file.
 BOOLEAN gfLoadShadeTablesFromTextFile =		FALSE;
