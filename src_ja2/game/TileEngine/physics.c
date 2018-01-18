@@ -45,7 +45,10 @@
 #define	GLAUNCHER_HIGHER_LEVEL_START_ANGLE		(FLOAT)( PI/6 )
 
 #define GET_THROW_HEIGHT( l )						(INT16)( ( l * 256 ) )
-#define GET_SOLDIER_THROW_HEIGHT( l )		(INT16)( ( l * 256 ) + STANDING_HEIGHT )
+//#define GET_SOLDIER_THROW_HEIGHT( l )		(INT16)( ( l * 256 ) + STANDING_HEIGHT )
+// ATE: Commented out part to provide a more accurate start height
+#define GET_SOLDIER_THROW_HEIGHT( l )		(INT16)( ( l * 256 ) + CROUCHED_HEIGHT )
+
 
 #define	GET_OBJECT_LEVEL( z )						( (INT8)( ( z + 10 ) / HEIGHT_UNITS ) )
 #define	OBJECT_DETONATE_ON_IMPACT( o )	( ( o->Obj.usItem == MORTAR_SHELL ) ) // && ( o->ubActionCode == THROW_ARM_ITEM || pObject->fTestObject ) )
