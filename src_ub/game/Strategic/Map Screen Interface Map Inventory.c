@@ -1923,7 +1923,7 @@ void HandleMouseInCompatableItemForMapSectorInventory( INT32 iCurrentSlot )
 		fMapPanelDirty = TRUE;
 		fItemWasHighLighted = FALSE;
 		giCompatibleItemBaseTime = 0;
-		ResetMapSectorInventoryPoolHighLights( TRUE );
+		ResetMapSectorInventoryPoolHighLights( );
 		return;
 	}
 
@@ -1952,7 +1952,7 @@ void HandleMouseInCompatableItemForMapSectorInventory( INT32 iCurrentSlot )
 	}
 	
 	ResetCompatibleItemArray( );
-	ResetMapSectorInventoryPoolHighLights( FALSE );
+	ResetMapSectorInventoryPoolHighLights( );
 
 	if( iCurrentSlot == -1 )
 	{
@@ -2017,14 +2017,14 @@ void HandleMouseInCompatableItemForMapSectorInventory( INT32 iCurrentSlot )
 	return;
 }
 
-void ResetMapSectorInventoryPoolHighLights( BOOLEAN fClearOutOldFlags )
+void ResetMapSectorInventoryPoolHighLights( void )
 {
 	INT32 iCounter = 0;
 
 	// now reset the highlight list for the map sector inventory
 	for ( iCounter = 0; iCounter < MAP_INVENTORY_POOL_SLOT_COUNT; iCounter++ )
 	{
-		if( fMapInventoryItemCompatable[ iCounter ] && fClearOutOldFlags  )
+		if( fMapInventoryItemCompatable[ iCounter ] )
 		{
 			fMapInventoryItemCompatable[ iCounter ] = FALSE;
 		}

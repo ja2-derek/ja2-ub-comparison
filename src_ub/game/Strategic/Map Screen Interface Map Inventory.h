@@ -56,7 +56,7 @@ extern BOOLEAN fMapInventoryItemCompatable[ ];
 BOOLEAN IsMapScreenWorldItemInvisibleInMapInventory( WORLDITEM *pWorldItem );
 BOOLEAN IsMapScreenWorldItemVisibleInMapInventory( WORLDITEM *pWorldItem );
 
-void ResetMapSectorInventoryPoolHighLights( BOOLEAN fClearOutOldFlags );
+void ResetMapSectorInventoryPoolHighLights( void );
 
 
 #endif

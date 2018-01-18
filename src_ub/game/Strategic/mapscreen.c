@@ -6645,7 +6645,7 @@ void MAPInvMoveCallback( MOUSE_REGION *pRegion, INT32 iReason )
 		fMapPanelDirty = TRUE;
 		if( fShowMapInventoryPool )
 		{
-			ResetMapSectorInventoryPoolHighLights( TRUE );
+			ResetMapSectorInventoryPoolHighLights( );
 		}
 
 	  gbCheckForMouseOverItemPos = -1;
