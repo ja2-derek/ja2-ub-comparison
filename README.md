@@ -15,5 +15,6 @@ The basic idea is to generate a set of patches that transform the code in `src_j
 
 ### Strategy:
 - Unimportant differences may be removed from either of the folders, i.e. `src_ja2` or `src_ub`.
-- Important differences (features/bug fixes) may be removed by merging them into `src_ja2`. The commit title has to start with `PATCHXXX` where XXX is a three digit number.
+- Important differences (features/bug fixes) may be removed by merging them into `src_ja2`. The commit title has to start with `PATCHXXX` where XXX is a three digit 
+number. If the patch only modifies the editor, the commit title has to start with `EDITORYYY`.
 - The python script `move_common.py` can be used to automatically move equal (modulo white space) files to `src_common`. These changes should be commited without any manual changes. The commit message should be `Use script to move shared files to src_common`.
