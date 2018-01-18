@@ -287,6 +287,14 @@ BOOLEAN LoadAllMapChangesFromMapTempFileAndApplyThem( )
 				}
 				break;
 
+			case SLM_REMOVE_EXIT_GRID:
+				//Remove the exit grid
+				RemoveExitGridFromWorld( pMap->usGridNo );
+
+				// Save this struct back to the temp file
+				SaveModifiedMapStructToMapTempFile( pMap, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+				break;
+
 			default:
 				AssertMsg( 0, "ERROR!  Map Type not in switch when loading map changes from temp file");
 				break;
@@ -891,6 +899,28 @@ void AddExitGridToMapTempFile( UINT16 usGridNo, EXITGRID *pExitGrid, INT16 sSect
 
 	Map.ubExtra		= pExitGrid->ubGotoSectorZ;
 	Map.ubType		= SLM_EXIT_GRIDS;
+
+	SaveModifiedMapStructToMapTempFile( &Map, sSectorX, sSectorY, ubSectorZ );
+}
+
+void AddRemoveExitGridToUnloadedMapTempFile( UINT16 usGridNo, INT16 sSectorX, INT16 sSectorY, UINT8 ubSectorZ )
+{
+	MODIFY_MAP Map;
+
+	if( !gfApplyChangesToTempFile )
+	{
+		ScreenMsg( FONT_MCOLOR_WHITE, MSG_BETAVERSION, L"Called AddRemoveExitGridToUnloadedMapTempFile() without calling ApplyMapChangesToMapTempFile()" );
+		return;
+	}
+
+	if( gTacticalStatus.uiFlags & LOADING_SAVED_GAME )
+		return;
+
+	memset( &Map, 0, sizeof( MODIFY_MAP ) );
+
+	Map.usGridNo = usGridNo;
+
+	Map.ubType		= SLM_REMOVE_EXIT_GRID;
 
 	SaveModifiedMapStructToMapTempFile( &Map, sSectorX, sSectorY, ubSectorZ );
 }

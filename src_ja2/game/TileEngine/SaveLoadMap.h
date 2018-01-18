@@ -43,6 +43,8 @@ enum
 
 	// Modify window graphic & structure 
 	SLM_WINDOW_HIT,
+
+	SLM_REMOVE_EXIT_GRID,
 };
 
 typedef struct
@@ -99,6 +101,8 @@ void AddStructToUnLoadedMapTempFile( UINT32 uiMapIndex, UINT16 usIndex, INT16 sS
 //Adds the exit grid to
 void AddExitGridToMapTempFile( UINT16 usGridNo, EXITGRID *pExitGrid, INT16 sSectorX, INT16 sSectorY, UINT8 ubSectorZ );
 
+//Removes an exit grid from an unloaded map
+void AddRemoveExitGridToUnloadedMapTempFile( UINT16 usGridNo, INT16 sSectorX, INT16 sSectorY, UINT8 ubSectorZ );
 
 //This function removes a struct with the same MapIndex and graphic index from the given sectors temp file
 BOOLEAN RemoveGraphicFromTempFile( UINT32 uiMapIndex, UINT16 usIndex, INT16 sSectorX, INT16 sSectorY, UINT8 ubSectorZ );
