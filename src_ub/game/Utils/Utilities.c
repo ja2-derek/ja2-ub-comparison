@@ -291,14 +291,6 @@ SGPFILENAME	gCheckFilenames[] =
 };
 
  
-UINT32 gCheckFileMinSizes[] =
-{
-  20000000,
-  16000000,
-  5000000,
-  30000000,
-  200000000
-};
 
 
 
