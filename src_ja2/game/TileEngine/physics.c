@@ -1680,7 +1680,10 @@ INT32 ChanceToGetThroughObjectTrajectory( INT16 sTargetZ, OBJECTTYPE *pItem, vec
     // Calculate gridno from last position
 
     // If NOT from UI, use exact collision position
-    if ( fFromUI )
+	// JA25 comment from CJC:  testing breaklights, we ran into a situation where EndedWithCollisionPosition was not
+	// set due to breaklight stopping on flat ground.  It makes sense that if EndedWithCollisionPosition is
+	// unset, at least the Position value is of SOME use...
+    if ( fFromUI || (pObject->EndedWithCollisionPosition.x == 0.0f && pObject->EndedWithCollisionPosition.y == 0.0f) )
     {
 		  (*psNewGridNo) = MAPROWCOLTOPOS( ( (INT16)pObject->Position.y / CELL_Y_SIZE ), ( (INT16)pObject->Position.x / CELL_X_SIZE ) );
     }
