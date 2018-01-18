@@ -136,6 +136,9 @@ INT32 NewLightEffect( INT16 sGridNo, INT8 bType )
   // Handle sight here....
 	AllTeamsLookForAll( FALSE );
 
+	//Play the breaklight sound
+	PlayJA2Sample( BREAK_LIGHT_IGNITING, RATE_11025, SoundVolume( LOWVOLUME, sGridNo ), 1, SoundDir( sGridNo ) );
+
 	return( iLightIndex );
 }
 
