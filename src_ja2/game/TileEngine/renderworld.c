@@ -698,7 +698,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransInvZ( UINT16 *pBuffer, UINT32 uiDestPitchBY
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncClip( UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion, INT16 sZIndex, UINT16 *p16BPPPalette );
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncObscureClip( UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion);
 BOOLEAN Blt8BPPDataTo16BPPBufferTransZTransShadowIncObscureClip( UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion, INT16 sZIndex, UINT16 *p16BPPPalette );
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough( UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion);
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough( UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion, INT16 sZStripIndex );
 
 
 
@@ -978,7 +978,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 	ITEM_POOL			*pItemPool = NULL;
 	BOOLEAN				fHiddenTile = FALSE;
   UINT32        uiAniTileFlags = 0;
-
+	INT16 sZStripIndex;
 
 	//Init some variables
 	usImageIndex = 0;
@@ -1137,6 +1137,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 							fObscuredBlitter						= FALSE;
 							fTranslucencyType						= TRUE;
               uiAniTileFlags        = 0;
+							sZStripIndex = -1;
 
 							uiLevelNodeFlags			= pNode->uiFlags;
 		
@@ -1608,6 +1609,15 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 
 									StructZLevel( iTempPosX_M, iTempPosY_M );
 									uiDirtyFlags=BGND_FLAG_SINGLE|BGND_FLAG_ANIMATED;
+
+
+									if ( uiTileElemFlags & Z_AWARE_DYNAMIC_TILE )
+									{
+										fMultiZBlitter = TRUE;
+										fZBlitter = TRUE;
+										fWallTile = TRUE;
+										sZStripIndex = 0;
+									}
 									break;
 								case TILES_DYNAMIC_ROOF:
 
@@ -2220,7 +2230,14 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 												{
 													if ( fWallTile )
 													{
-														Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough((UINT16*)pDestBuf, uiDestPitchBYTES, gpZBuffer, sZLevel, hVObject, sXPos, sYPos, usImageIndex, &gClippingRect);
+														if ( sZStripIndex == -1 )
+														{
+															Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough((UINT16*)pDestBuf, uiDestPitchBYTES, gpZBuffer, sZLevel, hVObject, sXPos, sYPos, usImageIndex, &gClippingRect, usImageIndex);
+														}
+														else
+														{
+															Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough((UINT16*)pDestBuf, uiDestPitchBYTES, gpZBuffer, sZLevel, hVObject, sXPos, sYPos, usImageIndex, &gClippingRect, sZStripIndex );
+														}
 													}
 													else
 													{
@@ -4734,7 +4751,7 @@ BlitDone:
 	must be the same dimensions (including Pitch) as the destination.
 
 **********************************************************************************************/
-BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough( UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion)
+BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough( UINT16 *pBuffer, UINT32 uiDestPitchBYTES, UINT16 *pZBuffer, UINT16 usZValue, HVOBJECT hSrcVObject, INT32 iX, INT32 iY, UINT16 usIndex, SGPRect *clipregion, INT16 usZStripIndex )
 {
 	UINT16 *p16BPPPalette;
 	UINT32 uiOffset;
@@ -4807,7 +4824,7 @@ BOOLEAN Blt8BPPDataTo16BPPBufferTransZIncClipZSameZBurnsThrough( UINT16 *pBuffer
 		return(FALSE);
 	}
 	// setup for the z-column blitting stuff
-	pZInfo=hSrcVObject->ppZStripInfo[usIndex];
+	pZInfo=hSrcVObject->ppZStripInfo[usZStripIndex];
 	if(pZInfo==NULL)
 	{
 		DebugMsg(TOPIC_VIDEOOBJECT, DBG_LEVEL_0, String("Missing Z-Strip info on multi-Z object")); 
