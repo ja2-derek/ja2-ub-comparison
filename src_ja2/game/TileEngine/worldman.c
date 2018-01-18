@@ -2233,7 +2233,10 @@ BOOLEAN AddMercStructureInfoFromAnimSurface( INT16 sGridNo, SOLDIERTYPE *pSoldie
 				// If we have more than one tile
 				pSoldier->uiStatusFlags |= SOLDIER_MULTITILE_Z;
 			}
-
+			else
+			{
+				//pSoldier->uiStatusFlags |= SOLDIER_Z;
+			}
 
 			return( FALSE );
 		}			
@@ -2247,7 +2250,7 @@ BOOLEAN AddMercStructureInfoFromAnimSurface( INT16 sGridNo, SOLDIERTYPE *pSoldie
 			}
 			else
 			{
-				//pSoldier->uiStatusFlags |= SOLDIER_MULTITILE_NZ;
+				//pSoldier->uiStatusFlags |= SOLDIER_Z;
 			}
 		}
 	}
