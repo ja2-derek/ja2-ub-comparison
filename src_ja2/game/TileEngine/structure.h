@@ -56,6 +56,8 @@ STRUCTURE * FindNonBaseStructure( INT16 sGridNo, STRUCTURE * pStructure );
 STRUCTURE * SwapStructureForPartner( INT16 sGridNo, STRUCTURE * pStructure );
 STRUCTURE * SwapStructureForPartnerWithoutTriggeringSwitches( INT16 sGridNo, STRUCTURE * pStructure );
 STRUCTURE * SwapStructureForPartnerAndStoreChangeInMap( INT16 sGridNo, STRUCTURE * pStructure );
+STRUCTURE * SwapStructureForPartnerForcingGraphicalChange( INT16 sGridNo, STRUCTURE * pStructure );
+
 //
 // functions useful for AI that return info about heights
 //

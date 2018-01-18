@@ -1115,7 +1115,7 @@ BOOLEAN DeleteStructureFromWorld( STRUCTURE * pStructure )
 	return( TRUE );	
 }
 
-STRUCTURE * InternalSwapStructureForPartner( INT16 sGridNo, STRUCTURE * pStructure, BOOLEAN fFlipSwitches, BOOLEAN fStoreInMap )
+STRUCTURE * InternalSwapStructureForPartner( INT16 sGridNo, STRUCTURE * pStructure, BOOLEAN fStoreInMap, BOOLEAN fForceGraphicChange )
 { // switch structure 
 	LEVELNODE *				pLevelNode;
 	LEVELNODE *				pShadowNode;
@@ -1164,7 +1164,7 @@ STRUCTURE * InternalSwapStructureForPartner( INT16 sGridNo, STRUCTURE * pStructu
 	}
 	// set values in the new structure
 	pNewBaseStructure->ubHitPoints = ubHitPoints;
-	if (!fDoor)
+	if (!fDoor || fForceGraphicChange )
 	{ // swap the graphics
 
 		// store removal of previous if necessary
@@ -1203,7 +1203,7 @@ STRUCTURE * InternalSwapStructureForPartner( INT16 sGridNo, STRUCTURE * pStructu
 
 STRUCTURE * SwapStructureForPartner( INT16 sGridNo, STRUCTURE * pStructure )
 {	
-	return( InternalSwapStructureForPartner( sGridNo, pStructure, TRUE, FALSE ) );
+	return( InternalSwapStructureForPartner( sGridNo, pStructure, FALSE, FALSE ) );
 }
 
 STRUCTURE * SwapStructureForPartnerWithoutTriggeringSwitches( INT16 sGridNo, STRUCTURE * pStructure )
@@ -1213,8 +1213,19 @@ STRUCTURE * SwapStructureForPartnerWithoutTriggeringSwitches( INT16 sGridNo, STR
 
 STRUCTURE * SwapStructureForPartnerAndStoreChangeInMap( INT16 sGridNo, STRUCTURE * pStructure )
 {
+	return( InternalSwapStructureForPartner( sGridNo, pStructure, TRUE, FALSE ) );
+}
+
+STRUCTURE * SwapStructureForPartnerForcingGraphicalChange( INT16 sGridNo, STRUCTURE * pStructure )
+{
+	return( InternalSwapStructureForPartner( sGridNo, pStructure, FALSE, TRUE ) );
+}
+
+STRUCTURE * SwapStructureForPartnerForcingGraphicalChangeAndStoreChangeInMap( INT16 sGridNo, STRUCTURE * pStructure )
+{
 	return( InternalSwapStructureForPartner( sGridNo, pStructure, TRUE, TRUE ) );
 }
+
 
 STRUCTURE * FindStructure( INT16 sGridNo, UINT32 fFlags )
 { // finds a structure that matches any of the given flags
