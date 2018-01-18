@@ -609,6 +609,16 @@ void	SetSpecificDatabaseValues( UINT16 usType, UINT16 uiDatabaseElem, TILE_ELEME
 	INT16						sIndexDiff;
 	UINT32					cnt;
 
+	//Ja25:  The Fan in J13 is a multi tile animated structure.  It will take great hacks to make it work
+	// Check sector, usType, set TileElement->uiFlags to Z_AWARE_DYNAMIC_TILE
+	if( usType == FIFTHOSTRUCT )
+	{
+		if( gWorldSectorX == 13 && gWorldSectorY == MAP_ROW_J && gbWorldSectorZ == 0 )
+		{
+			TileElement->uiFlags |= Z_AWARE_DYNAMIC_TILE;
+		}
+	}
+
 	// SETUP BUDDYS FOR SHADOWS
 	cnt = 0;
 	while( gReverseShadowBuddys[ cnt ] != -1 )
