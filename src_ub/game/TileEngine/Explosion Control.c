@@ -2570,6 +2570,8 @@ void PerformItemAction( INT16 sGridNo, OBJECTTYPE * pObj )
 			TogglePressureActionItemsInGridNo( sGridNo );
 			break;
 		case ACTION_ITEM_ENTER_BROTHEL:
+			// JA2Gold: Disable brothel tracking
+			/*
 			if ( ! (gTacticalStatus.uiFlags & INCOMBAT) )
 			{
 				UINT8		ubID;
@@ -2640,8 +2642,11 @@ void PerformItemAction( INT16 sGridNo, OBJECTTYPE * pObj )
 				}
 
 			}
+			*/
 			break;
 		case ACTION_ITEM_EXIT_BROTHEL:
+			// JA2Gold: Disable brothel tracking
+			/*
 			if ( ! (gTacticalStatus.uiFlags & INCOMBAT) )
 			{
 				UINT8		ubID;
@@ -2660,6 +2665,7 @@ void PerformItemAction( INT16 sGridNo, OBJECTTYPE * pObj )
 					SetCustomizableTimerCallbackAndDelay( 1000, DelayedBillyTriggerToBlockOnExit, TRUE );
 				}
 			}
+			*/
 			break;
 		case ACTION_ITEM_KINGPIN_ALARM:
 			PlayJA2Sample( KLAXON_ALARM, RATE_11025, SoundVolume( MIDVOLUME, sGridNo ), 5, SoundDir( sGridNo ) );
@@ -2696,6 +2702,8 @@ void PerformItemAction( INT16 sGridNo, OBJECTTYPE * pObj )
 			pObj->fFlags &= (~OBJECT_DISABLED_BOMB);
 			break;
 		case ACTION_ITEM_SEX:
+			// JA2Gold: Disable brothel sex
+			/*
 			if ( ! (gTacticalStatus.uiFlags & INCOMBAT) )
 			{
 				UINT8		ubID;
@@ -2768,6 +2776,7 @@ void PerformItemAction( INT16 sGridNo, OBJECTTYPE * pObj )
 
 				}
 			}
+			*/
 			break;
 		case ACTION_ITEM_REVEAL_ROOM:
 			{
