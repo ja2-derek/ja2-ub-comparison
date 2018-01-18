@@ -423,6 +423,16 @@ BOOLEAN	PhysicsUpdateLife( REAL_OBJECT *pObject, real DeltaTime )
 							bLevel = 1;
 						}
 
+						// ATE: Yet another hack here, to make sure things don't fall through roofs
+						if ( pObject->ubLastTargetTakenDamage != NOBODY )
+						{
+							SOLDIERTYPE *pSoldier;
+
+							pSoldier = MercPtrs[ pObject->ubLastTargetTakenDamage ];
+
+							bLevel = pSoldier->bLevel;
+						}
+
 						// ATE; If an armed object, don't add....
 						if ( pObject->ubActionCode != THROW_ARM_ITEM )
 						{
