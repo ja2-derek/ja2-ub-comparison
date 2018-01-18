@@ -1189,6 +1189,15 @@ STRUCTURE * InternalSwapStructureForPartner( INT16 sGridNo, STRUCTURE * pStructu
 		}
 	}
 
+	//if ( (pNewBaseStructure->fFlags & STRUCTURE_SWITCH) && (pNewBaseStructure->fFlags & STRUCTURE_OPEN) )
+	if ( 0 /*fFlipSwitches*/ )
+	{
+		if ( pNewBaseStructure->fFlags & STRUCTURE_SWITCH )
+		{
+			// just turned a switch on!
+			ActivateSwitchInGridNo( NOBODY, sGridNo );
+		}
+	}
 	return( pNewBaseStructure );
 }
 
