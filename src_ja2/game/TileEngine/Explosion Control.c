@@ -1877,9 +1877,26 @@ void GetRayStopInfo( UINT32 uiNewSpot, UINT8 ubDir, INT8 bLevel, BOOLEAN fSmokeE
 		 }
 	 }
 
+	// ATE: For smoke, don't let it go over roof....
+	if ( fSmokeEffect )
+	{
+		if ( bLevel )
+		{
+			STRUCTURE * pStructure;
+
+			// Check for roof here....
+			pStructure = FindStructure( (INT16)uiNewSpot, STRUCTURE_ROOF );
+
+			if ( pStructure == NULL )
+			{
+				// block completely!
+				fTravelCostObs = TRUE;
+			}
+		}
+	}
+
 	 if ( fTravelCostObs )
 	 {
-
 		 if ( fSmokeEffect )
 		 {
 			 if ( Blocking == BLOCKING_TOPRIGHT_OPEN_WINDOW || Blocking == BLOCKING_TOPLEFT_OPEN_WINDOW )
