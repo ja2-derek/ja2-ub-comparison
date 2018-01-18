@@ -2,6 +2,8 @@
 	#include "Strategic All.h"
 	#include "Language Defines.h"
 	#include "HelpScreen.h"
+	#include "Ja25Update.h"
+	#include "Ja25 Strategic Ai.h"
 #else
 	#include "sgp.h"
 	#include "jascreens.h"

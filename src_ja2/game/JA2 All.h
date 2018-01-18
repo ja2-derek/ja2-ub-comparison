@@ -157,6 +157,6 @@
 #include "lighteffects.h"
 #include "JA2 Splash.h"
 #include "Scheduling.h"
-#include "_JA25EnglishText.h"
+
 
 #endif

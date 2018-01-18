@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Tactical All.h"
+	#include "Ja25_Tactical.h"
 #else
 	#include "items.h"
 	#include "Action Items.h"

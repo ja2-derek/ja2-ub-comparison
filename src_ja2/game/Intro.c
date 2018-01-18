@@ -2,6 +2,7 @@
 	#include "JA2 All.h"
 	#include "Intro.h"
 	#include "Cinematics.h"
+	#include "Ja25_Tactical.h"
 #else
 	#include "sgp.h"
 	#include "sys globals.h"

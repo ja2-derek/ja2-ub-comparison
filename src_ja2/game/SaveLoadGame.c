@@ -7,6 +7,8 @@
 	#include "HelpScreen.h"
 	#include "Cheats.h"
 	#include "Animated ProgressBar.h"
+	#include "Ja25 Strategic Ai.h"
+	#include "Ja25_Tactical.h"
 #else
 	#include "Types.h"
 	#include "Soldier Profile.h"

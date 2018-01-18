@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Editor All.h"
+	#include "Ja25Update.h"
 #else
 	#include "builddefines.h"
 #endif

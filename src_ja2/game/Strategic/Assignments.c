@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Strategic All.h"
+	#include "Ja25_Tactical.h"
 #else
 	#include "Assignments.h"
 	#include "Soldier Control.h"

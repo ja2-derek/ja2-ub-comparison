@@ -2,6 +2,8 @@
 
 #ifdef PRECOMPILEDHEADERS
 	#include "Strategic All.h"
+	#include "Ja25Update.h"
+	#include "Ja25 Strategic Ai.h"
 #else
 	#include <stdio.h>
 	#include "types.h"

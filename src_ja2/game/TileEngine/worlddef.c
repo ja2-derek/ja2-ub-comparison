@@ -1,6 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "TileEngine All.h"
 	#include "PreBattle Interface.h"
+	#include "Ja25 Strategic Ai.h"
 #else
 	#include "worlddef.h"
 	#include "worlddat.h"

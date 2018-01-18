@@ -2,6 +2,8 @@
 
 #ifdef PRECOMPILEDHEADERS
 	#include "Strategic All.h"
+	#include "Ja25 Strategic Ai.h"
+	#include "Ja25_Tactical.h"
 #else
 	#include "Queen Command.h"
 	#include "Strategic Event Handler.h"

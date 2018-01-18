@@ -224,6 +224,5 @@
 #include "JA2 Demo Ads.h"
 #include "Bullets.h"
 #include "physics.h"
-#include "_JA25EnglishText.h"
 
 #endif

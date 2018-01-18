@@ -2,6 +2,7 @@
 	#include "Tactical All.h"
 	#include "PreBattle Interface.h"
 	#include "Intro.h"
+	#include "Ja25_Tactical.h"
 #else
 	#include "Soldier Control.h"
 	#include "Overhead.h"

@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Strategic All.h"
+	#include "Ja25Update.h"
 #else
 	#include "types.h"
 	#include "Campaign Init.h"

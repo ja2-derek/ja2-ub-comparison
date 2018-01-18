@@ -2,6 +2,8 @@
 	#include "JA2 All.h"
 	#include "HelpScreen.h"
 	#include "PreBattle Interface.h"
+	#include "Ja25_Tactical.h"
+	#include "Ja25 Strategic Ai.h"
 #else
 	#include <stdio.h>
 	#include <stdarg.h>

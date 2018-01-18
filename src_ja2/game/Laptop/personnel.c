@@ -1,5 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Laptop All.h"
+	#include "Ja25Update.h"
+	#include "Ja25 Strategic Ai.h"
 #else
 	#include "laptop.h"
 	#include "personnel.h"

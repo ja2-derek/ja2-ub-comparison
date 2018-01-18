@@ -3,6 +3,7 @@
 	#include "HelpScreen.h"
 	#include "BrokenLink.h"
 	#include "BobbyRShipments.h"
+	#include "Ja25 Strategic Ai.h"
 #else
 	#include "sgp.h"
 	#include "Utilities.h"

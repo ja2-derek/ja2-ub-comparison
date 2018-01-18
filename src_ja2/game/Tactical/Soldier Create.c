@@ -1,6 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Tactical All.h"
 	#include "PreBattle Interface.h"
+	#include "Ja25 Strategic Ai.h"
 #include "saveloadgame.h"
 #else
 	#include "sgp.h"

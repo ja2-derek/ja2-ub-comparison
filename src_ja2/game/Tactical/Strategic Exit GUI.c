@@ -2,6 +2,8 @@
 	#include "Tactical All.h"
 	#include "PreBattle Interface.h"
   #include "creature spreading.h"
+	#include "Ja25 Strategic Ai.h"
+	#include "Ja25_Tactical.h"
 #else
 	#include <stdio.h>
 	#include "Button System.h"

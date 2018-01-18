@@ -38,6 +38,8 @@
 #endif
 
 #include "Campaign Init.h"
+#include "_Ja25EnglishText.h"
+
 
 BOOLEAN gfSchedulesHosed = FALSE;
 extern UINT32 guiBrokenSaveGameVersion;

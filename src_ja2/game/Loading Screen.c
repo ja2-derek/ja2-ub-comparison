@@ -1,6 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "JA2 All.h"
 	#include "Loading Screen.h"
+	#include "Ja25 Strategic Ai.h"
 #else
 	//???
 #endif

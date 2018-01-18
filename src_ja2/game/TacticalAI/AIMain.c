@@ -2,6 +2,7 @@
 	#include "AI All.h"
   #include "sound control.h"
 	#include "Debug Control.h"
+	#include "Ja25 Strategic Ai.h"
 #else
 	#include "wcheck.h"
 	#include "sgp.h"

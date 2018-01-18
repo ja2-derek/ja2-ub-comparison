@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Strategic All.h"
+	#include "Ja25Update.h"
 #else
 	#include "Map Screen Interface.h"
 	#include "string.h"
