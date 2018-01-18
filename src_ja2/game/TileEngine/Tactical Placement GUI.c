@@ -323,6 +323,9 @@ void RenderTacticalPlacementGUI()
 	//If the display is dirty render the entire panel.
 	if( gfTacticalPlacementGUIDirty )
 	{
+		//There are transparent regions around the bottom 2 buttons on the interface, make sure the background is black!
+		ColorFillVideoSurfaceArea( FRAME_BUFFER, 4, 393, 85, 470, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
+
 		BltVideoObjectFromIndex( FRAME_BUFFER, giOverheadPanelImage, 0, 0, SCREEN_BUFFER_WIDTH/2, VO_BLT_SRCTRANSPARENCY, 0 );
 		InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH/2, SCREEN_BUFFER_HEIGHT );
 		gfTacticalPlacementGUIDirty = FALSE;
