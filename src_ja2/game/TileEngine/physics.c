@@ -397,6 +397,42 @@ BOOLEAN	PhysicsUpdateLife( REAL_OBJECT *pObject, real DeltaTime )
 
 	if ( !pObject->fAlive )
 	{
+		if ( !pObject->fTestObject )
+		{
+			int i = 0;
+		}
+
+		// ATE: OK, adjust gridno based on where we ended and if we hit any walls....
+		{
+			// Check for SW wall...
+			real remainder;
+
+			remainder = (float)fmod( pObject->Position.x, CELL_X_SIZE );
+
+			if ( remainder >= 9 )
+			{
+				// DO we have a wall here?
+				if ( WallOrClosedDoorExistsOfTopRightOrientation( pObject->sGridNo ) )
+				{
+					// Adjust forward 1!
+					pObject->sGridNo += 1;
+				}
+			}
+
+			// Now SE wall
+			remainder = (float)fmod( pObject->Position.y,  CELL_X_SIZE );
+
+			if ( remainder >= 9 )
+			{
+				// DO we have a wall here?
+				if ( WallOrClosedDoorExistsOfTopLeftOrientation( pObject->sGridNo ) )
+				{
+					// Adjust forward 1!
+					pObject->sGridNo += WORLD_COLS;
+				}
+			}
+		}
+
 		pObject->fAlive = FALSE;
 
 		if ( !pObject->fTestObject )
