@@ -215,12 +215,14 @@ INT32 NewSmokeEffect( INT16 sGridNo, UINT16 usItem, INT8 bLevel, UINT8 ubOwner )
 			ubStartRadius			= 1;
 			break;
 
+/*
+Ja25
     case LARGE_CREATURE_GAS:
 			bSmokeEffectType	=	CREATURE_SMOKE_EFFECT; 
 			ubDuration				= 3;
 			ubStartRadius			= Explosive[ Item[ LARGE_CREATURE_GAS ].ubClassIndex ].ubRadius;
 			break;
-
+*/
     case VERY_SMALL_CREATURE_GAS:
 
 			bSmokeEffectType	=	CREATURE_SMOKE_EFFECT; 

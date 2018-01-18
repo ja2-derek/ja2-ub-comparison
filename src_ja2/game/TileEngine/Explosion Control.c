@@ -1480,7 +1480,7 @@ BOOLEAN ExpAffect( INT16 sBombGridNo, INT16 sGridNo, UINT32 uiDist, UINT16 usIte
 					break;
 
         case SMALL_CREATURE_GAS:
-        case LARGE_CREATURE_GAS:
+//Ja25        case LARGE_CREATURE_GAS:
         case VERY_SMALL_CREATURE_GAS:
 
 					fSmokeEffect			= TRUE;
@@ -2067,7 +2067,7 @@ void SpreadEffect( INT16 sGridNo, UINT8 ubRadius, UINT16 usItem, UINT8 ubOwner, 
 		case SMOKE_GRENADE:
 		case GL_SMOKE_GRENADE:
     case SMALL_CREATURE_GAS:
-    case LARGE_CREATURE_GAS:
+//Ja25    case LARGE_CREATURE_GAS:
     case VERY_SMALL_CREATURE_GAS:
 
       fSmokeEffect = TRUE;
