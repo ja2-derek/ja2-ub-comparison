@@ -2,7 +2,6 @@
 #define __JA2_ALL_H
 
 #pragma message("GENERATED PCH FOR JA2 PROJECT.")
-#pragma warning (disable: 4292)
 
 #include <time.h> 
 #include <stdio.h>
