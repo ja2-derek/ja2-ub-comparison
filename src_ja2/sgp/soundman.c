@@ -74,7 +74,6 @@ CHAR8	*cWAVChunks[3]={"RIFF", "FMT ", "DATA"};
 
 #define		SOUND_MAX_CHANNELS		16						// number of mixer channels
 
-#pragma message("TEMP!")
 
 #define		SOUND_DEFAULT_MEMORY	(8048*1024)		// default memory limit
 #define		SOUND_DEFAULT_THRESH	(256*8024)		// size for sample to be double-buffered
