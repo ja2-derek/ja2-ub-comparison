@@ -2438,7 +2438,7 @@ void HandleArmedObjectImpact( REAL_OBJECT *pObject )
 	{
 		if ( pObject->Obj.usItem == BREAK_LIGHT || pObject->Obj.usItem == GL_FLARE )
 		{
-			//if the light object will ber created OFF the ground
+			//if the light object will be created OFF the ground
 			if( pObject->Position.z > 0 )
 			{
 				//we cannot create the light source above the ground, or on a roof.  The system doesnt support it.
