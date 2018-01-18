@@ -289,6 +289,13 @@ void PasteRoomNumber( UINT32 iMapIndex, UINT8 ubRoomNumber )
 	{
 		AddToUndoList( iMapIndex );
 		gubWorldRoomInfo[ iMapIndex ] = ubRoomNumber;
+
+		// ATE: Make sure show rooms is on...
+		if ( !fBuildingShowRoomInfo )
+		{
+			ClickEditorButton( BUILDING_TOGGLE_INFO_VIEW );
+			fBuildingShowRoomInfo = TRUE;
+		}
 	}
 }
 
