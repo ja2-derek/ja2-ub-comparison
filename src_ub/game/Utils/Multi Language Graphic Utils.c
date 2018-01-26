@@ -248,8 +248,6 @@ BOOLEAN GetMLGFilename( SGPFILENAME filename, UINT16 usMLGGraphicID )
 		  sprintf( zLanguage, "RUSSIAN" );
 		#elif defined( SPANISH )
 		  sprintf( zLanguage, "SPANISH" );
-		#elif defined( TAIWANESE )
-		  sprintf( zLanguage, "TAIWANESE" );
 		#endif
 
 		switch( usMLGGraphicID )
