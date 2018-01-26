@@ -297,12 +297,14 @@ BOOLEAN IsThisFenceElectrified( INT16 sGridNo );
 void HandleCuttinAnElectrifiedFence( SOLDIERTYPE *pSoldier, INT16 sGridNo );
 
 BOOLEAN IsSoldierAnImpMercWithBothJa2AndJa25BattleSnds( SOLDIERTYPE *pSoldier );
+
+UINT32 SleepDartSuccumbChance( SOLDIERTYPE * pSoldier );
+
 void		EnableDisableSoldierLightEffects( BOOLEAN fEnableLights );
 void		SetSoldierPersonalLightLevel( SOLDIERTYPE *pSoldier );
 
 
 
-UINT32 SleepDartSuccumbChance( SOLDIERTYPE * pSoldier );
 
 
 void HandleVehicleMovementSound( SOLDIERTYPE *pSoldier, BOOLEAN fOn )
@@ -2373,6 +2375,7 @@ void SetSoldierGridNo( SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fForceRe
 	BOOLEAN	fInWaterValue;
 	INT8		bDir;
 	INT32		cnt;
+	SOLDIERTYPE * pEnemy;
 	INT16		sDist;
 
 	//INT16	sX, sY, sWorldX, sZLevel;
@@ -2512,6 +2515,7 @@ void SetSoldierGridNo( SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fForceRe
 					LightSpriteRoofStatus(pSoldier->iLight, FALSE );
 			}
 
+			//JA2Gold:
 			//if the player wants the merc to cast the fake light AND it is night
 			if( pSoldier->bTeam != OUR_TEAM || gGameSettings.fOptions[ TOPTION_MERC_CASTS_LIGHT ] && NightTime() )
 			{
@@ -2650,15 +2654,16 @@ void SetSoldierGridNo( SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fForceRe
 				// check each possible enemy
 				for ( cnt = 0; cnt < MAX_NUM_SOLDIERS; cnt++ )
 				{
+					pEnemy = Menptr[ cnt ];
 					// if this guy is here and alive enough to be looking for us
-					if ( Menptr[ cnt ].bActive && Menptr[ cnt ].bInSector && ( Menptr[ cnt ].bLife >= OKLIFE ) )
+					if ( pEnemy->bActive && pEnemy->bInSector && ( pEnemy->bLife >= OKLIFE ) )
 					{
 						// no points for sneaking by the neutrals & friendlies!!!
-				    if ( !Menptr[cnt].bNeutral && ( pSoldier->bSide != Menptr[cnt].bSide ) && (Menptr[cnt].ubBodyType != COW && Menptr[cnt].ubBodyType != CROW) )
+				    if ( !pEnemy->bNeutral && ( pSoldier->bSide != pEnemy->bSide ) && (pEnemy->ubBodyType != COW && pEnemy->ubBodyType != CROW) )
 						{
 							// if we SEE this particular oppponent, and he DOESN'T see us...
 							if ( ( pSoldier->bOppList[ cnt ] == SEEN_CURRENTLY) &&
-								 ( Menptr[ cnt ].bOppList[ pSoldier->ubID ] != SEEN_CURRENTLY ) )
+								 ( pEnemy->bOppList[ pSoldier->ubID ] != SEEN_CURRENTLY ) )
 							{
 									// AGILITY (5):  Soldier snuck 1 square past unaware enemy
 									StatChange( pSoldier, AGILAMT, 5, FALSE );
