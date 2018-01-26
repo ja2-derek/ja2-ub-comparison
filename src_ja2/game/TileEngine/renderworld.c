@@ -1672,7 +1672,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 									if ( uiRowFlags == TILES_DYNAMIC_MERCS  )
 									{
 										// If we are multi-tiled, ignore here
-										if ( pSoldier->uiStatusFlags & SOLDIER_MULTITILE_Z )
+										if (pSoldier->uiStatusFlags & (SOLDIER_MULTITILE_Z | SOLDIER_Z))
 										{
 											pNode = pNode->pNext;
 											continue;
@@ -1689,7 +1689,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 									if ( uiRowFlags == TILES_DYNAMIC_HIGHMERCS  )
 									{
 										// If we are multi-tiled, ignore here
-										if ( pSoldier->uiStatusFlags & SOLDIER_MULTITILE_Z )
+										if (pSoldier->uiStatusFlags & (SOLDIER_MULTITILE_Z | SOLDIER_Z))
 										{
 											pNode = pNode->pNext;
 											continue;
@@ -1707,7 +1707,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 									if ( uiRowFlags == TILES_DYNAMIC_STRUCT_MERCS )
 									{
 										// If we are not multi-tiled, ignore here
-										if ( !( pSoldier->uiStatusFlags & SOLDIER_MULTITILE_Z ) )
+										if (!(pSoldier->uiStatusFlags & (SOLDIER_MULTITILE_Z | SOLDIER_Z)))
 										{
 											// If we are at a low level, no not do anything unless we are at the merc stage
 											if ( pSoldier->bLevel == 0  )
@@ -1717,22 +1717,29 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 											}
 										}
 
-										if ( pSoldier->uiStatusFlags & SOLDIER_MULTITILE_Z )
+										if (pSoldier->uiStatusFlags & (SOLDIER_MULTITILE_Z | SOLDIER_Z))
 										{
 											fSaveZ													= TRUE;
-											fMultiTransShadowZBlitter				= TRUE;
 											fZBlitter												= TRUE;
 
-											// ATE: Use one direction for queen!
-											if ( pSoldier->ubBodyType == QUEENMONSTER )
+											if (pSoldier->uiStatusFlags & SOLDIER_MULTITILE_Z)
 											{
-												sMultiTransShadowZBlitterIndex = 0;
+												fMultiTransShadowZBlitter = TRUE;
+
+												// ATE: Use one direction for queen!
+												if (pSoldier->ubBodyType == QUEENMONSTER)
+												{
+													sMultiTransShadowZBlitterIndex = 0;
+												}
+												else
+												{
+													sMultiTransShadowZBlitterIndex = gOneCDirection[pSoldier->bDirection];
+												}
 											}
 											else
 											{
-												sMultiTransShadowZBlitterIndex	= gOneCDirection[ pSoldier->bDirection ];
+												fZWrite = TRUE;
 											}
-
 										}
 							
 									}
