@@ -4490,20 +4490,10 @@ void StartDialogueMessageBox( UINT8 ubProfileID, UINT16 usMessageBoxType )
 		case NPC_ACTION_ASK_ABOUT_PAYING_RPC:
 		case NPC_ACTION_ASK_ABOUT_PAYING_RPC_WITH_DAILY_SALARY:
 		case NPC_ACTION_REDUCE_CONRAD_SALARY_CONDITIONS:
-/*
-			if( LaptopSaveInfo.iCurrentBalance < gMercProfiles[ubProfileID].sSalary )
-			{
-				swprintf( zTemp, zNewTacticalMessages[ TACT_MSG__CANNOT_AFFORD_MERC ], gMercProfiles[ubProfileID].zNickname );
-				DoMessageBox( MSG_BOX_BASIC_STYLE, zTemp, GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_OK, DialogueMessageBoxCallBack, NULL );
-			}
-			else
-*/
-			{
-				swprintf( zTemp2, L"%d", gMercProfiles[ubProfileID].sSalary );
-				InsertDollarSignInToString( zTemp2 );
-				swprintf( zTemp, TacticalStr[ HIRE_PROMPT ], gMercProfiles[ubProfileID].zNickname, zTemp2 );
-				DoMessageBox( MSG_BOX_BASIC_STYLE, zTemp, GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_YESNO, DialogueMessageBoxCallBack, NULL );
-			}
+			swprintf( zTemp2, L"%d", gMercProfiles[ubProfileID].sSalary );
+			InsertDollarSignInToString( zTemp2 );
+			swprintf( zTemp, TacticalStr[ HIRE_PROMPT ], gMercProfiles[ubProfileID].zNickname, zTemp2 );
+			DoMessageBox( MSG_BOX_BASIC_STYLE, zTemp, GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_YESNO, DialogueMessageBoxCallBack, NULL );
 			break;
 		case NPC_ACTION_DARREN_REQUESTOR:
 		case NPC_ACTION_FIGHT_AGAIN_REQUESTOR:
