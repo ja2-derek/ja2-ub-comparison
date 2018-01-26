@@ -2663,6 +2663,35 @@ void SetSoldierGridNo( SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fForceRe
 			}
 		}
 
+		//Ja25: The fan in the power gen. sector is a multi tile animated object.  There are rendeing problems with it,.
+		// we need to make soldiers who go near it write their info to the z buffer
+		//Do checks to see if this is the right sector, mercs are in range, etc...
+		if(gWorldSectorX == 13 && gWorldSectorY == MAP_ROW_J && gbWorldSectorZ == 0)
+		{
+			sDist = PythSpacesAway(pSoldier->sGridNo, 10979);
+
+			//Do a quick check to see if the merc is fairly close
+			if(sDist < 5)
+			{
+				if(IsGridNoInRadiusOfSweetSpot(pSoldier, 10979, 5))
+				{
+					pSoldier->uiStatusFlags |= SOLDIER_Z;
+				}
+			}
+			else
+			{
+				pSoldier->uiStatusFlags &= ~SOLDIER_Z;
+			}
+		}
+		else
+		{
+			//ATE: Turn off flag!
+			if (pSoldier->uiStatusFlags & SOLDIER_Z)
+			{
+				pSoldier->uiStatusFlags &= ~SOLDIER_Z;
+			}
+		}
+
 		// Adjust speed based on terrain, etc
 		SetSoldierAniSpeed( pSoldier );
 
