@@ -2844,7 +2844,7 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 				}
 				break;
 
-
+/* Ja25 No terrorist
 			case NPC_ACTION_CHECK_LAST_TERRORIST_HEAD:
 				// decrement head count
 				gMercProfiles[ 78 ].bNPCData--;
@@ -2872,7 +2872,10 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 
 				SetCustomizableTimerCallbackAndDelay( 10000, CarmenLeavesSectorCallback, TRUE );
 				break;
+*/
 
+/*
+Ja25 No terrorists
 			case NPC_ACTION_CARMEN_LEAVES_ON_NEXT_SECTOR_LOAD:
 				if (gMercProfiles[ CARMEN ].bNPCData == 0)
 				{
@@ -2884,6 +2887,7 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 				// anyhow Carmen has given the player money so reset his balance to 0.
 				gMercProfiles[ CARMEN ].uiMoney = 0;
 				break;
+*/
 
 			case NPC_ACTION_END_COMBAT:
 				ExitCombatMode();

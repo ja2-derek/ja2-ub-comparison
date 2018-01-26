@@ -110,7 +110,7 @@ UINT8	gubTerrorists[NUM_TERRORISTS + 1] =
 	0
 };
 
-UINT8	gubNumTerrorists = 0;
+//Ja25	No terrorists	UINT8	gubNumTerrorists = 0;
 
 #define NUM_TERRORIST_POSSIBLE_LOCATIONS 5
 
@@ -201,7 +201,7 @@ INT8 gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] =
 UINT16 CalcCompetence( MERCPROFILESTRUCT * pProfile );
 INT16 CalcMedicalDeposit( MERCPROFILESTRUCT * pProfile );
 extern void HandleEndDemoInCreatureLevel( );
-void DecideActiveTerrorists( void );
+//Ja25	No terrorists		void DecideActiveTerrorists( void );
 
 extern SOLDIERTYPE			*gpSMCurrentMerc;
 extern BOOLEAN	gfRerenderInterfaceFromHelpText;
@@ -348,8 +348,10 @@ BOOLEAN LoadMercProfiles(void)
 
 	FileClose( fptr );
 
-	// decide which terrorists are active
+/*
+Ja25 no terrorists	// decide which terrorists are active
 	DecideActiveTerrorists();
+*/
 
 	// initialize mercs' status
 	StartSomeMercsOnAssignment( );
@@ -373,6 +375,9 @@ BOOLEAN LoadMercProfiles(void)
 
 #define MAX_ADDITIONAL_TERRORISTS 4
 
+
+/*
+Ja25 no terrorists
 void DecideActiveTerrorists( void )
 {
 	UINT8		ubLoop, ubLoop2;
@@ -469,7 +474,10 @@ void DecideActiveTerrorists( void )
 	// store total terrorists
 	gubNumTerrorists = 1 + ubNumAdditionalTerrorists;
 }
+*/
 
+/*
+Ja25 no terrorists
 void MakeRemainingTerroristsTougher( void )
 {
 	UINT8					ubRemainingTerrorists = 0, ubLoop;
@@ -568,6 +576,7 @@ void MakeRemainingTerroristsTougher( void )
 		}
 	}
 }
+*/
 
 void DecideOnAssassin( void )
 {

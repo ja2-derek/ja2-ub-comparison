@@ -3936,7 +3936,7 @@ Ja25 no meanwhiles
 
 	memcpy( &sGeneralInfo.fSamSiteFound, &fSamSiteFound, NUMBER_OF_SAMS * sizeof( BOOLEAN ) );
 
-	sGeneralInfo.ubNumTerrorists = gubNumTerrorists;
+//Ja25	No terrorists		sGeneralInfo.ubNumTerrorists = gubNumTerrorists;
 	sGeneralInfo.ubCambriaMedicalObjects = gubCambriaMedicalObjects;
 
 	sGeneralInfo.fDisableTacticalPanelButtons = gfDisableTacticalPanelButtons;
@@ -4189,7 +4189,7 @@ Ja25 no meanwhiles
 
 	memcpy( &fSamSiteFound, &sGeneralInfo.fSamSiteFound, NUMBER_OF_SAMS * sizeof( BOOLEAN ) );
 
-	gubNumTerrorists = sGeneralInfo.ubNumTerrorists;
+//Ja25	No terrorists		gubNumTerrorists = sGeneralInfo.ubNumTerrorists;
 	gubCambriaMedicalObjects = sGeneralInfo.ubCambriaMedicalObjects;
 
 	gfDisableTacticalPanelButtons = sGeneralInfo.fDisableTacticalPanelButtons;

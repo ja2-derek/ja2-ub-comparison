@@ -187,7 +187,11 @@ void DecideOnAssassin( void );
 
 extern BOOLEAN gubNumTerrorists;
 
+/*
+Ja25 no terrorists
 void MakeRemainingTerroristsTougher( void );
+*/
+
 void MakeRemainingAssassinsTougher( void );
 SOLDIERTYPE * SwapLarrysProfiles( SOLDIERTYPE * pSoldier );
 

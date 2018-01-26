@@ -3198,6 +3198,9 @@ void HandleNPCTeamMemberDeath( SOLDIERTYPE *pSoldierOld )
 			case CHRIS:
 			case TIFFANY:
 			case T_REX:
+				Assert( 0 );
+/*
+Ja25 no terrorists
 				MakeRemainingTerroristsTougher();
 				if ( pSoldierOld->ubProfile == DRUGGIST )
 				{
@@ -3210,6 +3213,7 @@ void HandleNPCTeamMemberDeath( SOLDIERTYPE *pSoldierOld )
 						TriggerNPCRecord( MANNY, 10 );
 					}
 				}
+* /
 				break;
 			case JIM:
 			case JACK:

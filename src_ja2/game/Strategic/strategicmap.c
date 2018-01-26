@@ -1124,6 +1124,9 @@ void HandleQuestCodeOnSectorEntry( INT16 sNewSectorX, INT16 sNewSectorY, INT8 bN
 	UINT8		cnt;
 	SOLDIERTYPE * pSoldier;
 
+/*
+Ja25:
+	No terrorist
 	if ( CheckFact( FACT_ALL_TERRORISTS_KILLED, 0 ) )
 	{
 		// end terrorist quest
@@ -1133,6 +1136,7 @@ void HandleQuestCodeOnSectorEntry( INT16 sNewSectorX, INT16 sNewSectorY, INT8 bN
 		gMercProfiles[ CARMEN ].sSectorY = 0;
 		gMercProfiles[ CARMEN ].bSectorZ = 0;
 	}
+*/
 
 	// are we in a mine sector, on the surface?
 	if ( IsThereAMineInThisSector( sNewSectorX, sNewSectorY ) && ( bNewSectorZ == 0 ))
