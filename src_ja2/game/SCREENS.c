@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "JA2 All.h"
+	#include "ImportJa2SaveScreen.h"
 #else
 	#include "Screens.h"
 #endif
@@ -35,5 +36,6 @@ Screens GameScreens[MAX_SCREENS] =
 
 
 
-	{ QuestDebugScreenInit,				QuestDebugScreenHandle,		QuestDebugScreenShutdown		}
+	{ QuestDebugScreenInit,				QuestDebugScreenHandle,		QuestDebugScreenShutdown		},
+	{ ImportJa2SaveScreenInit,		ImportJa2SaveScreenHandle,		ImportJa2SaveScreenShutdown		},
 };

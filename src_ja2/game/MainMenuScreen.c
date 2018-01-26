@@ -357,7 +357,8 @@ void MenuButtonCallback(GUI_BUTTON *btn,INT32 reason)
 
 		if( gbHandledMainMenu == NEW_GAME )
 		{
-			SetMainMenuExitScreen( GAME_INIT_OPTIONS_SCREEN );
+//Ja25			SetMainMenuExitScreen( GAME_INIT_OPTIONS_SCREEN );
+			SetMainMenuExitScreen( IMPORT_SCREEN );
 		}
 		else if( gbHandledMainMenu == LOAD_GAME )
 		{

@@ -32,6 +32,8 @@ typedef enum ScreenTypes
 
 	QUEST_DEBUG_SCREEN,
 
+	IMPORT_SCREEN,
+
 	MAX_SCREENS
 };
 
