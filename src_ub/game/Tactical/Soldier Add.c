@@ -1482,6 +1482,13 @@ void AddSoldierToSectorGridNo( SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDir
 			{
 				RevealRoofsAndItems( pSoldier, TRUE, FALSE, pSoldier->bLevel, TRUE );
 
+        // ATE: Patch fix: If we are in an non-interruptable animation, stop!
+        if ( pSoldier->usAnimState == HOPFENCE )
+        {
+          pSoldier->fInNonintAnim = FALSE;
+          SoldierGotoStationaryStance( pSoldier );
+        }
+
 				EVENT_StopMerc( pSoldier, sGridNo, ubDirection );
 			}
 		}
