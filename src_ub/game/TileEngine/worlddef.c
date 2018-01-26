@@ -2364,7 +2364,6 @@ BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, B
 	}
 	//RenderProgressBar( 1, 0 );
 
-	//clear the summary file info
 	pSummary->ubSummaryVersion = GLOBAL_SUMMARY_VERSION;
 	pSummary->dMajorMapVersion = gdMajorMapVersion;
 
