@@ -158,6 +158,35 @@ UINT32 InitializeJA2(void)
 
 
 
+	#ifdef JA2EDITOR
+		// CHECK COMMANDLINE FOR SPECIAL UTILITY
+		if( !strcmp( gzCommandLine, "-EDITORAUTO" ) )
+		{
+			OutputDebugString( "Beginning JA2 using -EDITORAUTO commandline argument...\n" );
+			//For editor purposes, need to know the default map file.
+			sprintf( gubFilename, "none");
+			//also set the sector
+			gWorldSectorX = 0;
+			gWorldSectorY = 0;
+			gfAutoLoadA9 = TRUE;
+			gfIntendOnEnteringEditor = TRUE;
+			gGameOptions.fGunNut = TRUE;
+			return( GAME_SCREEN );
+		}
+		if ( strcmp( gzCommandLine, "-EDITOR" ) == 0 )
+		{
+			OutputDebugString( "Beginning JA2 using -EDITOR commandline argument...\n" );
+			//For editor purposes, need to know the default map file.
+			sprintf( gubFilename, "none");
+			//also set the sector
+			gWorldSectorX = 0;
+			gWorldSectorY = 0;
+			gfAutoLoadA9 = FALSE;
+			gfIntendOnEnteringEditor = TRUE;
+			gGameOptions.fGunNut = TRUE;
+			return( GAME_SCREEN );
+		}
+	#endif
 
 	return( INIT_SCREEN );
 }

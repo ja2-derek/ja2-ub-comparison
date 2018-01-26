@@ -44,6 +44,8 @@
 
 extern UINT32 MemDebugCounter;
 extern BOOLEAN gfPauseDueToPlayerGamePause;
+extern BOOLEAN gfIntendOnEnteringEditor;
+
 
 extern	BOOLEAN	CheckIfGameCdromIsInCDromDrive();
 extern  void    QueueEvent(UINT16 ubInputEvent, UINT32 usParam, UINT32 uiParam);
@@ -589,6 +591,11 @@ void ProcessJa2CommandLineBeforeInitialization(CHAR8 *pCommandLine)
 		{
 			//disable the sound
 			SoundEnableSound(FALSE);
+		}
+
+		if( !strcmp( pToken, "-EDITOR" ) )
+		{
+			gfIntendOnEnteringEditor = TRUE;
 		}
 
 		//get the next token

@@ -399,6 +399,13 @@ UINT32 InitScreenHandle(void)
 			#endif
 		}
 
+#ifdef EDITOR
+		if ( gfIntendOnEnteringEditor )
+		{
+			mprintf( 10, 450, L"Loading Editor..." );
+		}
+#endif
+
 		InvalidateScreen( );
 
 		// Delete video Surface
