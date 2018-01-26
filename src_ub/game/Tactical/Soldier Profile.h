@@ -190,15 +190,22 @@ BOOLEAN DoesMercHaveABuddyOnTheTeam( UINT8 ubMercID );
 void StartSomeMercsOnAssignment( void );
 
 /*
-Ja25 no assassins 
+Ja25 no assassins
 void DecideOnAssassin( void );
-void MakeRemainingAssassinsTougher( void );
-void MakeRemainingTerroristsTougher( void );
 extern BOOLEAN gubNumTerrorists;
-
 */
 
 void CalculateMercsOptionalGearCost( MERCPROFILESTRUCT *pProfile );
+
+/*
+Ja25 no terrorists
+void MakeRemainingTerroristsTougher( void );
+*/
+
+/*
+Ja25 no assassins
+void MakeRemainingAssassinsTougher( void );
+*/
 
 SOLDIERTYPE * SwapLarrysProfiles( SOLDIERTYPE * pSoldier );
 
