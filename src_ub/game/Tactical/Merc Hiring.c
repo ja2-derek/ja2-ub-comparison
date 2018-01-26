@@ -167,7 +167,6 @@ Ja25: No enrico, therefore, no email
 
 		// Set insertion for first time in chopper
 
-		// ATE: Insert for demo , not using the heli sequence....
 		pHireMerc->ubInsertionCode				= INSERTION_CODE_CHOPPER;
 	}
 */
