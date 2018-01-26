@@ -4573,11 +4573,11 @@ UINT8 MovementNoise( SOLDIERTYPE *pSoldier )
 	}
 	else			// in STEALTH mode
 	{
-		iRoll = (INT8) PreRandom(100);	// roll them bones!
+		iRoll = (INT32) PreRandom(100);	// roll them bones!
 
 		if (iRoll >= iStealthSkill)   // v1.13 modification: give a second chance!
 		{
-			iRoll = (INT8) PreRandom(100);
+			iRoll = (INT32) PreRandom(100);
 		}
 
 		if (iRoll < iStealthSkill)
