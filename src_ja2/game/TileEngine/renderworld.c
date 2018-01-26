@@ -1502,6 +1502,21 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 											}
 										}
 
+										if (guiCurrentScreen == EDIT_SCREEN)
+										{
+											// ATE: If in the editor, change this to a little higher value
+											if (bItemCount == MAX_RENDERED_ITEMS)
+											{
+												//CONTINUE, DO NOT RENDER
+												if(!fLinkedListDirection)
+													pNode = pNode->pPrevNode;
+												else
+													pNode = pNode->pNext;
+												continue;
+											}
+										}
+
+
 										if ( pItemPool->bRenderZHeightAboveLevel > 0 )
 										{
 											sYPos -= pItemPool->bRenderZHeightAboveLevel;
