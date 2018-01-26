@@ -32,27 +32,7 @@ void InitJA2SplashScreen()
 	//Initialize the file database
 	InitializeFileDatabase( gGameLibaries, NUMBER_OF_LIBRARIES );
 
-	//#ifdef ENGLISH
-		ClearMainMenu();
-	//#else
-	//	{
-	//		HVSURFACE hVSurface;
-	//		VSURFACE_DESC VSurfaceDesc;
-//
-	//		memset( &VSurfaceDesc, 0, sizeof( VSURFACE_DESC ) );
-	//		VSurfaceDesc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
-	//		GetMLGFilename( VSurfaceDesc.ImageFile, MLG_SPLASH );
-	//		if( !AddVideoSurface( &VSurfaceDesc, &uiLogoID ) )
-	//		{	
-	//			AssertMsg( 0, String( "Failed to load %s", VSurfaceDesc.ImageFile ) );
-	//			return;
-	//		}
-
-	//		GetVideoSurface( &hVSurface, uiLogoID );
-	//		BltVideoSurfaceToVideoSurface( ghFrameBuffer, hVSurface, 0, 0, 0, 0, NULL );
-	//		DeleteVideoSurfaceFromIndex( uiLogoID );
-	//	}
-//	#endif
+	ClearMainMenu();
 
 
 	InvalidateScreen();
