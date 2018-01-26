@@ -1715,3 +1715,36 @@ INT16 GetSoldierIDFromMercID(UINT8 ubMercID)
 }
 
 
+
+BOOLEAN IsGridNoInRadiusOfSweetSpot(SOLDIERTYPE *pSoldier, INT16 sSweetGridNo, INT8 ubRadius)
+{
+	INT16 sTop, sBottom;
+	INT16 sLeft, sRight;
+	INT16 cnt1, cnt2;
+	INT16 sGridNo;
+	INT32 leftmost;
+	BOOLEAN fFound = FALSE;
+
+
+	sTop    = ubRadius;
+	sBottom = -ubRadius;
+	sLeft   = -ubRadius;
+	sRight  = ubRadius;
+
+	// ATE: CHECK FOR BOUNDARIES!!!!!!
+	for(cnt1 = sBottom; cnt1 <= sTop; cnt1++)
+	{
+		leftmost = ((sSweetGridNo + (WORLD_COLS * cnt1)) / WORLD_COLS) * WORLD_COLS;
+
+		for( cnt2 = sLeft; cnt2 <= sRight; cnt2++ )
+		{
+			sGridNo = sSweetGridNo + (WORLD_COLS * cnt1) + cnt2;
+			if(sGridNo >=0 && sGridNo < WORLD_MAX && sGridNo >= leftmost && sGridNo < (leftmost + WORLD_COLS))
+			{
+				return(TRUE);
+			}
+		}
+	}
+
+	return(FALSE);
+}

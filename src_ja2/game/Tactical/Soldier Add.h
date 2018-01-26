@@ -59,5 +59,6 @@ void SoldierInSectorRepair( SOLDIERTYPE *pSoldier, INT16 sGridNo );
 
 BOOLEAN CanSoldierReachGridNoInGivenTileLimit( SOLDIERTYPE *pSoldier, INT16 sGridNo, INT16 sMaxTiles, INT8 bLevel );
 
+BOOLEAN IsGridNoInRadiusOfSweetSpot(SOLDIERTYPE *pSoldier, INT16 sSweetGridNo, INT8 ubRadius);
 
 #endif
