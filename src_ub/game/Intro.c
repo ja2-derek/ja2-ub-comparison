@@ -47,8 +47,7 @@ UINT32		guiIntroExitScreen = INTRO_SCREEN;
 
 extern	BOOLEAN	gfDoneWithSplashScreen;
 
-//SMKFLIC *gpSmackFlic = NULL;
-BINKFLIC *gpBinkFlic = NULL;
+BINKFLIC *gpSmackFlic = NULL;
 
 #define		SMKINTRO_FIRST_VIDEO				255
 #define		SMKINTRO_NO_VIDEO						-1
@@ -74,7 +73,6 @@ enum
 	SMKINTRO_SPLASH_INTERPLAY,
 
 	SMKINTRO_HELI_CRASH_SCENE_1,
-//	SMKINTRO_HELI_CRASH_SCENE_2,
 
 	//there are no more videos shown for the endgame
 	SMKINTRO_LAST_END_GAME,
@@ -82,32 +80,8 @@ enum
 
 INT32	giCurrentIntroBeingPlayed = SMKINTRO_NO_VIDEO;
 
-/*
+
 CHAR		*gpzSmackerFileNames[] = 
-{
-	//begining of the game
-	"INTRO\\Rebel_cr.smk",
-	"INTRO\\Omerta.smk",
-	"INTRO\\Prague_cr.smk",
-	"INTRO\\Prague.smk",
-
-
-	//endgame
-	"INTRO\\Throne_Mig.smk",
-	"INTRO\\Throne_NoMig.smk",
-	"INTRO\\Heli_FlyBy.smk",
-	"INTRO\\Heli_Sky.smk",
-	"INTRO\\Heli_NoSky.smk",
-
-	"INTRO\\SplashScreen.smk",
-	"INTRO\\TalonSoftid_endhold.smk",
-
-	"INTRO\\Heli_FlyBy.smk",
-	"INTRO\\Heli_FlyBy2.smk",
-};
-*/
-
-CHAR		*gpzBinkFileNames[] = 
 {
 	//begining of the game
 	"INTRO\\Rebel_cr.smk",
@@ -126,9 +100,8 @@ CHAR		*gpzBinkFileNames[] =
 	"INTRO\\SplashScreen.bik",
 	"INTRO\\IPLYLogo.bik",
 
-	//Ja25: New vidoes
+	//Ja25: New videos
 	"INTRO\\Intro.bik",
-//	"INTRO\\Fade.bik",
 
 	"INTRO\\MissileEnding.bik"
 };
@@ -173,10 +146,10 @@ UINT32	IntroScreenHandle( void )
 {
 	if( gfIntroScreenEntry )
 	{
+		EnterIntroScreen();
+
 		gfIntroScreenEntry = FALSE;
 		gfIntroScreenExit = FALSE;
-
-		EnterIntroScreen();
 
 		InvalidateRegion( 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 	}
@@ -235,8 +208,7 @@ BOOLEAN EnterIntroScreen()
 	}
 
 	//initialize smacker
-//	SmkInitialize( ghWindow, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT);
-	BinkInitialize(  ghWindow, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
+	BinkInitialize( ghWindow, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 
 	//get the index opf the first video to watch
@@ -267,8 +239,6 @@ void ExitIntroScreen()
 {
 
 	//shutdown smaker
-//	SmkShutdown();
-
 	BinkShutdownVideo( );
 }
 
@@ -282,7 +252,6 @@ void HandleIntroScreen()
 
 
 	//handle smaker each frame
-//	fFlicStillPlaying = SmkPollFlics();
 	fFlicStillPlaying = BinkPollFlics();
 
 	//if the flic is not playing
@@ -341,11 +310,6 @@ void		GetIntroScreenUserInput()
 				MouseSystemHook(LEFT_BUTTON_REPEAT, (INT16)MousePos.x, (INT16)MousePos.y,_LeftButtonDown, _RightButtonDown);				
 				break;
 		}
-
-//		if( Event.usEvent == LEFT_BUTTON_DOWN || Event.usEvent == RIGHT_BUTTON_DOWN )
-//{
-//			BinkCloseFlic( gpBinkFlic );
-//		}
  
 		if( Event.usEvent == KEY_UP )
 		{
@@ -354,15 +318,14 @@ void		GetIntroScreenUserInput()
 				case ESC:
 
 					// ATE: if in splash, don't exit all!
-					BinkCloseFlic( gpBinkFlic );
+					BinkCloseFlic( gpSmackFlic );
 					if ( gbIntroScreenMode != INTRO_SPLASH )
 					{
 						PrepareToExitIntroScreen();
 					}
 					break;
 				case SPACE:
-//					SmkCloseFlic( gpSmackFlic );
-					BinkCloseFlic( gpBinkFlic );
+					BinkCloseFlic( gpSmackFlic );
 					break;
 
 			}
@@ -373,7 +336,7 @@ void		GetIntroScreenUserInput()
 	if( !gfLeftButtonState && !gfRightButtonState  && gfOldMouseState )
 	{
 		//advance to the next flic
-		BinkCloseFlic( gpBinkFlic );
+		BinkCloseFlic( gpSmackFlic );
 
 		gfOldMouseState = FALSE;
 	}
@@ -560,11 +523,9 @@ void StartPlayingIntroFlic( INT32 iIndexOfFlicToPlay )
 	if( iIndexOfFlicToPlay != -1 )
 	{
 		//start playing a flic
-//		gpSmackFlic = SmkPlayFlic( gpzSmackerFileNames[ iIndexOfFlicToPlay ], 0, 0, TRUE );
-		gpBinkFlic = BinkPlayFlic( gpzBinkFileNames[ iIndexOfFlicToPlay ], 0, 0, BINK_FLIC_AUTOCLOSE | BINK_FLIC_CENTER_VERTICAL );
+		gpSmackFlic = BinkPlayFlic( gpzSmackerFileNames[ iIndexOfFlicToPlay ], 0, 0, BINK_FLIC_AUTOCLOSE | BINK_FLIC_CENTER_VERTICAL );
 
-//		if( gpSmackFlic != NULL )
-		if( gpBinkFlic != NULL )
+		if( gpSmackFlic != NULL )
 		{
 			giCurrentIntroBeingPlayed = iIndexOfFlicToPlay;
 		}
