@@ -120,6 +120,7 @@ INT8 IsHiddenTileMarkerThere( INT16 sGridNo );
 extern void SetInterfaceHeightLevel( );
 extern void GetRootName( INT8 *pDestStr, INT8 *pSrcStr );
 
+BOOLEAN EvaluateWorldEx(UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BOOLEAN fWriteSummaryFile);
 
 void SaveMapLights( HWFILE hfile );
 void LoadMapLights( INT8 **hBuffer );
@@ -2192,8 +2193,24 @@ extern BOOLEAN gfUpdatingNow;
 
 BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 {
-	FLOAT	dMajorMapVersion;
+	BOOLEAN fReturnVal;
 	SUMMARYFILE *pSummary;
+
+	pSummary = (SUMMARYFILE*)MemAlloc(sizeof(SUMMARYFILE));
+	Assert(pSummary);
+	memset(pSummary, 0, sizeof(SUMMARYFILE));
+
+	fReturnVal = EvaluateWorldEx(pSector, ubLevel, pSummary, TRUE);
+
+	MemFree(pSummary);
+
+	return(fReturnVal);
+}
+
+BOOLEAN EvaluateWorldEx(UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BOOLEAN fWriteSummaryFile)
+{
+	FLOAT dMajorMapVersion;
+
 	HWFILE	hfile;
 	MAPCREATE_STRUCT mapInfo;
 	INT8 *pBuffer, *pBufferHead;
@@ -2250,13 +2267,13 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 	else
 		SetRelativeStartAndEndPercentage( 0, (UINT16)MasterStart, (UINT16)MasterEnd, str );
 
-	RenderProgressBar( 0, 0 );
+
+	if (fWriteSummaryFile)
+	{
+		RenderProgressBar(0, 0);
+	}
 	//RenderProgressBar( 1, 0 );
 
-	//clear the summary file info
-	pSummary = (SUMMARYFILE*)MemAlloc( sizeof( SUMMARYFILE ) );
-	Assert( pSummary );
-	memset( pSummary, 0, sizeof( SUMMARYFILE ) );
 	pSummary->ubSummaryVersion = GLOBAL_SUMMARY_VERSION;
 	pSummary->dMajorMapVersion = gdMajorMapVersion;
 
@@ -2285,7 +2302,10 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
   {
 		if( !( cnt % 2560 ) )
 		{
-			RenderProgressBar( 0, (cnt / 2560)+1 ); //1 - 10
+			if (fWriteSummaryFile)
+			{
+				RenderProgressBar(0, (cnt/2560)+1); //1 - 10
+			}
 			//RenderProgressBar( 1, (cnt / 2560)+1 ); //1 - 10
 		}
 		// Read combination of land/world flags
@@ -2317,7 +2337,10 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 	{
 		if( !( cnt % 320 ) )
 		{
-			RenderProgressBar( 0, (cnt / 320)+11 ); //11 - 90
+			if (fWriteSummaryFile)
+			{
+				RenderProgressBar(0, (cnt/320)+11); //11 - 90
+			}
 			//RenderProgressBar( 1, (cnt / 320)+11 ); //11 - 90
 		}
 		pBuffer += sizeof( UINT16 ) * bCounts[cnt][6];
@@ -2340,7 +2363,11 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 	if( uiFlags & MAP_WORLDITEMS_SAVED )
 	{
 		UINT32 temp;
-		RenderProgressBar( 0, 91 ); 
+
+		if (fWriteSummaryFile)
+		{
+			RenderProgressBar(0, 91);
+		}
 		//RenderProgressBar( 1, 91 ); 
 		//get number of items (for now)
 		LOADDATA( &temp, pBuffer, 4 );
@@ -2363,7 +2390,11 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 	if( uiFlags & MAP_WORLDLIGHTS_SAVED )
 	{
 		UINT8 ubTemp;
-		RenderProgressBar( 0, 92 ); 
+
+		if (fWriteSummaryFile)
+		{
+			RenderProgressBar(0, 92);
+		}
 		//RenderProgressBar( 1, 92 ); 
 		//skip number of light palette entries
 		LOADDATA( &ubTemp, pBuffer, 1 );
@@ -2393,7 +2424,11 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 		TEAMSUMMARY *pTeam=NULL;
 		BASIC_SOLDIERCREATE_STRUCT basic;
 		SOLDIERCREATE_STRUCT priority;
-		RenderProgressBar( 0, 94 ); 
+
+		if (fWriteSummaryFile)
+		{
+			RenderProgressBar(0, 94);
+		}
 		//RenderProgressBar( 1, 94 ); 
 
 		pSummary->uiEnemyPlacementPosition = pBuffer - pBufferHead;
@@ -2504,7 +2539,11 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 			}
 			pTeam->ubTotal++;
 		}
-		RenderProgressBar( 0, 96 ); 
+
+		if (fWriteSummaryFile)
+		{
+			RenderProgressBar(0, 96);
+		}
 		//RenderProgressBar( 1, 96 ); 
 	}
 
@@ -2514,7 +2553,11 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 		INT32 loop;
 		UINT16 usMapIndex;
 		BOOLEAN fExitGridFound;
-		RenderProgressBar( 0, 98 ); 
+
+		if (fWriteSummaryFile)
+		{
+			RenderProgressBar(0, 98);
+		}
 		//RenderProgressBar( 1, 98 ); 
 
 		LOADDATA( &cnt, pBuffer, 2 );
@@ -2579,12 +2622,18 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 		}
 	}
 
-	RenderProgressBar( 0, 100 ); 
+	if (fWriteSummaryFile)
+	{
+		RenderProgressBar(0, 100);
+	}
 	//RenderProgressBar( 1, 100 ); 
 
 	MemFree( pBufferHead );
 
-	WriteSectorSummaryUpdate( szFilename, ubLevel, pSummary );
+	if (fWriteSummaryFile)
+	{
+		WriteSectorSummaryUpdate(szFilename, ubLevel, pSummary);
+	}
 	return TRUE;
 }
 #endif
