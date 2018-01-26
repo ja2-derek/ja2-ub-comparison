@@ -4482,7 +4482,6 @@ UINT8 MovementNoise( SOLDIERTYPE *pSoldier )
 	}
 
 	iStealthSkill = 20 + 4 * EffectiveExpLevel( pSoldier ) + ((EffectiveDexterity( pSoldier ) * 4) / 10); // 24-100
-	//iStealthSkill = (5 * EffectiveExpLevel( pSoldier ) ) + ( EffectiveDexterity( pSoldier ) / 2);	// 5 - 100
 
 	// big bonus for those "extra stealthy" mercs
 	if ( pSoldier->ubBodyType == BLOODCAT )
