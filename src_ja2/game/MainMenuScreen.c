@@ -37,7 +37,6 @@
 #define	MAINMENU_TEXT_FILE						"LoadScreens\\MainMenu.edt"
 #define MAINMENU_RECORD_SIZE					80 * 2
 
-//#define TESTFOREIGNFONTS
 
 // MENU ITEMS
 enum
