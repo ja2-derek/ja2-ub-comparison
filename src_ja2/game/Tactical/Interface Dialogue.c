@@ -2844,7 +2844,7 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 				}
 				break;
 
-/* Ja25 No terrorist
+/* Ja25 No carmen, no terrorist
 			case NPC_ACTION_CHECK_LAST_TERRORIST_HEAD:
 				// decrement head count
 				gMercProfiles[ 78 ].bNPCData--;
@@ -2875,7 +2875,7 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 */
 
 /*
-Ja25 No terrorists
+Ja25 No carmen, no terrorists
 			case NPC_ACTION_CARMEN_LEAVES_ON_NEXT_SECTOR_LOAD:
 				if (gMercProfiles[ CARMEN ].bNPCData == 0)
 				{

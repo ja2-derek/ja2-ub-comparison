@@ -3076,6 +3076,9 @@ void HandlePlayerTeamMemberDeath( SOLDIERTYPE *pSoldier )
 		// handle stuff for Carmen if Slay is killed
 		switch( pSoldier->ubProfile )
 		{
+/*
+Ja25
+No carmen
 			case SLAY:
 				pTeamSoldier = FindSoldierByProfileID( CARMEN, FALSE );
 				if (pTeamSoldier && pTeamSoldier->bAttitude == ATTACKSLAYONLY && ClosestPC( pTeamSoldier, NULL ) != NOWHERE )
@@ -3084,6 +3087,7 @@ void HandlePlayerTeamMemberDeath( SOLDIERTYPE *pSoldier )
 					TriggerNPCRecord( CARMEN, 29 );
 				}
 				break;
+*/
 			case ROBOT:
 				if (CheckFact( FACT_FIRST_ROBOT_DESTROYED, 0 ) == FALSE )
 				{
@@ -7078,6 +7082,8 @@ BOOLEAN ProcessImplicationsOfPCAttack( SOLDIERTYPE * pSoldier, SOLDIERTYPE ** pp
 	}
 	else
 	{
+/*
+Ja25: No carmen
 		if (pTarget->ubProfile == CARMEN)// Carmen
 		{
 			// Special stuff for Carmen the bounty hunter
@@ -7087,6 +7093,7 @@ BOOLEAN ProcessImplicationsOfPCAttack( SOLDIERTYPE * pSoldier, SOLDIERTYPE ** pp
 				pTarget->bAttitude = AGGRESSIVE;
 			}
 		}
+*/
 
 		if ( pTarget->ubCivilianGroup && ( (pTarget->bTeam == gbPlayerNum) || pTarget->bNeutral ) )
 		{

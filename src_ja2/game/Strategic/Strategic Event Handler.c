@@ -931,6 +931,8 @@ void HandleEarlyMorningEvents( void )
 	gMercProfiles[ DARREN ].iBalance = 0;
 	SetMoneyInSoldierProfile( DARREN, 15000 );
 
+/*
+Ja25: No Carmen
 	// set Carmen to be placed on the map in case he moved and is waiting off screen
 	if (gMercProfiles[ CARMEN ].ubMiscFlags2 & PROFILE_MISC_FLAG2_DONT_ADD_TO_SECTOR)
 	{
@@ -990,6 +992,7 @@ void HandleEarlyMorningEvents( void )
 			}
 		}
 	}
+*/
 
 	if ( PreRandom( 3 ) == 0 )
 	{

@@ -1828,6 +1828,9 @@ void ManSeesMan(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, INT16 sOppGridno,
 					{
 						switch( pSoldier->ubProfile )
 						{
+/*
+JA25:
+no carmen
 							case CARMEN:
 								if (pOpponent->ubProfile == SLAY ) // 64
 								{
@@ -1846,6 +1849,7 @@ void ManSeesMan(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, INT16 sOppGridno,
 									*/
 								}
 								break;
+*/
 							case ELDIN:
 								if ( pSoldier->bNeutral )
 								{
