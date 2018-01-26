@@ -470,9 +470,6 @@ void DisplaySirtechSplashScreen()
 	UINT32										 uiDestPitchBYTES;
 	UINT8											 *pDestBuf;
 
-	// JA3Gold: do nothing until we have a graphic to replace Talonsoft's
-	//return;
-
 	// CLEAR THE FRAME BUFFER
 	pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
 	memset(pDestBuf, 0, SCREEN_HEIGHT * uiDestPitchBYTES );
