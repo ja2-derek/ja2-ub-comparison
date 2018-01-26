@@ -16,7 +16,6 @@
 // TEMP VALUES FOR NAMES
 #define MAXCIVLASTNAMES		30
 UINT16 CivLastNames[MAXCIVLASTNAMES][10];
- 
 
 // ANDREW: these are defines for OKDestanation usage - please move to approprite file
 #define IGNOREPEOPLE    0
@@ -61,9 +60,9 @@ UINT16 CivLastNames[MAXCIVLASTNAMES][10];
 #define SOLDIER_MONSTER											0x00002000
 #define SOLDIER_ANIMAL											0x00004000
 #define SOLDIER_VEHICLE											0x00008000
-#define SOLDIER_MULTITILE_NZ								0x00010000
+#define SOLDIER_Z											0x00010000
 #define SOLDIER_MULTITILE_Z									0x00020000
-#define SOLDIER_MULTITILE										( SOLDIER_MULTITILE_Z | SOLDIER_MULTITILE_NZ )
+#define SOLDIER_MULTITILE										( SOLDIER_MULTITILE_Z )
 #define SOLDIER_RECHECKLIGHT								0x00040000
 #define SOLDIER_TURNINGFROMHIT							0x00080000
 #define SOLDIER_BOXER												0x00100000
