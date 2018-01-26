@@ -2878,7 +2878,8 @@ Ja25 no loyalty
 				{
 					TriggerNPCRecord( 78, 21 );
 				}
-				AddHistoryToPlayersLog( HISTORY_GAVE_CARMEN_HEAD, 0, GetWorldTotalMin(), 0, 0 );
+				// CJC Nov 28 2002 - fixed history record which didn't have location specified
+				AddHistoryToPlayersLog( HISTORY_GAVE_CARMEN_HEAD, 0, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
 				break;
 
 			case NPC_ACTION_CARMEN_LEAVES_FOR_GOOD:
