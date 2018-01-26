@@ -333,7 +333,6 @@ UINT32 InitScreenHandle(void)
 
 	if ( ubCurrentScreen == 255 )
 	{
-	#ifdef ENGLISH
 		if( gfDoneWithSplashScreen )
 		{
 			ubCurrentScreen = 0;
@@ -343,9 +342,6 @@ UINT32 InitScreenHandle(void)
 			SetCurrentCursorFromDatabase( VIDEO_NO_CURSOR );
 			return( INTRO_SCREEN );
 		}
-	#else
-		ubCurrentScreen = 0;
-	#endif
 	}
 
 	if ( ubCurrentScreen == 0 )
