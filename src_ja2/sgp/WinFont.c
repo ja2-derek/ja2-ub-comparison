@@ -194,8 +194,7 @@ void SetWinFontBackColor( INT32 iFont, COLORVAL *pColor )
 void PrintWinFont( UINT32 uiDestBuf, INT32 iFont, INT32 x, INT32 y, UINT16 *pFontString, ...)
 {
   va_list                 argptr;
-  wchar_t									string2[512];
-	char										string[512];
+  wchar_t                 string[512];
   HVSURFACE               hVSurface;
   LPDIRECTDRAWSURFACE2    pDDSurface;
   HDC                     hdc;
@@ -212,14 +211,8 @@ void PrintWinFont( UINT32 uiDestBuf, INT32 iFont, INT32 x, INT32 y, UINT16 *pFon
   }
 
 	va_start(argptr, pFontString);       	// Set up variable argument pointer
-	len = vswprintf(string2, pFontString, argptr);	// process gprintf string (get output str)
+	len = vswprintf(string, pFontString, argptr);	// process gprintf string (get output str)
 	va_end(argptr);
-
-#ifdef TAIWANESE
-	Convert16BitStringTo8BitChineseBig5String( string, string2 );
-#else
-	sprintf( string, "%S", string2 );
-#endif
 
   // Get surface...
   GetVideoSurface( &hVSurface, uiDestBuf );
@@ -240,12 +233,11 @@ void PrintWinFont( UINT32 uiDestBuf, INT32 iFont, INT32 x, INT32 y, UINT16 *pFon
 
 }
 
-INT16 WinFontStringPixLength( UINT16 *string2, INT32 iFont )
+INT16 WinFontStringPixLength( UINT16 *string, INT32 iFont )
 {
   HWINFONT                *pWinFont;
   HDC                     hdc;
   SIZE                    RectSize;
-	char			string[512];
   
   pWinFont = GetWinFont( iFont );
 
@@ -254,27 +246,20 @@ INT16 WinFontStringPixLength( UINT16 *string2, INT32 iFont )
     return( 0 );
   }
 
-#ifdef TAIWANESE
-	Convert16BitStringTo8BitChineseBig5String( string, string2 );
-#else
-	sprintf( string, "%S", string2 );
-#endif
-
   hdc = GetDC(NULL);
   SelectObject(hdc, pWinFont->hFont );
-  GetTextExtentPoint32( hdc, string, strlen(string), &RectSize );
+  GetTextExtentPoint32( hdc, string, wcslen(string), &RectSize );
   ReleaseDC(NULL, hdc);
   
   return( (INT16)RectSize.cx );
 }
 
 
-INT16 GetWinFontHeight( UINT16 *string2, INT32 iFont )
+INT16 GetWinFontHeight( UINT16 *string, INT32 iFont )
 {
   HWINFONT                *pWinFont;
   HDC                     hdc;
   SIZE                    RectSize;
-	char			string[512];
 
   pWinFont = GetWinFont( iFont );
 
@@ -283,15 +268,9 @@ INT16 GetWinFontHeight( UINT16 *string2, INT32 iFont )
     return( 0 );
   }
 
-#ifdef TAIWANESE
-	Convert16BitStringTo8BitChineseBig5String( string, string2 );
-#else
-	sprintf( string, "%S", string2 );
-#endif
-
   hdc = GetDC(NULL);
   SelectObject(hdc, pWinFont->hFont );
-  GetTextExtentPoint32( hdc, string, strlen(string), &RectSize );
+  GetTextExtentPoint32( hdc, string, wcslen(string), &RectSize );
   ReleaseDC(NULL, hdc);
   
   return( (INT16)RectSize.cy );

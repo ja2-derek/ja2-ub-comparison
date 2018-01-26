@@ -2,14 +2,14 @@
 	#include "Utils All.h"
 #else
 	#include "Language Defines.h"
-	#if defined( ENGLISH ) || defined( TAIWANESE )
+	#ifdef ENGLISH
 		#include "text.h"
 		#include "Fileman.h"
 		#include "JA2 Demo Ads.h"
 	#endif
 #endif
 
-#if defined( ENGLISH ) || defined( TAIWANESE )
+#ifdef ENGLISH
 
 /*
 

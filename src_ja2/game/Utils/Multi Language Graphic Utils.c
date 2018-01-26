@@ -3,7 +3,7 @@
 
 BOOLEAN GetMLGFilename( SGPFILENAME filename, UINT16 usMLGGraphicID )
 {
-	#if defined( ENGLISH ) || defined( TAIWANESE ) || defined( FRENCH )
+	#if defined( ENGLISH ) || defined( FRENCH )
 		switch( usMLGGraphicID )
 		{
 			case MLG_AIMSYMBOL:

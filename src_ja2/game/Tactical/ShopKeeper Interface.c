@@ -4630,11 +4630,7 @@ void InitShopKeeperSubTitledText( STR16 pString )
 	//Clear the contents of the subtitle text
 	memset( gsShopKeeperTalkingText, 0, SKI_SUBTITLE_TEXT_SIZE );
 
-#ifdef TAIWANESE
-	swprintf( gsShopKeeperTalkingText, L"%s", pString );
-#else
 	swprintf( gsShopKeeperTalkingText, L"\"%s\"", pString );
-#endif
 
 
 	//Now setup the popup box

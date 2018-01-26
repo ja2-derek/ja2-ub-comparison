@@ -1875,13 +1875,9 @@ void HandleTacticalNPCTextUI( UINT8 ubCharacterNum, INT16 *zQuoteStr )
 	}
 
 	// post message to mapscreen message system
-#ifdef TAIWANESE
-	swprintf( gTalkPanel.zQuoteStr, L"%s", zQuoteStr );
-#else
 	swprintf( gTalkPanel.zQuoteStr, L"\"%s\"", zQuoteStr );
 	swprintf( zText, L"%s: \"%s\"", gMercProfiles[ ubCharacterNum ].zNickname, zQuoteStr );
 	MapScreenMessage( FONT_MCOLOR_WHITE, MSG_DIALOG, L"%s",  zText );
-#endif
 }
 
 
@@ -1900,13 +1896,9 @@ void DisplayTextForExternalNPC( UINT8 ubCharacterNum, STR16 zQuoteStr )
 	}
 
 	// post message to mapscreen message system
-#ifdef TAIWANESE
-	swprintf( gTalkPanel.zQuoteStr, L"%s", zQuoteStr );
-#else
 	swprintf( gTalkPanel.zQuoteStr, L"\"%s\"", zQuoteStr );
 	swprintf( zText, L"%s: \"%s\"", gMercProfiles[ ubCharacterNum ].zNickname, zQuoteStr );
 	MapScreenMessage( FONT_MCOLOR_WHITE, MSG_DIALOG, L"%s",  zText );
-#endif
 
 	if ( guiCurrentScreen == MAP_SCREEN )
 	{
@@ -1933,11 +1925,7 @@ void HandleTacticalTextUI( INT32 iFaceIndex, SOLDIERTYPE *pSoldier, INT16 *zQuot
 	//BUild text
 	// How do we do this with defines?
 	//swprintf( zText, L"\xb4\xa2 %s: \xb5 \"%s\"", gMercProfiles[ ubCharacterNum ].zNickname, zQuoteStr );
-#ifdef TAIWANESE
-	swprintf( zText, L"%s", zQuoteStr );
-#else
 	swprintf( zText, L"\"%s\"", zQuoteStr );
-#endif
 	sLeft	= 110;
 
 
@@ -1946,11 +1934,8 @@ void HandleTacticalTextUI( INT32 iFaceIndex, SOLDIERTYPE *pSoldier, INT16 *zQuot
 
 	ExecuteTacticalTextBox( sLeft, zText );
 
-#ifndef TAIWANESE
 	swprintf( zText, L"%s: \"%s\"", gMercProfiles[ pSoldier->ubProfile ].zNickname, zQuoteStr );
 	MapScreenMessage( FONT_MCOLOR_WHITE, MSG_DIALOG, L"%s",  zText );
-#endif
-	
 }
 
 
