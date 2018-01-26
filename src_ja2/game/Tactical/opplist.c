@@ -1841,12 +1841,6 @@ no carmen
 										pSoldier->bAttitude = ATTACKSLAYONLY;
 										TriggerNPCRecord( pSoldier->ubProfile, 28 );
 									}
-									/*
-									if ( ! gTacticalStatus.uiFlags & INCOMBAT )
-									{
-										EnterCombatMode( pSoldier->bTeam );
-									}
-									*/
 								}
 								break;
 */
