@@ -17,7 +17,6 @@ extern	INT16		zTrackingNumber[16];
 
 
 
-//#define RUSSIANGOLD
 
 //
 //		Keeps track of the saved game version.  Increment the saved game version whenever 
