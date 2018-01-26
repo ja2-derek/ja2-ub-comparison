@@ -1509,7 +1509,7 @@ BOOLEAN LoadSavedGameHeader( INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader )
 
 
 		//Ja25 
-		//Check to see if the save is from the Expansion pack, or regualr Ja2
+		//Check to see if the save is from the Expansion pack, or regular Ja2
 		if( pSaveGameHeader->uiSavedGameVersion < JA2_EXP_FIRST_SAVE_GAME_VERSION )
 		{
 			memset( pSaveGameHeader, 0, sizeof( SAVED_GAME_HEADER ) );
