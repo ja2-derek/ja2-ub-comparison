@@ -465,6 +465,9 @@ BOOLEAN		EnterSaveLoadScreen()
 //	if( guiPreviousOptionScreen != MAINMENU_SCREEN )
 //		gbSetSlotToBeSelected = -1;
 
+	//Clear the Background
+	ClearMainMenu();
+
 	// This is a hack to get sector names , but... if the underground sector is NOT loaded
 	if( !gpUndergroundSectorInfoHead )
 	{
