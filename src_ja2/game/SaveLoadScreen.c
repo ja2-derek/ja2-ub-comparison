@@ -1493,6 +1493,16 @@ BOOLEAN LoadSavedGameHeader( INT8 bEntry, SAVED_GAME_HEADER *pSaveGameHeader )
 		// Do some Tests on the header to make sure it is valid
 		//
 
+
+		//Ja25
+		//Check to see if the save is from the Expansion pack, or regular Ja2
+		if( pSaveGameHeader->uiSavedGameVersion < JA2_EXP_FIRST_SAVE_GAME_VERSION )
+		{
+			memset( pSaveGameHeader, 0, sizeof( SAVED_GAME_HEADER ) );
+			gbSaveGameArray[ bEntry ] = FALSE;
+			return(FALSE);
+		}
+
 		//Check to see if the desc field is bigger then it should be, ie no null char
 		if( wcslen( pSaveGameHeader->sSavedGameDesc ) >= SIZE_OF_SAVE_GAME_DESC )
 		{

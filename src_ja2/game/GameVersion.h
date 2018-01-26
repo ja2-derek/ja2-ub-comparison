@@ -7,6 +7,10 @@ extern "C" {
 #endif
 
 
+
+#define JA2_EXP_FIRST_SAVE_GAME_VERSION 1001
+
+
 //
 //	Keeps track of the game version
 //
