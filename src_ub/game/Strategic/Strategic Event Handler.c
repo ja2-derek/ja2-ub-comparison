@@ -965,7 +965,7 @@ Ja25:	No hospital people
 */
 
 /*
-Ja25:	No darrrenn
+Ja25:	No darren
 	// Reset Darren's balance and money
 	gMercProfiles[ DARREN ].iBalance = 0;
 	SetMoneyInSoldierProfile( DARREN, 15000 );
