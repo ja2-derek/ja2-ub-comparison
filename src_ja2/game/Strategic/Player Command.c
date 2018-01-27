@@ -137,6 +137,8 @@ Ja25: No meanwhiles
 			return FALSE;
 		}
 
+/*
+Ja25:  No BobbyR's
 		// check if we ever grabbed drassen airport, if so, set fact we can go to BR's
 		if( ( sMapX == BOBBYR_SHIPPING_DEST_SECTOR_X ) && ( sMapY == BOBBYR_SHIPPING_DEST_SECTOR_Y ) )
 		{
@@ -149,6 +151,7 @@ Ja25: No meanwhiles
 				LaptopSaveInfo.ubHaveBeenToBobbyRaysAtLeastOnceWhileUnderConstruction = BOBBYR_ALREADY_SENT_EMAIL;
 			}
 		}
+*/
 
 		fWasEnemyControlled = StrategicMap[ usMapSector ].fEnemyControlled;
 

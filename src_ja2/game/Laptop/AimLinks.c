@@ -18,7 +18,8 @@
 #define   AIM_LINK_FONT									FONT12ARIAL
 #define   AIM_LINK_COLOR								AIM_FONT_GOLD
 
-#define		AIM_LINK_NUM_LINKS						3
+// Ja25#define		AIM_LINK_NUM_LINKS						3
+#define		AIM_LINK_NUM_LINKS						2
 
 #define		AIM_LINK_LINK_OFFSET_Y				94//90
 
@@ -74,10 +75,13 @@ BOOLEAN EnterAimLinks()
 	InitAimDefaults();
 	InitAimMenuBar();
 
+/*
+ja25*/
 	// load the Bobby link graphic and add it
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 	GetMLGFilename( VObjectDesc.ImageFile, MLG_BOBBYRAYLINK );
 	CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyLink));
+//
 
 	// load the Funeral graphic and add it
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;

@@ -30,6 +30,8 @@
 #endif
 #include "BobbyRMailOrder.h"
 
+#ifdef JA25_ALLOW_BOBBYR_SHIPMENTS
+
 #define		MEDUNA_ITEM_DROP_OFF_GRIDNO			10959
 #define		MEDUNA_ITEM_DROP_OFF_SECTOR_X		3
 #define		MEDUNA_ITEM_DROP_OFF_SECTOR_Y		14
@@ -620,6 +622,9 @@ void CheckForKingpinsMoneyMissing( BOOLEAN fFirstCheck )
 	}
 
 }
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS
+
+
 
 void HandleNPCSystemEvent( UINT32 uiEvent )
 {
@@ -684,10 +689,18 @@ void HandleNPCSystemEvent( UINT32 uiEvent )
 		switch( uiEvent - NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS )
 		{
 			case NPC_ACTION_RETURN_STOLEN_SHIPMENT_ITEMS:
+				Assert( 0 );
+/*
+Ja25:  No bobbyr shipments, therefore no damage to it
 				HandleDelayedItemsArrival( uiEvent );
+*/
 				break;
 			case NPC_ACTION_SET_RANDOM_PACKAGE_DAMAGE_TIMER:
+				Assert( 0 );
+/*
+Ja25:  No bobbyr shipments, therefore no damage to it
 				HandlePossiblyDamagedPackage();
+*/
 				break;
 			case NPC_ACTION_ENABLE_CAMBRIA_DOCTOR_BONUS:
 				SetFactTrue( FACT_WILLIS_HEARD_ABOUT_JOEY_RESCUE );
@@ -1021,13 +1034,18 @@ void MakeCivGroupHostileOnNextSectorEntrance( UINT8 ubCivGroup )
 	gTacticalStatus.fCivGroupHostile[ ubCivGroup ] = CIV_GROUP_WILL_BECOME_HOSTILE;
 }
 
+
+#ifdef JA25_ALLOW_BOBBYR_SHIPMENTS
 void RemoveAssassin( UINT8 ubProfile )
 {
 	gMercProfiles[ ubProfile ].sSectorX = 0;
 	gMercProfiles[ ubProfile ].sSectorY = 0;
 	gMercProfiles[ ubProfile ].bLife = gMercProfiles[ ubProfile ].bLifeMax;
 }
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS
 
+
+#ifdef JA25_ALLOW_BOBBYR_SHIPMENTS
 void CheckForMissingHospitalSupplies( void )
 {
 	UINT32				uiLoop;
@@ -1086,8 +1104,10 @@ void CheckForMissingHospitalSupplies( void )
 	}
 	
 }
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS
 
 
+#ifdef JA25_ALLOW_BOBBYR_SHIPMENTS
 void DropOffItemsInMeduna( UINT8 ubOrderNum )
 {
 	BOOLEAN	fSectorLoaded = FALSE;
@@ -1190,3 +1210,4 @@ void DropOffItemsInMeduna( UINT8 ubOrderNum )
 	//Add an email from kulba telling the user the shipment is there
 	AddEmail( BOBBY_R_MEDUNA_SHIPMENT, BOBBY_R_MEDUNA_SHIPMENT_LENGTH, BOBBY_R, GetWorldTotalMin() );
 }
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS

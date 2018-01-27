@@ -111,14 +111,22 @@ BOOLEAN ExecuteStrategicEvent( STRATEGICEVENT *pEvent )
 			break;
 		//The players purchase from Bobby Ray has arrived
 		case EVENT_BOBBYRAY_PURCHASE:
+			Assert( 0 );
+/*
+Ja25 no Bobby R's
 			BobbyRayPurchaseEventCallback( (UINT8) pEvent->uiParam);
+*/
 			break;
 		//Gets called once a day ( at BOBBYRAY_UPDATE_TIME).  To simulate the items being bought and sold at bobby rays 
 		case EVENT_DAILY_UPDATE_BOBBY_RAY_INVENTORY:
+			DailyUpdateOfArmsDealersInventory();
+			break;
+/*
+Ja25: No bobby ray
 			DailyUpdateOfBobbyRaysNewInventory();
 			DailyUpdateOfBobbyRaysUsedInventory();
 			DailyUpdateOfArmsDealersInventory();
-			break;
+*/
 		//Add items to BobbyR's new/used inventory
 		case EVENT_UPDATE_BOBBY_RAY_INVENTORY:
 			AddFreshBobbyRayInventory( (UINT16) pEvent->uiParam );

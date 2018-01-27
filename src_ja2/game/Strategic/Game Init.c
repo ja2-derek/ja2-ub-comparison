@@ -353,7 +353,7 @@ Ja25 no meanwhiles
 	{
 		//Init all the arms dealers inventory
 		InitAllArmsDealers();
-		InitBobbyRayInventory();
+//Ja25: No Bobby Ray		InitBobbyRayInventory();
 	}
 
 	// clear tactical 

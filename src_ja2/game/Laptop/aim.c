@@ -36,8 +36,8 @@ UINT8			gCurrentAimPage[ NUM_AIM_SCREENS ] =
 //
 
 
-#define			BOBBYR_UNDER_CONSTRUCTION_AD_FONT							FONT14HUMANIST//FONT16ARIAL
-#define			BOBBYR_UNDER_CONSTRUCTION_AD_COLOR						FONT_MCOLOR_DKRED//FONT_MCOLOR_WHITE
+//#define			BOBBYR_UNDER_CONSTRUCTION_AD_FONT							FONT14HUMANIST//FONT16ARIAL
+//#define			BOBBYR_UNDER_CONSTRUCTION_AD_COLOR						FONT_MCOLOR_DKRED//FONT_MCOLOR_WHITE
 
 
 // Link Images
@@ -69,7 +69,7 @@ UINT8			gCurrentAimPage[ NUM_AIM_SCREENS ] =
 #define			AIM_WARNING_TEXT_WIDTH	220
 
 #define			AIM_FLOWER_LINK_TEXT_Y	AIM_WARNING_TEXT_Y + 25
-
+/*
 #define			AIM_BOBBYR1_LINK_TEXT_X			WARNING_X + 20
 #define			AIM_BOBBYR1_LINK_TEXT_Y			WARNING_Y + 20
 
@@ -78,7 +78,7 @@ UINT8			gCurrentAimPage[ NUM_AIM_SCREENS ] =
 
 #define			AIM_BOBBYR3_LINK_TEXT_X			WARNING_X + 20
 #define			AIM_BOBBYR3_LINK_TEXT_Y			WARNING_Y + 20
-
+*/
 
 
 #define			AIM_AD_TOP_LEFT_X				WARNING_X
@@ -112,15 +112,16 @@ UINT8			gCurrentAimPage[ NUM_AIM_SCREENS ] =
 #define			AIM_AD_FUNERAL_AD_DELAY					250
 #define			AIM_AD_FUNERAL_AD__NUM_SUBIMAGES	9
 
-#define			AIM_AD_BOBBYR_AD_STARTS								2
+//#define			AIM_AD_BOBBYR_AD_STARTS								2	JA25  No Bobbyr in exp
+#define			AIM_AD_DAY_ADDVERTISMENT_FOR_ADS			1
 #define			AIM_AD_DAY_FUNERAL_AD_STARTS					4
 #define			AIM_AD_DAY_FLOWER_AD_STARTS						7
 #define			AIM_AD_DAY_INSURANCE_AD_STARTS				12
-
+/*
 #define			AIM_AD_BOBBYR_AD_DELAY								300
 #define			AIM_AD_BOBBYR_AD__NUM_SUBIMAGES				21
 #define			AIM_AD_BOBBYR_AD_NUM_DUCK_SUBIMAGES		6
-
+*/
 
 //#define			
 
@@ -130,7 +131,7 @@ enum
 	AIM_AD_DONE,
 	AIM_AD_WARNING_BOX,
 	AIM_AD_FOR_ADS,
-	AIM_AD_BOBBY_RAY_AD,
+//	AIM_AD_BOBBY_RAY_AD,		JA25  No Bobbyr in exp
 	AIM_AD_FUNERAL_ADS,
 	AIM_AD_FLOWER_SHOP,
 	AIM_AD_INSURANCE_AD,
@@ -152,7 +153,7 @@ UINT32		guiFlowerAdvertisement;
 UINT32		guiAdForAdsImages;
 UINT32		guiInsuranceAdImages;
 UINT32		guiFuneralAdImages;
-UINT32		guiBobbyRAdImages;
+//UINT32		guiBobbyRAdImages;
 
 
 UINT8			gubAimMenuButtonDown=255;
@@ -199,7 +200,7 @@ void		HandleAdAndWarningArea( BOOLEAN fInit, BOOLEAN fRedraw );
 void		LaptopInitAim();
 BOOLEAN DisplayAd( BOOLEAN fInit, BOOLEAN fRedraw, UINT16 usDelay, UINT16 usNumberOfSubImages, UINT32 uiAdImageIdentifier );
 void		HandleTextOnAimAdd( UINT8 ubCurSubImage );
-BOOLEAN DisplayBobbyRAd( BOOLEAN fInit, BOOLEAN fRedraw );
+//BOOLEAN DisplayBobbyRAd( BOOLEAN fInit, BOOLEAN fRedraw );
 UINT8		GetNextAimAd( UINT8 ubCurrentAd );
 
 
@@ -272,11 +273,13 @@ BOOLEAN EnterAIM()
 	GetMLGFilename( VObjectDesc.ImageFile, MLG_FUNERALAD9 );
 	CHECKF(AddVideoObject(&VObjectDesc, &guiFuneralAdImages));
 
+/*
+JA25  No Bobbyr in exp
 	// load the funeral advertisment and add it
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 	GetMLGFilename( VObjectDesc.ImageFile, MLG_BOBBYRAYAD21 );
 	CHECKF(AddVideoObject(&VObjectDesc, &guiBobbyRAdImages ));
-
+*/
 	
 
 	//** Mouse Regions **
@@ -335,7 +338,7 @@ void ExitAIM()
 	DeleteVideoObjectFromIndex(guiAdForAdsImages);
 	DeleteVideoObjectFromIndex(guiInsuranceAdImages);
 	DeleteVideoObjectFromIndex(guiFuneralAdImages);
-	DeleteVideoObjectFromIndex(guiBobbyRAdImages);
+//	DeleteVideoObjectFromIndex(guiBobbyRAdImages);	JA25  No Bobbyr in exp
 
 
 	// Remove Mouse Regions
@@ -773,10 +776,13 @@ void HandleAdAndWarningArea( BOOLEAN fInit, BOOLEAN fRedraw )
 			ubPreviousAdvertisment = DisplayAd( fInit, fRedraw, AIM_AD_FUNERAL_AD_DELAY, AIM_AD_FUNERAL_AD__NUM_SUBIMAGES, guiFuneralAdImages );
 			break;
 
+/*
+JA25  No Bobbyr in exp
 		case AIM_AD_BOBBY_RAY_AD:
 		  MSYS_EnableRegion(&gSelectedBannerRegion);
 			ubPreviousAdvertisment = DisplayBobbyRAd( fInit, fRedraw );
 			break;
+*/
 	}
 }
 
@@ -907,8 +913,10 @@ void SelectBannerRegionCallBack(MOUSE_REGION * pRegion, INT32 iReason )
 			GoToWebPage( INSURANCE_BOOKMARK );
 		else if( gubCurrentAdvertisment == AIM_AD_FUNERAL_ADS )
 			GoToWebPage( FUNERAL_BOOKMARK );
-		else if( gubCurrentAdvertisment == AIM_AD_BOBBY_RAY_AD )
-			GoToWebPage( BOBBYR_BOOKMARK );
+
+//JA25  No Bobbyr in exp
+//		else if( gubCurrentAdvertisment == AIM_AD_BOBBY_RAY_AD )
+//			GoToWebPage( BOBBYR_BOOKMARK );
 
 
 	}
@@ -1027,7 +1035,7 @@ void HandleTextOnAimAdd( UINT8 ubCurSubImage )
 
 		case AIM_AD_FUNERAL_ADS:
 			break;
-
+/*
 		case AIM_AD_BOBBY_RAY_AD:
 
 			//if the subimage is the first couple
@@ -1048,11 +1056,12 @@ void HandleTextOnAimAdd( UINT8 ubCurSubImage )
 				SetFontShadow( DEFAULT_SHADOW );
 			}
 			break;
+*/
 	}
 }
 
 
-
+/*
 BOOLEAN DisplayBobbyRAd( BOOLEAN fInit, BOOLEAN fRedraw )
 {
 	static UINT32 uiLastTime;
@@ -1208,11 +1217,11 @@ BOOLEAN DisplayBobbyRAd( BOOLEAN fInit, BOOLEAN fRedraw )
       
 			ubSubImage++;
 		}
-*/
+
 
 	return( ubRetVal );
 }
-
+*/
 
 UINT8 GetNextAimAd( UINT8 ubCurrentAd )
 {
@@ -1222,18 +1231,8 @@ UINT8 GetNextAimAd( UINT8 ubCurrentAd )
 
 	if( ubCurrentAd == AIM_AD_WARNING_BOX )
 	{
-		if( uiDay < AIM_AD_BOBBYR_AD_STARTS )
-		{
-			//if the player has NOT ever been to drassen
-			if( !LaptopSaveInfo.fBobbyRSiteCanBeAccessed )
-			{
-				ubNextAd = AIM_AD_FOR_ADS;
-			}
-			else
-			{
-				ubNextAd = AIM_AD_BOBBY_RAY_AD;
-			}
-		}
+		if( uiDay <= AIM_AD_DAY_ADDVERTISMENT_FOR_ADS )//AIM_AD_BOBBYR_AD_STARTS
+			ubNextAd = AIM_AD_FOR_ADS;
 
 		else if( uiDay < AIM_AD_DAY_FUNERAL_AD_STARTS )
 			ubNextAd = AIM_AD_FUNERAL_ADS;

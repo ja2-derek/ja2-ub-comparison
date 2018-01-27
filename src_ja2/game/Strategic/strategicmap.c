@@ -3168,6 +3168,7 @@ void SetupNewStrategicGame( )
 	// Some things get updated in the very early morning
 	AddEveryDayStrategicEvent( EVENT_DAILY_EARLY_MORNING_EVENTS, EARLY_MORNING_TIME, 0 );
 	//Daily Update BobbyRay Inventory
+	//Ja25:  BobbyRay stuff is NOT being called, only the arms dealer info, which just happens to be inthe same function
 	AddEveryDayStrategicEvent( EVENT_DAILY_UPDATE_BOBBY_RAY_INVENTORY, BOBBYRAY_UPDATE_TIME, 0 );
 	//Daily Update of the M.E.R.C. site.
 	AddEveryDayStrategicEvent( EVENT_DAILY_UPDATE_OF_MERC_SITE, 0, 0 );
