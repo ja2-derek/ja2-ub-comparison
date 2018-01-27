@@ -622,7 +622,10 @@ void CheckForKingpinsMoneyMissing( BOOLEAN fFirstCheck )
 	}
 
 }
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS
 
+
+#ifdef JA25_ALLOW_BOBBYR_SHIPMENTS
 void HandleNPCSystemEvent( UINT32 uiEvent )
 {
 	if (uiEvent < NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS)
@@ -773,195 +776,8 @@ void HandleNPCSystemEvent( UINT32 uiEvent )
 		}
 	}
 }
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS
 
-
-
-void RemoveAssassin( UINT8 ubProfile )
-{
-	gMercProfiles[ ubProfile ].sSectorX = 0;
-	gMercProfiles[ ubProfile ].sSectorY = 0;
-	gMercProfiles[ ubProfile ].bLife = gMercProfiles[ ubProfile ].bLifeMax;
-}
-
-void CheckForMissingHospitalSupplies( void )
-{
-	UINT32				uiLoop;
-	ITEM_POOL *		pItemPool;
-	OBJECTTYPE *	pObj;
-	UINT8					ubMedicalObjects = 0;
-
-	for ( uiLoop = 0; uiLoop < guiNumWorldItems; uiLoop++ )
-	{
-		// loop through all items, look for ownership
-		if ( gWorldItems[ uiLoop ].fExists && gWorldItems[ uiLoop ].o.usItem == OWNERSHIP && gWorldItems[ uiLoop ].o.ubOwnerCivGroup == DOCTORS_CIV_GROUP )
-		{
-			GetItemPool( gWorldItems[ uiLoop ].sGridNo, &pItemPool, 0 ) ;
-			while( pItemPool ) 
-			{
-				pObj = &( gWorldItems[ pItemPool->iItemIndex ].o );
-
-				if ( pObj->bStatus[ 0 ] > 60 )
-				{
-					if ( pObj->usItem == FIRSTAIDKIT || pObj->usItem == MEDICKIT || pObj->usItem == REGEN_BOOSTER || pObj->usItem == ADRENALINE_BOOSTER )
-					{
-						ubMedicalObjects++;
-					}
-				}
-
-				pItemPool = pItemPool->pNext;
-			}
-		}
-	}
-
-	if ( CheckFact( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES_AGAIN, 0 ) == TRUE )
-	{
-		// player returning stuff!  if back to full then can operate
-		if ( ubMedicalObjects >= gubCambriaMedicalObjects )
-		{
-			SetFactFalse( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES_AGAIN );
-			SetFactFalse( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES );
-			return;
-		}
-	}
-	
-	if ( ubMedicalObjects < gubCambriaMedicalObjects )
-	{
-		// player's stolen something!
-		if ( CheckFact( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES, 0 ) == FALSE )
-		{
-			SetFactTrue( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES );
-		}
-
-		// if only 1/5 or less left, give up the ghost
-		if ( ubMedicalObjects * 5 <= gubCambriaMedicalObjects )
-		{
-			// run out!
-			SetFactTrue( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES_AGAIN );
-		}
-	}
-	
-}
-
-
-void DropOffItemsInMeduna( UINT8 ubOrderNum )
-{
-	BOOLEAN	fSectorLoaded = FALSE;
-	OBJECTTYPE		Object;
-	UINT32	uiCount = 0;
-	OBJECTTYPE	*pObject=NULL;
-	UINT16	usNumberOfItems=0, usItem;
-	UINT8		ubItemsDelivered, ubTempNumItems;
-	UINT32	i;
-
-	//if the player doesnt "own" the sector,
-	if( StrategicMap[ CALCULATE_STRATEGIC_INDEX( MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y ) ].fEnemyControlled )
-	{
-		//the items disappear
-		gpNewBobbyrShipments[ ubOrderNum ].fActive = FALSE;
-		return;
-	}
-
-	// determine if the sector is loaded
-	if( ( gWorldSectorX == MEDUNA_ITEM_DROP_OFF_SECTOR_X ) && ( gWorldSectorY == MEDUNA_ITEM_DROP_OFF_SECTOR_Y ) && ( gbWorldSectorZ == MEDUNA_ITEM_DROP_OFF_SECTOR_Z ) )
-		fSectorLoaded = TRUE;
-	else
-		fSectorLoaded = FALSE;
-
-	// set crate to closed!
-	if ( fSectorLoaded )
-	{
-		SetOpenableStructureToClosed( MEDUNA_ITEM_DROP_OFF_GRIDNO, 0 );
-	}
-	else
-	{
-		ChangeStatusOfOpenableStructInUnloadedSector( MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y, MEDUNA_ITEM_DROP_OFF_SECTOR_Z, MEDUNA_ITEM_DROP_OFF_GRIDNO, FALSE );
-	}
-
-	
-	for(i=0; i<gpNewBobbyrShipments[ ubOrderNum ].ubNumberPurchases; i++)
-	{
-		// Count how many items were purchased
-		usNumberOfItems += gpNewBobbyrShipments[ ubOrderNum ].BobbyRayPurchase[i].ubNumberPurchased;
-	}
-
-	//if we are NOT currently in the right sector
-	if( !fSectorLoaded )
-	{
-		//build an array of objects to be added
-		pObject = MemAlloc( sizeof( OBJECTTYPE ) * usNumberOfItems );
-		if( pObject == NULL )
-			return;
-		memset( pObject, 0, sizeof( OBJECTTYPE ) * usNumberOfItems );
-	}
-
-
-	uiCount = 0;
-
-	//loop through the number of purchases
-	for( i=0; i< gpNewBobbyrShipments->ubNumberPurchases; i++)
-	{
-		ubItemsDelivered = gpNewBobbyrShipments[ ubOrderNum ].BobbyRayPurchase[i].ubNumberPurchased;
-		usItem = gpNewBobbyrShipments[ ubOrderNum ].BobbyRayPurchase[i].usItemIndex;
-
-		while ( ubItemsDelivered )
-		{
-			// treat 0s as 1s :-)
-			ubTempNumItems = __min( ubItemsDelivered, __max( 1, Item[ usItem ].ubPerPocket ) );
-			CreateItems( usItem, gpNewBobbyrShipments[ ubOrderNum ].BobbyRayPurchase[i].bItemQuality, ubTempNumItems, &Object );
-
-			// stack as many as possible
-			if( fSectorLoaded )
-			{
-				AddItemToPool( MEDUNA_ITEM_DROP_OFF_GRIDNO, &Object, -1, 0, 0, 0 );
-			}
-			else
-			{
-				memcpy( &pObject[ uiCount ], &Object, sizeof( OBJECTTYPE ) );
-				uiCount++;
-			}
-
-			ubItemsDelivered -= ubTempNumItems;
-		}
-	}
-
-	//if the sector WASNT loaded
-	if( !fSectorLoaded )
-	{
-		//add all the items from the array that was built above
-
-		//The item are to be added to the Top part of Drassen, grid loc's  10112, 9950
-		if( !AddItemsToUnLoadedSector( MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y, MEDUNA_ITEM_DROP_OFF_SECTOR_Z, MEDUNA_ITEM_DROP_OFF_GRIDNO, uiCount, pObject, 0, 0, 0, -1, FALSE ) )
-		{
-			//error
-			Assert( 0 );
-		}
-		MemFree( pObject );
-		pObject = NULL;
-	}
-
-	//mark that the shipment has arrived
-	gpNewBobbyrShipments[ ubOrderNum ].fActive = FALSE;
-
-	//Add an email from kulba telling the user the shipment is there
-	AddEmail( BOBBY_R_MEDUNA_SHIPMENT, BOBBY_R_MEDUNA_SHIPMENT_LENGTH, BOBBY_R, GetWorldTotalMin() );
-}
-
-#endif
-
-
-void MakeCivGroupHostileOnNextSectorEntrance( UINT8 ubCivGroup )
-{
-	// if it's the rebels that will become hostile, reduce town loyalties NOW, not later
-	if ( ubCivGroup == REBEL_CIV_GROUP && gTacticalStatus.fCivGroupHostile[ ubCivGroup ] == CIV_GROUP_NEUTRAL )
-	{
-/*
-Ja25 no loyalty
-		ReduceLoyaltyForRebelsBetrayed();
-*/
-	}
-
-	gTacticalStatus.fCivGroupHostile[ ubCivGroup ] = CIV_GROUP_WILL_BECOME_HOSTILE;
-}
 
 
 
@@ -1390,3 +1206,196 @@ Ja25:	No
 	}
 */
 }
+
+
+void MakeCivGroupHostileOnNextSectorEntrance( UINT8 ubCivGroup )
+{
+	// if it's the rebels that will become hostile, reduce town loyalties NOW, not later
+	if ( ubCivGroup == REBEL_CIV_GROUP && gTacticalStatus.fCivGroupHostile[ ubCivGroup ] == CIV_GROUP_NEUTRAL )
+	{
+/*
+Ja25 no loyalty
+		ReduceLoyaltyForRebelsBetrayed();
+*/
+	}
+
+	gTacticalStatus.fCivGroupHostile[ ubCivGroup ] = CIV_GROUP_WILL_BECOME_HOSTILE;
+}
+
+
+#ifdef JA25_ALLOW_BOBBYR_SHIPMENTS
+void RemoveAssassin( UINT8 ubProfile )
+{
+	gMercProfiles[ ubProfile ].sSectorX = 0;
+	gMercProfiles[ ubProfile ].sSectorY = 0;
+	gMercProfiles[ ubProfile ].bLife = gMercProfiles[ ubProfile ].bLifeMax;
+}
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS
+
+
+#ifdef JA25_ALLOW_BOBBYR_SHIPMENTS
+void CheckForMissingHospitalSupplies( void )
+{
+	UINT32				uiLoop;
+	ITEM_POOL *		pItemPool;
+	OBJECTTYPE *	pObj;
+	UINT8					ubMedicalObjects = 0;
+
+	for ( uiLoop = 0; uiLoop < guiNumWorldItems; uiLoop++ )
+	{
+		// loop through all items, look for ownership
+		if ( gWorldItems[ uiLoop ].fExists && gWorldItems[ uiLoop ].o.usItem == OWNERSHIP && gWorldItems[ uiLoop ].o.ubOwnerCivGroup == DOCTORS_CIV_GROUP )
+		{
+			GetItemPool( gWorldItems[ uiLoop ].sGridNo, &pItemPool, 0 ) ;
+			while( pItemPool ) 
+			{
+				pObj = &( gWorldItems[ pItemPool->iItemIndex ].o );
+
+				if ( pObj->bStatus[ 0 ] > 60 )
+				{
+					if ( pObj->usItem == FIRSTAIDKIT || pObj->usItem == MEDICKIT || pObj->usItem == REGEN_BOOSTER || pObj->usItem == ADRENALINE_BOOSTER )
+					{
+						ubMedicalObjects++;
+					}
+				}
+
+				pItemPool = pItemPool->pNext;
+			}
+		}
+	}
+
+	if ( CheckFact( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES_AGAIN, 0 ) == TRUE )
+	{
+		// player returning stuff!  if back to full then can operate
+		if ( ubMedicalObjects >= gubCambriaMedicalObjects )
+		{
+			SetFactFalse( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES_AGAIN );
+			SetFactFalse( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES );
+			return;
+		}
+	}
+	
+	if ( ubMedicalObjects < gubCambriaMedicalObjects )
+	{
+		// player's stolen something!
+		if ( CheckFact( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES, 0 ) == FALSE )
+		{
+			SetFactTrue( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES );
+		}
+
+		// if only 1/5 or less left, give up the ghost
+		if ( ubMedicalObjects * 5 <= gubCambriaMedicalObjects )
+		{
+			// run out!
+			SetFactTrue( FACT_PLAYER_STOLE_MEDICAL_SUPPLIES_AGAIN );
+		}
+	}
+	
+}
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS
+
+
+#ifdef JA25_ALLOW_BOBBYR_SHIPMENTS
+void DropOffItemsInMeduna( UINT8 ubOrderNum )
+{
+	BOOLEAN	fSectorLoaded = FALSE;
+	OBJECTTYPE		Object;
+	UINT32	uiCount = 0;
+	OBJECTTYPE	*pObject=NULL;
+	UINT16	usNumberOfItems=0, usItem;
+	UINT8		ubItemsDelivered, ubTempNumItems;
+	UINT32	i;
+
+	//if the player doesnt "own" the sector,
+	if( StrategicMap[ CALCULATE_STRATEGIC_INDEX( MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y ) ].fEnemyControlled )
+	{
+		//the items disappear
+		gpNewBobbyrShipments[ ubOrderNum ].fActive = FALSE;
+		return;
+	}
+
+	// determine if the sector is loaded
+	if( ( gWorldSectorX == MEDUNA_ITEM_DROP_OFF_SECTOR_X ) && ( gWorldSectorY == MEDUNA_ITEM_DROP_OFF_SECTOR_Y ) && ( gbWorldSectorZ == MEDUNA_ITEM_DROP_OFF_SECTOR_Z ) )
+		fSectorLoaded = TRUE;
+	else
+		fSectorLoaded = FALSE;
+
+	// set crate to closed!
+	if ( fSectorLoaded )
+	{
+		SetOpenableStructureToClosed( MEDUNA_ITEM_DROP_OFF_GRIDNO, 0 );
+	}
+	else
+	{
+		ChangeStatusOfOpenableStructInUnloadedSector( MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y, MEDUNA_ITEM_DROP_OFF_SECTOR_Z, MEDUNA_ITEM_DROP_OFF_GRIDNO, FALSE );
+	}
+
+	
+	for(i=0; i<gpNewBobbyrShipments[ ubOrderNum ].ubNumberPurchases; i++)
+	{
+		// Count how many items were purchased
+		usNumberOfItems += gpNewBobbyrShipments[ ubOrderNum ].BobbyRayPurchase[i].ubNumberPurchased;
+	}
+
+	//if we are NOT currently in the right sector
+	if( !fSectorLoaded )
+	{
+		//build an array of objects to be added
+		pObject = MemAlloc( sizeof( OBJECTTYPE ) * usNumberOfItems );
+		if( pObject == NULL )
+			return;
+		memset( pObject, 0, sizeof( OBJECTTYPE ) * usNumberOfItems );
+	}
+
+
+	uiCount = 0;
+
+	//loop through the number of purchases
+	for( i=0; i< gpNewBobbyrShipments->ubNumberPurchases; i++)
+	{
+		ubItemsDelivered = gpNewBobbyrShipments[ ubOrderNum ].BobbyRayPurchase[i].ubNumberPurchased;
+		usItem = gpNewBobbyrShipments[ ubOrderNum ].BobbyRayPurchase[i].usItemIndex;
+
+		while ( ubItemsDelivered )
+		{
+			// treat 0s as 1s :-)
+			ubTempNumItems = __min( ubItemsDelivered, __max( 1, Item[ usItem ].ubPerPocket ) );
+			CreateItems( usItem, gpNewBobbyrShipments[ ubOrderNum ].BobbyRayPurchase[i].bItemQuality, ubTempNumItems, &Object );
+
+			// stack as many as possible
+			if( fSectorLoaded )
+			{
+				AddItemToPool( MEDUNA_ITEM_DROP_OFF_GRIDNO, &Object, -1, 0, 0, 0 );
+			}
+			else
+			{
+				memcpy( &pObject[ uiCount ], &Object, sizeof( OBJECTTYPE ) );
+				uiCount++;
+			}
+
+			ubItemsDelivered -= ubTempNumItems;
+		}
+	}
+
+	//if the sector WASNT loaded
+	if( !fSectorLoaded )
+	{
+		//add all the items from the array that was built above
+
+		//The item are to be added to the Top part of Drassen, grid loc's  10112, 9950
+		if( !AddItemsToUnLoadedSector( MEDUNA_ITEM_DROP_OFF_SECTOR_X, MEDUNA_ITEM_DROP_OFF_SECTOR_Y, MEDUNA_ITEM_DROP_OFF_SECTOR_Z, MEDUNA_ITEM_DROP_OFF_GRIDNO, uiCount, pObject, 0, 0, 0, -1, FALSE ) )
+		{
+			//error
+			Assert( 0 );
+		}
+		MemFree( pObject );
+		pObject = NULL;
+	}
+
+	//mark that the shipment has arrived
+	gpNewBobbyrShipments[ ubOrderNum ].fActive = FALSE;
+
+	//Add an email from kulba telling the user the shipment is there
+	AddEmail( BOBBY_R_MEDUNA_SHIPMENT, BOBBY_R_MEDUNA_SHIPMENT_LENGTH, BOBBY_R, GetWorldTotalMin() );
+}
+#endif // JA25_ALLOW_BOBBYR_SHIPMENTS
