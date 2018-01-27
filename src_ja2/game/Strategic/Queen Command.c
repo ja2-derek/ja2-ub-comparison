@@ -94,6 +94,7 @@ UINT8 NumHostilesInSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ )
 UINT8 NumEnemiesInAnySector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ )
 {
 	UINT8 ubNumEnemies = 0;
+	GROUP *pGroup;
 
 	Assert( sSectorX >= 1 && sSectorX <= 16 );
 	Assert( sSectorY >= 1 && sSectorY <= 16 );
@@ -111,22 +112,21 @@ UINT8 NumEnemiesInAnySector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ )
 	else
 	{
 		SECTORINFO *pSector;
-		GROUP *pGroup;
 
 		//Count stationary enemies
 		pSector = &SectorInfo[ SECTOR( sSectorX, sSectorY ) ];
 		ubNumEnemies = (UINT8)(pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites);
-		
-		//Count mobile enemies
-		pGroup = gpGroupList;
-		while( pGroup )
+	}
+
+	//Count mobile enemies
+	pGroup = gpGroupList;
+	while( pGroup )
+	{
+		if( !pGroup->fPlayer && !pGroup->fVehicle && pGroup->ubSectorX == sSectorX && pGroup->ubSectorY == sSectorY && pGroup->ubSectorZ == sSectorZ )
 		{
-			if( !pGroup->fPlayer && !pGroup->fVehicle && pGroup->ubSectorX == sSectorX && pGroup->ubSectorY == sSectorY )
-			{
-				ubNumEnemies += pGroup->ubGroupSize;
-			}
-			pGroup = pGroup->next;
+			ubNumEnemies += pGroup->ubGroupSize;
 		}
+		pGroup = pGroup->next;
 	}
 
 	return ubNumEnemies;
