@@ -132,7 +132,7 @@ void InitEditorMercsToolbar()
 //	SetButtonFastHelpText( iEditorButton[ MERCS_PROFILE ], L"Profile ID mode");
 //	iEditorButton[ MERCS_SCHEDULE ] =
 //		CreateEasyToggleButton( 134, 434, "EDITOR\\MercSchedule.sti", MercsScheduleModeCallback );
-//	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE ], L"Schedule mode");
+//	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE ], gzEditorStrings[EDITOR_STR_SCHEDULE_MODE]);
 	//Workaround for identical buttons.
 //	MSYS_SetBtnUserData( iEditorButton[ MERCS_SCHEDULE ], 3, 0xffffffff );
 	iEditorButton[ MERCS_GLOWSCHEDULE ] =

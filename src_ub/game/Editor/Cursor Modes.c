@@ -36,7 +36,7 @@ INT16 sGridX, sGridY;
 INT16 sBadMarker = -1;
 
 //Removed because you cant access static memory
-//UINT16 *wszSelType[6]= { L"Small", L"Medium", L"Large", L"XLarge", L"Width: xxxxxxxxx", L"Area" };
+//UINT16 *wszSelType[6]= { gzEditorStrings[EDITOR_STR_SMALL], gzEditorStrings[EDITOR_STR_MEDIUM], gzEditorStrings[EDITOR_STR_LARGE], gzEditorStrings[EDITOR_STR_XLARGE], L"Width: xxxxxxxxx", gzEditorStrings[EDITOR_STR_AREA] };
 CHAR16 wszSelType[6][64];
 
 BOOLEAN gfAllowRightButtonSelections = FALSE;
