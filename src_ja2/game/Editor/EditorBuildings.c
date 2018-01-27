@@ -82,16 +82,16 @@ void UpdateBuildingsInfo()
 	//print the headers on top of the columns
 	SetFont( SMALLCOMPFONT );
 	SetFontForeground( FONT_RED );
-	mprintfEditor( 112, 362, L"TOGGLE");
-	mprintfEditor( 114, 372, L"VIEWS");
+	mprintfEditor( 112, 362, gzEditorStrings[EDITOR_STR_TOGGLE]);
+	mprintfEditor( 114, 372, gzEditorStrings[EDITOR_STR_VIEWS]);
 	SetFontForeground( FONT_YELLOW );
-	mprintfEditor( 185, 362, L"SELECTION METHOD");
+	mprintfEditor( 185, 362, gzEditorStrings[EDITOR_STR_SELECTION_METHOD]);
 	SetFontForeground( FONT_LTGREEN );
-	mprintfEditor( 290, 362, L"SMART METHOD");
+	mprintfEditor( 290, 362, gzEditorStrings[EDITOR_STR_SMART_METHOD]);
 	SetFontForeground( FONT_LTBLUE );
-	mprintfEditor( 390, 362, L"BUILDING METHOD");
+	mprintfEditor( 390, 362, gzEditorStrings[EDITOR_STR_BUILDING_METHOD]);
 	SetFontForeground( FONT_GRAY2 );
-	mprintfEditor( 437, 404, L"Room#" );
+	mprintfEditor( 437, 404, gzEditorStrings[EDITOR_STR_ROOM_NUM] );
 }
 
 //Uses a recursive method to elimate adjacent tiles of structure information.
@@ -517,11 +517,11 @@ void InitDoorEditing( INT32 iMapIndex )
 	DisableButton( iDoorButton[ DOOR_BACKGROUND ] );
 	SpecifyDisabledButtonStyle( iDoorButton[ DOOR_BACKGROUND ], DISABLED_STYLE_NONE );
 	iDoorButton[ DOOR_OKAY ] =
-		CreateTextButton(L"Okay", FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_OKAY], FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT,
 		330, 195, 50, 30, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, 
 		DoorOkayCallback );
 	iDoorButton[ DOOR_CANCEL ] =
-		CreateTextButton(L"Cancel", FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_CANCEL], FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT,
 		385, 195, 50, 30, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, 
 		DoorCancelCallback );
 	InitTextInputModeWithScheme( DEFAULT_SCHEME );
@@ -649,13 +649,13 @@ void RenderDoorEditingWindow()
 	SetFontForeground( FONT_YELLOW );
 	SetFontShadow( FONT_NEARBLACK );
 	SetFontBackground( 0 );
-	mprintf( 210, 140, L"Editing lock attributes at map index %d.", iDoorMapIndex );
+	mprintf( 210, 140, gzEditorStrings[EDITOR_STR_EDIT_LOCK], iDoorMapIndex );
 
 	SetFontForeground( FONT_GRAY2 );
-	mprintf( 238, 160, L"Lock ID" );
-	mprintf( 238, 180, L"Trap Type" );
-	mprintf( 238, 200, L"Trap Level" );
-	mprintf( 238, 218, L"Locked" );
+	mprintf( 238, 160, gzEditorStrings[EDITOR_STR_LOCK_ID] );
+	mprintf( 238, 180, gzEditorStrings[EDITOR_STR_TRAP_TYPE] );
+	mprintf( 238, 200, gzEditorStrings[EDITOR_STR_TRAP_LEVEL] );
+	mprintf( 238, 218, gzEditorStrings[EDITOR_STR_LOCKED] );
 }
 
 void KillDoorEditing()

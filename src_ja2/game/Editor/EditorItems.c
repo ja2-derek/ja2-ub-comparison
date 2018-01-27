@@ -470,35 +470,35 @@ void InitEditorItemsInfo(UINT32 uiItemType)
 				{
 					if( i == PRESSURE_ACTION_ID )
 					{
-						swprintf( pStr, L"Pressure Action" );
+						swprintf( pStr, gzEditorStrings[EDITOR_STR_PRESSURE_ACTION] );
 					}
 					else if( i < 2 )
 					{
 						if( usCounter == SWITCH )
-							swprintf( pStr, L"Panic Trigger1" );
+							swprintf( pStr, gzEditorStrings[EDITOR_STR_PANIC1] );
 						else
-							swprintf( pStr, L"Panic Action1" );
+							swprintf( pStr, gzEditorStrings[EDITOR_STR_PANIC_ACTION1] );
 					}
 					else if( i < 4 )
 					{
 						if( usCounter == SWITCH )
-							swprintf( pStr, L"Panic Trigger2" );
+							swprintf( pStr, gzEditorStrings[EDITOR_STR_PANIC2] );
 						else
-							swprintf( pStr, L"Panic Action2" );
+							swprintf( pStr, gzEditorStrings[EDITOR_STR_PANIC_ACTION2] );
 					}
 					else if( i < 6 )
 					{
 						if( usCounter == SWITCH )
-							swprintf( pStr, L"Panic Trigger3" );
+							swprintf( pStr, gzEditorStrings[EDITOR_STR_PANIC3] );
 						else
-							swprintf( pStr, L"Panic Action3" );
+							swprintf( pStr, gzEditorStrings[EDITOR_STR_PANIC_ACTION3] );
 					}
 					else
 					{
 						if( usCounter == SWITCH )
-							swprintf( pStr, L"Trigger%d", (i-4)/2 );
+							swprintf( pStr, gzEditorStrings[EDITOR_STR_TRIGGER_NUM], (i-4)/2 );
 						else
-							swprintf( pStr, L"Action%d", (i-4)/2 );
+							swprintf( pStr, gzEditorStrings[EDITOR_STR_ACTION_NUM], (i-4)/2 );
 					}
 				}
 				DisplayWrappedString(x, (UINT16)(y+25), 60, 2, SMALLCOMPFONT, FONT_WHITE, pStr, FONT_BLACK, TRUE, CENTER_JUSTIFIED );
@@ -1619,11 +1619,11 @@ void DisplayItemStatistics()
 	LoadItemInfo( usItemIndex, pItemName, NULL );
 
 	mprintf( 50 - StringPixLength( pItemName , SMALLCOMPFONT )/2, 403, pItemName );
-	mprintf( 2, 410, L"Status Info Line 1");
-	mprintf( 2, 420, L"Status Info Line 2");
-	mprintf( 2, 430, L"Status Info Line 3");
-	mprintf( 2, 440, L"Status Info Line 4");
-	mprintf( 2, 450, L"Status Info Line 5");
+	mprintf( 2, 410, gzEditorStrings[EDITOR_STR_STATUS1]);
+	mprintf( 2, 420, gzEditorStrings[EDITOR_STR_STATUS2]);
+	mprintf( 2, 430, gzEditorStrings[EDITOR_STR_STATUS3]);
+	mprintf( 2, 440, gzEditorStrings[EDITOR_STR_STATUS4]);
+	mprintf( 2, 450, gzEditorStrings[EDITOR_STR_STATUS5]);
 }
 
 

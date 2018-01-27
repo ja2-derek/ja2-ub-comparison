@@ -623,7 +623,7 @@ void RenderMapEntryPointsAndLights()
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
 		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
-			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"North Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, gzEditorStrings[EDITOR_STR_NORTH_ENTRY_POINT], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
 	}
 	sGridNo = gMapInformation.sWestGridNo;
@@ -632,7 +632,7 @@ void RenderMapEntryPointsAndLights()
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
 		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
-			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"West Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, gzEditorStrings[EDITOR_STR_WEST_ENTRY_POINT], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
 	}
 	sGridNo = gMapInformation.sEastGridNo;
@@ -641,7 +641,7 @@ void RenderMapEntryPointsAndLights()
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
 		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
-			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"East Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, gzEditorStrings[EDITOR_STR_EAST_ENTRY_POINT], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
 	}
 	sGridNo = gMapInformation.sSouthGridNo;
@@ -650,7 +650,7 @@ void RenderMapEntryPointsAndLights()
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
 		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
-			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"South Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, gzEditorStrings[EDITOR_STR_SOUTH_ENTRY_POINT], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
 	}
 	sGridNo = gMapInformation.sCenterGridNo;
@@ -659,7 +659,7 @@ void RenderMapEntryPointsAndLights()
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
 		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
-			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"Center Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, gzEditorStrings[EDITOR_STR_CENTER_ENTRY_POINT], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
 	}
 	sGridNo = gMapInformation.sIsolatedGridNo;
@@ -668,7 +668,7 @@ void RenderMapEntryPointsAndLights()
 		GetGridNoScreenPos( sGridNo, 0, &sScreenX, &sScreenY );
 		if( sScreenY >= -20 && sScreenY < 340 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 		{
-			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, L"Isolated Entry Point", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+			DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 40, 2, FONT10ARIAL, FONT_YELLOW, gzEditorStrings[EDITOR_STR_ISOLATED_ENTRY_POINT], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 		}
 	}
 	//Do the lights now.
@@ -681,11 +681,11 @@ void RenderMapEntryPointsAndLights()
 			if( sScreenY >= -50 && sScreenY < 300 && sScreenX >= -40  && sScreenX < SCREEN_BUFFER_WIDTH )
 			{
 				if( LightSprites[ i ].uiFlags & LIGHT_PRIMETIME )
-					DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 50, 2, FONT10ARIAL, FONT_ORANGE, L"Prime", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+					DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 50, 2, FONT10ARIAL, FONT_ORANGE, gzEditorStrings[EDITOR_STR_PRIME], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 				else if( LightSprites[ i ].uiFlags & LIGHT_NIGHTTIME )
-					DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 50, 2, FONT10ARIAL, FONT_RED, L"Night", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+					DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 50, 2, FONT10ARIAL, FONT_RED, gzEditorStrings[EDITOR_STR_NIGHT], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 				else
-					DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 50, 2, FONT10ARIAL, FONT_YELLOW, L"24Hour", FONT_BLACK, TRUE, CENTER_JUSTIFIED );
+					DisplayWrappedString( sScreenX, (INT16)(sScreenY-5), 50, 2, FONT10ARIAL, FONT_YELLOW, gzEditorStrings[EDITOR_STR_24HR], FONT_BLACK, TRUE, CENTER_JUSTIFIED );
 			}
 		}
 	}
@@ -696,26 +696,26 @@ void BuildTriggerName( OBJECTTYPE *pItem, UINT16 *szItemName )
 	if( pItem->usItem == SWITCH )
 	{
 		if( pItem->bFrequency == PANIC_FREQUENCY )
-			swprintf( szItemName, L"Panic Trigger1" );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_PANIC1] );
 		else if( pItem->bFrequency == PANIC_FREQUENCY_2 )
-			swprintf( szItemName, L"Panic Trigger2" );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_PANIC2] );
 		else if( pItem->bFrequency == PANIC_FREQUENCY_3 )
-			swprintf( szItemName, L"Panic Trigger3" );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_PANIC3] );
 		else
-			swprintf( szItemName, L"Trigger%d", pItem->bFrequency - 50 );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_TRIGGER_NUM], pItem->bFrequency - 50 );
 	}
 	else
 	{ //action item
 		if( pItem->bDetonatorType == BOMB_PRESSURE )
-			swprintf( szItemName, L"Pressure Action" );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_PRESSURE_ACTION] );
 		else if( pItem->bFrequency == PANIC_FREQUENCY )
-			swprintf( szItemName, L"Panic Action1" );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_PANIC_ACTION1] );
 		else if( pItem->bFrequency == PANIC_FREQUENCY_2 )
-			swprintf( szItemName, L"Panic Action2" );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_PANIC_ACTION2] );
 		else if( pItem->bFrequency == PANIC_FREQUENCY_3 )
-			swprintf( szItemName, L"Panic Action3" );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_PANIC_ACTION3] );
 		else
-			swprintf( szItemName, L"Action%d", pItem->bFrequency - 50 );
+			swprintf( szItemName, gzEditorStrings[EDITOR_STR_ACTION_NUM], pItem->bFrequency - 50 );
 	}
 }
 
@@ -732,7 +732,7 @@ void RenderDoorLockInfo()
 		if( DoorTable[ i ].ubLockID != 255 )
 			swprintf( str, L"%S", LockTable[ DoorTable[ i ].ubLockID ].ubEditorName );
 		else
-			swprintf( str, L"No Lock ID" );
+			swprintf( str, gzEditorStrings[EDITOR_STR_NO_LOCK_ID] );
 		xp = sScreenX - 10;
 		yp = sScreenY - 40;
 		DisplayWrappedString( xp, yp, 60, 2, FONT10ARIAL, FONT_LTKHAKI, str, FONT_BLACK, TRUE, CENTER_JUSTIFIED );
@@ -744,26 +744,26 @@ void RenderDoorLockInfo()
 			switch( DoorTable[ i ].ubTrapID )
 			{
 				case EXPLOSION:
-					swprintf( str, L"Explosion Trap" );
+					swprintf( str, gzEditorStrings[EDITOR_STR_EXPLOSION_TRAP] );
 					break;
 				case ELECTRIC:
-					swprintf( str, L"Electric Trap" );
+					swprintf( str, gzEditorStrings[EDITOR_STR_ELECTRIC_TRAP] );
 					break;
 				case SIREN:
-					swprintf( str, L"Siren Trap" );
+					swprintf( str, gzEditorStrings[EDITOR_STR_SIREN_TRAP] );
 					break;
 				case SILENT_ALARM:
-					swprintf( str, L"Silent Alarm" );
+					swprintf( str, gzEditorStrings[EDITOR_STR_SILENT_ALARM] );
 					break;
 				case SUPER_ELECTRIC:
-					swprintf( str, L"Super Electric Trap" );
+					swprintf( str, gzEditorStrings[EDITOR_STR_SUPER_TRAP] );
 					break;
 
 			}
 			xp = sScreenX + 20 - StringPixLength( str, FONT10ARIAL ) / 2;
 			yp = sScreenY;
 			mprintf( xp, yp, str );
-			swprintf( str, L"Trap Level %d", DoorTable[ i ].ubTrapLevel );
+			swprintf( str, gzEditorStrings[EDITOR_STR_TRAP_LEVEL_NUM], DoorTable[ i ].ubTrapLevel );
 			xp = sScreenX + 20 - StringPixLength( str, FONT10ARIAL ) / 2;
 			mprintf( xp, yp+10, str );
 		}
@@ -853,7 +853,7 @@ void RenderSelectedItemBlownUp()
 		{
 			SetFontForeground( 249 );
 		}
-		mprintf( sScreenX + 16, sScreenY + 7, L"H" );
+		mprintf( sScreenX + 16, sScreenY + 7, gzEditorStrings[EDITOR_STR_HIDDEN_LETTER] );
 		InvalidateRegion( sScreenX + 16, sScreenY + 7, sScreenX + 24, sScreenY + 27 );
 	}
 }
@@ -870,23 +870,23 @@ void RenderEditorInfo( )
 
 	//Display the mapindex position
 	if( GetMouseMapPos( &iMapIndex ) )
-		swprintf( FPSText, L"   (%d)   ", iMapIndex );
+		swprintf( FPSText, gzEditorStrings[EDITOR_STR_GRIDNO_INDICATOR], iMapIndex );
 	else
-		swprintf( FPSText, L"          " );
+		swprintf( FPSText, gzEditorStrings[EDITOR_STR_ERASE_GRIDNO_INDICATOR] );
 	mprintfEditor( (UINT16)(50-StringPixLength( FPSText, FONT12POINT1 )/2), 463, FPSText );
 
 	switch( iCurrentTaskbar )
 	{
 		case TASK_OPTIONS:
 			if( !gfWorldLoaded || giCurrentTilesetID < 0 )
-				mprintf( 260, 445, L"No map currently loaded." );
+				mprintf( 260, 445, gzEditorStrings[EDITOR_STR_NO_MAP_LOADED] );
 			else
-				mprintf( 260, 445, L"File:  %S, Current Tileset:  %s", 
+				mprintf( 260, 445, gzEditorStrings[EDITOR_STR_FILE_TILESET_INDICATOR], 
 					gubFilename, gTilesets[ giCurrentTilesetID ].zName );
 			break;
 		case TASK_TERRAIN:
 			if( gusSelectionType == LINESELECTION )
-				swprintf( wszSelType[LINESELECTION], L"Width: %d", gusSelectionWidth );
+				swprintf( wszSelType[LINESELECTION], gzEditorStrings[EDITOR_STR_WIDTH_INDICATOR], gusSelectionWidth );
 			DrawEditorInfoBox( wszSelType[gusSelectionType], FONT12POINT1, 220, 430, 60, 30 );
 			swprintf( FPSText, L"%d%%", gusSelectionDensity );
 			DrawEditorInfoBox( FPSText, FONT12POINT1, 310, 430, 40, 30 );
@@ -898,7 +898,7 @@ void RenderEditorInfo( )
 		case TASK_BUILDINGS:
 			UpdateBuildingsInfo();
 			if( gusSelectionType == LINESELECTION )
-				swprintf( wszSelType[LINESELECTION], L"Width: %d", gusSelectionWidth );
+				swprintf( wszSelType[LINESELECTION], gzEditorStrings[EDITOR_STR_WIDTH_INDICATOR], gusSelectionWidth );
 			DrawEditorInfoBox( wszSelType[gusSelectionType], FONT12POINT1, 530, 430, 60, 30 );
 			break;
 		case TASK_MERCS:
@@ -907,7 +907,7 @@ void RenderEditorInfo( )
 		case TASK_MAPINFO:
 			UpdateMapInfo();
 			if( gusSelectionType == LINESELECTION )
-				swprintf( wszSelType[LINESELECTION], L"Width: %d", gusSelectionWidth );
+				swprintf( wszSelType[LINESELECTION], gzEditorStrings[EDITOR_STR_WIDTH_INDICATOR], gusSelectionWidth );
 			DrawEditorInfoBox( wszSelType[gusSelectionType], FONT12POINT1, 440, 430, 60, 30 );
 			break;
 	}

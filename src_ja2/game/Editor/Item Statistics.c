@@ -476,67 +476,67 @@ void UpdateItemStatsPanel()
 	if( gpItem && iCurrentTaskbar == TASK_ITEMS && 
 			gbEditingMode != EDITING_TRIGGERS && gbEditingMode != EDITING_ACTIONITEMS )
 	{
-		mprintf( 500, 366, L"Toggle hide flag" );
+		mprintf( 500, 366, gzEditorStrings[EDITOR_STR_TOGGLE_HIDE_FLAG] );
 	}
 	SetFontForeground( FONT_YELLOW );
 	switch( gbEditingMode )
 	{
 		case EDITING_NOTHING:
 			if( iCurrentTaskbar == TASK_ITEMS )
-				mprintf( 520, 400, L"No item selected." );
+				mprintf( 520, 400, gzEditorStrings[EDITOR_STR_NO_ITEM_SELECTED] );
 			else
 			{
-				mprintf( 500, 390, L"Slot available for" );
-				mprintf( 500, 400, L"random generation." );
+				mprintf( 500, 390, gzEditorStrings[EDITOR_STR_SLOT_AVAIL_FOR] );
+				mprintf( 500, 400, gzEditorStrings[EDITOR_STR_RANDOM_GEN] );
 			}
 			return;
 		case EDITING_KEYS:
 			if( !gpEditingItemPool )
 			{
-				mprintf( 500, 400, L"Keys not editable." );
+				mprintf( 500, 400, gzEditorStrings[EDITOR_STR_KEYS_NOT] );
 				return;
 			}
 			break;
 		case EDITING_OWNERSHIP:
-			mprintf( 512, 384, L"ProfileID of owner" );
+			mprintf( 512, 384, gzEditorStrings[EDITOR_STR_PROFILE_ID_OWNER] );
 			return;
 		case EDITING_NOT_YET_IMPLEMENTED:
-			mprintf( 500, 400, L"Item class not implemented." );
+			mprintf( 500, 400, gzEditorStrings[EDITOR_STR_ITEM_CLASS_NOT] );
 			return;
 		case EDITING_DROPPABLE:
-			mprintf( 500, 400, L"Slot locked as empty.");
+			mprintf( 500, 400, gzEditorStrings[EDITOR_STR_SLOT_LOCKED]);
 			return;
 		case EDITING_GUNS:
-			mprintf( 512, 384, L"Status" );
-			mprintf( 512, 404, L"Rounds" );
-			mprintf( 512, 424, L"Trap Level" );
+			mprintf( 512, 384, gzEditorStrings[EDITOR_STR_STATUS] );
+			mprintf( 512, 404, gzEditorStrings[EDITOR_STR_ROUNDS] );
+			mprintf( 512, 424, gzEditorStrings[EDITOR_STR_TRAPLVL] );
 			break;
 		case EDITING_AMMO:
-			mprintf( 512, 384, L"Quantity" );
-			mprintf( 512, 404, L"Trap Level" );
+			mprintf( 512, 384, gzEditorStrings[EDITOR_STR_QTY] );
+			mprintf( 512, 404, gzEditorStrings[EDITOR_STR_TRAPLVL] );
 			break;
 		case EDITING_ARMOUR:
 		case EDITING_EQUIPMENT:
-			mprintf( 512, 384, L"Status" );
-			mprintf( 512, 404, L"Trap Level" );
+			mprintf( 512, 384, gzEditorStrings[EDITOR_STR_STATUS] );
+			mprintf( 512, 404, gzEditorStrings[EDITOR_STR_TRAPLVL] );
 			break;
 		case EDITING_EXPLOSIVES:
-			mprintf( 512, 380, L"Status" );
-			mprintf( 512, 404, L"Quantity" );
-			mprintf( 512, 424, L"Trap Level" );
+			mprintf( 512, 380, gzEditorStrings[EDITOR_STR_STATUS] );
+			mprintf( 512, 404, gzEditorStrings[EDITOR_STR_QTY] );
+			mprintf( 512, 424, gzEditorStrings[EDITOR_STR_TRAPLVL] );
 			break;
 		case EDITING_MONEY:
-			mprintf( 532, 384, L"Dollars" );
+			mprintf( 532, 384, gzEditorStrings[EDITOR_STR_DOLLARS] );
 			break;
 		case EDITING_ACTIONITEMS:
-			mprintf( 512, 369, L"Status" );
-			mprintf( 512, 389, L"Trap Level" );
+			mprintf( 512, 369, gzEditorStrings[EDITOR_STR_STATUS] );
+			mprintf( 512, 389, gzEditorStrings[EDITOR_STR_TRAPLVL] );
 			break;
 		case EDITING_TRIGGERS:
-			mprintf( 512, 369, L"Trap Level");
-			mprintf( 512, 389, L"Tolerance" );
+			mprintf( 512, 369, gzEditorStrings[EDITOR_STR_TRAPLVL]);
+			mprintf( 512, 389, gzEditorStrings[EDITOR_STR_TOLERANCE] );
 			if( gpEditingItemPool && gpItem->bFrequency >= PANIC_FREQUENCY_3 && gpItem->bFrequency <= PANIC_FREQUENCY )
-				mprintf( 500, 407, L"Alarm Trigger" );
+				mprintf( 500, 407, gzEditorStrings[EDITOR_STR_ALARM_TRIG] );
 			break;
 	}
 	if( gpEditingItemPool )
@@ -548,7 +548,7 @@ void UpdateItemStatsPanel()
 			SetFontForeground( FONT_ORANGE );
 		else 
 			SetFontForeground( FONT_RED );
-		mprintf( 512, 444, L"Exist Chance" );
+		mprintf( 512, 444, gzEditorStrings[EDITOR_STR_EXIST_CHANCE] );
 		mprintf( 587, 366, L"B" );
 		mprintf( 609, 366, L"R" );
 		mprintf( 630, 366, L"S" );
@@ -662,7 +662,7 @@ void SetupGunGUI()
 	if( ValidAttachment( SILENCER, gpItem->usItem ) )
 	{
 		guiAttachmentButton[ SILENCER_ATTACHMENT_BUTTON ] = 
-			CreateTextButton( L"SILENCER", SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+			CreateTextButton( gzEditorStrings[EDITOR_STR_SILENCER], SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 			570, yp, 60, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ToggleAttachment );
 		yp += 14;
 		if( FindAttachment( gpItem, SILENCER ) != -1 )
@@ -675,7 +675,7 @@ void SetupGunGUI()
 	if( ValidAttachment( SNIPERSCOPE, gpItem->usItem ) )
 	{
 		guiAttachmentButton[ SNIPERSCOPE_ATTACHMENT_BUTTON ] = 
-			CreateTextButton( L"SNIPERSCOPE", SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+			CreateTextButton( gzEditorStrings[EDITOR_STR_SNIPERSCOPE], SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 			570, yp, 60, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ToggleAttachment );
 		yp += 14;
 		if( FindAttachment( gpItem, SNIPERSCOPE ) != -1 )
@@ -688,7 +688,7 @@ void SetupGunGUI()
 	if( ValidAttachment( LASERSCOPE, gpItem->usItem ) )
 	{
 		guiAttachmentButton[ LASERSCOPE_ATTACHMENT_BUTTON ] = 
-			CreateTextButton( L"LASERSCOPE", SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+			CreateTextButton( gzEditorStrings[EDITOR_STR_LASERSCOPE], SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 			570, yp, 60, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ToggleAttachment );
 		yp += 14;
 		if( FindAttachment( gpItem, LASERSCOPE ) != -1 )
@@ -701,7 +701,7 @@ void SetupGunGUI()
 	if( ValidAttachment( BIPOD, gpItem->usItem ) )
 	{
 		guiAttachmentButton[ BIPOD_ATTACHMENT_BUTTON ] = 
-			CreateTextButton( L"BIPOD", SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+			CreateTextButton( gzEditorStrings[EDITOR_STR_BIPOD], SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 			570, yp, 60, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ToggleAttachment );
 		yp += 14;
 		if( FindAttachment( gpItem, BIPOD ) != -1 )
@@ -714,7 +714,7 @@ void SetupGunGUI()
 	if( ValidAttachment( DUCKBILL, gpItem->usItem ) )
 	{
 		guiAttachmentButton[ DUCKBILL_ATTACHMENT_BUTTON ] = 
-			CreateTextButton( L"DUCKBILL", SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+			CreateTextButton( gzEditorStrings[EDITOR_STR_DUCKBILL], SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 			570, yp, 60, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ToggleAttachment );
 		yp += 14;
 		if( FindAttachment( gpItem, DUCKBILL ) != -1 )
@@ -727,7 +727,7 @@ void SetupGunGUI()
 	if( ValidAttachment( UNDER_GLAUNCHER, gpItem->usItem ) )
 	{
 		guiAttachmentButton[ GLAUNCHER_ATTACHMENT_BUTTON ] = 
-			CreateTextButton( L"G-LAUNCHER", SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+			CreateTextButton( gzEditorStrings[EDITOR_STR_GLAUNCHER], SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 			570, yp, 60, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ToggleAttachment );
 		yp += 14;
 		if( FindAttachment( gpItem, UNDER_GLAUNCHER ) != -1 )
@@ -847,7 +847,7 @@ void SetupArmourGUI()
 	if( ValidAttachment( CERAMIC_PLATES, gpItem->usItem ) )
 	{
 		guiCeramicPlatesButton = 
-			CreateTextButton( L"CERAMIC PLATES", SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+			CreateTextButton( gzEditorStrings[EDITOR_STR_CERAMIC], SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 			558, 375, 72, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ToggleCeramicPlates );
 		if( FindAttachment( gpItem, CERAMIC_PLATES ) != -1 )
 		{
@@ -960,7 +960,7 @@ void SetupExplosivesGUI()
 	if( ValidAttachment( DETONATOR, gpItem->usItem ) )
 	{
 		guiDetonatorButton = 
-			CreateTextButton( L"DETONATOR", SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+			CreateTextButton( gzEditorStrings[EDITOR_STR_DETONATOR], SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 			570, yp, 60, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, ToggleDetonator );
 		yp += 14;
 		if( FindAttachment( gpItem, DETONATOR ) != -1 )
@@ -1209,7 +1209,7 @@ void SetupTriggersGUI()
 		{
 			giAlarmTriggerButton = 
 				CreateCheckBoxButton(	485, 405, "EDITOR\\smCheckBox.sti", MSYS_PRIORITY_NORMAL, AlarmTriggerCheckboxCallback );
-			SetButtonFastHelpText( giAlarmTriggerButton, L"If the panic trigger is an alarm trigger,\nenemies won't attempt to use it if they\nare already aware of your presence.");
+			SetButtonFastHelpText( giAlarmTriggerButton, gzEditorStrings[EDITOR_STR_PANIC_WARNING] );
 			if( gpItem->fFlags & OBJECT_ALARM_TRIGGER )
 				ButtonList[ giAlarmTriggerButton ]->uiFlags |= BUTTON_CLICKED_ON;
 		}

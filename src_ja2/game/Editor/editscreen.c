@@ -446,7 +446,7 @@ BOOLEAN EditModeShutdown( void )
 	if( gfConfirmExitFirst )
 	{
 		gfConfirmExitPending = TRUE;
-		CreateMessageBox( L"Exit editor?" );
+		CreateMessageBox( gzEditorStrings[EDITOR_STR_EXIT_EDITOR] );
 		return FALSE;
 	}
 
@@ -1568,15 +1568,15 @@ void HandleKeyboardShortcuts( )
 				case F9:
 					break;
 				case F10:
-					CreateMessageBox( L"Are you sure you wish to remove all lights?" );
+					CreateMessageBox( gzEditorStrings[EDITOR_STR_REMOVE_ALL_LIGHTS] );
 					gfRemoveLightsPending = TRUE;
 					break;
 				case F11:
-					CreateMessageBox( L"Are you sure you wish to reverse the schedules?" );
+					CreateMessageBox( gzEditorStrings[EDITOR_STR_REVERSE_SCHEDULES] );
 					gfScheduleReversalPending = TRUE;
 					break;
 				case F12:
-					CreateMessageBox( L"Are you sure you wish to clear all of the schedules?" );
+					CreateMessageBox( gzEditorStrings[EDITOR_STR_CLEAR_SCHEDULES] );
 					gfScheduleClearPending = TRUE;
 					break;
 
@@ -1813,12 +1813,12 @@ void HandleKeyboardShortcuts( )
 				case 'T':
 					if ( fShowTrees )
 					{
-						ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Removing Treetops" );
+						ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzEditorStrings[EDITOR_STR_REMOVE_TREETOPS] );
 						WorldHideTrees( );
 					}
 					else
 					{
-						ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Showing Treetops" );
+						ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzEditorStrings[EDITOR_STR_SHOW_TREETOPS] );
 						WorldShowTrees( );
 					}
 					fShowTrees = !fShowTrees;
@@ -1974,16 +1974,16 @@ UINT32 PerformSelectedAction( void )
 		case ACTION_NEW_MAP:
 			fNewMap = TRUE;
 			if( gfPendingBasement )
-				CreateMessageBox( L"Delete current map and start a new basement level?" );
+				CreateMessageBox( gzEditorStrings[EDITOR_STR_START_NEW_BASEMENT] );
 			else if( gfPendingCaves )
-				CreateMessageBox( L"Delete current map and start a new cave level?" );
+				CreateMessageBox( gzEditorStrings[EDITOR_STR_START_NEW_CAVE] );
 			else
-				CreateMessageBox( L"Delete current map and start a new outdoor level?" );
+				CreateMessageBox( gzEditorStrings[EDITOR_STR_START_NEW_OUTDOOR] );
 			break;
 
 		case ACTION_SET_NEW_BACKGROUND:
 			if (!fBeenWarned)
-				CreateMessageBox( L" Wipe out ground textures? " );
+				CreateMessageBox( gzEditorStrings[EDITOR_STR_WIPE_GROUND_TEXTURE] );
 			else
 			{
 				gCurrentBackground = TerrainBackgroundTile;
@@ -2403,68 +2403,68 @@ UINT32 WaitForHelpScreenResponse( void )
 
 	SetFont( gp12PointFont1 );
 
-	gprintf( 55,  55, L"HOME" );
-	gprintf( 205, 55, L"Toggle fake editor lighting ON/OFF" );
+	gprintf( 55,  55, gzEditorStrings[EDITOR_STR_HOMEKEY] );
+	gprintf( 205, 55, gzEditorStrings[EDITOR_STR_TOGGLE_LIGHTING] );
 
-	gprintf( 55,  67, L"INSERT" );
-	gprintf( 205, 67, L"Toggle fill mode ON/OFF" );
+	gprintf( 55,  67, gzEditorStrings[EDITOR_STR_INSERTKEY] );
+	gprintf( 205, 67, gzEditorStrings[EDITOR_STR_TOGGLE_FILLMODE] );
 
-	gprintf( 55,  79, L"BKSPC" );
-	gprintf( 205, 79, L"Undo last change" );
+	gprintf( 55,  79, gzEditorStrings[EDITOR_STR_BKSPACEKEY] );
+	gprintf( 205, 79, gzEditorStrings[EDITOR_STR_UNDO_LAST] );
 
-	gprintf( 55,  91, L"DEL" );
-	gprintf( 205, 91, L"Quick erase object under mouse cursor" );
+	gprintf( 55,  91, gzEditorStrings[EDITOR_STR_DELKEY] );
+	gprintf( 205, 91, gzEditorStrings[EDITOR_STR_QUICKERASE] );
 
-	gprintf( 55,  103, L"ESC" );
-	gprintf( 205, 103, L"Exit editor" );
+	gprintf( 55,  103, gzEditorStrings[EDITOR_STR_ESCKEY] );
+	gprintf( 205, 103, gzEditorStrings[EDITOR_STR_EXITEDITOR] );
 
-	gprintf( 55,  115, L"PGUP/PGDN" );
-	gprintf( 205, 115, L"Change object to be pasted" );
+	gprintf( 55,  115, gzEditorStrings[EDITOR_STR_PGUPDN] );
+	gprintf( 205, 115, gzEditorStrings[EDITOR_STR_CHANGE_OBJECT] );
 
-	gprintf( 55,  127, L"F1" );
-	gprintf( 205, 127, L"This help screen" );
+	gprintf( 55,  127, gzEditorStrings[EDITOR_STR_F1KEY] );
+	gprintf( 205, 127, gzEditorStrings[EDITOR_STR_HELP_SCREEN] );
 
-	gprintf( 55,  139, L"F10" );
-	gprintf( 205, 139, L"Save current map" );
+	gprintf( 55,  139, gzEditorStrings[EDITOR_STR_F10KEY] );
+	gprintf( 205, 139, gzEditorStrings[EDITOR_STR_SAVE_CURRENT_MAP] );
 
-	gprintf( 55,  151, L"F11" );
-	gprintf( 205, 151, L"Load map as current" );
+	gprintf( 55,  151, gzEditorStrings[EDITOR_STR_F11KEY] );
+	gprintf( 205, 151, gzEditorStrings[EDITOR_STR_LOAD_MAP_CURRENT] );
 
-	gprintf( 55,  163, L"+/-" );
-	gprintf( 205, 163, L"Change shadow darkness by .01" );
+	gprintf( 55,  163, gzEditorStrings[EDITOR_STR_PLUSMINUSKEY] );
+	gprintf( 205, 163, gzEditorStrings[EDITOR_STR_CHANGE_SHADOW] );
 
-	gprintf( 55,  175, L"SHFT +/-" );
-	gprintf( 205, 175, L"Change shadow darkness by .05" );
+	gprintf( 55,  175, gzEditorStrings[EDITOR_STR_SHIFTKEY] );
+	gprintf( 205, 175, gzEditorStrings[EDITOR_STR_CHANGE_SHADOW_05] );
 
-	gprintf( 55,  187, L"0 - 9" );
-	gprintf( 205, 187, L"Change map/tileset filename" );
+	gprintf( 55,  187, gzEditorStrings[EDITOR_STR_NUMKEY] );
+	gprintf( 205, 187, gzEditorStrings[EDITOR_STR_CHANGE_MAP_FILENAME] );
 	
-	gprintf( 55,  199, L"b" );
-	gprintf( 205, 199, L"Change brush size" );
+	gprintf( 55,  199, gzEditorStrings[EDITOR_STR_BKEY] );
+	gprintf( 205, 199, gzEditorStrings[EDITOR_STR_BRUSHSIZE] );
 	
-	gprintf( 55,  211, L"d" );
-	gprintf( 205, 211, L"Draw debris" );
+	gprintf( 55,  211, gzEditorStrings[EDITOR_STR_DKEY] );
+	gprintf( 205, 211, gzEditorStrings[EDITOR_STR_DRAW_DEBRIS] );
 
-	gprintf( 55,  223, L"o" );
-	gprintf( 205, 223, L"Draw obstacle" );
+	gprintf( 55,  223, gzEditorStrings[EDITOR_STR_OKEY] );
+	gprintf( 205, 223, gzEditorStrings[EDITOR_STR_DRAW_OBSTACLE] );
 
-	gprintf( 55,  235, L"r" );
-	gprintf( 205, 235, L"Draw rocks" );
+	gprintf( 55,  235, gzEditorStrings[EDITOR_STR_RKEY] );
+	gprintf( 205, 235, gzEditorStrings[EDITOR_STR_DRAW_ROCKS] );
 
-	gprintf( 55,  247, L"t" );
-	gprintf( 205, 247, L"Toggle trees display ON/OFF" );
+	gprintf( 55,  247, gzEditorStrings[EDITOR_STR_TKEY] );
+	gprintf( 205, 247, gzEditorStrings[EDITOR_STR_TOGGLE_TREES] );
 
-	gprintf( 55,  259, L"g" );
-	gprintf( 205, 259, L"Draw ground textures" );
+	gprintf( 55,  259, gzEditorStrings[EDITOR_STR_GKEY] );
+	gprintf( 205, 259, gzEditorStrings[EDITOR_STR_DRAW_GROUND_TEXTURES] );
 
-	gprintf( 55,  271, L"w" );
-	gprintf( 205, 271, L"Draw building walls" );
+	gprintf( 55,  271, gzEditorStrings[EDITOR_STR_WKEY] );
+	gprintf( 205, 271, gzEditorStrings[EDITOR_STR_DRAW_BUILDING_WALLS] );
 
-	gprintf( 55,  283, L"e" );
-	gprintf( 205, 283, L"Toggle erase mode ON/OFF" );
+	gprintf( 55,  283, gzEditorStrings[EDITOR_STR_EKEY] );
+	gprintf( 205, 283, gzEditorStrings[EDITOR_STR_TOGGLE_ERASE_MODE] );
 
-	gprintf( 55,  295, L"h" );
-	gprintf( 205, 295, L"Toggle roofs ON/OFF" );
+	gprintf( 55,  295, gzEditorStrings[EDITOR_STR_HKEY] );
+	gprintf( 205, 295, gzEditorStrings[EDITOR_STR_TOGGLE_ROOFS] );
 
 
 	fLeaveScreen = FALSE;
@@ -3618,7 +3618,7 @@ UINT32  EditScreenHandle( void )
 
 	if( gfWorldLoaded && gMapInformation.ubMapVersion <= 7 && !gfCorruptMap )
 	{
-		ScreenMsg( FONT_MCOLOR_RED, MSG_ERROR, L"Map data has just been corrupted.  Don't save, don't quit, get Kris!  If he's not here, save the map using a temp filename and document everything you just did, especially your last action!" );
+		ScreenMsg( FONT_MCOLOR_RED, MSG_ERROR, gzEditorStrings[EDITOR_STR_MAP_DATA_CORRUPTED] );
 		gfCorruptMap = TRUE;
 	}
 	if( gfWorldLoaded && gubScheduleID > 40 && !gfCorruptSchedules )
@@ -3765,7 +3765,7 @@ void CreateGotoGridNoUI()
 	DisableEditorTaskbar();
 	//Create the background panel.
 	guiGotoGridNoUIButtonID =
-		CreateTextButton( L"Enter gridno:", FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_ENTER_GRIDNO], FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		290, 155, 60, 50, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MSYS_NO_CALLBACK );
 	SpecifyDisabledButtonStyle( guiGotoGridNoUIButtonID, DISABLED_STYLE_NONE );
 	SpecifyButtonTextOffsets( guiGotoGridNoUIButtonID, 5, 5, FALSE );

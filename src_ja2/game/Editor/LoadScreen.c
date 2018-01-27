@@ -169,7 +169,7 @@ void LoadSaveScreenEntry()
 		GetFileClose(&FileInfo);
 	}
 
-	swprintf( zOrigName, L"%s Map (*.dat)", iCurrentAction == ACTION_SAVE_MAP ? L"Save" : L"Load" );
+	swprintf( zOrigName, gzEditorStrings[EDITOR_STR_MAP_STR], iCurrentAction == ACTION_SAVE_MAP ? gzEditorStrings[EDITOR_STR_SAVE_CHOICE] : gzEditorStrings[EDITOR_STR_LOAD_CHOICE] );
 
 	swprintf( gzFilename, L"%S", gubFilename );
 
@@ -336,7 +336,7 @@ UINT32 LoadSaveScreenHandle(void)
 	{
 		SetFontForeground( FONT_LTRED );
 		SetFontBackground( 142 );
-	  mprintf( 226, 126, L"NO FILES IN \\MAPS DIRECTORY" );
+	  mprintf( 226, 126, gzEditorStrings[EDITOR_STR_NO_FILES] );
 	}
 	else for(x=iTopFileShown;x<(iTopFileShown+8) && x<iTotalFiles && FListNode != NULL; x++)
 	{
@@ -374,11 +374,11 @@ UINT32 LoadSaveScreenHandle(void)
 				UINT16 str[40];
 				if( FileInfo.uiFileAttribs & (FILE_IS_READONLY|FILE_IS_HIDDEN|FILE_IS_SYSTEM) )
 				{
-					swprintf( str, L" Delete READ-ONLY file %s? ", gzFilename );
+					swprintf( str, gzEditorStrings[EDITOR_STR_DEL_READ_ONLY], gzFilename );
 					gfReadOnly = TRUE;
 				}
 				else
-					swprintf( str, L" Delete file %s? ", gzFilename );
+					swprintf( str, gzEditorStrings[EDITOR_STR_DELETE_FILE], gzFilename );
 				gfDeleteFile = TRUE;
 				CreateMessageBox( str );
 			}
@@ -386,7 +386,7 @@ UINT32 LoadSaveScreenHandle(void)
 		case DIALOG_SAVE:
 			if( !ExtractFilenameFromFields() )
 			{
-				CreateMessageBox( L" Illegal filename.  Try another filename? " );
+				CreateMessageBox( gzEditorStrings[EDITOR_STR_ILLEGAL_FILENAME] );
 				gfIllegalName = TRUE;
 				iFDlgState = DIALOG_NONE;
 				return LOADSAVE_SCREEN;
@@ -403,9 +403,9 @@ UINT32 LoadSaveScreenHandle(void)
 					GetFileClose(&FileInfo);
 				}
 				if( gfReadOnly )
-					CreateMessageBox( L" File is read only!  Choose a different name? " );
+					CreateMessageBox( gzEditorStrings[EDITOR_STR_READONLY_TRY_AGAIN] );
 				else
-					CreateMessageBox( L" File exists, Overwrite? " );
+					CreateMessageBox( gzEditorStrings[EDITOR_STR_OVERWRITE] );
 				return( LOADSAVE_SCREEN );
 			}	
 			RemoveFileDialog();
@@ -414,7 +414,7 @@ UINT32 LoadSaveScreenHandle(void)
 		case DIALOG_LOAD:
 			if( !ExtractFilenameFromFields() )
 			{
-				CreateMessageBox( L" Illegal filename.  Try another filename? " );
+				CreateMessageBox( gzEditorStrings[EDITOR_STR_ILLEGAL_FILENAME] );
 				gfIllegalName = TRUE;
 				iFDlgState = DIALOG_NONE;
 				return LOADSAVE_SCREEN;
@@ -422,7 +422,7 @@ UINT32 LoadSaveScreenHandle(void)
 			RemoveFileDialog();
 			CreateProgressBar( 0, 118, 183, 522, 202 );
 			DefineProgressBarPanel( 0, 65, 79, 94, 100, 155, 540, 235 );
-			swprintf( zOrigName, L"Loading map:  %s", gzFilename );
+			swprintf( zOrigName, gzEditorStrings[EDITOR_STR_LOADING_STR], gzFilename );
 			SetProgressBarTitle( 0, zOrigName, BLOCKFONT2, FONT_RED, FONT_NEARBLACK );
 			gbCurrentFileIOStatus = INITIATE_MAP_LOAD;
 			return LOADSAVE_SCREEN ;
@@ -444,9 +444,9 @@ void CreateFileDialog( UINT16 *zTitle )
 	MSYS_DefineRegion( &BlanketRegion, 0, 0, gsVIEWPORT_END_X, gsVIEWPORT_END_Y, MSYS_PRIORITY_HIGH - 5, 0, 0, 0 );
 
 	//Okay and cancel buttons
-	iFileDlgButtons[0] = CreateTextButton( L"Okay", FONT12POINT1, FONT_BLACK, FONT_BLACK,
+	iFileDlgButtons[0] = CreateTextButton( gzEditorStrings[EDITOR_STR_OKAY], FONT12POINT1, FONT_BLACK, FONT_BLACK,
 		BUTTON_USE_DEFAULT, 354, 225, 50, 30, BUTTON_NO_TOGGLE,	MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, FDlgOkCallback );
-	iFileDlgButtons[1] = CreateTextButton( L"Cancel", FONT12POINT1, FONT_BLACK, FONT_BLACK,
+	iFileDlgButtons[1] = CreateTextButton( gzEditorStrings[EDITOR_STR_CANCEL], FONT12POINT1, FONT_BLACK, FONT_BLACK,
 		BUTTON_USE_DEFAULT, 406, 225, 50, 30, BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, FDlgCancelCallback );
 
 	//Scroll buttons
@@ -563,11 +563,11 @@ void DrawFileDialog(void)
 	SetFontForeground( FONT_LTKHAKI );
 	SetFontShadow( FONT_DKKHAKI );
 	SetFontBackground( FONT_BLACK );
-	mprintf( 183, 217, L"Filename" );
+	mprintf( 183, 217, gzEditorStrings[EDITOR_STR_FILENAME] );
 	
 	if( iFileDlgButtons[6] != -1 ) 
 	{
-		mprintf( 200, 231, L"Update world info" );
+		mprintf( 200, 231, gzEditorStrings[EDITOR_STR_UPDATE_WORLD] );
 	}
 }
 
@@ -877,7 +877,7 @@ UINT32 ProcessFileIO()
 			SetFontForeground( FONT_LTKHAKI );
 			SetFontShadow( FONT_DKKHAKI );
 			SetFontBackground( 0 );
-			swprintf( zOrigName, L"Saving map:  %s", gzFilename );
+			swprintf( zOrigName, gzEditorStrings[EDITOR_STR_SAVING_STR], gzFilename );
 			usStartX = 320 - StringPixLength( zOrigName, LARGEFONT1 ) / 2;
 			usStartY = 180 - GetFontHeight( LARGEFONT1 ) / 2;
 			mprintf( usStartX, usStartY, zOrigName );
@@ -921,7 +921,7 @@ UINT32 ProcessFileIO()
 				return EDIT_SCREEN;
 			}
 			if( gMapInformation.ubMapVersion != gubMinorMapVersion )
-				ScreenMsg( FONT_MCOLOR_RED, MSG_ERROR, L"Map data has just been corrupted!!!  What did you just do?  KM : 0" );
+				ScreenMsg( FONT_MCOLOR_RED, MSG_ERROR, gzEditorStrings[EDITOR_STR_MAP_DATA_JUST_CORRUPTED] );
 			return EDIT_SCREEN;
 		case INITIATE_MAP_LOAD: //draw load message
 			SaveFontSettings();
@@ -944,7 +944,7 @@ UINT32 ProcessFileIO()
 				gfGlobalError = FALSE;
 				gfLoadError = TRUE;
 				//RemoveButton( iTempButton );
-				CreateMessageBox( L" Error loading file.  Try another filename?" );
+				CreateMessageBox( gzEditorStrings[EDITOR_STR_ERROR_LOADING] );
 				return LOADSAVE_SCREEN;
 			}
 			SetGlobalSectorValues( gzFilename );
@@ -1098,9 +1098,9 @@ BOOLEAN ValidFilename()
 	UINT16 *pDest;
 	if( gzFilename[0] != '\0' );
 	{
-		pDest = wcsstr( gzFilename, L".dat" );
+		pDest = wcsstr( gzFilename, gzEditorStrings[EDITOR_STR_DAT_STR] );
 		if( !pDest )
-			pDest = wcsstr( gzFilename, L".DAT" );
+			pDest = wcsstr( gzFilename, gzEditorStrings[EDITOR_STR_DAT_STR] );
 		if( pDest && pDest != gzFilename && pDest[4] == '\0' )
 			return TRUE;
 	}

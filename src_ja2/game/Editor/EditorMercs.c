@@ -267,6 +267,7 @@ UINT16 *zDiffNames[NUM_DIFF_LVLS] = { L"Wimp", L"Easy", L"Average", L"Tough", L"
 INT16 sBaseStat[NUM_DIFF_LVLS] = { 50, 60, 70, 80, 90 };
 INT16 sBaseExpLvl[NUM_DIFF_LVLS] = { 1, 3, 5, 7, 9 };
 
+
 UINT16 *EditMercStat[12] = { L"Max Health",L"Cur Health",L"Strength",
 														 L"Agility",L"Dexterity",L"Charisma",
 														 L"Wisdom",L"Marksmanship",L"Explosives",
@@ -806,7 +807,7 @@ void DisplayEditMercWindow( void )
 	SetFont( FONT12POINT1 );
 
 	// Name window
-	gprintf( iXPos + 128, iYPos + 3, L"Merc Name:" );
+	gprintf( iXPos + 128, iYPos + 3, gzEditorStrings[EDITOR_STR_MERC_NAME] );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 128, iYPos + 16, iXPos + 128 + 104, iYPos + 16 + 19, usFillColorDark );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 17, iXPos + 128 + 104, iYPos + 17 + 19, usFillColorLight );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 17, iXPos + 128 + 103, iYPos + 17 + 18, usFillColorTextBk );
@@ -814,7 +815,7 @@ void DisplayEditMercWindow( void )
 	gprintf( iXPos + 130 + iXOff, iYPos + 20, L"%s", pSoldier->name );
 		
 	// Orders window
-	gprintf( iXPos + 128, iYPos + 38, L"Orders:" );
+	gprintf( iXPos + 128, iYPos + 38, gzEditorStrings[EDITOR_STR_ORDERS] );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 128, iYPos + 51, iXPos + 128 + 104, iYPos + 51 + 19, usFillColorDark );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 52, iXPos + 128 + 104, iYPos + 52 + 19, usFillColorLight );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 52, iXPos + 128 + 103, iYPos + 52 + 18, usFillColorTextBk );
@@ -822,7 +823,7 @@ void DisplayEditMercWindow( void )
 	gprintf( iXPos + 130 + iXOff, iYPos + 55, L"%s", EditMercOrders[pSoldier->bOrders] );
 
 	// Combat window
-	gprintf( iXPos + 128, iYPos + 73, L"Combat Attitude:" );
+	gprintf( iXPos + 128, iYPos + 73, gzEditorStrings[EDITOR_STR_COMBAT_ATTITUDE] );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 128, iYPos + 86, iXPos + 128 + 104, iYPos + 86 + 19, usFillColorDark );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 87, iXPos + 128 + 104, iYPos + 87 + 19, usFillColorLight );
 	ColorFillVideoSurfaceArea(FRAME_BUFFER, iXPos + 129, iYPos + 87, iXPos + 128 + 103, iYPos + 87 + 18, usFillColorTextBk );
@@ -1368,9 +1369,9 @@ void CreateEditMercWindow( void )
 
 	iEditMercBkgrndArea = CreateHotSpot((INT16)iXPos, (INT16)iYPos, (INT16)iWidth, (INT16)iHeight, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, EditMercBkgrndCallback );
 
-	iEditMercColorPage = CreateTextButton( L"Merc Colors", (INT16)FONT12POINT1, FONT_BLACK, FONT_BLACK,
+	iEditMercColorPage = CreateTextButton( gzEditorStrings[EDITOR_STR_MERC_COLORS], (INT16)FONT12POINT1, FONT_BLACK, FONT_BLACK,
 		BUTTON_USE_DEFAULT, (INT16)(iXPos + 183), (INT16)(iYPos + 315), 80, 20, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercChangeToColorPageCallback );
-	iEditMercEnd = CreateTextButton( L"Done", (INT16)FONT12POINT1, FONT_MCOLOR_BLACK, FONT_BLACK,
+	iEditMercEnd = CreateTextButton( gzEditorStrings[EDITOR_STR_DONE], (INT16)FONT12POINT1, FONT_MCOLOR_BLACK, FONT_BLACK,
 		BUTTON_USE_DEFAULT, (INT16)(iXPos + 183), (INT16)(iYPos + 337), 80, 20, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercDoneEditCallback );
 
 	// Disable color editing for PC Mercs
@@ -1379,13 +1380,13 @@ void CreateEditMercWindow( void )
 
 	iEditorButton[8] = QuickCreateButton( giEditMercImage[0], (INT16)(iXPos + 98), (INT16)(iYPos + 51), BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercPrevOrderCallback );
 	iEditorButton[9] = QuickCreateButton( giEditMercImage[1], (INT16)(iXPos + 233), (INT16)(iYPos + 51), BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercNextOrderCallback );
-	SetButtonFastHelpText( iEditorButton[8], L"Previous merc standing orders" );
-	SetButtonFastHelpText( iEditorButton[9], L"Next merc standing orders" );
+	SetButtonFastHelpText( iEditorButton[8], gzEditorStrings[EDITOR_STR_PREV_MERC_STANDING_ORDERS] );
+	SetButtonFastHelpText( iEditorButton[9], gzEditorStrings[EDITOR_STR_NEXT_MERC_STANDING_ORDERS] );
 
 	iEditorButton[10] = QuickCreateButton( giEditMercImage[0], (INT16)(iXPos + 98), (INT16)(iYPos + 86), BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercPrevAttCallback );
 	iEditorButton[11] = QuickCreateButton( giEditMercImage[1], (INT16)(iXPos + 233), (INT16)(iYPos + 86), BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercNextAttCallback );
-	SetButtonFastHelpText( iEditorButton[10], L"Previous merc combat attitude" );
-	SetButtonFastHelpText( iEditorButton[11], L"Next merc combat attitude" );
+	SetButtonFastHelpText( iEditorButton[10], gzEditorStrings[EDITOR_STR_PREV_MERC_COMBAT_ATT] );
+	SetButtonFastHelpText( iEditorButton[11], gzEditorStrings[EDITOR_STR_NEXT_MERC_COMBAT_ATT] );
 
 	iEditorButton[12] = QuickCreateButton( giEditMercImage[0], (INT16)(iXPos + 86), (INT16)(iYPos + 110), BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercStatDwnCallback );
 	iEditorButton[13] = QuickCreateButton( giEditMercImage[1], (INT16)(iXPos + 146), (INT16)(iYPos + 110), BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, EditMercStatUpCallback );
@@ -1425,8 +1426,8 @@ void CreateEditMercWindow( void )
 
 	for ( x = 12; x < 36; x += 2 )
 	{
-		SetButtonFastHelpText( iEditorButton[x], L"Decrease merc stat" );
-		SetButtonFastHelpText( iEditorButton[x + 1], L"Increase merc stat" );
+		SetButtonFastHelpText( iEditorButton[x], gzEditorStrings[EDITOR_STR_DECREASE_MERC_STAT] );
+		SetButtonFastHelpText( iEditorButton[x + 1], gzEditorStrings[EDITOR_STR_INCREASE_MERC_STAT] );
 	}
 }
 void SetMercOrders( INT8 bOrders )
@@ -2387,11 +2388,11 @@ void DisplayBodyTypeInfo()
 	UINT16 str[20];
 	switch( gpSelected->pBasicPlacement->bBodyType )
 	{
-		case RANDOM:							swprintf( str, L"Random" );					break;
-		case REGMALE:							swprintf( str, L"Reg Male" );				break;
-		case BIGMALE:							swprintf( str, L"Big Male" );				break;
-		case STOCKYMALE:					swprintf( str, L"Stocky Male" );		break;
-		case REGFEMALE:						swprintf( str, L"Reg Female" );			break;
+		case RANDOM:							swprintf( str, gzEditorStrings[EDITOR_STR_RANDOM] );					break;
+		case REGMALE:							swprintf( str, gzEditorStrings[EDITOR_STR_REG_MALE] );				break;
+		case BIGMALE:							swprintf( str, gzEditorStrings[EDITOR_STR_BIG_MALE] );				break;
+		case STOCKYMALE:					swprintf( str, gzEditorStrings[EDITOR_STR_STOCKY_MALE] );		break;
+		case REGFEMALE:						swprintf( str, gzEditorStrings[EDITOR_STR_FEMALE] );			break;
 		case TANK_NE:							swprintf( str, L"NE Tank" );				break;
 		case TANK_NW:							swprintf( str, L"NW Tank" );				break;
 		case FATCIV:							swprintf( str, L"Fat Civilian" );		break;
@@ -2414,7 +2415,7 @@ void DisplayBodyTypeInfo()
 		case ADULTFEMALEMONSTER:	swprintf( str, L"Adt F Monster" );	break;
 		case AM_MONSTER:					swprintf( str, L"Adt M Monster" );	break;
 		case QUEENMONSTER:				swprintf( str, L"Queen Monster" );	break;
-		case BLOODCAT:						swprintf( str, L"Bloodcat" );				break;
+		case BLOODCAT:						swprintf( str, gzEditorStrings[EDITOR_STR_BLOODCAT] );				break;
 	}
 	DrawEditorInfoBox( str, FONT10ARIAL, 490, 364, 70, 20 );
 }
@@ -2446,8 +2447,8 @@ void UpdateMercsInfo()
 			SetFont( SMALLCOMPFONT );
 			SetFontForeground( FONT_YELLOW );
 			SetFontShadow( FONT_NEARBLACK );
-			mprintf( 240, 363, L" --=ORDERS=-- ");
-			mprintf( 240, 419, L"--=ATTITUDE=--");
+			mprintf( 240, 363, gzEditorStrings[EDITOR_STR_ORDERS_LABEL]);
+			mprintf( 240, 419, gzEditorStrings[EDITOR_STR_ATTITUDE_LABEL]);
 			if( iDrawMode == DRAW_MODE_CREATURE )
 			{
 				DisplayBodyTypeInfo();
@@ -2469,28 +2470,28 @@ void UpdateMercsInfo()
 			{
 				SetFont( FONT10ARIAL );
 				SetFontForeground( FONT_YELLOW );
-				mprintf( 590, 411, L"Army" );
-				mprintf( 590, 425, L"Admin" );
-				mprintf( 590, 439, L"Elite" );
+				mprintf( 590, 411, gzEditorStrings[EDITOR_STR_ARMY] );
+				mprintf( 590, 425, gzEditorStrings[EDITOR_STR_ADMIN] );
+				mprintf( 590, 439, gzEditorStrings[EDITOR_STR_ELITE] );
 			}
 			break;
 		case MERC_ATTRIBUTEMODE:
 			SetFont( FONT10ARIAL );
 			SetFontForeground( FONT_YELLOW );
 			SetFontShadow( FONT_NEARBLACK );
-			mprintf( 225, 370, L"Exp. Level");
-			mprintf( 225, 395, L"Life");
-			mprintf( 225, 420, L"LifeMax");
-			mprintf( 225, 445, L"Marksmanship");
-			mprintf( 325, 370, L"Strength");
-			mprintf( 325, 395, L"Agility");
-			mprintf( 325, 420, L"Dexterity");
-			mprintf( 325, 445, L"Wisdom");
-			mprintf( 425, 370, L"Leadership");
-			mprintf( 425, 395, L"Explosives");
-			mprintf( 425, 420, L"Medical");
-			mprintf( 425, 445, L"Mechanical");
-			mprintf( 525, 370, L"Morale");
+			mprintf( 225, 370, gzEditorStrings[EDITOR_STR_ATT_LABEL_1]);
+			mprintf( 225, 395, gzEditorStrings[EDITOR_STR_ATT_LABEL_2]);
+			mprintf( 225, 420, gzEditorStrings[EDITOR_STR_ATT_LABEL_3]);
+			mprintf( 225, 445, gzEditorStrings[EDITOR_STR_ATT_LABEL_4]);
+			mprintf( 325, 370, gzEditorStrings[EDITOR_STR_ATT_LABEL_5]);
+			mprintf( 325, 395, gzEditorStrings[EDITOR_STR_ATT_LABEL_6]);
+			mprintf( 325, 420, gzEditorStrings[EDITOR_STR_ATT_LABEL_7]);
+			mprintf( 325, 445, gzEditorStrings[EDITOR_STR_ATT_LABEL_8]);
+			mprintf( 425, 370, gzEditorStrings[EDITOR_STR_ATT_LABEL_9]);
+			mprintf( 425, 395, gzEditorStrings[EDITOR_STR_ATT_LABEL_10]);
+			mprintf( 425, 420, gzEditorStrings[EDITOR_STR_ATT_LABEL_11]);
+			mprintf( 425, 445, gzEditorStrings[EDITOR_STR_ATT_LABEL_12]);
+			mprintf( 525, 370, gzEditorStrings[EDITOR_STR_ATT_LABEL_13]);
 			break;
 		case MERC_APPEARANCEMODE:
 			SetFont( FONT10ARIAL );
@@ -2500,10 +2501,10 @@ void UpdateMercsInfo()
 				SetFontForeground( FONT_DKYELLOW );
 			SetFontShadow( FONT_NEARBLACK );
 
-			mprintf( 396, 364, L"Hair color:");
-			mprintf( 396, 388, L"Skin color:");
-			mprintf( 396, 412, L"Vest color:"); 
-			mprintf( 396, 436, L"Pant color:");
+			mprintf( 396, 364, gzEditorStrings[EDITOR_STR_BODY_ATT_1]);
+			mprintf( 396, 388, gzEditorStrings[EDITOR_STR_BODY_ATT_2]);
+			mprintf( 396, 412, gzEditorStrings[EDITOR_STR_BODY_ATT_3]); 
+			mprintf( 396, 436, gzEditorStrings[EDITOR_STR_BODY_ATT_4]);
 
 			SetFont( SMALLCOMPFONT );
 			SetFontForeground( FONT_BLACK );
@@ -2517,10 +2518,10 @@ void UpdateMercsInfo()
 			}
 			else
 			{
-				mprintf( 396, 374, L"RANDOM");
-				mprintf( 396, 398, L"RANDOM");
-				mprintf( 396, 422, L"RANDOM");
-				mprintf( 396, 446, L"RANDOM");
+				mprintf( 396, 374, gzEditorStrings[EDITOR_STR_UPPER_RANDOM]);
+				mprintf( 396, 398, gzEditorStrings[EDITOR_STR_UPPER_RANDOM]);
+				mprintf( 396, 422, gzEditorStrings[EDITOR_STR_UPPER_RANDOM]);
+				mprintf( 396, 446, gzEditorStrings[EDITOR_STR_UPPER_RANDOM]);
 				ShowEditMercPalettes( NULL ); //will display grey scale to signify random
 			}
 			DisplayBodyTypeInfo();
@@ -2542,7 +2543,7 @@ void UpdateMercsInfo()
 				if( gpSelected->pDetailedPlacement->ubProfile == NO_PROFILE )
 				{
 					SetFontForeground( FONT_GRAY3 );
-					mprintfEditor( 240, 435, L"Current Profile:  n/a                            ");
+					mprintfEditor( 240, 435, gzEditorStrings[EDITOR_STR_CURRENT_PROFILE]);
 				}
 				else
 				{
@@ -2558,14 +2559,14 @@ void UpdateMercsInfo()
 			SetFontShadow( FONT_NEARBLACK );
 			switch( gpSelected->pSoldier->bOrders )
 			{
-				case STATIONARY:	mprintf( 430, 363, L"STATIONARY" );			break;
-				case ONCALL:			mprintf( 430, 363, L"ON CALL" );				break;
-				case ONGUARD:			mprintf( 430, 363, L"ON GUARD" );				break;
-				case SEEKENEMY:		mprintf( 430, 363, L"SEEK ENEMY" );			break;
-				case CLOSEPATROL:	mprintf( 430, 363, L"CLOSE PATROL" );		break;
-				case FARPATROL:		mprintf( 430, 363, L"FAR PATROL" );			break;
-				case POINTPATROL:	mprintf( 430, 363, L"POINT PATROL" );		break;
-				case RNDPTPATROL:	mprintf( 430, 363, L"RND PT PATROL" );	break;
+				case STATIONARY:	mprintf( 430, 363, gzEditorStrings[EDITOR_STR_ORDER_LABEL_1] );			break;
+				case ONCALL:			mprintf( 430, 363, gzEditorStrings[EDITOR_STR_ORDER_LABEL_2] );				break;
+				case ONGUARD:			mprintf( 430, 363, gzEditorStrings[EDITOR_STR_ORDER_LABEL_3] );				break;
+				case SEEKENEMY:		mprintf( 430, 363, gzEditorStrings[EDITOR_STR_ORDER_LABEL_4] );			break;
+				case CLOSEPATROL:	mprintf( 430, 363, gzEditorStrings[EDITOR_STR_ORDER_LABEL_5] );		break;
+				case FARPATROL:		mprintf( 430, 363, gzEditorStrings[EDITOR_STR_ORDER_LABEL_6] );			break;
+				case POINTPATROL:	mprintf( 430, 363, gzEditorStrings[EDITOR_STR_ORDER_LABEL_7] );		break;
+				case RNDPTPATROL:	mprintf( 430, 363, gzEditorStrings[EDITOR_STR_ORDER_LABEL_8] );	break;
 			}
 			SetFontForeground( FONT_YELLOW );
 			mprintf( 186, 363, L"Action" );
@@ -3145,7 +3146,7 @@ void RenderMercStrings()
 				sYPos += 10;
 
 				SetFontForeground( FONT_GRAY2 );
-				swprintf( str, L"Slot #%d", pSoldier->ubID );
+				swprintf( str, gzEditorStrings[EDITOR_STR_SLOT_NUM], pSoldier->ubID );
 				FindFontCenterCoordinates( sXPos, sYPos, 80, 1, str, TINYFONT1, &sX, &sY );
 				if( sY < 352 )
 				{
@@ -3171,7 +3172,7 @@ void RenderMercStrings()
 				sYPos += 10;
 
 				SetFontForeground( FONT_GRAY2 );
-				swprintf( str, L"Slot #%d", pSoldier->ubID );
+				swprintf( str, gzEditorStrings[EDITOR_STR_SLOT_NUM], pSoldier->ubID );
 				FindFontCenterCoordinates( sXPos, sYPos, 80, 1, str, TINYFONT1, &sX, &sY );
 				if( sY < 352 )
 				{
@@ -3188,7 +3189,7 @@ void RenderMercStrings()
 						SetFontForeground( FONT_DKRED );
 					else 
 						SetFontForeground( FONT_RED );
-					swprintf( str, L"Patrol orders with no waypoints" );
+					swprintf( str, gzEditorStrings[EDITOR_STR_PATROL_BUT_NO_WP] );
 					FindFontCenterCoordinates( sXPos, sYPos, 80, 1, str, TINYFONT1, &sX, &sY );
 					if( sY < 352 )
 					{
@@ -3204,7 +3205,7 @@ void RenderMercStrings()
 					SetFontForeground( FONT_DKRED );
 				else 
 					SetFontForeground( FONT_RED );
-				swprintf( str, L"Waypoints with no patrol orders" );
+				swprintf( str, gzEditorStrings[EDITOR_STR_WP_BUT_NO_PATROL] );
 				FindFontCenterCoordinates( sXPos, sYPos, 80, 1, str, TINYFONT1, &sX, &sY );
 				if( sY < 352 )
 				{
@@ -3466,7 +3467,7 @@ void ClearCurrentSchedule()
 	for( i = 0; i < 4; i++ )
 	{
 		MSYS_SetBtnUserData( iEditorButton[ MERCS_SCHEDULE_ACTION1 + i ], 0, 0 );
-		SpecifyButtonText( iEditorButton[ MERCS_SCHEDULE_ACTION1 + i ], L"No action" );
+		SpecifyButtonText( iEditorButton[ MERCS_SCHEDULE_ACTION1 + i ], gzEditorStrings[EDITOR_STR_NO_ACTION] );
 		gCurrSchedule.usTime[i] = 0xffff;
 		SetExclusive24HourTimeValue( (UINT8)(i+1), gCurrSchedule.usTime[ i ] ); //blanks the field
 		gCurrSchedule.usData1[i] = 0xffff;
@@ -3591,7 +3592,7 @@ void CopyMercPlacement( INT32 iMapIndex )
 {
 	if( gsSelectedMercID == -1 )
 	{
-		ScreenMsg( FONT_MCOLOR_LTRED, MSG_INTERFACE, L"Placement not copied because no placement selected." );
+		ScreenMsg( FONT_MCOLOR_LTRED, MSG_INTERFACE, gzEditorStrings[EDITOR_STR_PLACEMENT_NOT_COPIED] );
 		return;
 	}
 	gfSaveBuffer = TRUE;
@@ -3600,7 +3601,7 @@ void CopyMercPlacement( INT32 iMapIndex )
 	{
 		memcpy( &gSaveBufferDetailedPlacement, gpSelected->pDetailedPlacement, sizeof( SOLDIERCREATE_STRUCT ) );
 	}
-	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Placement copied." );
+	ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzEditorStrings[EDITOR_STR_PLACEMENT_COPIED] );
 }
 
 void PasteMercPlacement( INT32 iMapIndex )
@@ -3611,7 +3612,7 @@ void PasteMercPlacement( INT32 iMapIndex )
 
 	if( !gfSaveBuffer )
 	{
-		ScreenMsg( FONT_MCOLOR_LTRED, MSG_INTERFACE, L"Placement not pasted as no placement is saved in buffer." );
+		ScreenMsg( FONT_MCOLOR_LTRED, MSG_INTERFACE, gzEditorStrings[EDITOR_STR_BUFFER_EMPTY] );
 		return;
 	}
 
@@ -3724,11 +3725,11 @@ void PasteMercPlacement( INT32 iMapIndex )
 			{
 				SetEnemyDroppableStatus( gbMercSlotTypes[i-FIRST_MERCS_INVENTORY_BUTTON], FALSE );
 			}
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Placement pasted." );
+			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, gzEditorStrings[EDITOR_STR_PLACEMENT_PASTED] );
 		}
 		else
 		{
-			ScreenMsg( FONT_MCOLOR_LTRED, MSG_INTERFACE, L"Placement not pasted as the maximum number of placements for this team is already used." );
+			ScreenMsg( FONT_MCOLOR_LTRED, MSG_INTERFACE, gzEditorStrings[EDITOR_STR_MAX_PLACEMENTS_USED] );
 		}
 	}
 }

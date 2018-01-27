@@ -109,41 +109,41 @@ void UpdateMapInfo()
 	SetFontShadow( FONT_NEARBLACK );
 
 	SetFontForeground( FONT_RED );
-	mprintf( 38, 399, L"R");
+	mprintf( 38, 399, gzEditorStrings[EDITOR_STR_RED_IND]);
 	SetFontForeground( FONT_GREEN );
-	mprintf( 38, 419, L"G");
+	mprintf( 38, 419, gzEditorStrings[EDITOR_STR_GREEN_IND]);
 	SetFontForeground( FONT_DKBLUE );
-	mprintf( 38, 439, L"B");
+	mprintf( 38, 439, gzEditorStrings[EDITOR_STR_BLUE_IND]);
 
 	SetFontForeground( FONT_YELLOW );
-	mprintf( 65, 369, L"Prime" );
-	mprintf( 65, 382, L"Night" );
-	mprintf( 65, 397, L"24Hrs" );
+	mprintf( 65, 369, gzEditorStrings[EDITOR_STR_PRIME] );
+	mprintf( 65, 382, gzEditorStrings[EDITOR_STR_NIGHT] );
+	mprintf( 65, 397, gzEditorStrings[EDITOR_STR_24HR] );
 
 	SetFontForeground( FONT_YELLOW );
-	mprintf( 148, 399, L"Radius");
+	mprintf( 148, 399, gzEditorStrings[EDITOR_STR_RADIUS]);
 
 	if( !gfBasement && !gfCaves )
 		SetFontForeground( FONT_DKYELLOW );
-	mprintf( 148, 414, L"Underground" );
-	mprintf( 148, 423, L"Light Level" );
+	mprintf( 148, 414, gzEditorStrings[EDITOR_STR_UNDERGROUND] );
+	mprintf( 148, 423, gzEditorStrings[EDITOR_STR_LIGHT_LEVEL] );
 
 	SetFontForeground( FONT_YELLOW );
-	mprintf( 230, 369, L"Outdoors" );
-	mprintf( 230, 384, L"Basement" );
-	mprintf( 230, 399, L"Caves" );
+	mprintf( 230, 369, gzEditorStrings[EDITOR_STR_OUTDOORS] );
+	mprintf( 230, 384, gzEditorStrings[EDITOR_STR_BASEMENT] );
+	mprintf( 230, 399, gzEditorStrings[EDITOR_STR_CAVES] );
 
 	SetFontForeground( FONT_ORANGE );
 	mprintf( 250, 420, L"Restricted" );
 	mprintf( 250, 430, L"Scroll ID" );
 
 	SetFontForeground( FONT_YELLOW );
-	mprintf( 368, 363, L"Destination");
-	mprintf( 368, 372, L"Sector" );
-	mprintf( 368, 383, L"Destination");
-	mprintf( 368, 392, L"Bsmt. Level" );
-	mprintf( 378, 403, L"Dest." );
-	mprintf( 378, 412, L"GridNo" );
+	mprintf( 368, 363, gzEditorStrings[EDITOR_STR_DESTINATION]);
+	mprintf( 368, 372, gzEditorStrings[EDITOR_STR_SECTOR] );
+	mprintf( 368, 383, gzEditorStrings[EDITOR_STR_DESTINATION]);
+	mprintf( 368, 392, gzEditorStrings[EDITOR_STR_BASEMENT_LEVEL] );
+	mprintf( 378, 403, gzEditorStrings[EDITOR_STR_DEST_ABBREV] );
+	mprintf( 378, 412, gzEditorStrings[EDITOR_STR_GRIDNO] );
 	SetFontForeground( FONT_RED );
 }
 

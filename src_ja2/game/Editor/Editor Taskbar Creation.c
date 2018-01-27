@@ -41,32 +41,32 @@ void InitEditorItemStatsButtons()
 	iEditorButton[ ITEMSTATS_HIDDEN_BTN ] =
 		CreateCheckBoxButton(	485, 365, "EDITOR\\SmCheckbox.sti", MSYS_PRIORITY_NORMAL, ItemStatsToggleHideCallback );
 	iEditorButton[ ITEMSTATS_DELETE_BTN ] =
-		CreateTextButton( L"Delete", FONT10ARIAL, FONT_RED, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_DELETE], FONT10ARIAL, FONT_RED, FONT_BLACK, BUTTON_USE_DEFAULT,
 		600, 441, 36, 16, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL+1, DEFAULT_MOVE_CALLBACK, ItemStatsDeleteCallback );
 }
 
 void InitEditorMercsToolbar()
 {
 	INT16 TempString[30];
-	INT16 *FaceDirs[8] = {L"north",L"northeast",L"east",L"southeast",L"south",L"southwest",L"west",L"northwest"};
+	INT16 *FaceDirs[8] = {gzEditorStrings[EDITOR_STR_NORTH],gzEditorStrings[EDITOR_STR_NORTHEAST],gzEditorStrings[EDITOR_STR_EAST],gzEditorStrings[EDITOR_STR_SOUTHEAST],gzEditorStrings[EDITOR_STR_SOUTH],gzEditorStrings[EDITOR_STR_SOUTHWEST],gzEditorStrings[EDITOR_STR_WEST],gzEditorStrings[EDITOR_STR_NORTHWEST]};
 	INT32 x;
 
 	iEditorButton[ MERCS_PLAYERTOGGLE ] = 
 		CreateCheckBoxButton(	4, 362, "EDITOR\\SmCheckbox.sti", MSYS_PRIORITY_NORMAL, MercsTogglePlayers );
 	if( gfShowPlayers )
 		ClickEditorButton( MERCS_PLAYERTOGGLE );
-	SetButtonFastHelpText( iEditorButton[ MERCS_PLAYERTOGGLE ], L"Toggle viewing of players");
+	SetButtonFastHelpText( iEditorButton[ MERCS_PLAYERTOGGLE ], gzEditorStrings[EDITOR_STR_TOGGLE_VIEW_PLAYERS]);
 	DisableButton( iEditorButton[ MERCS_PLAYERTOGGLE ] );
 	iEditorButton[ MERCS_ENEMYTOGGLE ] = 
 		CreateCheckBoxButton(	4, 382, "EDITOR\\SmCheckbox.sti", MSYS_PRIORITY_NORMAL, MercsToggleEnemies );
 	if( gfShowEnemies )
 		ClickEditorButton( MERCS_ENEMYTOGGLE );
-	SetButtonFastHelpText( iEditorButton[ MERCS_ENEMYTOGGLE ], L"Toggle viewing of enemies");
+	SetButtonFastHelpText( iEditorButton[ MERCS_ENEMYTOGGLE ], gzEditorStrings[EDITOR_STR_TOGGLE_VIEW_ENEMIES]);
 	iEditorButton[ MERCS_CREATURETOGGLE ] = 
 		CreateCheckBoxButton(	4, 402, "EDITOR\\SmCheckbox.sti", MSYS_PRIORITY_NORMAL, MercsToggleCreatures );
 	if( gfShowCreatures )
 		ClickEditorButton( MERCS_CREATURETOGGLE );
-	SetButtonFastHelpText( iEditorButton[ MERCS_CREATURETOGGLE ], L"Toggle viewing of creatures");
+	SetButtonFastHelpText( iEditorButton[ MERCS_CREATURETOGGLE ], gzEditorStrings[EDITOR_STR_TOGGLE_VIEW_CREATURES]);
 	iEditorButton[ MERCS_REBELTOGGLE ] = 
 		CreateCheckBoxButton(	4, 422, "EDITOR\\SmCheckbox.sti", MSYS_PRIORITY_NORMAL, MercsToggleRebels );
 	if( gfShowRebels )
@@ -78,18 +78,18 @@ void InitEditorMercsToolbar()
 		ClickEditorButton( MERCS_CIVILIANTOGGLE );
 	SetButtonFastHelpText( iEditorButton[ MERCS_CIVILIANTOGGLE ], L"Toggle viewing of civilians");
 	iEditorButton[MERCS_PLAYER] = 
-		CreateTextButton( L"Player",(UINT16)BLOCKFONT, 165, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_PLAYER],(UINT16)BLOCKFONT, 165, FONT_BLACK, BUTTON_USE_DEFAULT,
 		20, 362, 78, 19, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK,
 		MercsPlayerTeamCallback );
 	SpecifyButtonDownTextColors( iEditorButton[MERCS_PLAYER], FONT_YELLOW, FONT_BLACK );
 	DisableButton( iEditorButton[MERCS_PLAYER] );
 	iEditorButton[MERCS_ENEMY] = 
-		CreateTextButton( L"Enemy",(UINT16)BLOCKFONT, 165, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_ENEMY],(UINT16)BLOCKFONT, 165, FONT_BLACK, BUTTON_USE_DEFAULT,
 		20, 382, 78, 19, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK,
 		MercsEnemyTeamCallback );
 	SpecifyButtonDownTextColors( iEditorButton[MERCS_ENEMY], FONT_YELLOW, FONT_BLACK );
 	iEditorButton[MERCS_CREATURE] = 
-		CreateTextButton( L"Creature",(UINT16)BLOCKFONT, 165, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_CREATURE],(UINT16)BLOCKFONT, 165, FONT_BLACK, BUTTON_USE_DEFAULT,
 		20, 402, 78, 19, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK,
 		MercsCreatureTeamCallback );
 	SpecifyButtonDownTextColors( iEditorButton[MERCS_CREATURE], FONT_YELLOW, FONT_BLACK );
@@ -105,7 +105,7 @@ void InitEditorMercsToolbar()
 	SpecifyButtonDownTextColors( iEditorButton[MERCS_CIVILIAN], FONT_YELLOW, FONT_BLACK );
 
 	iEditorButton[ MERCS_1 ] =
-		CreateTextButton( L"DETAILED PLACEMENT", SMALLCOMPFONT, FONT_ORANGE, 60, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_DETAILED_PLACEMENT_TEXT], SMALLCOMPFONT, FONT_ORANGE, 60, BUTTON_USE_DEFAULT, 
 		100, 362, 68, 20, BUTTON_TOGGLE, 
 		MSYS_PRIORITY_NORMAL, BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK );
 	DisableButton( iEditorButton[ MERCS_1 ] );
@@ -117,44 +117,44 @@ void InitEditorMercsToolbar()
 
 	iEditorButton[ MERCS_GENERAL ] = 
 		CreateEasyToggleButton( 100, 382, "EDITOR\\MercGeneral.sti", MercsGeneralModeCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_GENERAL ], L"General information mode");
+	SetButtonFastHelpText( iEditorButton[ MERCS_GENERAL ], gzEditorStrings[EDITOR_STR_GENERAL_INFO_MODE]);
 	iEditorButton[ MERCS_APPEARANCE ] = 
 		CreateEasyToggleButton( 134, 382, "EDITOR\\MercAppearance.sti", MercsAppearanceModeCallback );
 	SetButtonFastHelpText( iEditorButton[ MERCS_APPEARANCE ], L"Physical appearance mode");
 	iEditorButton[ MERCS_ATTRIBUTES ] = 
 		CreateEasyToggleButton( 100, 408, "EDITOR\\MercAttributes.sti", MercsAttributesModeCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_ATTRIBUTES ], L"Attributes mode");
+	SetButtonFastHelpText( iEditorButton[ MERCS_ATTRIBUTES ], gzEditorStrings[EDITOR_STR_ATTRIBUTES_MODE]);
 	iEditorButton[ MERCS_INVENTORY ] = 
 		CreateEasyToggleButton( 134, 408, "EDITOR\\MercInventory.sti", MercsInventoryModeCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_INVENTORY ], L"Inventory mode");
+	SetButtonFastHelpText( iEditorButton[ MERCS_INVENTORY ], gzEditorStrings[EDITOR_STR_INVENTORY_MODE]);
 	iEditorButton[ MERCS_PROFILE ] = 
 		CreateEasyToggleButton( 100, 434, "EDITOR\\MercProfile.sti", MercsProfileModeCallback );
 	SetButtonFastHelpText( iEditorButton[ MERCS_PROFILE ], L"Profile ID mode");
 	iEditorButton[ MERCS_SCHEDULE ] = 
 		CreateEasyToggleButton( 134, 434, "EDITOR\\MercSchedule.sti", MercsScheduleModeCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE ], L"Schedule mode");
+	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE ], gzEditorStrings[EDITOR_STR_SCHEDULE_MODE]);
 	//Workaround for identical buttons.
 	MSYS_SetBtnUserData( iEditorButton[ MERCS_SCHEDULE ], 3, 0xffffffff );
 	iEditorButton[ MERCS_GLOWSCHEDULE ] = 
 		CreateEasyToggleButton( 134, 434, "EDITOR\\MercGlowSchedule.sti", MercsScheduleModeCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_GLOWSCHEDULE ], L"Schedule mode");
+	SetButtonFastHelpText( iEditorButton[ MERCS_GLOWSCHEDULE ], gzEditorStrings[EDITOR_STR_SCHEDULE_MODE]);
 	HideEditorButton( MERCS_GLOWSCHEDULE );
 
 	iEditorButton[ MERCS_DELETE ] =
-		CreateTextButton( L"DELETE", (UINT16)SMALLCOMPFONT, FONT_DKBLUE, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_DELETE], (UINT16)SMALLCOMPFONT, FONT_DKBLUE, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		600, 362, 40, 20, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsDeleteCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_DELETE ], L"Delete currently selected merc (DEL).");
+	SetButtonFastHelpText( iEditorButton[ MERCS_DELETE ], gzEditorStrings[EDITOR_STR_DELETE_SEL_MERC]);
 	iEditorButton[ MERCS_NEXT ] =
-		CreateTextButton( L"NEXT", (UINT16)SMALLCOMPFONT, FONT_DKBLUE, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_NEXT], (UINT16)SMALLCOMPFONT, FONT_DKBLUE, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		600, 382, 40, 20, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsNextCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_NEXT ], L"Find next merc (SPACE).");
+	SetButtonFastHelpText( iEditorButton[ MERCS_NEXT ], gzEditorStrings[EDITOR_STR_FIND_NEXT_MERC]);
 
 	//Priority Existance
 	iEditorButton[ MERCS_PRIORITYEXISTANCE_CHECKBOX ] = 
 		CreateCheckBoxButton(	170, 365, "EDITOR\\checkbox.sti", MSYS_PRIORITY_NORMAL, MercsPriorityExistanceCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_PRIORITYEXISTANCE_CHECKBOX ], L"Toggle priority existance" );
+	SetButtonFastHelpText( iEditorButton[ MERCS_PRIORITYEXISTANCE_CHECKBOX ], gzEditorStrings[EDITOR_STR_TOGGLE_PRIORITY_EXISTANCE] );
 	
 	//If merc has keys
 	iEditorButton[ MERCS_HASKEYS_CHECKBOX ] = 
@@ -163,35 +163,35 @@ void InitEditorMercsToolbar()
 
 	//Orders
 	iEditorButton[ MERCS_ORDERS_STATIONARY ] =
-		CreateTextButton( L"STATIONARY", (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_STATIONARY], (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		200, 368, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetOrdersCallback );
 	iEditorButton[ MERCS_ORDERS_ONGUARD] = 
-		CreateTextButton( L"ON GUARD", (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_ON_GUARD], (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		200, 380, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetOrdersCallback );
 	iEditorButton[ MERCS_ORDERS_ONCALL ] = 
-		CreateTextButton( L"ON CALL", (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_ON_CALL], (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		200, 392, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetOrdersCallback );
 	iEditorButton[ MERCS_ORDERS_SEEKENEMY ] = 
-		CreateTextButton( L"SEEK ENEMY", (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_SEEK_ENEMY], (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		200, 404, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetOrdersCallback );
 	iEditorButton[ MERCS_ORDERS_CLOSEPATROL ] = 
-		CreateTextButton( L"CLOSE PATROL", (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_CLOSE_PATROL], (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		270, 368, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetOrdersCallback );
 	iEditorButton[ MERCS_ORDERS_FARPATROL ] = 
-		CreateTextButton( L"FAR PATROL", (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_FAR_PATROL], (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		270, 380, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetOrdersCallback );
 	iEditorButton[ MERCS_ORDERS_POINTPATROL ] = 
-		CreateTextButton( L"POINT PATROL", (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_POINT_PATROL], (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		270, 392, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetOrdersCallback );
 	iEditorButton[ MERCS_ORDERS_RNDPTPATROL ] = 
-		CreateTextButton( L"RND PT PATROL", (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_RND_PT_PATROL], (UINT16)SMALLCOMPFONT, FONT_GRAY2, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		270, 404, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetOrdersCallback );
 	for ( x = 0; x < 8; x++ )
@@ -201,27 +201,27 @@ void InitEditorMercsToolbar()
 
 	//Attitudes
 	iEditorButton[ MERCS_ATTITUDE_DEFENSIVE ] = 
-		CreateTextButton( L"DEFENSIVE", (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_DEFENSIVE], (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		200, 424, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetAttitudeCallback );
 	iEditorButton[ MERCS_ATTITUDE_BRAVESOLO ] = 
-		CreateTextButton( L"BRAVE SOLO", (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_BRAVE_SOLO], (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		200, 436, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetAttitudeCallback );
 	iEditorButton[ MERCS_ATTITUDE_BRAVEAID ] = 
-		CreateTextButton( L"BRAVE AID", (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_BRAVE_AID], (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		200, 448, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetAttitudeCallback );
 	iEditorButton[ MERCS_ATTITUDE_AGGRESSIVE ] = 
-		CreateTextButton( L"AGGRESSIVE", (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_AGGRESSIVE], (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		270, 424, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetAttitudeCallback );
 	iEditorButton[ MERCS_ATTITUDE_CUNNINGSOLO ] = 
-		CreateTextButton( L"CUNNING SOLO", (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_CUNNING_SOLO], (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		270, 436, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetAttitudeCallback );
 	iEditorButton[ MERCS_ATTITUDE_CUNNINGAID ] = 
-		CreateTextButton( L"CUNNING AID", (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_CUNNING_AID], (UINT16)SMALLCOMPFONT, FONT_GRAY4, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		270, 448, 70, 12, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, 
 		MercsSetAttitudeCallback );
 	for ( x = 0; x < 6; x++ )
@@ -255,15 +255,15 @@ void InitEditorMercsToolbar()
 		360, 395, 30, 30, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, MercsDirectionSetCallback );
 	for ( x = 0; x < 8; x++ )
 	{ 
-		swprintf( TempString, L"Set merc to face %s", FaceDirs[x] );
+		swprintf( TempString, gzEditorStrings[EDITOR_STR_SET_MERC_TO_FACE], FaceDirs[x] );
 		SetButtonFastHelpText( iEditorButton[ FIRST_MERCS_DIRECTION_BUTTON + x ], TempString );
 		MSYS_SetBtnUserData( iEditorButton[ FIRST_MERCS_DIRECTION_BUTTON + x ], 0, x);
 	}
 
 	iEditorButton[ MERCS_DIRECTION_FIND ] = 
-		CreateTextButton( L"Find", (INT16)FONT12POINT1, FONT_MCOLOR_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT, 
+		CreateTextButton( gzEditorStrings[EDITOR_STR_FIND], (INT16)FONT12POINT1, FONT_MCOLOR_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT, 
 		390, 395, 30, 30, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL + 1, DEFAULT_MOVE_CALLBACK, MercsFindSelectedMercCallback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_DIRECTION_FIND] , L"Find selected merc" );
+	SetButtonFastHelpText( iEditorButton[ MERCS_DIRECTION_FIND] , gzEditorStrings[EDITOR_STR_FIND_SEL_MERC] );
 
 	iEditorButton[ MERCS_EQUIPMENT_BAD ] =
 		CreateTextButton( L"BAD", (INT16)SMALLCOMPFONT, FONT_GRAY1, FONT_BLACK, BUTTON_USE_DEFAULT,
@@ -347,8 +347,8 @@ void InitEditorMercsToolbar()
 		CreateEasyNoToggleButton( 360,436,"EDITOR\\rightarrow.sti", MercsSetColorsCallback );
 	for ( x = FIRST_MERCS_COLOR_BUTTON; x < LAST_MERCS_COLOR_BUTTON; x+=2 )
 	{
-		SetButtonFastHelpText( iEditorButton[x], L"Previous color set" );
-		SetButtonFastHelpText( iEditorButton[x + 1], L"Next color set" );
+		SetButtonFastHelpText( iEditorButton[x], gzEditorStrings[EDITOR_STR_PREVIOUS_COL_SET] );
+		SetButtonFastHelpText( iEditorButton[x + 1], gzEditorStrings[EDITOR_STR_NEXT_COL_SET] );
 		DisableButton( iEditorButton[ x ] );
 		DisableButton( iEditorButton[ x + 1 ] );
 	}
@@ -362,28 +362,28 @@ void InitEditorMercsToolbar()
 
 	iEditorButton[ MERCS_SCHEDULE_VARIANCE1 ] = 
 		CreateCheckBoxButton(	309, 375, "EDITOR\\SmCheckBox.sti", MSYS_PRIORITY_NORMAL, MercsScheduleToggleVariance1Callback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE_VARIANCE1 ], L"Toggle time variance (+ or - 15 minutes)");
+	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE_VARIANCE1 ], gzEditorStrings[EDITOR_STR_TOGGLE_TIME_VAR]);
 	iEditorButton[ MERCS_SCHEDULE_VARIANCE2 ] = 
 		CreateCheckBoxButton(	309, 396, "EDITOR\\SmCheckBox.sti", MSYS_PRIORITY_NORMAL, MercsScheduleToggleVariance2Callback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE_VARIANCE2 ], L"Toggle time variance (+ or - 15 minutes)");
+	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE_VARIANCE2 ], gzEditorStrings[EDITOR_STR_TOGGLE_TIME_VAR]);
 	iEditorButton[ MERCS_SCHEDULE_VARIANCE3 ] = 
 		CreateCheckBoxButton(	309, 417, "EDITOR\\SmCheckBox.sti", MSYS_PRIORITY_NORMAL, MercsScheduleToggleVariance3Callback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE_VARIANCE3 ], L"Toggle time variance (+ or - 15 minutes)");
+	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE_VARIANCE3 ], gzEditorStrings[EDITOR_STR_TOGGLE_TIME_VAR]);
 	iEditorButton[ MERCS_SCHEDULE_VARIANCE4 ] = 
 		CreateCheckBoxButton(	309, 438, "EDITOR\\SmCheckBox.sti", MSYS_PRIORITY_NORMAL, MercsScheduleToggleVariance4Callback );
-	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE_VARIANCE4 ], L"Toggle time variance (+ or - 15 minutes)");
+	SetButtonFastHelpText( iEditorButton[ MERCS_SCHEDULE_VARIANCE4 ], gzEditorStrings[EDITOR_STR_TOGGLE_TIME_VAR]);
 	
 	iEditorButton[ MERCS_SCHEDULE_ACTION1 ] =
-		CreateTextButton( L"No action", FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_NO_ACTION], FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		186, 373, 77, 16, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsScheduleAction1Callback );
 	iEditorButton[ MERCS_SCHEDULE_ACTION2 ] =
-		CreateTextButton( L"No action", FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_NO_ACTION], FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		186, 394, 77, 16, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsScheduleAction2Callback );
 	iEditorButton[ MERCS_SCHEDULE_ACTION3 ] =
-		CreateTextButton( L"No action", FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_NO_ACTION], FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		186, 415, 77, 16, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsScheduleAction3Callback );
 	iEditorButton[ MERCS_SCHEDULE_ACTION4 ] =
-		CreateTextButton( L"No action", FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_NO_ACTION], FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		186, 436, 77, 16, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsScheduleAction4Callback );
 	
 	iEditorButton[ MERCS_SCHEDULE_DATA1A ] =
@@ -411,7 +411,7 @@ void InitEditorMercsToolbar()
 		CreateTextButton( L"", FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		381, 436, 40, 16, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsScheduleData4BCallback );
 	iEditorButton[ MERCS_SCHEDULE_CLEAR ] =
-		CreateTextButton( L"Clear Schedule", FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_CLEAR_SCHED], FONT10ARIAL, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		516, 362, 77, 16, BUTTON_NO_TOGGLE, MSYS_PRIORITY_NORMAL, DEFAULT_MOVE_CALLBACK, MercsScheduleClearCallback );
 	HideEditorButtons( MERCS_SCHEDULE_DATA1A, MERCS_SCHEDULE_DATA4B );
 
@@ -447,15 +447,15 @@ void InitEditorMercsToolbar()
 void InitEditorBuildingsToolbar()
 {
 	iEditorButton[BUILDING_TOGGLE_ROOF_VIEW] =
-		CreateTextButton(L"ROOFS",(UINT16)SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_ROOFS],(UINT16)SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		110, 400, 50, 15, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,BUTTON_NO_CALLBACK, 
 		BuildingToggleRoofViewCallback);
 	iEditorButton[BUILDING_TOGGLE_WALL_VIEW] = 
-		CreateTextButton(L"WALLS",(UINT16)SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_WALLS],(UINT16)SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		110, 415, 50, 15, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,BUTTON_NO_CALLBACK, 
 		BuildingToggleWallViewCallback);
 	iEditorButton[BUILDING_TOGGLE_INFO_VIEW] =
-		CreateTextButton(L"ROOM INFO",(UINT16)SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_ROOM_INFO],(UINT16)SMALLCOMPFONT, FONT_YELLOW, FONT_BLACK, BUTTON_USE_DEFAULT,
 		110, 430, 50, 15, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,BUTTON_NO_CALLBACK, 
 		BuildingToggleInfoViewCallback);
 	//Selection method buttons
@@ -464,124 +464,124 @@ void InitEditorBuildingsToolbar()
 	//SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_WALLS],L"Place walls using selection method");
 
 
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_WALLS],
-		L"Place walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\nPlace walls using selection method\n");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_WALLS], 
+		gzEditorStrings[EDITOR_STR_PLACE_WALLS]);
 	
 	
 	iEditorButton[BUILDING_PLACE_DOORS] = 
 		CreateEasyToggleButton( 210,370,"EDITOR\\door.sti",	BuildingDoorCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_DOORS],L"Place doors using selection method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_DOORS],gzEditorStrings[EDITOR_STR_PLACE_DOORS]);
 	iEditorButton[BUILDING_PLACE_ROOFS] = 
 		CreateEasyToggleButton( 240,370,"EDITOR\\roof.sti", BuildingRoofCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_ROOFS],L"Place roofs using selection method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_ROOFS],gzEditorStrings[EDITOR_STR_PLACE_ROOFS]);
 	iEditorButton[BUILDING_PLACE_WINDOWS] = 
 		CreateEasyToggleButton( 180,400,"EDITOR\\window.sti", BuildingWindowCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_WINDOWS],L"Place windows using selection method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_WINDOWS],gzEditorStrings[EDITOR_STR_PLACE_WINDOWS]);
 	iEditorButton[BUILDING_PLACE_BROKEN_WALLS] = 
 		CreateEasyToggleButton( 210,400,"EDITOR\\crackwall.sti", BuildingCrackWallCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_BROKEN_WALLS],L"Place damaged walls using selection method.");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_BROKEN_WALLS],gzEditorStrings[EDITOR_STR_PLACE_DAMAGED_WALLS]);
 	iEditorButton[BUILDING_PLACE_FURNITURE] = 
 		CreateEasyToggleButton( 240,400,"EDITOR\\decor.sti", BuildingFurnitureCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_FURNITURE],L"Place furniture using selection method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_FURNITURE],gzEditorStrings[EDITOR_STR_PLACE_FURNITURE]);
 	iEditorButton[BUILDING_PLACE_DECALS] = 
 		CreateEasyToggleButton( 180,430,"EDITOR\\decal.sti", BuildingDecalCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_DECALS],L"Place wall decals using selection method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_DECALS],gzEditorStrings[EDITOR_STR_PLACE_DECALS]);
 	iEditorButton[BUILDING_PLACE_FLOORS] = 
 		CreateEasyToggleButton( 210,430,"EDITOR\\floor.sti", BuildingFloorCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_FLOORS],L"Place floors using selection method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_FLOORS],gzEditorStrings[EDITOR_STR_PLACE_FLOORS]);
 	iEditorButton[BUILDING_PLACE_TOILETS] = 
 		CreateEasyToggleButton( 240,430,"EDITOR\\toilet.sti", BuildingToiletCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_TOILETS],L"Place generic furniture using selection method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_PLACE_TOILETS],gzEditorStrings[EDITOR_STR_PLACE_GEN_FURNITURE]);
 
 	//Smart method buttons
 	iEditorButton[BUILDING_SMART_WALLS] = 
 		CreateEasyToggleButton( 290,370,"EDITOR\\wall.sti", BuildingSmartWallCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_SMART_WALLS],L"Place walls using smart method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_SMART_WALLS],gzEditorStrings[EDITOR_STR_SMART_WALLS]);
 	iEditorButton[BUILDING_SMART_DOORS] = 
 		CreateEasyToggleButton( 320,370,"EDITOR\\door.sti", BuildingSmartDoorCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_SMART_DOORS],L"Place doors using smart method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_SMART_DOORS],gzEditorStrings[EDITOR_STR_SMART_DOORS]);
 	iEditorButton[BUILDING_SMART_WINDOWS] = 
 		CreateEasyToggleButton( 290,400,"EDITOR\\window.sti", BuildingSmartWindowCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_SMART_WINDOWS],L"Place windows using smart method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_SMART_WINDOWS],gzEditorStrings[EDITOR_STR_SMART_WINDOWS]);
 	iEditorButton[BUILDING_SMART_BROKEN_WALLS] = 
 		CreateEasyToggleButton( 320,400,"EDITOR\\crackwall.sti", BuildingSmartCrackWallCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_SMART_BROKEN_WALLS],L"Place damaged walls using smart method");
+	SetButtonFastHelpText(iEditorButton[BUILDING_SMART_BROKEN_WALLS],gzEditorStrings[EDITOR_STR_SMART_DAMAGED_WALLS]);
 	iEditorButton[BUILDING_DOORKEY] = 
 		CreateEasyToggleButton( 290, 430,"EDITOR\\key.sti", BuildingDoorKeyCallback);
 	SetButtonFastHelpText(iEditorButton[BUILDING_DOORKEY], L"Lock or trap existing doors" );
 
 	iEditorButton[BUILDING_NEW_ROOM] = 
 		CreateEasyToggleButton( 370,370,"EDITOR\\newroom.sti", BuildingNewRoomCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_NEW_ROOM],L"Add a new room");
+	SetButtonFastHelpText(iEditorButton[BUILDING_NEW_ROOM],gzEditorStrings[EDITOR_STR_ADD_ROOM]);
 	iEditorButton[BUILDING_CAVE_DRAWING] = 
 		CreateEasyToggleButton( 370,370,"EDITOR\\caves.sti", BuildingCaveDrawingCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_CAVE_DRAWING],L"Edit cave walls.");
+	SetButtonFastHelpText(iEditorButton[BUILDING_CAVE_DRAWING],gzEditorStrings[EDITOR_STR_EDIT_CAVE]);
 	iEditorButton[BUILDING_SAW_ROOM] = 
 		CreateEasyToggleButton( 370,400,"EDITOR\\sawroom.sti", BuildingSawRoomCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_SAW_ROOM],L"Remove an area from existing building.");
+	SetButtonFastHelpText(iEditorButton[BUILDING_SAW_ROOM],gzEditorStrings[EDITOR_STR_REMOVE_AREA]);
 	iEditorButton[BUILDING_KILL_BUILDING] = 
 		CreateEasyToggleButton( 370,430,"EDITOR\\delroom.sti", BuildingKillBuildingCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_KILL_BUILDING],L"Remove a building");
+	SetButtonFastHelpText(iEditorButton[BUILDING_KILL_BUILDING],gzEditorStrings[EDITOR_STR_REMOVE_BUILDING]);
 	iEditorButton[BUILDING_NEW_ROOF] = 
 		CreateEasyToggleButton( 400,430,"EDITOR\\newroof.sti", BuildingNewRoofCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_NEW_ROOF],L"Add/replace building's roof with new flat roof.");
+	SetButtonFastHelpText(iEditorButton[BUILDING_NEW_ROOF],gzEditorStrings[EDITOR_STR_REPLACE_ROOF]);
 	iEditorButton[BUILDING_COPY_BUILDING] = 
 		CreateEasyToggleButton( 430,430,"EDITOR\\copyroom.sti", BuildingCopyBuildingCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_COPY_BUILDING],L"Copy a building");
+	SetButtonFastHelpText(iEditorButton[BUILDING_COPY_BUILDING],gzEditorStrings[EDITOR_STR_COPY_BUILDING]);
 	iEditorButton[BUILDING_MOVE_BUILDING] = 
 		CreateEasyToggleButton( 460,430,"EDITOR\\moveroom.sti", BuildingMoveBuildingCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_MOVE_BUILDING],L"Move a building");
+	SetButtonFastHelpText(iEditorButton[BUILDING_MOVE_BUILDING],gzEditorStrings[EDITOR_STR_MOVE_BUILDING]);
 	iEditorButton[BUILDING_DRAW_ROOMNUM] = 
 		CreateEasyToggleButton( 410,370,"EDITOR\\addTileRoom.sti", BuildingDrawRoomNumCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_DRAW_ROOMNUM],L"Draw room number");
+	SetButtonFastHelpText(iEditorButton[BUILDING_DRAW_ROOMNUM],gzEditorStrings[EDITOR_STR_DRAW_ROOM_NUMBER]);
 	iEditorButton[BUILDING_ERASE_ROOMNUM] =
 		CreateEasyToggleButton( 440,370,"EDITOR\\killTileRoom.sti", BuildingEraseRoomNumCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_ERASE_ROOMNUM],L"Erase room numbers");
+	SetButtonFastHelpText(iEditorButton[BUILDING_ERASE_ROOMNUM],gzEditorStrings[EDITOR_STR_ERASE_ROOM_NUMBER]);
 
 	iEditorButton[BUILDING_TOGGLE_ERASEMODE] = 
 		CreateEasyToggleButton( 500,400,"EDITOR\\eraser.sti", BtnEraseCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_TOGGLE_ERASEMODE],L"Toggle erase mode");
+	SetButtonFastHelpText(iEditorButton[BUILDING_TOGGLE_ERASEMODE],gzEditorStrings[EDITOR_STR_TOGGLE_ERASE_MODE]);
 	iEditorButton[BUILDING_UNDO] = 
 		CreateEasyNoToggleButton( 530,400,"EDITOR\\undo.sti", BtnUndoCallback);
-	SetButtonFastHelpText(iEditorButton[BUILDING_UNDO],L"Undo last change");
+	SetButtonFastHelpText(iEditorButton[BUILDING_UNDO],gzEditorStrings[EDITOR_STR_UNDO_LAST]);
 	iEditorButton[BUILDING_CYCLE_BRUSHSIZE] = 
 		CreateEasyNoToggleButton( 500,430,"EDITOR\\paint.sti",BtnBrushCallback);
-	SetButtonFastHelpText( iEditorButton[ BUILDING_CYCLE_BRUSHSIZE ], L"Cycle brush size");
+	SetButtonFastHelpText( iEditorButton[ BUILDING_CYCLE_BRUSHSIZE ], gzEditorStrings[EDITOR_STR_CYCLE_BRUSH_SIZE]);
 }
 
 void InitEditorItemsToolbar()
 {
 	SetFontForeground( FONT_MCOLOR_LTRED );
 	iEditorButton[ITEMS_WEAPONS] = 
-		CreateTextButton(L"Weapons",(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_WEAPONS],(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
 		100, 440, 59, 20, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,DEFAULT_MOVE_CALLBACK, 
 		ItemsWeaponsCallback);
 	iEditorButton[ITEMS_AMMO] = 
-		CreateTextButton(L"Ammo",(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_AMMO],(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
 		159, 440, 40, 20, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,DEFAULT_MOVE_CALLBACK, 
 		ItemsAmmoCallback);
 	iEditorButton[ITEMS_ARMOUR] = 
-		CreateTextButton(L"Armour",(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_ARMOR],(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
 		199, 440, 52, 20, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,DEFAULT_MOVE_CALLBACK, 
 		ItemsArmourCallback);
 	iEditorButton[ITEMS_EXPLOSIVES] = 
-		CreateTextButton(L"Explosives",(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_EXPLOSIVES],(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
 		251, 440, 69, 20, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,DEFAULT_MOVE_CALLBACK, 
 		ItemsExplosivesCallback);
 	iEditorButton[ITEMS_EQUIPMENT1] = 
-		CreateTextButton(L"E1",(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_E1],(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
 		320, 440, 21, 20, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,DEFAULT_MOVE_CALLBACK, 
 		ItemsEquipment1Callback);
 	iEditorButton[ITEMS_EQUIPMENT2] = 
-		CreateTextButton(L"E2",(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_E2],(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
 		341, 440, 21, 20, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,DEFAULT_MOVE_CALLBACK, 
 		ItemsEquipment2Callback);
 	iEditorButton[ITEMS_EQUIPMENT3] = 
-		CreateTextButton(L"E3",(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_E3],(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
 		362, 440, 21, 20, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,DEFAULT_MOVE_CALLBACK, 
 		ItemsEquipment3Callback);
 	iEditorButton[ITEMS_TRIGGERS] = 
-		CreateTextButton( L"Triggers",(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton( gzEditorStrings[EDITOR_STR_TRIGGERS],(UINT16)BLOCKFONT, FONT_MCOLOR_DKWHITE, FONT_BLACK, BUTTON_USE_DEFAULT,
 		383, 440, 59, 20, BUTTON_TOGGLE,MSYS_PRIORITY_NORMAL,DEFAULT_MOVE_CALLBACK,
 		ItemsTriggersCallback );
 	iEditorButton[ITEMS_KEYS] = 
@@ -600,7 +600,7 @@ void InitEditorMapInfoToolbar()
 {
 	iEditorButton[MAPINFO_ADD_LIGHT1_SOURCE] = 
 		CreateEasyToggleButton( 10, 362, "EDITOR\\light.sti", BtnDrawLightsCallback );
-	SetButtonFastHelpText(iEditorButton[MAPINFO_ADD_LIGHT1_SOURCE],L"Add ambient light source");
+	SetButtonFastHelpText(iEditorButton[MAPINFO_ADD_LIGHT1_SOURCE],gzEditorStrings[EDITOR_STR_ADD_LIGHT_SOURCE]);
 
 	iEditorButton[ MAPINFO_LIGHT_PANEL ] = 
 		CreateTextButton( 0, 0, 0, 0, BUTTON_USE_DEFAULT, 45, 362, 60, 50, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK );
@@ -616,7 +616,7 @@ void InitEditorMapInfoToolbar()
 	
 	iEditorButton[MAPINFO_TOGGLE_FAKE_LIGHTS] = 
 		CreateEasyToggleButton( 120, 362, "EDITOR\\fakelight.sti", BtnFakeLightCallback );
-	SetButtonFastHelpText(iEditorButton[MAPINFO_TOGGLE_FAKE_LIGHTS], L"Toggle fake ambient lights.");
+	SetButtonFastHelpText(iEditorButton[MAPINFO_TOGGLE_FAKE_LIGHTS], gzEditorStrings[EDITOR_STR_TOGGLE_FAKE_LIGHTS]);
 
 	iEditorButton[ MAPINFO_RADIO_PANEL ] = 
 		CreateTextButton( 0, 0, 0, 0, BUTTON_USE_DEFAULT, 207, 362, 70, 50, BUTTON_TOGGLE, MSYS_PRIORITY_NORMAL, BUTTON_NO_CALLBACK, BUTTON_NO_CALLBACK );
@@ -631,71 +631,71 @@ void InitEditorMapInfoToolbar()
 
 	iEditorButton[MAPINFO_DRAW_EXITGRIDS] = 
 		CreateEasyToggleButton( 305, 372, "EDITOR\\exitgridbut.sti", MapInfoDrawExitGridCallback );
-	SetButtonFastHelpText(iEditorButton[MAPINFO_DRAW_EXITGRIDS],L"Add exit grids (r-clk to query existing).");
+	SetButtonFastHelpText(iEditorButton[MAPINFO_DRAW_EXITGRIDS],gzEditorStrings[EDITOR_STR_ADD_EXIT_GRIDS]);
 	iEditorButton[MAPINFO_CYCLE_BRUSHSIZE] = 
 		CreateEasyNoToggleButton( 420, 430, "EDITOR\\paint.sti", BtnBrushCallback );
-	SetButtonFastHelpText(iEditorButton[MAPINFO_CYCLE_BRUSHSIZE],L"Cycle brush size");
+	SetButtonFastHelpText(iEditorButton[MAPINFO_CYCLE_BRUSHSIZE],gzEditorStrings[EDITOR_STR_CYCLE_BRUSH_SIZE]);
 	iEditorButton[MAPINFO_UNDO] = 
 		CreateEasyNoToggleButton( 510, 430, "EDITOR\\undo.sti", BtnUndoCallback );
-	SetButtonFastHelpText(iEditorButton[MAPINFO_UNDO],L"Undo last change");
+	SetButtonFastHelpText(iEditorButton[MAPINFO_UNDO],gzEditorStrings[EDITOR_STR_UNDO_LAST]);
 	iEditorButton[MAPINFO_TOGGLE_ERASEMODE] = 
 		CreateEasyToggleButton( 540, 430, "EDITOR\\eraser.sti", BtnEraseCallback);
-	SetButtonFastHelpText(iEditorButton[MAPINFO_TOGGLE_ERASEMODE],L"Toggle erase mode");
+	SetButtonFastHelpText(iEditorButton[MAPINFO_TOGGLE_ERASEMODE],gzEditorStrings[EDITOR_STR_TOGGLE_ERASE_MODE]);
 
 	iEditorButton[ MAPINFO_NORTH_POINT ] = 
 		CreateEasyToggleButton( 540, 365, "EDITOR\\north.sti", MapInfoEntryPointsCallback);
-	SetButtonFastHelpText( iEditorButton[ MAPINFO_NORTH_POINT ], L"Specify north point for validation purposes.");
+	SetButtonFastHelpText( iEditorButton[ MAPINFO_NORTH_POINT ], gzEditorStrings[EDITOR_STR_SPECIFY_NORTH_POINT]);
 
 	iEditorButton[ MAPINFO_WEST_POINT ] = 
 		CreateEasyToggleButton( 525, 386, "EDITOR\\west.sti", MapInfoEntryPointsCallback);
-	SetButtonFastHelpText( iEditorButton[ MAPINFO_WEST_POINT ], L"Specify west point for validation purposes.");
+	SetButtonFastHelpText( iEditorButton[ MAPINFO_WEST_POINT ], gzEditorStrings[EDITOR_STR_SPECIFY_WEST_POINT]);
 
 	iEditorButton[ MAPINFO_EAST_POINT ] = 
 		CreateEasyToggleButton( 555, 386, "EDITOR\\east.sti", MapInfoEntryPointsCallback);
-	SetButtonFastHelpText( iEditorButton[ MAPINFO_EAST_POINT ], L"Specify east point for validation purposes.");
+	SetButtonFastHelpText( iEditorButton[ MAPINFO_EAST_POINT ], gzEditorStrings[EDITOR_STR_SPECIFY_EAST_POINT]);
 
 	iEditorButton[ MAPINFO_SOUTH_POINT ] = 
 		CreateEasyToggleButton( 540, 407, "EDITOR\\south.sti", MapInfoEntryPointsCallback);
-	SetButtonFastHelpText( iEditorButton[ MAPINFO_SOUTH_POINT ], L"Specify south point for validation purposes.");
+	SetButtonFastHelpText( iEditorButton[ MAPINFO_SOUTH_POINT ], gzEditorStrings[EDITOR_STR_SPECIFY_SOUTH_POINT]);
 
 	iEditorButton[ MAPINFO_CENTER_POINT ] = 
 		CreateEasyToggleButton( 590, 375, "EDITOR\\center.sti", MapInfoEntryPointsCallback);
-	SetButtonFastHelpText( iEditorButton[ MAPINFO_CENTER_POINT ], L"Specify center point for validation purposes.");
+	SetButtonFastHelpText( iEditorButton[ MAPINFO_CENTER_POINT ], gzEditorStrings[EDITOR_STR_SPECIFY_CENTER_POINT]);
 
 	iEditorButton[ MAPINFO_ISOLATED_POINT ] = 
 		CreateEasyToggleButton( 590, 396, "EDITOR\\isolated.sti", MapInfoEntryPointsCallback);
-	SetButtonFastHelpText( iEditorButton[ MAPINFO_ISOLATED_POINT ], L"Specify isolated point for validation purposes.");
+	SetButtonFastHelpText( iEditorButton[ MAPINFO_ISOLATED_POINT ], gzEditorStrings[EDITOR_STR_SPECIFY_ISOLATED_POINT]);
 }
 
 void InitEditorOptionsToolbar()
 {
 	iEditorButton[OPTIONS_NEW_MAP] = 
 		CreateEasyNoToggleButton( 71,401,"EDITOR\\new.sti",  BtnNewMapCallback);
-	SetButtonFastHelpText(iEditorButton[OPTIONS_NEW_MAP],L"New map");
+	SetButtonFastHelpText(iEditorButton[OPTIONS_NEW_MAP],gzEditorStrings[EDITOR_STR_NEW_MAP]);
 
 	iEditorButton[OPTIONS_NEW_BASEMENT] = 
 		CreateEasyNoToggleButton( 101,401,"EDITOR\\new.sti",  BtnNewBasementCallback);
-	SetButtonFastHelpText(iEditorButton[OPTIONS_NEW_BASEMENT],L"New basement");
+	SetButtonFastHelpText(iEditorButton[OPTIONS_NEW_BASEMENT],gzEditorStrings[EDITOR_STR_NEW_BASEMENT]);
 
 	iEditorButton[OPTIONS_NEW_CAVES] = 
 		CreateEasyNoToggleButton( 131,401,"EDITOR\\new.sti", BtnNewCavesCallback);
-	SetButtonFastHelpText(iEditorButton[OPTIONS_NEW_CAVES],L"New cave level");
+	SetButtonFastHelpText(iEditorButton[OPTIONS_NEW_CAVES],gzEditorStrings[EDITOR_STR_NEW_CAVE]);
 
 	iEditorButton[OPTIONS_SAVE_MAP] = 
 		CreateEasyNoToggleButton( 161,401,"EDITOR\\save.sti",  BtnSaveCallback);
-	SetButtonFastHelpText(iEditorButton[OPTIONS_SAVE_MAP],L"Save map");
+	SetButtonFastHelpText(iEditorButton[OPTIONS_SAVE_MAP],gzEditorStrings[EDITOR_STR_SAVE_MAP]);
 
 	iEditorButton[OPTIONS_LOAD_MAP] = 
 		CreateEasyNoToggleButton( 191,401,"EDITOR\\load.sti",  BtnLoadCallback);
-	SetButtonFastHelpText(iEditorButton[OPTIONS_LOAD_MAP],L"Load map");
+	SetButtonFastHelpText(iEditorButton[OPTIONS_LOAD_MAP],gzEditorStrings[EDITOR_STR_LOAD_MAP]);
 
 	iEditorButton[OPTIONS_CHANGE_TILESET] = 
 		CreateEasyNoToggleButton( 221,401,"EDITOR\\tileset.sti", BtnChangeTilesetCallback);
-	SetButtonFastHelpText(iEditorButton[OPTIONS_CHANGE_TILESET],L"Select tileset");
+	SetButtonFastHelpText(iEditorButton[OPTIONS_CHANGE_TILESET],gzEditorStrings[EDITOR_STR_SELECT_TILESET]);
 
 	iEditorButton[OPTIONS_LEAVE_EDITOR] = 
 		CreateEasyNoToggleButton( 251,401,"EDITOR\\cancel.sti", BtnCancelCallback);
-	SetButtonFastHelpText(iEditorButton[OPTIONS_LEAVE_EDITOR],L"Leave Editor mode");
+	SetButtonFastHelpText(iEditorButton[OPTIONS_LEAVE_EDITOR],gzEditorStrings[EDITOR_STR_LEAVE_EDITOR]);
 
 	iEditorButton[OPTIONS_QUIT_GAME] = 
 		CreateEasyNoToggleButton( 281,401,"EDITOR\\cancel.sti", BtnQuitCallback);
@@ -706,91 +706,91 @@ void InitEditorTerrainToolbar()
 {
 	iEditorButton[TERRAIN_FGROUND_TEXTURES] = 
 		CreateEasyToggleButton( 100,400,"EDITOR\\downgrid.sti", BtnFgGrndCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_FGROUND_TEXTURES],L"Draw ground textures");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_FGROUND_TEXTURES],gzEditorStrings[EDITOR_STR_DRAW_GROUND]);
 
 	iEditorButton[TERRAIN_BGROUND_TEXTURES] = 
 		CreateEasyToggleButton( 130,400,"EDITOR\\upgrid.sti", BtnBkGrndCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_BGROUND_TEXTURES],L"Set map ground textures");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_BGROUND_TEXTURES],gzEditorStrings[EDITOR_STR_SET_GROUND]);
 
 	iEditorButton[TERRAIN_PLACE_CLIFFS] = 
 		CreateEasyToggleButton( 160,400,"EDITOR\\banks.sti", BtnBanksCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_CLIFFS],L"Place banks and cliffs");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_CLIFFS],gzEditorStrings[EDITOR_STR_PLACE_CLIFFS]);
 
 	iEditorButton[TERRAIN_PLACE_ROADS] = 
 		CreateEasyToggleButton( 190,400,"EDITOR\\road.sti", BtnRoadsCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_ROADS],L"Draw roads");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_ROADS],gzEditorStrings[EDITOR_STR_DRAW_ROADS]);
 
 	iEditorButton[TERRAIN_PLACE_DEBRIS] = 
 		CreateEasyToggleButton( 220,400,"EDITOR\\debris.sti", BtnDebrisCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_DEBRIS],L"Draw debris");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_DEBRIS],gzEditorStrings[EDITOR_STR_DRAW_DEBRIS]);
 
 	iEditorButton[TERRAIN_PLACE_TREES] = 
 		CreateEasyToggleButton( 250,400,"EDITOR\\tree.sti", BtnObjectCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_TREES],L"Place trees & bushes");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_TREES],gzEditorStrings[EDITOR_STR_PLACE_TREES]);
 	
 	iEditorButton[TERRAIN_PLACE_ROCKS] = 
 		CreateEasyToggleButton( 280,400,"EDITOR\\num1.sti", BtnObject1Callback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_ROCKS],L"Place rocks");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_ROCKS],gzEditorStrings[EDITOR_STR_PLACE_ROCKS]);
 	
 	iEditorButton[TERRAIN_PLACE_MISC] = 
 		CreateEasyToggleButton( 310,400,"EDITOR\\num2.sti", BtnObject2Callback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_MISC],L"Place barrels & other junk");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_PLACE_MISC],gzEditorStrings[EDITOR_STR_PLACE_JUNK]);
 	
 	iEditorButton[TERRAIN_FILL_AREA] = 
 		CreateEasyToggleButton( 100,430,"EDITOR\\fill.sti", BtnFillCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_FILL_AREA],L"Fill area");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_FILL_AREA],gzEditorStrings[EDITOR_STR_FILL_AREA]);
 
 	iEditorButton[TERRAIN_UNDO] = 
 		CreateEasyNoToggleButton( 130,430,"EDITOR\\undo.sti", BtnUndoCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_UNDO],L"Undo last change");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_UNDO],gzEditorStrings[EDITOR_STR_UNDO_LAST]);
 
 	iEditorButton[TERRAIN_TOGGLE_ERASEMODE] = 
 		CreateEasyToggleButton( 160,430,"EDITOR\\eraser.sti", BtnEraseCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_TOGGLE_ERASEMODE],L"Toggle erase mode");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_TOGGLE_ERASEMODE],gzEditorStrings[EDITOR_STR_TOGGLE_ERASE_MODE]);
 
 	iEditorButton[TERRAIN_CYCLE_BRUSHSIZE] = 
 		CreateEasyNoToggleButton( 190,430,"EDITOR\\paint.sti", BtnBrushCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_CYCLE_BRUSHSIZE],L"Cycle brush size");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_CYCLE_BRUSHSIZE],gzEditorStrings[EDITOR_STR_CYCLE_BRUSH_SIZE]);
 
 	iEditorButton[TERRAIN_RAISE_DENSITY] = 
 		CreateEasyNoToggleButton( 280,430,"EDITOR\\uparrow.sti", BtnIncBrushDensityCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_RAISE_DENSITY],L"Raise brush density");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_RAISE_DENSITY],gzEditorStrings[EDITOR_STR_RAISE_BRUSH_DENSITY]);
 	
 	iEditorButton[TERRAIN_LOWER_DENSITY] = 
 		CreateEasyNoToggleButton( 350,430,"EDITOR\\downarrow.sti", BtnDecBrushDensityCallback);
-	SetButtonFastHelpText(iEditorButton[TERRAIN_LOWER_DENSITY],L"Lower brush density");
+	SetButtonFastHelpText(iEditorButton[TERRAIN_LOWER_DENSITY],gzEditorStrings[EDITOR_STR_LOWER_BRUSH_DENSITY]);
 }
 
 void CreateEditorTaskbarInternal()
 {
 	//Create the tabs for the editor taskbar
 	iEditorButton[ TAB_TERRAIN ] = 
-		CreateTextButton(L"Terrain",  (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_TERRAIN],  (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
 		100, 460, 90, 20, BUTTON_TOGGLE,MSYS_PRIORITY_HIGH,BUTTON_NO_CALLBACK, 
 		TaskTerrainCallback);
 	SpecifyButtonDownTextColors( iEditorButton[TAB_TERRAIN], FONT_YELLOW, FONT_ORANGE );
 	iEditorButton[ TAB_BUILDINGS ] = 
-		CreateTextButton(L"Buildings", (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_BUILDINGS], (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
 		190, 460, 90, 20, BUTTON_TOGGLE,MSYS_PRIORITY_HIGH,BUTTON_NO_CALLBACK, 
 		TaskBuildingCallback);
 	SpecifyButtonDownTextColors( iEditorButton[TAB_BUILDINGS], FONT_YELLOW, FONT_ORANGE );
 	iEditorButton[ TAB_ITEMS ] = 
-		CreateTextButton(L"Items", (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_ITEMS], (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
 		280, 460, 90, 20, BUTTON_TOGGLE,MSYS_PRIORITY_HIGH,BUTTON_NO_CALLBACK, 
 		TaskItemsCallback);
 	SpecifyButtonDownTextColors( iEditorButton[TAB_ITEMS], FONT_YELLOW, FONT_ORANGE );
 	iEditorButton[ TAB_MERCS ] = 
-		CreateTextButton(L"Mercs", (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_MERCS], (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
 		370, 460, 90, 20, BUTTON_TOGGLE,MSYS_PRIORITY_HIGH,BUTTON_NO_CALLBACK, 
 		TaskMercsCallback);
 	SpecifyButtonDownTextColors( iEditorButton[TAB_MERCS], FONT_YELLOW, FONT_ORANGE );
 	iEditorButton[ TAB_MAPINFO ] = 
-		CreateTextButton(L"Map Info", (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_MAP_INFO], (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
 		460, 460, 90, 20, BUTTON_TOGGLE,MSYS_PRIORITY_HIGH,BUTTON_NO_CALLBACK, 
 		TaskMapInfoCallback);
 	SpecifyButtonDownTextColors( iEditorButton[TAB_MAPINFO], FONT_YELLOW, FONT_ORANGE );
 	iEditorButton[ TAB_OPTIONS ] = 
-		CreateTextButton(L"Options", (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_MISC], (UINT16)SMALLFONT1, FONT_LTKHAKI, FONT_DKKHAKI, BUTTON_USE_DEFAULT,
 		550, 460, 90, 20, BUTTON_TOGGLE,MSYS_PRIORITY_HIGH,BUTTON_NO_CALLBACK, 
 		TaskOptionsCallback);
 	SpecifyButtonDownTextColors( iEditorButton[TAB_OPTIONS], FONT_YELLOW, FONT_ORANGE );

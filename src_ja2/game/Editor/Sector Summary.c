@@ -277,7 +277,7 @@ void CreateSummaryWindow()
 	DisableButton( iSummaryButton[ SUMMARY_BACKGROUND ] );
 
 	iSummaryButton[ SUMMARY_OKAY ] = 
-		CreateTextButton(L"Okay", FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT,
+		CreateTextButton(gzEditorStrings[EDITOR_STR_OKAY], FONT12POINT1, FONT_BLACK, FONT_BLACK, BUTTON_USE_DEFAULT,
 		585, 325, 50, 30, BUTTON_TOGGLE, MSYS_PRIORITY_HIGH, DEFAULT_MOVE_CALLBACK, 
 		SummaryOkayCallback );
 	//GiveButtonDefaultStatus( iSummaryButton[ SUMMARY_OKAY ], DEFAULT_STATUS_WINDOWS95 );
@@ -343,13 +343,13 @@ void CreateSummaryWindow()
 #if 0
 	iSummaryButton[ SUMMARY_NEW_GROUNDLEVEL ] = 
 		CreateSimpleButton( MAP_LEFT, MAP_BOTTOM+58, "EDITOR\\new.sti", BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, SummaryNewGroundLevelCallback );
-	SetButtonFastHelpText( iSummaryButton[ SUMMARY_NEW_GROUNDLEVEL ], L"New map" );
+	SetButtonFastHelpText( iSummaryButton[ SUMMARY_NEW_GROUNDLEVEL ], gzEditorStrings[EDITOR_STR_NEW_MAP] );
 	iSummaryButton[ SUMMARY_NEW_BASEMENTLEVEL ] = 
 		CreateSimpleButton( MAP_LEFT+32, MAP_BOTTOM+58, "EDITOR\\new.sti", BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, SummaryNewBasementLevelCallback );
-	SetButtonFastHelpText( iSummaryButton[ SUMMARY_NEW_BASEMENTLEVEL ], L"New basement" );
+	SetButtonFastHelpText( iSummaryButton[ SUMMARY_NEW_BASEMENTLEVEL ], gzEditorStrings[EDITOR_STR_NEW_BASEMENT] );
 	iSummaryButton[ SUMMARY_NEW_CAVELEVEL ] = 
 		CreateSimpleButton( MAP_LEFT+64, MAP_BOTTOM+58, "EDITOR\\new.sti", BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH, SummaryNewCaveLevelCallback );
-	SetButtonFastHelpText( iSummaryButton[ SUMMARY_NEW_CAVELEVEL ], L"New cave level" );
+	SetButtonFastHelpText( iSummaryButton[ SUMMARY_NEW_CAVELEVEL ], gzEditorStrings[EDITOR_STR_NEW_CAVE] );
 #endif
 	
 
@@ -1328,7 +1328,7 @@ void RenderSummaryWindow()
 		{
 			SetFontForeground( FONT_RED );
 		}
-		mprintf( 354, 33, L"Items" );
+		mprintf( 354, 33, gzEditorStrings[EDITOR_STR_ITEMS] );
 		pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
 		SetClippingRegionAndImageWidth( uiDestPitchBYTES, 0, 0, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 		RectangleDraw( TRUE, 350, 30, 405, 43, 0, pDestBuf );
@@ -2083,7 +2083,7 @@ void SummaryLoadMapCallback( GUI_BUTTON *btn, INT32 reason )
 		CreateProgressBar( 0, MAP_LEFT+5, MAP_BOTTOM+110, 573, MAP_BOTTOM+120 );
 
 		DefineProgressBarPanel( 0, 65, 79, 94, MAP_LEFT, 318, 578, 356 );
-		swprintf( str, L"Loading map:  %s", gszDisplayName );
+		swprintf( str, gzEditorStrings[EDITOR_STR_LOADING_STR], gszDisplayName );
 		SetProgressBarTitle( 0, str, BLOCKFONT2, FONT_RED, FONT_NEARBLACK );
 		SetProgressBarMsgAttributes( 0, SMALLCOMPFONT, FONT_BLACK, FONT_BLACK );
 

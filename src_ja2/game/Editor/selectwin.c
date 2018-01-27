@@ -195,28 +195,28 @@ void CreateJA2SelectionWindow( INT16 sWhat )
 														40, 40, BUTTON_TOGGLE,
  														MSYS_PRIORITY_HIGH,
 														DEFAULT_MOVE_CALLBACK, CnclClkCallback);
-	SetButtonFastHelpText(iCancelWin,L"Cancel selections");
+	SetButtonFastHelpText(iCancelWin,gzEditorStrings[EDITOR_STR_CANCEL_SELECTIONS]);
 
 	iOkWin = CreateIconButton((INT16)iButtonIcons[OK_ICON], 0,
 														BUTTON_USE_DEFAULT, 600, 0,
 														40, 40, BUTTON_TOGGLE,
 														MSYS_PRIORITY_HIGH,
 														DEFAULT_MOVE_CALLBACK, OkClkCallback);
-	SetButtonFastHelpText(iOkWin,L"Accept selections");
+	SetButtonFastHelpText(iOkWin,gzEditorStrings[EDITOR_STR_ACCEPT_SELECTIONS]);
 
 	iScrollUp = CreateIconButton((INT16)iButtonIcons[UP_ICON], 0,
 														BUTTON_USE_DEFAULT, 600, 80,
 														40, 160, BUTTON_NO_TOGGLE,
 														MSYS_PRIORITY_HIGH,
 														DEFAULT_MOVE_CALLBACK, UpClkCallback);
-	SetButtonFastHelpText(iScrollUp,L"Scroll window up");
+	SetButtonFastHelpText(iScrollUp,gzEditorStrings[EDITOR_STR_SCROLLUP]);
 
 	iScrollDown = CreateIconButton((INT16)iButtonIcons[DOWN_ICON], 0,
 														BUTTON_USE_DEFAULT, 600, 240,
 														40, 160, BUTTON_NO_TOGGLE,
 														MSYS_PRIORITY_HIGH,
 														DEFAULT_MOVE_CALLBACK, DwnClkCallback);
-	SetButtonFastHelpText(iScrollDown,L"Scroll window down");
+	SetButtonFastHelpText(iScrollDown,gzEditorStrings[EDITOR_STR_SCROLLDN]);
 
 	fButtonsPresent = TRUE;	
 
@@ -1060,19 +1060,19 @@ void DisplaySelectionWindowGraphicalInformation()
 		//usIndex = pNode->uiIndex;
 		if( !gTilesets[ giCurrentTilesetID].TileSurfaceFilenames[ pNode->uiObjIndx ][0] )
 		{
-			mprintf( 2, 2, L"%S[%d] is from default tileset %s (%S)",
+			mprintf( 2, 2, gzEditorStrings[EDITOR_STR_DEFAULT_TILESET_STR],
 				gTilesets[0].TileSurfaceFilenames[ pNode->uiObjIndx ],
 				pNode->uiIndex, gTilesets[0].zName,
 				gTileSurfaceName[ pNode->uiObjIndx ] );
 		}
 		else
 		{
-			mprintf( 2, 2, L"File:  %S, subindex:  %d (%S)", 
+			mprintf( 2, 2, gzEditorStrings[EDITOR_STR_FILE_SUB_STR], 
 				gTilesets[ giCurrentTilesetID ].TileSurfaceFilenames[ pNode->uiObjIndx ],
 				pNode->uiIndex, gTileSurfaceName[ pNode->uiObjIndx ] );
 		}
 	}
-	mprintf( 350, 2, L"Current Tileset:  %s",	gTilesets[ giCurrentTilesetID ].zName );
+	mprintf( 350, 2, gzEditorStrings[EDITOR_STR_CURRENT_TILESET_STR],	gTilesets[ giCurrentTilesetID ].zName );
 }	
 
 //----------------------------------------------------------------------------------------------

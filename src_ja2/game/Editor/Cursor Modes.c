@@ -35,7 +35,7 @@ UINT16 gusSavedBuildingSelectionType = AREASELECTION;
 INT16 sGridX, sGridY;
 INT16 sBadMarker = -1;
 
-UINT16 *wszSelType[6]= { L"Small", L"Medium", L"Large", L"XLarge", L"Width: xx", L"Area" };
+UINT16 *wszSelType[6]= { gzEditorStrings[EDITOR_STR_SMALL], gzEditorStrings[EDITOR_STR_MEDIUM], gzEditorStrings[EDITOR_STR_LARGE], gzEditorStrings[EDITOR_STR_XLARGE], L"Width: xx", gzEditorStrings[EDITOR_STR_AREA] };
 
 BOOLEAN gfAllowRightButtonSelections = FALSE;
 BOOLEAN gfCurrentSelectionWithRightButton = FALSE;
