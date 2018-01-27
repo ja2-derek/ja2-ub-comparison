@@ -903,7 +903,6 @@ void AddPossiblePendingEnemiesToBattle()
 	UINT8 ubSlots, ubNumAvailable;
 	UINT8 ubNumElites, ubNumTroops, ubNumAdmins;
 	GROUP *pGroup;
-	BOOLEAN fMagicallyAppeared=FALSE;
 
   if( !gfPendingEnemies )
 	{ //Optimization.  No point in checking if we know that there aren't any more enemies that can
@@ -969,7 +968,6 @@ void AddPossiblePendingEnemiesToBattle()
 					{
 						//Ja25: it doesnt matter the entry point at this point, it will become GRIDNO at a later point
 						ubStrategicInsertionCode = INSERTION_CODE_NORTH;
-						fMagicallyAppeared = FALSE;
 					}
 				}
 				else if( pGroup->ubNextX && pGroup->ubNextY )
@@ -984,7 +982,7 @@ void AddPossiblePendingEnemiesToBattle()
 						ubStrategicInsertionCode = INSERTION_CODE_NORTH;
 				}
 				//Add the number of each type of troop and place them in the appropriate positions
-				AddEnemiesToBattle( pGroup, ubStrategicInsertionCode, ubNumAdmins, ubNumTroops, ubNumElites, fMagicallyAppeared );
+				AddEnemiesToBattle( pGroup, ubStrategicInsertionCode, ubNumAdmins, ubNumTroops, ubNumElites, FALSE );
 			}
 		}
 		pGroup = pGroup->next;
