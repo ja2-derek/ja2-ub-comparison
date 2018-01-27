@@ -775,7 +775,6 @@ void HandleAdAndWarningArea( BOOLEAN fInit, BOOLEAN fRedraw )
 
 		case AIM_AD_BOBBY_RAY_AD:
 		  MSYS_EnableRegion(&gSelectedBannerRegion);
-//			ubPreviousAdvertisment = DisplayAd( fInit, fRedraw, AIM_AD_BOBBYR_AD_DELAY, AIM_AD_BOBBYR_AD__NUM_SUBIMAGES, guiBobbyRAdImages );
 			ubPreviousAdvertisment = DisplayBobbyRAd( fInit, fRedraw );
 			break;
 	}
@@ -1048,15 +1047,6 @@ void HandleTextOnAimAdd( UINT8 ubCurSubImage )
 				DisplayWrappedString(AIM_BOBBYR2_LINK_TEXT_X, AIM_BOBBYR2_LINK_TEXT_Y, AIM_WARNING_TEXT_WIDTH, 2, BOBBYR_UNDER_CONSTRUCTION_AD_FONT, BOBBYR_UNDER_CONSTRUCTION_AD_COLOR, AimScreenText[AIM_BOBBYR_ADD2], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED | INVALIDATE_TEXT ) ;
 				SetFontShadow( DEFAULT_SHADOW );
 			}
-/*
-			else
-			{
-				//Display Aim Warning Text 
-				SetFontShadow( 2 );
-//				DisplayWrappedString( AIM_BOBBYR3_LINK_TEXT_X, AIM_BOBBYR3_LINK_TEXT_Y, AIM_WARNING_TEXT_WIDTH, 2, BOBBYR_UNDER_CONSTRUCTION_AD_FONT, FONT_MCOLOR_WHITE, AimScreenText[AIM_BOBBYR_ADD3], FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED | INVALIDATE_TEXT );
-				SetFontShadow( DEFAULT_SHADOW );
-			}
-*/
 			break;
 	}
 }
