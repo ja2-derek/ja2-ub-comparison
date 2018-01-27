@@ -906,7 +906,7 @@ DEALER_POSSIBLE_INV gFredoInventory[] =
 	{ LAST_DEALER_ITEM,	NO_DEALER_ITEM },		//Last One
 };
 
-#endif
+#endif //USE_OLD_DEALERS
 
 // prototypes
 
