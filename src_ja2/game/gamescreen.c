@@ -1013,11 +1013,13 @@ void InitHelicopterEntranceByMercs( void )
 {
 	if( DidGameJustStart() )
 	{
-		AIR_RAID_DEFINITION	AirRaidDef;
+//		AIR_RAID_DEFINITION	AirRaidDef;
 
 		// Update clock ahead from STARTING_TIME to make mercs arrive!
 		WarpGameTime( FIRST_ARRIVAL_DELAY, WARPTIME_PROCESS_EVENTS_NORMALLY );
 
+/*
+Ja25 No air raid
 		AirRaidDef.sSectorX		= 9;
 		AirRaidDef.sSectorY		= 1;
 		AirRaidDef.sSectorZ		= 0;
@@ -1026,6 +1028,7 @@ void InitHelicopterEntranceByMercs( void )
 		AirRaidDef.ubNumMinsFromCurrentTime	= 1;
 
 	//	ScheduleAirRaid( &AirRaidDef );
+*/
 
 		gfTacticalDoHeliRun = TRUE;
 		gfFirstHeliRun			= TRUE;
