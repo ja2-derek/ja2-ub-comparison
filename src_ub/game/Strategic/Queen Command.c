@@ -759,8 +759,7 @@ JA25:  No mike or iggy
 		}
 	}
 	else
-	{
-		//The enemy was in a stationary defence group
+	{ //The enemy was in a stationary defence group
 		if( !gbWorldSectorZ || IsAutoResolveActive() )
 		{ //ground level (SECTORINFO)
 			SECTORINFO *pSector;
@@ -1334,7 +1333,7 @@ UNDERGROUND_SECTORINFO* FindUnderGroundSector( INT16 sMapX, INT16 sMapY, UINT8 b
 
 void BeginCaptureSquence( )
 {
-	if( !( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ) )
+	if( !( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ) || !( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_ESCAPE ) )
 	{
 		gStrategicStatus.ubNumCapturedForRescue = 0;
 	}
@@ -1344,17 +1343,24 @@ void EndCaptureSequence( )
 {
 
 	// Set flag...
-	if( !( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ) )
+	if( !( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ) || !(gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_ESCAPE) )
 	{
-		gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE;
+		// CJC Dec 1 2002: fixing multiple captures:
+		//gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE;
 
 		if ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTNOTSTARTED )
 		{
+			// CJC Dec 1 2002: fixing multiple captures:
+			gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE;
 			StartQuest( QUEST_HELD_IN_ALMA, gWorldSectorX, gWorldSectorY );
 		}
-		else if ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTDONE )
+		// CJC Dec 1 2002: fixing multiple captures:
+		//else if ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTDONE )
+		else if ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTDONE && gubQuest[ QUEST_INTERROGATION ] == QUESTNOTSTARTED )
 		{
 			StartQuest( QUEST_INTERROGATION, gWorldSectorX, gWorldSectorY );
+			// CJC Dec 1 2002: fixing multiple captures:
+			gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_ESCAPE;
 
 			// OK! - Schedule Meanwhile now!
 			{
@@ -1368,6 +1374,13 @@ void EndCaptureSequence( )
 
 				ScheduleMeanwhileEvent( &MeanwhileDef, 10 );
 			}
+		}
+		// CJC Dec 1 2002: fixing multiple captures
+		else 
+		{
+			// !?!? set both flags
+			gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE;
+			gStrategicStatus.uiFlags |= STRATEGIC_PLAYER_CAPTURED_FOR_ESCAPE;
 		}
 	}
 
@@ -1391,7 +1404,8 @@ void EnemyCapturesPlayerSoldier( SOLDIERTYPE *pSoldier )
 	
 
   // ATE: Check first if ! in player captured sequence already
-	if( ( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ) )
+	// CJC Dec 1 2002: fixing multiple captures
+	if ( ( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ) && (gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_ESCAPE) )
   {
     return;
   }
@@ -1415,6 +1429,9 @@ void EnemyCapturesPlayerSoldier( SOLDIERTYPE *pSoldier )
   {
     return;
   }
+
+  // ATE: Patch fix If in a vehicle, remove from vehicle...
+  TakeSoldierOutOfVehicle( pSoldier ); 
 
 
   // Are there anemies in ALMA? ( I13 )
