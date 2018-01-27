@@ -4881,6 +4881,9 @@ BOOLEAN CheckAndHandleUnloadingOfCurrentWorld()
 	SetCurrentCursorFromDatabase( CURSOR_WAIT_NODELAY );
 	RefreshScreen( NULL );
 
+	// JA2Gold: Leaving sector, so get rid of ambients!
+	DeleteAllAmbients();
+
 	if( guiCurrentScreen == GAME_SCREEN )
 	{
 		if( !gfTacticalTraversal )
