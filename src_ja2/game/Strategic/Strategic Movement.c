@@ -4587,6 +4587,9 @@ void RandomizePatrolGroupLocation( GROUP *pGroup )
 //roll the dice to see if this will become an ambush random encounter.
 BOOLEAN TestForBloodcatAmbush( GROUP *pGroup )
 {
+	//Ja25: No BLoodcat ambushes
+	return( FALSE );
+/*
 	SECTORINFO *pSector;
 	INT32 iHoursElapsed;
 	UINT8 ubSectorID;
