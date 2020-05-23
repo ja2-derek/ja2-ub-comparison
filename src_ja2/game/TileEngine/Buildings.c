@@ -48,6 +48,7 @@ BUILDING * GenerateBuilding( INT16 sDesiredSpot )
 	SOLDIERTYPE 	FakeSoldier;
 	BUILDING *		pBuilding;
 	UINT8					ubBuildingID = 0;
+	INT32					iLoopCount = 0;
 
 	pBuilding = CreateNewBuilding( &ubBuildingID );
 	if (!pBuilding)
@@ -107,17 +108,26 @@ BUILDING * GenerateBuilding( INT16 sDesiredSpot )
 
 	while( 1 )
 	{
-
 		// if point to (2 clockwise) is not part of building and is not visited,
 		// or is starting point, turn!
 		sRightGridNo = NewGridNo( sCurrGridNo, DirectionInc( gTwoCDirection[ bDirection ] ) );
 		sTempGridNo = sRightGridNo;
 		if ( ( ( !(gpWorldLevelData[ sTempGridNo ].uiFlags & MAPELEMENT_REACHABLE) && !(gpWorldLevelData[ sTempGridNo ].ubExtFlags[0] & MAPELEMENT_EXT_ROOFCODE_VISITED) ) || (sTempGridNo == sStartGridNo) ) && (sCurrGridNo != sStartGridNo) )
 		{
+			iLoopCount++;
+
+			if ( iLoopCount >= 10 )
+			{
+				return( NULL );
+			}
+
 			bDirection = gTwoCDirection[ bDirection ];
 			// try in that direction
 			continue;
 		}
+
+		iLoopCount = 0;
+
 
 		// if spot ahead is part of building, turn
 		sTempGridNo = NewGridNo( sCurrGridNo, DirectionInc( bDirection ) );
