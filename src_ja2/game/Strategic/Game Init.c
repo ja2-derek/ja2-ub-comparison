@@ -318,7 +318,11 @@ void ShutdownStrategicLayer()
 	RemoveAllGroups();
 	TrashUndergroundSectorInfo();
 	DeleteCreatureDirectives();
+/*
+Ja25 No strategic ai
 	KillStrategicAI();
+*/
+
 }
 
 BOOLEAN InitNewGame( BOOLEAN fReset )

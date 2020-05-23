@@ -334,8 +334,10 @@ void  PlayAutoResolveSampleFromFile( STR8 szFileName, UINT32 usRate, UINT32 ubVo
 }
 
 
+/*
+Ja25 No strategic ai
 extern void ClearPreviousAIGroupAssignment( GROUP *pGroup );
-
+*/
 void EliminateAllMercs()
 {
 	SOLDIERCELL *pAttacker = NULL;
@@ -431,7 +433,10 @@ void EliminateAllEnemies( UINT8 ubSectorX, UINT8 ubSectorY )
 		{
 			if( !pGroup->fPlayer && pGroup->ubSectorX == ubSectorX && pGroup->ubSectorY == ubSectorY )
 			{
+/*
+Ja25 No strategic ai
 				ClearPreviousAIGroupAssignment( pGroup );
+*/
 				pDeleteGroup = pGroup;
 				pGroup = pGroup->next;
 				if( gpBattleGroup == pDeleteGroup )
@@ -447,7 +452,11 @@ void EliminateAllEnemies( UINT8 ubSectorX, UINT8 ubSectorY )
 		}
 		// set this sector as taken over
 		SetThisSectorAsPlayerControlled( ubSectorX, ubSectorY, 0, TRUE );
+
+/*
+Ja25 No strategic ai
 		RecalculateSectorWeight( (UINT8)SECTOR( ubSectorX, ubSectorY ) );
+*/
 
 		// dirty map panel
 		fMapPanelDirty = TRUE;

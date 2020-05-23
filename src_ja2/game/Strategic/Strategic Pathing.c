@@ -321,10 +321,13 @@ INT32 FindStratPath(INT16 sStart, INT16 sDestination, INT16 sMvtGroupNumber, BOO
 				{
 					continue;
 				}
+/*
+Ja25 No strategic ai
 				if( !OkayForEnemyToMoveThroughSector( (UINT8)SECTOR( sSectorX, sSectorY ) ) )
 				{
 					continue;
 				}
+*/
 			}
 
 			// are we plotting path or checking for existance of one?

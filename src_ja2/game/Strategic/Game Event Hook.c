@@ -294,10 +294,18 @@ Ja25 No meanwhiles
 			CreatureAttackTown( (UINT8)pEvent->uiParam, FALSE );
 			break;
 		case EVENT_EVALUATE_QUEEN_SITUATION:
+			Assert( 0 );
+/*
+Ja25 No strategic ai
 			EvaluateQueenSituation();
+*/
 			break;
 		case EVENT_CHECK_ENEMY_CONTROLLED_SECTOR:
+			Assert( 0 );
+/*
+Ja25 No strategic ai
 			CheckEnemyControlledSector( (UINT8)pEvent->uiParam );
+*/
 			break;
 		case EVENT_TURN_ON_NIGHT_LIGHTS:
 			TurnOnNightLights();
@@ -340,7 +348,11 @@ Ja25 No meanwhiles
 			GetMercSiteBackOnline();
 			break;
 		case EVENT_INVESTIGATE_SECTOR:
+			Assert( 0 );
+/*
+Ja25 No strategic ai
 			InvestigateSector( (UINT8)pEvent->uiParam );
+*/
 			break;
 		case EVENT_CHECK_IF_MINE_CLEARED:
 			// If so, the head miner will say so, and the mine's shutdown will be ended.

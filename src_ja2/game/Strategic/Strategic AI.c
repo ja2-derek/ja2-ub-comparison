@@ -195,7 +195,10 @@ BOOLEAN gfDisplayStrategicAILogs = FALSE;
 
 void ValidatePendingGroups();
 void ValidateWeights( INT32 iID );
+/*
+Ja25 No strategic ai
 void ValidateGroup( GROUP *pGroup );
+*/
 void ValidateLargeGroup( GROUP *pGroup );
 
 extern BOOLEAN TeleportSoldier( SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fForce );
@@ -208,6 +211,11 @@ extern BOOLEAN TeleportSoldier( SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fF
 //All reinforcements use the composition of the troop/elite for refilling.
 //@@@Alex, the send reinforcement composition isn't complete.  Either sends all troops or troops based off of the composition of the source garrison.
 //  It is my intention to add this.
+
+
+/*
+
+	//Ja25 No strategic ai	
 
 //If you change the MAX_STRATEGIC_TEAM_SIZE, then all the garrison sizes (start, desired) will have to be changed accordingly.
 
@@ -242,6 +250,11 @@ ARMY_COMPOSITION gOrigArmyComp[ NUM_ARMY_COMPOSITIONS ] =
 	ROADBLOCK,						20,				2,			98,			0,			8,				0,				{0,0,0,0,0,0,0,0,0,0},
 	SANMONA_SMALL,				0,				0,			0,			0,			0,				0,				{0,0,0,0,0,0,0,0,0,0},			
 };
+*/
+
+/*
+//Ja25 No strategic ai	
+
 
 //Patrol definitions
 //NOTE:	  A point containing 0 is actually the same as SEC_A1, but because nobody is using SEC_A1 in any 
@@ -287,9 +300,11 @@ PATROL_GROUP gOrigPatrolGroup[] =
 	//29
 };
 #define PATROL_GROUPS 29
+*/
 
 
-
+/*
+//Ja25 No strategic ai	
 GARRISON_GROUP gOrigGarrisonGroup[] = 
 { //SECTOR	MILITARY								WEIGHT	UNUSED
 	//				COMPOSITION											GROUP ID
@@ -363,14 +378,14 @@ GARRISON_GROUP gOrigGarrisonGroup[] =
 	SEC_C5,		SANMONA_SMALL,					0,			0,			{0,0,0,0,0,0,0,0,0,0},
 	//57
 };
-
+*/
 //Various decision functions and utils to help make those decisions.
 BOOLEAN AdjacentSectorIsImportantAndUndefended( UINT8 ubSectorID );
 BOOLEAN HandleEmptySectorNoticedByPatrolGroup( GROUP *pGroup, UINT8 ubEmptySectorID );
 void HandleEmptySectorNoticedByGarrison( UINT8 ubGarrisonSectorID, UINT8 ubEmptySectorID );
 
 BOOLEAN PlayerForceTooStrong( UINT8 ubSectorID, UINT16 usOffensePoints, UINT16 *pusDefencePoints );
-void RequestAttackOnSector( UINT8 ubSectorID, UINT16 usDefencePoints );
+//Ja25 No strategic ai	void RequestAttackOnSector( UINT8 ubSectorID, UINT16 usDefencePoints );
 void RequestHighPriorityStagingGroupReinforcements( GROUP *pGroup );
 void RequestHighPriorityGarrisonReinforcements( INT32 iGarrisonID, UINT8 ubSoldiersRequested );
 
@@ -396,14 +411,17 @@ void RecalculatePatrolWeight( INT32 iPatrolID );
 void RecalculateGarrisonWeight( INT32 iGarrisonID );
 
 
-INT32 GarrisonReinforcementsRequested( INT32 iGarrisonID, UINT8 *pubExtraReinforcements );
+//Ja25 No strategic ai	INT32 GarrisonReinforcementsRequested( INT32 iGarrisonID, UINT8 *pubExtraReinforcements );
 INT32 PatrolReinforcementsRequested( INT32 iPatrolID );
 INT32 ReinforcementsAvailable( INT32 iGarrisonID );
 BOOLEAN ReinforcementsApproved( INT32 iGarrisonID, UINT16 *pusDefencePoints );
-void SendReinforcementsForGarrison( INT32 iDstGarrisonID, UINT16 usDefencePoints, GROUP **pOptionalGroup );
+//Ja25 No strategic ai	void SendReinforcementsForGarrison( INT32 iDstGarrisonID, UINT16 usDefencePoints, GROUP **pOptionalGroup );
 void SendReinforcementsForPatrol( INT32 iPatrolID, GROUP **pOptionalGroup );
 
+/*
+Ja25 No strategic ai
 void ClearPreviousAIGroupAssignment( GROUP *pGroup );
+*/
 
 void CalcNumTroopsBasedOnComposition( UINT8 *pubNumTroops, UINT8 *pubNumElites, UINT8 ubTotal, INT32 iCompositionID );
 void ConvertGroupTroopsToComposition( GROUP *pGroup, INT32 iCompositionID );
@@ -414,6 +432,8 @@ void RemoveSoldiersFromGarrisonBasedOnComposition( INT32 iGarrisonID, UINT8 ubSi
 UINT8 RedirectEnemyGroupsMovingThroughSector( UINT8 ubSectorX, UINT8 ubSectorY );
 
 
+/*
+Ja25 No strategic ai
 
 //As the player's progress changes in the game, the queen will adjust her priorities accordingly.  
 //Basically, increasing priorities and numbers for sectors she owns, and lowering them.
@@ -421,10 +441,14 @@ UINT8 RedirectEnemyGroupsMovingThroughSector( UINT8 ubSectorX, UINT8 ubSectorY )
 //priorities and numbers for towns the queen has lost, to instead lower the priority but increase the numbers so 
 //she would send larger attack forces.  This is questionable.
 void EvolveQueenPriorityPhase( BOOLEAN fForceChange );
+*/
 
 extern INT16 sWorldSectorLocationOfFirstBattle;
 
+/*
+Ja25 No strategic ai
 void ReassignAIGroup( GROUP **pGroup );
+*/
 void TransferGroupToPool( GROUP **pGroup );
 void SendGroupToPool( GROUP **pGroup );
 
@@ -443,7 +467,13 @@ enum SAIMOVECODE
 	EVASIVE,
 	STAGE,
 };
+/*
+Ja25 No strategic ai
 void MoveSAIGroupToSector( GROUP **pGroup, UINT8 ubSectorID, UINT32 uiMoveCode, UINT8 ubIntention );
+*/
+
+/*
+Ja25 no strategic ai
 
 //returns the number of reinforcements permitted to be sent.  Will increased if the denied counter is non-zero.
 INT32 GarrisonReinforcementsRequested( INT32 iGarrisonID, UINT8 *pubExtraReinforcements )
@@ -471,6 +501,12 @@ INT32 GarrisonReinforcementsRequested( INT32 iGarrisonID, UINT8 *pubExtraReinfor
 
 	return iReinforcementsRequested;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
+
 
 INT32 PatrolReinforcementsRequested( INT32 iPatrolID )
 {
@@ -485,7 +521,11 @@ INT32 PatrolReinforcementsRequested( INT32 iPatrolID )
 		return gPatrolGroup[ iPatrolID ].bSize - pGroup->ubGroupSize;
 	}
 }
+*/
 
+
+/*
+Ja25 No strategic ai
 INT32 ReinforcementsAvailable( INT32 iGarrisonID )
 {
 	SECTORINFO *pSector;
@@ -511,7 +551,11 @@ INT32 ReinforcementsAvailable( INT32 iGarrisonID )
 
 	return iReinforcementsAvailable;
 }
+*/
 
+/*
+
+	Ja25 No strategic ai
 //
 BOOLEAN PlayerForceTooStrong( UINT8 ubSectorID, UINT16 usOffensePoints, UINT16 *pusDefencePoints )
 {
@@ -532,6 +576,11 @@ BOOLEAN PlayerForceTooStrong( UINT8 ubSectorID, UINT16 usOffensePoints, UINT16 *
 	}
 	return FALSE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 void RequestAttackOnSector( UINT8 ubSectorID, UINT16 usDefencePoints )
 {
@@ -545,8 +594,10 @@ void RequestAttackOnSector( UINT8 ubSectorID, UINT16 usDefencePoints )
 		}
 	}
 }
+*/
 
-
+/*
+Ja25 No strategic ai
 
 BOOLEAN AdjacentSectorIsImportantAndUndefended( UINT8 ubSectorID )
 {
@@ -573,15 +624,27 @@ BOOLEAN AdjacentSectorIsImportantAndUndefended( UINT8 ubSectorID )
 	}
 	return FALSE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
+
 
 void ValidatePendingGroups()
 {
 }
+*/
 
+/*
+Ja25 No strategic ai
 void ValidateWeights( INT32 iID )
 {
 }
+*/
 
+/*
+Ja25 No strategic ai
 void ValidateGroup( GROUP *pGroup )
 {
 	if( !pGroup->ubSectorX || !pGroup->ubSectorY || pGroup->ubSectorX > 16 || pGroup->ubSectorY > 16 )
@@ -607,15 +670,24 @@ void ValidateGroup( GROUP *pGroup )
 		}
 	}
 }
+*/
+
+
+/*
+Ja25 No strategic ai
+
 
 void ValidateLargeGroup( GROUP *pGroup )
 {
 }
+*/
 
 
 
 
 
+/*
+Ja25 No strategic ai
 
 void InitStrategicAI()
 {
@@ -933,7 +1005,10 @@ void InitStrategicAI()
 
 	ValidateWeights( 1 );
 }
+*/
 
+/*
+Ja25 No strategic ai
 void KillStrategicAI()
 {
 	if( gPatrolGroup )
@@ -958,7 +1033,10 @@ void KillStrategicAI()
 	}
 	DeleteAllStrategicEventsOfType( EVENT_EVALUATE_QUEEN_SITUATION );
 }
+*/
 
+/*
+Ja25 No strategic ai
 BOOLEAN OkayForEnemyToMoveThroughSector( UINT8 ubSectorID )
 {
 	SECTORINFO *pSector;
@@ -969,7 +1047,9 @@ BOOLEAN OkayForEnemyToMoveThroughSector( UINT8 ubSectorID )
 	}
 	return TRUE;
 }
+*/
 
+/*
 BOOLEAN EnemyPermittedToAttackSector( GROUP **pGroup, UINT8 ubSectorID )
 {
 	SECTORINFO *pSector;
@@ -1045,6 +1125,10 @@ BOOLEAN EnemyPermittedToAttackSector( GROUP **pGroup, UINT8 ubSectorID )
 	}
 	return TRUE;
 }
+*/
+
+/*
+Ja25 No strategic ai
 
 BOOLEAN HandlePlayerGroupNoticedByPatrolGroup( GROUP *pPlayerGroup, GROUP *pEnemyGroup )
 {
@@ -1074,6 +1158,12 @@ BOOLEAN HandlePlayerGroupNoticedByPatrolGroup( GROUP *pPlayerGroup, GROUP *pEnem
 	}
 	return TRUE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
+
 
 void HandlePlayerGroupNoticedByGarrison( GROUP *pPlayerGroup, UINT8 ubSectorID )
 {
@@ -1119,7 +1209,11 @@ void HandlePlayerGroupNoticedByGarrison( GROUP *pPlayerGroup, UINT8 ubSectorID )
 		}
 	}
 }
+*/
 
+/*
+
+Ja25 No strategic ai
 BOOLEAN HandleMilitiaNoticedByPatrolGroup( UINT8 ubSectorID, GROUP *pEnemyGroup )
 {
 	//For now, automatically attack.
@@ -1139,6 +1233,11 @@ BOOLEAN HandleMilitiaNoticedByPatrolGroup( UINT8 ubSectorID, GROUP *pEnemyGroup 
 	
 	return FALSE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 BOOLEAN AttemptToNoticeEmptySectorSucceeds()
 {
@@ -1172,6 +1271,13 @@ BOOLEAN AttemptToNoticeEmptySectorSucceeds()
 	}
 	return FALSE;
 }
+*/
+
+
+
+/*
+
+	Ja25 No strategic ai
 
 //Calling the function assumes that a player group is found to be adjacent to an enemy group.
 //This uses the alertness rating to emulate the chance that the group will notice.  If it does 
@@ -1209,6 +1315,11 @@ BOOLEAN AttemptToNoticeAdjacentGroupSucceeds()
 	}
 	return FALSE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 BOOLEAN HandleEmptySectorNoticedByPatrolGroup( GROUP *pGroup, UINT8 ubEmptySectorID )
 {
@@ -1238,6 +1349,12 @@ BOOLEAN HandleEmptySectorNoticedByPatrolGroup( GROUP *pGroup, UINT8 ubEmptySecto
 
 	return TRUE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
+
 
 void HandleEmptySectorNoticedByGarrison( UINT8 ubGarrisonSectorID, UINT8 ubEmptySectorID )
 {
@@ -1275,6 +1392,9 @@ void HandleEmptySectorNoticedByGarrison( UINT8 ubGarrisonSectorID, UINT8 ubEmpty
 		MoveSAIGroupToSector( &pGroup, ubEmptySectorID, DIRECT, REINFORCEMENTS );
 	}
 }
+*/
+
+/*
 
 BOOLEAN ReinforcementsApproved( INT32 iGarrisonID, UINT16 *pusDefencePoints )
 {
@@ -1312,6 +1432,12 @@ BOOLEAN ReinforcementsApproved( INT32 iGarrisonID, UINT16 *pusDefencePoints )
 
 	return FALSE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
+
 
 //if the group has arrived in a sector, and doesn't have any particular orders, then
 //send him back where they came from.
@@ -1470,6 +1596,11 @@ BOOLEAN EvaluateGroupSituation( GROUP *pGroup )
 	ValidateWeights( 3 );
 	return FALSE;
 }
+*/
+
+/*
+Ja25 No strategic ai
+
 
 //returns TRUE if the group was deleted.
 BOOLEAN StrategicAILookForAdjacentGroups( GROUP *pGroup )
@@ -1671,6 +1802,11 @@ BOOLEAN StrategicAILookForAdjacentGroups( GROUP *pGroup )
 	}
 	return FALSE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 //This is called periodically for each enemy occupied sector containing garrisons.
 void CheckEnemyControlledSector( UINT8 ubSectorID )
@@ -1738,7 +1874,7 @@ void CheckEnemyControlledSector( UINT8 ubSectorID )
 				return;
 			}
 			else
-			*/
+			* /
 			if( AdjacentSectorIsImportantAndUndefended( (UINT8)(ubSectorID-16) ) && AttemptToNoticeEmptySectorSucceeds() )
 			{
 				HandleEmptySectorNoticedByGarrison( ubSectorID, (UINT8)(ubSectorID-16) );
@@ -1755,7 +1891,7 @@ void CheckEnemyControlledSector( UINT8 ubSectorID )
 				return;
 			}
 			else 
-			*/
+			* /
 			if( AdjacentSectorIsImportantAndUndefended( (UINT8)(ubSectorID+1) ) && AttemptToNoticeEmptySectorSucceeds() )
 			{
 				HandleEmptySectorNoticedByGarrison( ubSectorID, (UINT8)(ubSectorID+1) );
@@ -1772,7 +1908,7 @@ void CheckEnemyControlledSector( UINT8 ubSectorID )
 				return;
 			}
 			else 
-			*/
+			* /
 			if( AdjacentSectorIsImportantAndUndefended( (UINT8)(ubSectorID+16) ) && AttemptToNoticeEmptySectorSucceeds() )
 			{
 				HandleEmptySectorNoticedByGarrison( ubSectorID, (UINT8)(ubSectorID+16) );
@@ -1789,7 +1925,7 @@ void CheckEnemyControlledSector( UINT8 ubSectorID )
 				return;
 			}
 			else 
-			*/
+			* /
 			if( AdjacentSectorIsImportantAndUndefended( (UINT8)(ubSectorID-1) ) && AttemptToNoticeEmptySectorSucceeds() )
 			{
 				HandleEmptySectorNoticedByGarrison( ubSectorID, (UINT8)(ubSectorID-1) );
@@ -1798,8 +1934,12 @@ void CheckEnemyControlledSector( UINT8 ubSectorID )
 		}
 	}
 }
+*/
 
 
+/*
+
+	Ja25 No strategic ai
 void RemoveGroupFromStrategicAILists( UINT8 ubGroupID )
 {
 	INT32 i;
@@ -1826,7 +1966,12 @@ void RemoveGroupFromStrategicAILists( UINT8 ubGroupID )
 		}
 	}
 }
+*/
 
+
+
+/*
+Ja25 No strategic ai
 void RecalculatePatrolWeight( INT32 iPatrolID )
 {
 	GROUP *pGroup;
@@ -1862,6 +2007,10 @@ void RecalculatePatrolWeight( INT32 iPatrolID )
 
 	ValidateWeights( 5 );
 }
+*/
+
+/*
+Ja25 No strategic ai
 
 void RecalculateGarrisonWeight( INT32 iGarrisonID )
 {
@@ -1907,6 +2056,11 @@ void RecalculateGarrisonWeight( INT32 iGarrisonID )
 
 	ValidateWeights( 7 );
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 void RecalculateSectorWeight( UINT8 ubSectorID )
 {
@@ -1920,6 +2074,11 @@ void RecalculateSectorWeight( UINT8 ubSectorID )
 		}
 	}
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 void RecalculateGroupWeight( GROUP *pGroup )
 {
@@ -1939,6 +2098,11 @@ void RecalculateGroupWeight( GROUP *pGroup )
 	}
 
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 INT32 ChooseSuitableGarrisonToProvideReinforcements( INT32 iDstGarrisonID, INT32 iReinforcementsRequested )
 {
@@ -2045,6 +2209,11 @@ INT32 ChooseSuitableGarrisonToProvideReinforcements( INT32 iDstGarrisonID, INT32
 	//Failed completely.
 	return -1;
 }
+*/
+
+
+/*
+//Ja25 No strategic ai	
 
 void SendReinforcementsForGarrison( INT32 iDstGarrisonID, UINT16 usDefencePoints, GROUP **pOptionalGroup )
 {
@@ -2252,6 +2421,11 @@ void SendReinforcementsForGarrison( INT32 iDstGarrisonID, UINT16 usDefencePoints
 	}
 	ValidateWeights( 20 );
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 void SendReinforcementsForPatrol( INT32 iPatrolID, GROUP **pOptionalGroup )
 {
@@ -2341,6 +2515,11 @@ void SendReinforcementsForPatrol( INT32 iPatrolID, GROUP **pOptionalGroup )
 	}
 	ValidateWeights( 25 );
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 //Periodically does a general poll and check on each of the groups and garrisons, determines
 //reinforcements, new patrol groups, planned assaults, etc.
@@ -2455,7 +2634,11 @@ void EvaluateQueenSituation()
 
 	ValidateWeights( 27 );
 }
+*/
 
+
+/*
+Ja25 No strategic ai
 
 BOOLEAN SaveStrategicAI( HWFILE hFile )
 {
@@ -2581,6 +2764,12 @@ BOOLEAN SaveStrategicAI( HWFILE hFile )
 	
 	return TRUE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
+
 
 BOOLEAN LoadStrategicAI( HWFILE hFile )
 {
@@ -3085,6 +3274,11 @@ BOOLEAN LoadStrategicAI( HWFILE hFile )
 
 	return TRUE;
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 void EvolveQueenPriorityPhase( BOOLEAN fForceChange )
 {
@@ -3263,6 +3457,8 @@ void EvolveQueenPriorityPhase( BOOLEAN fForceChange )
 		RecalculateGarrisonWeight( i );
 	}
 }
+*/
+
 
 void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSectorY )
 {
@@ -3273,11 +3469,19 @@ void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSecto
 	switch( usActionCode )
 	{
 		case STRATEGIC_AI_ACTION_WAKE_QUEEN:
+			Assert( 0 );
+/*
+Ja25 No strategic ai
 			WakeUpQueen();
+*/
 			break;
 
 		case STRATEGIC_AI_ACTION_QUEEN_DEAD:
+			Assert( 0 );
+/*
+Ja25 No strategic ai
 			gfQueenAIAwake = FALSE;
+*/
 			break;
 
 		case STRATEGIC_AI_ACTION_KINGPIN_DEAD:
@@ -3299,6 +3503,10 @@ void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSecto
 			*/
 			break;
 		case NPC_ACTION_SEND_SOLDIERS_TO_DRASSEN:
+			Assert( 0 );
+/*
+Ja25 No strategic ai
+
 			//Send 6, 9, or 12 troops (based on difficulty) one of the Drassen sectors.  If nobody is there when they arrive,
 			//those troops will get reassigned.
 
@@ -3330,9 +3538,13 @@ void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSecto
 			giReinforcementPool = max( giReinforcementPool, 0 );
 
 			MoveSAIGroupToSector( &pGroup, ubSectorID, EVASIVE, pGroup->pEnemyGroup->ubIntention );
-
+*/
 			break;
 		case NPC_ACTION_SEND_SOLDIERS_TO_BATTLE_LOCATION:
+			Assert( 0 );
+
+/*
+Ja25 No strategic ai
 
 			//Send 4, 8, or 12 troops (based on difficulty) to the location of the first battle.  If nobody is there when they arrive,
 			//those troops will get reassigned.
@@ -3365,9 +3577,12 @@ void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSecto
 			{
 				MoveSAIGroupToSector( &pGroup, ubSectorID, EVASIVE, PURSUIT );
 			}
-
+*/
 			break;
 		case NPC_ACTION_SEND_SOLDIERS_TO_OMERTA:
+			Assert( 0 );
+/*
+Ja25 No strategic ai
 			ubNumSoldiers = (UINT8)(gGameOptions.ubDifficultyLevel * 6); //6, 12, or 18 based on difficulty.
 			pGroup = CreateNewEnemyGroupDepartingFromSector( SEC_P3, 0, ubNumSoldiers, (UINT8)(ubNumSoldiers/7) ); //add 1 elite to normal, and 2 for hard
 			ubNumSoldiers = (UINT8)(ubNumSoldiers + ubNumSoldiers / 7);
@@ -3385,8 +3600,12 @@ void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSecto
 			MoveSAIGroupToSector( &pGroup, ubSectorID, EVASIVE, PURSUIT );
 
 			ValidateGroup( pGroup );
+*/
 			break;
 		case NPC_ACTION_SEND_TROOPS_TO_SAM:
+			Assert( 0 );
+/*
+Ja25 No strategic ai
 			ubSectorID = (UINT8)SECTOR( sSectorX, sSectorY );
 			ubNumSoldiers = (UINT8)( 3 + gGameOptions.ubDifficultyLevel + HighestPlayerProgressPercentage() / 15 );
 			giReinforcementPool -= ubNumSoldiers;
@@ -3408,12 +3627,15 @@ void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSecto
 			{ //Reassign the pending group
 				ReassignAIGroup( &pPendingGroup );
 			}
-			
+*/			
 			break;
+/*
+Ja25 No strategic ai
 		case NPC_ACTION_ADD_MORE_ELITES:
 			gfExtraElites = TRUE;
 			EvolveQueenPriorityPhase( TRUE );
 			break;
+*/
 		case NPC_ACTION_GIVE_KNOWLEDGE_OF_ALL_MERCS:
 			//temporarily make the queen's forces more aware (high alert)
 			switch( gGameOptions.ubDifficultyLevel )
@@ -3435,6 +3657,9 @@ void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSecto
 	}
 }
 
+
+/*
+Ja25 No strategic ai
 
 void InvestigateSector( UINT8 ubSectorID )
 {
@@ -3554,8 +3779,14 @@ void InvestigateSector( UINT8 ubSectorID )
 	{
 		gfFirstBattleMeanwhileScenePending = TRUE;
 	}
-*/
+* /
 }
+*/
+
+
+
+/*
+Ja25 No strategic ai
 
 void StrategicHandleQueenLosingControlOfSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ )
 {
@@ -3577,6 +3808,10 @@ void StrategicHandleQueenLosingControlOfSector( INT16 sSectorX, INT16 sSectorY, 
 
 	//Keep track of victories and wake up the queen after x number of battles.
 	gusPlayerBattleVictories++;
+
+/*
+	JA25 no strategic ai
+
 	if( gusPlayerBattleVictories == 5 - gGameOptions.ubDifficultyLevel )
 	{ //4 victories for easy, 3 for normal, 2 for hard
 		WakeUpQueen();
@@ -3700,7 +3935,13 @@ void StrategicHandleQueenLosingControlOfSector( INT16 sSectorX, INT16 sSectorY, 
 	}
 	//@@@ disabled
 	//AddStrategicEventUsingSeconds( EVENT_INVESTIGATE_SECTOR, GetWorldTotalSeconds() + 45 * pSector->ubInvestigativeState + Random( 60 ), SECTOR( sSectorX, sSectorY ) );
+* /
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 void RequestHighPriorityStagingGroupReinforcements( GROUP *pGroup )
 {
@@ -3711,6 +3952,7 @@ void RequestHighPriorityStagingGroupReinforcements( GROUP *pGroup )
 	}
 	//pClosestGroup = SearchForClosestGroup( pGroup );
 }
+*/
 
 
 UINT8 SectorDistance( UINT8 ubSectorID1, UINT8 ubSectorID2 )
@@ -3726,6 +3968,11 @@ UINT8 SectorDistance( UINT8 ubSectorID1, UINT8 ubSectorID2 )
 
 	return ubDist;
 }
+
+
+
+/*
+Ja25 No strategic ai
 
 void RequestHighPriorityGarrisonReinforcements( INT32 iGarrisonID, UINT8 ubSoldiersRequested )
 {
@@ -3842,6 +4089,11 @@ void RequestHighPriorityGarrisonReinforcements( INT32 iGarrisonID, UINT8 ubSoldi
 		ValidateGroup( pGroup );
 	}
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 void WakeUpQueen()
 {
@@ -3852,6 +4104,12 @@ void WakeUpQueen()
 		MassFortifyTowns();
 	}
 }
+*/
+
+
+
+/*
+Ja25 No strategic ai
 
 void MassFortifyTowns()
 {
@@ -3888,6 +4146,10 @@ void MassFortifyTowns()
 		RecalculateSectorWeight( SEC_A9 );
 	}
 }
+*/
+
+/*
+Ja25 No strategic ai
 
 void RenderAIViewerGarrisonInfo( INT32 x, INT32 y, SECTORINFO *pSector )
 {
@@ -3923,6 +4185,12 @@ void RenderAIViewerGarrisonInfo( INT32 x, INT32 y, SECTORINFO *pSector )
 		mprintf( x, y, L"No garrison information for this sector." );
 	}
 }
+*/
+
+
+
+/*
+Ja25 No strategic ai
 
 void StrategicHandleMineThatRanOut( UINT8 ubSectorID )
 {
@@ -3953,6 +4221,12 @@ void StrategicHandleMineThatRanOut( UINT8 ubSectorID )
 	}
 }
 
+	*/
+
+
+/*
+Ja25 No strategic ai
+
 BOOLEAN GarrisonCanProvideMinimumReinforcements( INT32 iGarrisonID )
 {
 	INT32 iAvailable;
@@ -3979,6 +4253,10 @@ BOOLEAN GarrisonCanProvideMinimumReinforcements( INT32 iGarrisonID )
 	}
 	return FALSE;
 }
+*/
+
+/*
+Ja25 No strategic ai
 
 BOOLEAN GarrisonRequestingMinimumReinforcements( INT32 iGarrisonID )
 {
@@ -4001,7 +4279,11 @@ BOOLEAN GarrisonRequestingMinimumReinforcements( INT32 iGarrisonID )
 	}
 	return FALSE;
 }
+*/
 
+
+/*
+Ja25 No strategic ai
 BOOLEAN PatrolRequestingMinimumReinforcements( INT32 iPatrolID )
 {
 	GROUP *pGroup;
@@ -4024,7 +4306,12 @@ BOOLEAN PatrolRequestingMinimumReinforcements( INT32 iPatrolID )
 	}
 	return FALSE;
 }
+*/
 
+
+
+/*
+Ja25 No strategic ai
 
 void EliminateSurplusTroopsForGarrison( GROUP *pGroup, SECTORINFO *pSector )
 {
@@ -4118,7 +4405,11 @@ void EliminateSurplusTroopsForGarrison( GROUP *pGroup, SECTORINFO *pSector )
 		}
 	}
 }
+*/
 
+
+/*
+Ja25 No strategic ai
 
 
 // once Queen is awake, she'll gradually begin replacing admins with regular troops.  This is mainly to keep player from
@@ -4231,7 +4522,11 @@ void UpgradeAdminsToTroops()
 		pGroup = pGroup->next;
 	}
 }
+*/
 
+
+/*
+Ja25 No strategic ai
 
 INT16 FindPatrolGroupIndexForGroupID( UINT8 ubGroupID )
 {
@@ -4285,6 +4580,11 @@ INT16 FindGarrisonIndexForGroupIDPending( UINT8 ubGroupID )
 	// not there!
 	return( -1 );
 }
+*/
+
+
+/*
+Ja25 No strategic ai
 
 void TransferGroupToPool( GROUP **pGroup )
 {
@@ -4530,6 +4830,13 @@ void ClearPreviousAIGroupAssignment( GROUP *pGroup )
 		}
 	}
 }
+*/
+
+
+
+/*
+Ja25 No strategic ai
+
 
 void CalcNumTroopsBasedOnComposition( UINT8 *pubNumTroops, UINT8 *pubNumElites, UINT8 ubTotal, INT32 iCompositionID )
 {
@@ -4726,6 +5033,13 @@ UINT8 RedirectEnemyGroupsMovingThroughSector( UINT8 ubSectorX, UINT8 ubSectorY )
 	}
 	return ubNumGroupsRedirected;
 }
+*/
+
+
+
+
+/*
+Ja25 No strategic ai
 
 //when the SAI compositions change, it is necessary to call this function upon version load,
 //to reflect the changes of the compositions to the sector that haven't been visited yet.
@@ -4800,6 +5114,7 @@ void ReinitializeUnvisitedGarrisons()
 	}
 }
 
+
 GROUP* FindPendingGroupForGarrisonSector( UINT8 ubSectorID )
 {
 	GROUP *pGroup;
@@ -4816,3 +5131,6 @@ GROUP* FindPendingGroupForGarrisonSector( UINT8 ubSectorID )
 	}
 	return NULL;
 }
+
+
+*/

@@ -428,7 +428,10 @@ UINT32 ExtractOreFromMine( INT8 bMineIndex, UINT32 uiAmount )
 
 		// tell the strategic AI about this, that mine's and town's value is greatly reduced
 		GetMineSector( bMineIndex, &sSectorX, &sSectorY );
+/*
+Ja25 No strategic ai
 		StrategicHandleMineThatRanOut( ( UINT8 ) SECTOR( sSectorX, sSectorY ) );
+*/
 
 		AddHistoryToPlayersLog( HISTORY_MINE_RAN_OUT, gMineLocation[ bMineIndex ].bAssociatedTown, GetWorldTotalMin( ), gMineLocation[ bMineIndex ].sSectorX,  gMineLocation[ bMineIndex ].sSectorY );
 	}

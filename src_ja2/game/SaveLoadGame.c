@@ -985,13 +985,13 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 		goto FAILED_TO_SAVE;
 	}
 
-
-
+/*
+Ja25:  No Strategic AI
 	if( !SaveStrategicAI( hFile ) )
 	{
 		goto FAILED_TO_SAVE;
 	}
-
+*/
 
 	if( !SaveLightEffectsToSaveGameFile( hFile ) )
 	{
@@ -1898,7 +1898,8 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 	}
 
 
-
+/*
+Ja25:  No Strategic AI
 	uiRelEndPerc += 1;
 	SetRelativeStartAndEndPercentage( 0, uiRelStartPerc, uiRelEndPerc, L"Strategic AI..." );
 	RenderProgressBar( 0, 100 );
@@ -1915,7 +1916,7 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 			return(FALSE);
 		}
 	}
-
+*/
 
 
 	uiRelEndPerc += 1;

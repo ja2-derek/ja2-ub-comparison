@@ -1933,10 +1933,13 @@ void HandleNonCombatGroupArrival( GROUP *pGroup, BOOLEAN fMainGroup, BOOLEAN fNe
 {	
 	// if any mercs are actually in the group
 
+/*
+Ja25 No strategic ai
 	if( StrategicAILookForAdjacentGroups( pGroup ) )
 	{ //The routine actually just deleted the enemy group (player's don't get deleted), so we are done!
 		return;
 	}
+*/
 
 	if( pGroup->fPlayer )
 	{
@@ -2549,7 +2552,10 @@ void RemovePGroup( GROUP *pGroup )
 	}
 	else
 	{
+/*
+Ja25 No strategic ai
 		RemoveGroupFromStrategicAILists( pGroup->ubGroupID );
+*/
 		MemFree( pGroup->pEnemyGroup );
 	}
 		
@@ -4182,7 +4188,10 @@ void ResetMovementForEnemyGroup( GROUP *pGroup )
 	}
 	if( !pGroup->fBetweenSectors || !pGroup->ubNextX || !pGroup->ubNextY )
 	{ //Reset the group's assignment by moving it to the group's original sector as it's pending group.
+/*
+Ja25 No strategic ai
 		RepollSAIGroup( pGroup );
+*/
 		return;
 	}
 

@@ -251,17 +251,23 @@ Ja25 No meanwhiles
 */
 		}
 
+/*
+Ja25 No strategic ai
 		if( fContested )
 		{
 			StrategicHandleQueenLosingControlOfSector( (UINT8)sMapX, (UINT8)sMapY, (UINT8)bMapZ );
 		}
+*/
 	}
 	else
 	{
+/*
+Ja25 No strategic ai
 		if( sMapX == 3 && sMapY == 16 && bMapZ == 1 )
 		{ //Basement sector (P3_b1)
 			gfUseAlternateQueenPosition = TRUE;
 		}
+*/
 	}
 
 	// also set fact the player knows they own it

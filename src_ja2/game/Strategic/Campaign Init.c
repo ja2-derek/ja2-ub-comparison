@@ -359,7 +359,8 @@ void InitNewCampaign()
 
 	//Generates the initial forces in a new campaign.  The idea is to randomize numbers and sectors
 	//so that no two games are the same.
-	InitStrategicAI();
+//Ja25  NO Strategic AI  :)
+//	InitStrategicAI();
 
 	InitStrategicStatus();
 

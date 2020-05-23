@@ -5,7 +5,11 @@
 #include "Strategic Movement.h"
 
 void InitStrategicAI();
+
+/*
+Ja25 No strategic ai
 void KillStrategicAI();
+*/
 
 BOOLEAN SaveStrategicAI( HWFILE hFile );
 BOOLEAN LoadStrategicAI( HWFILE hFile );
@@ -22,20 +26,32 @@ enum
 
 void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSectorY );
 
+/*
+Ja25 No strategic ai
 void CheckEnemyControlledSector( UINT8 ubSectorID );
+
 void EvaluateQueenSituation();
 
 extern BOOLEAN gfUseAlternateQueenPosition;
+*/
 
 //returns TRUE if the group was deleted.
+
+/*
+Ja25 No strategic ai
+
 BOOLEAN StrategicAILookForAdjacentGroups( GROUP *pGroup );
 void RemoveGroupFromStrategicAILists( UINT8 ubGroupID );
 void RecalculateSectorWeight( UINT8 ubSectorID );
 void RecalculateGroupWeight( GROUP *pGroup );
 
 BOOLEAN OkayForEnemyToMoveThroughSector( UINT8 ubSectorID );
+*/
+
 BOOLEAN EnemyPermittedToAttackSector( GROUP **pGroup, UINT8 ubSectorID );
 
+/*
+Ja25 No strategic ai
 void StrategicHandleQueenLosingControlOfSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ );
 
 void InvestigateSector( UINT8 ubSectorID );
@@ -49,9 +65,14 @@ INT16 FindPatrolGroupIndexForGroupIDPending( UINT8 ubGroupID );
 INT16 FindGarrisonIndexForGroupIDPending( UINT8 ubGroupID );
 
 GROUP* FindPendingGroupInSector( UINT8 ubSectorID );
+*/
 
 
+
+/*
+Ja25 No strategic ai
 void RepollSAIGroup( GROUP *pGroup );
+*/
 
 //When an enemy AI group is eliminated by the player, apply a grace period in which the 
 //group isn't allowed to be filled for several days.
