@@ -502,7 +502,7 @@ void HandleTimedAtmModes( void );
 void GameInitPersonnel( void )
 {
 	// init past characters lists
-	INT32 iCounter =0;
+//	INT32 iCounter =0;
 	InitPastCharactersList( );
 
 }
@@ -671,7 +671,7 @@ void RemovePersonnelGraphics( void )
 void RenderPersonnel( void )
 {
   HVOBJECT hHandle;
-  INT32 iCounter=0;
+//  INT32 iCounter=0;
   // re-renders personnel screen
 	// render main background	
 	
@@ -766,7 +766,7 @@ BOOLEAN RenderPersonnelPictures( void )
 	// find person with iStartPersonId, unless it is -1, then find first bActive Merc on Staff
 	SOLDIERTYPE *pTeamSoldier, *pSoldier;
 	BOOLEAN fFound=FALSE;
-	INT32 iCounter=0;
+//	INT32 iCounter=0;
 	INT32 iSlot=0;
 	INT32 cnt=0;
 	INT32 iCurrentId = 0;
@@ -837,7 +837,7 @@ BOOLEAN RenderPersonnelPictures( void )
 void RenderPersonnelStats( INT32 iId, INT32 iSlot )
 {
 
-	INT32 iCounter=0;
+//	INT32 iCounter=0;
 	// will render the stats of person iId in slot iSlot
 	SetFont(PERS_FONT);
 	SetFontForeground(PERS_TEXT_FONT_COLOR);
@@ -862,7 +862,7 @@ BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFire
 	char sTemp[100];
 	HVOBJECT hFaceHandle;
   VOBJECT_DESC    VObjectDesc;
-	INT32 iCounter = 7;
+//	INT32 iCounter = 7;
 
 	// draw face to soldier iId in slot iSlot
 	
@@ -1890,12 +1890,12 @@ void DrawPageNumber( void )
 {
 	// draws the page number
 	
-	wchar_t sString[10];
-	INT16 sX, sY;
-  INT32 iPageNumber, iLastPage;
+//	wchar_t sString[10];
+//	INT16 sX, sY;
+//  INT32 iPageNumber, iLastPage;
   
 	return;
-
+/*
 	// get last page number, and current page too
 	iLastPage=GetLastMercId()/MAX_SLOTS;
 	iPageNumber=iStartPersonId/MAX_SLOTS;
@@ -1922,6 +1922,7 @@ void DrawPageNumber( void )
 	SetFontShadow(DEFAULT_SHADOW);
 
 	return;
+*/
 }
 
 
@@ -2534,10 +2535,10 @@ void RenderInventoryForCharacter( INT32 iId, INT32 iSlot )
 
 void InventoryUpButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
-	INT32 iValue = 0;
-	SOLDIERTYPE *pSoldier = MercPtrs[ 0 ];
-	INT32 cnt = 0;
-	INT32 iId = 0;
+//	INT32 iValue = 0;
+//	SOLDIERTYPE *pSoldier = MercPtrs[ 0 ];
+//	INT32 cnt = 0;
+//	INT32 iId = 0;
 
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
@@ -2582,10 +2583,10 @@ void InventoryUpButtonCallback(GUI_BUTTON *btn,INT32 reason)
 
 void InventoryDownButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
-	INT32 iValue = 0;
-	SOLDIERTYPE *pSoldier = MercPtrs[ 0 ];
-	INT32 cnt = 0;
-	INT32 iId = 0;
+//	INT32 iValue = 0;
+//	SOLDIERTYPE *pSoldier = MercPtrs[ 0 ];
+//	INT32 cnt = 0;
+//	INT32 iId = 0;
 
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
@@ -4848,7 +4849,7 @@ void DisplayPastMercsPortraits( void )
 	INT32 iCounter = 0;
 	INT32 iCounterA = 0;
 	INT32 iStartArray = 0; // 0 = dead list, 1 = fired list, 2 = other list
-	BOOLEAN fFound = FALSE;
+//	BOOLEAN fFound = FALSE;
 
 	// not time to display
 	if( fCurrentTeamMode == TRUE )
@@ -5589,7 +5590,7 @@ BOOLEAN RemoveNewlyHiredMercFromPersonnelDepartedList( UINT8 ubProfile )
 INT32 GetIdOfFirstDisplayedMerc( )
 {
 	SOLDIERTYPE *pSoldier;
-	INT32 cnt = 0, iCounter = 0;
+	INT32 cnt = 0;//, iCounter = 0;
 
 	// set current soldier
 	pSoldier = MercPtrs[ cnt ];
@@ -5809,8 +5810,8 @@ void FindPositionOfPersInvSlider( void )
 	INT32 iValue = 0;
 	INT32 iNumberOfItems = 0;
 	INT16 sSizeOfEachSubRegion = 0;
-	INT16 sYPositionOnBar = 0;
-	INT16 iCurrentItemValue = 0;
+//	INT16 sYPositionOnBar = 0;
+//	INT16 iCurrentItemValue = 0;
 
 	// find out how many there are
 	iValue = ( INT32 )( GetNumberOfInventoryItemsOnCurrentMerc( ) );
@@ -6091,9 +6092,9 @@ void EmployementInfoButtonCallback(GUI_BUTTON *btn,INT32 reason)
 void ATMOther2ButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
 	INT32 iValue = 0;
-	SOLDIERTYPE *pSoldier = MercPtrs[ 0 ];
-	INT32 cnt = 0;
-	INT32 iId = 0;
+//	SOLDIERTYPE *pSoldier = MercPtrs[ 0 ];
+//	INT32 cnt = 0;
+//	INT32 iId = 0;
 
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
@@ -6325,7 +6326,7 @@ void DisplayATMAmount( void )
 
 	INT16 sX = 0, sY = 0;
 	CHAR16 sTempString[ 32 ];
-	CHAR16 sZero[ 2 ] = L"0";
+//	CHAR16 sZero[ 2 ] = L"0";
 	INT32 iCounter = 0;
 
 	if( fShowAtmPanel == FALSE )
@@ -6752,7 +6753,7 @@ void RenderRectangleForPersonnelTransactionAmount( void )
 	UINT32										 uiDestPitchBYTES;
 	UINT8											 *pDestBuf;
 	CHAR16 sTempString[ 32 ];
-	CHAR16 sZero[ 2 ] = L"0";
+//	CHAR16 sZero[ 2 ] = L"0";
 	INT32	 iCounter = 0;
 	
 
@@ -6866,7 +6867,7 @@ void DisplayEmploymentinformation( INT32 iId, INT32 iSlot )
 	wchar_t sString[50];
 	wchar_t sStringA[ 50 ];
 	INT16 sX, sY;
-	UINT32 uiHits = 0;
+//	UINT32 uiHits = 0;
 	
 	
 	if( Menptr[iId].uiStatusFlags & SOLDIER_VEHICLE )
