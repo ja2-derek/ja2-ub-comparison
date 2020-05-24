@@ -430,14 +430,15 @@ BOOLEAN DisplayMercFace( UINT8 ubMercID)
   VOBJECT_DESC    VObjectDesc;
 	SOLDIERTYPE			*pSoldier=NULL;
 
+	//See if the merc is currently hired
+	pSoldier = FindSoldierByProfileID( ubMercID, TRUE );
+	
 	// Portrait Frame
 	GetVideoObject(&hPortraitHandle, guiPortraitBox);
   BltVideoObject(FRAME_BUFFER, hPortraitHandle, 0,MERC_FILES_PORTRAIT_BOX_X, MERC_FILES_PORTRAIT_BOX_Y, VO_BLT_SRCTRANSPARENCY,NULL);
 
 	pMerc = &gMercProfiles[ ubMercID ];
 
-	//See if the merc is currently hired
-	pSoldier = FindSoldierByProfileID( ubMercID, TRUE );
 
 	// load the Face graphic and add it
   sprintf(sTemp, "%s%02d.sti", sFaceLoc, ubMercID);
