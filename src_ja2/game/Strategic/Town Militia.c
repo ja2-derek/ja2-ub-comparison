@@ -384,19 +384,6 @@ void HandleMilitiaDefections(INT16 sMapX, INT16 sMapY)
 }
 
 
-UINT8 CountAllMilitiaInSector(INT16 sMapX, INT16 sMapY)
-{
-	UINT8 ubMilitiaTotal = 0;
-	UINT8 ubRank;
-
-	// find out if there are any town militia in this SECTOR (don't care about other sectors in same town)
-	for( ubRank = 0; ubRank < MAX_MILITIA_LEVELS; ubRank++ )
-	{
-		ubMilitiaTotal += MilitiaInSectorOfRank(sMapX, sMapY, ubRank);
-	}
-
-	return(ubMilitiaTotal);
-}
 
 
 UINT8 MilitiaInSectorOfRank(INT16 sMapX, INT16 sMapY, UINT8 ubRank)
@@ -405,32 +392,6 @@ UINT8 MilitiaInSectorOfRank(INT16 sMapX, INT16 sMapY, UINT8 ubRank)
 }
 
 
-BOOLEAN SectorOursAndPeaceful( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
-{
-	// if this sector is currently loaded
-	if ( ( sMapX == gWorldSectorX ) && ( sMapY == gWorldSectorY ) && ( bMapZ == gbWorldSectorZ ) )
-	{
-		// and either there are enemies prowling this sector, or combat is in progress
-		if ( gTacticalStatus.fEnemyInSector || ( gTacticalStatus.uiFlags & INCOMBAT ) )
-		{
-			return FALSE;
-		}
-	}
-
-	// if sector is controlled by enemies, it's not ours (duh!)
-	if( !bMapZ && StrategicMap[ sMapX + sMapY * MAP_WORLD_X ].fEnemyControlled == TRUE )
-	{
-		return FALSE;
-	}
-
-	if( NumHostilesInSector( sMapX, sMapY, bMapZ ) )
-	{
-		return FALSE;
-	}
-
-	// safe & secure, s'far as we can tell
-	return(TRUE);
-}
 
 
 void InitFriendlyTownSectorServer(UINT8 ubTownId, INT16 sSkipSectorX, INT16 sSkipSectorY)
@@ -1253,4 +1214,44 @@ void BuildMilitiaPromotionsString( UINT16 *str )
 	gbGreenToRegPromotions = 0;
 	gbRegToElitePromotions = 0;
 	gbMilitiaPromotions = 0;
+
+UINT8 CountAllMilitiaInSector(INT16 sMapX, INT16 sMapY)
+{
+	UINT8 ubMilitiaTotal = 0;
+	UINT8 ubRank;
+
+	// find out if there are any town militia in this SECTOR (don't care about other sectors in same town)
+	for( ubRank = 0; ubRank < MAX_MILITIA_LEVELS; ubRank++ )
+	{
+		ubMilitiaTotal += MilitiaInSectorOfRank(sMapX, sMapY, ubRank);
+	}
+
+	return(ubMilitiaTotal);
+}
+
+BOOLEAN SectorOursAndPeaceful( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
+{
+	// if this sector is currently loaded
+	if ( ( sMapX == gWorldSectorX ) && ( sMapY == gWorldSectorY ) && ( bMapZ == gbWorldSectorZ ) )
+	{
+		// and either there are enemies prowling this sector, or combat is in progress
+		if ( gTacticalStatus.fEnemyInSector || ( gTacticalStatus.uiFlags & INCOMBAT ) )
+		{
+			return FALSE;
+		}
+	}
+
+	// if sector is controlled by enemies, it's not ours (duh!)
+	if( !bMapZ && StrategicMap[ sMapX + sMapY * MAP_WORLD_X ].fEnemyControlled == TRUE )
+	{
+		return FALSE;
+	}
+
+	if( NumHostilesInSector( sMapX, sMapY, bMapZ ) )
+	{
+		return FALSE;
+	}
+
+	// safe & secure, s'far as we can tell
+	return(TRUE);
 }
