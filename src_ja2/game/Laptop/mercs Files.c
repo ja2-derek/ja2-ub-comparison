@@ -380,6 +380,8 @@ void BtnMercHireButtonCallback(GUI_BUTTON *btn,INT32 reason)
 		{
 			btn->uiFlags &= (~BUTTON_CLICKED_ON );
 
+/*
+JA25:
 			//if the players accont is suspended, go back to the main screen and have Speck inform the players
 			if( LaptopSaveInfo.gubPlayersMercAccountStatus == MERC_ACCOUNT_SUSPENDED )
 			{
@@ -389,8 +391,9 @@ void BtnMercHireButtonCallback(GUI_BUTTON *btn,INT32 reason)
 
 			}
 
-			//else try to hire the merc
-			else if( MercFilesHireMerc( GetMercIDFromMERCArray( gubCurMercIndex ) ) )
+	else 
+*/
+			if( MercFilesHireMerc( GetMercIDFromMERCArray( gubCurMercIndex ) ) )
 			{
 				guiCurrentLaptopMode = LAPTOP_MODE_MERC;
 				gubArrivedFromMercSubSite = MERC_CAME_FROM_HIRE_PAGE;

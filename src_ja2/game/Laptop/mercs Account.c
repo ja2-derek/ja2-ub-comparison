@@ -21,7 +21,7 @@
 #endif
 
 
-
+#ifdef ENABLE_MERC_ACCOUNTS
 
 #define		MERC_ACCOUNT_TEXT_FONT				FONT14ARIAL
 #define		MERC_ACCOUNT_TEXT_COLOR				FONT_MCOLOR_WHITE
@@ -71,9 +71,11 @@ INT32		giMercTotalContractCharge;
 
 BOOLEAN	gfMercPlayerDoesntHaveEnoughMoney_DisplayWarning = FALSE;
 
+/*
 // The Authorize button
 void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn,INT32 reason);
 UINT32	guiMercAuthorizeBoxButton;
+*/
 INT32		guiMercAuthorizeButtonImage;
 
 
@@ -113,7 +115,7 @@ BOOLEAN EnterMercsAccount()
 
 
 	guiMercAuthorizeButtonImage = LoadButtonImage("LAPTOP\\BigButtons.sti", -1,0,-1,1,-1 );
-
+/*
 	guiMercAuthorizeBoxButton = CreateIconAndTextButton( guiMercAuthorizeButtonImage, MercAccountText[MERC_ACCOUNT_AUTHORIZE],
 													 FONT12ARIAL, 
 													 MERC_BUTTON_UP_COLOR, DEFAULT_SHADOW, 
@@ -123,6 +125,11 @@ BOOLEAN EnterMercsAccount()
 													 DEFAULT_MOVE_CALLBACK, BtnMercAuthorizeButtonCallback);
 	SetButtonCursor(guiMercAuthorizeBoxButton, CURSOR_LAPTOP_SCREEN);
 	SpecifyDisabledButtonStyle( guiMercAuthorizeBoxButton, DISABLED_STYLE_SHADED);
+
+	//Ja25 Disable the button cause the player no longer pays as you go, there is a 1 time fee
+	DisableButton( guiMercAuthorizeBoxButton );
+*/
+
 
 	guiMercBackBoxButton = CreateIconAndTextButton( guiMercAuthorizeButtonImage, MercAccountText[MERC_ACCOUNT_HOME],
 													 FONT12ARIAL, 
@@ -149,7 +156,7 @@ void ExitMercsAccount()
 	DeleteVideoObjectFromIndex(guiAccountNumberGrid);
 
 	UnloadButtonImage( guiMercAuthorizeButtonImage );
-	RemoveButton( guiMercAuthorizeBoxButton );
+//	RemoveButton( guiMercAuthorizeBoxButton );
 	RemoveButton( guiMercBackBoxButton );
 
 	RemoveMercBackGround();
@@ -194,12 +201,13 @@ void RenderMercsAccount()
 
 	DisplayHiredMercs();
 
+/*
 	// giMercTotalContractCharge  gets set with the price in DisplayHiredMercs(), so if there is currently no charge, disable the button
 	if( giMercTotalContractCharge == 0 )
 	{
 		DisableButton( guiMercAuthorizeBoxButton );
 	}
-
+*/
 
 
   MarkButtonsDirty( );
@@ -207,7 +215,7 @@ void RenderMercsAccount()
   InvalidateRegion(LAPTOP_SCREEN_UL_X,LAPTOP_SCREEN_WEB_UL_Y,LAPTOP_SCREEN_LR_X,LAPTOP_SCREEN_WEB_LR_Y);
 }
 
-
+/*
 void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
 	if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
@@ -243,7 +251,7 @@ void BtnMercAuthorizeButtonCallback(GUI_BUTTON *btn,INT32 reason)
 		InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY, btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
 	}
 } 
-
+*/
 
 void BtnMercBackButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
@@ -530,3 +538,5 @@ UINT32	CalculateHowMuchPlayerOwesSpeck()
 
 	return( uiContractCharge );
 }
+
+#endif

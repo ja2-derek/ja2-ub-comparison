@@ -48,7 +48,7 @@
 #define		MERC_ACCOUNT_BOX_Y							LAPTOP_SCREEN_WEB_UL_Y + 251
 
 #define		MERC_ACCOUNT_BOX_TEXT_X					MERC_ACCOUNT_BOX_X
-#define		MERC_ACCOUNT_BOX_TEXT_Y					MERC_ACCOUNT_BOX_Y + 20
+#define		MERC_ACCOUNT_BOX_TEXT_Y					MERC_ACCOUNT_BOX_Y + 24
 #define		MERC_ACCOUNT_BOX_TEXT_WIDTH			110
 
 #define		MERC_ACCOUNT_ARROW_X						MERC_ACCOUNT_BOX_X + 125
@@ -241,7 +241,7 @@ NUMBER_TIMES_QUOTE_SAID			gNumberOfTimesQuoteSaid[ MERC_NUMBER_OF_RANDOM_QUOTES 
 
 // The Account Box button
 void BtnAccountBoxButtonCallback(GUI_BUTTON *btn,INT32 reason);
-UINT32	guiAccountBoxButton;
+//UINT32	guiAccountBoxButton;
 INT32		guiAccountBoxButtonImage;
 
 //File Box
@@ -326,6 +326,15 @@ void GameInitMercs()
 	gubCurMercIndex = 0;
 	LaptopSaveInfo.gubLastMercIndex = NUMBER_OF_BAD_MERCS;
 
+	//Ja25.  create an account immediately
+	{
+		//open an account
+		LaptopSaveInfo.gubPlayersMercAccountStatus = MERC_ACCOUNT_VALID;
+
+		//Get an account number
+		LaptopSaveInfo.guiPlayersMercAccountNumber = Random( 99999 );
+	}
+
 	gubCurrentMercVideoMode = MERC_VIDEO_NO_VIDEO_MODE;
 	gfMercVideoIsBeingDisplayed = FALSE;
 
@@ -388,11 +397,13 @@ BOOLEAN EnterMercs()
 	// Account Box button
 	guiAccountBoxButtonImage  = LoadButtonImage("LAPTOP\\SmallButtons.sti", -1,0,-1,1,-1 );
 
+/*
 	guiAccountBoxButton = QuickCreateButton(guiAccountBoxButtonImage, MERC_ACCOUNT_BUTTON_X, MERC_ACCOUNT_BUTTON_Y,
 																BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
 																DEFAULT_MOVE_CALLBACK, BtnAccountBoxButtonCallback);
 	SetButtonCursor(guiAccountBoxButton, CURSOR_LAPTOP_SCREEN);
 	SpecifyDisabledButtonStyle( guiAccountBoxButton, DISABLED_STYLE_SHADED);
+*/
 
 	guiFileBoxButton = QuickCreateButton(guiAccountBoxButtonImage, MERC_FILE_BUTTON_X, MERC_FILE_BUTTON_Y,
 																BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
@@ -481,7 +492,7 @@ void ExitMercs()
 
 	UnloadButtonImage( guiAccountBoxButtonImage );
 	RemoveButton( guiFileBoxButton );
-	RemoveButton( guiAccountBoxButton );
+//JA25: removed		RemoveButton( guiAccountBoxButton );
 
 	RemoveMercBackGround();
 
@@ -591,20 +602,25 @@ void RenderMercs()
 	//Text on the Speck Portrait
 	DisplayWrappedString(MERC_PORTRAIT_TEXT_X, MERC_PORTRAIT_TEXT_Y, MERC_PORTRAIT_TEXT_WIDTH, 2, MERC_TEXT_FONT, MERC_TEXT_COLOR, MercHomePageText[MERC_SPECK_OWNER], FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
+	//Display the "ask about or special offer
+	DisplayWrappedString(MERC_ACCOUNT_BOX_TEXT_X, MERC_ACCOUNT_BOX_TEXT_Y, 230, 2, MERC_TEXT_FONT, MERC_TEXT_COLOR, gzNewLaptopMessages[ LPTP_MSG__MERC_SPECIAL_OFFER ], FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
+
+/*
+ja25:
 	//Text on the Account Box
 	if( LaptopSaveInfo.gubPlayersMercAccountStatus == MERC_NO_ACCOUNT )
 		DisplayWrappedString(MERC_ACCOUNT_BOX_TEXT_X, MERC_ACCOUNT_BOX_TEXT_Y, MERC_ACCOUNT_BOX_TEXT_WIDTH, 2, MERC_TEXT_FONT, MERC_TEXT_COLOR, MercHomePageText[MERC_OPEN_ACCOUNT], FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 	else
 		DisplayWrappedString(MERC_ACCOUNT_BOX_TEXT_X, MERC_ACCOUNT_BOX_TEXT_Y, MERC_ACCOUNT_BOX_TEXT_WIDTH, 2, MERC_TEXT_FONT, MERC_TEXT_COLOR, MercHomePageText[MERC_VIEW_ACCOUNT], FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
-
+*/
 	//Text on the Files Box
 	DisplayWrappedString(MERC_FILE_BOX_TEXT_X, MERC_FILE_BOX_TEXT_Y, MERC_FILE_BOX_TEXT_WIDTH, 2, MERC_TEXT_FONT, MERC_TEXT_COLOR, MercHomePageText[MERC_VIEW_FILES], FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 
 	//If the Specks popup dioalogue box is active, display it.
 	if( iMercPopUpBox != -1 )
 	{
-		DrawButton( guiAccountBoxButton );
-		ButtonList[ guiAccountBoxButton ]->uiFlags |= BUTTON_FORCE_UNDIRTY;
+//JA25: removed			DrawButton( guiAccountBoxButton );
+//		ButtonList[ guiAccountBoxButton ]->uiFlags |= BUTTON_FORCE_UNDIRTY;
 
 		RenderMercPopUpBoxFromIndex( iMercPopUpBox, gusSpeckDialogueX, MERC_TEXT_BOX_POS_Y, FRAME_BUFFER);
 	}
@@ -615,7 +631,7 @@ void RenderMercs()
 	//if the page is redrawn, and we are in video conferencing, redraw the VC backgrund graphic
 	gfMercSiteScreenIsReDrawn = TRUE;
 
-	ButtonList[ guiAccountBoxButton ]->uiFlags &= ~BUTTON_FORCE_UNDIRTY;
+//JA25: removed	ButtonList[ guiAccountBoxButton ]->uiFlags &= ~BUTTON_FORCE_UNDIRTY;
 
   InvalidateRegion(LAPTOP_SCREEN_UL_X,LAPTOP_SCREEN_WEB_UL_Y,LAPTOP_SCREEN_LR_X,LAPTOP_SCREEN_WEB_LR_Y);
 }
@@ -650,7 +666,7 @@ BOOLEAN RemoveMercBackGround()
 
 
 
-
+/*
 void BtnAccountBoxButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
 	if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
@@ -685,6 +701,8 @@ void BtnAccountBoxButtonCallback(GUI_BUTTON *btn,INT32 reason)
 		InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY, btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
 	}
 } 
+*/
+
 
 void BtnFileBoxButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
@@ -1470,8 +1488,8 @@ void HandleTalkingSpeck()
 
 					if( iMercPopUpBox != -1 )
 					{
-						DrawButton( guiAccountBoxButton );
-						ButtonList[ guiAccountBoxButton ]->uiFlags |= BUTTON_FORCE_UNDIRTY;
+//JA25: removed							DrawButton( guiAccountBoxButton );
+//JA25: removed							ButtonList[ guiAccountBoxButton ]->uiFlags |= BUTTON_FORCE_UNDIRTY;
 
 						RenderMercPopUpBoxFromIndex( iMercPopUpBox, gusSpeckDialogueX, MERC_TEXT_BOX_POS_Y, FRAME_BUFFER);
 					}
@@ -2287,7 +2305,7 @@ void DisableMercSiteButton()
 {
 	if( iMercPopUpBox != -1 )
 	{
-		ButtonList[ guiAccountBoxButton ]->uiFlags |= BUTTON_FORCE_UNDIRTY;
+//JA25: removed			ButtonList[ guiAccountBoxButton ]->uiFlags |= BUTTON_FORCE_UNDIRTY;
 	}
 }
 

@@ -1168,10 +1168,10 @@ void RenderLaptop()
 			RenderMercsFiles();
 			break;
 		case LAPTOP_MODE_MERC_ACCOUNT:
-			RenderMercsAccount();
+//Ja25						RenderMercsAccount();
 			break;
 		case LAPTOP_MODE_MERC_NO_ACCOUNT:
-			RenderMercsNoAccount();
+//Ja25						RenderMercsNoAccount();
 			break;
 
 		case LAPTOP_MODE_BOBBY_R:
@@ -1527,10 +1527,10 @@ void EnterNewLaptopMode()
 			EnterMercsFiles();
 			break;
 		case LAPTOP_MODE_MERC_ACCOUNT:
-			EnterMercsAccount();
+//Ja25						EnterMercsAccount();
 			break;
 		case LAPTOP_MODE_MERC_NO_ACCOUNT:
-			EnterMercsNoAccount();
+//Ja25						EnterMercsNoAccount();
 			break;
 
 		case LAPTOP_MODE_BOBBY_R:
@@ -1688,10 +1688,10 @@ void HandleLapTopHandles()
 			HandleMercsFiles();
 			break;
 		case LAPTOP_MODE_MERC_ACCOUNT:
-			HandleMercsAccount();
+//Ja25						HandleMercsAccount();
 			break;
 		case LAPTOP_MODE_MERC_NO_ACCOUNT:
-			HandleMercsNoAccount();
+//Ja25						HandleMercsNoAccount();
 			break;
 
 		
@@ -2155,10 +2155,10 @@ UINT32 ExitLaptopMode(UINT32 uiMode)
 			ExitMercsFiles();
 			break;
 		case LAPTOP_MODE_MERC_ACCOUNT:
-			ExitMercsAccount();
+//Ja25						ExitMercsAccount();
 			break;
 		case LAPTOP_MODE_MERC_NO_ACCOUNT:
-			ExitMercsNoAccount();
+//Ja25			ExitMercsNoAccount();
 			break;
 
 		

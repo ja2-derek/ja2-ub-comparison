@@ -14,7 +14,7 @@
 	#include "Speck Quotes.h"
 #endif
 
-
+#ifdef ENABLE_MERC_NO_ACCOUNT
 
 
 #define		MERC_NA_TEXT_FONT									FONT12ARIAL
@@ -192,3 +192,4 @@ void BtnCancelBoxButtonCallback(GUI_BUTTON *btn,INT32 reason)
 	}
 } 
 
+#endif
