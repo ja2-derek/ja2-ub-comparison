@@ -40,6 +40,7 @@ typedef struct
 extern INT16	gsMercArriveSectorX;
 extern INT16	gsMercArriveSectorY;
 
+extern	BOOLEAN		gfFirstTimeInGameHeliCrash;
 
 INT8		HireMerc( MERC_HIRE_STRUCT *pHireMerc);
 void		MercArrivesCallback(	UINT8 ubSoldierID );
@@ -50,7 +51,13 @@ BOOLEAN IsTheSoldierAliveAndConcious( 	SOLDIERTYPE		*pSoldier );
 void		HandleMercArrivesQuotes( SOLDIERTYPE *pSoldier );
 void		UpdateAnyInTransitMercsWithGlobalArrivalSector( );
 
+void UpdateJerryMiloInInitialSector();
 
 UINT32	GetMercArrivalTimeOfDay( );
+
+void InitializeHeliGridnoAndTime( BOOLEAN fLoading );
+void InitJerryMiloInfo();
+
+
 
 #endif

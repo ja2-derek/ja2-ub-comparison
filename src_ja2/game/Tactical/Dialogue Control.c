@@ -197,6 +197,10 @@ void CreateTalkingUI( INT8 bUIHandlerID, INT32 iFaceIndex, UINT8 ubCharacterNum,
 
 void HandleExternNPCSpeechFace( INT32 iIndex );
 
+BOOLEAN AreAllTheMercsFinishedSayingThereInitialHeliCrashQuotes();
+void		InitJerriesSpeechCallBack();
+void		HandlePlayerClosingMorrisNoteDisplayedOnScreen();
+
 
 
 extern BOOLEAN ContinueDialogue(SOLDIERTYPE *pSoldier, BOOLEAN fDone );
@@ -390,6 +394,8 @@ void StopAnyCurrentlyTalkingSpeech( )
 	{
 		InternalShutupaYoFace( gpCurrentTalkingFace->iID, TRUE );
 	}
+
+	RemoveJerryMiloBrokenLaptopOverlay();
 }
 
 
@@ -1141,6 +1147,38 @@ void HandleDialogue( )
 			else if ( QItem->uiSpecialEventData & MULTIPURPOSE_SPECIAL_EVENT_TEAM_MEMBERS_DONE_TALKING )
 			{
 				HandleDoneLastEndGameQuote( );
+			}
+			else
+			{
+				// grab soldier ptr from profile ID
+				pSoldier = FindSoldierByProfileID( (UINT8)QItem->uiSpecialEventData, FALSE );
+
+				// Now, wake these sluts up and have them say quote...
+				pSoldier->fIgnoreGetupFromCollapseCheck = FALSE;
+
+				//Get the soldier up
+				pSoldier->bCollapsed = FALSE;
+				ChangeSoldierStance( pSoldier, ANIM_STAND );
+
+				//if the soldier is Jerry
+				if( FindSoldierByProfileID( JERRY, FALSE ) == pSoldier )
+				{
+					//Play the sound of the Antena breaking
+					PlayJA2SampleFromFile( "SOUNDS\\Metal Antenna Crunch.wav", RATE_11025, HIGHVOLUME, 1, MIDDLE );
+				}
+
+				//Turn off the flag saying we are doing the initial heli crash
+				gfFirstTimeInGameHeliCrash = FALSE;
+
+				//if all the mercs are done their talk
+				if( AreAllTheMercsFinishedSayingThereInitialHeliCrashQuotes() )
+				{
+					//Trigger Jerry Milo's script record 10 ( call action 301 )
+					//AA DelayedMercQuote( JERRY, 0xffff, 4 );
+
+					//End the ui Lock
+					guiPendingOverrideEvent = LU_ENDUILOCK;
+				}
 			}
 		}
 		else if( QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_SLEEP )
@@ -2590,6 +2628,12 @@ void TextOverlayClickCallback( MOUSE_REGION * pRegion, INT32 iReason )
 				ShutDownLastQuoteTacticalTextBox( );
 			}
 		}
+
+		//if we are in the heli crash sequence
+		else if( gJa25SaveStruct.fJerryBreakingLaptopOccuring )
+		{
+			InitJerriesSpeechCallBack();
+		}
 	}
 	else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE )
 	{
@@ -2850,4 +2894,71 @@ void SetExternMapscreenSpeechPanelXY( INT16 sXPos, INT16 sYPos )
 {
   gsExternPanelXPosition     = sXPos;
   gsExternPanelYPosition     = sYPos;
+}
+
+BOOLEAN AreAllTheMercsFinishedSayingThereInitialHeliCrashQuotes()
+{
+	INT32                   cnt;
+	SOLDIERTYPE             *pSoldier;
+
+	// IF IT'S THE SELECTED GUY, MAKE ANOTHER SELECTED!
+	cnt = gTacticalStatus.Team[ OUR_TEAM ].bFirstID;
+
+	// look for all mercs on the same team, 
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; cnt++,pSoldier++)
+	{       
+		//if the merc is alive, in sector, etc...
+		if ( OK_CONTROLLABLE_MERC( pSoldier )  )
+		{
+			//if the merc is still not done the initial speech, and still prone
+			if( pSoldier->fIgnoreGetupFromCollapseCheck )
+			{
+				//we arent done
+				return( FALSE );
+			}
+		}
+	}
+
+	//See if Jerry is still waiting to get up
+	pSoldier = FindSoldierByProfileID( JERRY, FALSE );
+	if( pSoldier )
+	{
+		//if the merc is still not done the initial speech, and still prone
+		if( pSoldier->fIgnoreGetupFromCollapseCheck )
+		{
+			//we arent done
+			return( FALSE );
+		}
+	}
+
+	//all mercs on the team are done
+	return( TRUE );
+}
+
+void InitJerriesSpeechCallBack()
+{
+	//Trigger Jerry Milo's script record 10 ( call action 301 )
+	TriggerNPCRecord( JERRY, 10 );
+
+	//Clear the overlay
+	RemoveJerryMiloBrokenLaptopOverlay();
+}
+
+void RemoveJerryMiloBrokenLaptopOverlay()
+{
+	//if the overlay is up
+	if( gJa25SaveStruct.fJerryBreakingLaptopOccuring )
+	{
+		gJa25SaveStruct.fJerryBreakingLaptopOccuring = FALSE;
+
+		RemoveVideoOverlay( giTextBoxOverlay );
+		giTextBoxOverlay = -1;
+
+		if( fTextBoxMouseRegionCreated )
+		{
+			MSYS_RemoveRegion( &gTextBoxMouseRegion );
+			fTextBoxMouseRegionCreated = FALSE; 
+		}
+	}
+}
 }

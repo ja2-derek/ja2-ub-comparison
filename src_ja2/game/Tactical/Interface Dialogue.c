@@ -90,6 +90,9 @@ UINT16 gusDialogueMessageBoxType;
 void StartDialogueMessageBox( UINT8 ubProfileID, UINT16 usMessageBoxType );
 void DialogueMessageBoxCallBack( UINT8 ubExitValue );
 void CarmenLeavesSectorCallback( void );
+void PerformJerryMiloAction301();
+void PerformJerryMiloAction302();
+void DisplayJerryBreakingLaptopTransmitterPopup();
 
 #define		TALK_PANEL_FACE_X				6
 #define		TALK_PANEL_FACE_Y				9
@@ -4244,6 +4247,14 @@ Ja25 No meanwhiles
 					TriggerNPCRecord( WALTER, 15 );
 				}
 				break;
+
+			case NPC_ACTION_TRIGGER_JERRY_CONVERSATION_WITH_PGC_1:
+				PerformJerryMiloAction301();
+				break;
+
+			case NPC_ACTION_TRIGGER_JERRY_CONVERSATION_WITH_PGC_2:
+				PerformJerryMiloAction302();
+				break;
 			default:
 				ScreenMsg( FONT_MCOLOR_RED, MSG_TESTVERSION, L"No code support for NPC action %d", usActionCode );
 				break;
@@ -4938,5 +4949,133 @@ void CarmenLeavesSectorCallback( void )
 	{
 		TriggerNPCRecord( 78, 36 );
 	}
+
+}
+
+void PerformJerryMiloAction301()
+{
+	UINT8		ubMercsPresent[NUM_MERCS_WITH_NEW_QUOTES];
+	INT8		bNumMercsPresent=-1;
+	SOLDIERTYPE	*pSoldier=NULL;
+	INT32   cnt;
+	UINT8		ubId;
+
+	//Get the number and array of the new soldiers
+	bNumMercsPresent = GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( ubMercsPresent, NULL );
+
+/*
+Randomly choose one
+	//if there is at least 1 of the desired mercs found
+	if( bNumMercsPresent != -1 )
+	{
+		ubId = ubMercsPresent[ Random( bNumMercsPresent ) ];
+
+		pSoldier = MercPtrs[ ubId ];
+
+		TacticalCharacterDialogue( pSoldier, QUOTE_DEATH_RATE_REFUSAL );
+	}
+*/
+	//Have them all say their quote
+	for( cnt=0; cnt<bNumMercsPresent; cnt++ )
+	{
+		ubId = ubMercsPresent[ cnt ];
+
+		pSoldier = MercPtrs[ ubId ];
+
+		TacticalCharacterDialogue( pSoldier, QUOTE_DEATH_RATE_REFUSAL );
+	}
+
+	//Trigger Jerry Milo's script record 11 ( call action 302 )
+	TriggerNPCRecord( JERRY, 11 );
+
+	//Close the dialogue panel
+	DeleteTalkingMenu();
+}
+
+void PerformJerryMiloAction302()
+{
+	UINT8	ubMercsPresent[3];
+	INT8	bNumMercsPresent=-1;
+	SOLDIERTYPE	*pSoldier=NULL;
+	UINT8		ubId;
+
+	//Get the number and array of the new soldiers
+	bNumMercsPresent = GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( ubMercsPresent, NULL );
+
+//Randomly choose one
+	//if there is at least 1 of the desired mercs found
+	if( bNumMercsPresent != 0 )
+	{
+		UINT8 ubProfileID = NO_PROFILE;
+		UINT8	ubIdOfMercWhoSaidQuote;
+
+		ubIdOfMercWhoSaidQuote = Random( bNumMercsPresent );
+		ubId = ubMercsPresent[ ubIdOfMercWhoSaidQuote ];
+
+		pSoldier = MercPtrs[ ubId ];
+
+		TacticalCharacterDialogue( pSoldier, QUOTE_LAME_REFUSAL );
+
+		if( bNumMercsPresent == 1 )
+			ubProfileID = MercPtrs[ ubId ]->ubProfile;
+		else
+		{
+			BOOLEAN fDone=FALSE;
+
+			while( !fDone )
+			{
+				ubProfileID = Random( bNumMercsPresent );
+
+				if( ubProfileID != ubIdOfMercWhoSaidQuote )
+				{
+					ubId = ubMercsPresent[ ubProfileID ];
+					fDone = TRUE;
+				}
+			}
+
+			ubProfileID = MercPtrs[ ubId ]->ubProfile;
+		}
+
+		//Say the quote in 15 seconds
+		DelayedMercQuote( ubProfileID, QUOTE_DEPARTING_COMMENT_CONTRACT_NOT_RENEWED_OR_48_OR_MORE, GetWorldTotalSeconds( ) + 15 );
+	}
+
+	//handle the merc arrives quotes now
+	HandleMercArrivesQuotesFromHeliCrashSequence();
+
+	//Set the fact that we should show the destination dialog
+	gJa25SaveStruct.fShowMercDestinationDialogWhenHiringMerc = TRUE;
+
+	//Close the dialogue panel
+	DeleteTalkingMenu();
+}
+
+void DisplayJerryBreakingLaptopTransmitterPopup()
+{
+	CHAR16	zString[512];
+	INT8		bID=-1;
+
+	if( gJa25SaveStruct.fJerryBreakingLaptopOccuring )
+	{
+		return;
+	}
+
+	//get a random ID for a mercs name
+	bID = RandomSoldierIdForAnyMercInSector();
+
+	if( bID == -1 )
+	{
+		//Assert( 0 );
+		return;
+	}
+
+	//Create the string
+	swprintf( zString, zNewTacticalMessages[ TCTL_MSG__JERRY_BREAKIN_LAPTOP_ANTENA ], Menptr[ bID ].name );
+
+	//Display it
+	ExecuteTacticalTextBox( 110, zString );
+
+	gJa25SaveStruct.fJerryBreakingLaptopOccuring = TRUE;
+}
 
 }

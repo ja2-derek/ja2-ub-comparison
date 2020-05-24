@@ -134,6 +134,8 @@ extern		BOOLEAN				gfLoadedGame;
 extern		HELP_SCREEN_STRUCT gHelpScreen;
 extern		UINT8					gubDesertTemperature;
 extern		UINT8					gubGlobalTemperature;
+extern		BOOLEAN		gfFirstTimeInGameHeliCrash;
+
 //extern		BOOLEAN				gfCreatureMeanwhileScenePlayed;
 
 BOOLEAN				gMusicModeToPlay = FALSE;
@@ -353,7 +355,9 @@ Ja25 no meanwhiles
   INT8  fPlayerTeamSawJoey;
 	INT8	fMikeShouldSayHi;
 
-	UINT8		ubFiller[550];		//This structure should be 1024 bytes
+	BOOLEAN		fFirstTimeInGameHeliCrash;
+
+	UINT8		ubFiller[549];		//This structure should be 1024 bytes
 
 } GENERAL_SAVE_INFO;
 
@@ -1161,6 +1165,9 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 	//Empty the dialogue Queue cause someone could still have a quote in waiting
 	EmptyDialogueQueue( );
 
+	//Reset Jerry Quotes
+	HandleJerryMiloQuotes( TRUE );
+
 	//If there is someone talking, stop them
 	StopAnyCurrentlyTalkingSpeech( );
 
@@ -1285,6 +1292,9 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 		gfUseAlternateMap = TRUE;
 	}
 
+
+	//Re-init the heli gridnos and time..
+	InitializeHeliGridnoAndTime( TRUE );
 
 	//if the world was loaded when saved, reload it, otherwise dont
 	if( SaveGameHeader.fWorldLoaded || SaveGameHeader.uiSavedGameVersion < 50 )
@@ -3982,6 +3992,7 @@ Ja25 no meanwhiles
 	sGeneralInfo.bHospitalPriceModifier					= gbHospitalPriceModifier;
   sGeneralInfo.fPlayerTeamSawJoey             = gfPlayerTeamSawJoey;
 	sGeneralInfo.fMikeShouldSayHi								= gfMikeShouldSayHi;
+	sGeneralInfo.fFirstTimeInGameHeliCrash			= gfFirstTimeInGameHeliCrash;
 
 	//Setup the 
 	//Save the current music mode
@@ -4241,6 +4252,8 @@ Ja25 no meanwhiles
 	gbHospitalPriceModifier = sGeneralInfo.bHospitalPriceModifier;
   gfPlayerTeamSawJoey     = sGeneralInfo.fPlayerTeamSawJoey;
 	gfMikeShouldSayHi				= sGeneralInfo.fMikeShouldSayHi;
+	gfFirstTimeInGameHeliCrash			= sGeneralInfo.fFirstTimeInGameHeliCrash;
+
 
 	return( TRUE );
 }

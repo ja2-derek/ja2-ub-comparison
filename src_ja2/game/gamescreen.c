@@ -560,7 +560,12 @@ UINT32  MainGameScreenHandle(void)
 	if ( gfTacticalDoHeliRun )
 	{
 		gfGameScreenLocateToSoldier = FALSE;
-		InternalLocateGridNo( gMapInformation.sNorthGridNo, TRUE );
+
+		//if it is the first time in the game, and we are doing the heli crash code, locate to a different spot
+		if( gfFirstTimeInGameHeliCrash )
+			InternalLocateGridNo( 15427, TRUE );
+		else
+			InternalLocateGridNo( gMapInformation.sNorthGridNo, TRUE );
 
 		// Start heli Run...
 		StartHelicopterRun( gMapInformation.sNorthGridNo );
@@ -1029,6 +1034,7 @@ Ja25 No air raid
 
 	//	ScheduleAirRaid( &AirRaidDef );
 */
+		HandleInitialEventsInHeliCrash();
 
 		gfTacticalDoHeliRun = TRUE;
 		gfFirstHeliRun			= TRUE;

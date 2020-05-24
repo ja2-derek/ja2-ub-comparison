@@ -20,6 +20,8 @@
 	#include "Random.h"
 #endif
 
+extern	BOOLEAN		gfFirstTimeInGameHeliCrash;
+
 // Adds a soldier to a world gridno and set's direction
 void AddSoldierToSectorGridNo( SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDirection, BOOLEAN fUseAnimation, UINT16 usAnimState, UINT16 usAnimCode );
 
@@ -1530,7 +1532,19 @@ void AddSoldierToSectorGridNo( SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubDir
 				// default to standing on arrival
 				if ( pSoldier->usAnimState != HELIDROP )
 				{
-					if ( fUseAnimation )
+					// DAVE!!!!
+					if ( gfFirstTimeInGameHeliCrash )
+					{
+						//should we be on our back or tummy
+						if( Random( 100 ) < 50 )
+							EVENT_InitNewSoldierAnim( pSoldier, STAND_FALLFORWARD_STOP, 1, TRUE );
+						else
+							EVENT_InitNewSoldierAnim( pSoldier, FALLBACKHIT_STOP, 1, TRUE );
+
+						pSoldier->bCollapsed = TRUE;
+
+					}					
+					else if ( fUseAnimation )
 					{
 						EVENT_InitNewSoldierAnim( pSoldier, usAnimState, usAnimCode, TRUE );
 					}
