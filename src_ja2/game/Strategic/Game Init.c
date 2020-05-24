@@ -327,7 +327,6 @@ Ja25 No strategic ai
 
 BOOLEAN InitNewGame( BOOLEAN fReset )
 {
-	INT32		iStartingCash;
 
 //	static fScreenCount = 0;
 
@@ -389,32 +388,7 @@ Ja25 no meanwhiles
 		AddEmail(IMP_EMAIL_INTRO,IMP_EMAIL_INTRO_LENGTH,CHAR_PROFILE_SITE,  GetWorldTotalMin() );
 		//AddEmail(ENRICO_CONGRATS,ENRICO_CONGRATS_LENGTH,MAIL_ENRICO, GetWorldTotalMin() );
 
-		// ATE: Set starting cash....
-		switch( gGameOptions.ubDifficultyLevel )
-		{
-			case DIF_LEVEL_EASY:
-
-				iStartingCash	= 45000;
-				break;
-
-			case DIF_LEVEL_MEDIUM:
-
-				iStartingCash	= 35000;
-				break;
-
-			case DIF_LEVEL_HARD:
-
-				iStartingCash	= 30000;
-				break;
-
-			default:
-				Assert(0);
-				return( FALSE );
-		}
-
-		// Setup initial money
- 		AddTransactionToPlayersBook( ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), iStartingCash );
-
+		GivePlayerStartingJa25Money();
 
 /*
 Ja25 MERC is available from the begining
