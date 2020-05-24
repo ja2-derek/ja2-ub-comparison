@@ -167,7 +167,7 @@ void CreateACharacterFromPlayerEnteredStats( void )
 	// attitude
   gMercProfiles[ ubMercID ].bAttitude = ( INT8 )iAttitude; 
   
-	gMercProfiles[ ubMercID ].bExpLevel = 1;
+	gMercProfiles[ ubMercID ].bExpLevel = 4;
   
 	// set time away
 	gMercProfiles[ ubMercID ].bMercStatus = 0;
