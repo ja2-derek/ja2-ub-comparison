@@ -853,7 +853,7 @@ void DrawHistoryRecordsText( void )
     
 		
 		// no location
-		if( ( pCurHistory->sSectorX == -1 )||( pCurHistory->sSectorY == -1 ) )
+		if( ( pCurHistory->sSectorX == -1 )||( pCurHistory->sSectorY == -1 ) ||( pCurHistory->sSectorX == 0 ) || ( pCurHistory->sSectorY == 0 ) )
 		{
 			FindFontCenterCoordinates( RECORD_DATE_X + RECORD_DATE_WIDTH, 0,RECORD_LOCATION_WIDTH + 10, 0,  pHistoryLocations[0] ,HISTORY_TEXT_FONT, &sX, &sY );
 		  mprintf(sX, RECORD_Y + ( iCounter * ( BOX_HEIGHT ) ) + 3, pHistoryLocations[0] );
