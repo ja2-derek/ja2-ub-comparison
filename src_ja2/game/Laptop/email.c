@@ -22,7 +22,7 @@
 	#include "Text.h"
 #endif
 
-
+#define		EMAIL_EDT_FILE				"BINARYDATA\\Email25.edt"
 
 //static EmailPtr pEmailList; 
 EmailPtr pEmailList; 
@@ -672,7 +672,7 @@ void AddEmailWithSpecialData(INT32 iMessageOffset, INT32 iMessageLength, UINT8 u
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
+    LoadEncryptedDataFromFile( EMAIL_EDT_FILE, pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
 
 	//Make a fake email that will contain the codes ( ie the merc ID )
 	FakeEmail.iFirstData = iFirstData;
@@ -706,7 +706,7 @@ void AddEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender, INT32 
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
+	LoadEncryptedDataFromFile( EMAIL_EDT_FILE, pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
 
 	// add message to list
 	AddEmailMessage(iMessageOffset,iMessageLength, pSubject, iDate, ubSender, FALSE, 0, 0 );
@@ -733,7 +733,7 @@ void AddPreReadEmail(INT32 iMessageOffset, INT32 iMessageLength, UINT8 ubSender,
 
 
 	// starts at iSubjectOffset amd goes iSubjectLength, reading in string
-	LoadEncryptedDataFromFile("BINARYDATA\\Email.edt", pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
+	LoadEncryptedDataFromFile(EMAIL_EDT_FILE, pSubject, MAIL_STRING_SIZE*(iMessageOffset), MAIL_STRING_SIZE);
 
 	// add message to list
 	AddEmailMessage(iMessageOffset,iMessageLength, pSubject, iDate, ubSender, TRUE, 0, 0 );
@@ -3160,8 +3160,9 @@ BOOLEAN HandleMailSpecialMessages( UINT16 usMessageId, INT32 *iResults, EmailPtr
 
 			HandleIMPCharProfileResultsMessage( );
 		  fSpecialCase = TRUE;
-
 		break;
+
+/* JA25:
 		case( MERC_INTRO ):
 			SetBookMark( MERC_BOOKMARK );
 			fReDrawScreenFlag = TRUE;
@@ -3183,16 +3184,18 @@ BOOLEAN HandleMailSpecialMessages( UINT16 usMessageId, INT32 *iResults, EmailPtr
 			//Set the book mark so the player can access the site
 			SetBookMark( MERC_BOOKMARK );
 			break;
-
+*/
 		case MERC_DIED_ON_OTHER_ASSIGNMENT:
 			ModifyInsuranceEmails( usMessageId, iResults, pMail, MERC_DIED_ON_OTHER_ASSIGNMENT_LENGTH );
 			break;
 
+/* JA25:
 		case AIM_MEDICAL_DEPOSIT_REFUND:
 		case AIM_MEDICAL_DEPOSIT_NO_REFUND:
 		case AIM_MEDICAL_DEPOSIT_PARTIAL_REFUND:
 			ModifyInsuranceEmails( usMessageId, iResults, pMail, AIM_MEDICAL_DEPOSIT_REFUND_LENGTH );
 			break;
+*/
 	}
 
 	return fSpecialCase;
@@ -4748,7 +4751,7 @@ void PreProcessEmail( EmailPtr pMail )
 	  while(pMail->usLength > iCounter)
 		{
       // read one record from email file
-		  LoadEncryptedDataFromFile( "BINARYDATA\\Email.edt", pString, MAIL_STRING_SIZE * ( iOffSet + iCounter ), MAIL_STRING_SIZE );
+		  LoadEncryptedDataFromFile( EMAIL_EDT_FILE, pString, MAIL_STRING_SIZE * ( iOffSet + iCounter ), MAIL_STRING_SIZE );
 		 
 			// add to list
 			AddEmailRecordToList( pString );
@@ -4977,7 +4980,7 @@ void ModifyInsuranceEmails( UINT16 usMessageId, INT32 *iResults, EmailPtr pMail,
 	for( ubCnt=0; ubCnt<ubNumberOfRecords; ubCnt++)
 	{
 		// read one record from email file
-		LoadEncryptedDataFromFile( "BINARYDATA\\Email.edt", pString, MAIL_STRING_SIZE * usMessageId, MAIL_STRING_SIZE );
+		LoadEncryptedDataFromFile( EMAIL_EDT_FILE, pString, MAIL_STRING_SIZE * usMessageId, MAIL_STRING_SIZE );
  
 		//Replace the $MERCNAME$ and $AMOUNT$ with the mercs name and the amountm if the string contains the keywords.
 		ReplaceMercNameAndAmountWithProperData( pString, pMail );
