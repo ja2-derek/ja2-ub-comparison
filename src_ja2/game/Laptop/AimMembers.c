@@ -4216,6 +4216,12 @@ void DisplayPopUpBoxExplainingMercArrivalLocationAndTime( )
 	if( LaptopSaveInfo.sLastHiredMerc.fHaveDisplayedPopUpInLaptop )
 		return;
 
+	//if we are not to show the dialog
+	if( !gJa25SaveStruct.fShowMercDestinationDialogWhenHiringMerc )
+	{
+		return;
+	}
+
 	pSoldier = FindSoldierByProfileID( (UINT8)LaptopSaveInfo.sLastHiredMerc.iIdOfMerc, TRUE );
 
 	if( pSoldier == NULL )
