@@ -321,10 +321,12 @@ void GameInitMercs()
 	gubMercArray[ 8 ] = LARRY_DRUNK;		//if changing this values, change in GetMercIDFromMERCArray()
 	gubMercArray[ 9 ] = NUMB;
 	gubMercArray[ 10 ] = COUGAR;
+	gubMercArray[ 11 ] = GASTON;
+	gubMercArray[ 12 ] = STOGIE;
 
 	LaptopSaveInfo.gubPlayersMercAccountStatus = MERC_NO_ACCOUNT;
 	gubCurMercIndex = 0;
-	LaptopSaveInfo.gubLastMercIndex = NUMBER_OF_BAD_MERCS;
+	LaptopSaveInfo.gubLastMercIndex = LAST_MERC_ID;
 
 	//Ja25.  create an account immediately
 	{
@@ -976,7 +978,7 @@ UINT8 GetMercIDFromMERCArray(UINT8 ubMercID)
 	}
 
 	//if it is one of the newer mercs
-	else if( ubMercID <= 10 )
+	else if( ubMercID <= LAST_MERC_ID )
 	{
 		return( gubMercArray[ ubMercID ] );
 	}
@@ -1774,6 +1776,7 @@ BOOLEAN	GetSpeckConditionalOpening( BOOLEAN fJustEnteredScreen )
 	//if any mercs are dead
 	if( IsAnyMercMercsDead() )
 	{
+		UINT8 ubMercID;
 		//if no merc has died before
 		if( !LaptopSaveInfo.fHasAMercDiedAtMercSite )
 		{
@@ -1782,18 +1785,20 @@ BOOLEAN	GetSpeckConditionalOpening( BOOLEAN fJustEnteredScreen )
 		}
 
 		//loop through all the mercs and see if any are dead and the quote is not said
-		for(ubCnt=MERC_FIRST_MERC ; ubCnt<MERC_LAST_MERC; ubCnt++ )
+		for( ubCnt=0; ubCnt<NUMBER_OF_MERCS; ubCnt++ )
 		{
+			ubMercID = GetMercIDFromMERCArray( (UINT8) ubCnt );
+
 			//if the merc is dead
-			if( IsMercDead( ubCnt ) )
+			if( IsMercDead( ubMercID ) )
 			{
 				//if the quote has not been said
-				if( !( gMercProfiles[ ubCnt ].ubMiscFlags3 & PROFILE_MISC_FLAG3_MERC_MERC_IS_DEAD_AND_QUOTE_SAID ) )
+				if( !( gMercProfiles[ ubMercID ].ubMiscFlags3 & PROFILE_MISC_FLAG3_MERC_MERC_IS_DEAD_AND_QUOTE_SAID ) )
 				{
 					//set the flag
-					gMercProfiles[ ubCnt ].ubMiscFlags3 |= PROFILE_MISC_FLAG3_MERC_MERC_IS_DEAD_AND_QUOTE_SAID;
+					gMercProfiles[ ubMercID ].ubMiscFlags3 |= PROFILE_MISC_FLAG3_MERC_MERC_IS_DEAD_AND_QUOTE_SAID;
 
-					switch( ubCnt )
+					switch( ubMercID )
 					{
 						case BIFF:
 							StartSpeckTalking( SPECK_QUOTE_ALTERNATE_OPENING_TAG_BIFF_IS_DEAD );
@@ -1833,6 +1838,12 @@ BOOLEAN	GetSpeckConditionalOpening( BOOLEAN fJustEnteredScreen )
 							break;
 						case BUBBA:
 							StartSpeckTalking( SPECK_QUOTE_ALTERNATE_OPENING_TAG_BUBBA_IS_DEAD );
+							break;
+						case GASTON:
+							StartSpeckTalking( SPECK_QUOTE_GASTON_DEAD );
+							break;
+						case STOGIE:
+							StartSpeckTalking( SPECK_QUOTE_STOGIE_DEAD );
 							break;
 					};
 
@@ -1891,11 +1902,14 @@ BOOLEAN IsAnyMercMercsHired( )
 BOOLEAN IsAnyMercMercsDead()
 {
 	UINT8	i;
+	UINT8 ubMercID;
 
 	//loop through all of the hired mercs from M.E.R.C.
 	for(i=0; i<NUMBER_OF_MERCS; i++)
 	{
-		if( gMercProfiles[ i+BIFF ].bMercStatus == MERC_IS_DEAD )
+		ubMercID = GetMercIDFromMERCArray( (UINT8) i );
+
+		if( gMercProfiles[ ubMercID ].bMercStatus == MERC_IS_DEAD )
 			return( TRUE );
 	}
 
@@ -1907,11 +1921,14 @@ UINT8 NumberOfMercMercsDead()
 {
 	UINT8	i;
 	UINT8	ubNumDead = 0;
+	UINT8	ubMercID;
 
 	//loop through all of the hired mercs from M.E.R.C.
 	for(i=0; i<NUMBER_OF_MERCS; i++)
 	{
-		if( gMercProfiles[ i+BIFF ].bMercStatus == MERC_IS_DEAD )
+		ubMercID = GetMercIDFromMERCArray( (UINT8) i );
+
+		if( gMercProfiles[ ubMercID ].bMercStatus == MERC_IS_DEAD )
 			ubNumDead++;
 	}
 
@@ -1944,11 +1961,14 @@ UINT8	CountNumberOfMercMercsWhoAreDead()
 {
 	UINT8	i;
 	UINT8	ubCount=0;
+	UINT8	ubMercID;
 
 	//loop through all of the hired mercs from M.E.R.C.
 	for(i=0; i<NUMBER_OF_MERCS; i++)
 	{
-		if( gMercProfiles[ i+BIFF ].bMercStatus == MERC_IS_DEAD )
+		ubMercID = GetMercIDFromMERCArray( (UINT8) i );
+
+		if( gMercProfiles[ ubMercID ].bMercStatus == MERC_IS_DEAD )
 		{
 			ubCount++;
 		}
@@ -2044,6 +2064,21 @@ void HandlePlayerHiringMerc( UINT8 ubHiredMercID )
 				if( IsMercMercAvailable( BIFF ) )
 					StartSpeckTalking( SPECK_QUOTE_PLAYERS_HIRES_LARRY_SPECK_PLUGS_BIFF );
 				break;
+
+			//Gaston is hired
+			case GASTON:
+				//if biff is available, advertise for biff
+				if( IsMercMercAvailable( FLO ) )
+					StartSpeckTalking( SPECK_QUOTE_PLAYER_HIRES_GASTON );
+				break;
+
+			//Stogie is hired
+			case STOGIE:
+				//if biff is available, advertise for biff
+				if( IsMercMercAvailable( BIFF ) )
+					StartSpeckTalking( SPECK_QUOTE_PLAYER_HIRES_STOGIE );
+				break;
+
 		}
 	}
 

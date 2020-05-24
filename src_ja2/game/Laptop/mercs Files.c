@@ -505,12 +505,20 @@ void LoadAndDisplayMercBio( UINT8 ubMercID )
 	UINT32	uiStartLoc = 0;
 
 	//load and display the merc bio
-	uiStartLoc = MERC_BIO_SIZE * ubMercID;
+	//load and display the merc's additioanl info (if any)
+	if( ubMercID < 17 )
+		uiStartLoc = MERC_BIO_SIZE * ubMercID;
+	else
+		uiStartLoc = MERC_BIO_SIZE * ( ubMercID - 7 );
+
 	LoadEncryptedDataFromFile(MERCBIOFILE, sText, uiStartLoc, MERC_BIO_INFO_TEXT_SIZE);
 	DisplayWrappedString(MERC_BIO_TEXT_X, MERC_BIO_TEXT_Y, MERC_BIO_WIDTH, 2, MERC_BIO_FONT, MERC_BIO_COLOR, sText, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 	
 	//load and display the merc's additioanl info (if any)
-	uiStartLoc = MERC_BIO_SIZE * ubMercID + MERC_BIO_INFO_TEXT_SIZE;
+	if( ubMercID < 17 )
+		uiStartLoc = MERC_BIO_SIZE * ubMercID + MERC_BIO_INFO_TEXT_SIZE;
+	else
+		uiStartLoc = MERC_BIO_SIZE * ( ubMercID - 7 ) + MERC_BIO_INFO_TEXT_SIZE;
 	LoadEncryptedDataFromFile(MERCBIOFILE, sText, uiStartLoc, MERC_BIO_ADD_INFO_TEXT_SIZE);
 	if( sText[0] != 0 )
 	{

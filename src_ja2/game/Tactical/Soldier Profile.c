@@ -709,6 +709,23 @@ void StartSomeMercsOnAssignment(void)
 	{
 		pProfile = &(gMercProfiles[ uiCnt ]);
 
+		//Make sure stigie and Gaston are available at the start of the game
+		if( uiCnt == STOGIE || uiCnt == GASTON )
+		{
+			pProfile->bMercStatus = MERC_OK;
+			pProfile->uiDayBecomesAvailable = 0;
+			pProfile->uiPrecedentQuoteSaid = 0;
+			pProfile->ubDaysOfMoraleHangover = 0;
+
+			continue;
+		}
+
+		//if the merc is dead, dont modify anything
+		if( pProfile->bMercStatus == MERC_IS_DEAD )
+		{
+			continue;
+		}
+
 		// calc chance to start on assignment
 		uiChance = 5 * pProfile->bExpLevel;
 
