@@ -12,7 +12,7 @@ extern BOOLEAN	gfPotentialTeamChangeDuringDeath;
 
 MERCPROFILESTRUCT gMercProfiles[ NUM_PROFILES ];
 
-#define AIM_AND_MERC_MERCS		51		// A.I.M. is 0-39, M.E.R.C.s are 40-50
+#define AIM_AND_MERC_MERCS		59		// A.I.M. is 0-39, M.E.R.C.s are 40-50 && 57 & 58
 
 #define	LAST_IMP_MERC					57
 
@@ -34,16 +34,16 @@ enum
 	NUMB,
 	BUBBA,
 
-	MIGUEL = 57,
-	CARLOS,
-	IRA,
-	DIMITRI,
+	GASTON = 58,	//Ja25:		Was 57
+	STOGIE,
+	MANUEL,
+	BIGGENS,
 
-	DEVIN,	// 61
+	JOHN_K,	// 61
 	ROBOT,
-	HAMOUS,
+	TEX,
 	SLAY,
-	RPC65,
+//	RPC65,
 	DYNAMO,
 	SHANK,
 	IGGY,
@@ -52,11 +52,11 @@ enum
 
 	RPC71,	// 71
 	MADDOG,
-	DARREL,
-	PERKO,
-	QUEEN,
-	AUNTIE,
-	ENRICO,
+	BETTY,
+	RAUL,
+	MORRIS,
+	JERRY,	//Ja25 No more AUNTIE
+	RUDY,
 	CARMEN,
 	JOE,
 	STEVE,

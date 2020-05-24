@@ -66,14 +66,14 @@ BOOLEAN QuoteExp_HeadShotOnly[75] =
 /* 55	PGLady2	*/	0,
 /* 56	PGLady3	*/	0,
 
-/* 57	Miguel	*/	0,	// these RPC's don't have quotes written yet
-/* 58	Carlos	*/      0,	// so this data is temporary.
-/* 59	Ira	*/      0,
-/* 60	Dimitri	*/      0,
-/* 61	Devin	*/      0,
-/* 62	Rat	*/      0,
+/* 57	PGmale4	*/	1,	// these RPC's don't have quotes written yet
+/* 58	Gaston	*/  1,	// so this data is temporary.
+/* 59	Stogie	*/  1,
+/* 60	Manuel	*/  1,
+/* 61	Biggens	*/  1,
+/* 62	John	*/    1,
 /* 63	Madlab	*/      0,
-/* 64	Slay	*/      0,
+/* 64	Tex	*/      1,
 /* 65	Nanchuk	*/      0,
 /* 66	Dynamo	*/      0,
 /* 67	Prisoner*/      0,
@@ -148,14 +148,15 @@ BOOLEAN QuoteExp_TeamSpecific[75] =
 /* 55	PGLady2	*/	1,
 /* 56	PGLady3	*/	1,
 
-/* 57	Miguel	*/	0,	// these RPC's don't have quotes written yet
-/* 58	Carlos	*/      0,	// so this data is temporary.
-/* 59	Ira	*/      0,
-/* 60	Dimitri	*/      0,
-/* 61	Devin	*/      0,
-/* 62	Rat	*/      0,
-/* 63	Madlab	*/      0,
-/* 64	Slay	*/      0,
+/* 57	PGmale4	*/	1,	// these RPC's don't have quotes written yet
+
+/* 58	Gaston	*/      1,	// so this data is temporary.
+/* 59	Stogie	*/      1,
+/* 60	Manuel	*/      1,
+/* 61	Biggens	*/      1,
+/* 62	John	*/      1,
+/* 63	Madlab	*/     1,
+/* 64	Tex	*/      1,
 /* 65	Nanchuk	*/      0,
 /* 66	Dynamo	*/      0,
 /* 67	Prisoner*/      0,
@@ -231,14 +232,14 @@ BOOLEAN QuoteExp_GenderCode[75] =
 /* 55	PGLady2	*/      1,
 /* 56	PGLady3	*/      2,
 
-/* 57	Miguel	*/	0,	// these RPC's don't have quotes written yet
-/* 58	Carlos	*/      0,	// so this data is temporary.
-/* 59	Ira	*/      0,
-/* 60	Dimitri	*/      0,
-/* 61	Devin	*/      0,
-/* 62	Rat	*/      0,
+/* 57	pgmale4	*/	2,	// these RPC's don't have quotes written yet
+/* 58	Gaston	*/      1,	// so this data is temporary.
+/* 59	Stogie	*/      2,
+/* 60	Manuel	*/      2,
+/* 61	Biggens	*/      2,
+/* 62	John	*/      1,
 /* 63	Madlab	*/      0,
-/* 64	Slay	*/      0,
+/* 64	Tex	*/      1,
 /* 65	Nanchuk	*/      0,
 /* 66	Dynamo	*/      0,
 /* 67	Prisoner*/      0,
@@ -314,14 +315,14 @@ BOOLEAN QuoteExp_GotGunOrUsedGun[75] =
 /* 55	PGLady2 */      61,
 /* 56	PGLady3 */      62,
 
-/* 57	Miguel  */      62,
-/* 58	Carlos  */      61,
-/* 59	Ira     */      62,
-/* 60	Dimitri */      61,
-/* 61	Devin   */      0 ,
-/* 62	Rat     */      0 ,
+/* 57	PGmale */      62,
+/* 58	Gaston  */      62,
+/* 59	Stogie */      62,
+/* 60	Manuel */      61,
+/* 61	Biggnes   */    61,
+/* 62	John     */      62,
 /* 63	Madlab  */      0 ,
-/* 64	Slay    */      0 ,
+/* 64	Tex    */      62,
 /* 65	Nanchuk */      0 ,
 /* 66	Dynamo  */      62,
 /* 67	Shank   */      61,
@@ -397,14 +398,14 @@ BOOLEAN QuoteExp_PassingDislike[75] =
 /* 55	PGLady2 */      0,
 /* 56	PGLady3 */      0,
 
-/* 57	Miguel  */      4,
-/* 58	Carlos  */      2,
-/* 59	Ira     */      4,
-/* 60	Dimitri */      0,
-/* 61	Devin   */      0,
-/* 62	RPC62   */      0,
+/* 57	PGmale4  */     0,
+/* 58	Gaston  */      0,
+/* 59	Stogie     */   0,
+/* 60	Manuel */       0,
+/* 61	Biggens   */    2,
+/* 62	John  */				4,
 /* 63	Madlab  */      0,
-/* 64	Slay    */      0,
+/* 64	Tex    */       2,
 /* 65	RPC65   */      0,
 /* 66	Dynamo  */      4,
 /* 67	Shank   */      0,

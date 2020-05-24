@@ -211,7 +211,8 @@ BOOLEAN LoadMercProfiles(void)
 {
 //	FILE *fptr;
 	HWFILE fptr;
-	char *pFileName = "BINARYDATA\\Prof.dat";
+//Ja25: new file	char *pFileName = "BINARYDATA\\Prof.dat";
+	char *pFileName = JA25_PROF_DAT;
 	UINT32 uiLoop, uiLoop2, uiLoop3;
 	UINT16 usItem, usNewGun, usAmmo, usNewAmmo;
 	UINT32	uiNumBytesRead;
@@ -1475,7 +1476,9 @@ BOOLEAN IsProfileIdAnAimOrMERCMerc( UINT8 ubProfileID )
 {
 	
 	if( ubProfileID < BIFF || 
-			( ubProfileID >= BIFF && ubProfileID <= BUBBA ))
+			( ubProfileID >= BIFF && ubProfileID <= BUBBA ) || 
+			ubProfileID == GASTON ||
+			ubProfileID == STOGIE )
 	{
 		return( TRUE );
 	}

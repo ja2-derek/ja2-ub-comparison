@@ -5,8 +5,8 @@
 #define		MERC_BUTTON_UP_COLOR													FONT_MCOLOR_WHITE
 #define		MERC_BUTTON_DOWN_COLOR												FONT_MCOLOR_DKWHITE
 
-#define		NUMBER_OF_MERCS																11
-#define		LAST_MERC_ID																	10
+#define		NUMBER_OF_MERCS																13
+#define		LAST_MERC_ID																	12
 #define		NUMBER_OF_BAD_MERCS														5
 #define		NUMBER_MERCS_AFTER_FIRST_MERC_ARRIVES					6
 #define		NUMBER_MERCS_AFTER_SECOND_MERC_ARRIVES				8

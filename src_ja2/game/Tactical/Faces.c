@@ -67,15 +67,15 @@ typedef struct
 
 RPC_SMALL_FACE_VALUES gRPCSmallFaceValues[ ] =
 {
-	9,  8,  8,  24,		// MIGUEL		( 57 )
-	8,  8,  7,  24,		// CARLOS		( 58 )
-	10,	8,	8,	26,		// IRA			( 59 )
-	 7, 8,  7,  26,		// DIMITRI	( 60 )
-	 6,	7,	7,	23,		// DEVIN		( 61 )
-	 0,	0,	0,	0,		// THE RAT	( 62 )
-	 8,	7,	8,	23,		//					( 63 )
-	 8,	8,	8,	22,		// SLAY			( 64 )
-	 0,	0,	0,	0,		//					( 65 )
+	13, 5, 10,  25,		// Gaston		( 58 )
+	 9, 4,  8,  22,		// Stogie		( 59 )
+	14,	2,	13,	22,		// Manuel		( 60 )
+	 5, 6,  5,  25,		// Biggens	( 61 )
+	 6,	4,	6,	24,		// J Kulba	( 62 )
+	 0,	0,	0,	0,		// THE RAT	( 63 )
+	 3,	6,	3,	23,		// Tex			( 64 )
+	 8,	8,	8,	22,		// SLAY			( 65 )
+//	 0,	0,	0,	0,		//					( 66 )
 	 9,	4,	7,	22,		// DYNAMO		( 66 )
 	 8,	8,	8,	25,		// SHANK		( 67 )
 	 4,	6,	5,	22,		// IGGY			( 68 )
@@ -86,7 +86,8 @@ RPC_SMALL_FACE_VALUES gRPCSmallFaceValues[ ] =
 	 0,	0,	0,	0,		//					( 73 )	
 	 0,	0,	0,	0,		//					( 74 )
 	 
-	 9,	3,	8,	23,		// MARIA		( 88 )
+	 9,	3,	8,	25,		// Jerry Milo		( 76 )
+//Ja25	 9,	3,	8,	23,		// MARIA		( 88 )
 
 	 9,	3,	8,	25,		// JOEY			( 90 )
 	 
@@ -104,7 +105,7 @@ RPC_SMALL_FACE_VALUES gRPCSmallFaceValues[ ] =
 
 UINT8	gubRPCSmallFaceProfileNum[] =
 {
-	57, // entry 0
+//	57, // entry 0
 	58,
 	59,
 	60,
@@ -122,7 +123,7 @@ UINT8	gubRPCSmallFaceProfileNum[] =
 	72,
 	73,
 	74,
-	88,
+	76,
 	90, // entry 19
 	97,
 	106,

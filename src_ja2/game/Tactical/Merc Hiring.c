@@ -284,7 +284,7 @@ INT8 HireMerc( MERC_HIRE_STRUCT *pHireMerc)
 		pSoldier->usMedicalDeposit = gMercProfiles[ pSoldier->ubProfile ].sMedicalDepositAmount;
 	}
 	//if the merc is from M.E.R.C.
-	else if( ( ubCurrentSoldier >= 40 ) && ( ubCurrentSoldier <= 50 ) ) 
+	else if( ( ubCurrentSoldier >= 40 ) && ( ubCurrentSoldier <= 50 ) || ( ubCurrentSoldier == GASTON || ubCurrentSoldier == STOGIE ) )
 	{
 		pSoldier->ubWhatKindOfMercAmI = MERC_TYPE__MERC;
 		//pSoldier->iTotalContractCharge = -1;

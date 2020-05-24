@@ -105,6 +105,7 @@ UINT32 uiExternalFaceProfileIds[ NUMBER_OF_EXTERNAL_NPC_FACES ]=
 	156,
 	157,
 	158,
+	76,					//Jerry Melo
 };
 
 UINT8	gubMercValidPrecedentQuoteID[ NUMBER_VALID_MERC_PRECEDENT_QUOTES ] = 
