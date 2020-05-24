@@ -5501,6 +5501,12 @@ void AddCharacterToFiredList( SOLDIERTYPE *pSoldier )
 {
 	INT32 iCounter = 0;
 
+	//if the merc has been let go while the merc is in transit
+	if( pSoldier->bAssignment == IN_TRANSIT )
+	{
+		//dont add it
+		return;
+	}
 
 	for( iCounter = 0; iCounter < 256; iCounter++ )
 	{
@@ -5526,6 +5532,13 @@ void AddCharacterToFiredList( SOLDIERTYPE *pSoldier )
 void AddCharacterToOtherList( SOLDIERTYPE *pSoldier )
 {
 	INT32 iCounter = 0;
+
+	//if the merc has been let go while the merc is in transit
+	if( pSoldier->bAssignment == IN_TRANSIT )
+	{
+		//dont add it
+		return;
+	}
 
 
 	for( iCounter = 0; iCounter < 256; iCounter++ )
