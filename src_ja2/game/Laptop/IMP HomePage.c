@@ -382,7 +382,7 @@ void HandleTextEvent( UINT32 uiKey )
 void ProcessPlayerInputActivationString( void )
 {
   // prcess string to see if it matches activation string
-  if( ( ( wcscmp(pPlayerActivationString, L"XEP624") == 0 ) || ( wcscmp(pPlayerActivationString, L"xep624") == 0 ) )&&( LaptopSaveInfo.fIMPCompletedFlag == FALSE ) &&( LaptopSaveInfo.gfNewGameLaptop < 2 ) )
+  if( ( ( wcscmp(pPlayerActivationString, L"GP97SL") == 0 ) || ( wcscmp(pPlayerActivationString, L"gp97sl") == 0 ) )&&( LaptopSaveInfo.fIMPCompletedFlag == FALSE ) &&( LaptopSaveInfo.gfNewGameLaptop < 2 ) )
 	{
 	  iCurrentImpPage = IMP_MAIN_PAGE;
 	
@@ -395,7 +395,7 @@ void ProcessPlayerInputActivationString( void )
 */
 	else
   {
-		if( ( ( wcscmp(pPlayerActivationString, L"XEP624") != 0 ) && ( wcscmp(pPlayerActivationString, L"xep624") != 0 ) ) )
+		if( ( ( wcscmp(pPlayerActivationString, L"GP97SL") != 0 ) && ( wcscmp(pPlayerActivationString, L"gp97sl") != 0 ) ) )
 		{
 			DoLapTopMessageBox( MSG_BOX_IMP_STYLE, pImpPopUpStrings[ 0 ], LAPTOP_SCREEN, MSG_BOX_FLAG_OK, NULL);
 		}
