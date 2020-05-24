@@ -1667,7 +1667,6 @@ JA25: not using quote quote
 				}
 */
 			}
-		}
 
 /*
 		if( fCanUseIdleTag )
@@ -1695,6 +1694,7 @@ JA25: not using quote quote
 					default:
 						Assert( 0 );
 				}
+			}
 			}
 */
 		}

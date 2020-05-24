@@ -139,11 +139,12 @@ void HandleIMPMainPage( void )
 	return;
 }
 
-
+//
+// this function will create the buttons needed for th IMP about us page
+//
 void CreateIMPMainPageButtons( void )
 {
 
-  // this function will create the buttons needed for th IMP about us page
   CHAR16 sString[ 128 ];
 
 	
@@ -156,6 +157,8 @@ void CreateIMPMainPageButtons( void )
 										BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageBackCallback);
   
 		*/
+
+		//Cancel/back button
 		 giIMPMainPageButton[0] = CreateIconAndTextButton( giIMPMainPageButtonImage[0], pImpButtonText[ 19 ], FONT12ARIAL, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
@@ -172,6 +175,8 @@ void CreateIMPMainPageButtons( void )
 										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
 										BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageBeginCallback);
 */
+
+	//Registry/Begin button
 	if(( iCurrentProfileMode ==0 )||( iCurrentProfileMode > 2) )
 	{
 	  giIMPMainPageButton[1] = CreateIconAndTextButton( giIMPMainPageButtonImage[ 1 ], pImpButtonText[ 1 ], FONT12ARIAL, 
@@ -198,6 +203,7 @@ void CreateIMPMainPageButtons( void )
 										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
 										BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPagePersonalityCallback);
 */
+	//Personality
   giIMPMainPageButton[2] = CreateIconAndTextButton( giIMPMainPageButtonImage[ 2 ], pImpButtonText[ 2 ], FONT12ARIAL, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
@@ -214,6 +220,7 @@ void CreateIMPMainPageButtons( void )
 										BUTTON_TOGGLE, MSYS_PRIORITY_HIGHEST - 1,
 										BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageAttributesCallback);
 */
+	//Attributes
   giIMPMainPageButton[3] = CreateIconAndTextButton( giIMPMainPageButtonImage[ 3 ], pImpButtonText[ 3 ], FONT12ARIAL, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
@@ -230,6 +237,7 @@ void CreateIMPMainPageButtons( void )
 										BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPagePortraitCallback);
   */
 
+	//Portrait
   giIMPMainPageButton[4] = CreateIconAndTextButton( giIMPMainPageButtonImage[ 4 ], pImpButtonText[ 4 ], FONT12ARIAL, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
@@ -254,6 +262,8 @@ void CreateIMPMainPageButtons( void )
 	{
 		swprintf( sString, pImpButtonText[ 25 ] );
 	}
+
+	//Voice
 	giIMPMainPageButton[5] = CreateIconAndTextButton( giIMPMainPageButtonImage[ 5 ], sString, FONT12ARIAL, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
@@ -585,6 +595,7 @@ void UpDateIMPMainPageButtons( void )
 	// enable 
   switch(  iCurrentProfileMode )
 	{
+		//begin
 		case 0:
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
@@ -597,12 +608,16 @@ void UpDateIMPMainPageButtons( void )
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
 		break;
+
+		//Attributes ( 4th button )
 		case( 2 ):
 		  EnableButton( giIMPMainPageButton[3] );
 			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
 		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
 		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
 		break;
+
+		//Portrait ( ist button
 		case( 3 ):
 			EnableButton( giIMPMainPageButton[3] );
 		  EnableButton( giIMPMainPageButton[4] );
@@ -611,6 +626,7 @@ void UpDateIMPMainPageButtons( void )
 		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
 
 		break;
+		//Voice ( 2nd button )
 		case( 4 ):
 		 //MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);

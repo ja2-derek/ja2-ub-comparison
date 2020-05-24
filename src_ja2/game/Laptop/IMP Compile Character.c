@@ -412,7 +412,7 @@ void ValidateSkillsList( void )
 		{
 			pProfile->bMarksmanship = 1;
 		}
-		// so is lockpicking
+
 		iIndex = FindSkillInSkillsList( HEAVY_WEAPS );
 
 		if ( iIndex != -1 )
@@ -643,7 +643,7 @@ void SelectMercFace( void )
 	// this procedure will select the approriate face for the merc and save offsets
 
 	// grab face filename
-//  strcpy( gMercProfiles[ ubMercID ].ubUnusedFaceFileName , pPlayerSelectedFaceFileNames[ iPortraitNumber ]);
+//  strcpy( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].ubUnusedFaceFileName , pPlayerSelectedFaceFileNames[ iPortraitNumber ]);
 
 	// now the offsets
   gMercProfiles[ ubMercID ].ubFaceIndex = 200 + ( UINT8 )iPortraitNumber;

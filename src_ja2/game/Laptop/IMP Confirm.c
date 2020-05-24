@@ -361,36 +361,7 @@ void BtnIMPConfirmNo( GUI_BUTTON *btn,INT32 reason )
 	}
 }
 
-/*
-void BtnIMPConfirmNo( GUI_BUTTON *btn,INT32 reason )
-{
-	
 
-  	// btn callback for IMP Homepage About US button
-	if (!(btn->uiFlags & BUTTON_ENABLED))
-		return;
-
-	if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
-	{
-		 btn->uiFlags|=(BUTTON_CLICKED_ON);
-	}
-	else if(reason & MSYS_CALLBACK_REASON_LBUTTON_UP )
-	{
-		if( btn->uiFlags & BUTTON_CLICKED_ON )
-		{
-			LaptopSaveInfo.fIMPCompletedFlag = TRUE;
-			if( fNoAlreadySelected == TRUE )
-			{
-				// already selected no 
-				fButtonPendingFlag = TRUE;
-				iCurrentImpPage = IMP_HOME_PAGE;
-			}
-      fNoAlreadySelected = TRUE;
-      btn->uiFlags&=~(BUTTON_CLICKED_ON);
-		}
-	}
-}
-*/
 
 
 #define PROFILE_HAS_SKILL_TRAIT( p, t ) ((p->bSkillTrait == t) || (p->bSkillTrait2 == t))
