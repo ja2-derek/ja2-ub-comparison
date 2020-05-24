@@ -393,6 +393,12 @@ void GiveItemsToPC( UINT8 ubProfileId )
 	MakeProfileInvItemThisSlot(pProfile, SMALLPOCK4POS, CANTEEN, 100, 1);
 
 
+	//Give ANY imp the calico
+	MakeProfileInvItemThisSlot( pProfile, HANDPOS, CALICO_950, 100, 1);
+//No ammo clip	MakeProfileInvItemThisSlot( pProfile, SMALLPOCK1POS, CLIP9_30, 100, 2);
+
+/*
+Ja25 IMP only gets 1 gun now
 	if (pProfile->bMarksmanship >= 80)
 	{
 		// good shooters get a better & matching ammo
@@ -405,7 +411,7 @@ void GiveItemsToPC( UINT8 ubProfileId )
 		MakeProfileInvItemThisSlot( pProfile, HANDPOS, BERETTA_93R, 100, 1 );
 		MakeProfileInvItemThisSlot( pProfile, SMALLPOCK1POS, CLIP9_15, 100, 3 );
 	}
-
+*/
 
 	// OPTIONAL EQUIPMENT: depends on skills & special skills
 
