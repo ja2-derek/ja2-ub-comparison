@@ -896,6 +896,27 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 		SetupProfileInsertionDataForSoldier( pSoldier ); 
 	}
 
+	//if the merc has been let go while the merc is in transit
+	if( pSoldier->bAssignment == IN_TRANSIT )
+	{
+		INT32	iAmountToRefund=0;
+
+		//if the merc is an AIM merc
+		if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC )
+		{
+			iAmountToRefund = (INT32)( gMercProfiles[ pSoldier->ubProfile ].uiWeeklySalary );
+
+			AddEmailWithSpecialData( AIM_REFUND, AIM_REFUND_LENGTH, AIM_SITE, GetWorldTotalMin(), 0, pSoldier->ubProfile );
+		}
+
+		//if there is something to refund
+		if( iAmountToRefund != 0 )
+		{
+			//add the financial record to reimburse
+			AddTransactionToPlayersBook(HIRED_MERC, pSoldier->ubProfile, GetWorldTotalMin(), iAmountToRefund );
+		}
+	}
+
 	//remove him from the soldier structure
 	if( pSoldier->bAssignment >= ON_DUTY )
 	{
@@ -1181,8 +1202,12 @@ void MercDepartEquipmentBoxCallBack( UINT8 bExitValue )
 
 	if( bExitValue == MSG_BOX_RETURN_OK )
 	{
-		// yep (NOTE that this passes the SOLDIER index, not the PROFILE index as the others do)
-		HandleLeavingOfEquipmentInCurrentSector( pLeaveSoldier->ubID );
+		//if the soldier is NOT transit, we can drop his equipment off
+		if( pLeaveSoldier->bAssignment != IN_TRANSIT )
+		{
+			// yep (NOTE that this passes the SOLDIER index, not the PROFILE index as the others do)
+			HandleLeavingOfEquipmentInCurrentSector( pLeaveSoldier->ubID );
+		}
 		
 		// aim merc will say goodbye when leaving
 		if( ( pLeaveSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ) && ( ubQuitType != HISTORY_MERC_FIRED ) )

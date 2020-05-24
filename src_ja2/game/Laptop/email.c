@@ -3184,9 +3184,13 @@ BOOLEAN HandleMailSpecialMessages( UINT16 usMessageId, INT32 *iResults, EmailPtr
 			//Set the book mark so the player can access the site
 			SetBookMark( MERC_BOOKMARK );
 			break;
-*/
+
 		case MERC_DIED_ON_OTHER_ASSIGNMENT:
 			ModifyInsuranceEmails( usMessageId, iResults, pMail, MERC_DIED_ON_OTHER_ASSIGNMENT_LENGTH );
+			break;
+*/
+		case AIM_REFUND:
+			ModifyInsuranceEmails( usMessageId, iResults, pMail, AIM_REFUND_LENGTH );
 			break;
 
 /* JA25:

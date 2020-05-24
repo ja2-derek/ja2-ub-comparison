@@ -1425,6 +1425,10 @@ void ProcessTransactionString(STR16 pString, FinanceUnitPtr pFinance)
 			swprintf(pString, pMessageStrings[ MSG_HIRED_MERC ], gMercProfiles[pFinance->ubSecondCode].zNickname );
 			break;
 
+		case REFUND_FOR_MERC:
+			swprintf( pString, pTransactionText[ REFUND_FOR_MERC ], gMercProfiles[pFinance->ubSecondCode].zNickname );
+			break;
+
 		case BOBBYR_PURCHASE:
 			swprintf(pString, L"%s", pTransactionText[ BOBBYR_PURCHASE ]);
 			break;
