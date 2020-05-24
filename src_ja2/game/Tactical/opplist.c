@@ -86,7 +86,9 @@ void HandleManNoLongerSeen( SOLDIERTYPE * pSoldier, SOLDIERTYPE * pOpponent, INT
 // someone has just been seen, EITHER THE MOVER OR SOMEONE THE MOVER SEES
 BOOLEAN		gfPlayerTeamSawCreatures = FALSE;
 BOOLEAN   gfPlayerTeamSawJoey			 = FALSE;
-BOOLEAN   gfMikeShouldSayHi				 = FALSE;
+//Ja25 noi mike	
+//BOOLEAN   gfMikeShouldSayHi				 = FALSE;
+BOOLEAN   gfMorrisShouldSayHi				 = FALSE;
 
 UINT8			gubBestToMakeSighting[BEST_SIGHTING_ARRAY_SIZE];
 UINT8			gubBestToMakeSightingSize = 0;
@@ -2003,12 +2005,19 @@ no carmen
 		}
     else if ( pSoldier->bTeam == gbPlayerNum )
     {
+		  if( (pOpponent->ubProfile == MORRIS ) && 
+					( GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( NULL, NULL ) != 0 ) && 
+					!( pSoldier->usQuoteSaidExtFlags & SOLDIER_QUOTE_SAID_EXT_MORRIS ) && 
+					!( gMercProfiles[ MORRIS ].ubMiscFlags2 & PROFILE_MISC_FLAG2_SAID_FIRSTSEEN_QUOTE ) )
+		  {
+				gfMorrisShouldSayHi = TRUE;
+		  }
+
+/*
+Ja25:  No mike in exp.
 		  if ( (pOpponent->ubProfile == MIKE) && ( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ) && !(pSoldier->usQuoteSaidExtFlags & SOLDIER_QUOTE_SAID_EXT_MIKE) )
 		  {
-			  if (gfMikeShouldSayHi == FALSE)
-			  {
 				gfMikeShouldSayHi = TRUE;
-			  }
 			  TacticalCharacterDialogue( pSoldier, QUOTE_AIM_SEEN_MIKE );
 			  pSoldier->usQuoteSaidExtFlags |= SOLDIER_QUOTE_SAID_EXT_MIKE;
 		  }
@@ -2017,6 +2026,7 @@ no carmen
         TacticalCharacterDialogue( pSoldier, QUOTE_SPOTTED_JOEY );
         gfPlayerTeamSawJoey = TRUE;
       }
+*/
     }
 
 	// as soon as a bloodcat sees someone, it becomes hostile

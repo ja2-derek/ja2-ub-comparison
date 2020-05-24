@@ -353,7 +353,7 @@ Ja25 no meanwhiles
 	INT32 iHospitalRefund;
 
   INT8  fPlayerTeamSawJoey;
-	INT8	fMikeShouldSayHi;
+	INT8	fMorrisShouldSayHi;
 
 	BOOLEAN		fFirstTimeInGameHeliCrash;
 
@@ -3991,7 +3991,9 @@ Ja25 no meanwhiles
 	sGeneralInfo.iHospitalRefund								= giHospitalRefund;
 	sGeneralInfo.bHospitalPriceModifier					= gbHospitalPriceModifier;
   sGeneralInfo.fPlayerTeamSawJoey             = gfPlayerTeamSawJoey;
-	sGeneralInfo.fMikeShouldSayHi								= gfMikeShouldSayHi;
+//Ja25: no mike
+//	sGeneralInfo.fMikeShouldSayHi								= gfMikeShouldSayHi;
+	sGeneralInfo.fMorrisShouldSayHi								= gfMorrisShouldSayHi;
 	sGeneralInfo.fFirstTimeInGameHeliCrash			= gfFirstTimeInGameHeliCrash;
 
 	//Setup the 
@@ -4251,7 +4253,7 @@ Ja25 no meanwhiles
 	giHospitalRefund				= sGeneralInfo.iHospitalRefund;
 	gbHospitalPriceModifier = sGeneralInfo.bHospitalPriceModifier;
   gfPlayerTeamSawJoey     = sGeneralInfo.fPlayerTeamSawJoey;
-	gfMikeShouldSayHi				= sGeneralInfo.fMikeShouldSayHi;
+	gfMorrisShouldSayHi							= sGeneralInfo.fMorrisShouldSayHi;
 	gfFirstTimeInGameHeliCrash			= sGeneralInfo.fFirstTimeInGameHeliCrash;
 
 

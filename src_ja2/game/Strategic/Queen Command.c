@@ -633,12 +633,17 @@ void ProcessQueenCmdImplicationsOfDeath( SOLDIERTYPE *pSoldier )
 
 	switch( pSoldier->ubProfile )
 	{
+/*
+JA25:  No mike or iggy
 		case MIKE:
 		case IGGY:
 			if( pSoldier->ubProfile == IGGY && !gubFact[ FACT_IGGY_AVAILABLE_TO_ARMY ] )
 			{ //Iggy is on our team!
 				break;
 			}
+*/
+		case MORRIS:
+
 			if( !pSoldier->bSectorZ )
 			{
 				pSector = &SectorInfo[ SECTOR( pSoldier->sSectorX, pSoldier->sSectorY ) ];
