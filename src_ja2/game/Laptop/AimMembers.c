@@ -887,7 +887,7 @@ BOOLEAN RenderAIMMembers()
   HVOBJECT	hPriceHandle;
   HVOBJECT	hWeaponBoxHandle;
 	UINT16		x, uiPosX;
-	wchar_t		wTemp[50];
+//	wchar_t		wTemp[50];
 
 	DrawAimDefaults();
 
