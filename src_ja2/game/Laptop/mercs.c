@@ -766,11 +766,17 @@ void DailyUpdateOfMercSite( UINT16 usDate)
 //				pSoldier->iTotalContractLength++;
 			}
 
+/*
+JA25:  MERC does a 1 time fee, no longer pay as you go 
 			//Get the longest time
 			if( gMercProfiles[ pSoldier->ubProfile ].iMercMercContractLength > iNumDays )
 				iNumDays = gMercProfiles[ pSoldier->ubProfile ].iMercMercContractLength;
+*/
 		}
 	}
+
+/*
+JA25:  No longer pay as you go, now pay up front
 
 	//if the players hasnt paid for a while, get email him to tell him to pay
 	//iTotalContractLength
@@ -804,7 +810,7 @@ void DailyUpdateOfMercSite( UINT16 usDate)
 			LaptopSaveInfo.uiSpeckQuoteFlags |= SPECK_QUOTE__SENT_EMAIL_ABOUT_LACK_OF_PAYMENT;
 		}
 	}
-
+*/
 
 	//Check and act if any new Merc Mercs should become available
 	ShouldAnyNewMercMercBecomeAvailable();

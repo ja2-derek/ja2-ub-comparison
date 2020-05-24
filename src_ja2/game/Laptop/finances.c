@@ -1434,7 +1434,9 @@ void ProcessTransactionString(STR16 pString, FinanceUnitPtr pFinance)
 			break;
 
 		case PAY_SPECK_FOR_MERC:
-			swprintf(pString, L"%s", pTransactionText[ PAY_SPECK_FOR_MERC ], gMercProfiles[pFinance->ubSecondCode].zName);
+//Ja25:  MERC now takes a 1 time fee for his mercs
+//			swprintf(pString, L"%s", pTransactionText[ PAY_SPECK_FOR_MERC ], gMercProfiles[pFinance->ubSecondCode].zName);
+			swprintf(pString, pTransactionText[ PAY_SPECK_FOR_MERC ], gMercProfiles[pFinance->ubSecondCode].zNickname);
 			break;
 	
 		case MEDICAL_DEPOSIT:

@@ -592,11 +592,18 @@ void DisplayMercsStats( UINT8 ubMercID )
 	usPosY += MERC_SPACE_BN_LINES;
 
 	//Daily Salary
-	DrawTextToScreen( MercInfo[MERC_FILES_SALARY], MERC_STATS_SECOND_COL_X, usPosY, 0, MERC_NAME_FONT, MERC_STATIC_STATS_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
+//	DrawTextToScreen( MercInfo[MERC_FILES_SALARY], MERC_STATS_SECOND_COL_X, usPosY, 0, MERC_NAME_FONT, MERC_STATIC_STATS_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
+	DrawTextToScreen( zNewTacticalMessages[ TACT_MSG__FEE ], MERC_STATS_SECOND_COL_X, usPosY, 0, MERC_NAME_FONT, MERC_STATIC_STATS_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 
 	usPosX = MERC_STATS_SECOND_COL_X + StringPixLength(MercInfo[MERC_FILES_SALARY], MERC_NAME_FONT) + 1;
-	swprintf(sString, L"%d %s", gMercProfiles[ ubMercID ].sSalary, MercInfo[MERC_FILES_PER_DAY]);
-	DrawTextToScreen( sString, usPosX, usPosY, 95, MERC_NAME_FONT, MERC_DYNAMIC_STATS_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
+
+//	swprintf(sString, L"%d %s", gMercProfiles[ ubMercID ].sSalary, MercInfo[MERC_FILES_PER_DAY]);
+//	swprintf(sString, L"%d %s", gMercProfiles[ ubMercID ].uiWeeklySalary, CharacterInfo[ AIM_MEMBER_FEE ] );
+	swprintf(sString, L"%d", gMercProfiles[ ubMercID ].uiWeeklySalary );
+	InsertCommasForDollarFigure( sString );
+	InsertDollarSignInToString( sString );
+
+	DrawTextToScreen( sString, 490, usPosY, 73, MERC_NAME_FONT, MERC_DYNAMIC_STATS_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED);
 }
 
 
@@ -628,6 +635,16 @@ BOOLEAN MercFilesHireMerc(UINT8 ubMercID)
 		
 		return(FALSE);
 	}
+
+	//if the merc the player is trying to hire costs more then the merc has
+	if( LaptopSaveInfo.iCurrentBalance <= 0 || gMercProfiles[ ubMercID ].uiWeeklySalary > (UINT32)LaptopSaveInfo.iCurrentBalance )
+	{
+		guiCurrentLaptopMode = LAPTOP_MODE_MERC;
+		gusMercVideoSpeckSpeech = SPECK_QUOTE_PLAYER_CANT_AFFORD_TO_HIRE_MERC;
+		gubArrivedFromMercSubSite = MERC_CAME_FROM_HIRE_PAGE;
+		return( FALSE );
+	}
+
 
 	HireMercStruct.ubProfileID = ubMercID;
 
@@ -665,6 +682,9 @@ BOOLEAN MercFilesHireMerc(UINT8 ubMercID)
 	}
 	else
 	{
+		//add an entry in the finacial page for the hiring of the merc
+		AddTransactionToPlayersBook(PAY_SPECK_FOR_MERC, ubMercID, GetWorldTotalMin(), -(INT32)( gMercProfiles[ubMercID].uiWeeklySalary ) );
+
 		//if we succesfully hired the merc
 		return(TRUE);
 	}
