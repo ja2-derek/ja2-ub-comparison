@@ -26,6 +26,15 @@
 
 #define MAIN_PAGE_BUTTON_TEXT_WIDTH 95
 
+
+#define	MAIN_PAGE_SPACE_BTN_BUTTONS							120
+
+#define	MAIN_PAGE__FIRST_BUTTON_POS_X						( LAPTOP_SCREEN_UL_X + 15 )
+#define	MAIN_PAGE__SECOND_BUTTON_POS_X					( MAIN_PAGE__FIRST_BUTTON_POS_X + MAIN_PAGE_SPACE_BTN_BUTTONS )
+#define	MAIN_PAGE__THIRD_BUTTON_POS_X						( MAIN_PAGE__SECOND_BUTTON_POS_X + MAIN_PAGE_SPACE_BTN_BUTTONS )
+#define	MAIN_PAGE__FOURTH_BUTTON_POS_X					( MAIN_PAGE__THIRD_BUTTON_POS_X + MAIN_PAGE_SPACE_BTN_BUTTONS )
+
+
 // main page buttons
 INT32 giIMPMainPageButton[6];
 INT32 giIMPMainPageButtonImage[6];
@@ -144,6 +153,7 @@ void HandleIMPMainPage( void )
 //
 void CreateIMPMainPageButtons( void )
 {
+	UINT16 usPosX=0;
 
   CHAR16 sString[ 128 ];
 
@@ -208,7 +218,7 @@ void CreateIMPMainPageButtons( void )
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 TEXT_CJUSTIFIED, 
-														LAPTOP_SCREEN_UL_X + 13 , LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+														 MAIN_PAGE__THIRD_BUTTON_POS_X, LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
 														 BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPagePersonalityCallback);
 
 
@@ -225,7 +235,7 @@ void CreateIMPMainPageButtons( void )
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 TEXT_CJUSTIFIED, 
-														 LAPTOP_SCREEN_UL_X + 133 , LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+														 MAIN_PAGE__FOURTH_BUTTON_POS_X, LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
 														 BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageAttributesCallback);
 
 
@@ -242,7 +252,7 @@ void CreateIMPMainPageButtons( void )
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 TEXT_CJUSTIFIED, 
-														 LAPTOP_SCREEN_UL_X + 253 , LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+														 MAIN_PAGE__FIRST_BUTTON_POS_X, LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
 														 BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPagePortraitCallback);
 
 
@@ -268,7 +278,7 @@ void CreateIMPMainPageButtons( void )
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 FONT_WHITE, DEFAULT_SHADOW, 
 														 TEXT_CJUSTIFIED, 
-														  LAPTOP_SCREEN_UL_X + 373 , LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
+														 MAIN_PAGE__SECOND_BUTTON_POS_X, LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
 														 BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageVoiceCallback);
 
 
@@ -603,37 +613,73 @@ void UpDateIMPMainPageButtons( void )
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
 		break;
-		case( 1 ):
+
+		//Personality ( 3RD BUTTON )
+		case 1:
+			EnableButton( giIMPMainPageButton[2] );
+			EnableButton( giIMPMainPageButton[4] );
+			EnableButton( giIMPMainPageButton[5] );
+
+//			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
+//			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
+			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
+/*
 		 EnableButton( giIMPMainPageButton[2] );
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
+*/
 		break;
 
 		//Attributes ( 4th button )
-		case( 2 ):
+		case 2:
+			EnableButton( giIMPMainPageButton[2] );
+			EnableButton( giIMPMainPageButton[4] );
+			EnableButton( giIMPMainPageButton[5] );
+		  EnableButton( giIMPMainPageButton[3] );
+
+//			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
+//		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
+//		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
+/*
 		  EnableButton( giIMPMainPageButton[3] );
 			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
 		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
 		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
+*/
 		break;
 
 		//Portrait ( ist button
-		case( 3 ):
+		case 3:
+//			EnableButton( giIMPMainPageButton[3] );
+		  EnableButton( giIMPMainPageButton[4] );
+			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
+		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
+		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
+/*
 			EnableButton( giIMPMainPageButton[3] );
 		  EnableButton( giIMPMainPageButton[4] );
 			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
 		  //MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
 		  MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
-
+*/
 		break;
+
 		//Voice ( 2nd button )
-		case( 4 ):
+		case 4:
+			EnableButton( giIMPMainPageButton[4] );
+			EnableButton( giIMPMainPageButton[5] );
+
+//			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
+			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 2 ]);
+			MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 3 ]);
+/*
 		 //MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 1 ]);
 		 MSYS_EnableRegion( &pIMPMainPageMouseRegions[ 0 ]);
 		 EnableButton( giIMPMainPageButton[3] );
 		 EnableButton( giIMPMainPageButton[4] );
 	   EnableButton( giIMPMainPageButton[5] );
+*/
 		break;
 	}
 
