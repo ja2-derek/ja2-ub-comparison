@@ -66,7 +66,11 @@ enum
 	QUEST_FREE_CHILDREN,	// 20
 	QUEST_LEATHER_SHOP_DREAM,
 
-	QUEST_KILL_DEIDRANNA = 25
+	QUEST_DESTROY_MISSLES = 23,
+	QUEST_FIX_LAPTOP,
+	QUEST_GET_RID_BLOODCATS_AT_BETTYS,
+	QUEST_FIND_ANTIQUE_MUSKET_FOR_RAUL,
+
 } Quests;
 /*
 // The first quest is mandatory. Player must find Miguel and deliver letter to him. The tough
@@ -215,7 +219,7 @@ enum
 	FACT_MIGUEL_FOUND,			//																12
 	FACT_LETTER_DELIVERED,	//																13
 	FACT_FOOD_ROUTE_EXISTS,	//																14
-	FACT_DIMITRI_DEAD,		  //																15
+//Ja25 	FACT_DIMITRI_DEAD,		  //																15
 
 	FACT_MIGUEL_READ_LETTER =																	23,
 
@@ -243,9 +247,9 @@ enum
 	FACT_NPC_WOUNDED,//																				47
 	FACT_NPC_WOUNDED_BY_PLAYER,//															48
 
-	FACT_IRA_NOT_PRESENT = 																		50,
-	FACT_IRA_TALKING,//																				51
-	FACT_FOOD_QUEST_OVER,//																		52
+//	FACT_IRA_NOT_PRESENT = 																		50,
+//	FACT_IRA_TALKING,//																				51
+	FACT_FOOD_QUEST_OVER = 																		52,
 	FACT_PABLOS_STOLE_FROM_LATEST_SHIPMENT,//									53
 	FACT_LAST_SHIPMENT_CRASHED,//															54
 	FACT_LAST_SHIPMENT_WENT_TO_WRONG_AIRPORT,//								55
@@ -258,7 +262,7 @@ enum
 	FACT_LARGE_SIZED_SHIPMENT_WAITING,//											62
 	FACT_DOREEN_HAD_CHANGE_OF_HEART,//												63
 
-	FACT_IRA_UNHIRED_AND_ALIVE =															65,
+//	FACT_IRA_UNHIRED_AND_ALIVE =															65,
 
 	FACT_NPC_BLEEDING =																				68,
 
@@ -351,7 +355,7 @@ enum
 	FACT_SHANK_NOT_IN_SECTOR =																167,
 	FACT_BLOODCAT_QUEST_STARTED_TWO_DAYS_AGO,//								168
 
-	FACT_QUEEN_DEAD =																					170,
+//Ja25, No queen	FACT_QUEEN_DEAD =																					170,
 
 	FACT_SPEAKER_AIM_OR_AIM_NEARBY =													171,
 	FACT_MINE_EMPTY,//																				172
@@ -464,8 +468,8 @@ enum
 	FACT_PABLO_ALIVE,//																				293
 	FACT_DOREEN_ALIVE,//																			294
 	FACT_WALDO_ALIVE,//																				295
-	FACT_PERKO_ALIVE,//																				296
-	FACT_TONY_ALIVE,//																				297
+//	FACT_PERKO_ALIVE,//																				296
+	FACT_TONY_ALIVE =																				297,
 
 	FACT_VINCE_ALIVE = 																				299,
 	FACT_JENNY_ALIVE,//																				300
@@ -516,6 +520,36 @@ enum
 
 	FACT_CONRAD_SHOULD_GO =																		367,
 	FACT_PLAYER_KILLED_BOXERS =																368,
+
+
+	FACT_IMPORTED_SAVE_AND_MARY_WAS_DEAD	=										400,
+	FACT_JOHN_KULBA_OFFERED_TO_BE_RECRUITED,//								401,
+	FACT_TEX_IS_IN_GAME_AND_ALIVE_IN_STORE,//									402,
+	FACT_PLAYER_PAID_BETTY_MORE_THEN_X_FOR_ITEM =							403,
+	FACT_PLAYER_BOUGHT_A_TEX_VIDEO_FROM_BETTY,//							404,
+	FACT_RAULS_INVENTORY_CHANGED_SINCE_LAST_VISIT,//					405
+	FACT_PLAYER_THREATENED_RAUL_COUPLE_TIMES,//								406
+	FACT_PLAYER_BOUGHT_SOMETHING_FROM_RAUL,//									407
+//	FACT_SKYRIDER_IN_C16,//																	408
+//	FACT_SKYRIDER_IN_C16,//																	409
+//	FACT_SKYRIDER_IN_C16,//																	410
+//	FACT_SKYRIDER_IN_C16,//																	411
+	FACT_PLAYER_BOUGHT_BARRET_FROM_RAUL =											412,
+	FACT_MERC_SAY_QUOTE_WHEN_TALK_MENU_CLOSES,//							413
+	FACT_PLAYER_IMPORTED_SAVE_MIGUEL_DEAD,//									414
+	FACT_PLAYER_IMPORTED_SAVE_FATIMA_OR_PACOS_DEAD,//					415
+	FACT_PLAYER_IMPORTED_SAVE_CARLOS_DEAD,//									416
+	FACT_PLAYER_IMPORTED_SAVE_IRA_DEAD,//											417
+	FACT_PLAYER_IMPORTED_SAVE_DIMITRI_DEAD,//									418
+	FACT_PLAYER_IMPORTED_SAVE,//															419
+	FACT_PLAYER_KILLED_ALL_BETTYS_BLOODCATS,//								420
+	FACT_BIGGENS_IS_ON_TEAM,//																421
+	FACT_FAN_STOPPPED,//																			422
+	FACT_BIGGENS_ON_TEAM_AND_FAN_STOPPED,//										423
+	FACT_PLAYER_KNOWS_ABOUT_FAN_STOPPING,//										424
+
+
+
 } Facts;
 //**  END FACTS *************************
 
