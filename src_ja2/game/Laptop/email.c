@@ -3192,6 +3192,9 @@ BOOLEAN HandleMailSpecialMessages( UINT16 usMessageId, INT32 *iResults, EmailPtr
 		case AIM_REFUND:
 			ModifyInsuranceEmails( usMessageId, iResults, pMail, AIM_REFUND_LENGTH );
 			break;
+		case MERC_REFUND:
+			ModifyInsuranceEmails( usMessageId, iResults, pMail, MERC_REFUND_LENGTH );
+			break;
 
 /* JA25:
 		case AIM_MEDICAL_DEPOSIT_REFUND:

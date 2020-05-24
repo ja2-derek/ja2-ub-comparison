@@ -909,6 +909,17 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 			AddEmailWithSpecialData( AIM_REFUND, AIM_REFUND_LENGTH, AIM_SITE, GetWorldTotalMin(), 0, pSoldier->ubProfile );
 		}
 
+		//else if he is a MERC merc
+		else if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC )
+		{
+			iAmountToRefund = (INT32)( gMercProfiles[ pSoldier->ubProfile ].uiWeeklySalary );
+
+			//Speck has a 'restocking' fee
+			iAmountToRefund -= 10;
+
+			AddEmailWithSpecialData( MERC_REFUND, MERC_REFUND_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin(), 0, pSoldier->ubProfile );
+		}
+
 		//if there is something to refund
 		if( iAmountToRefund != 0 )
 		{
