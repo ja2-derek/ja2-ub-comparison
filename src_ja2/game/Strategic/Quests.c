@@ -1284,6 +1284,55 @@ void InternalEndQuest( UINT8 ubQuest, INT16 sSectorX, INT16 sSectorY, BOOLEAN fU
 		gMercProfiles[ MADAME ].bNPCData2 = 0;
 	}
 	
+	//if the quest is the FIX LAPTOP quest
+	if( ubQuest == QUEST_FIX_LAPTOP )
+	{
+		//Set the fact that AIM and MERC should start selling
+		gJa25SaveStruct.fHaveAimandMercOffferItems = TRUE;
+
+		//Remeber that we should send email in the next sector
+		gJa25SaveStruct.fSendEmail_10_NextSector = TRUE;
+
+		AddEmail( EMAIL_PILOTMISSING, EMAIL_PILOTMISSING_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+		AddEmail( EMAIL_MAKECONTACT, EMAIL_MAKECONTACT_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+
+		//Merc and Aim emails
+		AddEmail( EMAIL_AIM_PROMOTION_1, EMAIL_AIM_PROMOTION_1_LENGTH, AIM_SITE,  GetWorldTotalMin() );
+		AddEmail( EMAIL_MERC_PROMOTION_1, EMAIL_MERC_PROMOTION_1_LENGTH, SPECK_FROM_MERC,  GetWorldTotalMin() );
+		AddEmail( EMAIL_AIM_PROMOTION_2, EMAIL_AIM_PROMOTION_2_LENGTH, AIM_SITE,  GetWorldTotalMin() );
+
+		//Manuel
+		{
+			SOLDIERTYPE *pSoldier=NULL;
+
+			pSoldier = FindSoldierByProfileID( MANUEL, TRUE );
+
+			if( pSoldier != NULL )
+			{
+				//Add the Manuel email
+				AddEmail( EMAIL_MANUEL, EMAIL_MANUEL_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+			}
+		}
+
+		//Miguel
+		{
+			//if miguel was dead, when importing the save
+			if( gubFact[ FACT_PLAYER_IMPORTED_SAVE_MIGUEL_DEAD ] == FALSE )
+			{
+				//Add the miguel email
+				AddEmail( EMAIL_MIGUELHELLO, EMAIL_MIGUELHELLO_LENGTH, MAIL_MIGUEL,  GetWorldTotalMin() );
+			}
+		}
+
+		//If any aim mercs were asked to send emails when the get back from duty elsewhere
+		HandleAddingAnyAimAwayEmailsWhenLaptopGoesOnline();
+
+		//Should we send the IMP reminder email when we go back online
+		ShouldImpReminderEmailBeSentWhenLaptopBackOnline();
+
+		//Force which ever of these emails that needed to be sent, to be sent
+		HandleEmailBeingSentWhenEnteringSector( 0, 0, 0, TRUE );
+	}
 };
 
 void InitQuestEngine()

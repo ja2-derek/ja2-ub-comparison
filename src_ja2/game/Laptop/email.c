@@ -3112,6 +3112,12 @@ void HandleAnySpecialEmailMessageEvents(INT32 iMessageId )
 
 	switch( iMessageId )
 	{
+		case EMAIL_MAKECONTACT:
+			if( !( gJa25SaveStruct.ubEmailFromSectorFlag & SECTOR_EMAIL__ANOTHER_SECTOR ) )
+			{
+				AddStrategicEvent( EVENT_SEND_ENRICO_UNDERSTANDING_EMAIL, GetWorldTotalMin() + ( 2 * 60 ) + Random( 120 ), 0 );
+			}
+			break;
 
 		case( IMP_EMAIL_AGAIN ):
 		 SetBookMark(IMP_BOOKMARK);

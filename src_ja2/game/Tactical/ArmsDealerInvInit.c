@@ -35,6 +35,7 @@ ITEM_SORT_ENTRY DealerItemSortInfo[ ] =
 	{ IC_MISC,						NOGUNCLASS,		TRUE	},
 	{ IC_THROWN,					NOGUNCLASS,		FALSE	},
 	{ IC_KEY,							NOGUNCLASS,		FALSE	},
+	{ IC_MONEY,						NOGUNCLASS,   FALSE },
 
 	// marks end of list
 	{ IC_NONE,						NOGUNCLASS,		},
@@ -639,6 +640,9 @@ INT8 GetDealersMaxItemAmount( UINT8 ubDealerID, UINT16 usItemIndex )
 {
 	switch( ubDealerID )
 	{
+		case ARMS_DEALER_BETTY:
+			return( GetMaxItemAmount( gBettyInventory, usItemIndex ) );
+			break;
 		case ARMS_DEALER_TONY:
 			return( GetMaxItemAmount( gTonyInventory, usItemIndex ) );
 			break;
@@ -746,6 +750,9 @@ DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory( UINT8 ubArmsDealerID 
 {
 	switch( ubArmsDealerID )
 	{
+		case ARMS_DEALER_BETTY:
+			return( gBettyInventory );
+			break;
 		case ARMS_DEALER_TONY:
 			return( gTonyInventory );
 			break;
@@ -905,8 +912,8 @@ UINT8 GetCurrentSuitabilityForItem( INT8 bArmsDealer, UINT16 usItemIndex )
 	ubMinCoolness = HighestPlayerProgressPercentage() / 10;
 	ubMaxCoolness = ( HighestPlayerProgressPercentage() / 10 ) + 1;
 
-	// Tony has the better stuff sooner (than Bobby R's)
-	if (bArmsDealer == ARMS_DEALER_TONY)
+	// betty has the better stuff sooner (than Bobby R's)
+	if( bArmsDealer == ARMS_DEALER_BETTY  )
 	{
 		ubMinCoolness += 1;
 		ubMaxCoolness += 1;

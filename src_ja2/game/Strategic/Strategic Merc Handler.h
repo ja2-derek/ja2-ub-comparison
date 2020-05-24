@@ -10,4 +10,7 @@ void MercComplainAboutEquipment( UINT8 ubProfileID );
 BOOLEAN SoldierHasWorseEquipmentThanUsedTo( SOLDIERTYPE *pSoldier );
 void UpdateBuddyAndHatedCounters( void );
 void HourlyCamouflageUpdate( void );
+
+void HandleAddingAnyAimAwayEmailsWhenLaptopGoesOnline();
+
 #endif

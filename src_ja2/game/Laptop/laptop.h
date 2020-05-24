@@ -40,6 +40,8 @@ BOOLEAN		RemoveBookMark( INT32 iBookId );
 void			CreateFileAndNewEmailIconFastHelpText( UINT32 uiHelpTextID, BOOLEAN fClearHelpText );
 BOOLEAN		InitLaptopAndLaptopScreens();
 
+void			ShouldImpReminderEmailBeSentWhenLaptopBackOnline();
+
 // clear out all tempf iles from laptop
 void ClearOutTempLaptopFiles( void );
 

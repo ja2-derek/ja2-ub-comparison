@@ -8,6 +8,10 @@
 //enums for the various arms dealers
 enum
 {
+	ARMS_DEALER_RAUL,
+	ARMS_DEALER_BETTY,
+/*
+Ja25 None are in exp.
 	ARMS_DEALER_TONY,
 	ARMS_DEALER_FRANZ,
 	ARMS_DEALER_KEITH,
@@ -35,7 +39,7 @@ enum
 
 // added only in GameVersion 55
 	ARMS_DEALER_MANNY,
-
+*/
 	NUM_ARMS_DEALERS,
 };
 

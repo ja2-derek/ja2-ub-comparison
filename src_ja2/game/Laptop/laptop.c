@@ -708,6 +708,11 @@ UINT32 LaptopScreenInit()
 	//reset the flag that enables the 'just hired merc' popup
 	LaptopSaveInfo.sLastHiredMerc.fHaveDisplayedPopUpInLaptop = FALSE;
 
+	//Set the internet as WORKING
+	gubQuest[ QUEST_FIX_LAPTOP ] = QUESTNOTSTARTED;
+
+
+
 	//Initialize all vars
 	guiCurrentLaptopMode = LAPTOP_MODE_EMAIL;
 	guiPreviousLaptopMode = LAPTOP_MODE_NONE;
@@ -2609,11 +2614,25 @@ BOOLEAN HandleExit( void )
 
 void HaventMadeImpMercEmailCallBack()
 {
-	//if the player STILL hasnt made an imp merc yet
-	if( ( LaptopSaveInfo.fIMPCompletedFlag == FALSE ) && ( LaptopSaveInfo.fSentImpWarningAlready == FALSE ) )
+	//if the Laptop is NOT broken
+	if( gubQuest[ QUEST_FIX_LAPTOP ] != QUESTINPROGRESS )
 	{
-		LaptopSaveInfo.fSentImpWarningAlready = TRUE;
-		AddEmail(IMP_EMAIL_AGAIN,IMP_EMAIL_AGAIN_LENGTH,1, GetWorldTotalMin( ) );
+		//if the player STILL hasnt made an imp merc yet
+		if( ( LaptopSaveInfo.fIMPCompletedFlag == FALSE ) && ( LaptopSaveInfo.fSentImpWarningAlready == FALSE ) )
+		{
+			LaptopSaveInfo.fSentImpWarningAlready = TRUE;
+			AddEmail(IMP_EMAIL_AGAIN,IMP_EMAIL_AGAIN_LENGTH,1, GetWorldTotalMin( ) );
+		}
+	}
+}
+
+void ShouldImpReminderEmailBeSentWhenLaptopBackOnline()
+{
+	//if this is past the point of when the IMP email should have been sent
+	if( GetWorldTotalMin() > LAPTOP__HAVENT_CREATED_IMP_REMINDER_EMAIL_ARRIVE_TIME )
+	{
+		//and the email hasnt been sent
+		HaventMadeImpMercEmailCallBack();
 	}
 }
 
@@ -3610,6 +3629,9 @@ void GoToWebPage(INT32 iPageId )
 	else
 		giRainDelayInternetSite = -1;
 
+	//if the laptop is broken
+	if( gubQuest[ QUEST_FIX_LAPTOP ] != QUESTINPROGRESS )
+	{
 	switch(iPageId)
 	{
 		case AIM_BOOKMARK:
@@ -3753,6 +3775,18 @@ void GoToWebPage(INT32 iPageId )
 		break;
 	
 	}
+	}
+
+	//the web is not working
+	else
+	{
+		guiCurrentWWWMode = LAPTOP_MODE_BROKEN_LINK;
+		guiCurrentLaptopMode = LAPTOP_MODE_BROKEN_LINK;
+
+		// slow load
+		fLoadPendingFlag = TRUE;
+		fFastLoadFlag =  FALSE;
+	}
 
   gfShowBookmarks=FALSE;
 	fReDrawScreenFlag=TRUE;
@@ -3840,6 +3874,13 @@ BOOLEAN DisplayLoadPending( void )
 		iUnitTime += WWaitDelayIncreasedIfRaining( iUnitTime );
 
 		iLoadTime = iUnitTime * 30;
+
+		//if the site we are going to is the web poage not found page
+		if( guiCurrentLaptopMode == LAPTOP_MODE_BROKEN_LINK )
+		{
+			iLoadTime=1;
+			iUnitTime=1;
+		}
 	}
 
 	

@@ -386,6 +386,10 @@ Ja25 No strategic ai
 			NewMercsAvailableAtMercSiteCallBack( );
 			break;
 
+		case EVENT_SEND_ENRICO_UNDERSTANDING_EMAIL:
+			HandleEnricosUnderstandingEmail();
+			break;
+			
 	}
 	gfPreventDeletionOfAnyEvent = fOrigPreventFlag;
 	return TRUE;

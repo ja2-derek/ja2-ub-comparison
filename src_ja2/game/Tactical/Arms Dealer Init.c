@@ -507,6 +507,17 @@ void ConvertCreatureBloodToElixir( void )
 
 BOOLEAN AdjustCertainDealersInventory( )
 {
+	//if the player hasnt done the "killed the annoying bloodcats" quest for betty, 
+	if( gubQuest[ QUEST_FIX_LAPTOP ] != QUESTDONE )
+	{
+		//Guarntee 1 laptop transmitter to be at betty's
+		GuaranteeAtLeastXItemsOfIndex( ARMS_DEALER_BETTY, LAPTOP_TRANSMITTER, 1 );
+	}
+	else
+	{
+		//if the quest is done, dont have 1
+		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_BETTY, LAPTOP_TRANSMITTER, 0 );
+	}
 	//Adjust Tony's items (this restocks *instantly* 1/day, doesn't use the reorder system)
 	GuaranteeAtLeastOneItemOfType( ARMS_DEALER_TONY, ARMS_DEALER_BIG_GUNS );
 	LimitArmsDealersInventory( ARMS_DEALER_TONY, ARMS_DEALER_BIG_GUNS, 2 );
@@ -2811,4 +2822,48 @@ UINT32 CalculateMinutesClosedBetween( UINT8 ubArmsDealer, UINT32 uiStartTime, UI
 	}
 
 	return ( uiMinutesClosed );
+}
+
+
+void GuaranteeAtMostNumOfItemsForItem( UINT8 ubArmsDealer, INT16 sItemIndex, UINT8 ubAtMostNumItems )
+{
+	UINT16	usCnt=0;
+	UINT8		ubNumToRemove=0;
+	SPECIAL_ITEM_INFO SpclItemInfo;
+	UINT8			ubNumLeftToRemove=0;
+	INT8			bItemCondition=0;
+	UINT8			bElementToRemove=0;
+
+
+	//if the num items in stock is greater then the num past in
+	if( gArmsDealersInventory[ ubArmsDealer ][ sItemIndex ].ubTotalItems > ubAtMostNumItems )
+	{
+		ubNumToRemove = gArmsDealersInventory[ ubArmsDealer ][ sItemIndex ].ubTotalItems - ubAtMostNumItems;
+
+		ubNumLeftToRemove = ubNumToRemove;
+
+		//loop through the specified #of times
+		while( ubNumLeftToRemove > 0 )
+		{
+			SetSpecialItemInfoToDefaults( &SpclItemInfo );
+
+			//remove special ones first
+			if( gArmsDealersInventory[ ubArmsDealer ][ sItemIndex ].ubTotalItems > gArmsDealersInventory[ ubArmsDealer ][ sItemIndex ].ubPerfectItems )
+			{
+				bElementToRemove = GetFirstValidSpecialItemFromDealer( ubArmsDealer, sItemIndex );
+
+				RemoveSpecialItemFromArmsDealerInventoryAtElement( ubArmsDealer, sItemIndex, bElementToRemove );
+
+				ubNumLeftToRemove -= 1;
+			}
+			else
+			{
+				//lower the number to the required number
+				RemoveItemFromArmsDealerInventory( ubArmsDealer, sItemIndex, &SpclItemInfo, ubNumLeftToRemove );
+
+				ubNumLeftToRemove = 0;
+			}
+		}
+	}
+}
 }

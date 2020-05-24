@@ -440,11 +440,15 @@ void MercDailyUpdate()
 					{
 						iOffset = AIM_REPLY_BARRY;
 
-						//remove the Flag, so if the merc goes on another assignment, the player can leave an email.
-						pProfile->ubMiscFlags3 &= ~PROFILE_MISC_FLAG3_PLAYER_LEFT_MSG_FOR_MERC_AT_AIM;
-
-						// TO DO: send E-mail to player telling him the merc has returned from an assignment
-						AddEmail( ( UINT8 )( iOffset + ( cnt * AIM_REPLY_LENGTH_BARRY ) ), AIM_REPLY_LENGTH_BARRY, ( UINT8 )( 6 + cnt ), GetWorldTotalMin() );
+						//if the Laptop is NOT broken
+						if( gubQuest[ QUEST_FIX_LAPTOP ] != QUESTINPROGRESS )
+						{
+							//remove the Flag, so if the merc goes on another assignment, the player can leave an email.
+							pProfile->ubMiscFlags3 &= ~PROFILE_MISC_FLAG3_PLAYER_LEFT_MSG_FOR_MERC_AT_AIM;
+	
+							// TO DO: send E-mail to player telling him the merc has returned from an assignment
+							AddEmail( ( UINT8 )( iOffset + ( cnt * AIM_REPLY_LENGTH_BARRY ) ), AIM_REPLY_LENGTH_BARRY, ( UINT8 )( 6 + cnt ), GetWorldTotalMin() );
+						}
 					}
 				}
 			}
@@ -1099,6 +1103,39 @@ void HourlyCamouflageUpdate( void )
 					DirtyMercPanelInterface( pSoldier, DIRTYLEVEL2 );				
 				}
 				*/
+			}
+		}
+	}
+}
+
+void HandleAddingAnyAimAwayEmailsWhenLaptopGoesOnline()
+{
+	UINT32 cnt;
+	INT32	iOffset;
+	MERCPROFILESTRUCT *pProfile;
+
+
+	//Loop through all the profiles
+	for( cnt = 0; cnt < NUM_PROFILES; cnt++)
+	{
+		pProfile = &(gMercProfiles[ cnt ]);
+
+		if (pProfile->uiDayBecomesAvailable == 0)
+		{
+			//if the merc CAN become ready
+			if( pProfile->bMercStatus != MERC_FIRED_AS_A_POW )
+			{
+				// if the player has left a message for this merc
+				if ( pProfile->ubMiscFlags3 & PROFILE_MISC_FLAG3_PLAYER_LEFT_MSG_FOR_MERC_AT_AIM )
+				{
+					iOffset = AIM_REPLY_BARRY;
+
+					//remove the Flag, so if the merc goes on another assignment, the player can leave an email.
+					pProfile->ubMiscFlags3 &= ~PROFILE_MISC_FLAG3_PLAYER_LEFT_MSG_FOR_MERC_AT_AIM;
+
+					// TO DO: send E-mail to player telling him the merc has returned from an assignment
+					AddEmail( ( UINT8 )( iOffset + ( cnt * AIM_REPLY_LENGTH_BARRY ) ), AIM_REPLY_LENGTH_BARRY, ( UINT8 )( 6 + cnt ), GetWorldTotalMin() );
+				}
 			}
 		}
 	}

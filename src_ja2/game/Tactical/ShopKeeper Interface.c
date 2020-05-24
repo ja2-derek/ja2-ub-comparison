@@ -1225,6 +1225,24 @@ BOOLEAN ExitShopKeeperInterface()
 
 	gfSMDisableForItems = FALSE;
 
+	//Check to see if a merc should say something
+	CheckForValidQuotesWhenLeavingDealer( gTalkPanel.ubCharNum );
+
+	//if the laptop was just fixed
+	if( gubQuest[ QUEST_FIX_LAPTOP ] == QUESTDONE && !( gJa25SaveStruct.uiJa25GeneralFlags & JA_GF__PLAYER_SAID_LAPTOP_FIXED_QUOTE ) )
+	{
+		INT8	bSoldierID=-1;
+
+		//Have a new merc say a quote
+		bSoldierID = RandomSoldierIdFromNewMercsOnPlayerTeam();
+		if( bSoldierID != -1 )
+		{
+			TacticalCharacterDialogue( &Menptr[ bSoldierID ], QUOTE_SPARE2 );
+		}
+
+		gJa25SaveStruct.uiJa25GeneralFlags |= JA_GF__PLAYER_SAID_LAPTOP_FIXED_QUOTE;
+	}
+
 	return( TRUE );
 }
 
@@ -1344,6 +1362,21 @@ void HandleShopKeeperInterface()
 	if( gfSkiDisplayDropItemToGroundText )
 	{
 		DisplayTheSkiDropItemToGroundString();
+	}
+	else if( gubDisplayMsgBoxAskingUserToAttachTransmitter != TRNSMTR_MSG_BOX__NONE )
+	{
+		if( gubDisplayMsgBoxAskingUserToAttachTransmitter == TRNSMTR_MSG_BOX__1_FRAME_WAIT )
+		{
+			gubDisplayMsgBoxAskingUserToAttachTransmitter = TRNSMTR_MSG_BOX__DISPLAY_BOX;
+		}
+		else if( gubDisplayMsgBoxAskingUserToAttachTransmitter == TRNSMTR_MSG_BOX__DISPLAY_BOX )
+		{
+			//Tell user that they are attaching the transmitter
+			AskUserToAttachTransmitterToLaptop();
+
+			//clear the flag
+			gubDisplayMsgBoxAskingUserToAttachTransmitter = TRNSMTR_MSG_BOX__NONE;
+		}
 	}
 }
 
@@ -3864,6 +3897,28 @@ void MoveAllArmsDealersItemsInOfferAreaToPlayersOfferArea( )
 		//if there is an item here
 		if( ArmsDealerOfferArea[ uiCnt ].fActive )
 		{
+
+			fAddItemToPlayer = TRUE; 
+
+			//if the dealer is betty
+			if( gbSelectedArmsDealerID == ARMS_DEALER_BETTY )
+			{
+				//if the item is the laptop transmitter
+				if( ArmsDealerOfferArea[ uiCnt ].sItemIndex == LAPTOP_TRANSMITTER )
+				{
+					//Dont transfer the item
+					fAddItemToPlayer = FALSE;
+
+					//Tell the user we are going to attach the transmitter to the laptop
+					//( need to wait 1 frame caus ewe are currently in a msg box )
+					gubDisplayMsgBoxAskingUserToAttachTransmitter = TRNSMTR_MSG_BOX__1_FRAME_WAIT;
+				}
+
+			}
+
+			//if we are to add the item
+			if( fAddItemToPlayer )
+			{
 			bSlotID = AddItemToPlayersOfferArea( NO_PROFILE, &ArmsDealerOfferArea[ uiCnt ], -1 );
 
 			if( bSlotID != -1 )
@@ -7697,4 +7752,19 @@ void HatchOutInvSlot( UINT16 usPosX, UINT16 usPosY )
 	//Hatch it out
 	DrawHatchOnInventory( guiRENDERBUFFER, usSlotX, usSlotY, usSlotWidth, usSlotHeight );
 	InvalidateRegion( usSlotX, usSlotY, usSlotX + usSlotWidth, usSlotY + usSlotHeight );
+}
+
+void AskUserToAttachTransmitterToLaptop()
+{
+	DoSkiMessageBox( MSG_BOX_BASIC_STYLE, zNewTacticalMessages[ TCTL_MSG__ATTACH_TRANSMITTER_TO_LAPTOP ], SHOPKEEPER_SCREEN, MSG_BOX_FLAG_OK, AttachLaptopTransmitterToLaptop );
+}
+
+void AttachLaptopTransmitterToLaptop( UINT8 ubExitValue )
+{
+	//
+	// Get the laptop working again
+	//
+
+	//Mark the quest done
+	EndQuest( QUEST_FIX_LAPTOP, -1, -1 );
 }
