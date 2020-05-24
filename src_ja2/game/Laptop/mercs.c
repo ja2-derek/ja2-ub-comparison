@@ -955,6 +955,9 @@ JA25:  No longer pay as you go, now pay up front
 	}
 */
 
+/*
+JA25:  MERC site shouldnt go down
+
 	// If the merc site has never gone down, the number of MERC payment days is above 'X', 
 	// and the players account status is ok ( cant have the merc site going down when the player owes him money, player may lose account that way )
 	if( ShouldTheMercSiteServerGoDown() )
@@ -975,6 +978,7 @@ JA25:  No longer pay as you go, now pay up front
 		//Add an event that will get the site back up and running
 		AddStrategicEvent( EVENT_MERC_SITE_BACK_ONLINE, uiTimeInMinutes, 0 );
 	}
+*/
 }
 
 
@@ -2417,7 +2421,7 @@ BOOLEAN ShouldTheMercSiteServerGoDown()
 	return( FALSE );
 }
 
-
+/*
 void GetMercSiteBackOnline()
 {
 	//Add an email telling the user the site is back up
@@ -2426,6 +2430,7 @@ void GetMercSiteBackOnline()
 	//Set a flag indicating that the server just went up ( so speck can make a comment when the player next visits the site )
 	LaptopSaveInfo.fFirstVisitSinceServerWentDown = TRUE;
 }
+*/
 
 void DrawMercVideoBackGround()
 {

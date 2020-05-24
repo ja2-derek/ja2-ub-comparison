@@ -70,7 +70,7 @@ BOOLEAN IsMercMercAvailable( UINT8 ubMercID );
 void HandlePlayerHiringMerc( UINT8 ubHiredMercID );
 void EnterInitMercSite();
 
-void GetMercSiteBackOnline();
+//JA25: void GetMercSiteBackOnline();
 
 void DisableMercSiteButton();
 
