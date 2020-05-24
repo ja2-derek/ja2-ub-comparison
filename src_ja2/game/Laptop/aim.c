@@ -114,7 +114,7 @@ UINT8			gCurrentAimPage[ NUM_AIM_SCREENS ] =
 
 //#define			AIM_AD_BOBBYR_AD_STARTS								2	JA25  No Bobbyr in exp
 #define			AIM_AD_DAY_ADDVERTISMENT_FOR_ADS			1
-#define			AIM_AD_DAY_FUNERAL_AD_STARTS					4
+#define			AIM_AD_DAY_FUNERAL_AD_STARTS					2
 #define			AIM_AD_DAY_FLOWER_AD_STARTS						7
 #define			AIM_AD_DAY_INSURANCE_AD_STARTS				12
 /*
