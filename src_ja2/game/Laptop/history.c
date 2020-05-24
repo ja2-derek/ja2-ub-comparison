@@ -1665,14 +1665,14 @@ UINT32 GetTimeQuestWasStarted( UINT8 ubCode )
 void GetQuestStartedString( UINT8 ubQuestValue, STR16 sQuestString )
 {
 	// open the file and copy the string
-	LoadEncryptedDataFromFile( "BINARYDATA\\quests.edt", sQuestString, 160 * ( ubQuestValue * 2  ), 160 );
+	LoadEncryptedDataFromFile( "BINARYDATA\\quests25.edt", sQuestString, 160 * ( ubQuestValue * 2  ), 160 );
 }
 
 
 void GetQuestEndedString( UINT8 ubQuestValue, STR16 sQuestString )
 {
 	// open the file and copy the string
-	LoadEncryptedDataFromFile( "BINARYDATA\\quests.edt", sQuestString, 160 * ( ( ubQuestValue  * 2 ) + 1), 160 );
+	LoadEncryptedDataFromFile( "BINARYDATA\\quests25.edt", sQuestString, 160 * ( ( ubQuestValue  * 2 ) + 1), 160 );
 }
 
 
