@@ -406,6 +406,9 @@ UINT32 PlayVoice( void )
 			case( 2 ):
 				return( PlayJA2SampleFromFile( "Speech\\053_001.wav", RATE_11025, MIDVOLUME, 1 , MIDDLEPAN ) );	 
 		  break;
+			case( 3 ):
+				return( PlayJA2SampleFromFile( "Speech\\057_001.wav", RATE_11025, MIDVOLUME, 1 , MIDDLEPAN ) );	 
+			  break;
 		}
 	}
 	else
