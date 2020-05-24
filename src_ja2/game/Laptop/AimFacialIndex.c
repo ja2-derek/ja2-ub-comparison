@@ -22,7 +22,10 @@ extern UINT8			gbCurrentIndex;
 UINT32		guiMugShotBorder;
 UINT32		guiAimFiFace[ MAX_NUMBER_MERCS ];
 
-
+INT8			gbMercMouseMovedOffOf=-1;
+INT16			gsMercMouseMovedOffOfPosX;
+INT16			gsMercMouseMovedOffOfPosY;
+SGPRect		gMercMouseMovedOffOfRect;
 
 #define		AIM_FI_NUM_MUHSHOTS_X		8
 #define		AIM_FI_NUM_MUHSHOTS_Y		5
@@ -62,7 +65,7 @@ void SelectScreenRegionCallBack(MOUSE_REGION * pRegion, INT32 iReason );
 
 
 BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT8 ubImage);
-
+CHAR16*	SetAimFaceHelpText( UINT8 ubProfileID );
 
 void GameInitAimFacialIndex()
 {
@@ -96,13 +99,16 @@ BOOLEAN EnterAimFacialIndex()
 			MSYS_AddRegion( &gMercFaceMouseRegions[ i ] );
 			MSYS_SetRegionUserData( &gMercFaceMouseRegions[ i ], 0, i);
 
+			//Set the help text to display the current sort stat for the merc
+			SetRegionFastHelpText( &gMercFaceMouseRegions[ i ], SetAimFaceHelpText( AimMercArray[i] ) );
+
+
 			sprintf(sTemp, "%s%02d.sti", sFaceLoc, AimMercArray[i]);
 			VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 			FilenameForBPP(sTemp, VObjectDesc.ImageFile);
 			if( !AddVideoObject(&VObjectDesc, &guiAimFiFace[i]) )
 				return( FALSE );
 
-			
 			usPosX += AIM_FI_PORTRAIT_WIDTH + AIM_FI_MUGSHOT_GAP_X;
 			i++;
 		}
@@ -145,9 +151,13 @@ void ExitAimFacialIndex()
 
 void HandleAimFacialIndex()
 {
-//	if( fShowBookmarkInfo )
-//		fPausedReDrawScreenFlag = TRUE;
-
+	//if the user just moved the cursor off of a portrait
+	if( gbMercMouseMovedOffOf != -1 )
+	{
+		DrawMercsFaceToScreen( gbMercMouseMovedOffOf, gsMercMouseMovedOffOfPosX, gsMercMouseMovedOffOfPosY, 1);
+		InvalidateRegion(gMercMouseMovedOffOfRect.iLeft, gMercMouseMovedOffOfRect.iTop, gMercMouseMovedOffOfRect.iRight, gMercMouseMovedOffOfRect.iBottom );
+		gbMercMouseMovedOffOf = -1;
+	}
 }
 
 BOOLEAN RenderAimFacialIndex()
@@ -259,6 +269,14 @@ void SelectMercFaceMoveRegionCallBack(MOUSE_REGION * pRegion, INT32 reason )
 		pRegion->uiFlags &= (~BUTTON_CLICKED_ON );
 		DrawMercsFaceToScreen(ubMercNum, usPosX, usPosY, 1);
 		InvalidateRegion(pRegion->RegionTopLeftX, pRegion->RegionTopLeftY, pRegion->RegionBottomRightX, pRegion->RegionBottomRightY);
+
+		gbMercMouseMovedOffOf = ubMercNum;
+		gsMercMouseMovedOffOfPosX = usPosX;
+		gsMercMouseMovedOffOfPosY = usPosY;
+		gMercMouseMovedOffOfRect.iLeft = pRegion->RegionTopLeftX;
+		gMercMouseMovedOffOfRect.iTop = pRegion->RegionTopLeftY;
+		gMercMouseMovedOffOfRect.iRight = pRegion->RegionBottomRightX;
+		gMercMouseMovedOffOfRect.iBottom = pRegion->RegionBottomRightY;
 	}
 	else if( reason & MSYS_CALLBACK_REASON_GAIN_MOUSE )
 	{
@@ -329,3 +347,35 @@ BOOLEAN DrawMercsFaceToScreen(UINT8 ubMercID, UINT16 usPosX, UINT16 usPosY, UINT
 	return(TRUE);
 }
 
+CHAR16*	SetAimFaceHelpText( UINT8 ubProfileID )
+{
+	static CHAR16	zString[256];
+	CHAR16	zTemp[128];
+
+	switch( gubCurrentSortMode )
+	{
+		case AIM_FI_PRICE:
+			swprintf( zTemp, L"%d", gMercProfiles[ ubProfileID ].uiWeeklySalary );
+			InsertCommasForDollarFigure( zTemp );
+			InsertDollarSignInToString( zTemp );
+			swprintf( zString, L"%s: %s", AimFiText[ gubCurrentSortMode ], zTemp );
+			break;
+		case AIM_FI_EXP:
+			swprintf( zString, L"%s: %d", AimFiText[ gubCurrentSortMode ], gMercProfiles[ ubProfileID ].bExpLevel );
+			break;
+		case AIM_FI_MARKSMANSHIP:
+			swprintf( zString, L"%s: %d", AimFiText[ gubCurrentSortMode ], gMercProfiles[ ubProfileID ].bMarksmanship );
+			break;
+		case AIM_FI_MEDICAL:
+			swprintf( zString, L"%s: %d", AimFiText[ gubCurrentSortMode ], gMercProfiles[ ubProfileID ].bMedical );
+			break;
+		case AIM_FI_EXPLOSIVES:
+			swprintf( zString, L"%s: %d", AimFiText[ gubCurrentSortMode ], gMercProfiles[ ubProfileID ].bExplosive );
+			break;
+		case AIM_FI_MECHANICAL:		
+			swprintf( zString, L"%s: %d", AimFiText[ gubCurrentSortMode ], gMercProfiles[ ubProfileID ].bMechanical );
+			break;
+	}
+
+	return( zString );
+}
