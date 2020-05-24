@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Laptop All.h"
+	#include "IMP Skill Trait.h"
 #else
 	#include "laptop.h"
 	#include "cursors.h"
@@ -215,7 +216,8 @@ void HandleCharProfile()
 			 HandleIMPPersonalityEntrance( );
 		 break;
 		 case( IMP_PERSONALITY_QUIZ ):
-			 HandleIMPPersonalityQuiz( );
+//			 HandleIMPPersonalityQuiz( );
+			 HandleIMPSkillTrait( );
 		 break;
 		 case( IMP_PERSONALITY_FINISH ):
 		   HandleIMPPersonalityFinish( );
@@ -275,7 +277,8 @@ void RenderCharProfile()
 			 RenderIMPPersonalityEntrance( );
 		 break;
 		 case( IMP_PERSONALITY_QUIZ ):
-			 RenderIMPPersonalityQuiz( );
+//			 RenderIMPPersonalityQuiz( );
+			 RenderIMPSkillTrait( );
 		 break;
 		 case( IMP_PERSONALITY_FINISH ):
 		   RenderIMPPersonalityFinish( );
@@ -355,7 +358,8 @@ void ExitOldIMPMode( void )
 		 break;
 		 case( IMP_PERSONALITY_QUIZ ):
 			 DestroyIMPButtons( );
-			 ExitIMPPersonalityQuiz( );
+//			 ExitIMPPersonalityQuiz( );
+			 ExitIMPSkillTrait( );
 		 break;
 		 case( IMP_PERSONALITY_FINISH ):
 			 DestroyIMPButtons( );
@@ -420,7 +424,8 @@ void EnterNewIMPMode( void )
 		 break;
 		 case( IMP_PERSONALITY_QUIZ ):
 			 CreateIMPButtons( );
-			 EnterIMPPersonalityQuiz( );
+//			 EnterIMPPersonalityQuiz( );
+			 EnterIMPSkillTrait( );
 		 break;
 		 case( IMP_PERSONALITY_FINISH ):
 			 CreateIMPButtons( );

@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Laptop All.h"
+	#include "IMP Skill Trait.h"
 #else
 	#include "laptop.h"
 	#include "CharProfile.h"
@@ -394,27 +395,10 @@ void ValidateSkillsList( void )
 	{
 		// without mechanical, electronics is useless
 		iIndex = FindSkillInSkillsList( ELECTRONICS );
-		while ( iIndex != -1 )
-		{
-			RemoveSkillFromSkillsList( iIndex );
-			iIndex = FindSkillInSkillsList( ELECTRONICS );
-		}
-	}
 
-	// special check for lockpicking
-	iValue = pProfile->bMechanical;
-	iValue = ( iValue * pProfile->bWisdom ) / 100;
-	iValue = ( iValue * pProfile->bDexterity ) / 100;
-	if ( iValue + gbSkillTraitBonus[ LOCKPICKING ] < 50 )
-	{
-		// not good enough for lockpicking!
-
-		// so is lockpicking
-		iIndex = FindSkillInSkillsList( LOCKPICKING );
-		while ( iIndex != -1 )
+		if ( iIndex != -1 )
 		{
-			RemoveSkillFromSkillsList( iIndex );
-			iIndex = FindSkillInSkillsList( LOCKPICKING );
+			pProfile->bMechanical = 1;
 		}
 	}
 
@@ -423,17 +407,17 @@ void ValidateSkillsList( void )
 		// without marksmanship, the following traits are useless:
 		// auto weapons, heavy weapons
 		iIndex = FindSkillInSkillsList( AUTO_WEAPS );
-		while ( iIndex != -1 )
+
+		if ( iIndex != -1 )
 		{
-			RemoveSkillFromSkillsList( iIndex );
-			iIndex = FindSkillInSkillsList( AUTO_WEAPS );
+			pProfile->bMarksmanship = 1;
 		}
 		// so is lockpicking
 		iIndex = FindSkillInSkillsList( HEAVY_WEAPS );
-		while ( iIndex != -1 )
+
+		if ( iIndex != -1 )
 		{
-			RemoveSkillFromSkillsList( iIndex );
-			iIndex = FindSkillInSkillsList( HEAVY_WEAPS );
+			pProfile->bMarksmanship = 1;
 		}
 	}
 }
@@ -446,7 +430,7 @@ void CreatePlayerSkills( void )
 	INT32 iCounter = 0;
 
 	ValidateSkillsList();
-
+/*
 	// roll dice
 	iDiceValue = Random( iLastElementInSkillsList );
 
@@ -457,6 +441,23 @@ void CreatePlayerSkills( void )
 	iDiceValue = Random( iLastElementInSkillsList );
 
 	iSkillB = SkillsList[ iDiceValue ];
+*/
+
+	if( iLastElementInSkillsList > 0 )
+	{
+		// set attitude
+		iSkillA = SkillsList[ 0 ];
+	}
+
+	if( iLastElementInSkillsList > 1 )
+	{
+		iSkillB = SkillsList[ 1 ];
+	}
+	else
+	{
+		iSkillB = SkillsList[ 0 ];
+	}
+
 
 	// allow expert level for generated merc so you CAN have two of the same
 	// but there is no such thing as expert level for electronics
@@ -775,6 +776,9 @@ void HandleMercStatsForChangesInFace( )
 		return;
 	}
 
+	//add the skills to the skills list
+	AddSelectedSkillsToSkillsList();
+
 	// now figure out skills
 	CreatePlayerSkills();
 
@@ -852,4 +856,16 @@ UINT8 GetProfileIdForImpMerc()
 	}
 
 	return( ubMercID );
+}
+
+void ResetIMPSkillsList( )
+{
+	memset( SkillsList, 0, sizeof(SkillsList ) );
+	memset( BackupSkillsList, 0, sizeof( BackupSkillsList ) );
+
+	iLastElementInSkillsList = 0;
+	iLastElementInPersonalityList = 0;
+
+	memset( PersonalityList, 0, sizeof( PersonalityList ) );
+
 }

@@ -182,12 +182,12 @@ void PrintImpText( void )
       
 		break;
 		case ( IMP_PERSONALITY_QUIZ ):
-      LoadAndDisplayIMPText( LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_WEB_UL_Y + 5, sWidth, IMP_PERS_6, FONT14ARIAL, FONT_WHITE, TRUE, CENTER_JUSTIFIED );
-      LoadAndDisplayIMPText( LAPTOP_SCREEN_UL_X + 293, LAPTOP_SCREEN_WEB_UL_Y + 370, ( 456 - 200  ), IMP_PERS_11, FONT12ARIAL, FONT_WHITE, TRUE, 0);
-      LoadAndDisplayIMPText( LAPTOP_SCREEN_UL_X + 363, LAPTOP_SCREEN_WEB_UL_Y + 370, ( 456 - 200  ), IMP_PERS_12, FONT12ARIAL, FONT_WHITE, TRUE, 0);
+//      LoadAndDisplayIMPText( LAPTOP_SCREEN_UL_X, LAPTOP_SCREEN_WEB_UL_Y + 5, sWidth, IMP_PERS_6, FONT14ARIAL, FONT_WHITE, TRUE, CENTER_JUSTIFIED );
+ //     LoadAndDisplayIMPText( LAPTOP_SCREEN_UL_X + 293, LAPTOP_SCREEN_WEB_UL_Y + 370, ( 456 - 200  ), IMP_PERS_11, FONT12ARIAL, FONT_WHITE, TRUE, 0);
+  //    LoadAndDisplayIMPText( LAPTOP_SCREEN_UL_X + 363, LAPTOP_SCREEN_WEB_UL_Y + 370, ( 456 - 200  ), IMP_PERS_12, FONT12ARIAL, FONT_WHITE, TRUE, 0);
       
 			// print the question and suitable answers
-			PrintIMPPersonalityQuizQuestionAndAnsers( );
+//			PrintIMPPersonalityQuizQuestionAndAnsers( );
 		  
 		break;
 		case ( IMP_PERSONALITY_FINISH ):
