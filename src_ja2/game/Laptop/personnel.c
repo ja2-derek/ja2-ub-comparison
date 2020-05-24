@@ -870,7 +870,7 @@ BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFire
 	if( fCurrentTeamMode == TRUE )
 	{
 	
-		if( ( 50 < 	MercPtrs[iId] -> ubProfile )&&( 57 > 	MercPtrs[iId] -> ubProfile ) )
+		if( ( 50 < 	MercPtrs[iId] -> ubProfile )&&( LAST_IMP_MERC >= 	MercPtrs[iId] -> ubProfile ) )
 		{
 			sprintf( sTemp, "%s%03d.sti", FACES_DIR, 	gMercProfiles[ MercPtrs[iId] -> ubProfile  ].ubFaceIndex );	
 		}
@@ -887,7 +887,7 @@ BOOLEAN RenderPersonnelFace(INT32 iId, INT32 iSlot, BOOLEAN fDead, BOOLEAN fFire
 			return( TRUE );
 		}
 
-		if( ( 50 < 	iId )&&( 57 > 	iId ) )
+		if( ( 50 < 	iId )&&( LAST_IMP_MERC >= 	iId ) )
 		{
 			sprintf( sTemp, "%s%03d.sti", FACES_DIR, 	gMercProfiles[ iId  ].ubFaceIndex );	
 		}
@@ -2156,7 +2156,7 @@ BOOLEAN DisplayPicturesOfCurrentTeam( void )
 		if( ( MercPtrs[iId + iCnt ] -> bActive == TRUE ) )
 		{
 			// found the next actual guy
-			if( ( 50 < 	MercPtrs[iId + iCnt ]  -> ubProfile )&&( 57 > 	MercPtrs[iId + iCnt ] -> ubProfile ) )
+			if( ( 50 < 	MercPtrs[iId + iCnt ]  -> ubProfile )&&( LAST_IMP_MERC >= 	MercPtrs[iId + iCnt ]->ubProfile ) )
 			{
 				sprintf( sTemp, "%s%03d.sti", SMALL_FACES_DIR, 	gMercProfiles[ MercPtrs[ iId + iCnt ] -> ubProfile  ].ubFaceIndex );	
 			}
@@ -4977,7 +4977,7 @@ BOOLEAN DisplayPortraitOfPastMerc( INT32 iId , INT32 iCounter, BOOLEAN fDead, BO
 	
 
 
-	if( ( 50 < 	iId   )&&( 57 > 	iId   ) )
+	if( ( 50 < 	iId   )&&( LAST_IMP_MERC >= 	iId   ) )
 	{
 		sprintf( sTemp, "%s%03d.sti", SMALL_FACES_DIR, 	 gMercProfiles[ iId ].ubFaceIndex );	
 	}

@@ -14,6 +14,11 @@ MERCPROFILESTRUCT gMercProfiles[ NUM_PROFILES ];
 
 #define AIM_AND_MERC_MERCS		51		// A.I.M. is 0-39, M.E.R.C.s are 40-50
 
+#define	LAST_IMP_MERC					57
+
+//use this to sort out the above define
+BOOLEAN IsProfileIdAnAimOrMERCMerc( UINT8 ubProfileID );
+
 //enums for the mercs 
 enum
 {

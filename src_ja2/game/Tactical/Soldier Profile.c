@@ -1470,3 +1470,15 @@ BOOLEAN DoesNPCOwnBuilding( SOLDIERTYPE *pSoldier, INT16 sGridNo )
 
   return( FALSE );
 }
+
+BOOLEAN IsProfileIdAnAimOrMERCMerc( UINT8 ubProfileID )
+{
+	
+	if( ubProfileID < BIFF || 
+			( ubProfileID >= BIFF && ubProfileID <= BUBBA ))
+	{
+		return( TRUE );
+	}
+
+	return( FALSE );
+}

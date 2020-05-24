@@ -404,7 +404,7 @@ void MercDailyUpdate()
 		}
 
 		// if he's an AIM/M.E.R.C. merc
-		if ( cnt < AIM_AND_MERC_MERCS )
+		if( IsProfileIdAnAimOrMERCMerc( (UINT8)cnt ) )
 		{
 			// if he's not just on his way home
 			if ( pProfile->bMercStatus != MERC_RETURNING_HOME )
@@ -452,7 +452,7 @@ void MercDailyUpdate()
 		else	// was already available today
 		{
 			// if it's an AIM or M.E.R.C. merc
-			if (cnt < AIM_AND_MERC_MERCS)
+			if( IsProfileIdAnAimOrMERCMerc( (UINT8)cnt ) )
 			{
 				// check to see if he goes on another assignment
 				if (cnt < MAX_NUMBER_MERCS)

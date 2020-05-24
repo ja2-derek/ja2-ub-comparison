@@ -297,7 +297,7 @@ INT8 HireMerc( MERC_HIRE_STRUCT *pHireMerc)
 		AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_MERC, ubCurrentSoldier, GetWorldTotalMin(), -1, -1 );
 	}
 	//If the merc is from IMP, (ie a player character)
-	else if( ( ubCurrentSoldier >= 51 ) && ( ubCurrentSoldier < 57 ) ) 
+	else if( ( ubCurrentSoldier >= 51 ) && ( ubCurrentSoldier <= LAST_IMP_MERC ) ) 
 	{
 		pSoldier->ubWhatKindOfMercAmI = MERC_TYPE__PLAYER_CHARACTER;
 		//pSoldier->iTotalContractCharge = -1;
