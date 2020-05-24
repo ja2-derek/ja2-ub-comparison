@@ -2684,8 +2684,11 @@ void NewMercsAvailableAtMercSiteCallBack( )
 		}
 	}
 
+/*
+JA25: no new mercs
 	if( fSendEmail )
 		AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
+*/
 
 	//new mercs are available
 	LaptopSaveInfo.fNewMercsAvailableAtMercSite = TRUE;
