@@ -321,10 +321,9 @@ void  BtnIMPConfirmYes(GUI_BUTTON *btn,INT32 reason)
 	
 }
 
+// fixed? by CJC Nov 28 2002
 void BtnIMPConfirmNo( GUI_BUTTON *btn,INT32 reason )
 {
-	
-
   	// btn callback for IMP Homepage About US button
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
@@ -337,7 +336,18 @@ void BtnIMPConfirmNo( GUI_BUTTON *btn,INT32 reason )
 	{
 		if( btn->uiFlags & BUTTON_CLICKED_ON )
 		{
-			LaptopSaveInfo.fIMPCompletedFlag = TRUE;
+		
+			iCurrentImpPage = IMP_FINISH;
+
+			/*
+
+			LaptopSaveInfo.fIMPCompletedFlag = FALSE;
+			ResetCharacterStats();
+
+			fButtonPendingFlag = TRUE;
+			iCurrentImpPage = IMP_HOME_PAGE;
+			*/
+			/*
 			if( fNoAlreadySelected == TRUE )
 			{
 				// already selected no 
@@ -345,6 +355,7 @@ void BtnIMPConfirmNo( GUI_BUTTON *btn,INT32 reason )
 				iCurrentImpPage = IMP_HOME_PAGE;
 			}
       fNoAlreadySelected = TRUE;
+			*/
       btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		}
 	}
