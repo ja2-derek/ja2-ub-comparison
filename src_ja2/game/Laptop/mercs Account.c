@@ -318,11 +318,12 @@ void DisplayHiredMercs()
 			DrawTextToScreen(sTemp, MERC_AC_SECOND_COLUMN_X, usPosY, MERC_AC_SECOND_COLUMN_WIDTH, MERC_ACCOUNT_DYNAMIC_TEXT_FONT, ubFontColor, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
 			//Display the mercs rate
-			swprintf(sTemp, L"$%6d",gMercProfiles[ usMercID ].sSalary );
+//Ja25: Chnaged to weekly			swprintf(sTemp, L"$%6d",gMercProfiles[ usMercID ].sSalary );
+			swprintf(sTemp, L"$%6d",gMercProfiles[ usMercID ].uiWeeklySalary );
 			DrawTextToScreen(sTemp, MERC_AC_THIRD_COLUMN_X, usPosY, MERC_AC_THIRD_COLUMN_WIDTH, MERC_ACCOUNT_DYNAMIC_TEXT_FONT, ubFontColor, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
 			//Display the total charge
-			uiContractCharge = gMercProfiles[ usMercID ].sSalary * gMercProfiles[ usMercID ].iMercMercContractLength;
+			uiContractCharge = gMercProfiles[ usMercID ].uiWeeklySalary * gMercProfiles[ usMercID ].iMercMercContractLength;
 			swprintf(sTemp, L"$%6d", uiContractCharge );
 			DrawTextToScreen(sTemp, MERC_AC_FOURTH_COLUMN_X, usPosY, MERC_AC_FOURTH_COLUMN_WIDTH, MERC_ACCOUNT_DYNAMIC_TEXT_FONT, ubFontColor, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
@@ -355,7 +356,7 @@ void SettleMercAccounts()
 		if( IsMercOnTeam( ubMercID ) || ( gMercProfiles[ ubMercID ].iMercMercContractLength != 0 ) )
 		{
 			//Calc the contract charge
-			iContractCharge = gMercProfiles[ ubMercID ].sSalary * gMercProfiles[ ubMercID ].iMercMercContractLength;
+			iContractCharge = gMercProfiles[ ubMercID ].uiWeeklySalary * gMercProfiles[ ubMercID ].iMercMercContractLength;
 
 			//if the player can afford to pay this merc
 			if( LaptopSaveInfo.iCurrentBalance >= iPartialPayment + iContractCharge )
@@ -396,8 +397,7 @@ void SettleMercAccounts()
 		gusMercVideoSpeckSpeech = SPECK_QUOTE_PLAYER_MAKES_FULL_PAYMENT;
 
 		//if the merc's account was in suspense, re-enable it
-		// CJC Dec 1 2002: an invalid account become valid again.
-		//if( LaptopSaveInfo.gubPlayersMercAccountStatus != MERC_ACCOUNT_INVALID )
+		if( LaptopSaveInfo.gubPlayersMercAccountStatus != MERC_ACCOUNT_INVALID )
 			LaptopSaveInfo.gubPlayersMercAccountStatus = MERC_ACCOUNT_VALID;
 
 		
@@ -529,10 +529,10 @@ UINT32	CalculateHowMuchPlayerOwesSpeck()
 			continue;
 
 		usMercID = GetMercIDFromMERCArray( i );
-		//if( IsMercOnTeam( (UINT8)usMercID ) )
+		if( IsMercOnTeam( (UINT8)usMercID ) )
 		{
 			//Calc salary for the # of days the merc has worked since last paid
-			uiContractCharge += gMercProfiles[ usMercID ].sSalary * gMercProfiles[ usMercID ].iMercMercContractLength;
+			uiContractCharge += gMercProfiles[ usMercID ].uiWeeklySalary * gMercProfiles[ usMercID ].iMercMercContractLength;
 		}
 	}
 

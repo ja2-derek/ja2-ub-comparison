@@ -390,6 +390,7 @@ JA25:
 				gubArrivedFromMercSubSite = MERC_CAME_FROM_HIRE_PAGE;
 
 			}
+			//else try to hire the merc
 
 	else 
 */
