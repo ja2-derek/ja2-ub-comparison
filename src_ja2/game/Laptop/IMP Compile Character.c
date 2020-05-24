@@ -843,5 +843,13 @@ UINT8 GetProfileIdForImpMerc()
 {
 	UINT8 ubMercID = PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId;
 
+	if ( fCharacterIsMale == TRUE )
+	{
+		if( LaptopSaveInfo.iVoiceId == 3 )
+		{
+			ubMercID = LAST_IMP_MERC;
+		}
+	}
+
 	return( ubMercID );
 }

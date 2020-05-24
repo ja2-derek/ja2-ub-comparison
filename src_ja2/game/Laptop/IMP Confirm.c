@@ -271,6 +271,7 @@ void  BtnIMPConfirmYes(GUI_BUTTON *btn,INT32 reason)
 	{
 		if( btn->uiFlags & BUTTON_CLICKED_ON )
 		{
+			UINT8 ubMercID = GetProfileIdForImpMerc();
 
 			// reset button
 			btn->uiFlags&=~(BUTTON_CLICKED_ON);

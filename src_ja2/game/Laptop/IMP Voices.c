@@ -78,6 +78,21 @@ void EnterIMPVoices( void )
 	// play voice once
 	uiVocVoiceSound = PlayVoice( );
 
+	//if the character is a male
+	if( fCharacterIsMale )
+	{
+		iLastVoice = 3;
+	}
+	else
+	{
+		iLastVoice = 2;
+	}
+
+	if( iCurrentVoices > iLastVoice )
+	{
+		iCurrentVoices = iLastVoice;
+	}
+
 	return;
 }
 
