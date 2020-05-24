@@ -23,13 +23,13 @@
 #endif
 
 // width of the slider bar region
-#define BAR_WIDTH 423 - 197
+#define BAR_WIDTH																(231)//(423 - 197)
 
 // width of the slider bar itself
-#define SLIDER_BAR_WIDTH 37
+#define SLIDER_BAR_WIDTH												38
 
 // the sizeof one skill unit on the sliding bar in pixels
-#define BASE_SKILL_PIXEL_UNIT_SIZE ( ( 423 - 230 ) )
+//#define BASE_SKILL_PIXEL_UNIT_SIZE							( ( 423 - 230 ) )
 
 #define	MAX_ATTIBUTEPOINT		90
 #define	START_ATTRIBEPOINT		55
