@@ -140,7 +140,7 @@
 #define		NAME_X						STATS_FIRST_COL
 #define		NAME_Y						STATS_Y + 7
 
-#define		FEE_X							PRICE_X + 7
+#define		FEE_X							489 //ja25: PRICE_X + 7
 #define		FEE_Y							NAME_Y
 #define		FEE_WIDTH					37  //33
 
@@ -393,7 +393,7 @@ BOOLEAN		gfVideoFaceActive=FALSE;
 UINT8			gubPopUpBoxAction = AIM_POPUP_NOTHING;
 BOOLEAN		gfRedrawScreen = FALSE;
 UINT8			gubContractLength;
-BOOLEAN		gfBuyEquipment;
+BOOLEAN		gfBuyEquipment=TRUE;
 INT32			giContractAmount=0;
 INT32			giMercFaceIndex;
 wchar_t		gsTalkingMercText[ TEXT_POPUP_STRING_SIZE ];
@@ -451,12 +451,12 @@ INT32	giNextButton;
 INT32		guiVideoConferenceButtonImage[3];
 
 //Contract Length Button
-void BtnContractLengthButtonCallback(GUI_BUTTON *btn,INT32 reason);
-INT32	giContractLengthButton[3];
+//void BtnContractLengthButtonCallback(GUI_BUTTON *btn,INT32 reason);
+//INT32	giContractLengthButton[3];
 
 //BuyEquipment Button
-void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn,INT32 reason);
-INT32	giBuyEquipmentButton[2];
+//void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn,INT32 reason);
+//INT32	giBuyEquipmentButton[2];
 
 //Authorize Payment Button
 void BtnAuthorizeButtonCallback(GUI_BUTTON *btn,INT32 reason);
@@ -542,7 +542,7 @@ void		DisplayDots(UINT16 usNameX, UINT16 usNameY, UINT16 usStatX, STR16 pString)
 void		DelayMercSpeech( UINT8 ubMercID, UINT16 usQuoteNum, UINT16 usDelay, BOOLEAN fNewQuote, BOOLEAN fReset );
 void		DisplayPopUpBoxExplainingMercArrivalLocationAndTimeCallBack( UINT8 bExitValue );
 void		DisplayAimMemberClickOnFaceHelpText();
-
+void		DisplayAimAddOnVideoConferencingDisplay();
 //ppp
 
 UINT8	GetStatColor( INT8 bStat );
@@ -912,25 +912,37 @@ BOOLEAN RenderAIMMembers()
   UpdateMercInfo();
 
 	//Draw fee & contract
-	DrawTextToScreen(CharacterInfo[AIM_MEMBER_FEE], FEE_X, FEE_Y, 0, AIM_M_FONT_PREV_NEXT_CONTACT, AIM_M_FEE_CONTRACT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED	);
-	DrawTextToScreen(CharacterInfo[AIM_MEMBER_CONTRACT], AIM_CONTRACT_X, AIM_CONTRACT_Y, AIM_CONTRACT_WIDTH, AIM_M_FONT_PREV_NEXT_CONTACT, AIM_M_FEE_CONTRACT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED	);
+	DrawTextToScreen(CharacterInfo[AIM_MEMBER_FEE], FEE_X, FEE_Y, 112, AIM_M_FONT_PREV_NEXT_CONTACT, AIM_M_FEE_CONTRACT_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);
+//	DrawTextToScreen(CharacterInfo[AIM_MEMBER_FEE], FEE_X, FEE_Y, 0, AIM_M_FONT_PREV_NEXT_CONTACT, AIM_M_FEE_CONTRACT_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED	);
+//ja25	DrawTextToScreen(CharacterInfo[AIM_MEMBER_CONTRACT], AIM_CONTRACT_X, AIM_CONTRACT_Y, AIM_CONTRACT_WIDTH, AIM_M_FONT_PREV_NEXT_CONTACT, AIM_M_FEE_CONTRACT_COLOR, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED	);
 
+//Ja25 Remove to show only the 1 time fee
+/*
 	//Draw pay period (day, week, 2 week)
 	DrawTextToScreen(CharacterInfo[AIM_MEMBER_1_DAY], ONEDAY_X, EXPLEVEL_Y, AIM_CONTRACT_WIDTH, AIM_M_FONT_STATIC_TEXT, AIM_M_COLOR_STATIC_TEXT, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED	);
 	DrawTextToScreen(CharacterInfo[AIM_MEMBER_1_WEEK], ONEWEEK_X, MARKSMAN_Y, AIM_CONTRACT_WIDTH, AIM_M_FONT_STATIC_TEXT, AIM_M_COLOR_STATIC_TEXT, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED	);
 	DrawTextToScreen(CharacterInfo[AIM_MEMBER_2_WEEKS], TWOWEEK_X, MECHANAICAL_Y, AIM_CONTRACT_WIDTH, AIM_M_FONT_STATIC_TEXT, AIM_M_COLOR_STATIC_TEXT, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED	);
+*/
 
+
+	//Show the 1 time fee price
+//JA25: 	DrawTextToScreen(CharacterInfo[AIM_MEMBER_1_DAY], ONEDAY_X, EXPLEVEL_Y, AIM_CONTRACT_WIDTH, AIM_M_FONT_STATIC_TEXT, AIM_M_COLOR_STATIC_TEXT, FONT_MCOLOR_BLACK, FALSE, RIGHT_JUSTIFIED	);
+	
+	
 	//Display AIM Member text
 	DrawTextToScreen(CharacterInfo[AIM_MEMBER_ACTIVE_MEMBERS], AIM_MEMBER_ACTIVE_TEXT_X, AIM_MEMBER_ACTIVE_TEXT_Y, AIM_MEMBER_ACTIVE_TEXT_WIDTH, AIM_MAINTITLE_FONT, AIM_M_ACTIVE_MEMBER_TITLE_COLOR, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);
 
 	//Display Option Gear Cost text
 	DrawTextToScreen(CharacterInfo[AIM_MEMBER_OPTIONAL_GEAR], AIM_MEMBER_OPTIONAL_GEAR_X, AIM_MEMBER_OPTIONAL_GEAR_Y, 0, AIM_M_FONT_STATIC_TEXT, AIM_M_COLOR_STATIC_TEXT, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED	);
 
+/*
+Ja25 now just show "Gear included" instead of cost of gear
 	swprintf(wTemp, L"%d", gMercProfiles[gbCurrentSoldier].usOptionalGearCost);
 	InsertCommasForDollarFigure( wTemp );
 	InsertDollarSignInToString( wTemp );
 	uiPosX = AIM_MEMBER_OPTIONAL_GEAR_X + StringPixLength( CharacterInfo[AIM_MEMBER_OPTIONAL_GEAR], AIM_M_FONT_STATIC_TEXT) + 5;
 	DrawTextToScreen(wTemp, uiPosX, AIM_MEMBER_OPTIONAL_GEAR_Y, 0, AIM_M_FONT_STATIC_TEXT, AIM_M_COLOR_DYNAMIC_TEXT, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED	);
+*/
 
 	DisableAimButton();
 
@@ -1053,11 +1065,27 @@ BOOLEAN	UpdateMercInfo(void)
 	UINT16					PosY = 300;
   wchar_t					MercInfoString[ SIZE_MERC_BIO_INFO ];
   wchar_t					AdditionalInfoString[ SIZE_MERC_BIO_INFO ];
+	CHAR16					zString[128];
 
+//Ja25 Removed because we need to show the "1 time fee"
+/*
 	//Display the salaries
 	DrawMoneyToScreen(gMercProfiles[gbCurrentSoldier].sSalary, FEE_WIDTH, FEE_X, HEALTH_Y, AIM_M_NUMBER_FONT, AIM_M_COLOR_DYNAMIC_TEXT	);
 	DrawMoneyToScreen(gMercProfiles[gbCurrentSoldier].uiWeeklySalary, FEE_WIDTH, FEE_X, AGILITY_Y, AIM_M_NUMBER_FONT, AIM_M_COLOR_DYNAMIC_TEXT	);
 	DrawMoneyToScreen(gMercProfiles[gbCurrentSoldier].uiBiWeeklySalary, FEE_WIDTH, FEE_X, DEXTERITY_Y, AIM_M_NUMBER_FONT, AIM_M_COLOR_DYNAMIC_TEXT	);
+*/
+	//Display the "1 time fee"
+//	DrawMoneyToScreen( gMercProfiles[gbCurrentSoldier].uiWeeklySalary, FEE_WIDTH, FEE_X, HEALTH_Y, AIM_M_NUMBER_FONT, AIM_M_COLOR_DYNAMIC_TEXT	);
+
+	swprintf( zString, L"%d", gMercProfiles[gbCurrentSoldier].uiWeeklySalary );
+	InsertCommasForDollarFigure( zString );
+	InsertDollarSignInToString( zString );
+
+	DrawTextToScreen(zString, FEE_X, HEALTH_Y-6, 112, AIM_M_NUMBER_FONT, AIM_M_COLOR_DYNAMIC_TEXT, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);
+
+
+//	DrawTextToScreen(zNewTacticalMessages[ TACT_MSG__AIMMEMBER_FEE_TEXT ], FEE_X, AGILITY_Y, 112, AIM_M_FONT_DYNAMIC_TEXT, AIM_FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);
+	DisplayWrappedString( FEE_X, AGILITY_Y, 112, 2, AIM_M_FONT_DYNAMIC_TEXT, AIM_FONT_MCOLOR_WHITE, zNewTacticalMessages[ TACT_MSG__AIMMEMBER_FEE_TEXT ], FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED);
 
 /*
 Ja25: no medical deposit required
@@ -1583,7 +1611,7 @@ void DisplayDots(UINT16 usNameX, UINT16 usNameY, UINT16 usStatX, STR16 pString)
 	}
 }
 
-
+/*
 void BtnContractLengthButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
 	if (!(btn->uiFlags & BUTTON_ENABLED))
@@ -1618,8 +1646,10 @@ void BtnContractLengthButtonCallback(GUI_BUTTON *btn,INT32 reason)
 		InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY, btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
 	}
 } 
+*/
 
-
+/*
+Ja25  no optional equipment, it comes standard
 void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn,INT32 reason)
 {
 	if (!(btn->uiFlags & BUTTON_ENABLED))
@@ -1651,6 +1681,7 @@ void BtnBuyEquipmentButtonCallback(GUI_BUTTON *btn,INT32 reason)
 		InvalidateRegion(btn->Area.RegionTopLeftX, btn->Area.RegionTopLeftY, btn->Area.RegionBottomRightX, btn->Area.RegionBottomRightY);
 	}
 } 
+*/
 
 //Transfer funds button callback
 void BtnAuthorizeButtonCallback(GUI_BUTTON *btn,INT32 reason)
@@ -1689,8 +1720,11 @@ void BtnAuthorizeButtonCallback(GUI_BUTTON *btn,INT32 reason)
 					//Disable the buttons behind the message box
 					EnableDisableCurrentVideoConferenceButtons( TRUE );
 
+/*
+Ja25  no optional equipment, it comes standard
 					SpecifyDisabledButtonStyle( giBuyEquipmentButton[0], DISABLED_STYLE_NONE );
 					SpecifyDisabledButtonStyle( giBuyEquipmentButton[1], DISABLED_STYLE_NONE );
+*/
 
 					giIdOfLastHiredMerc = AimMercArray[gbCurrentIndex];
 				}
@@ -1740,8 +1774,11 @@ INT8 AimMemberHireMerc()
 		//Disable the buttons behind the message box
 		EnableDisableCurrentVideoConferenceButtons( TRUE );
 
+/*
+Ja25  no optional equipment, it comes standard
 		SpecifyDisabledButtonStyle( giBuyEquipmentButton[0], DISABLED_STYLE_NONE );
 		SpecifyDisabledButtonStyle( giBuyEquipmentButton[1], DISABLED_STYLE_NONE );
+*/
 
 		DelayMercSpeech( gbCurrentSoldier, QUOTE_REFUSAL_TO_JOIN_LACK_OF_FUNDS, 750, TRUE, FALSE );
 
@@ -1765,6 +1802,11 @@ INT8 AimMemberHireMerc()
 		gMercProfiles[ ubCurrentSoldier ].ubMiscFlags |= PROFILE_MISC_FLAG_ALREADY_USED_ITEMS;
 	}
 
+	bTypeOfContract = CONTRACT_EXTEND_1_WEEK;
+	HireMercStruct.iTotalContractLength = 7;
+
+/*
+Ja25: 1 time fee
 		//If 1 day
 	if( gubContractLength == AIM_CONTRACT_LENGTH_ONE_DAY)
 	{
@@ -1781,7 +1823,7 @@ INT8 AimMemberHireMerc()
 		bTypeOfContract = CONTRACT_EXTEND_2_WEEK;
 		HireMercStruct.iTotalContractLength = 14;
 	}
-
+*/
 	//specify when the merc should arrive
 	HireMercStruct.uiTimeTillMercArrives = GetMercArrivalTimeOfDay( );// + ubCurrentSoldier
 
@@ -1813,7 +1855,7 @@ INT8 AimMemberHireMerc()
 	AddTransactionToPlayersBook(HIRED_MERC, ubCurrentSoldier, GetWorldTotalMin(), -( giContractAmount ) );
 	
 /*
-Ja25: no medical deposit requireds
+Ja25: no medical deposit requireds	
 	if( gMercProfiles[ gbCurrentSoldier ].bMedicalDeposit )
 	{
 		//add an entry in the finacial page for the medical deposit
@@ -1856,6 +1898,9 @@ BOOLEAN DisplayVideoConferencingDisplay()
 		SetFontShadow(AIM_M_VIDEO_NAME_SHADOWCOLOR);	
 		DrawTextToScreen(VideoConfercingText[AIM_MEMBER_CONTRACT_CHARGE], AIM_CONTRACT_CHARGE_X, AIM_CONTRACT_CHARGE_Y, 0, FONT12ARIAL, AIM_M_VIDEO_NAME_COLOR, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED);
 		SetFontShadow(DEFAULT_SHADOW);
+
+		//Display the blurb about a 1 time fee
+		DisplayAimAddOnVideoConferencingDisplay();
 	}
 
 	DisplayMercChargeAmount();
@@ -1908,10 +1953,11 @@ BOOLEAN DisplayMercsVideoFace()
 void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown)
 {
 	UINT16 i, usPosY, usPosX;
-
+	return;
 	//First draw the select light for the contract length buttons
 	usPosY = AIM_MEMBER_BUY_CONTRACT_LENGTH_Y;
-	for(i=0; i<3; i++)
+//Ja25	for(i=0; i<3; i++)
+	for(i=0; i<1; i++)
 	{
 		// if the if is true, the light is on
 		if( gubContractLength == i)
@@ -1934,7 +1980,8 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown)
 		}
 		usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
 	}
-
+/*
+Ja25: no optional equipment
 	//draw the select light for the buy equipment buttons
 	usPosY = AIM_MEMBER_BUY_CONTRACT_LENGTH_Y;
 	for(i=0; i<2; i++)
@@ -1959,6 +2006,7 @@ void DisplaySelectLights(BOOLEAN fContractDown, BOOLEAN fBuyEquipDown)
 		}
 		usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
 	}
+*/
   InvalidateRegion(LAPTOP_SCREEN_UL_X,LAPTOP_SCREEN_WEB_UL_Y,LAPTOP_SCREEN_LR_X,LAPTOP_SCREEN_WEB_LR_Y);
 }
 
@@ -1983,7 +2031,10 @@ UINT32 DisplayMercChargeAmount()
 		giContractAmount = 0;
 
 		//the contract charge amount
+		giContractAmount = gMercProfiles[gbCurrentSoldier].uiWeeklySalary;
 
+/*
+Ja25:  Removed for a "1 time fee"
 		// Get the salary rate
 		if( gubContractLength == AIM_CONTRACT_LENGTH_ONE_DAY)
 			giContractAmount = gMercProfiles[gbCurrentSoldier].sSalary;
@@ -1993,6 +2044,7 @@ UINT32 DisplayMercChargeAmount()
 
 		else if( gubContractLength == AIM_CONTRACT_LENGTH_TWO_WEEKS)
 			giContractAmount = gMercProfiles[gbCurrentSoldier].uiBiWeeklySalary;
+*/
 
 /*
 JA25 no medical deposit required
@@ -3211,12 +3263,18 @@ BOOLEAN InitDeleteVideoConferencePopUp( )
 	{
 		gubVideoConferencingPreviousMode = gubVideoConferencingMode;
  		gubMercAttitudeLevel = 0;
-		gubContractLength = AIM_CONTRACT_LENGTH_ONE_WEEK;
+//Ja25	removed to make the 1 time fee the default 
+	gubContractLength = AIM_CONTRACT_LENGTH_ONE_DAY;
+//		gubContractLength = AIM_CONTRACT_LENGTH_ONE_WEEK;
 
+		//Ja25  no optional equipment, it comes standard
+		gfBuyEquipment = TRUE;
+/*
 		if( gMercProfiles[gbCurrentSoldier].usOptionalGearCost == 0 )
 			gfBuyEquipment = FALSE;
 		else
 			gfBuyEquipment = TRUE;
+*/
 
 		gfMercIsTalking = FALSE;
 		gfVideoFaceActive = FALSE;
@@ -3280,7 +3338,11 @@ BOOLEAN InitDeleteVideoConferencePopUp( )
 		// Contract Length button
 		guiVideoConferenceButtonImage[0] = LoadButtonImage("LAPTOP\\VideoConfButtons.sti", -1,0,-1,1,-1 );
 		usPosY = AIM_MEMBER_BUY_CONTRACT_LENGTH_Y;
-		for(i=0; i<3; i++)
+
+//Removed so there is only 1 button being displayed, the "1 time fee" price
+//Ja25		for(i=0; i<3; i++)
+/*
+		for(i=0; i<1; i++)
 		{
 			giContractLengthButton[i] = CreateIconAndTextButton( guiVideoConferenceButtonImage[0], VideoConfercingText[i+AIM_MEMBER_ONE_DAY], FONT12ARIAL, 
 																 AIM_M_VIDEO_NAME_COLOR, AIM_M_VIDEO_NAME_SHADOWCOLOR, 
@@ -3294,7 +3356,9 @@ BOOLEAN InitDeleteVideoConferencePopUp( )
 			SpecifyDisabledButtonStyle( giContractLengthButton[i], DISABLED_STYLE_NONE );
 			usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
 		}
-
+*/
+/*
+Ja25  no optional equipment, it comes standard
 		// BuyEquipment button
 		usPosY = AIM_MEMBER_BUY_CONTRACT_LENGTH_Y;
 		for(i=0; i<2; i++)
@@ -3312,8 +3376,10 @@ BOOLEAN InitDeleteVideoConferencePopUp( )
 			SpecifyDisabledButtonStyle( giBuyEquipmentButton[i], DISABLED_STYLE_SHADED );
 			usPosY += AIM_MEMBER_BUY_EQUIPMENT_GAP;
 		}
+
 		if( gMercProfiles[gbCurrentSoldier].usOptionalGearCost == 0 )
 			DisableButton( giBuyEquipmentButton[1] );
+*/
 
 
 		// Authorize button
@@ -3336,7 +3402,7 @@ BOOLEAN InitDeleteVideoConferencePopUp( )
 		}
 
 //		InitVideoFaceTalking(gbCurrentSoldier, QUOTE_LENGTH_OF_CONTRACT);
-		DelayMercSpeech( gbCurrentSoldier, QUOTE_LENGTH_OF_CONTRACT, 750, TRUE, FALSE );
+//ja25		DelayMercSpeech( gbCurrentSoldier, QUOTE_LENGTH_OF_CONTRACT, 750, TRUE, FALSE );
 	}
 
 
@@ -3523,11 +3589,17 @@ BOOLEAN DeleteVideoConfPopUp()
 				UnloadButtonImage(guiVideoConferenceButtonImage[i]);
 
 			//Remove the Contracy Length button	
-			for(i=0; i<3; i++)
+//Ja25 for(i=0; i<3; i++)
+/*
+			for(i=0; i<1; i++)
 				RemoveButton(giContractLengthButton[i] );
+*/
 
+/*
+Ja25  no optional equipment, it comes standard
 			for(i=0; i<2; i++)
 				RemoveButton(giBuyEquipmentButton[i] );
+*/
 
 			for(i=0; i<2; i++)
 				RemoveButton(giAuthorizeButton[i] );
@@ -3730,11 +3802,17 @@ BOOLEAN EnableDisableCurrentVideoConferenceButtons( BOOLEAN fEnable)
 		{
 			//enable buttons behind the acknowlegde button
 			
-			for( i=0; i<3; i++)
+//Ja25			for( i=0; i<3; i++)
+/*
+			for( i=0; i<1; i++)
 				EnableButton( giContractLengthButton[i] );
+*/
 
+/*
+Ja25  no optional equipment, it comes standard
 			for(i=0; i<2; i++)
 				EnableButton( giBuyEquipmentButton[i] );
+*/
 
 			for(i=0; i<2; i++)
 				EnableButton( giAuthorizeButton[i] );
@@ -3747,11 +3825,16 @@ BOOLEAN EnableDisableCurrentVideoConferenceButtons( BOOLEAN fEnable)
 		if( !fCreated )
 		{
 			//disable buttons behind the acknowlegde button
-			for( i=0; i<3; i++)
+//Ja25			for( i=0; i<3; i++)
+/*			for( i=0; i<1; i++)
 				DisableButton( giContractLengthButton[i] );
+*/
 
+/*
+Ja25  no optional equipment, it comes standard
 			for(i=0; i<2; i++)
 				DisableButton( giBuyEquipmentButton[i] );
+*/
 
 			for(i=0; i<2; i++)
 				DisableButton( giAuthorizeButton[i] );
@@ -4200,3 +4283,22 @@ void DisplayAimMemberClickOnFaceHelpText()
 	DrawTextToScreen( AimMemberText[2], AIM_FI_RIGHT_CLICK_TEXT_X, AIM_FI_LEFT_CLICK_TEXT_Y, AIM_FI_CLICK_TEXT_WIDTH, AIM_FI_HELP_TITLE_FONT, AIM_FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);			
 	DrawTextToScreen( AimMemberText[3], AIM_FI_RIGHT_CLICK_TEXT_X, AIM_FI_LEFT_CLICK_TEXT_Y+AIM_FI_CLICK_DESC_TEXT_Y_OFFSET, AIM_FI_CLICK_TEXT_WIDTH, AIM_FI_HELP_FONT, AIM_FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED	);			
 }
+
+void DisplayAimAddOnVideoConferencingDisplay()
+{
+	CHAR16	zString[512];
+	UINT32	uiHeight=0;
+
+	swprintf( zString, zNewTacticalMessages[ TACT_MSG__AIMMEMBER_ONE_TIME_FEE ], gMercProfiles[ gbCurrentSoldier ].zNickname );
+
+	SetFontShadow( AIM_M_VIDEO_NAME_SHADOWCOLOR );
+
+	//Display the blurb about a 1 time fee
+	uiHeight = DisplayWrappedString( 238, 144, 240, 2, AIM_M_FONT_DYNAMIC_TEXT, AIM_M_VIDEO_NAME_COLOR, zString, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED | DONT_DISPLAY_TEXT );
+
+	uiHeight = ( 80 - uiHeight ) / 2;
+
+	DisplayWrappedString( 238, (UINT16)(141+uiHeight), 240, 2, AIM_M_FONT_DYNAMIC_TEXT, AIM_M_VIDEO_NAME_COLOR, zString, FONT_MCOLOR_BLACK, FALSE, LEFT_JUSTIFIED );
+
+	SetFontShadow( DEFAULT_SHADOW );
+} 
