@@ -1712,6 +1712,15 @@ void DisplayCharStats(INT32 iId, INT32 iSlot)
 			swprintf(sString, L"%d",gMercProfiles[Menptr[iId].ubProfile].usKills);
       FindFontRightCoordinates((INT16)(pPersonnelScreenPoints[21].x+(iSlot*TEXT_BOX_WIDTH)),0,TEXT_BOX_WIDTH-20,0,sString, PERS_FONT,  &sX, &sY);
       mprintf(sX,pPersonnelScreenPoints[21].y,sString);
+
+			//if the player imported their characters from ja2, display their kills and thier kills from ja2
+			if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+			{
+				swprintf( sString, L"( %d )", gMercProfiles[Menptr[iId].ubProfile].usTotalKills + gMercProfiles[Menptr[iId].ubProfile].usKills );
+				FindFontRightCoordinates((INT16)(pPersonnelScreenPoints[9].x+(iSlot*TEXT_BOX_WIDTH) + TEXT_BOX_WIDTH-20 +TEXT_DELTA_OFFSET),0,30,0,sString, PERS_FONT,  &sX, &sY);
+			 	mprintf(sX,pPersonnelScreenPoints[21].y,sString);
+			}
+
 		 break;
 		 case 15:
 			// assists
@@ -1719,6 +1728,15 @@ void DisplayCharStats(INT32 iId, INT32 iSlot)
 			swprintf(sString, L"%d",gMercProfiles[Menptr[iId].ubProfile].usAssists);
       FindFontRightCoordinates((INT16)(pPersonnelScreenPoints[22].x+(iSlot*TEXT_BOX_WIDTH)),0,TEXT_BOX_WIDTH-20,0,sString, PERS_FONT,  &sX, &sY);
       mprintf(sX,pPersonnelScreenPoints[22].y,sString);
+
+			//if the player imported their characters from ja2, display their kills and thier kills from ja2
+			if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+			{
+				swprintf( sString, L"( %d )", gMercProfiles[Menptr[iId].ubProfile].usTotalAssists + gMercProfiles[Menptr[iId].ubProfile].usAssists );
+				FindFontRightCoordinates((INT16)(pPersonnelScreenPoints[9].x+(iSlot*TEXT_BOX_WIDTH) + TEXT_BOX_WIDTH-20 +TEXT_DELTA_OFFSET),0,30,0,sString, PERS_FONT,  &sX, &sY);
+			 	mprintf(sX,pPersonnelScreenPoints[22].y,sString);
+			}
+
 		 break;
 		  case 16:
 			// shots/hits
