@@ -4773,8 +4773,16 @@ void PreProcessEmail( EmailPtr pMail )
 	// set record ptr to head of list
 	pTempRecord=pMessageRecordList;
 //def removed
+/*
+JA25
 	// pass the subject line
 	if( pTempRecord && pMail->usOffset != IMP_EMAIL_PROFILE_RESULTS)
+	{
+		pTempRecord = pTempRecord->Next; 
+	}
+*/
+	// pass the subject line
+	if( pTempRecord )
 	{
 		pTempRecord = pTempRecord->Next; 
 	}
@@ -4830,18 +4838,18 @@ void PreProcessEmail( EmailPtr pMail )
 	{
 		fOnLastPageFlag = TRUE;
 
+/*
+JA25
 		if( pTempRecord && pMail->usOffset != IMP_EMAIL_PROFILE_RESULTS)
 		{
 			pTempRecord = pTempRecord->Next; 
 		}
-
-/*
-//Def removed
+*/
 		if( pTempRecord )
 		{
 			pTempRecord = pTempRecord->Next;
 		}
-*/
+
 
 		pEmailPageInfo[ 0 ].pFirstRecord = pTempRecord ;
 		pEmailPageInfo[ 0 ].iPageNumber = 0;
@@ -4877,20 +4885,18 @@ void PreProcessEmail( EmailPtr pMail )
 		fOnLastPageFlag = FALSE;
 		pTempList = pMessageRecordList;
 
+/*
+JA25
 		if( pTempList && pMail->usOffset != IMP_EMAIL_PROFILE_RESULTS)
 		{
 			pTempList = pTempList->Next; 
 		}
-
-/*
-//def removed
-		// skip the subject
+*/
 		if( pTempList )
 		{
 			pTempList = pTempList->Next;
 		}
 
-*/
 		iCounter = 0;
 
 		// more than one page

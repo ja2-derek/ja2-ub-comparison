@@ -304,7 +304,9 @@ void  BtnIMPConfirmYes(GUI_BUTTON *btn,INT32 reason)
 
 			// send email notice
 			//AddEmail(IMP_EMAIL_PROFILE_RESULTS, IMP_EMAIL_PROFILE_RESULTS_LENGTH, IMP_PROFILE_RESULTS, GetWorldTotalMin( ) );
-			AddFutureDayStrategicEvent( EVENT_DAY2_ADD_EMAIL_FROM_IMP, 60 * 7, 0, 2 );
+
+//Ja25 Disable this for now
+//			AddFutureDayStrategicEvent( EVENT_DAY2_ADD_EMAIL_FROM_IMP, 60 * 7, 0, 2 );
 			//RenderCharProfile( );
 
 			ResetCharacterStats();
