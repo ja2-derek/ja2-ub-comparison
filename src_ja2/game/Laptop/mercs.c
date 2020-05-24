@@ -1508,7 +1508,6 @@ BOOLEAN	GetSpeckConditionalOpening( BOOLEAN fJustEnteredScreen )
 	UINT8	ubRandom=0;
 	UINT8	ubCnt;
 	BOOLEAN	fCanSayLackOfPaymentQuote = TRUE;
-	BOOLEAN fCanUseIdleTag = FALSE;
 
 	//If we just entered the screen, reset some variables
 	if( fJustEnteredScreen )
@@ -2625,22 +2624,3 @@ void MarkSpeckImportantQuoteUsed( UINT32 uiQuoteNum )
 
 	gJa25SaveStruct.ubImportantSpeckQuotesSaidBefore |= ( 1 << iFlag );
 }
-
-/*
-// CJC Dec 1 2002: calculate whether any MERC characters have been used at all
-UINT32 CalcMercDaysServed()
-{
-	UINT8	i, ubMercID;
-	UINT32 uiDaysServed = 0;
-
-	for(i=0; i<NUMBER_OF_MERCS; i++)
-	{
-		//get the id
-		ubMercID = GetMercIDFromMERCArray( i );
-
-		uiDaysServed += gMercProfiles[ ubMercID ].usTotalDaysServed;
-
-	}
-	return( uiDaysServed );
-}
-*/
