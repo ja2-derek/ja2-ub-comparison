@@ -29,6 +29,7 @@ void CreateAttributeFinishButtons( void );
 void DestroyAttributeFinishButtons( void );
 extern void SetGeneratedCharacterAttributes( void );
 
+BOOLEAN CameBackToAttributesPageButNotFinished();
 
 // callbacks
 void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn,INT32 reason);
@@ -153,9 +154,10 @@ void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn,INT32 reason)
       btn->uiFlags&=~(BUTTON_CLICKED_ON);
       // gone far enough
 		  iCurrentImpPage = IMP_MAIN_PAGE;
-		  if( iCurrentProfileMode < 3 )
+//		  if( iCurrentProfileMode < 3 )
+			if( !CameBackToAttributesPageButNotFinished() )
 			{
-        iCurrentProfileMode = 3;
+        iCurrentProfileMode = 5;//3;
 			}
 		  // if we are already done, leave
 	    if( iCurrentProfileMode == 5)
@@ -167,6 +169,20 @@ void BtnIMPAttributeFinishYesCallback(GUI_BUTTON *btn,INT32 reason)
 			SetGeneratedCharacterAttributes( );
 			fButtonPendingFlag = TRUE;
 		}
+	}
+}
+
+BOOLEAN CameBackToAttributesPageButNotFinished()
+{
+	//if we are in a page that comes after this one
+	if( iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 4 )
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
 	}
 }
 

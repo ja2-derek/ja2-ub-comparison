@@ -42,7 +42,7 @@ void IncrementPictureIndex( void );
 void DecrementPicture( void );
 void CreateIMPPortraitButtons( void );
 void DestroyIMPPortraitButtons( void );
-
+BOOLEAN CameBackToPortraitsPageButNotFinished();
 
 // callbacks
 void BtnIMPPortraitNextCallback(GUI_BUTTON *btn,INT32 reason);
@@ -333,18 +333,30 @@ void BtnIMPPortraitDoneCallback(GUI_BUTTON *btn,INT32 reason)
       
 			// go to main page
 			iCurrentImpPage = IMP_MAIN_PAGE;
-
+/*
 			// current mode now is voice
 		  if( iCurrentProfileMode < 4 )
 			{
         iCurrentProfileMode = 4;
 			}
-			
+*/			
 			// if we are already done, leave
 	    if( iCurrentProfileMode == 5)
 			{
 	      iCurrentImpPage = IMP_FINISH;
 			} 
+			else
+			{
+				if( CameBackToPortraitsPageButNotFinished() )
+				{
+//					iCurrentProfileMode = 4;
+		      iCurrentImpPage = IMP_MAIN_PAGE;
+				}
+				else
+				{
+					iCurrentProfileMode = 4;
+				} 
+			}
 
 			// grab picture number
 			if( fCharacterIsMale  )
@@ -363,3 +375,19 @@ void BtnIMPPortraitDoneCallback(GUI_BUTTON *btn,INT32 reason)
 		}
 	}	
 } 
+
+
+BOOLEAN CameBackToPortraitsPageButNotFinished()
+{
+	//if we are in a page that comes after this one
+	if( iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 2 ||
+			iCurrentProfileMode == 4 )
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}

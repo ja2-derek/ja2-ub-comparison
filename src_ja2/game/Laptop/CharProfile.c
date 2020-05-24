@@ -664,7 +664,7 @@ void BtnIMPCancelCallback(GUI_BUTTON *btn,INT32 reason)
 			else if( iCurrentImpPage == IMP_FINISH )
 			{     
 				iCurrentImpPage = IMP_MAIN_PAGE;
-				iCurrentProfileMode = 4;
+				iCurrentProfileMode = 3;
 				fFinishedCharGeneration = FALSE;
 			  fButtonPendingFlag = TRUE;
 			  //iCurrentProfileMode = 0;

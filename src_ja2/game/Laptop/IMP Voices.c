@@ -52,7 +52,7 @@ void DestroyIMPVoicesButtons( void );
 void CreateIMPVoiceMouseRegions( void );
 void DestroyIMPVoiceMouseRegions( void );
 void RenderVoiceIndex( void );
-
+BOOLEAN CameBackToVoicePageButNotFinished();
 
 // callbacks
 void BtnIMPVoicesNextCallback(GUI_BUTTON *btn,INT32 reason);
@@ -357,19 +357,31 @@ void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn,INT32 reason)
 			{
 	      iCurrentImpPage = IMP_FINISH;
 			} 
-
-			// current mode now is voice
-		  else if( iCurrentProfileMode < 4 )
+			else
 			{
-        iCurrentProfileMode = 4;
+				if( CameBackToVoicePageButNotFinished() )
+				{
+					iCurrentImpPage = IMP_MAIN_PAGE;
+				}
+				else
+				{
+					iCurrentProfileMode = 1;
+				}
 			}
-			else if( iCurrentProfileMode == 4 )
+/*
+			// current mode now is voice
+		  else if( iCurrentProfileMode < 3 )
+			{
+				iCurrentProfileMode = 3;
+			}
+
+			else if( iCurrentProfileMode == 3 )
 			{
 				// all done profiling
-				iCurrentProfileMode = 5;
+				iCurrentProfileMode = 4;
 				iCurrentImpPage = IMP_FINISH;
 			}
-
+*/
 			// set voice id, to grab character slot
       if( fCharacterIsMale == TRUE )
 			{
@@ -385,6 +397,20 @@ void BtnIMPVoicesDoneCallback(GUI_BUTTON *btn,INT32 reason)
 		}
 	}	
 } 
+
+BOOLEAN CameBackToVoicePageButNotFinished()
+{
+	//if we are in a page that comes after this one
+	if( iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 2 )
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
 
 
 UINT32 PlayVoice( void )

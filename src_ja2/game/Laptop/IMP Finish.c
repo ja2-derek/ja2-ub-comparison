@@ -351,6 +351,7 @@ void BtnIMPFinishPersonalityCallback(GUI_BUTTON *btn,INT32 reason)
 			fButtonPendingFlag = TRUE;
 			uiBaseTime = 0;
       fAnimateFlag = FALSE;
+      iCurrentImpPage = IMP_PERSONALITY_QUIZ;
 			SpecifyButtonText( giIMPFinishButton[2], pImpButtonText[ 2 ] );
 		}
 	}
@@ -456,7 +457,7 @@ void BtnIMPFinishVoiceCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
   // if not this far in char generation, don't alot ANY action
-	if( iCurrentProfileMode < 4 )
+	if( iCurrentProfileMode < 3 )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		fButtonPendingFlag = TRUE;

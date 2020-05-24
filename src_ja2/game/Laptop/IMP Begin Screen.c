@@ -385,7 +385,7 @@ void BtnIMPBeginScreenDoneCallback(GUI_BUTTON *btn,INT32 reason)
 				// ok, now set back to main page, and set the fact we have completed part 1
 				if ( ( iCurrentProfileMode < 1 ) &&( bGenderFlag != -1 ) )
 				{
-				  iCurrentProfileMode = 1;
+				  iCurrentProfileMode = 3;//1;
 				}
 				else if( bGenderFlag == -1 )
 				{

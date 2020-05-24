@@ -368,14 +368,18 @@ void BtnIMPPersonalityFinishOkCallback(GUI_BUTTON *btn,INT32 reason)
 			// now set this button on
       btn->uiFlags&=~(BUTTON_CLICKED_ON);
 
-			if( iCurrentProfileMode < 2 )
-			{
-				iCurrentProfileMode = 2;
-			}
-
 			// button pending, wait a frame
 			fButtonPendingFlag = TRUE;
 			iCurrentImpPage = IMP_MAIN_PAGE;
+
+			if( iCurrentProfileMode != 5 )
+			{
+				iCurrentProfileMode = 2;
+			}
+			else
+			{
+				iCurrentImpPage = IMP_FINISH;//2;
+			}
 		}
 	}
 }

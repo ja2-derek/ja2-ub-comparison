@@ -254,7 +254,7 @@ void CreateIMPMainPageButtons( void )
 										BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageVoiceCallback);
   */
 
-	if( iCurrentProfileMode == 5 )
+	if( iCurrentProfileMode != 4		&&	iCurrentProfileMode != 3 )
 	{
 		swprintf( sString, pImpButtonText[ 5 ], iCurrentVoices + 1 );
 	}
@@ -413,13 +413,14 @@ void BtnIMPMainPagePersonalityCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
 	
+/*	
   // if not this far in char generation, don't alot ANY action
 	if( iCurrentProfileMode != 1 )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		return;
 	}
-
+*/
 
 	if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
 	{
@@ -507,7 +508,7 @@ void BtnIMPMainPageVoiceCallback(GUI_BUTTON *btn,INT32 reason)
 	if (!(btn->uiFlags & BUTTON_ENABLED))
 		return;
   // if not this far in char generation, don't alot ANY action
-	if( ( iCurrentProfileMode != 4 ) && ( iCurrentProfileMode > 5 ) )
+	if( ( iCurrentProfileMode != 3 ) && ( iCurrentProfileMode > 5 ) )
 	{
 		btn->uiFlags&=~(BUTTON_CLICKED_ON);
 		return;
@@ -536,7 +537,7 @@ void NextProfilingMode( void )
   // this function will change to mode the player is in for profiling
 	
 	// if less than done
-  if(iCurrentProfileMode < 5)
+  if(iCurrentProfileMode < 4)
     iCurrentProfileMode++;
 	
 	return;
