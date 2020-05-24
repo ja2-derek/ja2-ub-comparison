@@ -63,7 +63,10 @@ void DestoryMouseRegionsForIMPMainPageBasedOnCharGenStatus( void );
 void CreateMouseRegionsForIMPMainPageBasedOnCharGenStatus( void );
 void IMPMainPageNotSelectableBtnCallback(MOUSE_REGION * pRegion, INT32 iReason );
 BOOLEAN LoadCharacterPortraitForMainPage( void );
-
+BOOLEAN IMP_CanWeDisplayVoiceGraph( );
+BOOLEAN IMP_CanWeDisplaySpecialtiesGraph( );
+BOOLEAN IMP_CanWeDisplayAttributeGraph( );
+BOOLEAN IMP_CanWeDisplayPortrait( );
 
 
 BOOLEAN CheckIfFinishedCharacterGeneration( void );
@@ -222,6 +225,13 @@ void CreateIMPMainPageButtons( void )
 														 BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPagePersonalityCallback);
 
 
+	if( IMP_CanWeDisplaySpecialtiesGraph( ) )
+	{
+		SpecifyButtonIcon( giIMPMainPageButton[2], guiANALYSE, 0, 33, 23, FALSE );
+	}
+
+
+
 	// the attribs button
 	giIMPMainPageButtonImage[3]=  LoadButtonImage( "LAPTOP\\button_8.sti" ,-1,0,-1,1,-1 );
 	
@@ -237,6 +247,11 @@ void CreateIMPMainPageButtons( void )
 														 TEXT_CJUSTIFIED, 
 														 MAIN_PAGE__FOURTH_BUTTON_POS_X, LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
 														 BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageAttributesCallback);
+
+	if( IMP_CanWeDisplayAttributeGraph( ) )
+	{
+		SpecifyButtonIcon(  giIMPMainPageButton[3], guiATTRIBUTEGRAPH, 0, 25, 25, FALSE );
+	}
 
 
   // the portrait button
@@ -280,6 +295,11 @@ void CreateIMPMainPageButtons( void )
 														 TEXT_CJUSTIFIED, 
 														 MAIN_PAGE__SECOND_BUTTON_POS_X, LAPTOP_SCREEN_WEB_UL_Y + ( 245 ), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
 														 BtnGenericMouseMoveButtonCallback, (GUI_CALLBACK)BtnIMPMainPageVoiceCallback);
+
+	if( IMP_CanWeDisplayVoiceGraph( ) )
+	{
+		SpecifyButtonIcon(  giIMPMainPageButton[5], guiSMALLSILHOUETTE, 0, 33, 23, FALSE );
+	}
 
 
 
@@ -780,7 +800,7 @@ BOOLEAN LoadCharacterPortraitForMainPage( void )
   // this function will load the character's portrait, to be used on portrait button
   VOBJECT_DESC    VObjectDesc;
 
-	if( iCurrentProfileMode >= 4 )
+	if( IMP_CanWeDisplayPortrait( ) )
 	{
 		// load it
 		VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
@@ -794,4 +814,64 @@ BOOLEAN LoadCharacterPortraitForMainPage( void )
 	}
 
 	return( TRUE );
+}
+
+
+
+BOOLEAN IMP_CanWeDisplayPortrait( )
+{
+	if( iCurrentProfileMode == 4 ||
+			iCurrentProfileMode == 2 ||
+			iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 5 )
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
+
+BOOLEAN IMP_CanWeDisplayAttributeGraph( )
+{
+	if(	iCurrentProfileMode == 5 )
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
+
+
+
+BOOLEAN IMP_CanWeDisplaySpecialtiesGraph( )
+{
+	if( iCurrentProfileMode == 2 ||
+			iCurrentProfileMode == 5 )
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
+
+
+BOOLEAN IMP_CanWeDisplayVoiceGraph( )
+{
+	if( iCurrentProfileMode == 2 ||
+//			iCurrentProfileMode == 4 ||
+			iCurrentProfileMode == 1 ||
+			iCurrentProfileMode == 5 )
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
 }
