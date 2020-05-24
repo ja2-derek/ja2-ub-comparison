@@ -687,6 +687,8 @@ void BtnIMPCancelCallback(GUI_BUTTON *btn,INT32 reason)
 				if( iCurrentImpPage == IMP_ATTRIBUTE_PAGE )
 				{
 					SetAttributes( );
+
+					fFirstIMPAttribTime = TRUE;
 				}
 			  iCurrentImpPage = IMP_MAIN_PAGE;
 				iCurrentAnswer = -1;
