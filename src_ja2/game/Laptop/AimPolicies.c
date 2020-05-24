@@ -15,7 +15,8 @@
 
 #define	NUM_AIM_POLICY_PAGES				11
 #define	NUM_AIM_POLICY_TOC_BUTTONS	9
-#define	AIMPOLICYFILE		"BINARYDATA\\AimPol.edt"
+#define	AIMPOLICYFILE		"BINARYDATA\\AimPol25.edt"
+
 #define AIM_POLICY_LINE_SIZE 80 * 5 * 2 // 80 columns of 5 lines that are wide chars, 800 bytes total
 
 #define AIM_POLICY_TITLE_FONT				FONT14ARIAL
@@ -94,6 +95,7 @@ enum
 	LENGTH_OF_ENGAGEMENT_1_1,
 	LENGTH_OF_ENGAGEMENT_1_2,
 	LENGTH_OF_ENGAGEMENT_1_3,
+	LENGTH_OF_ENGAGEMENT_1_4,
 	LENGTH_OF_ENGAGEMENT_2,
 
 	LOCATION_0F_ENGAGEMENT,
@@ -109,6 +111,7 @@ enum
 	CONTRACT_EXTENSIONS_1,
 	CONTRACT_EXTENSIONS_2,
 	CONTRACT_EXTENSIONS_3,
+	CONTRACT_EXTENSIONS_4,
 
 	TERMS_OF_PAYMENT,
 	TERMS_OF_PAYMENT_1,
@@ -127,6 +130,7 @@ enum
 	EQUIPMENT_AND_INVENTORY,
 	EQUIPMENT_AND_INVENTORY_1,
 	EQUIPMENT_AND_INVENTORY_2,
+	EQUIPMENT_AND_INVENTORY_3,
 
 	POLICY_MEDICAL,
 	POLICY_MEDICAL_1,
@@ -317,6 +321,7 @@ void RenderAimPolicies()
 			usNumPixles += DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_1, (FLOAT)2.11) + AIM_POLICY_PARAGRAPH_GAP;
 			usNumPixles += DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_2, (FLOAT)2.12) + AIM_POLICY_PARAGRAPH_GAP;
 			usNumPixles += DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_3, (FLOAT)2.13) + AIM_POLICY_PARAGRAPH_GAP;
+			usNumPixles += DisplayAimPolicySubParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_1_4, (FLOAT)2.14) + AIM_POLICY_PARAGRAPH_GAP;
 			usNumPixles += DisplayAimPolicyParagraph(usNumPixles, LENGTH_OF_ENGAGEMENT_2, (FLOAT)2.2) + AIM_POLICY_PARAGRAPH_GAP;
 			break;
 
@@ -342,6 +347,7 @@ void RenderAimPolicies()
 			usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_1, (FLOAT)4.1) + AIM_POLICY_PARAGRAPH_GAP;
 			usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_2, (FLOAT)4.2) + AIM_POLICY_PARAGRAPH_GAP;
 			usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_3, (FLOAT)4.3) + AIM_POLICY_PARAGRAPH_GAP;
+			usNumPixles += DisplayAimPolicyParagraph(usNumPixles, CONTRACT_EXTENSIONS_4, (FLOAT)4.4) + AIM_POLICY_PARAGRAPH_GAP;
 			break;
 
 		case 6:
@@ -373,6 +379,7 @@ void RenderAimPolicies()
 			usNumPixles = AIM_POLICY_PARAGRAPH_Y;
 			usNumPixles += DisplayAimPolicyParagraph(usNumPixles, EQUIPMENT_AND_INVENTORY_1, (FLOAT)8.1) + AIM_POLICY_PARAGRAPH_GAP;
 			usNumPixles += DisplayAimPolicyParagraph(usNumPixles, EQUIPMENT_AND_INVENTORY_2, (FLOAT)8.2) + AIM_POLICY_PARAGRAPH_GAP;
+			usNumPixles += DisplayAimPolicyParagraph(usNumPixles, EQUIPMENT_AND_INVENTORY_3, (FLOAT)8.3) + AIM_POLICY_PARAGRAPH_GAP;
 			break;
 
 		case 10:
