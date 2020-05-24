@@ -2505,21 +2505,8 @@ BOOLEAN DisplayTalkingMercFaceForVideoPopUp(INT32	iFaceIndex)
 
 void DisplayTextForMercFaceVideoPopUp(STR16 pString)
 {
-	UINT16	uiLoop1, uiLoop2;
-	UINT16	uiStringSize = wcslen( pString );
 
-	gsTalkingMercText[0] = '\"';
-	for( uiLoop1=0, uiLoop2=1; uiLoop1<uiStringSize ; uiLoop1++, uiLoop2++ )
-	{
-		gsTalkingMercText[ uiLoop2 ] = pString[ uiLoop1 ];
-	}
-
-	//Put the last quote
-	gsTalkingMercText[ uiLoop2 ] = '\"';
-
-	//put the null character
-	gsTalkingMercText[ uiLoop2+1 ] = '\0';
-
+	swprintf( gsTalkingMercText, L"\"%s\"", pString );
 	
 	//Set the minimum time for the dialogue text to be present
 	usAimMercSpeechDuration =  wcslen( gsTalkingMercText ) * AIM_TEXT_SPEECH_MODIFIER;
