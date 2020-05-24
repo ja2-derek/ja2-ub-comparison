@@ -20,6 +20,9 @@ void ResetIncrementCharacterAttributes( void );
 void HandleMercStatsForChangesInFace( void );
 
 
+UINT8 GetProfileIdForImpMerc();
+
+
 extern STR8 pPlayerSelectedFaceFileNames[ NUMBER_OF_PLAYER_PORTRAITS ];
 extern STR8 pPlayerSelectedBigFaceFileNames[ NUMBER_OF_PLAYER_PORTRAITS ];
 #endif

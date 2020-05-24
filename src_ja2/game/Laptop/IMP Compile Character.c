@@ -120,53 +120,56 @@ BOOLEAN ShouldThisMercHaveABigBody( void );
 
 void CreateACharacterFromPlayerEnteredStats( void )
 {
+	UINT8	ubMercID;
+
+	ubMercID = GetProfileIdForImpMerc();
 
 	// copy over full name
-  wcscpy( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].zName, pFullName );
+  wcscpy( gMercProfiles[ ubMercID ].zName, pFullName );
 
 	// the nickname
-	wcscpy( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].zNickname, pNickName ); 
+	wcscpy( gMercProfiles[ ubMercID ].zNickname, pNickName ); 
   
 	// gender 
 	if ( fCharacterIsMale == TRUE )
 	{
     // male
-    gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSex = MALE;
+    gMercProfiles[ ubMercID ].bSex = MALE;
 	}
 	else
 	{
 		// female
-    gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSex = FEMALE;
+    gMercProfiles[ ubMercID ].bSex = FEMALE;
 	}
 
 
 	// attributes
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLifeMax		= ( INT8 )iHealth;
-  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLife       = ( INT8 )iHealth;
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bAgility    = ( INT8 )iAgility;
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bStrength   = ( INT8 )iStrength;
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bDexterity  = ( INT8 )iDexterity;
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bWisdom     = ( INT8 )iWisdom; 
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLeadership = ( INT8 )iLeadership;
+	gMercProfiles[ ubMercID ].bLifeMax		= ( INT8 )iHealth;
+  gMercProfiles[ ubMercID ].bLife       = ( INT8 )iHealth;
+	gMercProfiles[ ubMercID ].bAgility    = ( INT8 )iAgility;
+	gMercProfiles[ ubMercID ].bStrength   = ( INT8 )iStrength;
+	gMercProfiles[ ubMercID ].bDexterity  = ( INT8 )iDexterity;
+	gMercProfiles[ ubMercID ].bWisdom     = ( INT8 )iWisdom; 
+	gMercProfiles[ ubMercID ].bLeadership = ( INT8 )iLeadership;
 
 
 		// skills
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMarksmanship = ( INT8 )iMarksmanship;
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMedical      = ( INT8 )iMedical;
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMechanical   = ( INT8 )iMechanical;
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bExplosive    = ( INT8 )iExplosives;
+	gMercProfiles[ ubMercID ].bMarksmanship = ( INT8 )iMarksmanship;
+	gMercProfiles[ ubMercID ].bMedical      = ( INT8 )iMedical;
+	gMercProfiles[ ubMercID ].bMechanical   = ( INT8 )iMechanical;
+	gMercProfiles[ ubMercID ].bExplosive    = ( INT8 )iExplosives;
 
 	
   // personality
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bPersonalityTrait = ( INT8 )iPersonality;
+	gMercProfiles[ ubMercID ].bPersonalityTrait = ( INT8 )iPersonality;
   
 	// attitude
-  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bAttitude = ( INT8 )iAttitude; 
+  gMercProfiles[ ubMercID ].bAttitude = ( INT8 )iAttitude; 
   
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bExpLevel = 1;
+	gMercProfiles[ ubMercID ].bExpLevel = 1;
   
 	// set time away
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMercStatus = 0;
+	gMercProfiles[ ubMercID ].bMercStatus = 0;
 
 	
   
@@ -381,10 +384,12 @@ void ValidateSkillsList( void )
 {
 	INT32	iIndex, iValue;
 	MERCPROFILESTRUCT * pProfile;
+	UINT8 ubMercID = GetProfileIdForImpMerc();
+
 
 	// remove from the generated traits list any traits that don't match
 	// the character's skills
-	pProfile = &(gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ]);
+	pProfile = &(gMercProfiles[ ubMercID ]);
 	if ( pProfile->bMechanical == 0 )
 	{
 		// without mechanical, electronics is useless
@@ -632,21 +637,23 @@ void ResetIncrementCharacterAttributes( void )
 
 void SelectMercFace( void )
 {
+	UINT8 ubMercID = GetProfileIdForImpMerc();
+
 	// this procedure will select the approriate face for the merc and save offsets
 
 	// grab face filename
-//  strcpy( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].ubUnusedFaceFileName , pPlayerSelectedFaceFileNames[ iPortraitNumber ]);
+//  strcpy( gMercProfiles[ ubMercID ].ubUnusedFaceFileName , pPlayerSelectedFaceFileNames[ iPortraitNumber ]);
 
 	// now the offsets
-  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].ubFaceIndex = 200 + ( UINT8 )iPortraitNumber;
+  gMercProfiles[ ubMercID ].ubFaceIndex = 200 + ( UINT8 )iPortraitNumber;
 
 	// eyes
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].usEyesX = sFacePositions[ iPortraitNumber ][ 0 ];
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].usEyesY = sFacePositions[ iPortraitNumber ][ 1 ];
+	gMercProfiles[ ubMercID ].usEyesX = sFacePositions[ iPortraitNumber ][ 0 ];
+	gMercProfiles[ ubMercID ].usEyesY = sFacePositions[ iPortraitNumber ][ 1 ];
 	
 	// mouth
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].usMouthX = sFacePositions[ iPortraitNumber ][ 2 ];
-	gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].usMouthY = sFacePositions[ iPortraitNumber ][ 3 ];
+	gMercProfiles[ ubMercID ].usMouthX = sFacePositions[ iPortraitNumber ][ 2 ];
+	gMercProfiles[ ubMercID ].usMouthY = sFacePositions[ iPortraitNumber ][ 3 ];
 
 	// set merc skins and hair color
 	SetMercSkinAndHairColors( );
@@ -655,6 +662,8 @@ void SelectMercFace( void )
 
 void SetMercSkinAndHairColors( void )
 {
+	UINT8 ubMercID = GetProfileIdForImpMerc();
+
 	enum{ PINKSKIN, TANSKIN, DARKSKIN, BLACKSKIN, NUMSKINS };
 	enum{ BROWNHEAD, BLACKHEAD, //black skin (only this line )
 		    WHITEHEAD,						//dark skin (this line plus all above)
@@ -751,14 +760,16 @@ void SetMercSkinAndHairColors( void )
 	}
 
 	// now set them
-	strcpy( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].HAIR, sHairStrings[ sHairColor ] );
-	strcpy( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].SKIN, sSkinStrings[ sSkinColor ] );
+	strcpy( gMercProfiles[ ubMercID ].HAIR, sHairStrings[ sHairColor ] );
+	strcpy( gMercProfiles[ ubMercID ].SKIN, sSkinStrings[ sSkinColor ] );
 
 }
 
 
 void HandleMercStatsForChangesInFace( )
 {
+	UINT8 ubMercID = GetProfileIdForImpMerc();
+
 	if ( fLoadingCharacterForPreviousImpProfile )
 	{
 		return;
@@ -774,7 +785,7 @@ void HandleMercStatsForChangesInFace( )
 		// big or regular
 		if( ShouldThisMercHaveABigBody( ) )
 		{
-      gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].ubBodyType = BIGMALE; 
+      gMercProfiles[ ubMercID ].ubBodyType = BIGMALE; 
 			
 			if( iSkillA == MARTIALARTS )
 			{
@@ -787,13 +798,13 @@ void HandleMercStatsForChangesInFace( )
 		}
 		else
 		{
-		  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].ubBodyType = REGMALE; 
+		  gMercProfiles[ ubMercID ].ubBodyType = REGMALE; 
     }
 	}
 	else
 	{
      // female
-	  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].ubBodyType = REGFEMALE;
+	  gMercProfiles[ ubMercID ].ubBodyType = REGFEMALE;
 		
 		if( iSkillA == MARTIALARTS )
 		{
@@ -807,21 +818,30 @@ void HandleMercStatsForChangesInFace( )
 
 
 	// skill trait
-  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait =  ( INT8 )iSkillA;
-  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 = ( INT8 )iSkillB;
+  gMercProfiles[ ubMercID ].bSkillTrait =  ( INT8 )iSkillA;
+  gMercProfiles[ ubMercID ].bSkillTrait2 = ( INT8 )iSkillB;
 
 }
 
 BOOLEAN ShouldThisMercHaveABigBody( void )
 {
+	UINT8 ubMercID = GetProfileIdForImpMerc();
+
 	// should this merc be a big body typ
 	if ( ( iPortraitNumber == 0 ) || ( iPortraitNumber == 6 ) || ( iPortraitNumber == 7 ) )
 	{
-		if ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bStrength >= 75 )
+		if ( gMercProfiles[ ubMercID ].bStrength >= 75 )
 		{
 			return( TRUE );
 		}
 	}
 
 	return( FALSE );
+}
+
+UINT8 GetProfileIdForImpMerc()
+{
+	UINT8 ubMercID = PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId;
+
+	return( ubMercID );
 }

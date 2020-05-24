@@ -209,6 +209,7 @@ void DestroyConfirmButtons( void )
 
 BOOLEAN AddCharacterToPlayersTeam( void )
 {
+	UINT8 ubMercID = GetProfileIdForImpMerc();
 
 	MERC_HIRE_STRUCT HireMercStruct;
 
@@ -220,7 +221,7 @@ BOOLEAN AddCharacterToPlayersTeam( void )
 
 	memset(&HireMercStruct, 0, sizeof(MERC_HIRE_STRUCT));
 
-	HireMercStruct.ubProfileID = ( UINT8 )( PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ) ;
+	HireMercStruct.ubProfileID = ( UINT8 )( ubMercID ) ;
 
 	if( fLoadingCharacterForPreviousImpProfile == FALSE )
 	{
@@ -290,12 +291,12 @@ void  BtnIMPConfirmYes(GUI_BUTTON *btn,INT32 reason)
 			LaptopSaveInfo.fIMPCompletedFlag = TRUE;
 
 			// charge the player
-			AddTransactionToPlayersBook(IMP_PROFILE, (UINT8)(PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId), GetWorldTotalMin( ), - ( COST_OF_PROFILE ) );
+			AddTransactionToPlayersBook(IMP_PROFILE, (UINT8)(ubMercID), GetWorldTotalMin( ), - ( COST_OF_PROFILE ) );
       AddHistoryToPlayersLog( HISTORY_CHARACTER_GENERATED, 0,GetWorldTotalMin( ), -1, -1 );
 			AddCharacterToPlayersTeam( );
 			
 			// write the created imp merc
-			WriteOutCurrentImpCharacter( ( UINT8 )( PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ) );
+			WriteOutCurrentImpCharacter( ( UINT8 )( ubMercID ) );
 		
 			fButtonPendingFlag = TRUE;
 			iCurrentImpPage = IMP_HOME_PAGE;

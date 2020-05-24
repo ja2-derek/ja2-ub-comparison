@@ -3343,7 +3343,9 @@ void HandleIMPCharProfileResultsMessage( void)
 	INT32 iRand = 0; 
 	BOOLEAN fSufficientMechSkill = FALSE, fSufficientMarkSkill = FALSE, fSufficientMedSkill = FALSE, fSufficientExplSkill = FALSE;
 	BOOLEAN fSufficientHlth = FALSE, fSufficientStr = FALSE, fSufficientWis = FALSE, fSufficientAgi = FALSE, fSufficientDex = FALSE, fSufficientLdr = FALSE; 
-	
+
+	UINT8 ubMercID = GetProfileIdForImpMerc();
+
 	iRand = Random( 32767 );
 
 	// set record ptr to head of list
@@ -3369,7 +3371,7 @@ void HandleIMPCharProfileResultsMessage( void)
 			{
 				wchar_t	zTemp[512];
 
-				swprintf( zTemp, L" %s", gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].zName );
+				swprintf( zTemp, L" %s", gMercProfiles[ ubMercID ].zName );
 				wcscat( pString, zTemp );
 			}
 			
@@ -3398,7 +3400,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		}
 
 		// personality itself
-		switch( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bPersonalityTrait)
+		switch( gMercProfiles[ ubMercID ].bPersonalityTrait)
 		{
 			// normal as can be
 		  case( NO_PERSONALITYTRAIT ):
@@ -3440,7 +3442,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		AddEmailRecordToList( pString );
 
 		// extra paragraph for bugs
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bPersonalityTrait == FEAR_OF_INSECTS )
+		if( gMercProfiles[ ubMercID ].bPersonalityTrait == FEAR_OF_INSECTS )
 		{
       // persoanlity paragraph
 			LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( iOffSet + IMP_PERSONALITY_LENGTH + 1 ), MAIL_STRING_SIZE );
@@ -3467,7 +3469,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		}
 
 			// personality itself
-		switch( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bAttitude )
+		switch( gMercProfiles[ ubMercID ].bAttitude )
 		{
 			// normal as can be
 		  case( ATT_NORMAL ):
@@ -3552,27 +3554,27 @@ void HandleIMPCharProfileResultsMessage( void)
     iCounter = 0;
 
 		// marksmanship
-		if ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMarksmanship >= SUPER_SKILL_VALUE )
+		if ( gMercProfiles[ ubMercID ].bMarksmanship >= SUPER_SKILL_VALUE )
     {
 			fSufficientMarkSkill = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// medical
-		if ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMedical >= SUPER_SKILL_VALUE )
+		if ( gMercProfiles[ ubMercID ].bMedical >= SUPER_SKILL_VALUE )
 		{
 			fSufficientMedSkill = TRUE;	
 			iEndOfSection = 1;
 		}
 
 		// mechanical
-		if ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMechanical >= SUPER_SKILL_VALUE )
+		if ( gMercProfiles[ ubMercID ].bMechanical >= SUPER_SKILL_VALUE )
 		{
 			fSufficientMechSkill = TRUE;
 			iEndOfSection = 1;
 		}
 
-		if ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bExplosive >= SUPER_SKILL_VALUE )
+		if ( gMercProfiles[ ubMercID ].bExplosive >= SUPER_SKILL_VALUE )
 		{
 			fSufficientExplSkill = TRUE;
 			iEndOfSection = 1;
@@ -3642,25 +3644,25 @@ void HandleIMPCharProfileResultsMessage( void)
 		
 
 		// now the needs training values
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMarksmanship > NO_CHANCE_IN_HELL_SKILL_VALUE ) &&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMarksmanship <= NEEDS_TRAINING_SKILL_VALUE ) )
+		if( ( gMercProfiles[ ubMercID ].bMarksmanship > NO_CHANCE_IN_HELL_SKILL_VALUE ) &&( gMercProfiles[ ubMercID ].bMarksmanship <= NEEDS_TRAINING_SKILL_VALUE ) )
     {
 			fSufficientMarkSkill = TRUE;
 			iEndOfSection = 1;
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMedical > NO_CHANCE_IN_HELL_SKILL_VALUE ) &&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMedical <= NEEDS_TRAINING_SKILL_VALUE ) )
+		if( ( gMercProfiles[ ubMercID ].bMedical > NO_CHANCE_IN_HELL_SKILL_VALUE ) &&( gMercProfiles[ ubMercID ].bMedical <= NEEDS_TRAINING_SKILL_VALUE ) )
     {
 			fSufficientMedSkill = TRUE;
 			iEndOfSection = 1;
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMechanical > NO_CHANCE_IN_HELL_SKILL_VALUE ) &&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMechanical <= NEEDS_TRAINING_SKILL_VALUE ) )
+		if( ( gMercProfiles[ ubMercID ].bMechanical > NO_CHANCE_IN_HELL_SKILL_VALUE ) &&( gMercProfiles[ ubMercID ].bMechanical <= NEEDS_TRAINING_SKILL_VALUE ) )
     {
 			fSufficientMechSkill = TRUE;
 			iEndOfSection = 1;
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bExplosive > NO_CHANCE_IN_HELL_SKILL_VALUE ) &&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bExplosive <= NEEDS_TRAINING_SKILL_VALUE ) )
+		if( ( gMercProfiles[ ubMercID ].bExplosive > NO_CHANCE_IN_HELL_SKILL_VALUE ) &&( gMercProfiles[ ubMercID ].bExplosive <= NEEDS_TRAINING_SKILL_VALUE ) )
     {
 			fSufficientExplSkill = TRUE;
 			iEndOfSection = 1;
@@ -3726,25 +3728,25 @@ void HandleIMPCharProfileResultsMessage( void)
 		iEndOfSection = 0;
     iCounter = 0;	
 
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMarksmanship <= NO_CHANCE_IN_HELL_SKILL_VALUE )
+		if( gMercProfiles[ ubMercID ].bMarksmanship <= NO_CHANCE_IN_HELL_SKILL_VALUE )
 		{
 			fSufficientMarkSkill = TRUE;
 			iEndOfSection = 1;
 		}
 
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMedical <= NO_CHANCE_IN_HELL_SKILL_VALUE )
+		if( gMercProfiles[ ubMercID ].bMedical <= NO_CHANCE_IN_HELL_SKILL_VALUE )
 		{
 			fSufficientMedSkill = TRUE;
 			iEndOfSection = 1;
 		}
 
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bMechanical <= NO_CHANCE_IN_HELL_SKILL_VALUE )
+		if( gMercProfiles[ ubMercID ].bMechanical <= NO_CHANCE_IN_HELL_SKILL_VALUE )
 		{
 			fSufficientMechSkill = TRUE;
 			iEndOfSection = 1;
 		}
 
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bExplosive <= NO_CHANCE_IN_HELL_SKILL_VALUE )
+		if( gMercProfiles[ ubMercID ].bExplosive <= NO_CHANCE_IN_HELL_SKILL_VALUE )
 		{
 			fSufficientExplSkill = TRUE;
 			iEndOfSection = 1;
@@ -3815,7 +3817,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		   iCounter++;
 		}
 		
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == KNIFING )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == KNIFING ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == KNIFING )||( gMercProfiles[ ubMercID ].bSkillTrait2 == KNIFING ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_KNIFE ), MAIL_STRING_SIZE );
@@ -3825,7 +3827,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		}
 
     // lockpick     
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == LOCKPICKING)||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == LOCKPICKING) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == LOCKPICKING)||( gMercProfiles[ ubMercID ].bSkillTrait2 == LOCKPICKING) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_LOCK ), MAIL_STRING_SIZE );
@@ -3835,7 +3837,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		}
 
 		// hand to hand
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == HANDTOHAND )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == HANDTOHAND ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == HANDTOHAND )||( gMercProfiles[ ubMercID ].bSkillTrait2 == HANDTOHAND ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_HAND ), MAIL_STRING_SIZE );
@@ -3845,7 +3847,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		}
     
 		// electronics
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == ELECTRONICS )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == ELECTRONICS ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == ELECTRONICS )||( gMercProfiles[ ubMercID ].bSkillTrait2 == ELECTRONICS ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_ELEC ), MAIL_STRING_SIZE );
@@ -3854,7 +3856,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == NIGHTOPS )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == NIGHTOPS ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == NIGHTOPS )||( gMercProfiles[ ubMercID ].bSkillTrait2 == NIGHTOPS ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_NIGHT ), MAIL_STRING_SIZE );
@@ -3863,7 +3865,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == THROWING)||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == THROWING) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == THROWING)||( gMercProfiles[ ubMercID ].bSkillTrait2 == THROWING) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_THROW ), MAIL_STRING_SIZE );
@@ -3872,7 +3874,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == TEACHING )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == TEACHING ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == TEACHING )||( gMercProfiles[ ubMercID ].bSkillTrait2 == TEACHING ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_TEACH ), MAIL_STRING_SIZE );
@@ -3881,7 +3883,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == HEAVY_WEAPS )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == HEAVY_WEAPS ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == HEAVY_WEAPS )||( gMercProfiles[ ubMercID ].bSkillTrait2 == HEAVY_WEAPS ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_HEAVY ), MAIL_STRING_SIZE );
@@ -3890,7 +3892,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == AUTO_WEAPS )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == AUTO_WEAPS ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == AUTO_WEAPS )||( gMercProfiles[ ubMercID ].bSkillTrait2 == AUTO_WEAPS ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_AUTO ), MAIL_STRING_SIZE );
@@ -3899,7 +3901,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == STEALTHY )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == STEALTHY ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == STEALTHY )||( gMercProfiles[ ubMercID ].bSkillTrait2 == STEALTHY ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_STEALTH ), MAIL_STRING_SIZE );
@@ -3908,7 +3910,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == AMBIDEXT)||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == AMBIDEXT) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == AMBIDEXT)||( gMercProfiles[ ubMercID ].bSkillTrait2 == AMBIDEXT) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_AMBI ), MAIL_STRING_SIZE );
@@ -3917,7 +3919,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == THIEF )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == THIEF ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == THIEF )||( gMercProfiles[ ubMercID ].bSkillTrait2 == THIEF ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_THIEF ), MAIL_STRING_SIZE );
@@ -3926,7 +3928,7 @@ void HandleIMPCharProfileResultsMessage( void)
 		  AddEmailRecordToList( pString );
 		}
 
-		if( ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait == MARTIALARTS )||( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bSkillTrait2 == MARTIALARTS ) )
+		if( ( gMercProfiles[ ubMercID ].bSkillTrait == MARTIALARTS )||( gMercProfiles[ ubMercID ].bSkillTrait2 == MARTIALARTS ) )
     {
       	// read one record from email file
 		  LoadEncryptedDataFromFile( "BINARYDATA\\Impass.edt", pString, MAIL_STRING_SIZE * ( IMP_SKILLS_SPECIAL_MARTIAL ), MAIL_STRING_SIZE );
@@ -3961,42 +3963,42 @@ void HandleIMPCharProfileResultsMessage( void)
 
 		
 		// health
-		if(  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLife >= SUPER_STAT_VALUE )
+		if(  gMercProfiles[ ubMercID ].bLife >= SUPER_STAT_VALUE )
     {
 			fSufficientHlth = TRUE;
 			iEndOfSection = 1;
 		}
    
 		// dex
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bDexterity >= SUPER_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bDexterity >= SUPER_STAT_VALUE )
 		{
 			fSufficientDex = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// agility
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bAgility >= SUPER_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bAgility >= SUPER_STAT_VALUE )
 		{
 			fSufficientAgi  = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// strength
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bStrength >= SUPER_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bStrength >= SUPER_STAT_VALUE )
 		{
 			fSufficientStr = TRUE;	
 			iEndOfSection = 1;
 		}
 
 		// wisdom
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bWisdom >= SUPER_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bWisdom >= SUPER_STAT_VALUE )
 		{
 			fSufficientWis = TRUE;
 			iEndOfSection =1;
 		}
 
 		// leadership
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLeadership >= SUPER_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bLeadership >= SUPER_STAT_VALUE )
 		{
 			fSufficientLdr = TRUE;
 			iEndOfSection = 1;
@@ -4083,42 +4085,42 @@ void HandleIMPCharProfileResultsMessage( void)
     iCounter = 0;
 	
 		// health
-		if(  ( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLife < NEEDS_TRAINING_STAT_VALUE ) &&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLife > NO_CHANCE_IN_HELL_STAT_VALUE ) )
+		if(  ( gMercProfiles[ ubMercID ].bLife < NEEDS_TRAINING_STAT_VALUE ) &&( gMercProfiles[ ubMercID ].bLife > NO_CHANCE_IN_HELL_STAT_VALUE ) )
     {
 			fSufficientHlth = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// strength
-		if( (gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bStrength < NEEDS_TRAINING_STAT_VALUE )&&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bStrength > NO_CHANCE_IN_HELL_STAT_VALUE ) )
+		if( (gMercProfiles[ ubMercID ].bStrength < NEEDS_TRAINING_STAT_VALUE )&&( gMercProfiles[ ubMercID ].bStrength > NO_CHANCE_IN_HELL_STAT_VALUE ) )
 		{
 			fSufficientStr = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// agility
-		if( (gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bAgility < NEEDS_TRAINING_STAT_VALUE )&&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bAgility <= NO_CHANCE_IN_HELL_STAT_VALUE ) )
+		if( (gMercProfiles[ ubMercID ].bAgility < NEEDS_TRAINING_STAT_VALUE )&&( gMercProfiles[ ubMercID ].bAgility <= NO_CHANCE_IN_HELL_STAT_VALUE ) )
 		{
 			fSufficientAgi = TRUE;
 			iEndOfSection = 1;
 		}
 		
 		// wisdom
-		if( (gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bWisdom < NEEDS_TRAINING_STAT_VALUE)&&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bWisdom > NO_CHANCE_IN_HELL_STAT_VALUE ) )
+		if( (gMercProfiles[ ubMercID ].bWisdom < NEEDS_TRAINING_STAT_VALUE)&&( gMercProfiles[ ubMercID ].bWisdom > NO_CHANCE_IN_HELL_STAT_VALUE ) )
 		{
 			fSufficientWis = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// leadership
-		if( (gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLeadership < NEEDS_TRAINING_STAT_VALUE)&&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLeadership > NO_CHANCE_IN_HELL_STAT_VALUE ) )
+		if( (gMercProfiles[ ubMercID ].bLeadership < NEEDS_TRAINING_STAT_VALUE)&&( gMercProfiles[ ubMercID ].bLeadership > NO_CHANCE_IN_HELL_STAT_VALUE ) )
 		{
 			fSufficientLdr = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// dex
-		if( (gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bDexterity < NEEDS_TRAINING_STAT_VALUE )&&( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bDexterity > NO_CHANCE_IN_HELL_STAT_VALUE ) )
+		if( (gMercProfiles[ ubMercID ].bDexterity < NEEDS_TRAINING_STAT_VALUE )&&( gMercProfiles[ ubMercID ].bDexterity > NO_CHANCE_IN_HELL_STAT_VALUE ) )
 		{
 			fSufficientDex = TRUE;
 			iEndOfSection = 1;
@@ -4214,35 +4216,35 @@ void HandleIMPCharProfileResultsMessage( void)
 		fSufficientLdr = FALSE; 
 		
 		// health
-		if(  gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLife <= NO_CHANCE_IN_HELL_STAT_VALUE )
+		if(  gMercProfiles[ ubMercID ].bLife <= NO_CHANCE_IN_HELL_STAT_VALUE )
     {
 			fSufficientHlth = TRUE;
 			iEndOfSection =1;
 		}
     
 		// dex
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bDexterity <= NO_CHANCE_IN_HELL_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bDexterity <= NO_CHANCE_IN_HELL_STAT_VALUE )
 		{
 			fSufficientDex = TRUE;
 			iEndOfSection =1;
 		}
 
 		// strength
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bStrength <= NO_CHANCE_IN_HELL_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bStrength <= NO_CHANCE_IN_HELL_STAT_VALUE )
 		{
 			fSufficientStr = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// agility
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bAgility <= NO_CHANCE_IN_HELL_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bAgility <= NO_CHANCE_IN_HELL_STAT_VALUE )
 		{
 			fSufficientAgi = TRUE;
 			iEndOfSection = 1;
 		}
 
 		// wisdom
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bWisdom <= NO_CHANCE_IN_HELL_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bWisdom <= NO_CHANCE_IN_HELL_STAT_VALUE )
 		{
 			fSufficientWis = TRUE;
 			iEndOfSection =1;
@@ -4313,7 +4315,7 @@ void HandleIMPCharProfileResultsMessage( void)
 
 
 		// leadership
-		if( gMercProfiles[ PLAYER_GENERATED_CHARACTER_ID + LaptopSaveInfo.iVoiceId ].bLeadership <= NO_CHANCE_IN_HELL_STAT_VALUE )
+		if( gMercProfiles[ ubMercID ].bLeadership <= NO_CHANCE_IN_HELL_STAT_VALUE )
 		{
 			fSufficientLdr = TRUE;	
 		}
