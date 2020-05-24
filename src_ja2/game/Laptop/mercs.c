@@ -833,129 +833,6 @@ JA25:  No longer pay as you go, now pay up front
 	ShouldAnyNewMercMercBecomeAvailable();
 
 /*
-	//If we should advacne the number of days that the good mercs arrive
-//	if( LaptopSaveInfo.guiNumberOfMercPaymentsInDays > 4 )
-	{
-		UINT8 ubNumDays;
-		
-//		ubNumDays = (UINT8) LaptopSaveInfo.guiNumberOfMercPaymentsInDays / 4;
-		ubNumDays = (UINT8) LaptopSaveInfo.guiNumberOfMercPaymentsInDays;
-
-//		LaptopSaveInfo.guiNumberOfMercPaymentsInDays = LaptopSaveInfo.guiNumberOfMercPaymentsInDays % 4;
-		LaptopSaveInfo.guiNumberOfMercPaymentsInDays = 0;
-
-		//for the first merc
-		//if the merc is not already here
-		if( LaptopSaveInfo.gbNumDaysTillFirstMercArrives != -1 )
-		{
-			//We advance the day the merc arrives on
-			if( LaptopSaveInfo.gbNumDaysTillFirstMercArrives > ubNumDays )
-			{
-				LaptopSaveInfo.gbNumDaysTillFirstMercArrives -= ubNumDays;
-			}
-			else
-			{
-				//its time to add the new mercs
-				LaptopSaveInfo.gubLastMercIndex = NUMBER_MERCS_AFTER_FIRST_MERC_ARRIVES;
-
-				//Set the fact that there are new mercs available
-				LaptopSaveInfo.fNewMercsAvailableAtMercSite = TRUE;
-
-				//if we havent already sent an email this turn
-				if( !fAlreadySentEmailToPlayerThisTurn )
-				{
-					AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
-					fAlreadySentEmailToPlayerThisTurn = TRUE;
-				}
-				LaptopSaveInfo.gbNumDaysTillFirstMercArrives = -1;
-			}
-		}
-
-	
-		//for the Second merc
-		//if the merc is not already here
-		if( LaptopSaveInfo.gbNumDaysTillSecondMercArrives != -1 )
-		{
-			//We advance the day the merc arrives on
-			if( LaptopSaveInfo.gbNumDaysTillSecondMercArrives > ubNumDays )
-			{
-				LaptopSaveInfo.gbNumDaysTillSecondMercArrives -= ubNumDays;
-			}
-			else
-			{
-				//its time to add the new mercs
-				LaptopSaveInfo.gubLastMercIndex = NUMBER_MERCS_AFTER_SECOND_MERC_ARRIVES;
-
-				//Set the fact that there are new mercs available
-				LaptopSaveInfo.fNewMercsAvailableAtMercSite = TRUE;
-
-				//if we havent already sent an email this turn
-				if( !fAlreadySentEmailToPlayerThisTurn )
-				{
-					AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
-					fAlreadySentEmailToPlayerThisTurn = TRUE;
-				}
-				LaptopSaveInfo.gbNumDaysTillSecondMercArrives = -1;
-			}
-		}
-	
-		//for the Third merc
-		//if the merc is not already here
-		if( LaptopSaveInfo.gbNumDaysTillThirdMercArrives != -1 )
-		{
-			//We advance the day the merc arrives on
-			if( LaptopSaveInfo.gbNumDaysTillThirdMercArrives > ubNumDays )
-			{
-				LaptopSaveInfo.gbNumDaysTillThirdMercArrives -= ubNumDays;
-			}
-			else
-			{
-				//its time to add the new mercs
-				LaptopSaveInfo.gubLastMercIndex = NUMBER_MERCS_AFTER_THIRD_MERC_ARRIVES;
-
-				//Set the fact that there are new mercs available
-				LaptopSaveInfo.fNewMercsAvailableAtMercSite = TRUE;
-
-				//if we havent already sent an email this turn
-				if( !fAlreadySentEmailToPlayerThisTurn )
-				{
-					AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
-					fAlreadySentEmailToPlayerThisTurn = TRUE;
-				}
-				LaptopSaveInfo.gbNumDaysTillThirdMercArrives = -1;
-			}
-		}
-	
-		//for the Fourth merc
-		//if the merc is not already here
-		if( LaptopSaveInfo.gbNumDaysTillFourthMercArrives != -1 )
-		{
-			//We advance the day the merc arrives on
-			if( LaptopSaveInfo.gbNumDaysTillFourthMercArrives > ubNumDays )
-			{
-				LaptopSaveInfo.gbNumDaysTillFourthMercArrives -= ubNumDays;
-			}
-			else
-			{
-				//its time to add the new mercs
-				LaptopSaveInfo.gubLastMercIndex = NUMBER_MERCS_AFTER_FOURTH_MERC_ARRIVES;
-
-				//Set the fact that there are new mercs available
-				LaptopSaveInfo.fNewMercsAvailableAtMercSite = TRUE;
-
-				//if we havent already sent an email this turn
-				if( !fAlreadySentEmailToPlayerThisTurn )
-				{
-					AddEmail( NEW_MERCS_AT_MERC, NEW_MERCS_AT_MERC_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin());
-					fAlreadySentEmailToPlayerThisTurn = TRUE;
-				}
-				LaptopSaveInfo.gbNumDaysTillFourthMercArrives = -1;
-			}
-		}
-	}
-*/
-
-/*
 JA25:  MERC site shouldnt go down
 
 	// If the merc site has never gone down, the number of MERC payment days is above 'X', 
@@ -1688,8 +1565,7 @@ Ja25
 /*
 JA25: not using quote quote
 		//if the player has not hired any MERC mercs before
-		// CJC Dec 1 2002: fixing this, so near-bankrupt msg will play
-		if( !IsAnyMercMercsHired( ) && CalcMercDaysServed() == 0)
+		if( !IsAnyMercMercsHired( ) )
 		{
 			StartSpeckTalking( SPECK_QUOTE_ALTERNATE_OPENING_2_BUSINESS_BAD );
 		}
@@ -1702,7 +1578,6 @@ JA25: not using quote quote
 		{
 			LaptopSaveInfo.fFirstVisitSinceServerWentDown = 2;
 			StartSpeckTalking( SPECK_QUOTE_ALTERNATE_OPENING_9_FIRST_VISIT_SINCE_SERVER_WENT_DOWN );
-			fCanUseIdleTag = TRUE;
 		}
 */
 
@@ -1758,7 +1633,6 @@ JA25: not using quote quote
 /*
 JA25: not using quote quote
 			//if business is good
-//			if( ubRandom < 40 && ubNumMercsDead < 2 && CountNumberOfMercMercsHired() > 1 )
 			if( ubRandom < 40 && AreAnyOfTheNewMercsAvailable() && CountNumberOfMercMercsHired() > 1 )
 			{
 				StartSpeckTalking( SPECK_QUOTE_ALTERNATE_OPENING_3_BUSINESS_GOOD );
@@ -1769,11 +1643,9 @@ JA25: not using quote quote
 /*
 JA25: not using quote quote
 			//or if still trying to recruit ( the last recruit hasnt arrived and the player has paid for some of his mercs )
-//			else if( ubRandom < 80 && LaptopSaveInfo.gbNumDaysTillFourthMercArrives != -1 && LaptopSaveInfo.gbNumDaysTillFirstMercArrives < MERC_NUM_DAYS_TILL_FIRST_MERC_AVAILABLE )
 			else if( ubRandom < 80 && gConditionsForMercAvailability[ LaptopSaveInfo.ubLastMercAvailableId ].usMoneyPaid <= LaptopSaveInfo.uiTotalMoneyPaidToSpeck && CanMercBeAvailableYet( LaptopSaveInfo.ubLastMercAvailableId ) )
 			{
 				StartSpeckTalking( SPECK_QUOTE_ALTERNATE_OPENING_4_TRYING_TO_RECRUIT );
-				fCanUseIdleTag = TRUE;
 			}
 */
 
@@ -1833,15 +1705,11 @@ JA25: not using quote quote
 /*
 JA25: not using quote quote
 	//If Speck has sent an email to the player, and the player still hasnt paid, has speck complain about it.
-	// CJC Dec 1 2002 ACTUALLY HOOKED IN THAT CHECK
-	if (fCanSayLackOfPaymentQuote)
+	if( LaptopSaveInfo.uiSpeckQuoteFlags & SPECK_QUOTE__SENT_EMAIL_ABOUT_LACK_OF_PAYMENT )
 	{
-		if( LaptopSaveInfo.uiSpeckQuoteFlags & SPECK_QUOTE__SENT_EMAIL_ABOUT_LACK_OF_PAYMENT )
-		{
-			LaptopSaveInfo.uiSpeckQuoteFlags &= ~SPECK_QUOTE__SENT_EMAIL_ABOUT_LACK_OF_PAYMENT;
+		LaptopSaveInfo.uiSpeckQuoteFlags &= ~SPECK_QUOTE__SENT_EMAIL_ABOUT_LACK_OF_PAYMENT;
 
-			StartSpeckTalking( SPECK_QUOTE_ALTERNATE_OPENING_TAG_PLAYER_OWES_MONEY );
-		}
+		StartSpeckTalking( SPECK_QUOTE_ALTERNATE_OPENING_TAG_PLAYER_OWES_MONEY );
 	}
 */
 
