@@ -14,7 +14,7 @@ LibraryInitHeader gGameLibaries[ ] =
 	{ "Fonts.slf",						FALSE, TRUE },
 	{ "Interface.slf",				FALSE, TRUE },
 	{ "Laptop.slf",						FALSE, TRUE },
-	{ "Maps.slf",							TRUE,  TRUE },
+	{ "Campaigns\\Unfinished Business\\Maps.slf",							TRUE,  TRUE },
 	{ "MercEdt.slf",					FALSE, TRUE },
 	{ "Music.slf",						TRUE,  TRUE },
 	{ "Npc_Speech.slf",				TRUE,	 TRUE },
