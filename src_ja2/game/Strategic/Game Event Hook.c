@@ -137,7 +137,8 @@ Ja25: No bobby ray
 			DailyUpdateOfMercSite( (UINT16)GetWorldDay() );
 			break;
     case EVENT_DAY3_ADD_EMAIL_FROM_SPECK:
-			AddEmail(MERC_INTRO, MERC_INTRO_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin( ) );
+			Assert( 0 );
+//JA25:			AddEmail(MERC_INTRO, MERC_INTRO_LENGTH, SPECK_FROM_MERC, GetWorldTotalMin( ) );
 			break;
 		case EVENT_DAY2_ADD_EMAIL_FROM_IMP:
 			Assert( 0 );

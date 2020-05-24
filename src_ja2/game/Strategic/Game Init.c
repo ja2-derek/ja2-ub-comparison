@@ -416,12 +416,15 @@ Ja25 no meanwhiles
  		AddTransactionToPlayersBook( ANONYMOUS_DEPOSIT, 0, GetWorldTotalMin(), iStartingCash );
 
 
+/*
+Ja25 MERC is available from the begining
 		{
 			UINT32	uiDaysTimeMercSiteAvailable = Random( 2 ) + 1;
 
 			// schedule email for message from spec at 7am 3 days in the future
 			AddFutureDayStrategicEvent( EVENT_DAY3_ADD_EMAIL_FROM_SPECK, 60*7, 0, uiDaysTimeMercSiteAvailable );
 		}
+*/
 
 
 
