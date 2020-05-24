@@ -40,7 +40,7 @@ ARMY_GUN_CHOICE_TYPE gRegularArmyGunChoices[ARMY_GUN_LEVELS] =
 	{	/* 7 - hi rifles			*/	2,	M14,					C7,							-1,						-1,					-1					},
 	{ /* 8 - best rifle			*/	1,	FNFAL,				-1,							-1,						-1,					-1					},
 	{ /* 9 - machine guns		*/	1,	MINIMI,				-1,							-1,						-1,					-1					},
-	{ /* 10- rocket rifle		*/	2,	ROCKET_RIFLE,	MINIMI,							-1,						-1,					-1					},
+	{ /* 10- PSG1						*/	1,	PSG1,					-1,							-1,						-1,					-1					},
 };
 
 ARMY_GUN_CHOICE_TYPE gExtendedArmyGunChoices[ARMY_GUN_LEVELS] =
@@ -55,7 +55,7 @@ ARMY_GUN_CHOICE_TYPE gExtendedArmyGunChoices[ARMY_GUN_LEVELS] =
 	{	/* 7 - hi rifles			*/	4,	FAMAS,				M14,						AUG,					C7,					-1					},
 	{ /* 8 - best rifle			*/	1,	FNFAL,				-1,							-1,						-1,					-1					},
 	{ /* 9 - machine guns		*/	3,	MINIMI,				RPK74,					HK21E,				-1,					-1					},
-	{ /* 10- rocket rifle		*/	4,	ROCKET_RIFLE,	ROCKET_RIFLE,	RPK74,				HK21E,						-1},
+	{ /* 10- PSG 1 					*/	1,	PSG1,					-1,							-1,						-1,					-1					},
 };
 
 

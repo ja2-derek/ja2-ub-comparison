@@ -116,14 +116,13 @@ BOOLEAN gfReportHitChances = FALSE;
 // Accuracy is based on probability of shot being within 10cm of bullseye target on chest at 25m
 // from Compendium of Modern Firearms (Edge of the Sword Vol 1)
 
-// JA2 GOLD: reduced pistol ready time to 0, tweaked sniper rifle values and G11 range
-WEAPONTYPE Weapon[ MAX_WEAPONS ] =
+WEAPONTYPE Weapon[ MAX_WEAPONS + 1 ] =
 {
-	//          Description			  Ammo      Bullet	Ready	 4xSng Burst	Burst	Deadl	Accu	Clip	Range Attack Impact		Fire	
-	//										   Spd  Imp	Time	 ROF	 ROF		penal	iness	racy	Size					Vol   Vol			Sounds
+	//          Description       Ammo      Bullet	Ready	 4xSng Burst	Burst	Deadl	Accu	Clip	Range Attack Impact		Fire	
+	//								    								 Spd  Imp	Time	 ROF	 ROF		penal	iness	racy	Size					Vol   Vol			Sounds
 	{ 0,													0,				0,	0,		0,		0,		0,			 0,		 0,		0,	0,	 10,		 0,		0,			0,						0 }, // nada!  must have min range of 10
-	PISTOL( /* Glock 17			*/	AMMO9,		24,	21,		0,		14,		0,			 0,		 8,		0,	15,	120,		60,		5,			S_GLOCK17,		NO_WEAPON_SOUND		 ), // wt 6  // Austria
-	M_PISTOL( /* Glock 18		*/	AMMO9,		24,	21,		0,		14,		5,		  15,		 9,		0,	15,	120,		60,		5,			S_GLOCK18,		S_BURSTTYPE1			 ), // wt 6  // Austria
+	PISTOL( /* Glock 17				 */	AMMO9,		24,	21,		0,		14,		0,			 0,		 8,		0,	15,	120,		60,		5,			S_GLOCK17,		NO_WEAPON_SOUND		 ), // wt 6  // Austria
+	M_PISTOL( /* Glock 18			 */	AMMO9,		24,	21,		0,		14,		5,		  15,		 9,		0,	15,	120,		60,		5,			S_GLOCK18,		S_BURSTTYPE1			 ), // wt 6  // Austria
 	PISTOL( /* Beretta 92F     */	AMMO9,		23,	22,		0,		16,		0,			 0,		 9,		0,	15,	120,		60,		5,			S_BERETTA92,	NO_WEAPON_SOUND		 ), // wt 11 // Italy
 	M_PISTOL( /* Beretta 93R   */	AMMO9,		23,	22,		0,		13,		5,		  15,		 9,		0,	15,	120,		60,		5,			S_BERETTA93,  S_BURSTTYPE1			 ), // wt 11 // Italy
 	PISTOL(	/* .38 S&W Special */	AMMO38,		23,	22,		0,		11,		0,			 0,		 6,		0,	 6,	130,		63,		5,			S_SWSPECIAL,	NO_WEAPON_SOUND		 ), // wt 11 // Britain
@@ -141,8 +140,8 @@ WEAPONTYPE Weapon[ MAX_WEAPONS ] =
 	SMG(		/* Type-85         */	AMMO762W,	23,	23,		1,		10,		4,		  11,		12,		0,	30,	200,		75,		7,			S_TYPE85,			S_BURSTTYPE1			 ), // wt 19 // China; ROF 780
 
 	RIFLE(	/* SKS             */ AMMO762W,	22,	31,		2,		13,		0,						24,		0,	10,	300,		80,		8,			S_SKS,				S_BURSTTYPE1			 ), // wt 39 // USSR
-	SN_RIFLE(	/* Dragunov      */	AMMO762W,	21,	36,		5,		11,		0,						32,		0,	10,	750,		80,		8,			S_DRAGUNOV,		S_BURSTTYPE1			 ), // wt 43 // USSR
-	SN_RIFLE(	/* M24           */	AMMO762N,	21,	36,		5,		 8,		0,						32,		0,	 5,	800,		80,		8,			S_M24,				S_BURSTTYPE1			 ), // wt 66 // US
+	SN_RIFLE(	/* Dragunov      */	AMMO762W,	21,	36,		5,		11,		0,						52,		0,	10,	750,		80,		8,			S_DRAGUNOV,		S_BURSTTYPE1			 ), // wt 43 // USSR
+	SN_RIFLE(	/* M24           */	AMMO762N,	21,	36,		5,		 8,		0,						48,		0,	 5,	900,		80,		8,			S_M24,				S_BURSTTYPE1			 ), // wt 66 // US
 
 	ASRIFLE(/* Steyr AUG       */	AMMO556,	20,	30,		2,		13,		3,			 8,		38,		0,	30,	500,		77,		8,			S_AUG,				S_BURSTTYPE1			 ), // wt 36 // Austria; ROF 650
 	ASRIFLE(/* H&K G41         */	AMMO556,	20,	29,		2,		13,		4,			 8,		27,		0,	30,	300,		77,		8,			S_G41,				S_BURSTTYPE1			 ), // wt 41 // Germany; ROF 850
@@ -172,30 +171,36 @@ WEAPONTYPE Weapon[ MAX_WEAPONS ] =
 	LAUNCHER( /* grenade launcher*/					30,				3,		 5,									80,		0,			500,		20,		10,			S_GLAUNCHER ),
 	LAUNCHER( /* mortar */									30,				0,		 5,									100,	0,			550,		20,		10,			S_MORTAR_SHOT	),
 	{ 0 },// another rock
-	BLADE( /* yng male claws */									14,					10,									 1,						 10,		2,						NO_WEAPON_SOUND ),
-	BLADE( /* yng fem claws */									18,					10,									 1,						 10,		2,						NO_WEAPON_SOUND ),
-	BLADE( /* old male claws */									20,					10,									 1,						 10,		2,						NO_WEAPON_SOUND ),
-	BLADE( /* old fem claws */									24,					10,									 1,						 10,		2,						NO_WEAPON_SOUND ),
-	BLADE( /* queen's tentacles */							20,					10,									 1,						 70, 		2,						NO_WEAPON_SOUND ),
-	MONSTSPIT( /* queen's spit */								20,					10,									 1,				50,	300,		10,		 5,			ACR_SPIT ),
+	SN_RIFLE(	/* Barrett       */	 AMMO50,	20,	44,		7,		10,		0,					 166,		0,	11,1500,	 100,		10,			S_BARRET,			S_BURSTTYPE1			 ), 
+	SMG(		/* Calico    */					AMMO9,	23,	26,		1,		15,		4,		  8,		24,		0,	50,	250,		75,		7,			S_CALICO_960,	S_BURSTTYPE1			 ), 
+	SN_RIFLE(	/* PSG1       */	 AMMO762N,	20,	38,		5,		11,		0,					  60,		0,	20, 800,	  80,		8,			S_PSG1,				S_BURSTTYPE1			 ), 
+	ASRIFLE(/* L85a1          */	AMMO556,	20,	30,		2,		15,	  4,			8,		37,		0,	30,	350,		77,		8,			S_L85,				S_BURSTTYPE1			 ),
+	ASRIFLE(/* TAR 21          */	AMMO556,	21,	30,		2,		17,	  5,			6,		43,		0,	30,	350,		75,		8,			S_TAR21,			S_BURSTTYPE1			 ), 
+	SN_RIFLE(	/* VAL Silent	*/	AMMO9_VAL,	20,	29,		3,		12,		0,					  37,		0,	20, 400,	  30,		8,			S_VAL_SILENT,	S_BURSTTYPE1			 ),
 	PUNCHWEAPON( /* brass knuckles */						12,					15,									 1,										0,						0),
 	LAUNCHER( /* underslung GL */						30,				3,		 7,									80,		0,			450,		20,		10,			S_UNDER_GLAUNCHER ),
 	LAW(	/* rocket laucher */							30,				0,		 5,									80,		0,			500,		80,		10,			S_ROCKET_LAUNCHER ),
 	BLADE( /* bloodcat claws */									12,					14,									 1,						 10,		2,			NO_WEAPON_SOUND ),
 	BLADE( /* bloodcat bite */									24,					10,									 1,						 10,		2,			NO_WEAPON_SOUND ),
 	BLADE( /* machete */												24,					9,									 6,						 40,		2,						NO_WEAPON_SOUND	),
-	RIFLE(/* rocket rifle */		AMMOROCKET,	20,	38,		2,		10,		0,						62,		0,	 5,	600,		80,		10,			S_SMALL_ROCKET_LAUNCHER,	NO_WEAPON_SOUND	 ),
+	RIFLE(/* rocket rifle */		AMMOROCKET,	20,	50,		2,		10,		0,						62,		0,	 5,	600,		80,		10,			S_SMALL_ROCKET_LAUNCHER,	NO_WEAPON_SOUND	 ),
 	PISTOL(	/* automag III     */	AMMO762N,	24,	29,		1,		 9,		0,			 0,		13,		0,	 5,	220,		72,		 6,			S_AUTOMAG,	NO_WEAPON_SOUND		 ),
-	MONSTSPIT( /* infant spit */								12,		13,												 1,				 5,	200,		10,		 5,			ACR_SPIT ),
+	SMG(		/* Micro Uzi			*/		AMMO9,	22,	23,		1,		17,		6,		  11,		16,		0,	30,	140,		65,		5,			S_MICRO_UZI,	S_BURSTTYPE1			 ), // wt 19 // China; ROF 780
 	MONSTSPIT( /* yng male spit */							16,		10,												 1,				10,	200,		10,		 5,			ACR_SPIT ),
 	MONSTSPIT( /* old male spit */							20,		10,												 1,				20,	200,		10,		 5,			ACR_SPIT ),
 	CANNON( /* tank cannon*/								30,				0,		 8,									80,		0,			800,		90,		10,			S_TANK_CANNON ),
 	PISTOL(	/* DART GUN		    */	AMMODART,	25,	 2,		1,		13,		0,			 0,		10,		0,	 1,	200,		0,		0,			NO_WEAPON_SOUND, NO_WEAPON_SOUND ), 
 	THROWINGBLADE(  /* Bloody Thrw KN */				15,					12,								  3,						150,		2,		 				S_THROWKNIFE		),
 
-	SHOTGUN(/* Flamethrower */ AMMOFLAME,		24, 60,		2,		10,		0,			 0,		53,		0,	 5,	130,		40,		8,			S_CAWS,				S_BURSTTYPE1			 ), 
+	SHOTGUN(/* Hand Cannon*/				AMMO_CB,30, 50,		2,		9,		0,			 0,		23,		0,	 1,	100,		90,		30,			S_HAND_CANNON,				S_BURSTTYPE1			 ), 
 	PUNCHWEAPON( /* crowbar */									25,					10,									 4,										0,						0),
-	ASRIFLE(/* auto rckt rifle */AMMOROCKET,20,	38,		2,		12,	  5,			10,		97,		0,	 5,	600,		80,		10,			S_SMALL_ROCKET_LAUNCHER,	S_BURSTTYPE1	 ),
+	ASRIFLE(/* auto rocket rifle */AMMOROCKET,20,	50,	2,		12,	  5,			10,		97,		0,	 5,	600,		80,		10,			S_SMALL_ROCKET_LAUNCHER,	S_BURSTTYPE1	 ),
+
+	PISTOL( /* Calico M950     */	  AMMO9,	23,	22,		0,		15,		0,			 4,		11,		0,	50,	150,		65,		7,			S_CALICO_950,	S_BURSTTYPE1		 ), 
+	ASRIFLE(/* Calico M900			*/	AMMO9,	25,	25,		3,		14,		0,			 0,		20,		0,	50,	350,		77,		8,			S_CALICO_900,	S_BURSTTYPE1			 ), // wt 36 // USSR; ROF 650
+	PISTOL(	/* Hartford 6 shtr */	AMMO357,	27,	25,		0,		11,		0,			 0,		10,		0,	 6,	175,		75,		10,			S_HARTFORD_6,NO_WEAPON_SOUND		 ),
+	BLADE(  /* CheGuevera knife */							20,					12,									6,						 40,		2,						NO_WEAPON_SOUND	),
+	BLADE(  /* Umbrella    */										12,					10,									2,						 40,		2,						NO_WEAPON_SOUND	),
 };
 
 
@@ -247,7 +252,13 @@ MAGTYPE Magazine[] =
 	{ AMMOROCKET,				5,					AMMO_HE },
 	{ AMMOROCKET,				5,					AMMO_HEAT },
 	{ AMMODART,					1,					AMMO_SLEEP_DART },
-	{ AMMOFLAME,				5,					AMMO_BUCKSHOT },
+	{ AMMO_CB,					1,					AMMO_REGULAR },				//Cannon ball
+	{ AMMO50,						11,					AMMO_SUPER_AP },
+	{ AMMO9,						50,					AMMO_REGULAR },
+	{ AMMO9,						50,					AMMO_AP },
+	{ AMMO9,						50,					AMMO_HP },
+	{ AMMO9_VAL,				20,					AMMO_SUPER_AP },
+
 	{ NOAMMO,						0,					0 }
 };
 
@@ -313,7 +324,7 @@ EXPLOSIVETYPE Explosive[] =
 	{ 	EXPLOSV_NORMAL,		    50,			22,				6,				50,				2,					BLAST_2				/* mortar shell       */},
 
 	{ 	EXPLOSV_NORMAL,		    30,			30,				2,				30,				2,					BLAST_1				/* mine               */},
-	{		EXPLOSV_NORMAL,		    65,			30,				7,				65,				0,					BLAST_1				/* C4  ("plastique")  */},
+	{		EXPLOSV_NORMAL,		    65,			30,				7,				65,				0,					BLAST_2				/* C4  ("plastique")  */},
 	{		EXPLOSV_FLARE,		    0,			0,				10,				0,				0,					BLAST_1				/* trip flare				  */},
 	{		EXPLOSV_NOISE,		    0,			0,				50,				50,				0,					BLAST_1				/* trip klaxon        */},
 	{		EXPLOSV_NORMAL,		    20,			0,				1,				20,				0,					BLAST_1				/* shaped charge      */},
@@ -333,6 +344,8 @@ EXPLOSIVETYPE Explosive[] =
 	{ 	EXPLOSV_CREATUREGAS,	5,			0,				1,				0,				0,					NO_BLAST		  /* small creature gas*/},
 	{ 	EXPLOSV_CREATUREGAS,	8,			0,				3,				0,				0,					NO_BLAST  		/* big creature gas*/},
 	{ 	EXPLOSV_CREATUREGAS,	0,			0,				0,				0,				0,					NO_BLAST  		/* vry sm creature gas*/},
+
+	{		EXPLOSV_FLARE,		    0,			0,				10,				0,				0,					BLAST_1,			/* gl flare     */},
 };
 
 
@@ -1879,6 +1892,8 @@ BOOLEAN DoSpecialEffectAmmoMiss( UINT8 ubAttackerID, INT16 sGridNo, INT16 sXPos,
 
 		return( TRUE );
 	}
+/*
+Ja25: replaced these weapons
   else if ( usItem == CREATURE_OLD_MALE_SPIT || usItem == CREATURE_QUEEN_SPIT || usItem == CREATURE_INFANT_SPIT || usItem == CREATURE_YOUNG_MALE_SPIT )
   {
     // Increment attack busy...
@@ -1905,7 +1920,7 @@ BOOLEAN DoSpecialEffectAmmoMiss( UINT8 ubAttackerID, INT16 sGridNo, INT16 sXPos,
         break;
     }
   }
-
+*/
 	return( FALSE );
 }
 
@@ -2046,6 +2061,19 @@ void StructureHit( INT32 iBullet, UINT16 usWeaponIndex, INT8 bWeaponStatus, UINT
 
 			return;
 		}
+
+		// hand cannon
+		if ( MercPtrs[ ubAttackerID ]->inv[ HANDPOS ].usItem == HAND_CANNON && Random( 20 ) > 0 ) // 5% chance of loss
+		{
+			OBJECTTYPE	Object;
+
+			CreateItem( CLIP_CANNON_BALL, bWeaponStatus, &Object );
+
+			// add cannon ball in this tile
+			AddItemToPool( sGridNo, &Object, -1, 0, 0, 0 );
+			NotifySoldiersToLookforItems();
+		}
+
 	}
 
 	// Get Structure pointer and damage it!
@@ -3722,11 +3750,14 @@ UINT32 CalcChanceHTH( SOLDIERTYPE * pAttacker,SOLDIERTYPE *pDefender, UINT8 ubAi
 
   usInHand = pAttacker->usAttackingWeapon;
 
+/*
+Ja25: replaced these weapons
 	if ( (usInHand != CREATURE_QUEEN_TENTACLES ) && (pDefender->bLife < OKLIFE || pDefender->bBreath < OKBREATH) )
 	{
 		// there is NO way to miss
 		return( 100 ); 
 	}
+*/
 
 	if (ubMode == HTH_MODE_STAB)
 	{
@@ -3905,14 +3936,19 @@ UINT32 CalcChanceHTH( SOLDIERTYPE * pAttacker,SOLDIERTYPE *pDefender, UINT8 ubAi
   if ((iDefRating > 0) && (pDefender->bBreath < 100))
     iDefRating -= (iDefRating * (100 - pDefender->bBreath)) / 200;
 
+/*
+Ja25: replaced these weapons
 	if ( usInHand == CREATURE_QUEEN_TENTACLES && pDefender->ubBodyType == LARVAE_MONSTER || pDefender->ubBodyType == INFANT_MONSTER )
 	{
 		// try to prevent queen from killing the kids, ever!
 		iDefRating += 10000;
 	}
+*/
 
 	if (gAnimControl[ pDefender->usAnimState ].ubEndHeight < ANIM_STAND)
 	{
+/*
+Ja25: replaced these weapons
 		if (usInHand == CREATURE_QUEEN_TENTACLES)
 		{
 			if ( gAnimControl[ pDefender->usAnimState ].ubEndHeight == ANIM_PRONE )
@@ -3926,6 +3962,7 @@ UINT32 CalcChanceHTH( SOLDIERTYPE * pAttacker,SOLDIERTYPE *pDefender, UINT8 ubAi
 			}
 		}
 		else
+*/
 		{
 			// if defender crouched, reduce chance accordingly (harder to dodge)
 			iDefRating -= BAD_DODGE_POSITION_PENALTY;
@@ -4397,6 +4434,9 @@ void ChangeWeaponMode( SOLDIERTYPE * pSoldier )
 
 void DishoutQueenSwipeDamage( SOLDIERTYPE *pQueenSoldier )
 {
+	Assert(0);
+/*
+JA25: no queen
 	INT8 bValidDishoutDirs[3][3] = { NORTH, NORTHEAST, -1,
 																	EAST, SOUTHEAST, -1,
 																	SOUTH, -1, -1 };
@@ -4451,6 +4491,7 @@ void DishoutQueenSwipeDamage( SOLDIERTYPE *pQueenSoldier )
 	}
 
 	pQueenSoldier->uiPendingActionData1++;
+*/
 }
 
 

@@ -80,7 +80,7 @@ INVTYPE Item[MAXITEMS] =
 {	IC_GUN,						16,			TARGETCURS,	CONDBUL,	0,		16,		19,	0,		 620,	3,		/* Type-85         */ -4,		+2,			IF_TWOHANDED_GUN | ITEM_BIGGUNLIST },
 {	IC_GUN,						17,			TARGETCURS,	CONDBUL,	0,		17,		39,	0,		1350,	5,		/* SKS             */ -4,		-2,			IF_TWOHANDED_GUN | ITEM_BIGGUNLIST },
 {	IC_GUN,						18,			TARGETCURS,	CONDBUL,	0,		18,		43,	0,		1930,	6,		/* Dragunov        */ +2,		+2,			IF_TWOHANDED_GUN | ITEM_BIGGUNLIST },
-{	IC_GUN,						19,			TARGETCURS,	CONDBUL,	0,		19,		66,	0,		1950,	6,		/* M24             */ +4,		+4,			IF_TWOHANDED_GUN },
+{	IC_GUN,						19,			TARGETCURS,	CONDBUL,	0,		19,		66,	0,		1950,	6,		/* M24             */ +3,		+3,			IF_TWOHANDED_GUN },
 {	IC_GUN,						20,			TARGETCURS,	CONDBUL,	0,		20,		36,	0,		2380,	8,		/* Steyr AUG       */ +1,		-2,			IF_TWOHANDED_GUN | ITEM_BIGGUNLIST },
 
 {	IC_GUN,						21,			TARGETCURS,	CONDBUL,	0,		21,		41,	0,		1620,	6,		/* H&K G41         */ +1,		-1,			IF_TWOHANDED_GUN },
@@ -107,13 +107,13 @@ INVTYPE Item[MAXITEMS] =
 
 {	IC_LAUNCHER,			41,			TRAJECTORYCURS,	0,		0,		0,		77,	0,		1800,	10,		/* mortar */					0,		-2,			IF_TWOHANDED_GUN},
 {	IC_THROWN,				42,			TOSSCURS,		0,				1,		60,		4,	3,			 0,	0,		/* another rock    */	0,		0,			ITEM_NOT_BUYABLE},
-{	IC_BLADE,					43,			KNIFECURS,	0,				0,		0,		0,	1, 		   0,	0,		/* yng male claws */	0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
-{	IC_BLADE,					44,			KNIFECURS,	0,				0,		0,		0,	1, 		   0,	0,		/* yng fem claws  */	0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
-{	IC_BLADE,					45,			KNIFECURS,	0,				0,		0,		0,	1,		   0,	0,		/* old male claws */	0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
-{	IC_BLADE,					46,			KNIFECURS,	0,				0,		0,		0,	1,		   0,	0,		/* old fem claws  */	0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
-{	IC_TENTACLES,			47,			KNIFECURS,	0,				0,		0,		0,	1,		   0,	0,		/* queen tentacles*/	0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
-{	IC_GUN,						48,			TARGETCURS,	0,				0,		0,		0,	1,		   0,	0,		/* queen spit */			0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
-{	IC_PUNCH,					49,			PUNCHCURS,	0,				1,		102,	1,	4,		  20,	2,		/* brass knuckles */	0,		0,			IF_STANDARD_BLADE },
+{	IC_GUN,						43,			TARGETCURS,	CONDBUL,	0,		50,	122,	0, 		6200,10,		/* Barrett				 */+1,	 -1,			IF_TWOHANDED_GUN }, //| ITEM_BIGGUNLIST 
+{	IC_GUN,						44,			TARGETCURS,	CONDBUL,	0,		51,	 22,	0, 		 900, 7,		/* Calico 960			 */+1,	 -1,			IF_TWOHANDED_GUN },//| ITEM_BIGGUNLIST 
+{	IC_GUN,						45,			TARGETCURS,	CONDBUL,	0,		52,	 80,	0, 		2700, 8,		/* Psg1						 */+4,	 +4,			IF_TWOHANDED_GUN },//| ITEM_BIGGUNLIST 
+{	IC_GUN,						46,			TARGETCURS,	CONDBUL,	0,		53,	 38,	0, 		1300, 6,		/* L85						 */ 0,	 +1,			IF_TWOHANDED_GUN },//| ITEM_BIGGUNLIST 
+{	IC_GUN,						47,			TARGETCURS,	CONDBUL,	0,		54,	 24,	0, 		2100, 8,		/* Tar 21					 */+3,	 -1,			IF_TWOHANDED_GUN },//| ITEM_BIGGUNLIST 
+{	IC_GUN,						48,			TARGETCURS,	CONDBUL,	0,		55,	 25,	0, 		4100, 9,		/* Val Silent			 */-3,	 -3,			IF_TWOHANDED_GUN },//| ITEM_BIGGUNLIST 
+{	IC_PUNCH,					49,			PUNCHCURS,	0,				1,		102,	1,	4,		  20,	2,		/* brass knuckles */  0,	  0,			IF_STANDARD_BLADE },
 {	IC_LAUNCHER,			50,			INVALIDCURS,0,				0,		39,		13,	0,		 500,	8,		/* underslung g.l.*/	0,		0,			IF_STANDARD_GUN},
 
 {	IC_GUN,						51,			TARGETCURS,	0,				0,		38,		21,	0,		 500,	9,		/* rocket Launcher*/	0,		-3,			IF_TWOHANDED_GUN },	// now repairable
@@ -122,21 +122,21 @@ INVTYPE Item[MAXITEMS] =
 {	IC_BLADE,					54,			KNIFECURS,	0,				0,		41,		13,	0,		 200,	3,		/* machete */					0,		+3,			IF_STANDARD_BLADE},
 {	IC_GUN,						55,			TARGETCURS,	0,				0,		45,		40,	0,		5000,	0,		/* rocket rifle */		0,		-5,			IF_TWOHANDED_GUN | ITEM_NOT_BUYABLE | ITEM_ELECTRONIC },
 {	IC_GUN,						56,			TARGETCURS,	0,				0,		40,		12,	0,		1000,	0,		/* Automag III */			0,		-2,			IF_STANDARD_GUN | ITEM_NOT_BUYABLE },
-{	IC_GUN,						57,			TARGETCURS,	0,				0,		0,		0,	0,		   0,	0,		/* infant spit */			0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
+{	IC_GUN,						57,			TARGETCURS,	CONDBUL,	0,		58,	 19,	1, 		 300, 6,		/* Micro Uzi			 */+1,	 -1,			IF_STANDARD_GUN },//| ITEM_BIGGUNLIST 
 {	IC_GUN,						58,			TARGETCURS,	0,				0,		0,		0,	0,		   0,	0,		/* yng male spit */		0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
 {	IC_GUN,						59,			TARGETCURS,	0,				0,		0,		0,	0,		   0,	0,		/* old male spit */		0,		0,			ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR | ITEM_DEFAULT_UNDROPPABLE },
 {	IC_GUN,						60,			TARGETCURS,	0,				0,		37,		26,	0,		   0,	0,		/* tank cannon  */		0,		0,			ITEM_NOT_BUYABLE },
 
-{	IC_GUN,						61,			TARGETCURS,		0,				0,		46,	 12,	1,		 500,	5,		/* dart gun */				0,		+3,			IF_STANDARD_GUN },
-{	IC_THROWING_KNIFE,62,			TARGETCURS,		0,				1,		95,		1,	4,		  50,	0,		/*bloody throw.knife*/0,		+4,			IF_STANDARD_BLADE | ITEM_NOT_BUYABLE },
-{	IC_GUN,						63,			TARGETCURS,		0,				0,		48,	 18,	0,		   0,	0,		/* flamethrower */		0,		0,			IF_STANDARD_GUN | ITEM_NOT_BUYABLE },
-{	IC_PUNCH,					64,			PUNCHCURS,		0,				1,		85,	 30,	0,		  40,	1,		/* Crowbar       */		0,		-4,			ITEM_METAL | ITEM_DAMAGEABLE },
-{	IC_GUN,						65,			TARGETCURS,		0,				0,		45,		40,	0,	 10000,	0,		/* rocket rifle */		0,		-5,			IF_TWOHANDED_GUN | ITEM_NOT_BUYABLE | ITEM_ELECTRONIC },
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
+{	IC_GUN,						61,			TARGETCURS,		0,			0,		46,	 12,	1,		 500,	5,		/* dart gun */				0,		+3,			IF_STANDARD_GUN },
+{	IC_THROWING_KNIFE,62,			TARGETCURS,		0,			1,		95,		1,	4,		  50,	0,		/*bloody throw.knife*/0,		+4,			IF_STANDARD_BLADE | ITEM_NOT_BUYABLE },
+{	IC_GUN,						63,			TARGETCURS,		0,			0,		59,	 24,	0,		 500, 0,		/* Musket Cannon  */	-5,		-4,			IF_TWOHANDED_GUN | ITEM_NOT_BUYABLE },
+{	IC_PUNCH,					64,			PUNCHCURS,		0,			1,		85,	 30,	0,		  40,	1,		/* Crowbar       */		0,		-4,			ITEM_METAL | ITEM_DAMAGEABLE },
+{	IC_GUN,						65,			TARGETCURS,		0,			0,		45,		40,	0,	 10000,	0,		/* rocket rifle */		0,		-5,			IF_TWOHANDED_GUN | ITEM_NOT_BUYABLE | ITEM_ELECTRONIC },
+{	IC_GUN,						66,			TARGETCURS,	CONDBUL,	0,		56,	 10,	0, 		 400, 6,		/* Calico 950			 */+1,	 -1,			IF_STANDARD_GUN },//| ITEM_BIGGUNLIST 
+{	IC_GUN,						67,			TARGETCURS,	CONDBUL,	0,		57,	 22,	0, 		 900, 8,		/* Calico 900			 */+1,	 -1,			IF_TWOHANDED_GUN },//| ITEM_BIGGUNLIST 
+{	IC_GUN,						68,			TARGETCURS,	CONDBUL,	0,		65,	 16,	1,		2250,	9,		/* Hartford 6 shotr */-1,		-1,			IF_STANDARD_GUN},
+{	IC_BLADE,					69,			KNIFECURS,  0,				0,		69,		9,	2,		 350,	4,		/* Che Guivera Knife*/+1,		-1,			IF_STANDARD_BLADE},
+{	IC_BLADE,					70,			KNIFECURS,  0,				0,		68,		6,	1,		  20,	1,		/* Umbrella    */			-1,		-3,			IF_STANDARD_BLADE},
 //---AMMO---
 {	IC_AMMO,					0,			INVALIDCURS,	0,				1,		32,		2,	8,		  15,	2,		/* CLIP9_15 */				0,		0,			IF_STANDARD_CLIP},
 {	IC_AMMO,					1,			INVALIDCURS,	0,				1,		35,		3,	4,		  30,	4,		/* CLIP9_30 */				0,		0,			IF_STANDARD_CLIP},
@@ -174,9 +174,9 @@ INVTYPE Item[MAXITEMS] =
 {	IC_AMMO,					30,			INVALIDCURS,	0,				1,		27,		8,	4,		 120,	6,		/* CLIP762N_20_AP */	0,		0,			IF_STANDARD_CLIP},
 {	IC_AMMO,					31,			INVALIDCURS,	0,				1,		 2,		1,	6,		  20,	6,		/* CLIP762N_5_HP */		0,		0,			IF_STANDARD_CLIP},
 {	IC_AMMO,					32,			INVALIDCURS,	0,				1,		28,		8,	4,		  80,	5,		/* CLIP762N_20_HP */	0,		0,			IF_STANDARD_CLIP},
-{	IC_AMMO,					33,			INVALIDCURS,	0,				1,		31,		5,	4,		 700,	8,		/* CLIP47_50_SAP */		0,		0,			IF_STANDARD_CLIP},
-{	IC_AMMO,					34,			INVALIDCURS,	0,				1,		20,		9 ,	4,		 750,	9,		/* CLIP57_50_SAP */		0,		0,			IF_STANDARD_CLIP},
-{	IC_AMMO,					35,			INVALIDCURS,	0,				1,		21,		9,	4,		 500,	9,		/* CLIP57_50_HP */		0,		0,			IF_STANDARD_CLIP},
+{	IC_AMMO,					33,			INVALIDCURS,	0,				1,		31,		5,	4,		 200,	8,		/* CLIP47_50_SAP */		0,		0,			IF_STANDARD_CLIP},
+{	IC_AMMO,					34,			INVALIDCURS,	0,				1,		20,		9 ,	4,		 250,	9,		/* CLIP57_50_SAP */		0,		0,			IF_STANDARD_CLIP},
+{	IC_AMMO,					35,			INVALIDCURS,	0,				1,		21,		9,	4,		 200,	9,		/* CLIP57_50_HP */		0,		0,			IF_STANDARD_CLIP},
 {	IC_AMMO,					37,			INVALIDCURS,	0,				2,		22,		5,	6,		  20,	3,		/* CLIP12G_7 */				0,		0,			IF_STANDARD_CLIP},
 {	IC_AMMO,					36,			INVALIDCURS,	0,				2,		 4,		5,	6,		  20,	3,		/* CLIP12G_7_BUCKSHOT */	0,		0,	IF_STANDARD_CLIP},
 {	IC_AMMO,					39,			INVALIDCURS,	0,				1,		 0,	 10,	6,		 300,	9,		/* CLIPCAWS_10_SAP */	0,		0,			IF_STANDARD_CLIP},
@@ -186,12 +186,12 @@ INVTYPE Item[MAXITEMS] =
 {	IC_AMMO,					41,			INVALIDCURS,	0,				1,		115, 10,	4,		 500,	9,		/* CLIPROCKET_HE */		0,		0,			IF_STANDARD_CLIP},
 {	IC_AMMO,					42,			INVALIDCURS,	0,				1,		114, 10,	4,		 500,	9,		/* CLIPROCKET_HEAT */	0,		0,			IF_STANDARD_CLIP},
 {	IC_AMMO,					43,			INVALIDCURS,	0,				1,		119,	1,	8,		  10,	4,		/* sleep dart */			0,		0,			IF_STANDARD_CLIP},
-{	IC_AMMO,					44,			INVALIDCURS,	0,				0,		49,		8,	4,		   0,	0,		/* flameThrwr clip */	0,		0,			IF_STANDARD_CLIP | ITEM_NOT_BUYABLE },
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
+{	IC_AMMO,					44,			INVALIDCURS,	0,				0,		60,	 25,	4,			10,	0,		/* Cannon Ball */			0,		0,			IF_STANDARD_CLIP | ITEM_NOT_BUYABLE },
+{	IC_AMMO,					45,			INVALIDCURS,	0,				1,		138,		9,	4,		 300,7,		/* .50 Cal	 */				0,		0,			IF_STANDARD_CLIP },
+{	IC_AMMO,					46,			INVALIDCURS,	0,				1,		139,		8,	4,		  50,	6,		/* Calico 50 REG*/		0,		0,			0},
+{	IC_AMMO,					47,			INVALIDCURS,	0,				1,		140,		8,	4,		  50,	7,		/* Calico 50 AP*/			0,		0,			0},
+{	IC_AMMO,					48,			INVALIDCURS,	0,				1,		141,		8,	4,		  50,	7,		/* Calico 50 HP*/			0,		0,			0},
+{	IC_AMMO,					49,			INVALIDCURS,	0,				1,		142,		4,	4,		  60,	7,		/* 9mm Val Sniper */	0,		0,			0},
 
 {	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
 {	IC_NONE,					0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
@@ -231,7 +231,7 @@ INVTYPE Item[MAXITEMS] =
 {	IC_GRENADE,				20,			TOSSCURS,			0,				1,		98,		6,	4,		  50,	4,		/* smoke hand grenade */	0,		-2,			ITEM_DAMAGEABLE | ITEM_METAL | ITEM_REPAIRABLE},
 {	IC_BOMB,					21,			INVALIDCURS,	0,				1,		40,	 41,	8,		 450,	0,		/* tank shell       */		0,		-4,			ITEM_DAMAGEABLE | ITEM_METAL | ITEM_NOT_BUYABLE | ITEM_NOT_EDITOR },
 {	IC_BOMB,					22,			INVALIDCURS,	0,				1,		40,	 41,	2,		 450,	0,		/* fake struct ignite*/		0,		-4,			ITEM_DAMAGEABLE | ITEM_METAL | ITEM_NOT_BUYABLE },
-{	IC_GRENADE,				23,			TOSSCURS,			0,				2,		37,		6,	4,		  50,	0,		/* creature cocktail*/		0,		0,			ITEM_DAMAGEABLE | ITEM_METAL },
+{	IC_GRENADE,				30,			INVALIDCURS,	0,				1,		143, 10,	4,		 100,	7,		/* 40mm FLARE					 */	0,		-2,			ITEM_DAMAGEABLE | ITEM_METAL | ITEM_REPAIRABLE},
 {	IC_BOMB,					24,			INVALIDCURS,	0,				1,		40,	 41,	2,		 450,	0,		/* fake struct xplod*/		0,		-4,			ITEM_DAMAGEABLE | ITEM_METAL | ITEM_NOT_BUYABLE },
 {	IC_BOMB,					25,			INVALIDCURS,	0,				1,		40,	 41,	2,		 450,	0,		/* fake vehicle xplod*/		0,		-4,			ITEM_DAMAGEABLE | ITEM_METAL | ITEM_NOT_BUYABLE },
 {	IC_GRENADE,	 			26,			TOSSCURS,			0,				1,		48,		6,	4,		   0,	0,		/* BIG tear gas grenade*/	0,		-2,			ITEM_DAMAGEABLE | ITEM_METAL | ITEM_REPAIRABLE | ITEM_NOT_BUYABLE },
@@ -425,16 +425,16 @@ INVTYPE Item[MAXITEMS] =
 {	IC_MONEY,				0,			INVALIDCURS,	0,				2,	 38,		2,	1,		 100,	0,		/* silver   */				0,		0,			ITEM_NOT_BUYABLE | ITEM_DAMAGEABLE},
 {	IC_MONEY,				0,			INVALIDCURS,	0,				1,	135,		2,	1,		 300,	0,		/* gold			*/				0,		0,			ITEM_NOT_BUYABLE | ITEM_DAMAGEABLE},
 {	IC_KIT,					0,			REFUELCURS,	  0,				2,	 39,	 20,	0,		 250,	0,		/* gas can */					0,		0,			ITEM_DAMAGEABLE},
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
+{	IC_MISC,				0,			INVALIDCURS,	0,				0,	 61,		1,	1,		  20,	0,		/* Tex movie 1 */			0,		0,			0},
+{	IC_MISC,				0,			INVALIDCURS,	0,				0,	 62,		1,	1,		  20,	0,		/* Tex movie 2 */			0,		0,			0},
+{	IC_MISC,				0,			INVALIDCURS,	0,				0,	 63,		1,	1,		  20,	0,		/* Tex movie 3 */			0,		0,			0},
 
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
-{	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
+{	IC_MISC,				0,			INVALIDCURS,	0,				0,	 64,		1,	4,		 100,10,		/* lptp Trnsmttr */		0,		0,			0},
+{	IC_MISC,				0,			INVALIDCURS,	0,				0,	 66,		10,	4,		  25,	5,		/* CHEGUEVARA CANTEN*/0,		0,			ITEM_NOT_BUYABLE | ITEM_DAMAGEABLE },
+{	IC_MISC,				0,			INVALIDCURS,	0,				0,	 67,		1,	8,		  50,	2,		/* MERC_WRISTWATCH */	0,		0,			ITEM_NOT_BUYABLE | ITEM_DAMAGEABLE },
+{	IC_MISC,				0,			INVALIDCURS,	0,				0,	 69,	 10,	2,		  25,	1,		/* Sm GRVR CMBT KNF */0,		0,			ITEM_NOT_BUYABLE | ITEM_DAMAGEABLE },
+{	IC_MISC,				0,			INVALIDCURS,	0,				0,	 68,		8,	2,		  15,	0,		/* MERC_UMBRELLA */		0,		0,			ITEM_NOT_BUYABLE | ITEM_DAMAGEABLE | ITEM_UNAERODYNAMIC },
+{	IC_MISC,				0,			INVALIDCURS,	0,				1,	144,		1,	1,		   1,10,		/* Missile Inst. */		0,		0,			0},
 {	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
 {	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
 {	IC_NONE,				0,			INVALIDCURS,	0,				0,		0,		0,	0,		   0,	0,		/* nothing! */				0,		0,			0},
@@ -499,6 +499,9 @@ UINT16 Attachment[][2] =
 	{SILENCER, MAC10},
 	{SILENCER, THOMPSON},
 	{SILENCER, P90},
+	{SILENCER, CALICO_960},
+	{SILENCER, CALICO_950},
+	{SILENCER, MICRO_UZI},
 
 	{SNIPERSCOPE, COMMANDO},
 	{SNIPERSCOPE, AKSU74},
@@ -523,6 +526,13 @@ UINT16 Attachment[][2] =
 	{SNIPERSCOPE, MINIMI},
 	{SNIPERSCOPE, RPK74},
 	{SNIPERSCOPE, HK21E},
+	{SNIPERSCOPE, BARRETT},
+	{SNIPERSCOPE, CALICO_960},
+	{SNIPERSCOPE, PSG1},
+	{SNIPERSCOPE, L85},
+	{SNIPERSCOPE, TAR21},
+	{SNIPERSCOPE, VAL_SILENT},
+	{SNIPERSCOPE, CALICO_900},
 
 	{LASERSCOPE, GLOCK_17},
 	{LASERSCOPE, GLOCK_18},
@@ -561,6 +571,14 @@ UINT16 Attachment[][2] =
 	{LASERSCOPE, RPK74},
 	{LASERSCOPE, HK21E},
 	{LASERSCOPE, AUTOMAG_III},
+	{LASERSCOPE, BARRETT},
+	{LASERSCOPE, CALICO_960},
+	{LASERSCOPE, PSG1},
+	{LASERSCOPE, L85},
+	{LASERSCOPE, TAR21},
+	{LASERSCOPE, VAL_SILENT},
+	{LASERSCOPE, CALICO_900},
+	{LASERSCOPE, CALICO_960},
 
 	{BIPOD,	SKS},
 	{BIPOD,	DRAGUNOV},
@@ -580,6 +598,12 @@ UINT16 Attachment[][2] =
 	{BIPOD,	MINIMI},
 	{BIPOD,	RPK74},
 	{BIPOD,	HK21E},
+	{BIPOD, BARRETT},
+	{BIPOD, PSG1},
+	{BIPOD, VAL_SILENT},
+	{BIPOD, CALICO_900},
+	{BIPOD, L85},
+	{BIPOD, TAR21},
 
 	{DUCKBILL, M870},
 	{DUCKBILL, SPAS15},
@@ -600,6 +624,10 @@ UINT16 Attachment[][2] =
 	{UNDER_GLAUNCHER, MINIMI},
 	{UNDER_GLAUNCHER, RPK74},
 	{UNDER_GLAUNCHER, HK21E},
+	{UNDER_GLAUNCHER, VAL_SILENT},
+	{UNDER_GLAUNCHER, CALICO_900},
+	{UNDER_GLAUNCHER, L85},
+	{UNDER_GLAUNCHER, TAR21},
 
 	{SPRING_AND_BOLT_UPGRADE, GLOCK_17},
 	{SPRING_AND_BOLT_UPGRADE, GLOCK_18},
@@ -638,6 +666,15 @@ UINT16 Attachment[][2] =
 	{SPRING_AND_BOLT_UPGRADE, RPK74},
 	{SPRING_AND_BOLT_UPGRADE, HK21E},
 	{SPRING_AND_BOLT_UPGRADE, AUTOMAG_III},
+	{SPRING_AND_BOLT_UPGRADE, BARRETT},
+	{SPRING_AND_BOLT_UPGRADE, CALICO_960},
+	{SPRING_AND_BOLT_UPGRADE, PSG1},
+	{SPRING_AND_BOLT_UPGRADE, L85},
+	{SPRING_AND_BOLT_UPGRADE, TAR21},
+	{SPRING_AND_BOLT_UPGRADE, VAL_SILENT},
+	{SPRING_AND_BOLT_UPGRADE, CALICO_950},
+	{SPRING_AND_BOLT_UPGRADE, CALICO_900},
+	{SPRING_AND_BOLT_UPGRADE, MICRO_UZI},
 
 	{GUN_BARREL_EXTENDER, GLOCK_17},
 	{GUN_BARREL_EXTENDER, GLOCK_18},
@@ -676,6 +713,14 @@ UINT16 Attachment[][2] =
 	{GUN_BARREL_EXTENDER, RPK74},
 	{GUN_BARREL_EXTENDER, HK21E},
 	{GUN_BARREL_EXTENDER, AUTOMAG_III},
+	{GUN_BARREL_EXTENDER, BARRETT},
+	{GUN_BARREL_EXTENDER, CALICO_960},
+	{GUN_BARREL_EXTENDER, PSG1},
+	{GUN_BARREL_EXTENDER, L85},
+	{GUN_BARREL_EXTENDER, TAR21},
+	{GUN_BARREL_EXTENDER, CALICO_950},
+	{GUN_BARREL_EXTENDER, CALICO_900},
+	{GUN_BARREL_EXTENDER, MICRO_UZI},
 
 	{DETONATOR, TNT},
 	{DETONATOR, HMX},
@@ -707,6 +752,7 @@ UINT16 Attachment[][2] =
 	{CHEWING_GUM,			FUMBLE_PAK},
 	{BATTERIES,				XRAY_DEVICE},
 	{COPPER_WIRE,			LAME_BOY},
+	{COPPER_WIRE,			MERC_WRISTWATCH},
 	{0, 0}
 };
 
@@ -722,6 +768,8 @@ UINT16 Launchable[][2] =
 	{GL_SMOKE_GRENADE, UNDER_GLAUNCHER},
 	{MORTAR_SHELL, MORTAR},
 	{TANK_SHELL, TANK_CANNON},
+	{GL_FLARE, GLAUNCHER},
+	{GL_FLARE, UNDER_GLAUNCHER},
 	{0, 0}
 };
 
@@ -740,15 +788,19 @@ UINT16 CompatibleFaceItems[][2] =
 
 	{NIGHTGOGGLES,		EXTENDEDEAR},
 	{NIGHTGOGGLES,		WALKMAN},
+	{NIGHTGOGGLES,		GASMASK},
 	{NIGHTGOGGLES,		NOTHING},
 	{SUNGOGGLES,			EXTENDEDEAR},
 	{SUNGOGGLES,			WALKMAN},
 	{SUNGOGGLES,			NOTHING},
 	{UVGOGGLES,				EXTENDEDEAR},
 	{UVGOGGLES,				WALKMAN},
+	{UVGOGGLES,				GASMASK},
 	{UVGOGGLES,				NOTHING},
 	{GASMASK,					EXTENDEDEAR},
 	{GASMASK,					WALKMAN},
+	{GASMASK,					NIGHTGOGGLES},
+	{GASMASK,					UVGOGGLES},
 	{GASMASK,					NOTHING},
 
 	{ROBOT_REMOTE_CONTROL, NOTHING},
@@ -843,6 +895,7 @@ ComboMergeInfoStruct AttachmentComboMerge[] =
 	{STEEL_ROD,								{QUICK_GLUE,						DUCT_TAPE},					GUN_BARREL_EXTENDER },
 	{FUMBLE_PAK,							{XRAY_BULB,							CHEWING_GUM},				FLASH_DEVICE },	
 	{LAME_BOY,								{COPPER_WIRE,						NOTHING},						DISPLAY_UNIT },
+	{MERC_WRISTWATCH,					{COPPER_WIRE,						NOTHING},						DETONATOR },
 	{NOTHING,									{NOTHING,								NOTHING},						NOTHING },
 };
 
@@ -2175,7 +2228,8 @@ BOOLEAN ReloadGun( SOLDIERTYPE * pSoldier, OBJECTTYPE * pGun, OBJECTTYPE * pAmmo
 		}
 		else if (Magazine[Item[pAmmo->usItem].ubClassIndex].ubMagSize > Weapon[pGun->usItem].ubMagSize)
 		{
-			usNewAmmoItem = pAmmo->usItem - 1;
+			//usNewAmmoItem = pAmmo->usItem - 1;
+			usNewAmmoItem = FindAmmoIncludingType( Weapon[ pGun->usItem ].ubCalibre, Weapon[ pGun->usItem ].ubMagSize, Magazine[Item[pAmmo->usItem].ubClassIndex].ubAmmoType );
 			if (bReloadType == RELOAD_TOPOFF)
 			{
 				ubBulletsToMove = __min( pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize - pGun->ubGunShotsLeft );
@@ -2187,7 +2241,8 @@ BOOLEAN ReloadGun( SOLDIERTYPE * pSoldier, OBJECTTYPE * pGun, OBJECTTYPE * pAmmo
 		}
 		else // mag is smaller than weapon mag
 		{
-			usNewAmmoItem = pAmmo->usItem + 1;
+			//usNewAmmoItem = pAmmo->usItem + 1;
+			usNewAmmoItem = FindAmmoIncludingType( Weapon[ pGun->usItem ].ubCalibre, Weapon[ pGun->usItem ].ubMagSize, Magazine[Item[pAmmo->usItem].ubClassIndex].ubAmmoType );
 			if (bReloadType == RELOAD_TOPOFF)
 			{
 				ubBulletsToMove = __min( pAmmo->ubShotsLeft[0], Weapon[pGun->usItem].ubMagSize - pGun->ubGunShotsLeft );
@@ -2410,6 +2465,22 @@ INT8 FindAmmo( SOLDIERTYPE * pSoldier, UINT8 ubCalibre, UINT8 ubMagSize, INT8 bE
 	return( NO_SLOT );
 }
 
+UINT16 FindAmmoIncludingType( UINT8 ubCalibre, UINT8 ubMagSize, UINT8 ubType )
+{
+	INT32				iLoop;
+	INVTYPE *		pItem;
+
+	for ( iLoop = FIRST_AMMO; iLoop < FIRST_EXPLOSIVE; iLoop++)
+	{
+		pItem = &( Item[iLoop] );
+		if ( Magazine[pItem->ubClassIndex].ubCalibre == ubCalibre && Magazine[pItem->ubClassIndex].ubMagSize == ubMagSize && Magazine[pItem->ubClassIndex].ubAmmoType == ubType )
+		{
+			return( (UINT16)iLoop );
+		}
+	}
+	Assert( 0 );
+	return( NOTHING );
+}
 
 INT8 FindAmmoToReload( SOLDIERTYPE * pSoldier, INT8 bWeaponIn, INT8 bExcludeSlot )
 {
@@ -2452,7 +2523,12 @@ INT8 FindAmmoToReload( SOLDIERTYPE * pSoldier, INT8 bWeaponIn, INT8 bExcludeSlot
 				return( FindObj( pSoldier, TANK_SHELL ) );
 			case GLAUNCHER:
 			case UNDER_GLAUNCHER:
-				return( FindObjInObjRange( pSoldier, GL_HE_GRENADE, GL_SMOKE_GRENADE ) );
+				bSlot = FindObjInObjRange( pSoldier, GL_HE_GRENADE, GL_SMOKE_GRENADE );
+				if ( bSlot == NO_SLOT )
+				{
+					bSlot = FindObj( pSoldier, GL_FLARE );
+				}
+				return( bSlot );
 			default:
 				return( NO_SLOT );
 		}
@@ -2593,7 +2669,7 @@ BOOLEAN AttachObject( SOLDIERTYPE * pSoldier, OBJECTTYPE * pTargetObj, OBJECTTYP
 
 		// find an attachment position... 
 		// second half of this 'if' is for attaching GL grenades to a gun
-		if ( fValidLaunchable || pAttachment->usItem >= GL_HE_GRENADE && pAttachment->usItem <= GL_SMOKE_GRENADE )
+		if ( fValidLaunchable || (pAttachment->usItem >= GL_HE_GRENADE && pAttachment->usItem <= GL_SMOKE_GRENADE) || pAttachment->usItem == GL_FLARE )
 		{
 			// try replacing if possible
 			bAttachPos = FindAttachmentByClass( pTargetObj, Item[ pAttachment->usItem ].usItemClass );
@@ -2993,6 +3069,9 @@ BOOLEAN PlaceObject( SOLDIERTYPE * pSoldier, INT8 bPos, OBJECTTYPE * pObj )
 			KeyTable[ pObj->ubKeyID ].usSectorFound = SECTOR( pSoldier->sSectorX, pSoldier->sSectorY );
 		}
 	}
+
+	//handle the placing up of a new ja25 gun
+	HandleNewGunComment( pSoldier, pObj->usItem, FALSE );
 
 	ubSlotLimit = ItemSlotLimit( pObj->usItem, bPos );
 
@@ -4939,7 +5018,7 @@ BOOLEAN ApplyCanteen( SOLDIERTYPE * pSoldier, OBJECTTYPE * pObj, BOOLEAN *pfGood
 
   (*pfGoodAPs) = TRUE;
 
-	if (pObj->usItem != CANTEEN)
+	if (pObj->usItem != CANTEEN && pObj->usItem != CHE_GUEVARA_CANTEEN )
 	{
 		return( FALSE );
 	}

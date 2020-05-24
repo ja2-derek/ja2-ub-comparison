@@ -93,7 +93,10 @@ enum
 	AMMOMONST,
 	AMMOROCKET,
 	AMMODART,
-	AMMOFLAME,
+	AMMO_CB,				//Cannon ball
+	AMMO50,
+	AMMOCALICO_50,
+	AMMO9_VAL,
 };
 
 enum
@@ -225,7 +228,7 @@ typedef struct
 
 //GLOBALS
 
-extern WEAPONTYPE Weapon[ MAX_WEAPONS ];
+extern WEAPONTYPE Weapon[ MAX_WEAPONS + 1];
 extern ARMOURTYPE Armour[];
 extern MAGTYPE Magazine[];
 extern EXPLOSIVETYPE Explosive[];

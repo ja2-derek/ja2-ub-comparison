@@ -2436,7 +2436,7 @@ void HandleArmedObjectImpact( REAL_OBJECT *pObject )
 
 	if ( fDoImpact )
 	{
-		if ( pObject->Obj.usItem == BREAK_LIGHT )
+		if ( pObject->Obj.usItem == BREAK_LIGHT || pObject->Obj.usItem == GL_FLARE )
 		{
 			//if the light object will be created OFF the ground
 			if( pObject->Position.z > 0 )
