@@ -396,7 +396,7 @@ BOOLEAN DisplayPicturesOfCurrentTeam( void );
 void DisplayFaceOfDisplayedMerc( );
 void DisplayNumberOnCurrentTeam( void );
 void DisplayNumberDeparted( void );
-INT32 GetTotalDailyCostOfCurrentTeam( void );
+INT32 GetTotalAverageCostOfCurrentTeam( void );
 void DisplayCostOfCurrentTeam( void );
 INT32 GetLowestDailyCostOfCurrentTeam( void );
 INT32 GetHighestDailyCostOfCurrentTeam( void );
@@ -2798,14 +2798,15 @@ void DisplayNumberDeparted( void )
 }
 
 
-INT32 GetTotalDailyCostOfCurrentTeam( void )
+INT32 GetTotalAverageCostOfCurrentTeam( void )
 {
 	// will return the total daily cost of the current team
 
 	SOLDIERTYPE *pSoldier;	
 	INT32 cnt=0;
-	INT32 iCounter = 0;
+//	INT32 iCounter = 0;
 	INT32 iCostOfTeam = 0;
+	INT32	iNum=0;
 
 
 	 // first grunt
@@ -2820,7 +2821,22 @@ INT32 GetTotalDailyCostOfCurrentTeam( void )
 
 		 if( ( pSoldier->bActive) && ( pSoldier->bLife > 0 ) )
 		 {
-			 
+			 iNum++;
+
+			 if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER )
+			 {
+					iCostOfTeam += COST_OF_PROFILE;
+			 }
+			 else if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||  pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC )
+			 {
+				 iCostOfTeam += gMercProfiles[ pSoldier->ubProfile ].uiWeeklySalary;
+			 }
+			 else
+			 {
+				 iCostOfTeam += gMercProfiles[ pSoldier->ubProfile ].sSalary;
+			 }
+
+/*			 
 			 // valid soldier, get cost
 			 if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)
 			 {
@@ -2851,9 +2867,18 @@ INT32 GetTotalDailyCostOfCurrentTeam( void )
 					// no cost
 				 iCostOfTeam += 0;
 			 }
+*/
 		}
 	}
-	return iCostOfTeam;
+
+	if( iNum == 0 )
+	{
+		return( 0 );
+	}
+	else
+	{
+		return( iCostOfTeam /iNum );
+	}
 }
 
 INT32 GetLowestDailyCostOfCurrentTeam( void )
@@ -2862,7 +2887,7 @@ INT32 GetLowestDailyCostOfCurrentTeam( void )
 
 	SOLDIERTYPE *pSoldier;	
 	INT32 cnt=0;
-	INT32 iCounter = 0;
+//	INT32 iCounter = 0;
 	INT32 iLowest = 999999;
 //	INT32 iId =0;
 	INT32 iCost = 0;
@@ -2879,6 +2904,27 @@ INT32 GetLowestDailyCostOfCurrentTeam( void )
 
 		if( ( pSoldier->bActive ) && !( pSoldier->uiStatusFlags & SOLDIER_VEHICLE ) && ( pSoldier->bLife > 0 ) )
 		{
+			 if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER )
+			 {
+					iCost = COST_OF_PROFILE;
+			 }
+			 else if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||  pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC )
+			 {
+				 iCost = gMercProfiles[ pSoldier->ubProfile ].uiWeeklySalary;
+			 }
+			 else
+			 {
+				 iCost = gMercProfiles[ pSoldier->ubProfile ].sSalary;
+			 }
+
+			 if( iCost <= iLowest )
+			 {
+				 iLowest = iCost;
+			 }
+		}
+	}
+
+/*
 			 // valid soldier, get cost
 			 if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)
 			 {
@@ -2917,6 +2963,7 @@ INT32 GetLowestDailyCostOfCurrentTeam( void )
 		 }
 		 
 		}
+*/
 
 	// if no mercs, send 0
 	if( iLowest == 999999 )
@@ -2935,7 +2982,7 @@ INT32 GetHighestDailyCostOfCurrentTeam( void )
 
 	SOLDIERTYPE *pSoldier;	
 	INT32 cnt=0;
-	INT32 iCounter = 0;
+//	INT32 iCounter = 0;
 	INT32 iHighest = 0;
 //	INT32 iId =0;
 	INT32 iCost = 0;
@@ -2952,7 +2999,26 @@ INT32 GetHighestDailyCostOfCurrentTeam( void )
 
 		 if( ( pSoldier->bActive) && !( pSoldier->uiStatusFlags & SOLDIER_VEHICLE ) && ( pSoldier->bLife > 0 ) )
 		 {
-			 
+			 if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER )
+			 {
+					iCost = COST_OF_PROFILE;
+			 }
+			 else if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||  pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC )
+			 {
+				 iCost = gMercProfiles[ pSoldier->ubProfile ].uiWeeklySalary;
+			 }
+			 else
+			 {
+				 iCost = gMercProfiles[ pSoldier->ubProfile ].sSalary;
+			 }
+
+			 if( iCost >= iHighest )
+			 {
+				 iHighest = iCost;
+			 }
+		 }
+	}
+/*			 
 			 // valid soldier, get cost
 			 if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)
 			 {
@@ -2990,8 +3056,8 @@ INT32 GetHighestDailyCostOfCurrentTeam( void )
 				 iHighest = iCost;
 			 }
 		 }
-		 
-		}
+*/
+	 
 	return iHighest;
 }
 
@@ -3015,7 +3081,7 @@ void DisplayCostOfCurrentTeam( void )
 		// daily cost
 		mprintf(  PERS_CURR_TEAM_COST_X, PERS_CURR_TEAM_COST_Y, pPersonelTeamStrings[ 2 ] );
 
-	  swprintf( sString, L"%d", GetTotalDailyCostOfCurrentTeam( ) );
+	  swprintf( sString, L"%d", GetTotalAverageCostOfCurrentTeam( ) );
 		InsertCommasForDollarFigure( sString );
 		InsertDollarSignInToString( sString );
 
@@ -3062,7 +3128,7 @@ INT32 GetIdOfDepartedMercWithHighestStat( INT32 iStat )
 	INT32 iValue =0;
 	MERCPROFILESTRUCT *pTeamSoldier;
 	INT32 cnt=0;
-	INT32 iCounter =0;
+//	INT32 iCounter =0;
 	INT8 bCurrentList = 0;
 	INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
 	BOOLEAN fNotDone = TRUE;
@@ -3238,7 +3304,7 @@ INT32 GetIdOfDepartedMercWithLowestStat( INT32 iStat )
 	INT32 iValue =9999999;
 	MERCPROFILESTRUCT *pTeamSoldier;
 	INT32 cnt=0;
-	INT32 iCounter =0;
+//	INT32 iCounter =0;
 	INT8 bCurrentList = 0;
 	INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
 	BOOLEAN fNotDone = TRUE;
@@ -3771,7 +3837,7 @@ INT32 GetAvgStatOfPastTeamStat( INT32 iStat )
 	INT32 iTotalStatValue = 0;
 	INT32 iId = -1;
 	MERCPROFILESTRUCT *pTeamSoldier;
-	INT32 iCounter =0;
+//	INT32 iCounter =0;
 	INT8 bCurrentList = 0;
 	INT16 *bCurrentListValue = LaptopSaveInfo.ubDeadCharactersList;
 	BOOLEAN fNotDone = TRUE;
@@ -4455,7 +4521,7 @@ void DisplayPersonnelTeamStats( void )
 INT32 GetNumberOfPastMercsOnPlayersTeam( void )
 {
 	INT32 iPastNumberOfMercs = 0;
-	INT32 iCounter = 0;
+//	INT32 iCounter = 0;
 	// will run through the alist of past mercs on the players team and return thier number
 
 	// dead
@@ -6819,9 +6885,13 @@ void DisplayEmploymentinformation( INT32 iId, INT32 iSlot )
 		//Remaining Contract:
 		case 0:
 		{
-			UINT32 uiTimeUnderThisDisplayAsHours = 24*60;
-			UINT32 uiMinutesInDay = 24 * 60;
+//			UINT32 uiTimeUnderThisDisplayAsHours = 24*60;
+//			UINT32 uiMinutesInDay = 24 * 60;
 
+			wcscpy( sString, gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
+			mprintf((INT16)(pPersonnelScreenPoints[iCounter].x+(iSlot*TEXT_BOX_WIDTH)),pPersonnelScreenPoints[iCounter].y,pPersonnelScreenStrings[PRSNL_TXT_CURRENT_CONTRACT]);
+
+/*ja25:
 				if(Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC || Menptr[iId].ubProfile == SLAY )
 				{
 					INT32 iTimeLeftOnContract = CalcTimeLeftOnMercContract( &Menptr[iId] );
@@ -6853,8 +6923,6 @@ void DisplayEmploymentinformation( INT32 iId, INT32 iSlot )
 				}
 				else if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__MERC)
 				{
-//					swprintf(sString, L"%d%s / %d%s",Menptr[iId].iTotalContractLength, gpStrategicString[ STR_PB_DAYS_ABBREVIATION ], ( GetWorldTotalMin( ) -Menptr[iId].iStartContractTime ) / ( 24 * 60 ), gpStrategicString[ STR_PB_DAYS_ABBREVIATION ] );
-
 					wcscpy( sString, gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
 					mprintf((INT16)(pPersonnelScreenPoints[iCounter].x+(iSlot*TEXT_BOX_WIDTH)),pPersonnelScreenPoints[iCounter].y,pPersonnelScreenStrings[PRSNL_TXT_CURRENT_CONTRACT]);
 				}
@@ -6863,7 +6931,7 @@ void DisplayEmploymentinformation( INT32 iId, INT32 iSlot )
 					wcscpy( sString, gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
 					mprintf((INT16)(pPersonnelScreenPoints[iCounter].x+(iSlot*TEXT_BOX_WIDTH)),pPersonnelScreenPoints[iCounter].y,pPersonnelScreenStrings[PRSNL_TXT_CURRENT_CONTRACT]);
 				}
-
+*/
 		   FindFontRightCoordinates((INT16)(pPersonnelScreenPoints[iCounter].x+(iSlot*TEXT_BOX_WIDTH)+Prsnl_DATA_OffSetX),0,TEXT_BOX_WIDTH-20,0,sString, PERS_FONT,  &sX, &sY);
        mprintf(sX,pPersonnelScreenPoints[iCounter].y,sString);		 
 		}
@@ -6888,56 +6956,26 @@ void DisplayEmploymentinformation( INT32 iId, INT32 iSlot )
 		 case 3:
 		   // cost (PRSNL_TXT_TOTAL_COST)
 
-/*
-			 if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)
-			 {
-				 UINT32 uiDailyCost = 0;
+//				swprintf( sString, L"%d", gMercProfiles[ Menptr[ iId ].ubProfile ].uiTotalCostToDate );
 
-				 if( Menptr[iId].bTypeOfLastContract == CONTRACT_EXTEND_2_WEEK )
+				 if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER )
 				 {
-					 // 2 week contract
-					 uiDailyCost = gMercProfiles[ Menptr[ iId ].ubProfile ].uiBiWeeklySalary / 14;
+						swprintf( sString, L"%d", COST_OF_PROFILE );
 				 }
-				 else if( Menptr[iId].bTypeOfLastContract == CONTRACT_EXTEND_1_WEEK )
+				 else if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||  Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__MERC )
 				 {
-					 // 1 week contract
-					 uiDailyCost = gMercProfiles[ Menptr[ iId ].ubProfile ].uiWeeklySalary / 7;
+						swprintf( sString, L"%d", gMercProfiles[ Menptr[ iId ].ubProfile ].uiWeeklySalary );
 				 }
 				 else
 				 {
-					 uiDailyCost = gMercProfiles[ Menptr[ iId ].ubProfile ].sSalary;
+						swprintf( sString, L"%d", gMercProfiles[ Menptr[ iId ].ubProfile ].sSalary );
 				 }
 
-//				 swprintf( sString, L"%d",uiDailyCost * Menptr[ iId ].iTotalContractLength );
-				 swprintf( sString, L"%d", gMercProfiles[ Menptr[ iId ].ubProfile ].uiTotalCostToDate );
-			 }
-			 else if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__MERC)
-			 {
-//					swprintf( sString, L"%d",gMercProfiles[ Menptr[ iId ].ubProfile ].sSalary * gMercProfiles[ Menptr[ iId ].ubProfile ].iMercMercContractLength );
-					swprintf( sString, L"%d", gMercProfiles[ Menptr[ iId ].ubProfile ].uiTotalCostToDate );
-			 }
-			 else
-			 {
-				 //Display a $0 amount
-//				 swprintf( sString, L"0" );
-
-				 swprintf( sString, L"%d", gMercProfiles[ Menptr[ iId ].ubProfile ].uiTotalCostToDate );
-			 }
-*/
-				swprintf( sString, L"%d", gMercProfiles[ Menptr[ iId ].ubProfile ].uiTotalCostToDate );
 
 				// insert commas and dollar sign
 				InsertCommasForDollarFigure( sString );
 				InsertDollarSignInToString( sString );
 
-/*
-DEF:3/19/99:
-			 if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__MERC )
-			 {
-			   swprintf( sStringA, L"%s", pPersonnelScreenStrings[ PRSNL_TXT_UNPAID_AMOUNT ] );
-			 }
-			 else
-*/
 			 {
 				 swprintf( sStringA, L"%s", pPersonnelScreenStrings[ PRSNL_TXT_TOTAL_COST ]  );
 			 }
@@ -6950,6 +6988,9 @@ DEF:3/19/99:
      	 
 			 if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC)
 			 {
+	 				swprintf( sString, L"%s", gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
+
+				 /*
 				 // daily rate
 				 if( Menptr[iId].bTypeOfLastContract == CONTRACT_EXTEND_2_WEEK )
 				 {
@@ -6975,26 +7016,25 @@ DEF:3/19/99:
 				   InsertDollarSignInToString( sStringA );
 					 swprintf( sString,  L"%s", sStringA );
 				 }
+				 */
 			 }
 			 else if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__MERC)
 			 {
-//DEF: 99/2/7
-//				 swprintf( sStringA, L"%d", gMercProfiles[Menptr[ iId ].ubProfile].sSalary * Menptr[ iId ].iTotalContractLength);
-				 swprintf( sStringA, L"%d", gMercProfiles[Menptr[ iId ].ubProfile].sSalary );
-				 InsertCommasForDollarFigure( sStringA );
-				 InsertDollarSignInToString( sStringA );
-				 swprintf( sString,   L"%s", sStringA );
+				swprintf( sString, L"%s", gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
+//				 swprintf( sStringA, L"%d", gMercProfiles[Menptr[ iId ].ubProfile].sSalary );
+//				 InsertCommasForDollarFigure( sStringA );
+//				 InsertDollarSignInToString( sStringA );
+//				 swprintf( sString,   L"%s", sStringA );
 			 }
 
 			 else
 			 {
 				 //Display a $0 amount
-//				 swprintf( sString, L"0" );
-//				 InsertDollarSignInToString( sString );
-				 swprintf( sStringA, L"%d", gMercProfiles[Menptr[ iId ].ubProfile].sSalary );
-				 InsertCommasForDollarFigure( sStringA );
-				 InsertDollarSignInToString( sStringA );
-				 swprintf( sString,   L"%s", sStringA );
+					swprintf( sString, L"%s", gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
+//				 swprintf( sStringA, L"%d", gMercProfiles[Menptr[ iId ].ubProfile].sSalary );
+//				 InsertCommasForDollarFigure( sStringA );
+//				 InsertDollarSignInToString( sStringA );
+//				 swprintf( sString,   L"%s", sStringA );
 			 }
 
 			 FindFontRightCoordinates((INT16)(pPersonnelScreenPoints[iCounter].x+(iSlot*TEXT_BOX_WIDTH)+Prsnl_DATA_OffSetX),0,TEXT_BOX_WIDTH-20,0,sString, PERS_FONT,  &sX, &sY);
@@ -7014,6 +7054,8 @@ DEF:3/19/99:
 			 //if its a merc merc, display the salary oweing
 			if( Menptr[iId].ubWhatKindOfMercAmI == MERC_TYPE__MERC )
 			{
+
+/*
 				mprintf((INT16)(pPersonnelScreenPoints[iCounter-1].x+(iSlot*TEXT_BOX_WIDTH)),pPersonnelScreenPoints[iCounter-1].y,pPersonnelScreenStrings[PRSNL_TXT_UNPAID_AMOUNT]);
 
 				swprintf( sString, L"%d", gMercProfiles[Menptr[ iId ].ubProfile].sSalary * gMercProfiles[Menptr[ iId ].ubProfile ].iMercMercContractLength );
@@ -7022,7 +7064,9 @@ DEF:3/19/99:
 
 				FindFontRightCoordinates((INT16)(pPersonnelScreenPoints[iCounter-1].x+(iSlot*TEXT_BOX_WIDTH)+Prsnl_DATA_OffSetX),0,TEXT_BOX_WIDTH-20,0,sString, PERS_FONT,  &sX, &sY);
 				mprintf(sX,pPersonnelScreenPoints[iCounter-1].y,sString);
+*/
 			}
+/*
 			else
 			{
 				mprintf((INT16)(pPersonnelScreenPoints[iCounter-1].x+(iSlot*TEXT_BOX_WIDTH)),pPersonnelScreenPoints[iCounter-1].y,pPersonnelScreenStrings[PRSNL_TXT_MED_DEPOSIT]);		
@@ -7036,7 +7080,7 @@ DEF:3/19/99:
 				FindFontRightCoordinates((INT16)(pPersonnelScreenPoints[iCounter-1].x+(iSlot*TEXT_BOX_WIDTH)+Prsnl_DATA_OffSetX),0,TEXT_BOX_WIDTH-20,0,sString, PERS_FONT,  &sX, &sY);
 				mprintf(sX,pPersonnelScreenPoints[iCounter-1].y,sString);
 			}
-
+*/
 				 
 		 break;
 
