@@ -962,6 +962,10 @@ INT32 EnterLaptop()
   gfShowBookmarks=FALSE;
   LoadBookmark( );
   SetBookMark(AIM_BOOKMARK);
+
+	//Set merc to be available immediately
+	SetBookMark( MERC_BOOKMARK );
+
 	LoadLoadPending( );
 
 	DrawDeskTopBackground( );
