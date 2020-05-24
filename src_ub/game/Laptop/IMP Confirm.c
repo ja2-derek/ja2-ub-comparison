@@ -282,12 +282,15 @@ void  BtnIMPConfirmYes(GUI_BUTTON *btn,INT32 reason)
 				return;
 			}
 
-			LaptopSaveInfo.fIMPCompletedFlag = TRUE;
 			if( LaptopSaveInfo.iCurrentBalance < COST_OF_PROFILE )
 			{
 				// not enough
 		    return;
 			}
+
+			// line moved by CJC Nov 28 2002 to AFTER the check for money
+			LaptopSaveInfo.fIMPCompletedFlag = TRUE;
+
 			// charge the player
 			AddTransactionToPlayersBook(IMP_PROFILE, (UINT8)( ubMercID ), GetWorldTotalMin( ), - ( COST_OF_PROFILE ) );
       AddHistoryToPlayersLog( HISTORY_CHARACTER_GENERATED, 0,GetWorldTotalMin( ), -1, -1 );
