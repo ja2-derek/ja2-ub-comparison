@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Laptop All.h"
+	#include "IMP Skill Trait.h"
 #else
 	#include "CharProfile.h"
 	#include "IMP Attribute Selection.h"
@@ -1601,6 +1602,7 @@ INT32 GetCurrentAttributeValue( INT32 iAttribute )
 
 void SetAttributes( void )
 {
+	INT8	bExtraPoints;
 /*
   // set attributes and skills based on what is in charprofile.c
     
@@ -1638,6 +1640,15 @@ void SetAttributes( void )
 
 	// reset bonus pts
 	iCurrentBonusPoints = 40;
+
+	//Determine if the player has any extra points 
+	bExtraPoints = DoesPlayerHaveExtraAttibutePointsToDistributeBasedOnSkillSelection();
+
+	if( bExtraPoints > 0 )
+	{
+		iCurrentBonusPoints += bExtraPoints;
+	}
+	
 
 	ResetIncrementCharacterAttributes( );
 
