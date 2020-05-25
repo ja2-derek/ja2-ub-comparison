@@ -284,16 +284,32 @@ Ja25 No meanwhiles
 		case EVENT_BEGIN_CREATURE_QUEST:
 			break;
 		case EVENT_CREATURE_SPREAD:
+			Assert( 0 );
+/*
+jA25 creatures
 			SpreadCreatures();
+*/
 			break;
 		case EVENT_DECAY_CREATURES:
+			Assert( 0 );
+/*
+jA25 creatures
 			DecayCreatures();
+*/
 			break;
 		case EVENT_CREATURE_NIGHT_PLANNING:
+			Assert( 0 );
+/*
+jA25 creatures
 			CreatureNightPlanning();
+*/
 			break;
 		case EVENT_CREATURE_ATTACK:
+			Assert( 0 );
+/*
+Ja25 no creatures
 			CreatureAttackTown( (UINT8)pEvent->uiParam, FALSE );
+*/
 			break;
 		case EVENT_EVALUATE_QUEEN_SITUATION:
 			Assert( 0 );

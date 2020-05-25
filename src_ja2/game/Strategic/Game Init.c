@@ -317,7 +317,12 @@ void ShutdownStrategicLayer()
 	DeleteAllStrategicEvents();
 	RemoveAllGroups();
 	TrashUndergroundSectorInfo();
+
+/*
+Ja25 No creatures
 	DeleteCreatureDirectives();
+*/
+
 /*
 Ja25 No strategic ai
 	KillStrategicAI();

@@ -3346,6 +3346,8 @@ Ja25 no terrorists
 	}
 	else	// enemies and creatures... should any of this stuff not be called if a creature dies?
 	{
+/*
+Ja25 No queen monster
     if ( pSoldierOld->ubBodyType == QUEENMONSTER )
     {
 			SOLDIERTYPE *pKiller = NULL;
@@ -3357,6 +3359,7 @@ Ja25 no terrorists
 				BeginHandleQueenBitchDeath( pKiller, pSoldierOld->sGridNo, pSoldierOld->bLevel );
 			}
     }
+*/
 
 		if ( pSoldierOld->bTeam == ENEMY_TEAM )
 		{
@@ -3384,6 +3387,7 @@ Ja25 no terrorists
 			HandleMoraleEvent( NULL, MORALE_DEIDRANNA_KILLED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ  );
 			MaximizeLoyaltyForDeidrannaKilled( );
 		}
+		/*
 		else if ( pSoldierOld->ubBodyType == QUEENMONSTER )
 		{
 			HandleMoraleEvent( NULL, MORALE_MONSTER_QUEEN_KILLED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ  );
@@ -3393,6 +3397,7 @@ Ja25 no terrorists
 			HandleNPCDoAction( 0, NPC_ACTION_GRANT_EXPERIENCE_5, 0 );
 
 		}
+*/
 	}
 
 

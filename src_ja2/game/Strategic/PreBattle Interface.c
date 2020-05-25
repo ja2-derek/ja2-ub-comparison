@@ -256,9 +256,13 @@ void InitPreBattleInterface( GROUP *pBattleGroup, BOOLEAN fPersistantPBI )
 		}
 		else
 		{
+			Assert( 0 );
+/*
+Ja25 no creatures
 			gubPBSectorX = (UINT8)SECTORX( gubSectorIDOfCreatureAttack );
 			gubPBSectorY = (UINT8)SECTORY( gubSectorIDOfCreatureAttack );
 			gubPBSectorZ = 0;
+*/
 		}
 	}
 	else

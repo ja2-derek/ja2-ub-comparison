@@ -744,11 +744,15 @@ BOOLEAN	SetCurrentWorldSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 		{
 			PrepareEnemyForSectorBattle();
 		}
+
+/*
+Ja25 no creatures
 		if( gubNumCreaturesAttackingTown && !gbWorldSectorZ && 
 				gubSectorIDOfCreatureAttack == SECTOR( gWorldSectorX, gWorldSectorY ) )
 		{
 			PrepareCreaturesForBattle();
 		}
+*/
 		if( gfGotoSectorTransition )
 		{
 			BeginLoadScreen( );
@@ -783,10 +787,13 @@ BOOLEAN	SetCurrentWorldSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 	{
     StopAnyCurrentlyTalkingSpeech( );
 
+/*
+Ja25 no creatures
 		if( gWorldSectorX == 9 && gWorldSectorY == 10 && gbWorldSectorZ == 2 )
 		{
 			InitCreatureQuest(); //Ignored if already active.
 		}
+*/
 	}
 
 	//Stop playing any music -- will fade out.
@@ -916,16 +923,19 @@ BOOLEAN	SetCurrentWorldSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
     gTacticalStatus.sCreatureTenseQuoteDelay = (INT16)( 10 + Random( 20 ) );
 
     {
-      INT16 sWarpWorldX;
-      INT16 sWarpWorldY;
-      INT8  bWarpWorldZ;
-      INT16 sWarpGridNo;
+//      INT16 sWarpWorldX;
+//      INT16 sWarpWorldY;
+//      INT8  bWarpWorldZ;
+//      INT16 sWarpGridNo;
 
+/*
+Ja25 No creatures, therefore not in creature layer to get teleported out of
       if ( GetWarpOutOfMineCodes( &sWarpWorldX, &sWarpWorldY, &bWarpWorldZ, &sWarpGridNo ) && gbWorldSectorZ >= 2 )
       {
         gTacticalStatus.uiFlags |= IN_CREATURE_LAIR;
       }
       else
+*/
       {
         gTacticalStatus.uiFlags &= ( ~IN_CREATURE_LAIR );
       }
@@ -1042,8 +1052,10 @@ void PrepareLoadedSector()
 		//additional checking.
 
 
+/*
+Ja25 no creatures
 		PrepareCreaturesForBattle();
-
+*/
 		PrepareMilitiaForTactical();
 
 		// OK, set varibles for entring this new sector...

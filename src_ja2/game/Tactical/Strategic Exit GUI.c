@@ -441,6 +441,8 @@ BOOLEAN InitSectorExitMenu( UINT8 ubDirection, INT16 sAdditionalData )
 
   if ( gbWorldSectorZ >= 2 && gubQuest[ QUEST_CREATURES ] == QUESTDONE )
   {
+/*
+Ja25 No creatures, therefore not in creature layer to get teleported out of
     if ( GetWarpOutOfMineCodes( &gsWarpWorldX, &gsWarpWorldY, &gbWarpWorldZ, &gsWarpGridNo ) )
     {
       // ATE: Check if we are in a creature lair and bring up box if so....
@@ -448,6 +450,7 @@ BOOLEAN InitSectorExitMenu( UINT8 ubDirection, INT16 sAdditionalData )
 
       return( TRUE );
     }
+*/
   }
 
   return( InternalInitSectorExitMenu( ubDirection, sAdditionalData ) );

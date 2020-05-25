@@ -440,11 +440,14 @@ BOOLEAN StartMusicBasedOnMode( )
 		case MUSIC_TACTICAL_NOTHING:
 			// ATE: Don't fade in 
 			gbFadeSpeed = (INT8)uiMusicVolume;
+/*
+Ja25 no creatures
 			if( gfUseCreatureMusic )
 			{
 				MusicPlay( CREEPY_MUSIC );
 			}
 			else
+*/
 			{
 				MusicPlay( bNothingModeSong );
 				bNothingModeSong = NOTHING_A_MUSIC + (INT8)Random( 4 );
@@ -454,11 +457,14 @@ BOOLEAN StartMusicBasedOnMode( )
 		case MUSIC_TACTICAL_ENEMYPRESENT:
 			// ATE: Don't fade in EnemyPresent...
 			gbFadeSpeed = (INT8)uiMusicVolume;
+/*
+Ja25 no creatures
 			if( gfUseCreatureMusic )
 			{
 				MusicPlay( CREEPY_MUSIC );
 			}
 			else
+*/
 			{
 				MusicPlay( bEnemyModeSong );
 				bEnemyModeSong = TENSOR_A_MUSIC + (INT8)Random( 3 );
@@ -468,11 +474,14 @@ BOOLEAN StartMusicBasedOnMode( )
 		case MUSIC_TACTICAL_BATTLE:
 			// ATE: Don't fade in 
 			gbFadeSpeed = (INT8)uiMusicVolume;
+/*
+Ja25 no creatures
 			if( gfUseCreatureMusic )
 			{
 				MusicPlay( CREATURE_BATTLE_MUSIC );
 			}
 			else
+*/
 			{
 				MusicPlay( bBattleModeSong );
 			}
@@ -486,10 +495,13 @@ BOOLEAN StartMusicBasedOnMode( )
 			MusicPlay( TRIUMPH_MUSIC );
 			gbVictorySongCount++;
 
+/*
+Ja25 no creatures
 			if( gfUseCreatureMusic && !gbWorldSectorZ )
 			{ //We just killed all the creatures that just attacked the town.
 				gfUseCreatureMusic = FALSE;
 			}
+*/
 			break;
 
 		case MUSIC_TACTICAL_DEATH:

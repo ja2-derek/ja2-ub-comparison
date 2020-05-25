@@ -283,8 +283,6 @@ void EndTacticalBattleForEnemy()
 		pSector->ubAdminsInBattle = 0;
 		pSector->ubTroopsInBattle = 0;
 		pSector->ubElitesInBattle = 0;
-		pSector->ubNumCreatures = 0;
-		pSector->ubCreaturesInBattle = 0;
 	}
 	else	// negative
 		return;
@@ -836,35 +834,6 @@ JA25:  No mike or iggy
 						if( pSector->ubElitesInBattle )
 						{
 							pSector->ubElitesInBattle--;
-						}
-						break;
-					case SOLDIER_CLASS_CREATURE:
-						if( pSector->ubNumCreatures )
-						{
-							pSector->ubNumCreatures--;
-						}
-						if( pSector->ubCreaturesInBattle )
-						{
-							pSector->ubCreaturesInBattle--;
-						}
-
-						if( !pSector->ubNumCreatures && gWorldSectorX != 9 && gWorldSectorY != 10 )
-						{ //If the player has successfully killed all creatures in ANY underground sector except J9
-							//then cancel any pending creature town attack.
-							DeleteAllStrategicEventsOfType( EVENT_CREATURE_ATTACK );
-						}
-
-						// a monster has died.  Post an event to immediately check whether a mine has been cleared.
-						AddStrategicEventUsingSeconds( EVENT_CHECK_IF_MINE_CLEARED, GetWorldTotalSeconds() + 15, 0);
-
-						if( pSoldier->ubBodyType == QUEENMONSTER )
-						{
-							//Need to call this, as the queen is really big, and killing her leaves a bunch 
-							//of bad tiles in behind her.  Calling this function cleans it up.
-							InvalidateWorldRedundency();
-							//Now that the queen is dead, turn off the creature quest.
-							EndCreatureQuest();
-							EndQuest( QUEST_CREATURES, gWorldSectorX, gWorldSectorY );
 						}
 						break;
 				}

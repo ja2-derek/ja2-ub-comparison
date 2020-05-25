@@ -1268,6 +1268,10 @@ void CalcBestStab(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab, BOOLEAN fBladeAt
 
 void CalcTentacleAttack(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab )
 {
+	Assert( 0 );
+/*
+Ja25: replaced these weapons
+
  UINT32 uiLoop;
  INT32 iAttackValue;
  INT32 iThreatValue,iHitRate,iBestHitRate, iEstDamage;
@@ -1415,6 +1419,7 @@ void CalcTentacleAttack(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestStab )
 
     }
   }
+*/
 }
 
 UINT8 NumMercsCloseTo( INT16 sGridNo, UINT8 ubMaxDist )
@@ -1547,6 +1552,8 @@ INT32 EstimateShotDamage(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ub
 		iDamage = AMMO_DAMAGE_ADJUSTMENT_HP( iDamage );
 	}
 
+/*
+Ja25: replaced these weapons
 	if (ubAmmoType == AMMO_MONSTER)
 	{
 		// cheat and emphasize shots
@@ -1565,6 +1572,7 @@ INT32 EstimateShotDamage(SOLDIERTYPE *pSoldier, SOLDIERTYPE *pOpponent, UINT8 ub
 				break;
 		}
   }
+*/
 
  if (iDamage < 1)
    iDamage = 1;  // assume we can do at LEAST 1 pt minimum damage

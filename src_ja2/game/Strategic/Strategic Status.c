@@ -200,6 +200,8 @@ void HandleEnricoEmail(void)
 	UINT8 ubCurrentProgress = CurrentPlayerProgressPercentage();
 	UINT8 ubHighestProgress = HighestPlayerProgressPercentage();
 
+/*
+Ja25:  no creatures
 	// if creatures have attacked a mine (doesn't care if they're still there or not at the moment)
 	if (HasAnyMineBeenAttackedByMonsters() && !(gStrategicStatus.usEnricoEmailFlags & ENRICO_EMAIL_SENT_CREATURES))
 	{
@@ -207,8 +209,9 @@ void HandleEnricoEmail(void)
 		gStrategicStatus.usEnricoEmailFlags |= ENRICO_EMAIL_SENT_CREATURES;
 		return;	// avoid any other E-mail at the same time
 	}
+*/
 
-
+/* enrico emails */
 	if ((ubCurrentProgress >= SOME_PROGRESS_THRESHOLD) && !(gStrategicStatus.usEnricoEmailFlags & ENRICO_EMAIL_SENT_SOME_PROGRESS))
 	{
 		AddEmail(ENRICO_PROG_20, ENRICO_PROG_20_LENGTH, MAIL_ENRICO, GetWorldTotalMin());

@@ -1912,6 +1912,9 @@ void AssignCreatureInventory( SOLDIERTYPE *pSoldier )
 	// never get dropped, because they're not real items!
 	switch( pSoldier->ubBodyType)
 	{
+/*
+Ja25 No creatures
+
 		case ADULTFEMALEMONSTER:
 			CreateItem( CREATURE_OLD_FEMALE_CLAWS,	100, &(pSoldier->inv[HANDPOS]) );
 			CreateItem( CREATURE_OLD_FEMALE_HIDE,		100, &(pSoldier->inv[HELMETPOS]) );
@@ -1963,6 +1966,7 @@ void AssignCreatureInventory( SOLDIERTYPE *pSoldier )
 			// she can't drop anything, because the items are unreachable anyways (she's too big!)
 			uiChanceToDrop = 0;
 			break;
+*/
 		case BLOODCAT:
 			CreateItem( BLOODCAT_CLAW_ATTACK,		100, &(pSoldier->inv[HANDPOS]) );
 			CreateItem( BLOODCAT_BITE,		100, &(pSoldier->inv[SECONDHANDPOS]) );

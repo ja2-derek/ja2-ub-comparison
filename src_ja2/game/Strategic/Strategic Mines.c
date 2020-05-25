@@ -1070,10 +1070,14 @@ BOOLEAN IsHisMineDisloyal( UINT8 ubMinerProfileId )
 
 BOOLEAN IsHisMineInfested( UINT8 ubMinerProfileId )
 {
+	//Ja25 no creatures
+	return( FALSE );
+/*
 	UINT8 ubMineIndex;
 
 	ubMineIndex = GetHeadMinersMineIndex( ubMinerProfileId );
 	return(!MineClearOfMonsters( ubMineIndex ));
+*/
 }
 
 BOOLEAN IsHisMineLostAndRegained( UINT8 ubMinerProfileId )
@@ -1133,6 +1137,8 @@ void QueenHasRegainedMineSector(INT8 bMineIndex)
 
 BOOLEAN HasAnyMineBeenAttackedByMonsters(void)
 {
+/*
+Ja25 no creatures
 	UINT8 ubMineIndex;
 
 	// find which mine this guy represents
@@ -1143,7 +1149,7 @@ BOOLEAN HasAnyMineBeenAttackedByMonsters(void)
 			return(TRUE);
 		}
 	}
-
+*/
 	return(FALSE);
 }
 
@@ -1307,7 +1313,8 @@ BOOLEAN AreThereMinersInsideThisMine( UINT8 ubMineIndex )
 	// mine not empty
 	// mine clear of any monsters
 	// the "shutdown permanently" flag is only used for the player never receiving the income - miners will keep mining
-	if ( ( !pMineStatus->fEmpty ) && MineClearOfMonsters( ubMineIndex ) )
+//JA25 no creatures	if ( ( !pMineStatus->fEmpty ) && MineClearOfMonsters( ubMineIndex ) )
+	if( ( !pMineStatus->fEmpty ) )
 	{
 		return( TRUE );
 	}

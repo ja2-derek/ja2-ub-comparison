@@ -1349,10 +1349,13 @@ Ja25 no meanwhiles
 		return( FALSE );
 	}
 
+/*
+Ja25 no creatures
 	if( PlayerGroupIsInACreatureInfestedMine() )
 	{
 		return FALSE;
 	}
+*/
 
 	return( TRUE );
 }

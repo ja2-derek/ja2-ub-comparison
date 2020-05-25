@@ -10335,10 +10335,13 @@ void TellPlayerWhyHeCantCompressTime( void )
 			InitPreBattleInterface( NULL, FALSE );
 		}
 	}
+/*
+ja25 no creatures
 	else if( PlayerGroupIsInACreatureInfestedMine() )
 	{
 		DoMapMessageBox( MSG_BOX_BASIC_STYLE, gzLateLocalizedString[ 28 ], MAP_SCREEN, MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback );
 	}
+*/
 }
 
 
@@ -11986,9 +11989,13 @@ void HandlePostAutoresolveMessages()
 	//are "virtually" murdered and loyalty hits will be processed.
 	if( gsCiviliansEatenByMonsters >= 1 )
 	{
+		Assert( 0 );
+/*
+Ja25 no creatures
 		AdjustLoyaltyForCivsEatenByMonsters( (UINT8)SECTORX( gsEnemyGainedControlOfSectorID ), 
 																				 (UINT8)SECTORY( gsEnemyGainedControlOfSectorID ),
 																				 (UINT8)gsCiviliansEatenByMonsters );
+*/
 		gsCiviliansEatenByMonsters = -2;
 	}
 	else if( gsCiviliansEatenByMonsters == -2 )

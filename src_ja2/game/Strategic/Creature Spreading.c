@@ -28,6 +28,9 @@
 	#include "opplist.h"
 #endif
 
+#ifdef JA25_ALLOW_CREATURE_SPREADING
+
+
 
 //GAME BALANCING DEFINITIONS FOR CREATURE SPREADING
 //Hopefully, adjusting these following definitions will ease the balancing of the
@@ -1582,3 +1585,5 @@ BOOLEAN GetWarpOutOfMineCodes( INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSecto
 	}
 	return( FALSE );
 }
+
+#endif

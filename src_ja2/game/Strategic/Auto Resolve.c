@@ -2292,8 +2292,13 @@ void RemoveAutoResolveInterface( BOOLEAN fDeleteForGood )
 
 	if( gubEnemyEncounterCode == CREATURE_ATTACK_CODE )
 	{
+		Assert( 0 );
+/*
+Ja25 no creatures
+
 		gubNumCreaturesAttackingTown = 0;
 		gubSectorIDOfCreatureAttack = 0;
+*/
 	}
 	//VtPauseSampling();
 }
@@ -2576,6 +2581,9 @@ void CalculateAutoResolveInfo()
 	}
 	else
 	{
+		gpAR->ubYMCreatures = gpAR->ubYFCreatures = gpAR->ubAMCreatures = gpAR->ubAFCreatures = 0;
+/*
+no creatures
 		if( gfTransferTacticalOppositionToAutoResolve )
 		{
 			DetermineCreatureTownCompositionBasedOnTacticalInformation( &gubNumCreaturesAttackingTown, 
@@ -2588,6 +2596,7 @@ void CalculateAutoResolveInfo()
 																				&gpAR->ubYMCreatures, &gpAR->ubYFCreatures,
 																				&gpAR->ubAMCreatures, &gpAR->ubAFCreatures );
 		}
+*/
 		gpAR->ubEnemies = (UINT8)min( gpAR->ubYMCreatures + gpAR->ubYFCreatures + gpAR->ubAMCreatures + gpAR->ubAFCreatures, 32 );
 	}
 	gfTransferTacticalOppositionToAutoResolve = FALSE;
@@ -4266,7 +4275,8 @@ void ProcessBattleFrame()
 				return;
 			}
 			CONTINUE_BATTLE:
-			if( IsBattleOver() || gubEnemyEncounterCode != CREATURE_ATTACK_CODE && AttemptPlayerCapture() )
+
+			if( IsBattleOver() || AttemptPlayerCapture() )
 				return;
 
 			iRandom = PreRandom( iTotal );

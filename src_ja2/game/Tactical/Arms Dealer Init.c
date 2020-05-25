@@ -311,7 +311,8 @@ BOOLEAN LoadArmsDealerInventoryFromSavedGameFile( HWFILE hFile, BOOLEAN fInclude
 void DailyUpdateOfArmsDealersInventory()
 {
 	// if Gabby has creature blood, start turning it into extra elixir
-	ConvertCreatureBloodToElixir();
+//Ja25: No creatures 
+//	ConvertCreatureBloodToElixir();
 
 	//Simulate other customers buying inventory from the dealer
 	SimulateArmsDealerCustomer();
@@ -482,8 +483,14 @@ void DailyCheckOnItemQuantities()
 	}
 }
 
+/*
+//Ja25: No creatures 
 void ConvertCreatureBloodToElixir( void )
 {
+	//shoutld never get it
+	Assert( 0 );
+
+
 	UINT8	ubBloodAvailable;
 	UINT8 ubAmountToConvert;
 	SPECIAL_ITEM_INFO SpclItemInfo;
@@ -504,6 +511,7 @@ void ConvertCreatureBloodToElixir( void )
 		ArmsDealerGetsFreshStock( ARMS_DEALER_GABBY, JAR_ELIXIR, ubAmountToConvert );
 	}
 }
+*/
 
 BOOLEAN AdjustCertainDealersInventory( )
 {
