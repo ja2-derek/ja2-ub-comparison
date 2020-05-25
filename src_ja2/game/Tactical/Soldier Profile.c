@@ -999,8 +999,12 @@ BOOLEAN RecruitRPC( UINT8 ubCharNum )
 	{
 		EndQuest( QUEST_FREE_DYNAMO, pSoldier->sSectorX, pSoldier->sSectorY );
 	}
+
+/*
+Ja25 no loyalty
 	// handle town loyalty adjustment
 	HandleTownLoyaltyForNPCRecruitment( pNewSoldier );
+*/
 
 	// Try putting them into the current squad
 	if ( AddCharacterToSquad( pNewSoldier, (INT8)CurrentSquad( ) ) == FALSE )

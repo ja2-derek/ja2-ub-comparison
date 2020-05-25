@@ -2395,7 +2395,10 @@ void AllMercsWalkedToExitGrid()
 	}
 	if( !PlayerMercsInSector( (UINT8)gsAdjacentSectorX, (UINT8)gsAdjacentSectorY, (UINT8)gbAdjacentSectorZ ) )
 	{
+/*
+Ja25 no loyalty
 		HandleLoyaltyImplicationsOfMercRetreat( RETREAT_TACTICAL_TRAVERSAL, gsAdjacentSectorX, gsAdjacentSectorY, gbAdjacentSectorZ );
+*/
 	}
 	if( gubAdjacentJumpCode == JUMP_ALL_NO_LOAD || gubAdjacentJumpCode == JUMP_SINGLE_NO_LOAD )
 	{
@@ -2668,7 +2671,10 @@ void AllMercsHaveWalkedOffSector( )
 		fEnemiesInLoadedSector = TRUE;		
 	}
 
+/*
+Ja25 no loyalty
 	HandleLoyaltyImplicationsOfMercRetreat( RETREAT_TACTICAL_TRAVERSAL, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+*/
 
 	//Setup strategic traversal information
 	if( guiAdjacentTraverseTime <= 5 )

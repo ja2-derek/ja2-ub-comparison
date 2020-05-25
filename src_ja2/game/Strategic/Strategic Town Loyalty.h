@@ -5,6 +5,9 @@
 #include "mapscreen.h"
 #include "Soldier Control.h"
 
+/*
+Ja25 no loyalty
+
 
 // gain pts per real loyalty pt
 #define GAIN_PTS_PER_LOYALTY_PT 500
@@ -89,7 +92,7 @@ extern BOOLEAN gfTownUsesLoyalty[ NUM_TOWNS ];
 
 
 // initialize a specific town's loyalty if it hasn't already been
-void StartTownLoyaltyIfFirstTime( INT8 bTownId );
+//Ja25:  New Towns, no loyalty			void StartTownLoyaltyIfFirstTime( INT8 bTownId );
 
 // set a speciafied town's loyalty rating
 void SetTownLoyalty( INT8 bTownId, UINT8 ubLoyaltyValue );
@@ -124,11 +127,15 @@ void HandleLoyaltyForDemolitionOfBuilding( SOLDIERTYPE *pSoldier, INT16 sPointsD
 void HandleDelayedTownLoyaltyEvent( UINT32 uiValue );
 // build loyalty event value
 UINT32 BuildLoyaltyEventValue( INT8 bTownValue, UINT32 uiValue, BOOLEAN fIncrement );
-*/
+* /
 
 
+
+/*
+Ja25:	no town loyalty
 BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile( HWFILE hFile );
 BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile( HWFILE hFile );
+* /
 
 void ReduceLoyaltyForRebelsBetrayed(void);
 
@@ -148,7 +155,7 @@ void AffectAllTownsLoyaltyByDistanceFrom( INT32 iLoyaltyChange, INT16 sSectorX, 
 void CheckIfEntireTownHasBeenLiberated( INT8 bTownId, INT16 sSectorX, INT16 sSectorY );
 void CheckIfEntireTownHasBeenLost( INT8 bTownId, INT16 sSectorX, INT16 sSectorY );
 
-void HandleLoyaltyChangeForNPCAction( UINT8 ubNPCProfileId );
+//Ja25 no loyalty		void HandleLoyaltyChangeForNPCAction( UINT8 ubNPCProfileId );
 
 BOOLEAN  DidFirstBattleTakePlaceInThisTown( INT8 bTownId );
 
@@ -166,6 +173,7 @@ INT32 GetNumberOfWholeTownsUnderControlButExcludeCity( INT8 bCityToExclude );
 void HandleLoyaltyImplicationsOfMercRetreat( INT8 bRetreatCode, INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ );
 
 void MaximizeLoyaltyForDeidrannaKilled( void );
+*/
 
 void SetTheFirstBattleSector( INT16 sSectorValue );
 

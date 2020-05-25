@@ -158,6 +158,8 @@ Ja25:  No BobbyR's
 		StrategicMap[ usMapSector ].fEnemyControlled = FALSE;
 		SectorInfo[ SECTOR( sMapX, sMapY ) ].fPlayer[ bMapZ ] = TRUE;
 
+/*
+Ja25:  New Towns, no loyalty			
 		bTownId = StrategicMap[ usMapSector ].bNameId;
 
 		// check if there's a town in the sector
@@ -166,6 +168,7 @@ Ja25:  No BobbyR's
 			// yes, start tracking (& displaying) this town's loyalty if not already doing so
 			StartTownLoyaltyIfFirstTime( bTownId );
 		}
+*/
 
 
 		// if player took control away from enemy
@@ -181,10 +184,13 @@ Ja25:  No BobbyR's
 					if( !bMapZ && ubSectorID != SEC_J9 && ubSectorID != SEC_K4 )
 					{
 						HandleMoraleEvent( NULL, MORALE_TOWN_LIBERATED, sMapX, sMapY, bMapZ );
+/*
+Ja25:	no loyalty
 						HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_GAIN_TOWN_SECTOR, sMapX, sMapY, bMapZ );
 
 						// liberation by definition requires that the place was enemy controlled in the first place
 						CheckIfEntireTownHasBeenLiberated( bTownId, sMapX, sMapY );
+*/
 					}
 				}
 			}
@@ -195,7 +201,10 @@ Ja25:  No BobbyR's
 				if ( GetTotalLeftInMine( GetMineIndexForSector( sMapX, sMapY ) ) > 0)
 				{
 					HandleMoraleEvent( NULL, MORALE_MINE_LIBERATED, sMapX, sMapY, bMapZ );
+/*
+Ja25:	no loyalty
 					HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_GAIN_MINE, sMapX, sMapY, bMapZ );
+*/
 				}
 			}
 
@@ -212,7 +221,10 @@ JA25 No meanwhiles
 */
 
 				HandleMoraleEvent( NULL, MORALE_SAM_SITE_LIBERATED, sMapX, sMapY, bMapZ );
+/*
+Ja25:	no loyalty
 				HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_GAIN_SAM, sMapX, sMapY, bMapZ );
+*/
 
 				// if Skyrider has been delivered to chopper, and already mentioned Drassen SAM site, but not used this quote yet
 				if ( IsHelicopterPilotAvailable() && ( guiHelicopterSkyriderTalkState >= 1 ) && ( !gfSkyriderSaidCongratsOnTakingSAM ) )
@@ -336,9 +348,12 @@ BOOLEAN SetThisSectorAsEnemyControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
 				if( !bMapZ && ubSectorID != SEC_J9 && ubSectorID != SEC_K4 )
 				{
 					HandleMoraleEvent( NULL, MORALE_TOWN_LOST, sMapX, sMapY, bMapZ );
+/*
+Ja25:	no loyalty
 					HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_LOSE_TOWN_SECTOR, sMapX, sMapY, bMapZ );
 
 					CheckIfEntireTownHasBeenLost( bTownId, sMapX, sMapY );
+*/
 				}
 			}
 
@@ -350,7 +365,10 @@ BOOLEAN SetThisSectorAsEnemyControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
 				{
 					QueenHasRegainedMineSector(GetMineIndexForSector (sMapX, sMapY));
 					HandleMoraleEvent( NULL, MORALE_MINE_LOST, sMapX, sMapY, bMapZ );
+/*
+Ja25:	no loyalty
 					HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_LOSE_MINE, sMapX, sMapY, bMapZ );
+*/
 				}
 			}
 
@@ -358,7 +376,10 @@ BOOLEAN SetThisSectorAsEnemyControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
 			if( IsThisSectorASAMSector( sMapX, sMapY, bMapZ ) )
 			{
 				HandleMoraleEvent( NULL, MORALE_SAM_SITE_LOST, sMapX, sMapY, bMapZ );
+/*
+Ja25:	no loyalty
 				HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_LOSE_SAM, sMapX, sMapY, bMapZ );
+*/
 			}
 
 			// if it's a helicopter refueling site sector

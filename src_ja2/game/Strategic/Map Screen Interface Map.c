@@ -938,6 +938,9 @@ void ShowTownText( void )
 
 			fLoyaltyTooLowToTrainMilitia = FALSE;
 
+/*
+Ja25 no loyalty
+
 			// don't show loyalty string until loyalty tracking for that town has been started
 			if( gTownLoyalty[ bTown ].fStarted && gfTownUsesLoyalty[ bTown ])
 			{
@@ -950,6 +953,7 @@ void ShowTownText( void )
 				}
 			}
 			else
+*/
 			{
 				wcscpy( sStringA, L"");
 			}

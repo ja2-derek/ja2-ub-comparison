@@ -615,6 +615,10 @@ BOOLEAN NPCHeardShot( UINT8 ubProfileID )
 
 BOOLEAN InTownSectorWithTrainingLoyalty( INT16 sSectorX, INT16 sSectorY )
 {
+	Assert( 0 );
+	return( FALSE );
+/*
+Ja25 no loyalty
 	UINT8	ubTown;
 
 	ubTown = GetTownIdForSector( sSectorX, sSectorY );
@@ -626,6 +630,7 @@ BOOLEAN InTownSectorWithTrainingLoyalty( INT16 sSectorX, INT16 sSectorY )
 	{
 		return( FALSE );
 	}
+*/
 }
 
 BOOLEAN CheckFact( UINT16 usFact, UINT8 ubProfileID )
@@ -932,6 +937,9 @@ Ja25: NO Carmen
 			break;
 
 		case FACT_LOYALTY_OKAY:
+			Assert( 0 );
+/*
+Ja25 no loyalty
 			bTown = gMercProfiles[ ubProfileID ].bTown;
 			if( ( bTown != BLANK_SECTOR ) && gTownLoyalty[ bTown ].fStarted && gfTownUsesLoyalty[ bTown ])
 			{
@@ -941,9 +949,13 @@ Ja25: NO Carmen
 			{
 				gubFact[usFact] = FALSE;
 			}
+*/
 			break;
 
 		case FACT_LOYALTY_LOW:
+			Assert( 0 );
+/*
+Ja25 no loyalty
 			bTown = gMercProfiles[ ubProfileID ].bTown;
 			if( ( bTown != BLANK_SECTOR ) && gTownLoyalty[ bTown ].fStarted && gfTownUsesLoyalty[ bTown ])
 			{
@@ -962,9 +974,13 @@ Ja25: NO Carmen
 			{
 				gubFact[usFact] = FALSE;
 			}
+*/
 			break;
 
 		case FACT_LOYALTY_HIGH:
+			Assert( 0 );
+/*
+Ja25 no loyalty
 			bTown = gMercProfiles[ ubProfileID ].bTown;
 			if( ( bTown != BLANK_SECTOR ) && gTownLoyalty[ bTown ].fStarted && gfTownUsesLoyalty[ bTown ])
 			{
@@ -974,6 +990,7 @@ Ja25: NO Carmen
 			{
 				gubFact[usFact] = FALSE;
 			}
+*/
 			break;
 
 		case FACT_ELGIN_ALIVE:

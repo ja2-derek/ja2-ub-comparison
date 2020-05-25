@@ -1028,7 +1028,10 @@ void MakeCivGroupHostileOnNextSectorEntrance( UINT8 ubCivGroup )
 	// if it's the rebels that will become hostile, reduce town loyalties NOW, not later
 	if ( ubCivGroup == REBEL_CIV_GROUP && gTacticalStatus.fCivGroupHostile[ ubCivGroup ] == CIV_GROUP_NEUTRAL )
 	{
+/*
+Ja25 no loyalty
 		ReduceLoyaltyForRebelsBetrayed();
+*/
 	}
 
 	gTacticalStatus.fCivGroupHostile[ ubCivGroup ] = CIV_GROUP_WILL_BECOME_HOSTILE;

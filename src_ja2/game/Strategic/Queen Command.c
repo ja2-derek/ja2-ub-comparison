@@ -303,6 +303,8 @@ void EndTacticalBattleForEnemy()
 		pGroup = pGroup->next;
 	}
 
+/*
+Ja25:	no loyalty, or militia
 
 	//Check to see if any of our mercs have abandoned the militia during a battle.  This is cause for a rather
 	//severe loyalty blow.
@@ -322,6 +324,7 @@ void EndTacticalBattleForEnemy()
 			break;
 		}
 	}
+*/
 }
 
 UINT8 NumFreeEnemySlots()

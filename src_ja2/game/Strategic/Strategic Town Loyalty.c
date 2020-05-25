@@ -102,7 +102,7 @@
 
 
 // town loyalty table
-TOWN_LOYALTY gTownLoyalty[ NUM_TOWNS ];
+//TOWN_LOYALTY gTownLoyalty[ NUM_TOWNS ];
 
 
 // town name and locations arrays, for town theft and what not
@@ -111,6 +111,10 @@ INT32 pTownLocationsList[ 40 ];
 
 INT32 iTownDistances[ NUM_TOWNS ][ NUM_TOWNS ];
 
+
+
+/*
+Ja25 no loyalty
 
 #define BASIC_COST_FOR_CIV_MURDER	(10 * GAIN_PTS_PER_LOYALTY_PT)
 
@@ -125,7 +129,10 @@ UINT32 uiPercentLoyaltyDecreaseForCivMurder[]={
 	  (20 * GAIN_PTS_PER_LOYALTY_PT),	// cripple
      (1 * GAIN_PTS_PER_LOYALTY_PT),	// cow
 };
+*/
 
+/*
+//Ja25:  New Towns, no loyalty
 
 // on a scale of 1-100, this is a measure of how much each town hates the Queen's opression & is willing to stand against it
 // it primarily controls the RATE of loyalty change in each town: the loyalty effect of the same events depends on it
@@ -162,6 +169,8 @@ BOOLEAN gfTownUsesLoyalty[ NUM_TOWNS ] =
 	TRUE,			// MEDUNA
 	TRUE,			// CHITZENA
 };
+*/
+
 
 // location of first enocunter with enemy
 INT16 sWorldSectorLocationOfFirstBattle = 0;
@@ -177,7 +186,7 @@ extern STR16 pTownNames[];
 
 
 // update the loyalty rating of the passed town id
-void UpdateTownLoyaltyRating( INT8 bTownId );
+//Ja25:  New Towns, no loyalty		void UpdateTownLoyaltyRating( INT8 bTownId );
 
 
 
@@ -199,6 +208,9 @@ void HandleTownTheft( void );
 
 extern void MapScreenDefaultOkBoxCallback( UINT8 bExitValue );
 
+/*
+Ja25:  no town loyalty
+
 void InitTownLoyalty( void )
 {
 	UINT8 ubTown = 0;
@@ -215,8 +227,9 @@ void InitTownLoyalty( void )
 
 	return;
 }
+*/
 
-
+/*
 void StartTownLoyaltyIfFirstTime( INT8 bTownId )
 {
 	Assert( ( bTownId >= FIRST_TOWN ) && ( bTownId < NUM_TOWNS ) );
@@ -249,7 +262,11 @@ void StartTownLoyaltyIfFirstTime( INT8 bTownId )
 		gTownLoyalty[ bTownId ].fStarted = TRUE;
 	}
 }
+*/
 
+
+/*
+Ja25:  no town loyalty
 
 // set a specified town's loyalty rating (ignores previous loyalty value - probably NOT what you want)
 void SetTownLoyalty( INT8 bTownId, UINT8 ubNewLoyaltyRating )
@@ -268,7 +285,10 @@ void SetTownLoyalty( INT8 bTownId, UINT8 ubNewLoyaltyRating )
 
 	return;
 }
+*/
 
+
+/*
 
 // increments the town's loyalty rating by that many HUNDREDTHS of loyalty pts
 void IncrementTownLoyalty( INT8 bTownId, UINT32 uiLoyaltyIncrease )
@@ -307,6 +327,11 @@ void IncrementTownLoyalty( INT8 bTownId, UINT32 uiLoyaltyIncrease )
 
 	return;
 }
+*/
+
+
+/*
+//Ja25:  New Towns, no loyalty		
 
 // decrements the town's loyalty rating by that many HUNDREDTHS of loyalty pts
 //NOTE: This function expects a POSITIVE number for a decrease!!!
@@ -345,6 +370,10 @@ void DecrementTownLoyalty( INT8 bTownId, UINT32 uiLoyaltyDecrease )
 
 	return;
 }
+*/
+
+/*
+//Ja25:  New Towns, no loyalty
 
 
 // update town loyalty rating based on gain values
@@ -419,7 +448,7 @@ void UpdateTownLoyaltyRating( INT8 bTownId )
 
 	return;
 }
-
+*/
 
 // strategic handler, goes through and handles all strategic events for town loyalty updates...player controlled, monsters
 void HandleTownLoyalty( void )
@@ -730,13 +759,18 @@ void HandleMurderOfCivilian( SOLDIERTYPE *pSoldier, BOOLEAN fIntentional )
 		return;
 	}
 
+/*
+Ja25 no town loyalty
 	// check if this town does use loyalty (to skip a lot of unnecessary computation)
 	if (!gfTownUsesLoyalty[ bTownId ])
 	{
 		return;
 	}
+*/
+	//return because there is no loyalty 
+	return;
 
-
+/*
 	if( ( pSoldier->ubBodyType >= FATCIV) && ( pSoldier->ubBodyType <= COW ) )
 	{
 		// adjust value for killer and type
@@ -788,7 +822,8 @@ void HandleMurderOfCivilian( SOLDIERTYPE *pSoldier, BOOLEAN fIntentional )
 		{
 			case 0:
 				// nobody saw anything.  When body is found, chance player is blamed depends on the town's loyalty at this time
-				uiChanceFalseAccusal = MAX_LOYALTY_VALUE - gTownLoyalty[ bTownId ].ubRating;
+//Ja25 no loyalty				uiChanceFalseAccusal = MAX_LOYALTY_VALUE - gTownLoyalty[ bTownId ].ubRating;
+				uiChanceFalseAccusal = 0;
 				break;
 			case 1:
 				// civilians saw the killer, but not the victim. 10 % chance of blaming player whether or not he did it
@@ -923,7 +958,7 @@ void HandleMurderOfCivilian( SOLDIERTYPE *pSoldier, BOOLEAN fIntentional )
 	// ideally, we'd like to also call AffectAllTownsLoyaltyByDistanceFrom() here to spread the news to all other towns,
 	// but we don't have that available on a delay right now, and it would be a bit of a pain, since we only have 32 bits
 	// of event data to pass in, and that would have to store iLoyaltyChange, sSectorX, and sSectorY (64 bits)
-*/
+* /
 
 
 	// if it's a decrement, negate the value
@@ -935,11 +970,16 @@ void HandleMurderOfCivilian( SOLDIERTYPE *pSoldier, BOOLEAN fIntentional )
 	// this is a hack: to avoid having to adjust the values, divide by 1.75 to compensate for the distance 0
 	iLoyaltyChange *= 100;
 	iLoyaltyChange /= (100 + ( 25 * LOYALTY_EVENT_DISTANCE_THRESHOLD ) );
-
+*/
+/*
+Ja25 no loyalty
 	AffectAllTownsLoyaltyByDistanceFrom( iLoyaltyChange, pSoldier->sSectorX, pSoldier->sSectorY, pSoldier->bSectorZ );
+*/
 }
 
 
+/*
+//Ja25:  New Towns, no loyalty		
 
 // check town and raise loyalty value for hiring a merc from a town...not a lot of a gain, but some
 void HandleTownLoyaltyForNPCRecruitment( SOLDIERTYPE *pSoldier )
@@ -966,7 +1006,7 @@ void HandleTownLoyaltyForNPCRecruitment( SOLDIERTYPE *pSoldier )
 
 	return;
 }
-
+*/
 
 BOOLEAN HandleLoyaltyAdjustmentForRobbery( SOLDIERTYPE *pSoldier )
 {
@@ -992,6 +1032,9 @@ BOOLEAN HandleLoyaltyAdjustmentForRobbery( SOLDIERTYPE *pSoldier )
 */
 }
 
+
+/*
+//Ja25:  New Towns, no loyalty		
 
 // handle loyalty adjustment for dmg inflicted on a building
 void HandleLoyaltyForDemolitionOfBuilding( SOLDIERTYPE *pSoldier, INT16 sPointsDmg )
@@ -1049,7 +1092,7 @@ void HandleLoyaltyForDemolitionOfBuilding( SOLDIERTYPE *pSoldier, INT16 sPointsD
 
 	return;
 }
-
+*/
 
 void RemoveRandomItemsInSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, UINT8 ubChance )
 {
@@ -1292,7 +1335,8 @@ UINT32 BuildLoyaltyEventValue( INT8 bTownValue, UINT32 uiValue, BOOLEAN fIncreme
 }
 */
 
-
+/*
+Ja25:  no town loyalty
 BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile( HWFILE hFile )
 {
 	UINT32	uiNumBytesWritten;
@@ -1320,9 +1364,11 @@ BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile( HWFILE hFile )
 
 	return( TRUE );
 }
+*/
 
 
-
+/*
+Ja25:  no town loyalty
 void ReduceLoyaltyForRebelsBetrayed(void)
 {
 	INT8 bTownId;
@@ -1348,6 +1394,7 @@ void ReduceLoyaltyForRebelsBetrayed(void)
 		}
 	}
 }
+*/
 
 INT32 GetNumberOfWholeTownsUnderControl( void )
 {
@@ -1359,7 +1406,8 @@ INT32 GetNumberOfWholeTownsUnderControl( void )
 	// make sure that each town is one for which loyalty matters
 	for ( bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++ )
 	{
-		if ( IsTownUnderCompleteControlByPlayer( bTownId ) && gfTownUsesLoyalty[ bTownId ] )
+//Ja25 no loyalty		if ( IsTownUnderCompleteControlByPlayer( bTownId ) && gfTownUsesLoyalty[ bTownId ] )
+		if ( IsTownUnderCompleteControlByPlayer( bTownId ) )
 		{
 			iNumber++;
 		}
@@ -1377,7 +1425,8 @@ INT32 GetNumberOfWholeTownsUnderControlButExcludeCity( INT8 bCityToExclude )
 	// run through the list of towns..if the entire town is under player control, then increment the number of towns under player control
 	for( bTownId = FIRST_TOWN; bTownId < NUM_TOWNS; bTownId++ )
 	{
-		if ( IsTownUnderCompleteControlByPlayer( bTownId ) && ( bCityToExclude != bTownId ) && gfTownUsesLoyalty[ bTownId ] )
+//Ja25 no loyalty		if ( IsTownUnderCompleteControlByPlayer( bTownId ) && ( bCityToExclude != bTownId ) && gfTownUsesLoyalty[ bTownId ] )
+		if ( IsTownUnderCompleteControlByPlayer( bTownId ) && ( bCityToExclude != bTownId ) )
 		{
 			iNumber++;
 		}
@@ -1412,6 +1461,8 @@ INT32 IsTownUnderCompleteControlByEnemy( INT8 bTownId )
 	return( FALSE );
 }
 
+/*
+Ja25:  no town loyalty
 void AdjustLoyaltyForCivsEatenByMonsters( INT16 sSectorX, INT16 sSectorY, UINT8 ubHowMany)
 {
 	INT8 bTownId = 0;
@@ -1438,7 +1489,10 @@ void AdjustLoyaltyForCivsEatenByMonsters( INT16 sSectorX, INT16 sSectorY, UINT8 
 	uiLoyaltyChange = ubHowMany * BASIC_COST_FOR_CIV_MURDER * MULTIPLIER_FOR_MURDER_BY_MONSTER;
 	DecrementTownLoyalty( bTownId, uiLoyaltyChange );
 }
+*/
 
+/*
+//Ja25:  New Towns, no loyalty		
 
 // this applies the SAME change to every town equally, regardless of distance from the event
 void IncrementTownLoyaltyEverywhere( UINT32 uiLoyaltyIncrease )
@@ -1450,6 +1504,10 @@ void IncrementTownLoyaltyEverywhere( UINT32 uiLoyaltyIncrease )
 		IncrementTownLoyalty( bTownId, uiLoyaltyIncrease );
 	}
 }
+*/
+
+/*
+//Ja25:  New Towns, no loyalty		
 
 void DecrementTownLoyaltyEverywhere( UINT32 uiLoyaltyDecrease )
 {
@@ -1460,6 +1518,12 @@ void DecrementTownLoyaltyEverywhere( UINT32 uiLoyaltyDecrease )
 		DecrementTownLoyalty( bTownId, uiLoyaltyDecrease );
 	}
 }
+
+*/
+
+/*
+//Ja25:  New Towns, no loyalty		
+
 // this applies the change to every town differently, depending on the distance from the event
 void HandleGlobalLoyaltyEvent( UINT8 ubEventType, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ)
 {
@@ -1535,7 +1599,11 @@ void HandleGlobalLoyaltyEvent( UINT8 ubEventType, INT16 sSectorX, INT16 sSectorY
 
 	AffectAllTownsLoyaltyByDistanceFrom( iLoyaltyChange, sSectorX, sSectorY, bSectorZ);
 }
+*/
 
+
+/*
+//Ja25:  New Towns, no loyalty		
 
 void AffectAllTownsLoyaltyByDistanceFrom( INT32 iLoyaltyChange, INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ)
 {
@@ -1646,8 +1714,11 @@ void AffectAllTownsLoyaltyByDistanceFrom( INT32 iLoyaltyChange, INT16 sSectorX, 
 	}
 
 }
+*/
 
 
+/*
+//Ja25:  New Towns, no loyalty		
 
 // to be called whenever player gains control of a sector in any way
 void CheckIfEntireTownHasBeenLiberated( INT8 bTownId, INT16 sSectorX, INT16 sSectorY )
@@ -1666,7 +1737,7 @@ void CheckIfEntireTownHasBeenLiberated( INT8 bTownId, INT16 sSectorX, INT16 sSec
 /*
 Ja25: No meanhwiles
 			HandleMeanWhileEventPostingForTownLiberation( bTownId );
-*/
+* /
 		}
 
 		// even taking over non-trainable "towns" like Orta/Tixa for the first time should count as "player activity"
@@ -1683,6 +1754,11 @@ Ja25: No meanhwiles
 		gTownLoyalty[ bTownId ].fLiberatedAlready = TRUE;
 	}
 }
+*/
+
+
+/*
+//Ja25:  New Towns, no loyalty		
 
 void CheckIfEntireTownHasBeenLost( INT8 bTownId, INT16 sSectorX, INT16 sSectorY )
 {
@@ -1697,22 +1773,26 @@ Ja25 No meanwhile
 		{
 			HandleMeanWhileEventPostingForTownLoss( bTownId );
 		}
-*/
+* /
 	}
 }
+*/
 
 
-
+/*
+//Ja25:  New Towns, no loyalty		
 
 void HandleLoyaltyChangeForNPCAction( UINT8 ubNPCProfileId )
 {
 	switch ( ubNPCProfileId )
 	{
+/*
+Ja25: No miguel
 		case MIGUEL:
 			// Omerta loyalty increases when Miguel receives letter from Enrico
 			IncrementTownLoyalty( OMERTA, LOYALTY_BONUS_MIGUEL_READS_LETTER );
 			break;
-
+* /
 		case DOREEN:
 			// having freed the child labourers... she is releasing them herself!
 			IncrementTownLoyalty( DRASSEN, LOYALTY_BONUS_CHILDREN_FREED_DOREEN_SPARED );
@@ -1750,7 +1830,7 @@ void HandleLoyaltyChangeForNPCAction( UINT8 ubNPCProfileId )
 
 	}
 }
-
+*/
 
 
 // set the location of the first encounter with enemy
@@ -1817,6 +1897,12 @@ UINT32 EnemyStrength( void )
 	return( uiTotal );
 }
 
+
+/*
+
+//Ja25:  New Towns, no loyalty		
+
+
 //Function assumes that mercs have retreated already.  Handles two cases, one for general merc retreat 
 //which slightly demoralizes the mercs, the other handles abandonment of militia forces which poses
 //as a serious loyalty penalty.
@@ -1841,7 +1927,11 @@ void HandleLoyaltyImplicationsOfMercRetreat( INT8 bRetreatCode, INT16 sSectorX, 
 		HandleMoraleEvent( NULL, MORALE_RAN_AWAY, sSectorX, sSectorY, (INT8)sSectorZ );
 	}
 }
+*/
 
+
+/*
+//Ja25:  New Towns, no loyalty		
 
 void MaximizeLoyaltyForDeidrannaKilled(void)
 {
@@ -1854,3 +1944,4 @@ void MaximizeLoyaltyForDeidrannaKilled(void)
 		SetTownLoyalty(bTownId, 100);
 	}
 }
+*/

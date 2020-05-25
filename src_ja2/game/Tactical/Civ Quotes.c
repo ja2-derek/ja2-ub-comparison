@@ -596,6 +596,9 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
     return( CIV_QUOTE_DEIDRANNA_DEAD );
   }
 
+/*
+Ja25 no loyalty
+
 	// if in a town
 	if( ( bTownId != BLANK_SECTOR ) && ( gbWorldSectorZ == 0 ) && gfTownUsesLoyalty[ bTownId ] )
 	{
@@ -612,7 +615,7 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 			bCivHighLoyalty = TRUE;
 		}
 	}
-
+* /
 
 	// ATE: OK, check if we should look for a civ hint....
   if ( fCanUseHints )
@@ -624,6 +627,7 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
     bCivHint = -1;
   }
 
+/* Ja25: 
 	// ATE: check miners......
 	if ( pCiv->ubSoldierClass == SOLDIER_CLASS_MINER )
 	{
@@ -650,7 +654,7 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
       }
     }
 	}
-
+* /
 
 	// Is one availible?
 	// If we are to say low loyalty, do chance
@@ -701,7 +705,7 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 			return( CIV_QUOTE_KIDS_HIGH_LOYALTY );
 		}
 	}
-
+*/
 
 	// All purpose quote here....
 	if ( ubCivType == CIV_TYPE_ADULT )

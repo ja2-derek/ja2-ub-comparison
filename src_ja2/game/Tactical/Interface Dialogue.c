@@ -1971,7 +1971,11 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 				break;
 
 			case NPC_ACTION_BOOST_TOWN_LOYALTY:
+				Assert( 0 );
+/*
+Ja25 no loyalty
 				HandleLoyaltyChangeForNPCAction( ubTargetNPC );
+*/
 				break;
 
 			// case NPC_ACTION_PENALIZE_TOWN_LOYALTY:

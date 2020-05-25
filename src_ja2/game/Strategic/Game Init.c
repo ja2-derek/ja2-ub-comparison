@@ -275,8 +275,11 @@ void InitStrategicLayer( void )
 	InitSquads();
 	// Init vehicles
 	InitVehicles( );
+/*
+Ja25 no loyalty
 	// init town loyalty
 	InitTownLoyalty();
+*/
 	// init the mine management system
 	InitializeMines();
 	// initialize map screen flags

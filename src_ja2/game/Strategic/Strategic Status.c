@@ -326,6 +326,8 @@ Ja25:  no creatures
 				AddHistoryToPlayersLog( HISTORY_ENRICO_COMPLAINED, 0, GetWorldTotalMin(), -1, -1 );
 			}
 
+/*
+Ja25 no loyalty
 			// penalize loyalty!
 			if ( gStrategicStatus.usEnricoEmailFlags & ENRICO_EMAIL_SENT_LACK_PROGRESS2 )
 			{
@@ -336,6 +338,7 @@ Ja25:  no creatures
 				// on first complaint, give a day's grace...
 				DecrementTownLoyaltyEverywhere( LOYALTY_PENALTY_INACTIVE * (gStrategicStatus.ubNumberOfDaysOfInactivity - LackOfProgressTolerance() ) );
 			}
+*/
 		}
 	}
 

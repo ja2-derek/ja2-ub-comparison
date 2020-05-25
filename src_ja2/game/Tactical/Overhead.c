@@ -3341,8 +3341,11 @@ Ja25 no terrorists
 			// also treat this as murder - but player will never be blamed for militia death he didn't cause
 			HandleMurderOfCivilian( pSoldierOld, pSoldierOld->fIntendedTarget );
 		}
-
+*/
+/*
+Ja25:	no loyalty
 		HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_NATIVE_KILLED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+*/
 	}
 	else	// enemies and creatures... should any of this stuff not be called if a creature dies?
 	{
@@ -3372,7 +3375,10 @@ Ja25 No queen monster
 			HandleMoraleEvent( MercPtrs[pSoldierOld->ubAttackerID], MORALE_KILLED_ENEMY, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
 		}
 
+/*
+Ja25:	no loyalty
 		HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_ENEMY_KILLED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+*/
 
 		CheckForAlertWhenEnemyDies( pSoldierOld );
 
@@ -3719,12 +3725,15 @@ SOLDIERTYPE * CivilianGroupMemberChangesSides( SOLDIERTYPE * pAttacked )
 
 	if ( gTacticalStatus.fCivGroupHostile[ pNewAttacked->ubCivilianGroup ] == CIV_GROUP_NEUTRAL )
 	{
+/*
+Ja25 no loyalty
 		// if the civilian group turning hostile is the Rebels
 		if (pAttacked->ubCivilianGroup == REBEL_CIV_GROUP)
 		{
 			// we haven't already reduced the loyalty back when we first set the flag to BECOME hostile
 			ReduceLoyaltyForRebelsBetrayed();
 		}
+*/
 
 		AddStrategicEvent( EVENT_MAKE_CIV_GROUP_HOSTILE_ON_NEXT_SECTOR_ENTRANCE, GetWorldTotalMin() + 300, pNewAttacked->ubCivilianGroup );
 		gTacticalStatus.fCivGroupHostile[ pNewAttacked->ubCivilianGroup ] = CIV_GROUP_WILL_EVENTUALLY_BECOME_HOSTILE;
@@ -5954,7 +5963,10 @@ BOOLEAN CheckForEndOfBattle( BOOLEAN fAnEnemyRetreated )
 		}
 
 		HandleMoraleEvent( NULL, MORALE_HEARD_BATTLE_LOST, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+/*
+Ja25:	no loyalty
 		HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_BATTLE_LOST, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+*/
 
 		// Play death music
 		SetMusicMode( MUSIC_TACTICAL_DEATH );
@@ -6082,7 +6094,10 @@ Ja25  no meanwhile
 				}
 
 				HandleMoraleEvent( NULL, MORALE_BATTLE_WON, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+/*
+Ja25:	no loyalty
 				HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_BATTLE_WON, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+*/
 
 				// Change music modes
         if ( gfLastMercTalkedAboutKillingID == NOBODY || ( gfLastMercTalkedAboutKillingID != NOBODY && !( MercPtrs[ gfLastMercTalkedAboutKillingID ]->uiStatusFlags & SOLDIER_MONSTER ) ) )

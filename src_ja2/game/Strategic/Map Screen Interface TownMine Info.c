@@ -347,6 +347,8 @@ void AddTextToTownBox( void )
 		AddSecondColumnMonoString( &hStringHandle, wString );
 	}
 
+/*
+Ja25 no loyalty
 	// the concept of town loyalty is only meaningful in towns where loyalty is tracked
 	if( gTownLoyalty[ ubTownId ].fStarted && gfTownUsesLoyalty[ ubTownId ])
 	{
@@ -356,6 +358,7 @@ void AddTextToTownBox( void )
 		swprintf( wString, L"%d%%%%", gTownLoyalty[ ubTownId ].ubRating );
 		AddSecondColumnMonoString( &hStringHandle, wString );
 	}
+*/
 
 	// if the town has a mine
 	sMineSector = GetMineSectorForTown( ubTownId );
@@ -462,6 +465,8 @@ void AddTextToMineBox( void )
 		swprintf( wString, L"%d%%%%", (GetTownSectorsUnderControl( gMineLocation[ ubMineIndex ].bAssociatedTown ) *  100) / GetTownSectorSize( gMineLocation[ ubMineIndex ].bAssociatedTown ));
 		AddSecondColumnMonoString( &hStringHandle, wString );
 
+/*
+Ja25 no loyalty
 		ubTown = gMineLocation[ ubMineIndex ].bAssociatedTown;
 		if( gTownLoyalty[ ubTown ].fStarted && gfTownUsesLoyalty[ ubTown ])
 		{
@@ -471,6 +476,7 @@ void AddTextToMineBox( void )
 			swprintf( wString, L"%d%%%%", gTownLoyalty[ gMineLocation[ ubMineIndex ].bAssociatedTown ].ubRating);
 			AddSecondColumnMonoString( &hStringHandle, wString );
 		}
+*/
 
 /* gradual monster infestation concept was ditched, now simply IN PRODUCTION or SHUT DOWN
 		// percentage of miners working
