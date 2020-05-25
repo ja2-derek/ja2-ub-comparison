@@ -4677,6 +4677,7 @@ BOOLEAN TestForBloodcatAmbush( GROUP *pGroup )
 		gubEnemyEncounterCode = NO_ENCOUNTER_CODE;
 		return FALSE;
 	}
+*/
 }
 
 void NotifyPlayerOfBloodcatBattle( UINT8 ubSectorX, UINT8 ubSectorY )

@@ -288,7 +288,7 @@ void InitStrategicLayer( void )
 	//Clear out the vehicle list
 	ClearOutVehicleList();
 
-	InitBloodCatSectors();
+	//InitBloodCatSectors(); // AA
 
 	InitializeSAMSites();
 
