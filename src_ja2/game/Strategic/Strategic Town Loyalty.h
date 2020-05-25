@@ -82,10 +82,7 @@ typedef struct TOWN_LOYALTY
 // the loyalty variables for each town
 extern TOWN_LOYALTY gTownLoyalty[ NUM_TOWNS ];
 
-// town names list
-extern INT32 pTownNamesList[];
-// town locations list
-extern INT32 pTownLocationsList[]; 
+
 // whether town maintains/displays loyalty or not
 extern BOOLEAN gfTownUsesLoyalty[ NUM_TOWNS ];
 
@@ -106,14 +103,9 @@ void DecrementTownLoyalty( INT8 bTownId, UINT32 uiLoyaltyDecrease );
 // update the loyalty based on current % control of the town
 void UpdateLoyaltyBasedOnControl( INT8 bTownId );
 
-// strategic handler, goes through and handles all strategic events for town loyalty updates...player controlled, monsters
-void HandleTownLoyalty( void );
 
 // init town loyalty lists
 void InitTownLoyalty( void );
-
-// handle the death of a civ
-void HandleMurderOfCivilian( SOLDIERTYPE *pSoldier, BOOLEAN fIntentional );
 
 // handle town loyalty adjustment for recruitment
 void HandleTownLoyaltyForNPCRecruitment( SOLDIERTYPE *pSoldier );
@@ -124,20 +116,7 @@ BOOLEAN HandleLoyaltyAdjustmentForRobbery( SOLDIERTYPE *pSoldier );
 // handle loyalty adjustments for dmg/destruction of buildings
 void HandleLoyaltyForDemolitionOfBuilding( SOLDIERTYPE *pSoldier, INT16 sPointsDmg );
 
-// remove random item from this sector
-void RemoveRandomItemsInSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, UINT8 ubChance );
 
-// get the shortest distance between these two towns via roads
-INT32 GetTownDistances( UINT8 ubTown, UINT8 ubTownA );
-
-// build list of town sectors
-void BuildListOfTownSectors( void );
-
-
-
-
-// read in distances between towns
-void ReadInDistancesBetweenTowns( void );
 
 
 /* Delayed loyalty effects elimininated.  Sep.12/98.  ARM
@@ -148,16 +127,13 @@ UINT32 BuildLoyaltyEventValue( INT8 bTownValue, UINT32 uiValue, BOOLEAN fIncreme
 */
 
 
-BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile( HWFILE hFile );
 BOOLEAN SaveStrategicTownLoyaltyToSaveGameFile( HWFILE hFile );
+BOOLEAN LoadStrategicTownLoyaltyFromSavedGameFile( HWFILE hFile );
 
 void ReduceLoyaltyForRebelsBetrayed(void);
 
 // how many towns under player control?
 INT32 GetNumberOfWholeTownsUnderControl( void );
-
-// is all the sectors of this town under control by the player
-INT32 IsTownUnderCompleteControlByPlayer( INT8 bTownId );
 
 // used when monsters attack a town sector without going through tactical and they win
 void AdjustLoyaltyForCivsEatenByMonsters( INT16 sSectorX, INT16 sSectorY, UINT8 ubHowMany);
@@ -175,7 +151,7 @@ void CheckIfEntireTownHasBeenLost( INT8 bTownId, INT16 sSectorX, INT16 sSectorY 
 void HandleLoyaltyChangeForNPCAction( UINT8 ubNPCProfileId );
 
 BOOLEAN  DidFirstBattleTakePlaceInThisTown( INT8 bTownId );
-void SetTheFirstBattleSector( INT16 sSectorValue );
+
 
 // gte number of whole towns but exclude this one
 INT32 GetNumberOfWholeTownsUnderControlButExcludeCity( INT8 bCityToExclude );
@@ -191,4 +167,33 @@ void HandleLoyaltyImplicationsOfMercRetreat( INT8 bRetreatCode, INT16 sSectorX, 
 
 void MaximizeLoyaltyForDeidrannaKilled( void );
 
+void SetTheFirstBattleSector( INT16 sSectorValue );
+
+// town names list
+extern INT32 pTownNamesList[];
+// town locations list
+extern INT32 pTownLocationsList[]; 
+
+// handle the death of a civ
+void HandleMurderOfCivilian( SOLDIERTYPE *pSoldier, BOOLEAN fIntentional );
+
+// strategic handler, goes through and handles all strategic events for town loyalty updates...player controlled, monsters
+void HandleTownLoyalty( void );
+
+// remove random item from this sector
+void RemoveRandomItemsInSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, UINT8 ubChance );
+
+// is all the sectors of this town under control by the player
+INT32 IsTownUnderCompleteControlByPlayer( INT8 bTownId );
+
+// get the shortest distance between these two towns via roads
+INT32 GetTownDistances( UINT8 ubTown, UINT8 ubTownA );
+
+// build list of town sectors
+void BuildListOfTownSectors( void );
+
+// read in distances between towns
+void ReadInDistancesBetweenTowns( void );
+
 #endif
+
