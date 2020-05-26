@@ -1898,7 +1898,10 @@ no carmen
 									//TriggerNPCRecord( ANGEL, 24 );
 								}
 								break;
-							//case QUEEN:
+/*
+Ja25
+No Queen,Joe, or elliot
+ 							//case QUEEN:
 							case JOE:
 							case ELLIOT:
 								if ( ! ( gMercProfiles[ pSoldier->ubProfile ].ubMiscFlags2 & PROFILE_MISC_FLAG2_SAID_FIRSTSEEN_QUOTE ) )
@@ -1910,6 +1913,7 @@ no carmen
 									}
 								}
 								break;
+*/
 							default:
 								break;
 						}

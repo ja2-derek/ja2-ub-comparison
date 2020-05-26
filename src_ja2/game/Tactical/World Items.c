@@ -35,7 +35,7 @@ WORLDBOMB *		gWorldBombs = NULL;
 UINT32				guiNumWorldBombs = 0;
 
 void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere( void );
-void DeleteWorldItemsBelongingToQueenIfThere( void );
+//Ja25: No queen   void DeleteWorldItemsBelongingToQueenIfThere( void );
 
 extern UINT16 StandardGunListAmmoReplacement( UINT16 usAmmo );
 
@@ -485,10 +485,13 @@ void LoadWorldItemsFromMap( INT8 **hBuffer )
 	if ( !gfEditMode )
 	{	
 		DeleteWorldItemsBelongingToTerroristsWhoAreNotThere();
+/*
+Ja25: No queen
 		if ( gWorldSectorX == 3 && gWorldSectorY == MAP_ROW_P && gbWorldSectorZ == 1 )
 		{
 			DeleteWorldItemsBelongingToQueenIfThere();
 		}
+*/
 	}
 }
 
@@ -534,6 +537,9 @@ void DeleteWorldItemsBelongingToTerroristsWhoAreNotThere( void )
 	// else the terrorists haven't been placed yet!
 }
 
+
+/*
+Ja25 No queen
 void DeleteWorldItemsBelongingToQueenIfThere( void )
 {
 	UINT32	uiLoop;
@@ -594,6 +600,7 @@ void DeleteWorldItemsBelongingToQueenIfThere( void )
 		}
 	}
 }
+*/
 
 
 // Refresh item pools

@@ -839,7 +839,9 @@ BOOLEAN TurnSoldierIntoCorpse( SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc, BOOLE
 
 	// ATE: If the queen is killed, she should
 	// make items visible because it ruins end sequence....
-	if ( pSoldier->ubProfile == QUEEN || pSoldier->bTeam == gbPlayerNum )
+//	if ( pSoldier->ubProfile == QUEEN || pSoldier->bTeam == gbPlayerNum )
+//ja25 modified
+	if( pSoldier->bTeam == gbPlayerNum ) //pSoldier->ubProfile == QUEEN || 
 	{
 		bVisible = 1;
 	}

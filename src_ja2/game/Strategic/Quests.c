@@ -853,9 +853,11 @@ Ja25: NO Carmen
 		case FACT_SHANK_NOT_IN_SECTOR:
 			gubFact[usFact] = ( FindSoldierByProfileID( SHANK, FALSE ) == NULL );
 			break;
+/* Ja25 No queen
 		case FACT_QUEEN_DEAD:
 			gubFact[usFact] = (gMercProfiles[ QUEEN ].bMercStatus == MERC_IS_DEAD);
 			break;
+*/
 		case FACT_MINE_EMPTY:
 			gubFact[usFact] = IsHisMineEmpty( ubProfileID );
 			break;

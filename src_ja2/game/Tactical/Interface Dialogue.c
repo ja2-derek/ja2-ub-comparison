@@ -2560,25 +2560,26 @@ Ja25 no loyalty
 				StartDialogueMessageBox( ubTargetNPC, usActionCode );
 				break;
 
-			case NPC_ACTION_REMOVE_JOE_QUEEN:
-
-				// Find queen and joe and remove from sector...
-				pSoldier = FindSoldierByProfileID( QUEEN, FALSE );
-
-				if ( pSoldier != NULL )
-				{
-					TacticalRemoveSoldier( pSoldier->ubID ); 
-				}
-
-				// Find queen and joe and remove from sector...
-				pSoldier = FindSoldierByProfileID( JOE, FALSE );
-
-				if ( pSoldier != NULL )
-				{
-					TacticalRemoveSoldier( pSoldier->ubID ); 
-				}
-				break;
-
+//			case NPC_ACTION_REMOVE_JOE_QUEEN:
+//
+//				// Find queen and joe and remove from sector...
+//				pSoldier = FindSoldierByProfileID( QUEEN, FALSE );
+//
+//				if ( pSoldier != NULL )
+//				{
+//					TacticalRemoveSoldier( pSoldier->ubID ); 
+//				}
+//
+//				// Find queen and joe and remove from sector...
+//				pSoldier = FindSoldierByProfileID( JOE, FALSE );
+//
+//				if ( pSoldier != NULL )
+//				{
+//					TacticalRemoveSoldier( pSoldier->ubID ); 
+//				}
+//				break;
+//
+//
 //			case NPC_ACTION_REMOVE_ELLIOT_END_MEANWHILE:
 //
 //				// Find queen and joe and remove from sector...
@@ -3190,6 +3191,8 @@ Ja25 No meanwhiles
 				SetOrtaAsFound();				
 				AddHistoryToPlayersLog( HISTORY_DISCOVERED_ORTA, 0, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
 				break;
+/*
+Ja25: No queen, no slap
 			case NPC_ACTION_SLAP:
 
 				// OK, LET'S FIND THE QUEEN AND MAKE HER DO SLAP ANIMATION
@@ -3199,10 +3202,13 @@ Ja25 No meanwhiles
 					EVENT_InitNewSoldierAnim( pSoldier, QUEEN_SLAP, 0 , FALSE );							
 				}
 				break;
-
+*/
 			case NPC_ACTION_PUNCH_PC_SLOT_0:
 			case NPC_ACTION_PUNCH_PC_SLOT_1:
 			case NPC_ACTION_PUNCH_PC_SLOT_2:
+				Assert( 0 );
+/*
+Ja25:  should never get in here
 
 				DeleteTalkingMenu( );
 				// OK, LET'S FIND THE QUEEN AND MAKE HER DO SLAP ANIMATION
@@ -3275,6 +3281,7 @@ Ja25 No meanwhiles
 						TriggerNPCWithGivenApproach( pSoldier->ubProfile, (UINT8)pSoldier->uiPendingActionData4, FALSE );
 					}
 				}
+*/
 				break;
 
 
@@ -3323,6 +3330,10 @@ Ja25 No meanwhiles
 				//if ( pSoldier->uiStatusFlags & SOLDIER_NPC_SHOOTING )
 
 			case NPC_ACTION_PUNCH_FIRST_LIVING_PC:
+
+				Assert( 0 );
+/*
+Ja25:  should never get in here
 
 				// Punch first living pc....
 				// OK, LET'S FIND THE QUEEN AND MAKE HER DO SLAP ANIMATION
@@ -3389,6 +3400,7 @@ Ja25 No meanwhiles
 						TriggerNPCWithGivenApproach( pSoldier->ubProfile, (UINT8)pSoldier->uiPendingActionData4, FALSE );
 					}
 				}
+*/
 				break;
 
 			case NPC_ACTION_FRUSTRATED_SLAP:
@@ -3409,6 +3421,8 @@ Ja25 No meanwhiles
 				// keith is back in business
 				SetFactFalse( FACT_KEITH_OUT_OF_BUSINESS );
 				break;
+/*
+ja25: no queen
 			case NPC_ACTION_TRIGGER_QUEEN_BY_CITIES_CONTROLLED:
 				switch ( GetNumberOfWholeTownsUnderControlButExcludeCity( OMERTA ) )
 				{
@@ -3433,7 +3447,7 @@ Ja25 No meanwhiles
 						break;
 				}
 				break;
-
+*/
 			case NPC_ACTION_SEND_SOLDIERS_TO_DRASSEN:
 			case NPC_ACTION_SEND_SOLDIERS_TO_BATTLE_LOCATION:
 			case NPC_ACTION_SEND_SOLDIERS_TO_OMERTA:
@@ -3441,6 +3455,8 @@ Ja25 No meanwhiles
 			case NPC_ACTION_GIVE_KNOWLEDGE_OF_ALL_MERCS:
 				break;
 
+/*
+ja25: no queen
 			case NPC_ACTION_TRIGGER_QUEEN_BY_SAM_SITES_CONTROLLED:
 				switch ( GetNumberOfSAMSitesUnderPlayerControl() )
 				{
@@ -3458,6 +3474,7 @@ Ja25 No meanwhiles
 						break;
 				}
 				break;
+*/
 			case NPC_ACTION_TRIGGER_ELLIOT_BY_BATTLE_RESULT:
 				if ( gTacticalStatus.fLastBattleWon )
 				{
@@ -3469,6 +3486,8 @@ Ja25 No meanwhiles
 				}
 				break;
 
+/*
+ja25 no queen, no elliot
 			case NPC_ACTION_TRIGGER_ELLIOT_BY_SAM_DISABLED:
 				if ( IsThereAFunctionalSAMSiteInSector( gTacticalStatus.ubLastBattleSectorX, gTacticalStatus.ubLastBattleSectorY, 0 ) )
 				{
@@ -3479,6 +3498,7 @@ Ja25 No meanwhiles
 					TriggerNPCRecord( ELLIOT, 2 );
 				}
 				break;
+*/
 
 			case NPC_ACTION_TRIGGER_VINCE_BY_LOYALTY:
 				if( CheckFact( FACT_NPC_OWED_MONEY, ubTargetNPC ) && ( ubTargetNPC == VINCE ) )
@@ -3622,6 +3642,9 @@ Ja25 No meanwhiles
 					TriggerNPCRecord( ELLIOT, 1 );
 				}
 				break;
+
+/*
+ja25 no queen
 			case NPC_ACTION_QUEEN_DECIDE_WHICH_QUOTE_FOR_PLAYER_ATTACK:
 				if( DidFirstBattleTakePlaceInThisTown( DRASSEN ) )
 				{
@@ -3633,6 +3656,7 @@ Ja25 No meanwhiles
 				}
 
 				break;
+*/
 			case NPC_ACTION_KROTT_ALIVE_LOYALTY_BOOST:
 /* Delayed loyalty effects elimininated.  Sep.12/98.  ARM
 				AddFutureDayStrategicEvent( EVENT_SET_BY_NPC_SYSTEM, 480 + Random( 60 ), NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_KROTT_ALIVE_LOYALTY_BOOST, 1 );
@@ -3987,13 +4011,14 @@ Ja25 No meanwhiles
 				{
 					// This is not the end, 'cause momma creature is still alive
 					TriggerNPCRecordImmediately( 136, 8 );	
-					EndQueenDeathEndgame( );
+
+//Ja25 No queen					EndQueenDeathEndgame( );
 				}
 				else
 				{
 					// Continue with endgame cimematic..
 					DeleteTalkingMenu( );
-					EndQueenDeathEndgameBeginEndCimenatic( );
+//Ja25 No queen					EndQueenDeathEndgameBeginEndCimenatic( );
 				}
 				break;
 
@@ -4001,7 +4026,7 @@ Ja25 No meanwhiles
 
 				// Just end queen killed dequence.......
 				DeleteTalkingMenu( );
-				EndQueenDeathEndgame( );
+//Ja25 No queen				EndQueenDeathEndgame( );
 				break;
 
 			case NPC_ACTION_MAKE_ESTONI_A_FUEL_SITE:

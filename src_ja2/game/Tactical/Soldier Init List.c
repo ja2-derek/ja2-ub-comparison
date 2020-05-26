@@ -605,6 +605,8 @@ BOOLEAN AddPlacementToWorld( SOLDIERINITNODE *curr )
 					}
 				}
 			}
+/*
+Ja25: no queen
 			else if ( !gfInMeanwhile && gWorldSectorX == 3 && gWorldSectorY == 16 && !gbWorldSectorZ )
 			{ //Special civilian setup for queen's palace.
 				if( gubFact[ FACT_QUEEN_DEAD ] ) 
@@ -626,6 +628,7 @@ BOOLEAN AddPlacementToWorld( SOLDIERINITNODE *curr )
 					}
 				}
 			}
+*/
 			else if ( gWorldSectorX == TIXA_SECTOR_X && gWorldSectorY == TIXA_SECTOR_Y  && gbWorldSectorZ == 0 )
 			{
 				// Tixa prison, once liberated, should not have any civs without profiles unless

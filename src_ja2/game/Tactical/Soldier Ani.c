@@ -2466,7 +2466,7 @@ BOOLEAN AdjustToNextAnimationFrame( SOLDIERTYPE *pSoldier )
 				case 758:
 
 					// Trigger after slap...
-					TriggerNPCWithGivenApproach( QUEEN, APPROACH_DONE_SLAPPED , TRUE );
+//JA25 no queen					TriggerNPCWithGivenApproach( QUEEN, APPROACH_DONE_SLAPPED , TRUE );
 					break;
 
 				case 759:
@@ -3359,7 +3359,7 @@ void CheckForAndHandleSoldierIncompacitated( SOLDIERTYPE *pSoldier )
 		}
 
 /*
-ja25:
+ja25: No queen
 		// OK, if we are in a meanwhile and this is elliot...
 		if ( AreInMeanwhile( ) )
 		{

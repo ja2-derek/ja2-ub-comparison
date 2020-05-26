@@ -2561,11 +2561,14 @@ void HandleInitialRedAlert( INT8 bTeam, UINT8 ubCommunicate)
 		// alert Queen and Joe if they are around
 		SOLDIERTYPE *			pSoldier;
 		
+/*
+Ja25: 
 		pSoldier = FindSoldierByProfileID( QUEEN, FALSE );
 		if ( pSoldier )
 		{
 			pSoldier->bAlertStatus = STATUS_RED;
 		}
+*/
 
 		pSoldier = FindSoldierByProfileID( JOE, FALSE );
 		if ( pSoldier )

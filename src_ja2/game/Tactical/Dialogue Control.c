@@ -1200,6 +1200,8 @@ Ja25: removed the flag, no militia
 		}
 		else if( QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_MULTIPURPOSE )
 		{
+/*
+Ja25 No queen
 			if ( QItem->uiSpecialEventData & MULTIPURPOSE_SPECIAL_EVENT_DONE_KILLING_DEIDRANNA )
 			{
 				HandleDoneLastKilledQueenQuote( );
@@ -1207,6 +1209,11 @@ Ja25: removed the flag, no militia
 			else if ( QItem->uiSpecialEventData & MULTIPURPOSE_SPECIAL_EVENT_TEAM_MEMBERS_DONE_TALKING )
 			{
 				HandleDoneLastEndGameQuote( );
+			}
+*/
+			if ( QItem->uiSpecialEventData & MULTIPURPOSE_SPECIAL_EVENT_TEAM_MEMBERS_DONE_TALKING )
+			{
+				HandleEveryoneDoneTheirEndGameQuotes();
 			}
 			else
 			{

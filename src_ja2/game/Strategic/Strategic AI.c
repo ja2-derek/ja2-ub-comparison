@@ -3100,6 +3100,9 @@ BOOLEAN LoadStrategicAI( HWFILE hFile )
 			SectorInfo[ SEC_P3 ].ubNumElites = 32;
 		}
 	}
+
+/* 
+Ja25: No Queen
 	if( ubSAIVersion < 24 )
 	{
 		//If the queen has escaped to the basement, do not use the profile insertion info
@@ -3124,6 +3127,8 @@ BOOLEAN LoadStrategicAI( HWFILE hFile )
 			}
 		}
 	}
+* /
+
 	if( ubSAIVersion < 25 )
 	{
 		if( gubFact[ FACT_SKYRIDER_CLOSE_TO_CHOPPER ] )

@@ -110,6 +110,9 @@ void ChangeO3SectorStatue( BOOLEAN fFromExplosion )
 
 }
 
+/*
+Ja25 no queen
+
 void DeidrannaTimerCallback( void )
 {
 	HandleDeidrannaDeath( gpKillerSoldier, gsGridNo, gbLevel );
@@ -343,7 +346,7 @@ void EndQueenDeathEndgame( )
 
 	gTacticalStatus.uiFlags &= (~IN_DEIDRANNA_ENDGAME);
 }
-
+*/
 
 void DoneFadeOutEndCinematic( void )
 {
@@ -365,13 +368,16 @@ void DoneFadeOutEndCinematic( void )
 // OK, end death UI - fade to smaker....
 void HandleDoneLastEndGameQuote( )
 {
-	EndQueenDeathEndgame( );
+//Ja25 No queen	EndQueenDeathEndgame( );
 
 	gFadeOutDoneCallback = DoneFadeOutEndCinematic;
 
 	FadeOutGameScreen( );	
 }
 
+
+/*
+Ja25 no queen
 
 
 void QueenBitchTimerCallback( void )
@@ -481,3 +487,4 @@ void HandleQueenBitchDeath( SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLe
   }
 }
 
+*/

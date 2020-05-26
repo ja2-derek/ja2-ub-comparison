@@ -3998,11 +3998,14 @@ INT32	GetMaxNumberOfQuotesToPlay( )
 		iNumberOfQuotes = 119;
 	}
 
+/*
+No queen
 	//else if it is the queen
 	else if( ubProfileID == QUEEN )
 	{
 		iNumberOfQuotes = 138;
 	}
+*/
 
 	//else if it is speck
 	else if( ubProfileID == 159 )

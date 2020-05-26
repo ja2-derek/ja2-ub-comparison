@@ -1575,6 +1575,8 @@ INT8 DecideActionRed(SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK)
      return(bActionReturned);
   }
 
+/*
+Ja25: No queen
 	if ( pSoldier->ubProfile != NO_PROFILE )
 	{
 		if ( (pSoldier->ubProfile == QUEEN || pSoldier->ubProfile == JOE) && ubCanMove )
@@ -1589,7 +1591,7 @@ INT8 DecideActionRed(SOLDIERTYPE *pSoldier, UINT8 ubUnconsciousOK)
 			}
 		}
 	}
-
+*/
 
  // determine if we happen to be in water (in which case we're in BIG trouble!)
  bInWater = Water( pSoldier->sGridNo );
@@ -2659,6 +2661,8 @@ INT8 DecideActionBlack(SOLDIERTYPE *pSoldier)
      return(bActionReturned);
   }
 
+/*
+Ja25: No queen
 	if ( pSoldier->ubProfile != NO_PROFILE )
 	{
 		// if they see enemies, the Queen will keep going to the staircase, but Joe will fight
@@ -2674,6 +2678,7 @@ INT8 DecideActionBlack(SOLDIERTYPE *pSoldier)
 			}
 		}
 	}
+*/
 
 	if ( pSoldier->uiStatusFlags & SOLDIER_BOXER )
 	{

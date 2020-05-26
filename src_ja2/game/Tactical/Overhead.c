@@ -3301,6 +3301,8 @@ Ja25 no terrorists
 				break;
 		}
 
+/* Ja25
+no queen
 		// Are we looking at the queen?
 		if ( pSoldierOld->ubProfile == QUEEN )
 		{
@@ -3311,6 +3313,7 @@ Ja25 no terrorists
 
 			BeginHandleDeidrannaDeath( pKiller, pSoldierOld->sGridNo, pSoldierOld->bLevel );
 		}
+*/
   
 		// crows/cows are on the civilian team, but none of the following applies to them
 		if ( ( pSoldierOld->ubBodyType != CROW ) && ( pSoldierOld->ubBodyType != COW ) )
@@ -3391,12 +3394,13 @@ Ja25:	no loyalty
 			gTacticalStatus.ubTheChosenOne = NOBODY;
 		}
 
+/*
+no queen, or queen monster
 		if ( pSoldierOld->ubProfile == QUEEN )
 		{
 			HandleMoraleEvent( NULL, MORALE_DEIDRANNA_KILLED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ  );
 			MaximizeLoyaltyForDeidrannaKilled( );
 		}
-		/*
 		else if ( pSoldierOld->ubBodyType == QUEENMONSTER )
 		{
 			HandleMoraleEvent( NULL, MORALE_MONSTER_QUEEN_KILLED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ  );
@@ -7279,8 +7283,8 @@ SOLDIERTYPE *InternalReduceAttackBusyCount( UINT8 ubID, BOOLEAN fCalledByAttacke
 		}
 	}
 
-/* 
-Ja25
+/*
+Ja25 no queen
 	// ATE: IN MEANWHILES, we have 'combat' in realtime....
 	// this is so we DON'T call freeupattacker() which will cancel
 	// the AI guy's meanwhile NPC stuff.
