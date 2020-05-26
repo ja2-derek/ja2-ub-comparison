@@ -337,6 +337,8 @@ void AddTextToTownBox( void )
 	GetSectorFacilitiesFlags( bCurrentTownMineSectorX, bCurrentTownMineSectorY, wString );
 	AddSecondColumnMonoString( &hStringHandle, wString );
 
+/*
+Ja25	No militia
 	// the concept of control is only meaningful in sectors where militia can be trained
 	if ( MilitiaTrainingAllowedInSector( bCurrentTownMineSectorX, bCurrentTownMineSectorY, 0 ) )
 	{
@@ -346,6 +348,7 @@ void AddTextToTownBox( void )
 		swprintf( wString, L"%d%%%%",  (GetTownSectorsUnderControl( ubTownId ) * 100) / GetTownSectorSize( ubTownId ));
 		AddSecondColumnMonoString( &hStringHandle, wString );
 	}
+*/
 
 /*
 Ja25 no loyalty
@@ -377,7 +380,7 @@ Ja25 no loyalty
 void AddTextToMineBox( void )
 {
 	UINT8 ubMineIndex;
-	UINT8 ubTown;
+//	UINT8 ubTown;
 	UINT32 hStringHandle;
 	CHAR16 wString[ 64 ];
 
@@ -602,6 +605,8 @@ void AddCommonInfoToBox(void)
 	}
 
 
+/*
+Ja25 no militia
 	// in sector where militia can be trained,
 	// control of the sector matters, display who controls this sector.  Map brightness no longer gives this!
 	if ( MilitiaTrainingAllowedInSector( bCurrentTownMineSectorX, bCurrentTownMineSectorY, 0 ) && !fUnknownSAMSite )
@@ -643,6 +648,7 @@ void AddCommonInfoToBox(void)
 		swprintf( wString, L"%d%%%%", SectorInfo[ SECTOR( bCurrentTownMineSectorX, bCurrentTownMineSectorY ) ].ubMilitiaTrainingPercentDone );
 		AddSecondColumnMonoString( &hStringHandle, wString );
 	}
+*/
 
 
 	// enemy forces

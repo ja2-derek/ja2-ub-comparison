@@ -22,6 +22,9 @@
 	#include "Dialogue Control.h"
 #endif
 
+#ifdef JA25_ALLOW_TOWN_MILITIA
+
+
 #define SIZE_OF_MILITIA_COMPLETED_TRAINING_LIST 50
 
 // temporary local global variables
@@ -883,6 +886,8 @@ void ClearSectorListForCompletedTrainingOfMilitia( void )
 
 void HandleContinueOfTownTraining( void )
 {
+	Assert( 0 );
+/*
 	SOLDIERTYPE *pSoldier = NULL;
 	INT32 iCounter = 0;
 	BOOLEAN fContinueEventPosted = FALSE;
@@ -925,6 +930,7 @@ void HandleContinueOfTownTraining( void )
 	}
 
 	return;
+*/
 }
 
 
@@ -1214,9 +1220,15 @@ void BuildMilitiaPromotionsString( UINT16 *str )
 	gbGreenToRegPromotions = 0;
 	gbRegToElitePromotions = 0;
 	gbMilitiaPromotions = 0;
+}
+
+#endif
 
 UINT8 CountAllMilitiaInSector(INT16 sMapX, INT16 sMapY)
 {
+	return( 0 );
+/*
+Ja25 n militia
 	UINT8 ubMilitiaTotal = 0;
 	UINT8 ubRank;
 
@@ -1227,6 +1239,7 @@ UINT8 CountAllMilitiaInSector(INT16 sMapX, INT16 sMapY)
 	}
 
 	return(ubMilitiaTotal);
+*/
 }
 
 BOOLEAN SectorOursAndPeaceful( INT16 sMapX, INT16 sMapY, INT8 bMapZ )

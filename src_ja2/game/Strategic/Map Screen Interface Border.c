@@ -307,6 +307,9 @@ BOOLEAN CreateButtonsForMapBorder( void )
   giMapBorderButtons[ MAP_BORDER_MILITIA_BTN ] = QuickCreateButton( giMapBorderButtonsImage[ MAP_BORDER_MILITIA_BTN ], 428, 323,
 										BUTTON_NO_TOGGLE, MSYS_PRIORITY_HIGH,
 										(GUI_CALLBACK)MSYS_NO_CALLBACK, (GUI_CALLBACK)BtnMilitiaCallback);
+
+	//Ja25:	Disable the Militia button because there is no militia
+	DisableButton( giMapBorderButtons[ MAP_BORDER_MILITIA_BTN ] );
  
 	// airspace
 	giMapBorderButtonsImage[ MAP_BORDER_AIRSPACE_BTN ] = LoadButtonImage( "INTERFACE\\map_border_buttons.sti" ,-1,2,-1,11,-1 );

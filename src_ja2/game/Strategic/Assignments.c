@@ -1093,6 +1093,8 @@ BOOLEAN BasicCanCharacterTrainMilitia( SOLDIERTYPE *pSoldier )
 
 
 
+/*
+Ja25 no militia
 BOOLEAN CanCharacterTrainMilitia( SOLDIERTYPE *pSoldier )
 {
 	if( BasicCanCharacterTrainMilitia( pSoldier ) &&
@@ -1108,11 +1110,16 @@ BOOLEAN CanCharacterTrainMilitia( SOLDIERTYPE *pSoldier )
 		return( FALSE );
 	}
 }
-
+*/
 
 
 BOOLEAN DoesTownHaveRatingToTrainMilitia( INT8 bTownId )
 {
+	Assert( 0 );
+	return( FALSE );
+/*
+Ja25	No militia
+
 	// min loyalty rating?
 	if( ( gTownLoyalty[ bTownId ].ubRating < MIN_RATING_TO_TRAIN_TOWN ) )
 	{
@@ -1121,6 +1128,7 @@ BOOLEAN DoesTownHaveRatingToTrainMilitia( INT8 bTownId )
 	}
 
 	return( TRUE );
+*/
 }
 
 
@@ -1188,6 +1196,10 @@ INT8 CountMilitiaTrainersInSoldiersSector( SOLDIERTYPE * pSoldier )
 
 BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed( SOLDIERTYPE *pSoldier )
 {
+	Assert( 0 );
+/*
+Ja25 no militia
+
 	INT8 bTownId = 0;
 	BOOLEAN fSamSitePresent = FALSE;
 
@@ -1223,6 +1235,7 @@ BOOLEAN IsMilitiaTrainableFromSoldiersSectorMaxed( SOLDIERTYPE *pSoldier )
 		// town is full of militia
 		return( TRUE );
 	}
+*/
 
 	return( FALSE );
 }
@@ -1896,8 +1909,11 @@ void UpdateAssignments()
 	// see if any grunt or trainer just lost student/teacher
 	ReportTrainersTraineesWithoutPartners( );
 
+/*
+Ja25 no militia
 	// clear out the update list
 	ClearSectorListForCompletedTrainingOfMilitia( );
+*/
 	
 	
 	// rest resting mercs, fatigue active mercs,
@@ -1941,7 +1957,10 @@ void UpdateAssignments()
 	}
 
 
+/*
+Ja25 no militia
 	HandleContinueOfTownTraining( );
+*/
 
 	// check if anyone is on an assignment where they have nothing to do
 	ReEvaluateEveryonesNothingToDo();
@@ -4005,6 +4024,10 @@ void TrainSoldierWithPts( SOLDIERTYPE *pSoldier, INT16 sTrainPts )
 // will train a town in sector by character
 BOOLEAN TrainTownInSector( SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY, INT16 sTrainingPts )
 {
+//	Should never get in here
+	Assert( 0 );
+/*
+Ja25 no militia
 	SECTORINFO *pSectorInfo = &( SectorInfo[ SECTOR( sMapX, sMapY ) ] );
 	UINT8 ubTownId = 0;
 	INT16 sCnt = 0;
@@ -4057,6 +4080,8 @@ BOOLEAN TrainTownInSector( SOLDIERTYPE *pTrainer, INT16 sMapX, INT16 sMapY, INT1
 		// not done
 		return ( FALSE );
 	}
+*/
+	return( TRUE );
 }
 
 
@@ -4211,10 +4236,13 @@ void AssignmentDone( SOLDIERTYPE *pSoldier, BOOLEAN fSayQuote, BOOLEAN fMeToo )
 		{
 			TacticalCharacterDialogue( pSoldier, QUOTE_ASSIGNMENT_COMPLETE );
 
+/*
+Ja25 no militia
 			if( pSoldier -> bAssignment == TRAIN_TOWN )
 			{
 				AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining( pSoldier );
 			}
+*/
 		}
 	}
 	
@@ -7255,7 +7283,11 @@ void TrainingMenuBtnCallback( MOUSE_REGION * pRegion, INT32 iReason )
 				DetermineBoxPositions( );
 
 			break;
+
+/*
+Ja25:	No Militia
 			case( TRAIN_MENU_TOWN):
+				Assert( 0 );
 				if( BasicCanCharacterTrainMilitia(pSoldier) ) 
 				{
 					bTownId = GetTownIdForSector( pSoldier->sSectorX, pSoldier->sSectorY );
@@ -7345,6 +7377,7 @@ void TrainingMenuBtnCallback( MOUSE_REGION * pRegion, INT32 iReason )
 					gfRenderPBInterface = TRUE;
 
 				}
+*/
 			break;
 			case( TRAIN_MENU_TEAMMATES):
 
@@ -9418,6 +9451,9 @@ void SetSoldierAssignment( SOLDIERTYPE *pSoldier, INT8 bAssignment, INT32 iParam
 			}
 		break;
 		case( TRAIN_TOWN ):
+			Assert( 0 );
+/*
+Ja25 no milita
 			if( CanCharacterTrainMilitia( pSoldier ) )
 			{
 				// train militia
@@ -9458,6 +9494,7 @@ void SetSoldierAssignment( SOLDIERTYPE *pSoldier, INT8 bAssignment, INT32 iParam
 				fMapScreenBottomDirty = TRUE;
 				gfRenderPBInterface = TRUE;
 			}
+*/
 		break;
 		case( TRAIN_SELF ):
 			if( CanCharacterTrainStat( pSoldier, ( INT8 )iParam1, TRUE, FALSE ) )
@@ -9894,6 +9931,9 @@ void HandleShadingOfLinesForTrainingMenu( void )
 	}
 
 
+/*
+Ja25 no milita
+
 	// can character EVER train militia?
 	if( BasicCanCharacterTrainMilitia( pSoldier ) )
 	{
@@ -9914,6 +9954,7 @@ void HandleShadingOfLinesForTrainingMenu( void )
 		// shade train militia line
 		ShadeStringInBox( ghTrainingBox, TRAIN_MENU_TOWN );
 	}
+*/
 
 
 	// can character train teammates?
@@ -10603,7 +10644,11 @@ void ReEvaluateEveryonesNothingToDo()
 					break;
 
 				case TRAIN_TOWN:
+					Assert( 0 );
+/*
+Ja25 no milita
 					fNothingToDo = !CanCharacterTrainMilitia( pSoldier );
+*/
 					break;
 
 				case TRAIN_SELF:
@@ -10773,12 +10818,16 @@ void SetAssignmentForList( INT8 bAssignment, INT8 bParam )
 					}
 					break;
 				case( TRAIN_TOWN ):
+					Assert( 0 );
+/*
+Ja25 no milita
 					if( CanCharacterTrainMilitia( pSoldier ) )
 					{
 						pSoldier->bOldAssignment = pSoldier->bAssignment;
 						SetSoldierAssignment( pSoldier, TRAIN_TOWN, 0, 0, 0 );
 						fItWorked = TRUE;
 					}
+*/
 					break;
 				case( TRAIN_TEAMMATE ):
 					if( CanCharacterTrainStat( pSoldier, bParam, FALSE, TRUE ) )

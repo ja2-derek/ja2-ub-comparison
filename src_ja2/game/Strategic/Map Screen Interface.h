@@ -94,7 +94,7 @@ enum {
 // training assignment menu defines
 enum {
 	TRAIN_MENU_SELF,
-	TRAIN_MENU_TOWN,
+//Ja25 no militia	TRAIN_MENU_TOWN,
 	TRAIN_MENU_TEAMMATES,
 	TRAIN_MENU_TRAIN_BY_OTHER,
 	TRAIN_MENU_CANCEL,

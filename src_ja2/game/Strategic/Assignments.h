@@ -104,8 +104,11 @@ BOOLEAN CanCharacterRepair( SOLDIERTYPE *pCharacter );
 // can character be patient?
 BOOLEAN CanCharacterPatient( SOLDIERTYPE *pCharacter );
 
+/*
+Ja25 no milita
 // can character train militia?
 BOOLEAN CanCharacterTrainMilitia( SOLDIERTYPE *pCharacter );
+*/
 
 // can character train stat?..as train self or as trainer?
 BOOLEAN CanCharacterTrainStat( SOLDIERTYPE *pSoldier, INT8 bStat, BOOLEAN fTrainSelf, BOOLEAN fTrainTeammate );

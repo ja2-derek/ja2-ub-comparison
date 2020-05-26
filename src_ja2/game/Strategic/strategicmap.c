@@ -762,7 +762,10 @@ Ja25 no creatures
 		// Check for helicopter being on the ground in this sector...
 		HandleHelicopterOnGroundGraphic( );
 
+/*
+Ja25 no militia
 		ResetMilitia();
+*/
 		AllTeamsLookForAll( TRUE );
 		return( TRUE );
 	}
@@ -1053,10 +1056,11 @@ void PrepareLoadedSector()
 
 
 /*
-Ja25 no creatures
+Ja25 no creatures or militia
 		PrepareCreaturesForBattle();
-*/
+
 		PrepareMilitiaForTactical();
+*/
 
 		// OK, set varibles for entring this new sector...
 		gTacticalStatus.fVirginSector = TRUE;
@@ -4364,8 +4368,14 @@ BOOLEAN HandleDefiniteUnloadingOfWorld( UINT8 ubUnloadCode )
 		gfBlitBattleSectorLocator = FALSE;
 	}
 
+	//if the fan sound is going, remove it
+	HandleRemovingPowerGenFanSound();
+
+/*
+Ja25 no militia
 	//Handle cases for both types of unloading
 	HandleMilitiaStatusInCurrentMapBeforeLoadingNewMap();	
+*/
 	return TRUE;
 }
 

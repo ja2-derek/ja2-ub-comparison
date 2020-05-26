@@ -555,6 +555,8 @@ STR16 pUpperLeftMapScreenStrings[] =
 	L"Fuel",	// the fuel level of the current vehicle
 };
 
+/*
+Ja25: doesnt appear to be used
 STR16 pTrainingStrings[] =
 {
 	L"Practice", // tell merc to train self 
@@ -562,6 +564,7 @@ STR16 pTrainingStrings[] =
 	L"Trainer", // tell merc to act as trainer
 	L"Student", // tell merc to be train by other 
 };
+*/
 
 STR16 pGuardMenuStrings[] =
 {
@@ -627,7 +630,7 @@ STR16 pAttributeMenuStrings[] =
 STR16 pTrainingMenuStrings[] =
 {
  L"Practice", // train yourself 
- L"Militia", // train the town 
+//Ja25: no militia L"Militia", // train the town 
  L"Trainer", // train your teammates 
  L"Student",  // be trained by an instructor 
  L"Cancel", // cancel this menu
@@ -1607,7 +1610,7 @@ STR16 pMapScreenBorderButtonHelpText[] =
 	L"Show |Teams & Enemies",
 	L"Show |Airspace",
 	L"Show |Items",
-	L"Show Militia & Enemies (|Z)",
+	L"Militia Disabled",	//Ja25: new string
 };
 
 

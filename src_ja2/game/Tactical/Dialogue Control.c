@@ -1151,8 +1151,11 @@ Ja25: no mike
 		{
 			SetUpdateBoxFlag( TRUE );
 		}
+/*
+Ja25: removed the flag, no militia
 		else if( QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_CONTINUE_TRAINING_MILITIA )
 		{
+			Assert( 0 );
 			// grab soldier ptr from profile ID
 			pSoldier = FindSoldierByProfileID( ( UINT8 )( QItem->uiSpecialEventData ), FALSE );
 			
@@ -1162,6 +1165,7 @@ Ja25: no mike
 				HandleInterfaceMessageForContinuingTrainingMilitia( pSoldier );
 			}
 		}
+*/
 		else if( QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_ENTER_MAPSCREEN )
 		{
 			if( !(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )

@@ -3325,6 +3325,9 @@ Ja25 no terrorists
 	}
 	else if ( pSoldierOld->bTeam == MILITIA_TEAM )
 	{
+
+/*
+Ja25:	no militia
 		INT8 bMilitiaRank;
 		
 		bMilitiaRank = SoldierClassToMilitiaRank( pSoldierOld->ubSoldierClass );

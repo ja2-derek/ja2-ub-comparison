@@ -5017,7 +5017,11 @@ void DisplayLevelString( void )
 // function to manipulate the number of towns people on the cursor
 BOOLEAN PickUpATownPersonFromSector( UINT8 ubType, INT16 sX, INT16 sY )
 {
+	Assert( 0 );
+	return( FALSE );
 
+/*
+Ja25:  No militia
 	
 
 	// see if there are any militia of this type in this sector
@@ -5063,10 +5067,15 @@ BOOLEAN PickUpATownPersonFromSector( UINT8 ubType, INT16 sX, INT16 sY )
 	fMapPanelDirty = TRUE;
 
 	return( TRUE );
+*/
 }
 
 BOOLEAN DropAPersonInASector( UINT8 ubType, INT16 sX, INT16 sY )
 {
+	Assert( 0 );
+	return( FALSE );
+/*
+Ja25:  No militia
 
 	// are they in the same town as they were pickedup from
 	if( GetTownIdForSector( sX, sY ) != sSelectedMilitiaTown )
@@ -5125,6 +5134,7 @@ BOOLEAN DropAPersonInASector( UINT8 ubType, INT16 sX, INT16 sY )
 	fMapPanelDirty = TRUE;
 
 	return( TRUE );
+*/
 }
 
 
@@ -5767,6 +5777,10 @@ void DrawTownMilitiaName( void )
 
 void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor( INT16 sTownValue  )
 {
+	Assert( 0 );
+/*
+Ja25:  No militia
+
 	INT32 iCounter = 0, iCounterB = 0, iNumberUnderControl = 0, iNumberThatCanFitInSector= 0, iCount = 0;
 	BOOLEAN fLastOne = FALSE;
 
@@ -5857,10 +5871,15 @@ void HandleShutDownOfMilitiaPanelIfPeopleOnTheCursor( INT16 sTownValue  )
 	sElitesOnCursor = 0;
 
 	return;
+*/
 }
 
 void HandleEveningOutOfTroopsAmongstSectors( void )
 {
+	Assert( 0 );
+/*
+Ja25:  No militia
+
 	// even out troops among the town
 	INT32 iCounter = 0, iNumberUnderControl = 0, iNumberOfGreens = 0, iNumberOfRegulars = 0, iNumberOfElites = 0, iTotalNumberOfTroops = 0;
 	INT32 iNumberLeftOverGreen = 0, iNumberLeftOverRegular = 0, iNumberLeftOverElite = 0;
@@ -5983,6 +6002,7 @@ void HandleEveningOutOfTroopsAmongstSectors( void )
 	sElitesOnCursor = 0;
 
 	return;
+*/
 }
 
 void CreateMilitiaPanelBottomButton( void )
@@ -6434,7 +6454,7 @@ UINT32 WhatPlayerKnowsAboutEnemiesInSector( INT16 sSectorX, INT16 sSectorY )
 	//will display on mapscreen until time is compressed.  When time is compressed, the flag is cleared, and
 	//a question mark is displayed to reflect that the player no longer knows.
 	if ( CanMercsScoutThisSector( sSectorX, sSectorY, 0 ) ||
-			 CanNearbyMilitiaScoutThisSector( sSectorX, sSectorY ) || 
+//Ja25 no militia			 CanNearbyMilitiaScoutThisSector( sSectorX, sSectorY ) || 
 			 ( uiSectorFlags & SF_PLAYER_KNOWS_ENEMIES_ARE_HERE ) )
 	{
 		// if the enemies are stationary (i.e. mercs attacking a garrison)

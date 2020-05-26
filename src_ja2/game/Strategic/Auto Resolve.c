@@ -1866,10 +1866,17 @@ void CreateAutoResolveInterface()
 			hVObject->pShades[ 1 ] = Create16BPPPaletteShaded( hVObject->pPaletteEntry, 250, 25, 25, TRUE );
 		}
 	}
-
+/*
+Ja25 no militia
 	ubEliteMilitia = MilitiaInSectorOfRank( gpAR->ubSectorX, gpAR->ubSectorY, ELITE_MILITIA );
 	ubRegMilitia = MilitiaInSectorOfRank( gpAR->ubSectorX, gpAR->ubSectorY, REGULAR_MILITIA );
 	ubGreenMilitia = MilitiaInSectorOfRank( gpAR->ubSectorX, gpAR->ubSectorY, GREEN_MILITIA );
+*/
+
+	ubEliteMilitia = 0;
+	ubRegMilitia = 0;
+	ubGreenMilitia = 0;
+
 	while( ubEliteMilitia + ubRegMilitia + ubGreenMilitia < gpAR->ubCivs )
 	{
 		switch( PreRandom( 3 ) )
@@ -2204,9 +2211,9 @@ void RemoveAutoResolveInterface( BOOLEAN fDeleteForGood )
 			if( fDeleteForGood && gpCivs[ i ].pSoldier->bLife < OKLIFE/2 )
 			{
 				AddDeadSoldierToUnLoadedSector( gpAR->ubSectorX, gpAR->ubSectorY, 0, gpCivs[ i ].pSoldier, RandomGridNo(), ADD_DEAD_SOLDIER_TO_SWEETSPOT );
-				StrategicRemoveMilitiaFromSector( gpAR->ubSectorX, gpAR->ubSectorY, ubCurrentRank, 1 );
 /*
-Ja25:	no loyalty
+Ja25:	no loyalty, or militia
+				StrategicRemoveMilitiaFromSector( gpAR->ubSectorX, gpAR->ubSectorY, ubCurrentRank, 1 );
 				HandleGlobalLoyaltyEvent( GLOBAL_LOYALTY_NATIVE_KILLED, gpAR->ubSectorX, gpAR->ubSectorY, 0 );
 */
 			}
@@ -2216,7 +2223,8 @@ Ja25:	no loyalty
 				// this will check for promotions and handle them for you
 				if( fDeleteForGood && ( gpCivs[ i ].pSoldier->ubMilitiaKills > 0) && ( ubCurrentRank < ELITE_MILITIA ) )
 				{
-					ubPromotions = CheckOneMilitiaForPromotion( gpAR->ubSectorX, gpAR->ubSectorY, ubCurrentRank, gpCivs[ i ].pSoldier->ubMilitiaKills );
+//Ja25 no militia					ubPromotions = CheckOneMilitiaForPromotion( gpAR->ubSectorX, gpAR->ubSectorY, ubCurrentRank, gpCivs[ i ].pSoldier->ubMilitiaKills );
+					ubPromotions = 0;
 					if( ubPromotions )
 					{
 						if( ubPromotions == 2 )

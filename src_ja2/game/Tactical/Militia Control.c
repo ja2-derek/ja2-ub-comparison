@@ -1,3 +1,5 @@
+#ifdef JA25_MILITIA_ALLOWED_IN_EXP
+
 #ifdef PRECOMPILEDHEADERS
 	#include "Tactical All.h"
 	#include "PreBattle Interface.h"
@@ -128,3 +130,5 @@ void HandleMilitiaPromotions( void )
 		// DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, NULL );
 	}
 }
+
+#endif

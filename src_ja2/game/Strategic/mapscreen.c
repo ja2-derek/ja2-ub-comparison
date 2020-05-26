@@ -971,7 +971,7 @@ void HandleNewDestConfirmation( INT16 sMapX, INT16 sMapY );
 void RandomAwakeSelectedMercConfirmsStrategicMove( void );
 void DestinationPlottingCompleted( void );
 
-void HandleMilitiaRedistributionClick( void );
+//			Ja25:	void HandleMilitiaRedistributionClick( void );
 
 void StartChangeSectorArrivalMode( void );
 BOOLEAN CanMoveBullseyeAndClickedOnIt( INT16 sMapX, INT16 sMapY );
@@ -6206,7 +6206,8 @@ void PollRightButtonInMapView( UINT32 *puiNewEvent )
 					{
 						if ( fShowMilitia == TRUE )
 						{
-							HandleMilitiaRedistributionClick();
+							Assert( 0 );
+//			Ja25:	No militia							HandleMilitiaRedistributionClick();
 						}
 						else // show militia is OFF
 						{
@@ -11826,6 +11827,9 @@ void DestinationPlottingCompleted( void )
 }
 
 
+/*
+			Ja25:	No militia
+
 
 void HandleMilitiaRedistributionClick( void )
 {
@@ -11876,7 +11880,7 @@ void HandleMilitiaRedistributionClick( void )
 		}
 	}
 }
-
+*/
 
 
 
@@ -12016,9 +12020,13 @@ Ja25 no creatures
 	}
 	else if( gbMilitiaPromotions )
 	{
+		Assert( 0 );
+/*
+Ja25 no militia
 		UINT16 str[ 512 ];
 		BuildMilitiaPromotionsString( str );
 		DoScreenIndependantMessageBox( str, MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback );
+*/
 	}
 }
 
