@@ -205,7 +205,7 @@ void CreatePlayerControlledMonster();
 void ChangeCurrentSquad( INT32 iSquad );
 void HandleSelectMercSlot( UINT8 ubPanelSlot, INT8 bCode );
 void EscapeUILock( );
-void TestCapture( );
+//JA25 void TestCapture( );
 
 
 void HandleStealthChangeFromUIKeys( );
@@ -4563,7 +4563,8 @@ void HandleStealthChangeFromUIKeys(  )
 }
 
 
-
+/*
+Ja25 No surrendering
 void TestCapture( )
 {
 	INT32 cnt;
@@ -4596,7 +4597,7 @@ void TestCapture( )
 
 	EndCaptureSequence( );
 }
-
+*/
 
 void PopupAssignmentMenuInTactical( SOLDIERTYPE *pSoldier )
 {

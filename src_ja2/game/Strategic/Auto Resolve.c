@@ -293,7 +293,7 @@ void DetermineTeamLeader( BOOLEAN fFriendlyTeam );
 void CalculateAttackValues();
 void ProcessBattleFrame();
 BOOLEAN IsBattleOver();
-BOOLEAN AttemptPlayerCapture();
+//Ja25 No surrender BOOLEAN AttemptPlayerCapture();
 
 void AutoBandageFinishedCallback( UINT8 ubResult );
 
@@ -2144,7 +2144,11 @@ void RemoveAutoResolveInterface( BOOLEAN fDeleteForGood )
 				}
 				else if( gpAR->ubBattleStatus == BATTLE_SURRENDERED || gpAR->ubBattleStatus == BATTLE_CAPTURED )
 				{
+					Assert( 0 );
+/*
+Ja25 no surrenders
 					EnemyCapturesPlayerSoldier( gpMercs[ i ].pSoldier );
+*/
 				}
 				else if( gpAR->ubBattleStatus == BATTLE_VICTORY )
 				{ //merc is alive, so group them at the center gridno.
@@ -2170,11 +2174,14 @@ void RemoveAutoResolveInterface( BOOLEAN fDeleteForGood )
 			gpMercs[ i ].pSoldier = NULL;
 		}
 
+/*
+Ja25: No capture
 		// End capture squence....
 		if( gpAR->ubBattleStatus == BATTLE_SURRENDERED || gpAR->ubBattleStatus == BATTLE_CAPTURED )
 		{
 			EndCaptureSequence( );
 		}
+*/
 
 	}
 	//Delete all of the faces.
@@ -4051,7 +4058,8 @@ BOOLEAN IsBattleOver()
 
 
 //#define TESTSURRENDER
-
+/*
+Ja25 No surrender
 BOOLEAN AttemptPlayerCapture()
 {
 	INT32 i;
@@ -4142,6 +4150,8 @@ BOOLEAN AttemptPlayerCapture()
 	}
 	return TRUE;
 }
+*/
+
 
 void SetupDoneInterface()
 {
@@ -4207,11 +4217,14 @@ void AcceptSurrenderCallback( GUI_BUTTON *btn, INT32 reason )
 {
 	if( reason & MSYS_CALLBACK_REASON_LBUTTON_UP )
 	{
+		Assert( 0 );
+/*
 		BeginCaptureSquence( );
 
 		gpAR->ubBattleStatus = BATTLE_SURRENDERED;
 		gpAR->fPendingSurrender = FALSE;
 		SetupDoneInterface();
+*/
 	}
 }
 
@@ -4219,8 +4232,11 @@ void RejectSurrenderCallback( GUI_BUTTON *btn, INT32 reason )
 {
 	if( reason & MSYS_CALLBACK_REASON_LBUTTON_UP )
 	{
+		Assert( 0 );
+/*
 		gpAR->fPlayerRejectedSurrenderOffer = TRUE;
 		HideSurrenderInterface();
+*/
 	}
 }
 
@@ -4308,8 +4324,9 @@ void ProcessBattleFrame()
 				return;
 			}
 			CONTINUE_BATTLE:
-
-			if( IsBattleOver() || AttemptPlayerCapture() )
+//Ja25 No creature or surrender			
+//			if( IsBattleOver() || gubEnemyEncounterCode != CREATURE_ATTACK_CODE && AttemptPlayerCapture() )
+			if( IsBattleOver() )
 				return;
 
 			iRandom = PreRandom( iTotal );

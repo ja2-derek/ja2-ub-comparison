@@ -45,9 +45,17 @@ BOOLEAN LoadUnderGroundSectorInfoFromSavedGame( HWFILE hFile );
 //Finds and returns the specified underground structure ( DONT MODIFY IT ).  Else returns NULL
 UNDERGROUND_SECTORINFO* FindUnderGroundSector( INT16 sMapX, INT16 sMapY, UINT8 bMapZ );
 
+/*
+Ja25 no surrenders
 void EnemyCapturesPlayerSoldier( SOLDIERTYPE *pSoldier );
+*/
+
+
+/*
+Ja25: No capture
 void BeginCaptureSquence( );
 void EndCaptureSequence( );
+*/
 
 BOOLEAN PlayerSectorDefended( UINT8 ubSectorID );
 

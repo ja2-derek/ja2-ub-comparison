@@ -43,7 +43,10 @@ extern GARRISON_GROUP *gGarrisonGroup;
 extern INT32 giGarrisonArraySize;
 
 
+/* Ja25:  no surrendering 
 INT16 gsInterrogationGridNo[3] = { 7756, 7757, 7758 };
+*/
+
 
 void ValidateEnemiesHaveWeapons()
 {
@@ -1259,6 +1262,7 @@ UNDERGROUND_SECTORINFO* FindUnderGroundSector( INT16 sMapX, INT16 sMapY, UINT8 b
 
 
 
+/*
 
 void BeginCaptureSquence( )
 {
@@ -1314,6 +1318,9 @@ void EndCaptureSequence( )
 	}
 
 }
+*/
+/*
+Ja25:	No surrendering
 
 void EnemyCapturesPlayerSoldier( SOLDIERTYPE *pSoldier )
 {
@@ -1484,7 +1491,7 @@ void EnemyCapturesPlayerSoldier( SOLDIERTYPE *pSoldier )
 	pSoldier->sBreathRed = 0;
 	pSoldier->fMercCollapsedFlag = FALSE;
 }
-
+*/
 
 void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap()
 {

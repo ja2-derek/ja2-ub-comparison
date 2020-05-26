@@ -517,12 +517,15 @@ BOOLEAN IsActionAffordable(SOLDIERTYPE *pSoldier)
 			}
 			break;			
 
+/*
+Ja25 no surrender
+		case AI_ACTION_OFFER_SURRENDER:
+*/
 		case AI_ACTION_COWER:
 		case AI_ACTION_STOP_COWERING:
 		case AI_ACTION_LOWER_GUN:
 		case AI_ACTION_END_COWER_AND_MOVE:
 		case AI_ACTION_TRAVERSE_DOWN:
-		case AI_ACTION_OFFER_SURRENDER:
 			bMinPointsNeeded = 0;
 			break;
 			

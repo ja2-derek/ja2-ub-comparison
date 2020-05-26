@@ -147,6 +147,9 @@ BOOLEAN GetCivQuoteText( UINT8 ubCivQuoteID, UINT8 ubEntryID, INT16 *zQuote )
 	return( TRUE );
 }
 
+
+/*
+JA25:	No surrendering
 void SurrenderMessageBoxCallBack( UINT8 ubExitValue )
 {
 	SOLDIERTYPE *pTeamSoldier;
@@ -186,6 +189,7 @@ void SurrenderMessageBoxCallBack( UINT8 ubExitValue )
 		ActionDone( gCivQuoteData.pCiv );
 	}
 }
+*/
 
 void ShutDownQuoteBox( BOOLEAN fForce )
 {
@@ -207,11 +211,13 @@ void ShutDownQuoteBox( BOOLEAN fForce )
 
 		gCivQuoteData.bActive = FALSE;
 
+/*
 		// do we need to do anything at the end of the civ quote?
 		if ( gCivQuoteData.pCiv && gCivQuoteData.pCiv->bAction == AI_ACTION_OFFER_SURRENDER )
 		{
 			DoMessageBox( MSG_BOX_BASIC_STYLE, Message[ STR_SURRENDER ], GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_YESNO, SurrenderMessageBoxCallBack, NULL );
 		}
+*/
 	}
 }
 
@@ -446,10 +452,7 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 		{
 			return( CIV_QUOTE_ENEMY_THREAT );
 		}
-		else if ( pCiv->bAction == AI_ACTION_OFFER_SURRENDER )
-		{
-			return( CIV_QUOTE_ENEMY_OFFER_SURRENDER );
-		}
+
 		// Hurt?
 		else if ( pCiv->bLife < 30 )
 		{

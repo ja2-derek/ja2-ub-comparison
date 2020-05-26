@@ -2452,10 +2452,13 @@ INT8 ExecuteAction(SOLDIERTYPE *pSoldier)
 
 			return( FALSE );         // nothing is in progress
 
+/*
+Ja25: No surrenders
 		case AI_ACTION_OFFER_SURRENDER:
 			// start the offer of surrender!
 			StartCivQuote( pSoldier );
 			break;
+*/
 
 		default:
 			return(FALSE);

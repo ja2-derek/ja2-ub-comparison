@@ -6658,7 +6658,7 @@ BOOLEAN CheckForLosingEndOfBattle( )
         // Check if any enemies exist....
         if ( gTacticalStatus.Team[ ENEMY_TEAM ].bMenInSector > 0 )
         {
-				  //if( GetWorldDay() > STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE && !( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ))
+				  if( GetWorldDay() > STARTDAY_ALLOW_PLAYER_CAPTURE_FOR_RESCUE && !( gStrategicStatus.uiFlags & STRATEGIC_PLAYER_CAPTURED_FOR_RESCUE ) )
 				  {
 					  if ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTNOTSTARTED || ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTDONE && gubQuest[ QUEST_INTERROGATION ] == QUESTNOTSTARTED ) )
 					  {
@@ -6697,6 +6697,9 @@ BOOLEAN CheckForLosingEndOfBattle( )
 						}
 					}
 
+/*
+Ja25 no surrenders
+
           // ATE: if we are told to do capture....
           if ( pTeamSoldier->bLife != 0 && fDoCapture )
 					{
@@ -6704,7 +6707,7 @@ BOOLEAN CheckForLosingEndOfBattle( )
 
 						RemoveSoldierFromTacticalSector( pTeamSoldier, TRUE );
 					}
-
+*/
 				}
 			}
 
@@ -6712,7 +6715,7 @@ BOOLEAN CheckForLosingEndOfBattle( )
 
 			if ( fDoCapture )
 			{
-				EndCaptureSequence( );
+//Ja25: No surrendering				EndCaptureSequence( );
 				SetCustomizableTimerCallbackAndDelay( 3000, CaptureTimerCallback, FALSE );
 			}
 			else

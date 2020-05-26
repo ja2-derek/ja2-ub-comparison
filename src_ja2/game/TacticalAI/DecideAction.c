@@ -2794,6 +2794,8 @@ INT8 DecideActionBlack(SOLDIERTYPE *pSoldier)
    pSoldier->bAIMorale = MORALE_HOPELESS;
   }
 
+/*
+Ja25: no surrender
 	// offer surrender?
 	
 	if ( pSoldier->bTeam == ENEMY_TEAM && pSoldier->bVisible == TRUE && !( gTacticalStatus.fEnemyFlags & ENEMY_OFFERED_SURRENDER ) && pSoldier->bLife >= pSoldier->bLifeMax / 2 )
@@ -2810,6 +2812,7 @@ INT8 DecideActionBlack(SOLDIERTYPE *pSoldier)
       }
 		}
 	}
+*/
 
 	////////////////////////////////////////////////////////////////////////////
 	// SOLDIER CAN ATTACK IF NOT IN WATER/GAS AND NOT DOING SOMETHING TOO FUNKY
