@@ -74,7 +74,7 @@ INT16	sBasementEnterGridNos[ ] = { 13362, 13363, 13364, 13365, 13525, 13524 };
 INT16	sBasementExitGridNos[ ] = { 8047, 8207, 8208, 8048, 7888, 7728, 7727, 7567 };
 
 extern	UINT8		gubWaitingForAllMercsToExitCode;
-extern BOOLEAN fFoundTixa;
+
 void	DoneFadeOutActionBasement( void );
 void	DoneFadeOutActionSex( void );
 void	DoneFadeInActionBasement( void );
@@ -3183,6 +3183,10 @@ Ja25 No meanwhiles
 				}
 				
 				break;
+
+/*
+JA25: no orta and tixa
+
 			case NPC_ACTION_SHOW_TIXA:
 				SetTixaAsFound();
 				AddHistoryToPlayersLog( HISTORY_DISCOVERED_TIXA, 0, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
@@ -3191,6 +3195,8 @@ Ja25 No meanwhiles
 				SetOrtaAsFound();				
 				AddHistoryToPlayersLog( HISTORY_DISCOVERED_ORTA, 0, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
 				break;
+*/
+
 /*
 Ja25: No queen, no slap
 			case NPC_ACTION_SLAP:

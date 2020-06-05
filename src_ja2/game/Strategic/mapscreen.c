@@ -3189,6 +3189,8 @@ UINT32 MapScreenHandle(void)
 		 FilenameForBPP("INTERFACE\\top_left_corner_icons.sti", VObjectDesc.ImageFile);
 		 CHECKF(AddVideoObject(&VObjectDesc, &guiULICONS));
 
+/*
+Ja25 no orta
 		 VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 		 FilenameForBPP("INTERFACE\\map_item.sti", VObjectDesc.ImageFile);
 		 CHECKF(AddVideoObject(&VObjectDesc, &guiORTAICON));
@@ -3196,6 +3198,10 @@ UINT32 MapScreenHandle(void)
 		 VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 		 FilenameForBPP("INTERFACE\\prison.sti", VObjectDesc.ImageFile);
 		 CHECKF(AddVideoObject(&VObjectDesc, &guiTIXAICON));
+*/
+		 VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
+		 FilenameForBPP("INTERFACE\\PowerGenIcon.sti", VObjectDesc.ImageFile);
+		 CHECKF(AddVideoObject(&VObjectDesc, &guiPowerGenIcon));
 
 		 VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 		 FilenameForBPP("INTERFACE\\merc_between_sector_icons.sti", VObjectDesc.ImageFile);
@@ -5731,8 +5737,11 @@ void EndMapScreen( BOOLEAN fDuringFade )
 		DeleteVideoObjectFromIndex(guiMAPINV);
 		DeleteVideoObjectFromIndex(guiMapInvSecondHandBlockout);
 		DeleteVideoObjectFromIndex(guiULICONS);
+/*
 		DeleteVideoObjectFromIndex(guiORTAICON);
 		DeleteVideoObjectFromIndex(guiTIXAICON);
+*/
+		DeleteVideoObjectFromIndex(guiPowerGenIcon);
 		DeleteVideoObjectFromIndex( guiCHARBETWEENSECTORICONS );
 		DeleteVideoObjectFromIndex( guiCHARBETWEENSECTORICONSCLOSE );
 		DeleteVideoObjectFromIndex( guiLEVELMARKER );
@@ -9974,15 +9983,21 @@ BOOLEAN HandlePreloadOfMapGraphics( void )
 	FilenameForBPP("INTERFACE\\top_left_corner_icons.sti", VObjectDesc.ImageFile);
 	CHECKF(AddVideoObject(&VObjectDesc, &guiULICONS));
 
+/*
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 	FilenameForBPP("INTERFACE\\prison.sti", VObjectDesc.ImageFile);
 	CHECKF(AddVideoObject(&VObjectDesc, &guiTIXAICON));
 
-	HandleLoadOfMapBottomGraphics( );
 
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 	FilenameForBPP("INTERFACE\\map_item.sti", VObjectDesc.ImageFile);
 	CHECKF(AddVideoObject(&VObjectDesc, &guiORTAICON));
+*/
+	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
+	FilenameForBPP("INTERFACE\\PowerGenIcon.sti", VObjectDesc.ImageFile);
+	CHECKF(AddVideoObject(&VObjectDesc, &guiPowerGenIcon));
+
+	HandleLoadOfMapBottomGraphics( );
 
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 	FilenameForBPP("INTERFACE\\mapcursr.sti", VObjectDesc.ImageFile);
@@ -10079,8 +10094,11 @@ void HandleRemovalOfPreLoadedMapGraphics( void )
 		DeleteVideoObjectFromIndex(guiMAPINV);
 		DeleteVideoObjectFromIndex(guiMapInvSecondHandBlockout);
 		DeleteVideoObjectFromIndex(guiULICONS);
+/*
 		DeleteVideoObjectFromIndex(guiORTAICON);
 		DeleteVideoObjectFromIndex(guiTIXAICON);
+*/
+		DeleteVideoObjectFromIndex(guiPowerGenIcon);
 		DeleteVideoObjectFromIndex( guiCHARBETWEENSECTORICONS );
 		DeleteVideoObjectFromIndex( guiCHARBETWEENSECTORICONSCLOSE );
 		DeleteVideoObjectFromIndex( guiLEVELMARKER );

@@ -536,12 +536,15 @@ void UpdateButtonsDuringCharacterDialogueSubTitles( void );
 void SetUpdateBoxFlag( BOOLEAN fFlag );
 
 
+/*
+JA25: no orta and tixa
 
 /// set the town of Tixa as found by the player
 void SetTixaAsFound( void );
 
 // set the town of Orta as found by the player
 void SetOrtaAsFound( void );
+*/
 
 // set this SAM site as being found by the player
 void SetSAMSiteAsFound( UINT8 uiSamIndex );

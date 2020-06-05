@@ -265,8 +265,9 @@ enum{
 UINT32 guiBIGMAP;
 
 // orta .sti icon
-UINT32 guiORTAICON;
-UINT32 guiTIXAICON;
+//UINT32 guiORTAICON;
+//UINT32 guiTIXAICON;
+UINT32	guiPowerGenIcon;
 
 // boxes for characters on the map
 UINT32 guiCHARICONS;
@@ -342,9 +343,11 @@ UINT32		guiCHARBETWEENSECTORICONSCLOSE;
 
 extern BOOLEAN fMapScreenBottomDirty;
 
+/*
+JA25: no orta and tixa
 // tixa found
 BOOLEAN fFoundTixa = FALSE;
-
+*/
 // selected sector
 UINT16		sSelMapX = 9;
 UINT16		sSelMapY = 1;
@@ -533,8 +536,12 @@ BOOLEAN CanMilitiaAutoDistribute( void );
 void ShowItemsOnMap( void );
 void DrawMapBoxIcon( HVOBJECT hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 sMapY, UINT8 ubIconPosition );
 void DisplayDestinationOfHelicopter( void );
+/*
 void DrawOrta();
 void DrawTixa();
+*/
+void DrawPowerGenIcon();
+
 void DrawBullseye();
 void HideExistenceOfUndergroundMapSector( UINT8 ubSectorX, UINT8 ubSectorY );
 
@@ -789,6 +796,8 @@ UINT32 DrawMap( void )
 		// DOESN'T MERELY SHADE THE EXISTING MAP SURFACE, BUT INSTEAD GRABS THE ORIGINAL GRAPHICS FROM BIGMAP, AND CHANGES
 		// THEIR PALETTE.  BLITTING ICONS PRIOR TO SHADING WOULD MEAN THEY DON'T SHOW UP IN AIRSPACE VIEW AT ALL.
 
+/*
+Ja25: No orta and tixa
 		// if Orta found
 		if( fFoundOrta )
 		{
@@ -799,6 +808,12 @@ UINT32 DrawMap( void )
 		if( fFoundTixa )
 		{
 			DrawTixa();
+		}
+*/
+		//if the player has been to the PowerGen map (j13)
+		if( SectorInfo[ SEC_J13 ].uiTimeCurrentSectorWasLastLoaded != 0 )
+		{
+			DrawPowerGenIcon();
 		}
 
 		// draw SAM sites
@@ -932,7 +947,7 @@ void ShowTownText( void )
  	for( bTown = FIRST_TOWN; bTown < NUM_TOWNS; bTown++)
 	{
 		// skip Orta/Tixa until found
-		if( ( ( fFoundOrta != FALSE ) || ( bTown != ORTA ) ) && ( ( bTown != TIXA ) || ( fFoundTixa != FALSE) ) )
+//Ja25:	No orta or tixa		if( ( ( fFoundOrta != FALSE ) || ( bTown != ORTA ) ) && ( ( bTown != TIXA ) || ( fFoundTixa != FALSE) ) )
 		{
 			swprintf( sString, L"%s", pTownNames[ bTown ] );
 
@@ -4833,7 +4848,7 @@ void BlitTownGridMarkers( void )
 	while( pTownNamesList[ iCounter ] != 0 )
 	{
 		// skip Orta/Tixa until found
-		if( ( ( fFoundOrta != FALSE ) || ( pTownNamesList[ iCounter ] != ORTA ) ) && ( ( pTownNamesList[ iCounter ] != TIXA ) || ( fFoundTixa != FALSE) ) )
+//Ja25:	no orta or tixA		if( ( ( fFoundOrta != FALSE ) || ( pTownNamesList[ iCounter ] != ORTA ) ) && ( ( pTownNamesList[ iCounter ] != TIXA ) || ( fFoundTixa != FALSE) ) )
 		{
 			if( fZoomFlag )
 			{
@@ -6958,7 +6973,8 @@ void DrawMapBoxIcon( HVOBJECT hIconHandle, UINT16 usVOIndex, INT16 sMapX, INT16 
 }
 
 
-
+/*
+Ja25:  No orta
 void DrawOrta()
 {
 	UINT8 *pDestBuf2;
@@ -6991,8 +7007,10 @@ void DrawOrta()
 	GetVideoObject( &hHandle, guiORTAICON);
 	BltVideoObject( guiSAVEBUFFER, hHandle, ubVidObjIndex, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL );
 }
+*/
 
-
+/*
+Ja25: No Tixa
 void DrawTixa()
 {
 	UINT8 *pDestBuf2;
@@ -7024,7 +7042,40 @@ void DrawTixa()
 	GetVideoObject( &hHandle, guiTIXAICON);
 	BltVideoObject( guiSAVEBUFFER, hHandle, ubVidObjIndex, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL );
 }
+*/
 
+void DrawPowerGenIcon()
+{
+	UINT8 *pDestBuf2;
+  UINT32 uiDestPitchBYTES;
+	INT16 sX, sY;
+//	UINT8 ubVidObjIndex;
+	HVOBJECT hHandle;
+
+
+	if( fZoomFlag )
+	{
+		pDestBuf2 = LockVideoSurface( guiSAVEBUFFER, &uiDestPitchBYTES );
+		SetClippingRegionAndImageWidth( uiDestPitchBYTES, MAP_VIEW_START_X+MAP_GRID_X - 1, MAP_VIEW_START_Y+MAP_GRID_Y - 1, MAP_VIEW_WIDTH+1,MAP_VIEW_HEIGHT-9 );
+		UnLockVideoSurface(guiSAVEBUFFER);
+
+		GetScreenXYFromMapXYStationary( POWER_GEN_SECTOR_X, POWER_GEN_SECTOR_Y, &sX, &sY );
+		sX += -MAP_GRID_X + 3;
+		sY += -MAP_GRID_Y + 6;
+//		ubVidObjIndex = 0;
+	}
+	else
+	{
+		GetScreenXYFromMapXY( POWER_GEN_SECTOR_X, POWER_GEN_SECTOR_Y, &sX, &sY );
+//		sY += +2;
+		sX +=2;
+//		ubVidObjIndex = 1;
+	}
+
+	// draw Tixa in its sector
+	GetVideoObject( &hHandle, guiPowerGenIcon);
+	BltVideoObject( guiSAVEBUFFER, hHandle, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL );
+}
 
 
 void DrawBullseye()
@@ -7058,8 +7109,11 @@ void InitMapSecrets( void )
 {
 	UINT8 ubSamIndex;
 
+/*
+Ja25: No orta or tixa
 	fFoundTixa = FALSE;
 	fFoundOrta = FALSE;
+*/
 
 	for( ubSamIndex = 0; ubSamIndex < NUMBER_OF_SAMS; ubSamIndex++ )
 	{

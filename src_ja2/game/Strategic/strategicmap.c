@@ -148,8 +148,12 @@ INT8 gbMilitiaPromotions = 0;
 extern BOOLEAN gfUsePersistantPBI;
 
 BOOLEAN		gfUseAlternateMap = FALSE;
+
+/*
+JA25: no orta
 // whether or not we have found Orta yet
 BOOLEAN fFoundOrta = FALSE;
+*/
 
 // have any of the sam sites been found
 BOOLEAN fSamSiteFound[ NUMBER_OF_SAMS ]={
@@ -3506,13 +3510,15 @@ BOOLEAN SaveStrategicInfoToSavedFile( HWFILE hFile )
 */
 	FileSeek( hFile, uiSize, FILE_SEEK_FROM_CURRENT );
 
+/*
+JA25: no orta
 	// Save the fFoundOrta
 	FileWrite( hFile, &fFoundOrta, sizeof( BOOLEAN ), &uiNumBytesWritten );
 	if( uiNumBytesWritten != sizeof( BOOLEAN ) )
 	{
 		return(FALSE);
 	}
-
+*/
 
 
 	return( TRUE );
@@ -3552,13 +3558,15 @@ BOOLEAN LoadStrategicInfoFromSavedFile( HWFILE hFile )
 */
 	FileSeek( hFile, uiSize, FILE_SEEK_FROM_CURRENT );
 
+/*
+JA25: no orta
 	// Load the fFoundOrta
 	FileRead( hFile, &fFoundOrta, sizeof( BOOLEAN ), &uiNumBytesRead );
 	if( uiNumBytesRead != sizeof( BOOLEAN ) )
 	{
 		return(FALSE);
 	}
-
+*/
 
 	return( TRUE );
 }

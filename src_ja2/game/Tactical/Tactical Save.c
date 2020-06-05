@@ -2416,13 +2416,15 @@ BOOLEAN SetSectorFlag( INT16 sMapX, INT16 sMapY, UINT8 bMapZ, UINT32 uiFlagToSet
 {
 	if( uiFlagToSet == SF_ALREADY_VISITED )
 	{
+/*
+Ja25:  No tixa 
 		// do certain things when particular sectors are visited
 		if ( ( sMapX == TIXA_SECTOR_X ) && ( sMapY == TIXA_SECTOR_Y ) )
 		{
 			// Tixa prison (not seen until Tixa visited)
 			SectorInfo[ SEC_J9 ].uiFacilitiesFlags |= SFCF_PRISON;
 		}
-
+*/
 		if ( ( sMapX == GUN_RANGE_X ) && ( sMapY == GUN_RANGE_Y ) && ( bMapZ == GUN_RANGE_Z ) )
 		{
 			// Alma shooting range (not seen until sector visited)

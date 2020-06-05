@@ -182,6 +182,9 @@ enum {
 #define TIXA_SECTOR_X 9
 #define TIXA_SECTOR_Y 10
 
+#define POWER_GEN_SECTOR_X	13
+#define	POWER_GEN_SECTOR_Y	10
+
 // what are we showing?..teams/vehicles
 // Show values
 #define SHOW_TEAMMATES 1
@@ -207,11 +210,13 @@ extern INT16 gsHighlightSectorY;
 
 // the big map
 extern UINT32 guiBIGMAP;
-
+/*
 // the orta icon
 extern UINT32 guiORTAICON;
 
 extern UINT32 guiTIXAICON;
+*/
+extern	UINT32	guiPowerGenIcon;
 
 // the character icons
 extern UINT32 guiCHARICONS;
@@ -264,7 +269,10 @@ extern UINT16	sSelMapX;
 extern UINT16	sSelMapY;
 
 
+/*
+JA25: no orta and tixa
 extern BOOLEAN fFoundTixa;
+*/
 
 extern UINT32 guiSubLevel1, guiSubLevel2, guiSubLevel3;
 

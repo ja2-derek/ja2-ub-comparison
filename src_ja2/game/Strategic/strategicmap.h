@@ -35,7 +35,11 @@ extern INT16 pSamList[ NUMBER_OF_SAMS ];
 extern INT16 pSamGridNoAList[ NUMBER_OF_SAMS ];
 extern INT16 pSamGridNoBList[ NUMBER_OF_SAMS ];
 
+/*
+JA25: no orta
 extern BOOLEAN fFoundOrta;
+*/
+
 extern BOOLEAN fSamSiteFound[ NUMBER_OF_SAMS ];
 
 extern	BOOLEAN		gfUseAlternateMap;

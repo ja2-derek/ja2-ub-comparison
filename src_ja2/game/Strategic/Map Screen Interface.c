@@ -5264,7 +5264,8 @@ void SetUpdateBoxFlag( BOOLEAN fFlag )
 	return;
 }
 
-
+/*
+JA25: no orta and tixa
 void SetTixaAsFound( void )
 {
 	// set the town of Tixa as found by the player
@@ -5278,6 +5279,7 @@ void SetOrtaAsFound( void )
 	fFoundOrta = TRUE;
 	fMapPanelDirty = TRUE;
 }
+*/
 
 void SetSAMSiteAsFound( UINT8 uiSamIndex )
 {
