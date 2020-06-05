@@ -2332,7 +2332,6 @@ Ja25: No queen
 			 // UNDER FIRE, DON'T WANNA/CAN'T RUN AWAY, SO CROUCH
 			 ////////////////////////////////////////////////////////////////////////////
 
-
 			 // if not in water and not already crouched
 			 if (!fCivilian )
 			 {
@@ -2361,7 +2360,7 @@ Ja25: No queen
 
 				}
 			 }
-		 }
+			}
 	}
 
 
@@ -2802,7 +2801,7 @@ Ja25: No queen
 /*
 Ja25: no surrender
 	// offer surrender?
-	
+
 	if ( pSoldier->bTeam == ENEMY_TEAM && pSoldier->bVisible == TRUE && !( gTacticalStatus.fEnemyFlags & ENEMY_OFFERED_SURRENDER ) && pSoldier->bLife >= pSoldier->bLifeMax / 2 )
   { 
 		if ( gTacticalStatus.Team[ MILITIA_TEAM ].bMenInSector == 0 && NumPCsInSector() < 4 && gTacticalStatus.Team[ ENEMY_TEAM ].bMenInSector >= NumPCsInSector() * 3 )
@@ -2846,37 +2845,37 @@ Ja25: no surrender
 				{
 					if ( ( bCanAttack == NOSHOOT_NOWEAPON) && !(pSoldier->uiStatusFlags & SOLDIER_BOXER) && pSoldier->ubBodyType != COW && pSoldier->ubBodyType != CRIPPLECIV )
 					{
-						  // cower in fear!!
-						  if ( pSoldier->uiStatusFlags & SOLDIER_COWERING )
-						  {
-							  if ( pSoldier->bLastAction == AI_ACTION_COWER )
-							  {
-								  // do nothing
-								  pSoldier->usActionData = NOWHERE;
-								  return( AI_ACTION_NONE );
-							  }
-							  else
-							  {
-								  // set up next action to run away
-								  pSoldier->usNextActionData = FindSpotMaxDistFromOpponents( pSoldier );
-								  if ( pSoldier->usNextActionData != NOWHERE )
-								  {
-									  pSoldier->bNextAction = AI_ACTION_RUN_AWAY;
-									  pSoldier->usActionData = ANIM_STAND;
-									  return( AI_ACTION_STOP_COWERING );
-								  }
-								  else
-								  {
-									  return( AI_ACTION_NONE );
-								  }
-							  }
-						  }
-						  else
-						  {
-							  // cower!!!
-							  pSoldier->usActionData = ANIM_CROUCH;
-							  return( AI_ACTION_COWER );
-						  }
+						// cower in fear!!
+						if ( pSoldier->uiStatusFlags & SOLDIER_COWERING )
+						{
+							if ( pSoldier->bLastAction == AI_ACTION_COWER )
+							{
+								// do nothing
+								pSoldier->usActionData = NOWHERE;
+								return( AI_ACTION_NONE );
+							}
+							else
+							{
+								// set up next action to run away
+								pSoldier->usNextActionData = FindSpotMaxDistFromOpponents( pSoldier );
+								if ( pSoldier->usNextActionData != NOWHERE )
+								{
+									pSoldier->bNextAction = AI_ACTION_RUN_AWAY;
+									pSoldier->usActionData = ANIM_STAND;
+									return( AI_ACTION_STOP_COWERING );
+								}
+								else
+								{
+									return( AI_ACTION_NONE );
+								}
+							}
+						}
+						else
+						{
+							// cower!!!
+							pSoldier->usActionData = ANIM_CROUCH;
+							return( AI_ACTION_COWER );
+						}					 
 					}
 				}
 				else if (bCanAttack == NOSHOOT_NOAMMO && ubCanMove && !pSoldier->bNeutral)

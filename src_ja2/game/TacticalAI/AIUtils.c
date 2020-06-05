@@ -1904,17 +1904,17 @@ INT8 CalcMorale(SOLDIERTYPE *pSoldier)
 			// be positive otherwise
      iPercent = ThreatPercent[pFriend->bOppList[pOpponent->ubID] - OLDEST_HEARD_VALUE];
 
-	 // reduce the percentage value based on how far away they are from the enemy, if they only hear him
-	 if ( pFriend->bOppList[ pOpponent->ubID ] <= HEARD_LAST_TURN )
-	 {
-		 iPercent -= PythSpacesAway( pSoldier->sGridNo, pFriend->sGridNo ) * 2;
-		 if ( iPercent <= 0 )
+		 // reduce the percentage value based on how far away they are from the enemy, if they only hear him
+		 if ( pFriend->bOppList[ pOpponent->ubID ] <= HEARD_LAST_TURN )
 		 {
-			 //ignore!
-			 continue;
+			 iPercent -= PythSpacesAway( pSoldier->sGridNo, pFriend->sGridNo ) * 2;
+			 if ( iPercent <= 0 )
+			 {
+				 //ignore!
+				 continue;
+			 }
 		 }
-	 }
-
+		 
      sFrndThreatValue = (iPercent * CalcManThreatValue(pFriend,pOpponent->sGridNo,FALSE,pSoldier)) / 100;
 
      //sprintf(tempstr,"Known by friend %s, opplist status %d, percent %d, threat = %d",

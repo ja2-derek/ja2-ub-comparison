@@ -3903,7 +3903,7 @@ INT16 GetSoldierStudentPts( SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtG
 		break;
 		// NOTE: Wisdom can't be trained!
 		default:
-		      return(0);
+      return(0);
 	}
 
 	// if skill 0 or at/beyond the training cap, can't train

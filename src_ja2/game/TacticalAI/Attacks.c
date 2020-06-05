@@ -16,6 +16,9 @@
 	#include "Isometric Utils.h"
 #endif
 
+#include "Lighting.h"
+#include "Environment.h"
+
 extern INT16 DirIncrementer[8];
 
 // 
@@ -472,8 +475,8 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 		{
 			return;	// no grenades, can't fire the GLAUNCHER
 		}
-		ubSafetyMargin = Explosive[ Item[ TANK_SHELL ].ubClassIndex ].ubRadius;
-		
+		ubSafetyMargin = Explosive[ Item[ TANK_SHELL ].ubClassIndex ].ubRadius;	
+
 	}
 	else
 	{

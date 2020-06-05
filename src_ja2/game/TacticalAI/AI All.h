@@ -88,6 +88,7 @@
 #include "Interface Panels.h"
 #include "Soldier Ani.h"
 #include "Queen Command.h"
+#include "Opplist.h"
 #include "Lighting.h"
 #include "environment.h"
 

@@ -638,7 +638,7 @@ void EndAIGuysTurn( SOLDIERTYPE *pSoldier )
 				}
 			}
 		}
-		gTacticalStatus.fSomeoneHit = FALSE;
+	  gTacticalStatus.fSomeoneHit = FALSE;
 
 		// if civ in civ group and hostile, try to change nearby guys to hostile
 		if ( pSoldier->ubCivilianGroup != NON_CIV_GROUP && !pSoldier->bNeutral )
@@ -782,7 +782,7 @@ void StartNPCAI(SOLDIERTYPE *pSoldier)
 
 		// Locate to soldier
 		// If we are not in an interrupt situation!
-		if ( (( gTacticalStatus.uiFlags & TURNBASED ) && ( gTacticalStatus.uiFlags & INCOMBAT )) && gubOutOfTurnPersons == 0 )
+		if( (( gTacticalStatus.uiFlags & TURNBASED ) && ( gTacticalStatus.uiFlags & INCOMBAT )) && gubOutOfTurnPersons == 0 )
 		{
 			if( ( ( pSoldier->bVisible != -1 && pSoldier->bLife) || ( gTacticalStatus.uiFlags & SHOW_ALL_MERCS ) ) && ( fInValidSoldier == FALSE ) )
 			{
@@ -815,7 +815,7 @@ void StartNPCAI(SOLDIERTYPE *pSoldier)
 
 			UpdateEnemyUIBar( );
 
-		}		
+		}
 
 		// Remove deadlock message
 		EndDeadlockMsg( );
