@@ -63,32 +63,17 @@ MINE_STATUS_TYPE gMineStatus[ MAX_NUMBER_OF_MINES ];
 // this table holds mine values that never change and don't need to be saved
 MINE_LOCATION_TYPE gMineLocation[MAX_NUMBER_OF_MINES] =
 {
-	{		 4,		4,		SAN_MONA		},
-	{		13,		4,		DRASSEN			},
-	{		14,		9,		ALMA				},
-	{		 8,		8,		CAMBRIA			},
-	{		 2,		2,		CHITZENA		},
-	{		 3,		8,		GRUMM				},
+	{		13,		9,		ABANDONED_MINE_SECTOR		},
 };
 
 // the are not being randomized at all at this time
 UINT8 gubMineTypes[]={
-	GOLD_MINE,			// SAN MONA
-	SILVER_MINE,		// DRASSEN
-	SILVER_MINE,		// ALMA
-	SILVER_MINE,		// CAMBRIA
-	SILVER_MINE,		// CHITZENA
-	GOLD_MINE,			// GRUMM
+	GOLD_MINE,			// Abandoned
 };
 
 // These values also determine the most likely ratios of mine sizes after random production increases are done
 UINT32 guiMinimumMineProduction[]={
-	    0,		// SAN MONA
-	 1000,		// DRASSEN
-	 1500,		// ALMA
-	 1500,		// CAMBRIA
-	  500,		// CHITZENA
-	 2000,		// GRUMM
+	    0,		// Abondoned
 };
 
 
@@ -96,10 +81,6 @@ HEAD_MINER_TYPE gHeadMinerData[NUM_HEAD_MINERS] =
 {
 	//	Profile #		running out		creatures!		all dead!		creatures again!		external face graphic
 	{			FRED,					17,						18,						27,						26,					MINER_FRED_EXTERNAL_FACE		},
-	{			MATT,					-1,						18,						32,						31,					MINER_MATT_EXTERNAL_FACE		},
-	{			OSWALD,				14,						15,						24,						23,					MINER_OSWALD_EXTERNAL_FACE	},
-	{			CALVIN,				14,						15,						24,						23,					MINER_CALVIN_EXTERNAL_FACE	},
-	{			CARL,					14,						15,						24,						23,					MINER_CARL_EXTERNAL_FACE		},
 };
 
 
@@ -129,8 +110,8 @@ void InitializeMines( void )
 {
 	UINT8 ubMineIndex;
 	MINE_STATUS_TYPE *pMineStatus;
-	UINT8 ubMineProductionIncreases;
-	UINT8 ubDepletedMineIndex;
+//	UINT8 ubMineProductionIncreases;
+//	UINT8 ubDepletedMineIndex;
 	UINT8 ubMinDaysBeforeDepletion = 20;
 
 
@@ -155,6 +136,8 @@ void InitializeMines( void )
 		gMineStatus->fShutDownIsPermanent = FALSE;
 	}
 
+/*
+Ja25 only 1 mine, and it is abandoned
 	// randomize the exact size each mine.  The total production is always the same and depends on the game difficulty,
 	// but some mines will produce more in one game than another, while others produce less
 
@@ -193,7 +176,8 @@ void InitializeMines( void )
 	{
 		ubDepletedMineIndex = ( UINT8 ) Random(MAX_NUMBER_OF_MINES);
 		// Alma mine can't run out for quest-related reasons (see Ian)
-	} while (gMineStatus[ubDepletedMineIndex].fEmpty || (ubDepletedMineIndex == MINE_ALMA));
+//Ja25: no alma mione		} while (gMineStatus[ubDepletedMineIndex].fEmpty || (ubDepletedMineIndex == MINE_ALMA));
+	} while( gMineStatus[ubDepletedMineIndex].fEmpty  );
 
 
 	for( ubMineIndex = 0; ubMineIndex < MAX_NUMBER_OF_MINES; ubMineIndex++ )
@@ -202,11 +186,14 @@ void InitializeMines( void )
 
 		if (ubMineIndex == ubDepletedMineIndex)
 		{
+/*
+Ja25: No drassen mine
 			if ( ubDepletedMineIndex == MINE_DRASSEN )
 			{
 				ubMinDaysBeforeDepletion = 20;
 			}
 			else
+* /
 			{
 				ubMinDaysBeforeDepletion = 10;
 			}
@@ -231,6 +218,7 @@ void InitializeMines( void )
 			pMineStatus->uiOreRunningOutPoint = 0;
 		}
 	}
+*/
 }
 
 
@@ -238,7 +226,7 @@ void HourlyMinesUpdate(void)
 {
 	UINT8 ubMineIndex;
 	MINE_STATUS_TYPE *pMineStatus;
-	UINT8 ubQuoteType;
+//	UINT8 ubQuoteType;
 
 
 	// check every non-empty mine
@@ -252,6 +240,10 @@ void HourlyMinesUpdate(void)
 			continue;
 		}
 
+
+/*
+Ja25 no creatures, no mining
+
 		// check if the mine has any monster creatures in it
 		if (MineClearOfMonsters( ubMineIndex ))
 		{
@@ -263,7 +255,6 @@ void HourlyMinesUpdate(void)
 				{
 					IssueHeadMinerQuote( ubMineIndex, HEAD_MINER_STRATEGIC_QUOTE_CREATURES_GONE );
 				}
-
 				//Force the creatures to avoid the mine for a period of time.  This gives the 
 				//player a chance to rest and decide how to deal with the problem.
 				ForceCreaturesToAvoidMineTemporarily( ubMineIndex );
@@ -309,6 +300,7 @@ void HourlyMinesUpdate(void)
 				ShutOffMineProduction( ubMineIndex );
 			}
 		}
+*/
 	}
 }
 
@@ -706,6 +698,9 @@ INT32 PredictIncomeFromPlayerMines( void )
 }
 
 
+/*
+Ja25 Not needed cause there is no mine income in exp.
+
 INT32 CalcMaxPlayerIncomeFromMines( void )
 {
 	INT32 iTotal = 0;
@@ -720,7 +715,7 @@ INT32 CalcMaxPlayerIncomeFromMines( void )
 
 	return( iTotal );
 }
-
+*/
 
 // get index of this mine, return -1 if no mine found
 INT8 GetMineIndexForSector( INT16 sX, INT16 sY )
@@ -968,6 +963,9 @@ void IssueHeadMinerQuote( INT8 bMineIndex, UINT8 ubQuoteType )
 	// decide where the miner's face and text box should be positioned in order to not obscure the mine he's in as it flashes
 	switch ( bMineIndex )
 	{
+/*
+Ja25:	
+none iof these miners are in
 		case MINE_GRUMM:
 			sXPos = DEFAULT_EXTERN_PANEL_X_POS, sYPos = DEFAULT_EXTERN_PANEL_Y_POS;
 			break;
@@ -986,6 +984,11 @@ void IssueHeadMinerQuote( INT8 bMineIndex, UINT8 ubQuoteType )
 
 		// there's no head miner in San Mona, this is an error!
 		case MINE_SAN_MONA:
+*/
+		case MINE_ABANDONED_MINE:
+			sXPos = DEFAULT_EXTERN_PANEL_X_POS, sYPos = 117;
+			break;
+
 		default:
 			Assert( FALSE );
 			sXPos = DEFAULT_EXTERN_PANEL_X_POS, sYPos = DEFAULT_EXTERN_PANEL_Y_POS;
@@ -1177,9 +1180,11 @@ void PlayerAttackedHeadMiner( UINT8 ubMinerProfileId )
 
 		// get the index of his town
 		bTownId = GetTownAssociatedWithMine( ubMineIndex );
+/*
+JA25 no loyalty
 		// penalize associated town's loyalty
 		DecrementTownLoyalty( bTownId, LOYALTY_PENALTY_HEAD_MINER_ATTACKED );
-
+*/
 		// don't allow this more than once
 		gMineStatus[ ubMineIndex ].fAttackedHeadMiner = TRUE;
 	}
@@ -1228,6 +1233,11 @@ INT8 GetIdOfMineForSector( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ )
 	{
 		switch( sSectorValue )
 		{
+		case( SEC_I13 ):
+				bMineIndex = MINE_ABANDONED_MINE;
+				break;
+/*
+Ja25 none of these mines are in
 			// grumm
 			case( SEC_H3 ):
 			case( SEC_I3 ):
@@ -1257,6 +1267,7 @@ INT8 GetIdOfMineForSector( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ )
 			case( SEC_D5 ):
 				bMineIndex = MINE_SAN_MONA;
 			break;
+*/
 		}
 	}
 	else
@@ -1264,11 +1275,14 @@ INT8 GetIdOfMineForSector( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ )
 		// level 2
 		switch( sSectorValue )
 		{
+/*
+Ja25:	no grumm mine
 			case( SEC_I3 ):
 			case( SEC_H3 ):
 			case( SEC_H4 ):
 				bMineIndex = MINE_GRUMM;
 			break;
+*/
 		}
 	}
 

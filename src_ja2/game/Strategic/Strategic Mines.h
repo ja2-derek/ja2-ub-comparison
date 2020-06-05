@@ -8,12 +8,16 @@
 
 // the mines
 enum{
+/*
+Ja25 none of these mines are in exp.
 	  MINE_SAN_MONA = 0,
 		MINE_DRASSEN,
 		MINE_ALMA,
 		MINE_CAMBRIA,
 		MINE_CHITZENA,
 		MINE_GRUMM,
+*/
+	  MINE_ABANDONED_MINE = 0,
 	MAX_NUMBER_OF_MINES,
 };
 

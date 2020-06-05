@@ -4730,6 +4730,8 @@ void BlitMineText( INT16 sMapX, INT16 sMapY )
 	ubLineCnt++;
 
 
+/*
+Ja25
 	// check if mine is empty (abandoned) or running out
 	if (gMineStatus[ ubMineIndex ].fEmpty)
 	{
@@ -4738,8 +4740,7 @@ void BlitMineText( INT16 sMapX, INT16 sMapY )
 		mprintf( ( sScreenX - StringPixLength( wString, MAP_FONT ) / 2 ) , sScreenY + ubLineCnt * GetFontHeight( MAP_FONT ) , wString );
 		ubLineCnt++;
 	}
-	else
-	if (gMineStatus[ ubMineIndex ].fShutDown)
+	else if (gMineStatus[ ubMineIndex ].fShutDown)
 	{
 		swprintf( wString, L"%s", pwMineStrings[ 6 ] );
 		AdjustXForLeftMapEdge(wString, &sScreenX);
@@ -4754,7 +4755,7 @@ void BlitMineText( INT16 sMapX, INT16 sMapY )
 		mprintf( ( sScreenX - StringPixLength( wString, MAP_FONT ) / 2 ) , sScreenY + ubLineCnt * GetFontHeight( MAP_FONT ) , wString );
 		ubLineCnt++;
 	}
-
+*/
 
 	// only show production if player controls it and it's actually producing
 	if (PlayerControlsMine(ubMineIndex) && !gMineStatus[ ubMineIndex ].fEmpty)

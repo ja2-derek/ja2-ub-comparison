@@ -1352,6 +1352,9 @@ UINT8 CurrentPlayerProgressPercentage(void)
 	return(ubCurrentProgress);
 }
 /*
+{
+	UINT32 uiCurrentIncome = 0;
+	UINT32 uiPossibleIncome = 0;
 	UINT8 ubCurrentProgress;
 	UINT8 ubKillsPerPoint;
 	UINT16 usKillsProgress;
@@ -1361,6 +1364,8 @@ UINT8 CurrentPlayerProgressPercentage(void)
 	if( gfEditMode )
 		return 0;
 
+/*
+Ja25 Not needed cause there is no mine income in exp.
 	// figure out the player's current mine income
 	uiCurrentIncome = PredictIncomeFromPlayerMines();
 
@@ -1370,10 +1375,13 @@ UINT8 CurrentPlayerProgressPercentage(void)
 	// either of these indicates a critical failure of some sort
 	Assert(uiPossibleIncome > 0);
 	Assert(uiCurrentIncome <= uiPossibleIncome);
+* /
 
 	// for a rough guess as to how well the player is doing,
 	// we'll take the current mine income / potential mine income as a percentage
 
+/*
+Ja25:  No income
 	//Kris:  Make sure you don't divide by zero!!!
 	if( uiPossibleIncome > 0)
 	{
@@ -1383,6 +1391,10 @@ UINT8 CurrentPlayerProgressPercentage(void)
 	{
 		ubCurrentProgress = 0;
 	}
+* /
+
+	ubCurrentProgress = 0;
+
 
 	// kills per point depends on difficulty, and should match the ratios of starting enemy populations (730/1050/1500)
 	switch( gGameOptions.ubDifficultyLevel )

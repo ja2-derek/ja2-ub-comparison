@@ -1137,9 +1137,9 @@ Ja25 no creatures or militia
 #define RANDOM_HEAD_MINERS 4
 void HandleQuestCodeOnSectorEntry( INT16 sNewSectorX, INT16 sNewSectorY, INT8 bNewSectorZ )
 {
-	UINT8		ubRandomMiner[RANDOM_HEAD_MINERS] = { 106, 156, 157, 158 };
-	UINT8		ubMiner, ubMinersPlaced;
-	UINT8		ubMine, ubThisMine;
+//	UINT8		ubRandomMiner[RANDOM_HEAD_MINERS] = { 106, 156, 157, 158 };
+//	UINT8		ubMiner, ubMinersPlaced;
+	UINT8		ubThisMine;
 	UINT8		cnt;
 	SOLDIERTYPE * pSoldier;
 
@@ -1166,6 +1166,8 @@ Ja25:
 
 			ubThisMine = GetMineIndexForSector( sNewSectorX, sNewSectorY );
 
+/*
+Ja25:  only mine in exp. is abandoned
 			if (ubThisMine != MINE_SAN_MONA) // San Mona is abandoned
 			{
 				ubMinersPlaced = 0;
@@ -1216,6 +1218,7 @@ Ja25:
 
 				SetFactTrue( FACT_MINERS_PLACED );
 			}
+*/
 		}
 	}
 
@@ -1895,16 +1898,22 @@ void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *
 						if( fDetailed )
 						{
 							switch( ubSectorID )
-							{ //Append the word, "mine" for town sectors containing a mine.
+							{ 
+								//Append the word, "mine" for town sectors containing a mine.
+/*
+Ja25:  Only 1 mine
 								case SEC_B2:
 								case SEC_D4:
 								case SEC_D13:
 								case SEC_H3:
 								case SEC_H8:
 								case SEC_I14:
+
+								case SEC_I13:
 									wcscat( zString, L" " ); //space
 									wcscat( zString, pwMineStrings[ 0 ] ); //then "Mine"
 									break;
+*/
 							}
 						}
 					}
@@ -3205,8 +3214,12 @@ Ja25:  No insurance for mercs
 */
 	//Daily update of mercs
 	AddEveryDayStrategicEvent( EVENT_MERC_DAILY_UPDATE, 0, 0 );
+
+/*
+JA25: There is no mines
 	// Daily mine production processing events
 	AddEveryDayStrategicEvent( EVENT_SETUP_MINE_INCOME, 0, 0 );
+*/
 	// Daily merc reputation processing events
 	AddEveryDayStrategicEvent( EVENT_SETUP_TOWN_OPINION, 0, 0 );
 	// Daily checks for E-mail from Enrico
