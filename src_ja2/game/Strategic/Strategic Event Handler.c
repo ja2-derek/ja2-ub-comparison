@@ -633,8 +633,11 @@ void HandleNPCSystemEvent( UINT32 uiEvent )
 		switch( uiEvent )
 		{
 			case FACT_PABLOS_BRIBED:
+/*
+Ja25:  No pablo
 				// set Pacos to unbribed
 				SetPabloToUnbribed();
+*/
 				break;
 
 			case FACT_REALLY_NEW_BOBBYRAY_SHIPMENT_WAITING:
@@ -654,33 +657,34 @@ void HandleNPCSystemEvent( UINT32 uiEvent )
 				break;
 
 			case FACT_KINGPIN_KNOWS_MONEY_GONE:
+				Assert( 0 );
+/*
+Ja25:  No kingpin
 				// more generally events for kingpin quest
 				if ( CheckFact( FACT_KINGPIN_KNOWS_MONEY_GONE, 0 ) == FALSE )
 				{
 					// check for real whether to start quest
 					CheckForKingpinsMoneyMissing( FALSE );
 				}
-				else if ( CheckFact( FACT_KINGPIN_DEAD, 0 ) == FALSE )
+				else if ( gubQuest[ QUEST_KINGPIN_MONEY ] == QUESTNOTSTARTED )
 				{
-					if ( gubQuest[ QUEST_KINGPIN_MONEY ] == QUESTNOTSTARTED )
-					{
-						// KP knows money is gone, hasn't told player, if this event is called then the 2
-						// days are up... send email
-						AddEmail( KING_PIN_LETTER, KING_PIN_LETTER_LENGTH, KING_PIN, GetWorldTotalMin() );
-						StartQuest( QUEST_KINGPIN_MONEY, 5, MAP_ROW_D );
-						// add event to send terrorists two days from now
-						AddFutureDayStrategicEvent( EVENT_SET_BY_NPC_SYSTEM, Random( 120 ), FACT_KINGPIN_KNOWS_MONEY_GONE, 2 );
-					}
-					else if ( gubQuest[ QUEST_KINGPIN_MONEY ] == QUESTINPROGRESS )
-					{
-						// knows money gone, quest is still in progress
-						// event indicates Kingpin can start to send terrorists
-						SetFactTrue( FACT_KINGPIN_CAN_SEND_ASSASSINS );
-						gMercProfiles[ SPIKE ].sSectorX = 5;
-						gMercProfiles[ SPIKE ].sSectorY = MAP_ROW_C;
-						gTacticalStatus.fCivGroupHostile[ KINGPIN_CIV_GROUP ] = CIV_GROUP_WILL_BECOME_HOSTILE;
-					}
+					// KP knows money is gone, hasn't told player, if this event is called then the 2
+					// days are up... send email
+					AddEmail( KING_PIN_LETTER, KING_PIN_LETTER_LENGTH, KING_PIN, GetWorldTotalMin() );
+					StartQuest( QUEST_KINGPIN_MONEY, 5, MAP_ROW_D );
+					// add event to send terrorists two days from now
+					AddFutureDayStrategicEvent( EVENT_SET_BY_NPC_SYSTEM, Random( 120 ), FACT_KINGPIN_KNOWS_MONEY_GONE, 2 );
 				}
+				else if ( gubQuest[ QUEST_KINGPIN_MONEY ] == QUESTINPROGRESS )
+				{
+					// knows money gone, quest is still in progress
+					// event indicates Kingpin can start to send terrorists
+					SetFactTrue( FACT_KINGPIN_CAN_SEND_ASSASSINS );
+					gMercProfiles[ SPIKE ].sSectorX = 5;
+					gMercProfiles[ SPIKE ].sSectorY = MAP_ROW_C;
+					gTacticalStatus.fCivGroupHostile[ KINGPIN_CIV_GROUP ] = CIV_GROUP_WILL_BECOME_HOSTILE;
+				}
+*/
 				break;
 		}
 	}
@@ -771,7 +775,8 @@ Ja25:  No bobbyr shipments, therefore no damage to it
 				break;
 
 			case NPC_ACTION_SEND_ENRICO_MIGUEL_EMAIL:
-				AddEmail( ENRICO_MIGUEL, ENRICO_MIGUEL_LENGTH, MAIL_ENRICO, GetWorldTotalMin() );
+				Assert( 0 );
+//Ja25:				AddEmail( ENRICO_MIGUEL, ENRICO_MIGUEL_LENGTH, MAIL_ENRICO, GetWorldTotalMin() );
 				break;
 
 			case NPC_ACTION_TIMER_FOR_VEHICLE:
@@ -801,6 +806,8 @@ void HandleEarlyMorningEvents( void )
 		gMercProfiles[cnt].bThreatenDefaultResponseUsedRecently = FALSE;
 		gMercProfiles[cnt].ubMiscFlags2 &= (~PROFILE_MISC_FLAG2_BANDAGED_TODAY);
 	}
+/*
+Ja25:	No Father walker
 	// reset Father Walker's drunkenness level!
 	gMercProfiles[ FATHER ].bNPCData = (INT8) Random( 4 );
 	// set Walker's location
@@ -821,8 +828,10 @@ void HandleEarlyMorningEvents( void )
 			}
 		}
 	}
+*/
 	
-
+/*
+Ja25:	No tony
 	if( gMercProfiles[ TONY ].ubLastDateSpokenTo > 0 && !( gWorldSectorX == 5 && gWorldSectorY == MAP_ROW_C && gbWorldSectorZ == 0 ) )
 	{
 		// San Mona C5 is not loaded so make Tony possibly not available
@@ -841,8 +850,10 @@ void HandleEarlyMorningEvents( void )
 			gMercProfiles[ TONY ].sSectorY = 0;
 		}
 	}
+*/
 
-
+/*
+Ja25: No devin
 	if ( gMercProfiles[ DEVIN ].ubLastDateSpokenTo == 0 )
 	{
 		// Does Devin move?
@@ -879,7 +890,10 @@ void HandleEarlyMorningEvents( void )
 			}
 		}
 	}
+*/
 
+/*
+JA25 No hamous in exp.
 	// Does Hamous move?
 
 	// stop moving the truck if Hamous is dead!!
@@ -922,7 +936,10 @@ void HandleEarlyMorningEvents( void )
 				break;				
 		}
 	}
+*/
 
+/*
+Ja25:	No Rat
 	// Does Rat take off?
 	if ( gMercProfiles[ RAT ].bNPCData != 0 )
 	{
@@ -930,7 +947,11 @@ void HandleEarlyMorningEvents( void )
 		gMercProfiles[ RAT ].sSectorY = 0;
 		gMercProfiles[ RAT ].bSectorZ = 0;
 	}
+*/
 
+
+/*
+Ja25:	No hospital people
 
 	// Empty money from pockets of Vince 69, Willis 80, and Jenny 132
 	SetMoneyInSoldierProfile( VINCE, 0 );
@@ -939,10 +960,14 @@ void HandleEarlyMorningEvents( void )
 
 	// Vince is no longer expecting money
 	SetFactFalse( FACT_VINCE_EXPECTING_MONEY );
+*/
 
+/*
+Ja25:	No darren
 	// Reset Darren's balance and money
 	gMercProfiles[ DARREN ].iBalance = 0;
 	SetMoneyInSoldierProfile( DARREN, 15000 );
+*/
 
 /*
 Ja25: No Carmen
@@ -1007,6 +1032,8 @@ Ja25: No Carmen
 	}
 */
 
+/*
+Ja25:	No 
 	if ( PreRandom( 3 ) == 0 )
 	{
 		SetFactTrue( FACT_DAVE_HAS_GAS );
@@ -1020,8 +1047,9 @@ Ja25: No Carmen
 	{
 		CheckForMissingHospitalSupplies();
 	}
-
+*/
 }
+
 
 void MakeCivGroupHostileOnNextSectorEntrance( UINT8 ubCivGroup )
 {

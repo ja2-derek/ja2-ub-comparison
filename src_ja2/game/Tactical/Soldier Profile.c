@@ -180,6 +180,8 @@ UINT8 gubAssassins[NUM_ASSASSINS] =
 	TYRONE
 };
 
+/*
+Ja25:  No assissins
 #define NUM_ASSASSIN_POSSIBLE_TOWNS 5
 
 INT8 gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] = 
@@ -197,6 +199,7 @@ INT8 gbAssassinTown[NUM_ASSASSINS][NUM_ASSASSIN_POSSIBLE_TOWNS] =
 	// Tyrone
 	{ CAMBRIA, BALIME, ALMA, GRUMM, DRASSEN },
 };
+*/
 
 UINT16 CalcCompetence( MERCPROFILESTRUCT * pProfile );
 INT16 CalcMedicalDeposit( MERCPROFILESTRUCT * pProfile );
@@ -579,6 +582,8 @@ void MakeRemainingTerroristsTougher( void )
 }
 */
 
+/*
+No assassins
 void DecideOnAssassin( void )
 {
 	UINT8		ubAssassinPossibility[NUM_ASSASSINS] = { NO_PROFILE, NO_PROFILE, NO_PROFILE, NO_PROFILE, NO_PROFILE, NO_PROFILE };
@@ -697,6 +702,7 @@ void MakeRemainingAssassinsTougher( void )
 		}
 	}
 }
+*/
 
 void StartSomeMercsOnAssignment(void)
 {
@@ -1038,11 +1044,14 @@ Ja25 no loyalty
 	}
 
 
+/*
+Ja25 No Ira
 	if ( ubCharNum == IRA )
 	{
 		// trigger 0th PCscript line
 		TriggerNPCRecord( IRA, 0 );
 	}
+*/
 
 	// Set whatkind of merc am i
 	pNewSoldier->ubWhatKindOfMercAmI = MERC_TYPE__NPC;

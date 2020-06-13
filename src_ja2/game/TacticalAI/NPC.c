@@ -1165,9 +1165,12 @@ BOOLEAN HandleNPCBeingGivenMoneyByPlayer( UINT8 ubNPC, UINT32 uiMoneyAmount, UIN
 			}
 			gMercProfiles[ WALTER ].iBalance += uiMoneyAmount;
 			break;
+/*
+Ja25 No Frank
 		case FRANK:
 			gArmsDealerStatus[ ARMS_DEALER_FRANK ].uiArmsDealersCash += uiMoneyAmount;
 			break;
+*/
 		case GERARD:
 			gMercProfiles[ GERARD ].iBalance += uiMoneyAmount;
 			if ( (gMercProfiles[ GERARD ].iBalance) >= 10000 )
@@ -1960,13 +1963,6 @@ void Converse( UINT8 ubNPC, UINT8 ubMerc, INT8 bApproach, UINT32 uiApproachData 
 				if ( pQuotePtr->usGoToGridno != NO_MOVE )
 				{
 					pSoldier = FindSoldierByProfileID( ubNPC, FALSE );
-
-					// stupid hack CC
-					if (pSoldier && ubNPC == KYLE) 
-					{
-						// make sure he has keys
-						pSoldier->bHasKeys = TRUE;
-					}
 					if (pSoldier && pSoldier->sGridNo == pQuotePtr->usGoToGridno )
 					{
 						// search for quotes to trigger immediately!
@@ -2827,7 +2823,9 @@ BOOLEAN LoadNPCInfoFromSavedGameFile( HWFILE hFile, UINT32 uiSaveGameVersion )
 	if ( uiSaveGameVersion < 92 )
 	{
 		RefreshNPCScriptRecord( MATT, 14 );
+/* Ja25: No auntie
 		RefreshNPCScriptRecord( AUNTIE, 8 );
+*/
 	}
 	if ( uiSaveGameVersion < 93 )
 	{
@@ -2867,14 +2865,6 @@ BOOLEAN LoadNPCInfoFromSavedGameFile( HWFILE hFile, UINT32 uiSaveGameVersion )
 		RefreshNPCScriptRecord( SKYRIDER, 21 );
 		RefreshNPCScriptRecord( SKYRIDER, 22 );
 	}
-
-	if ( uiSaveGameVersion < 98 )
-	{
-		RefreshNPCScriptRecord( SKYRIDER, 19 );
-		RefreshNPCScriptRecord( SKYRIDER, 21 );
-		RefreshNPCScriptRecord( SKYRIDER, 22 );
-	}
-
 	return( TRUE );
 }
 
@@ -3189,6 +3179,9 @@ BOOLEAN HandleShopKeepHasBeenShutDown( UINT8 ubCharNum )
 }
 
 
+
+/*
+Ja25: No DARREL
 void UpdateDarrelScriptToGoTo( SOLDIERTYPE * pSoldier )
 {
 	// change destination in Darrel record 10 to go to a gridno adjacent to the 
@@ -3221,6 +3214,7 @@ void UpdateDarrelScriptToGoTo( SOLDIERTYPE * pSoldier )
 	gpNPCQuoteInfoArray[ DARREL ][ 11 ].sRequiredGridno = -(sAdjustedGridNo);
 	gpNPCQuoteInfoArray[ DARREL ][ 11 ].ubTriggerNPC = pSoldier->ubProfile;
 }
+*/
 
 BOOLEAN RecordHasDialogue( UINT8 ubNPC, UINT8 ubRecord )
 {

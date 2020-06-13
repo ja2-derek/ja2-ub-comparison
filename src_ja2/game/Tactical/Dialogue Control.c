@@ -2491,6 +2491,9 @@ void SayQuoteFromAnyBodyInSector( UINT16 usQuoteNum )
 		{
 			if ( gTacticalStatus.bNumFoughtInBattle[ ENEMY_TEAM ] == 0 )
 			{
+
+/*
+Ja25 No Ira, Miguel etc.
 				// quotes referring to Deidranna's men so we skip quote if there were no army guys fought
 				if ( (usQuoteNum == QUOTE_SECTOR_SAFE) && (pTeamSoldier->ubProfile == IRA || pTeamSoldier->ubProfile == MIGUEL || pTeamSoldier->ubProfile == SHANK ) )
 				{
@@ -2501,6 +2504,8 @@ void SayQuoteFromAnyBodyInSector( UINT16 usQuoteNum )
 				{
 					continue;
 				}
+*/
+
 			}
 
 			ubMercsInSector[ ubNumMercs ] = (UINT8)cnt;

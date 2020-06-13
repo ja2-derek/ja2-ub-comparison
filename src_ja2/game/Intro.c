@@ -381,11 +381,14 @@ INT32 GetNextIntroVideo( UINT32 uiCurrentVideo )
 		{
 			switch( uiCurrentVideo )
 			{
+
+/*
 				case SMKINTRO_FIRST_VIDEO:
 					//if Miguel is dead, play the flic with out him in it
-					if( gMercProfiles[ MIGUEL ].bMercStatus == MERC_IS_DEAD )
-						iStringToUse = SMKINTRO_END_END_SPEECH_NO_MIGUEL;
-					else
+//Ja25: No miguel
+//					if( gMercProfiles[ MIGUEL ].bMercStatus == MERC_IS_DEAD )
+//						iStringToUse = SMKINTRO_END_END_SPEECH_NO_MIGUEL;
+//					else
 						iStringToUse = SMKINTRO_END_END_SPEECH_MIGUEL;
 					break;
 
@@ -402,6 +405,7 @@ INT32 GetNextIntroVideo( UINT32 uiCurrentVideo )
 						iStringToUse = SMKINTRO_END_SKYRIDER_HELICOPTER;
 					break;
 			}
+*/
 		}
 		break;
 

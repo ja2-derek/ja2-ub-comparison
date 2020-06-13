@@ -188,16 +188,22 @@ BOOLEAN DoesMercHaveABuddyOnTheTeam( UINT8 ubMercID );
 
 void StartSomeMercsOnAssignment( void );
 
+/*
+Ja25 no assassins
 void DecideOnAssassin( void );
-
 extern BOOLEAN gubNumTerrorists;
+*/
 
 /*
 Ja25 no terrorists
 void MakeRemainingTerroristsTougher( void );
 */
 
+/*
+Ja25 no assassins
 void MakeRemainingAssassinsTougher( void );
+*/
+
 SOLDIERTYPE * SwapLarrysProfiles( SOLDIERTYPE * pSoldier );
 
 BOOLEAN DoesNPCOwnBuilding( SOLDIERTYPE *pSoldier, INT16 sGridNo );

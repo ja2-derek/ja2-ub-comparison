@@ -1836,7 +1836,9 @@ void HandleNPCDoAction( UINT8 ubTargetNPC, UINT16 usActionCode, UINT8 ubQuoteNum
 				gMercProfiles[ 60 ].sSectorY = 1;
 				gMercProfiles[ 60 ].bSectorZ = 1;
 */
-				ChangeNpcToDifferentSector( DIMITRI, 10, 1, 1 );
+
+//	Ja25 no dimitri
+//				ChangeNpcToDifferentSector( DIMITRI, 10, 1, 1 );
 
 				gFadeOutDoneCallback = DoneFadeOutActionBasement;
 
@@ -2609,41 +2611,44 @@ Ja25 no loyalty
 //					TriggerNPCRecord( QUEEN, 8 );
 //				}
 //			break;
-			case NPC_ACTION_TRIGGER_MARRY_DARYL_PROMPT:
-				DeleteTalkingMenu();
-				StartDialogueMessageBox( ubTargetNPC, usActionCode );
-				break;
-			case NPC_ACTION_HAVE_MARRIED_NPC_LEAVE_TEAM:
-				
-				// get the soldier
-				pSoldier = FindSoldierByProfileID( gMercProfiles[ DARYL ].bNPCData, FALSE );
-				pSoldier2 = gpDestSoldier;
+//			case NPC_ACTION_TRIGGER_MARRY_DARYL_PROMPT:
+//				DeleteTalkingMenu();
+//				StartDialogueMessageBox( ubTargetNPC, usActionCode );
+//				break;
 
-				if ( !pSoldier || !pSoldier2 )
-				{
-					return;
-				}
+//			case NPC_ACTION_HAVE_MARRIED_NPC_LEAVE_TEAM:
+//				
+//				// get the soldier
+//				pSoldier = FindSoldierByProfileID( gMercProfiles[ DARYL ].bNPCData, FALSE );
+//				pSoldier2 = gpDestSoldier;
+//
+//				if ( !pSoldier || !pSoldier2 )
+//				{
+//					return;
+//				}
+//
+//				//set the fact that the merc is being married ( used in the personnel screen )
+//				gMercProfiles[ pSoldier->ubProfile ].ubMiscFlags2 |= PROFILE_MISC_FLAG2_MARRIED_TO_HICKS;
+//
+//				AddHistoryToPlayersLog( HISTORY_MERC_MARRIED_OFF, pSoldier->ubProfile, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
+//
+//				// if Flo is going off with Daryl, then set that fact true
+//				if( pSoldier->ubProfile == 44 )
+//				{
+//					SetFactTrue( FACT_PC_MARRYING_DARYL_IS_FLO );
+//				}
+//
+//				HandleMoraleEvent( pSoldier, MORALE_MERC_MARRIED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
+//
+//				UpdateDarrelScriptToGoTo( pSoldier );
+//				TriggerNPCRecord( DARREL, 10 );
+//
+//				//Since the married merc is leaving the team, add them to the departed list for the personnel screen
+//				AddCharacterToOtherList( pSoldier );
+//
+//				break;
 
-				//set the fact that the merc is being married ( used in the personnel screen )
-				gMercProfiles[ pSoldier->ubProfile ].ubMiscFlags2 |= PROFILE_MISC_FLAG2_MARRIED_TO_HICKS;
 
-				AddHistoryToPlayersLog( HISTORY_MERC_MARRIED_OFF, pSoldier->ubProfile, GetWorldTotalMin(), gWorldSectorX, gWorldSectorY );
-
-				// if Flo is going off with Daryl, then set that fact true
-				if( pSoldier->ubProfile == 44 )
-				{
-					SetFactTrue( FACT_PC_MARRYING_DARYL_IS_FLO );
-				}
-
-				HandleMoraleEvent( pSoldier, MORALE_MERC_MARRIED, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
-
-				UpdateDarrelScriptToGoTo( pSoldier );
-				TriggerNPCRecord( DARREL, 10 );
-
-				//Since the married merc is leaving the team, add them to the departed list for the personnel screen
-				AddCharacterToOtherList( pSoldier );
-
-				break;
 			case NPC_ACTION_TRIGGER_ANGEL_17_OR_18:
 				if (CheckFact( FACT_ANGEL_SOLD_VEST, ANGEL ))
 				{
@@ -3635,6 +3640,9 @@ ja25 no queen, no elliot
 				SetFactFalse( FACT_VINCE_RECRUITABLE );
 				break;
 			case NPC_ACTION_ELLIOT_DECIDE_WHICH_QUOTE_FOR_PLAYER_ATTACK:
+				Assert( 0 );
+/*
+Ja25:	No drassen
 				if( DidFirstBattleTakePlaceInThisTown( DRASSEN ) )
 				{
 					TriggerNPCRecord( ELLIOT, 2 );
@@ -3647,6 +3655,7 @@ ja25 no queen, no elliot
 				{								
 					TriggerNPCRecord( ELLIOT, 1 );
 				}
+*/
 				break;
 
 /*
@@ -3667,11 +3676,15 @@ ja25 no queen
 /* Delayed loyalty effects elimininated.  Sep.12/98.  ARM
 				AddFutureDayStrategicEvent( EVENT_SET_BY_NPC_SYSTEM, 480 + Random( 60 ), NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_KROTT_ALIVE_LOYALTY_BOOST, 1 );
 */
+				Assert( 0 );
+/*
+
 				if ( gMercProfiles[ SERGEANT ].bMercStatus != MERC_IS_DEAD )
 				{
 					// give loyalty bonus to Alma
 					IncrementTownLoyalty( ALMA, LOYALTY_BONUS_FOR_SERGEANT_KROTT );
 				}
+*/
 				break;
 
 			case NPC_ACTION_MAKE_NPC_FIRST_BARTENDER:
@@ -3694,7 +3707,8 @@ ja25 no queen
 				break;
 
 			case NPC_ACTION_SEND_ENRICO_MIGUEL_EMAIL:
-				AddFutureDayStrategicEvent( EVENT_SET_BY_NPC_SYSTEM, 390 + Random( 60 ), NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_SEND_ENRICO_MIGUEL_EMAIL, 1 );
+				Assert( 0 );
+//				AddFutureDayStrategicEvent( EVENT_SET_BY_NPC_SYSTEM, 390 + Random( 60 ), NPC_SYSTEM_EVENT_ACTION_PARAM_BONUS + NPC_ACTION_SEND_ENRICO_MIGUEL_EMAIL, 1 );
 				break;
 
 			case NPC_ACTION_PLAYER_SAYS_NICE_LATER:
@@ -3977,6 +3991,8 @@ ja25 no queen
 				}
 				break;
 
+/*
+Ja25: No miguel
 			case NPC_ACTION_MAKE_MIGUEL_STATIONARY:
 				pSoldier = FindSoldierByProfileID( MIGUEL, FALSE );
 				if ( pSoldier ) 
@@ -3988,7 +4004,7 @@ ja25 no queen
 					pSoldier->bOrders = STATIONARY;
 				}
 				break;
-
+*/
 			
 			case NPC_ACTION_TRIGGER_DARREN_OR_KINGPIN_IMPRESSED:
 				if ( BoxerAvailable() )

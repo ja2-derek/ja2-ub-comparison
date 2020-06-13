@@ -52,12 +52,15 @@ void SetFactTrue( UINT16 usFact )
 	// This function is here just for control flow purposes (debug breakpoints)
 	// and code is more readable that way
 
+/*
+JA25 No Jake in exp.
 	// must intercept when Jake is first trigered to start selling fuel
 	if ( ( usFact == FACT_ESTONI_REFUELLING_POSSIBLE ) && ( CheckFact( usFact, 0 ) == FALSE ) )
 	{
 		// give him some gas...
 		GuaranteeAtLeastXItemsOfIndex( ARMS_DEALER_JAKE, GAS_CAN, ( UINT8 ) ( 4 + Random( 3 ) ) );
 	}
+*/
 
 	gubFact[usFact] = TRUE;
 }
@@ -640,9 +643,12 @@ BOOLEAN CheckFact( UINT16 usFact, UINT8 ubProfileID )
 
 	switch( usFact )
 	{
+/*
+Ja25 No dimitri
 		case FACT_DIMITRI_DEAD:
 			gubFact[ usFact ] = (gMercProfiles[ DIMITRI ].bMercStatus == MERC_IS_DEAD );
 			break;
+*/
 		case FACT_CURRENT_SECTOR_IS_SAFE:	
 			gubFact[FACT_CURRENT_SECTOR_IS_SAFE] = !( ( (gTacticalStatus.fEnemyInSector && NPCHeardShot( ubProfileID ) ) || gTacticalStatus.uiFlags & INCOMBAT ) );
 			break;
@@ -685,6 +691,8 @@ BOOLEAN CheckFact( UINT16 usFact, UINT8 ubProfileID )
 		case FACT_NPC_WOUNDED_BY_PLAYER:
 			gubFact[FACT_NPC_WOUNDED_BY_PLAYER] = CheckNPCWounded( ubProfileID, TRUE );
 			break;
+
+/*
 		case FACT_IRA_NOT_PRESENT:
 			gubFact[FACT_IRA_NOT_PRESENT] = !CheckNPCWithin( ubProfileID, IRA, 10 );
 			break;
@@ -701,6 +709,7 @@ BOOLEAN CheckFact( UINT16 usFact, UINT8 ubProfileID )
 				gubFact[FACT_IRA_UNHIRED_AND_ALIVE] = FALSE;
 			}
 			break;
+*/
 		case FACT_NPC_BLEEDING:
 			gubFact[FACT_NPC_BLEEDING] = CheckNPCBleeding( ubProfileID );
 			break;
@@ -1120,9 +1129,11 @@ Ja25 no loyalty
 			gubFact[usFact] = gMercProfiles[ WALDO ].bMercStatus != MERC_IS_DEAD;
 			break;
 
+/* Ja25 No perko
 		case FACT_PERKO_ALIVE:
 			gubFact[usFact] = gMercProfiles[ PERKO ].bMercStatus != MERC_IS_DEAD;
 			break;
+*/
 
 		case FACT_TONY_ALIVE:
 			gubFact[usFact] = gMercProfiles[ TONY ].bMercStatus != MERC_IS_DEAD;
@@ -1236,9 +1247,6 @@ Ja25 no loyalty
 		case FACT_PLAYER_KILLED_BOXERS:
 			gubFact[usFact] = !BoxerExists();
 			break;
-
-		case 245: // Can dimitri be recruited? should be true if already true, OR if Miguel has been recruited already
-			gubFact[usFact] = ( gubFact[usFact] || FindSoldierByProfileID( MIGUEL, TRUE ) );
 /*
 		case FACT_:
 			gubFact[usFact] = ;
@@ -1387,6 +1395,9 @@ void CheckForQuests( UINT32 uiDay )
 	ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"Checking For Quests, Day %d", uiDay );
 #endif
 
+
+/*
+Ja25: No deliver letter quest, dont start it
   // -------------------------------------------------------------------------------
 	// QUEST 0 : DELIVER LETTER
 	// -------------------------------------------------------------------------------
@@ -1402,6 +1413,7 @@ void CheckForQuests( UINT32 uiDay )
 	
 	// This quest gets turned OFF through conversation with Miguel - when user hands
 	// Miguel the letter
+*/
 }
 
 

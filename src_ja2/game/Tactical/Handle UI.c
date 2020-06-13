@@ -5482,11 +5482,13 @@ BOOLEAN HandleTalkInit(  )
 				// ATE: if our own guy...
 				if ( pTSoldier->bTeam == gbPlayerNum && !AM_AN_EPC( pTSoldier ) )
 				{
+/* Ja25 No dimitri
           if ( pTSoldier->ubProfile == DIMITRI )
           {
       			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_UI_FEEDBACK, gzLateLocalizedString[ 32 ], pTSoldier->name );
             return( FALSE );
           }
+*/
 
 					// Randomize quote to use....
 
@@ -5536,10 +5538,13 @@ BOOLEAN HandleTalkInit(  )
 							break;
 					}
 
+/*
+JA25, No IRA
           if ( pTSoldier->ubProfile == IRA )
           {
             ubQuoteNum = QUOTE_PASSING_DISLIKE;
           }
+*/
 
 					TacticalCharacterDialogue( pTSoldier, ubQuoteNum );
 

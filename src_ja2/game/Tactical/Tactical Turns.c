@@ -36,7 +36,9 @@ extern void DecayPublicOpplist( INT8 bTeam );
 extern UINT8 NumEnemyInSector();
 
 
-
+/*
+JA25:
+	Dont need Sector Descriptions
 void HandleRPCDescription(  )
 {
 	UINT8	ubMercsInSector[ 20 ] = { 0 };
@@ -129,7 +131,7 @@ void HandleRPCDescription(  )
 		}				
 	}
 }
-
+*/
 
 void HandleTacticalEndTurn( )
 {	

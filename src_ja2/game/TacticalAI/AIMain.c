@@ -2514,12 +2514,6 @@ void CheckForChangingOrders(SOLDIERTYPE *pSoldier)
 					pSoldier->bOrders = SEEKENEMY;
 				}
 			}	
-
-			if ( pSoldier->ubProfile == WARDEN )
-			{
-				// Tixa
-				MakeClosestEnemyChosenOne();
-			}
 			break;
 	}
 }

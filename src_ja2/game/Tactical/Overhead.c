@@ -3225,7 +3225,11 @@ Ja25 no terrorists
 			case RAY:
 			case OLGA:
 			case TYRONE:
+				Assert( 0 );
+/*
+no assassins
 				MakeRemainingAssassinsTougher();
+* /
 				break;
 
 			case ELDIN:
@@ -3284,6 +3288,9 @@ Ja25 no terrorists
 				ExecuteStrategicAIAction( STRATEGIC_AI_ACTION_KINGPIN_DEAD, 0, 0 );
 				break;
 			case DOREEN:
+				Assert( 0 );
+/*
+Ja25 No Doreen
 				// Doreen's dead
 				if ( CheckFact( FACT_DOREEN_HAD_CHANGE_OF_HEART, 0 ) )
 				{
@@ -3298,7 +3305,9 @@ Ja25 no terrorists
 				{
 					HandleNPCDoAction( DOREEN, NPC_ACTION_FREE_KIDS, 0 );
 				}
+* /
 				break;
+*/
 		}
 
 /* Ja25
@@ -3550,10 +3559,13 @@ void MakeCivHostile( SOLDIERTYPE *pSoldier, INT8 bNewSide )
 
 	switch( pSoldier->ubProfile )
 	{
+/*
+Ja25 No Ira, miguel, etc
 		case IRA:
 		case DIMITRI:
 		case MIGUEL:
 		case CARLOS:
+*/
 		case MADLAB:
 		case DYNAMO:
 		case SHANK:

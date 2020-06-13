@@ -641,6 +641,8 @@ void GetCurrentWorldSector( INT16 *psMapX, INT16 *psMapY )
 //not in overhead.h!
 extern UINT8 NumEnemyInSector();
 
+/*
+Ja25 No sector descriptions
 void HandleRPCDescriptionOfSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ )
 {
 	UINT32	cnt;
@@ -723,7 +725,7 @@ void HandleRPCDescriptionOfSector( INT16 sSectorX, INT16 sSectorY, INT16 sSector
 	HandleRPCDescription( );
 
 }
-
+*/
 
 BOOLEAN	SetCurrentWorldSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 {
@@ -907,9 +909,12 @@ Ja25 no creatures
 		}
 
 		// ATE: Check what sector we are in, to show description if we have an RPC.....
-		HandleRPCDescriptionOfSector( sMapX, sMapY, bMapZ );
+//Ja25: no sector descriptions
+//		HandleRPCDescriptionOfSector( sMapX, sMapY, bMapZ );
 
-    
+
+		// Say a quote from a merc who has new lines for the sector ( if any )
+		HandlePlayerTeamQuotesWhenEnteringSector( sMapX, sMapY, bMapZ );    
 
 		// ATE: Set Flag for being visited...
 		SetSectorFlag( sMapX, sMapY, bMapZ, SF_HAS_ENTERED_TACTICAL );
@@ -1254,11 +1259,13 @@ Ja25:  only mine in exp. is abandoned
 		}
 	}
 
-
+/*
+Ja25 no assassins and no kingin
 	if ( (gubQuest[ QUEST_KINGPIN_MONEY ] == QUESTINPROGRESS) && CheckFact( FACT_KINGPIN_CAN_SEND_ASSASSINS, 0 ) && (GetTownIdForSector( sNewSectorX, sNewSectorY ) != BLANK_SECTOR) && Random( 10 + GetNumberOfMilitiaInSector( sNewSectorX, sNewSectorY, bNewSectorZ ) ) < 3 )
 	{
 		DecideOnAssassin();
 	}
+*/
 
 /*
 	if ( sNewSectorX == 5 && sNewSectorY == MAP_ROW_C )
@@ -1299,11 +1306,14 @@ Ja25:  only mine in exp. is abandoned
 
 void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ )
 {
+	SOLDIERTYPE *pSoldier=NULL;
+/*
+//Ja25 no kingpin
 	if ( sOldSectorX == KINGPIN_MONEY_SECTOR_X && sOldSectorY == KINGPIN_MONEY_SECTOR_Y && bOldSectorZ == KINGPIN_MONEY_SECTOR_Z )
 	{
 		CheckForKingpinsMoneyMissing( TRUE );
 	}
-
+*/
 	if ( sOldSectorX == 13 && sOldSectorY == MAP_ROW_H && bOldSectorZ == 0 && CheckFact( FACT_CONRAD_SHOULD_GO, 0 ) )
 	{
 		// remove Conrad from the map
@@ -1311,10 +1321,13 @@ void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOl
 		gMercProfiles[ CONRAD ].sSectorY = 0;
 	}
 
+/*
+Ja25 no cambria hospital
 	if ( sOldSectorX == HOSPITAL_SECTOR_X && sOldSectorY == HOSPITAL_SECTOR_Y && bOldSectorZ == HOSPITAL_SECTOR_Z )
 	{
 		CheckForMissingHospitalSupplies();
 	}
+*/
 
 	// reset the state of the museum alarm for Eldin's quotes
 	SetFactFalse( FACT_MUSEUM_ALARM_WENT_OFF );

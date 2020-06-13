@@ -377,7 +377,10 @@ Ja25 No strategic ai
 			HourlyMinesUpdate();		// not-so hourly, in this case!
 			break;
 		case EVENT_REMOVE_ASSASSIN:
+			Assert( 0 );
+/*
 			RemoveAssassin( (UINT8) pEvent->uiParam );
+*/
 			break;
 		case EVENT_BEGIN_CONTRACT_RENEWAL_SEQUENCE:
 			BeginContractRenewalSequence( );
