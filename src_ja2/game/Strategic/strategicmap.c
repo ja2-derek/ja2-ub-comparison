@@ -1753,6 +1753,28 @@ void UpdateMercInSector( SOLDIERTYPE *pSoldier, INT16 sSectorX, INT16 sSectorY, 
 
 void InitializeStrategicMapSectorTownNames( void )
 {
+//Town Sectors
+
+	//Guard Post
+//	StrategicMap[CALCULATE_STRATEGIC_INDEX( 9, 8 ) ].bNameId = GUARD_POST;
+
+	// Town
+	StrategicMap[CALCULATE_STRATEGIC_INDEX( 10, 9 ) ].bNameId = TOWN_1;
+	StrategicMap[CALCULATE_STRATEGIC_INDEX( 11, 9 )].bNameId = TOWN_1;
+	StrategicMap[CALCULATE_STRATEGIC_INDEX( 11, 8 )].bNameId = TOWN_1;
+
+	//Abondoned Mine
+	StrategicMap[CALCULATE_STRATEGIC_INDEX( 13, 9 )].bNameId = ABANDONED_MINE_SECTOR;
+
+	//Power Generator
+//	StrategicMap[CALCULATE_STRATEGIC_INDEX( 13, 10 )].bNameId = POWER_GEN;
+
+	//Complex
+//	StrategicMap[CALCULATE_STRATEGIC_INDEX( 15, 11 )].bNameId = COMPLEX;
+
+/*
+Ja25 Removerd to add new towns
+
   StrategicMap[2+2*MAP_WORLD_X].bNameId= StrategicMap[2+1*MAP_WORLD_X].bNameId= CHITZENA;
 	StrategicMap[5+3*MAP_WORLD_X].bNameId=StrategicMap[6+3*MAP_WORLD_X].bNameId=StrategicMap[5+4*MAP_WORLD_X].bNameId = StrategicMap[4+4*MAP_WORLD_X].bNameId =SAN_MONA;
 	StrategicMap[9+1*MAP_WORLD_X].bNameId=StrategicMap[10+1*MAP_WORLD_X].bNameId=OMERTA;
@@ -1767,6 +1789,7 @@ void InitializeStrategicMapSectorTownNames( void )
 	StrategicMap[3+14*MAP_WORLD_X].bNameId=StrategicMap[4+14*MAP_WORLD_X].bNameId=StrategicMap[5+14*MAP_WORLD_X].bNameId=StrategicMap[3+15*MAP_WORLD_X].bNameId=StrategicMap[4+15*MAP_WORLD_X].bNameId= StrategicMap[3+16*MAP_WORLD_X].bNameId = MEDUNA;
 	//StrategicMap[3+16*MAP_WORLD_X].bNameId=PALACE;
 	return;
+*/
 
 }
 
