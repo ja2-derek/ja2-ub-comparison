@@ -601,7 +601,7 @@ void EnterAutoResolveMode( UINT8 ubSectorX, UINT8 ubSectorY )
 	switch( gubEnemyEncounterCode )
 	{
 		case ENEMY_ENCOUNTER_CODE:
-			gpAR->ubPlayerDefenceAdvantage = 21; //Skewed to the player's advantage for convenience purposes.
+			gpAR->ubPlayerDefenceAdvantage = 0;  //Ja25: removed to make autoresolve harder  21; //Skewed to the player's advantage for convenience purposes.
 			break;
 		case ENEMY_INVASION_CODE:
 			gpAR->ubPlayerDefenceAdvantage = 0; 
@@ -1774,6 +1774,7 @@ Ja25 no loyalty
 
 void CreateAutoResolveInterface()
 {
+	BOOLEAN fForceRetreatButtonToBeDisabled=FALSE;
 	VOBJECT_DESC    VObjectDesc;
 	INT32 i, index;
 	HVOBJECT hVObject;

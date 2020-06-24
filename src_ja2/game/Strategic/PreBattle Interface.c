@@ -40,6 +40,10 @@ extern BOOLEAN gfDelayAutoResolveStart;
 extern BOOLEAN gfTransitionMapscreenToAutoResolve;
 
 
+
+BOOLEAN ShouldAutoResolveButtonBeDisabled( UINT8 ubSectorX, UINT8 ubSectorY, INT8 bSectorZ );
+
+
 // zoom flag
 extern BOOLEAN fZoomFlag;
 extern BOOLEAN fMapScreenBottomDirty;
@@ -188,6 +192,7 @@ void InitPreBattleInterface( GROUP *pBattleGroup, BOOLEAN fPersistantPBI )
 	INT8	bBestExpLevel = 0;
 	BOOLEAN fRetreatAnOption = TRUE;
 	SECTORINFO *pSector;
+	BOOLEAN	fCantAutoResolve=FALSE;
 
 
 	// ARM: Feb01/98 - Cancel out of mapscreen movement plotting if PBI subscreen is coming up
@@ -305,6 +310,17 @@ Ja25 no creatures
 			return;
 		}
 	}
+
+
+
+
+
+
+	if( ShouldAutoResolveButtonBeDisabled( gubPBSectorX, gubPBSectorY, gubPBSectorZ ) )
+	{
+		fCantAutoResolve = TRUE;
+	}
+
 
 	fMapScreenBottomDirty = TRUE;
 	ChangeSelectedMapSector( gubPBSectorX, gubPBSectorY, gubPBSectorZ );
@@ -554,7 +570,8 @@ Ja25 no creatures
 	if( gfPersistantPBI )
 	{
 		if( gubEnemyEncounterCode == ENTERING_ENEMY_SECTOR_CODE || 
-				gubEnemyEncounterCode == ENTERING_BLOODCAT_LAIR_CODE )
+				gubEnemyEncounterCode == ENTERING_BLOODCAT_LAIR_CODE ||
+				fCantAutoResolve )
 		{ //Don't allow autoresolve for player initiated invasion battle types
 			DisableButton( iPBButton[ 0 ] );
 			SetButtonFastHelpText( iPBButton[ 0 ], gpStrategicString[ STR_PB_DISABLED_AUTORESOLVE_FASTHELP ] );
@@ -1941,4 +1958,32 @@ void HandlePreBattleInterfaceStates()
 	{
 		gfTransitionMapscreenToAutoResolve = FALSE;
 	}
+}
+
+
+
+
+
+
+
+BOOLEAN ShouldAutoResolveButtonBeDisabled( UINT8 ubSectorX, UINT8 ubSectorY, INT8 bSectorZ )
+{
+	if( bSectorZ != 0 )
+	{
+		return( TRUE );
+	}
+
+	//if the attacking group is a player group
+	if( gpBattleGroup != NULL && gpBattleGroup->fPlayer )
+	{
+		return( TRUE );
+	}
+
+	//K15
+	if( ubSectorX == 15 && ubSectorY == 11 && ( bSectorZ == 0 || bSectorZ == -1 ) )
+	{
+		return( TRUE );
+	}
+
+	return( FALSE );
 }
