@@ -8,6 +8,7 @@
 
 extern HVSURFACE ghFrameBuffer;
 
+UINT8 ErrorLoadScreen( BOOLEAN fNight, UINT32 uiLineNumber );
 
 
 UINT8 gubLastLoadingScreenID = LOADINGSCREEN_NOTHING;
@@ -24,6 +25,230 @@ UINT8 GetLoadScreenID( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ )
 	{
 		fNight = TRUE;
 	}
+
+	switch( bSectorZ )
+	{
+		case 0:
+		{
+			switch( ubSectorID )
+			{
+				case SEC_H7:
+					{
+//						if( DidGameJustStart() )
+						//if the player has never gone to H8, then we can still view the heli crash
+						if( !GetSectorFlagStatus( 8, 8, 0, SF_ALREADY_VISITED ) )
+						{
+							return LOADINGSCREEN_HELI_CRASH;
+						}
+						else
+						{
+							if( fNight )
+								return LOADINGSCREEN_NIGHT_SNOW;
+							return LOADINGSCREEN_DAY_SNOW;
+						}
+					}
+					break;
+
+				case SEC_H8:
+					{
+						if( fNight )
+							return LOADINGSCREEN_NIGHT_SNOW;
+						return LOADINGSCREEN_DAY_SNOW;
+					}
+					break;
+
+				//guard post
+				case SEC_H9:
+					{
+						if( fNight )
+							return LOADINGSCREEN_GUARDPOST_NIGHT;
+						return LOADINGSCREEN_GUARDPOST_DAY;
+					}
+					break;
+
+				case SEC_H11:
+					{
+						if( fNight )
+							return LOADINGSCREEN_NIGHTGENERIC;
+						return LOADINGSCREEN_DAYGENERIC;
+					}
+					break;
+
+				case SEC_K16:
+				case SEC_H10:
+				case SEC_I9:
+					{
+						if( fNight )
+							return LOADINGSCREEN_NIGHTPINE;
+						return LOADINGSCREEN_DAYPINE;
+					}
+					break;
+
+				case SEC_I10:
+				case SEC_I11:
+					{
+						pSector = &SectorInfo[ ubSectorID ];
+						switch( pSector->ubTraversability[ 4 ] )
+						{
+							case TOWN:
+							{
+								if( fNight )
+								{
+									if( Random( 2 ) )
+										return LOADINGSCREEN_NIGHTTOWN2;
+									else
+										return LOADINGSCREEN_NIGHTTOWN1;
+								}
+								if( Random( 2 ) )
+									return LOADINGSCREEN_DAYTOWN2;
+								else
+									return LOADINGSCREEN_DAYTOWN1;
+							}
+						}
+						return( LOADINGSCREEN_NOTHING );
+					}
+					break;
+
+				case SEC_I12:
+				case SEC_J11:
+					{
+						if( fNight )
+							return LOADINGSCREEN_NIGHTWILD;
+						return LOADINGSCREEN_DAYWILD;
+					}
+					break;
+
+				case SEC_J12:
+					{
+						if( fNight )
+							return LOADINGSCREEN_NIGHTFOREST;
+						return LOADINGSCREEN_DAYFOREST;
+					}
+					break;
+
+				case SEC_I13:
+					{
+						if( fNight )
+							return LOADINGSCREEN_NIGHTMINE;
+						return LOADINGSCREEN_DAYMINE;
+					}
+					break;
+
+				//Power plant
+				case SEC_J13:
+					{
+						if( fNight )
+							return LOADINGSCREEN_POWERPLANT_NIGHT;
+						return LOADINGSCREEN_POWERPLANT_DAY;
+					}
+					break;
+
+				//Complex
+				case SEC_K15:
+					{
+						if( fNight )
+							return LOADINGSCREEN_COMPLEX_TOP_LEVEL_NIGHT;
+						return LOADINGSCREEN_COMPLEX_TOP_LEVEL_DAY;
+					}
+					break;
+
+				default:
+					return( ErrorLoadScreen( fNight, __LINE__ ) );
+			}
+		}
+		break;
+
+		case 1:
+		{
+			switch( ubSectorID )
+			{
+				case SEC_I13:
+				case SEC_J13:
+				{
+					if( fNight )
+						return LOADINGSCREEN_MINE;
+					return LOADINGSCREEN_MINE;
+					break;
+				}
+
+				//tunnels
+				case SEC_J14:
+				case SEC_K14:
+				{
+					return LOADINGSCREEN_TUNNELS;
+					break;
+				}
+
+				case SEC_K15:
+				{
+					if( gJa25SaveStruct.ubLoadScreenStairTraversal == LS__GOING_UP_STAIRS )
+						return( LOADINGSCREEN_UP_STAIRS );
+					else if( gJa25SaveStruct.ubLoadScreenStairTraversal == LS__GOING_DOWN_STAIRS )
+						return( LOADINGSCREEN_DOWN_STAIRS );
+					else
+						return( LOADINGSCREEN_COMPLEX_BASEMENT_GENERIC );
+					break;
+				}
+				default:
+					return( ErrorLoadScreen( fNight, __LINE__ ) );
+			}
+		}
+		case 2:
+		{
+			switch( ubSectorID )
+			{
+				case SEC_K15:
+				{	
+					//if we are going up stairs, else traversing at same level
+					if( gJa25SaveStruct.ubLoadScreenStairTraversal == LS__GOING_UP_STAIRS )
+						return( LOADINGSCREEN_UP_STAIRS );
+					else if( gJa25SaveStruct.ubLoadScreenStairTraversal == LS__GOING_DOWN_STAIRS )
+						return( LOADINGSCREEN_DOWN_STAIRS );
+					else
+						return( LOADINGSCREEN_COMPLEX_BASEMENT );
+					break;
+				}
+
+				case SEC_L15:
+				{
+					//if we are going up stairs, else traversing at same level
+					if( gJa25SaveStruct.ubLoadScreenStairTraversal == LS__GOING_UP_STAIRS )
+						return( LOADINGSCREEN_UP_STAIRS );
+					else
+						return( LOADINGSCREEN_COMPLEX_BASEMENT );
+					break;
+				}
+
+				default:
+					return( ErrorLoadScreen( fNight, __LINE__ ) );
+			}
+		}
+		case 3:
+		{
+			switch( ubSectorID )
+			{
+				case SEC_L15:
+				{
+					//if we are going up stairs, else traversing at same level
+					if( gJa25SaveStruct.ubLoadScreenStairTraversal == LS__GOING_DOWN_STAIRS )
+						return( LOADINGSCREEN_DOWN_STAIRS );
+					else
+						return( LOADINGSCREEN_COMPLEX_BASEMENT_GENERIC );
+					break;
+				}
+
+				default:
+					return( ErrorLoadScreen( fNight, __LINE__ ) );
+			}
+		}
+		break;
+
+		default:
+			return( ErrorLoadScreen( fNight, __LINE__ ) );
+	}
+}
+
+/*Ja25: New sectors
 	switch( bSectorZ )
 	{
 		case 0:
@@ -195,6 +420,7 @@ UINT8 GetLoadScreenID( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ )
 			return LOADINGSCREEN_DAYGENERIC;
 	}
 }
+*/
 
 extern BOOLEAN gfSchedulesHosed;
 
@@ -210,6 +436,126 @@ void DisplayLoadScreenWithID( UINT8 ubLoadScreenID )
 
 	switch( ubLoadScreenID )
 	{
+		//Place holder
+		case LOADINGSCREEN_NOTHING:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Heli.sti");
+			break;
+
+		//New load screens
+		case LOADINGSCREEN_HELI_CRASH:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_HeliCrash.sti");
+			break;
+
+		case LOADINGSCREEN_DAY_SNOW:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Snow_day1.sti" );
+			break;
+		case LOADINGSCREEN_NIGHT_SNOW:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Snow_Night1.sti" );
+			break;
+
+		case LOADINGSCREEN_GUARDPOST_DAY:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Guardpostday.sti");
+			break;
+
+		case LOADINGSCREEN_GUARDPOST_NIGHT:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Guardpostnight.sti");
+			break;
+
+		case LOADINGSCREEN_POWERPLANT_DAY:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_PowerPlantDay.sti");
+			break;
+
+		case LOADINGSCREEN_POWERPLANT_NIGHT:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_PowerPlantNight.sti");
+			break;
+
+		//old loadscreens still being used
+		case LOADINGSCREEN_DAYGENERIC:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_DayGeneric.sti");
+			break;
+		case LOADINGSCREEN_NIGHTGENERIC:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_NightGeneric.sti");
+			break;
+
+		case LOADINGSCREEN_DAYTOWN1:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_DayTown1.sti");
+			break;
+		case LOADINGSCREEN_DAYTOWN2:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_DayTown2.sti");
+			break;
+
+		case LOADINGSCREEN_NIGHTTOWN1:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_NightTown1.sti");
+			break;
+		case LOADINGSCREEN_NIGHTTOWN2:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_NightTown2.sti");
+			break;
+
+		case LOADINGSCREEN_DAYFOREST:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_DayForest.sti");
+			break;
+		case LOADINGSCREEN_NIGHTFOREST:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_NightForest.sti");
+			break;
+
+		case LOADINGSCREEN_DAYWILD:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_DayWild.sti");
+			break;
+		case LOADINGSCREEN_NIGHTWILD:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_NightWild.sti");
+			break;
+
+		case LOADINGSCREEN_MINE:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Mine.sti");
+			break;
+		case LOADINGSCREEN_CAVE:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Cave.sti");
+			break;
+
+		case LOADINGSCREEN_DAYPINE:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_DayPine.sti");
+			break;
+		case LOADINGSCREEN_NIGHTPINE:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_NightPine.sti");
+			break;
+
+		case LOADINGSCREEN_DAYMINE:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_MineDay.sti" );
+			break;
+		case LOADINGSCREEN_NIGHTMINE:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_MineNight.sti" );
+			break;
+
+		case 	LOADINGSCREEN_DOWN_STAIRS:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Basement.sti");
+			break;
+
+		case 	LOADINGSCREEN_UP_STAIRS:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_UpStairs.sti");
+			break;
+
+		case 	LOADINGSCREEN_COMPLEX_BASEMENT:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\ls_Complexbsmnt.sti");
+			break;
+		case 	LOADINGSCREEN_COMPLEX_BASEMENT_GENERIC:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Basement_Generic.sti");
+			break;
+		case 	LOADINGSCREEN_TUNNELS:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\ls_tunnels.sti");
+			break;
+
+		case 	LOADINGSCREEN_COMPLEX_TOP_LEVEL_DAY:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_MissleDay.sti");
+			break;
+		case 	LOADINGSCREEN_COMPLEX_TOP_LEVEL_NIGHT:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_MissleNight.sti");
+			break;
+
+		default:
+			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Heli.sti");
+			break;
+	}
+/*
 		case LOADINGSCREEN_NOTHING:
 			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Heli.sti");
 			break;
@@ -343,6 +689,7 @@ void DisplayLoadScreenWithID( UINT8 ubLoadScreenID )
 			strcpy(vs_desc.ImageFile, "LOADSCREENS\\LS_Heli.sti");
 			break;
 	}
+*/
 
 	if( gfSchedulesHosed )
 	{
@@ -374,3 +721,15 @@ void DisplayLoadScreenWithID( UINT8 ubLoadScreenID )
 	RefreshScreen( NULL );
 }
 
+UINT8 ErrorLoadScreen( BOOLEAN fNight, UINT32 uiLineNumber )
+{
+	CHAR zString[128];
+
+	sprintf( zString, "Error in LoadScreen.c, actual line #%d", uiLineNumber );
+
+	if( fNight )
+	{
+		return LOADINGSCREEN_NIGHTGENERIC;
+	}
+	return LOADINGSCREEN_DAYGENERIC;
+}
