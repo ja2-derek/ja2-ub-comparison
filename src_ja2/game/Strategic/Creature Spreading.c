@@ -129,7 +129,7 @@ UINT8 gubCreatureBattleCode = CREATURE_BATTLE_CODE_NONE;
 UINT8 gubSectorIDOfCreatureAttack = 0;
 
 extern UNDERGROUND_SECTORINFO* FindUnderGroundSector( INT16 sMapX, INT16 sMapY, UINT8 bMapZ );
-extern UNDERGROUND_SECTORINFO* NewUndergroundNode( UINT8 ubSectorX, UINT8 ubSectorY, UINT8 ubSectorZ );
+extern UNDERGROUND_SECTORINFO* NewUndergroundNode( UINT8 ubSectorX, UINT8 ubSectorY, UINT8 ubSectorZ, BOOLEAN fCampaignSector );
 extern void BuildUndergroundSectorInfoList();
 void DeleteCreatureDirectives();
 
@@ -270,7 +270,7 @@ void InitCreatureQuest()
 		fPlayMeanwhile = TRUE;
 
 /*
-Ja25 No meanwhiles 
+Ja25 No meanwhiles && no creatures
 	if( fPlayMeanwhile && !gfCreatureMeanwhileScenePlayed )
 	{
 		//Start the meanwhile scene for the queen ordering the release of the creatures.
@@ -984,6 +984,9 @@ UINT8 CreaturesInUndergroundSector( UINT8 ubSectorID, UINT8 ubSectorZ )
 
 BOOLEAN MineClearOfMonsters( UINT8 ubMineIndex )
 {
+	/*
+	Ja25:  There are no creatures.
+
 	Assert( ( ubMineIndex >= 0 ) && ( ubMineIndex < MAX_NUMBER_OF_MINES ) );
 
 	if( !gMineStatus[ ubMineIndex ].fPrevInvadedByMonsters )
@@ -1036,6 +1039,7 @@ BOOLEAN MineClearOfMonsters( UINT8 ubMineIndex )
 			return FALSE;
 		}
 	}
+*/
 	return TRUE;
 }
 
