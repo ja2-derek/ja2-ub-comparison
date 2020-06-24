@@ -91,6 +91,8 @@ BOOLEAN PlayerMercInvolvedInThisCombat( SOLDIERTYPE *pSoldier );
 
 BOOLEAN CurrentBattleSectorIs( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ );
 
+BOOLEAN ShouldRetreatButtonBeDisabled( UINT8 ubSectorX, UINT8 ubSectorY, INT8 bSectorZ );
+
 enum
 {
 	LOG_DEFEAT,

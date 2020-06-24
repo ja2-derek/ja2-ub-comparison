@@ -311,10 +311,11 @@ Ja25 no creatures
 		}
 	}
 
-
-
-
-
+	//Is this a sector where the retreat button should be disabled
+	if( ShouldRetreatButtonBeDisabled( gubPBSectorX, gubPBSectorY, gubPBSectorZ ) )
+	{
+		gfCantRetreatInPBI = TRUE;
+	}
 
 	if( ShouldAutoResolveButtonBeDisabled( gubPBSectorX, gubPBSectorY, gubPBSectorZ ) )
 	{
@@ -1960,11 +1961,25 @@ void HandlePreBattleInterfaceStates()
 	}
 }
 
+BOOLEAN ShouldRetreatButtonBeDisabled( UINT8 ubSectorX, UINT8 ubSectorY, INT8 bSectorZ )
+{
+	if( bSectorZ != 0 )
+	{
+		return( TRUE );
+	}
 
+	if( ubSectorX == 7 && ubSectorY == 8 && bSectorZ == 0 )
+	{
+		return( TRUE );
+	}
 
+	if( ubSectorX == 15 && ubSectorY == 11 && ( bSectorZ == 0 || bSectorZ == -1 ) )
+	{
+		return( TRUE );
+	}
 
-
-
+	return( FALSE );
+}
 
 BOOLEAN ShouldAutoResolveButtonBeDisabled( UINT8 ubSectorX, UINT8 ubSectorY, INT8 bSectorZ )
 {

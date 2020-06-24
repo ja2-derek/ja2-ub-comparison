@@ -1793,6 +1793,12 @@ void CreateAutoResolveInterface()
 		AssertMsg( 0, "Failed to load Interface\\AutoResolve.sti" );
 	}
 
+	//Is this a sector where the retreat button should be disabled
+	if( ShouldRetreatButtonBeDisabled( gpAR->ubSectorX, gpAR->ubSectorY, -1 ) )
+	{
+		fForceRetreatButtonToBeDisabled = TRUE;
+	}
+
 	//Load the button images file, and assign it to the first button.
 	/* OLD BEFORE THE MEDICAL BUTTON WAS ADDED
 	gpAR->iButtonImage[ PAUSE_BUTTON ] = LoadButtonImage( "Interface\\AutoBtns.sti", -1, 0, -1, 6, -1 );
@@ -2054,7 +2060,7 @@ Ja25 no militia
 	gpAR->iButton[ RETREAT_BUTTON ] = 
 		QuickCreateButton( gpAR->iButtonImage[ RETREAT_BUTTON ], (INT16)(gpAR->sCenterStartX+51), (INT16)(274+gpAR->bVerticalOffset), BUTTON_TOGGLE, MSYS_PRIORITY_HIGH,
 		DEFAULT_MOVE_CALLBACK, RetreatButtonCallback );
-	if( !gpAR->ubMercs )
+	if( !gpAR->ubMercs || fForceRetreatButtonToBeDisabled )
 	{
 		DisableButton( gpAR->iButton[ RETREAT_BUTTON ] );
 	}
