@@ -76,6 +76,7 @@
 #define  MAP_EDGEPOINTS_SAVED					0x00000040
 #define  MAP_AMBIENTLIGHTLEVEL_SAVED	0x00000080
 #define	 MAP_NPCSCHEDULES_SAVED				0x00000100
+#define  MAP_RADARMAP_SAVED						0x00000200
 
 #ifdef JA2EDITOR
 	extern BOOLEAN gfErrorCatch;
@@ -1592,7 +1593,7 @@ void CompileWorldMovementCosts( )
 
 
 // SAVING CODE
-BOOLEAN SaveWorld( UINT8	*puiFilename )
+BOOLEAN SaveWorld( UINT8	*puiFilename, BOOLEAN fDoRadarMap )
 {
 #ifdef JA2EDITOR
 	INT32			cnt;
@@ -1653,6 +1654,12 @@ BOOLEAN SaveWorld( UINT8	*puiFilename )
 	if( gfBasement || gfCaves )
 		uiFlags |= MAP_AMBIENTLIGHTLEVEL_SAVED;
 	uiFlags |= MAP_NPCSCHEDULES_SAVED;
+
+	if ( fDoRadarMap )
+	{
+		uiFlags |= MAP_RADARMAP_SAVED;
+	}
+
 
 	FileWrite( hfile, &uiFlags, sizeof( INT32 ), &uiBytesWritten );
 
@@ -2083,6 +2090,13 @@ BOOLEAN SaveWorld( UINT8	*puiFilename )
 	{
 		SaveSchedules( hfile );
 	}
+	if( uiFlags & MAP_RADARMAP_SAVED )
+	{
+		// Create And Save radarmap!
+		GenerateRadarMap( puiFilename, FALSE, hfile );
+
+	}
+	
 
 	FileClose( hfile );
 
@@ -2200,14 +2214,14 @@ BOOLEAN EvaluateWorld( UINT8 *pSector, UINT8 ubLevel )
 	Assert(pSummary);
 	memset(pSummary, 0, sizeof(SUMMARYFILE));
 
-	fReturnVal = EvaluateWorldEx(pSector, ubLevel, pSummary, TRUE);
+	fReturnVal = EvaluateWorldEx( pSector, ubLevel, pSummary, TRUE, FALSE, NULL );
 
 	MemFree(pSummary);
 
 	return(fReturnVal);
 }
 
-BOOLEAN EvaluateWorldEx(UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BOOLEAN fWriteSummaryFile)
+BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BOOLEAN fWriteSummaryFile, BOOLEAN fExtractRadarMap, HIMAGE hImage )
 {
 	FLOAT dMajorMapVersion;
 
@@ -2227,28 +2241,33 @@ BOOLEAN EvaluateWorldEx(UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BO
 	UINT8 szFilename[ 40 ];
 	UINT8 ubMinorMapVersion;
 
+	gfTriedToLoadOldMapVersion = FALSE;
 
 	//Make sure the file exists... if not, then return false
 	sprintf( szFilename, pSector );
-	if( ubLevel % 4  )
+
+	if ( !fExtractRadarMap )
 	{
-		UINT8 str[4];
-		sprintf( str, "_b%d", ubLevel % 4 );
-		strcat( szFilename, str );
-	}
-	if( ubLevel >= 4 )
-	{
-		strcat( szFilename, "_a" );
+		if( ubLevel % 4  )
+		{
+			UINT8 str[4];
+			sprintf( str, "_b%d", ubLevel % 4 );
+			strcat( szFilename, str );
+		}
+		if( ubLevel >= 4 )
+		{
+			strcat( szFilename, "_a" );
+		}
 	}
 	strcat( szFilename, ".dat" );
 	sprintf( szDirFilename, "MAPS\\%s", szFilename );
 
 	if( gfMajorUpdate )
 	{
-		if( !LoadWorld( szFilename ) ) //error
+		if( !LoadWorld( szFilename, FALSE, TRUE ) ) //error
 			return FALSE;
 		FileClearAttributes( szDirFilename );
-		SaveWorld( szFilename );
+		SaveWorld( szFilename, FALSE );
 	}
 
 	hfile = FileOpen( szDirFilename, FILE_ACCESS_READ, FALSE );
@@ -2282,6 +2301,13 @@ BOOLEAN EvaluateWorldEx(UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BO
 	if( dMajorMapVersion >= 4.00 )
 	{
 		LOADDATA( &ubMinorMapVersion, pBuffer, sizeof( UINT8 ) );
+	}
+
+	// OK, check for older maps, if old, return false...
+	if ( ubMinorMapVersion < gubMinorMapVersion )
+	{
+		gfTriedToLoadOldMapVersion = TRUE;
+		return( FALSE );
 	}
 
 	//Read FLAGS FOR WORLD
@@ -2622,9 +2648,175 @@ BOOLEAN EvaluateWorldEx(UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BO
 		}
 	}
 
-	if (fWriteSummaryFile)
+	// ATE: Load all this additional info, just to allow us to reach end of filwe
+	if( uiFlags & MAP_EDGEPOINTS_SAVED )
 	{
-		RenderProgressBar(0, 100);
+			INT16 usTemp, uiSize;
+			UINT16 *pusTemp;
+
+			LOADDATA( &uiSize, pBuffer, 2 );
+			LOADDATA( &usTemp, pBuffer, 2 );
+			if( uiSize )
+			{
+				pusTemp = (INT16*)MemAlloc( uiSize * sizeof( INT16 ) );
+				LOADDATA( pusTemp, pBuffer, uiSize * sizeof( INT16 ) );
+				MemFree( pusTemp );
+			}
+			LOADDATA( &uiSize, pBuffer, 2 );
+			LOADDATA( &usTemp, pBuffer, 2 );
+			if( uiSize )
+			{
+				pusTemp = (INT16*)MemAlloc( uiSize * sizeof( INT16 ) );
+				LOADDATA( pusTemp, pBuffer, uiSize * sizeof( INT16 ) );
+				MemFree( pusTemp );
+			}
+			LOADDATA( &uiSize, pBuffer, 2 );
+			LOADDATA( &usTemp, pBuffer, 2 );
+			if( uiSize )
+			{
+				pusTemp = (INT16*)MemAlloc( uiSize * sizeof( INT16 ) );
+				LOADDATA( pusTemp, pBuffer, uiSize * sizeof( INT16 ) );
+				MemFree( pusTemp );
+			}
+			LOADDATA( &uiSize, pBuffer, 2 );
+			LOADDATA( &usTemp, pBuffer, 2 );
+			if( uiSize )
+			{
+				pusTemp = (INT16*)MemAlloc( uiSize * sizeof( INT16 ) );
+				LOADDATA( pusTemp, pBuffer, uiSize * sizeof( INT16 ) );
+				MemFree( pusTemp );
+			}
+
+			LOADDATA( &uiSize, pBuffer, 2 );
+			LOADDATA( &usTemp, pBuffer, 2 );
+			if( uiSize )
+			{
+				pusTemp = (INT16*)MemAlloc( uiSize * sizeof( INT16 ) );
+				LOADDATA( pusTemp, pBuffer, uiSize * sizeof( INT16 ) );
+				MemFree( pusTemp );
+			}
+			LOADDATA( &uiSize, pBuffer, 2 );
+			LOADDATA( &usTemp, pBuffer, 2 );
+			if( uiSize )
+			{
+				pusTemp = (INT16*)MemAlloc( uiSize * sizeof( INT16 ) );
+				LOADDATA( pusTemp, pBuffer, uiSize * sizeof( INT16 ) );
+				MemFree( pusTemp );
+			}
+			LOADDATA( &uiSize, pBuffer, 2 );
+			LOADDATA( &usTemp, pBuffer, 2 );
+			if( uiSize )
+			{
+				pusTemp = (INT16*)MemAlloc( uiSize * sizeof( INT16 ) );
+				LOADDATA( pusTemp, pBuffer, uiSize * sizeof( INT16 ) );
+				MemFree( pusTemp );
+			}
+			LOADDATA( &uiSize, pBuffer, 2 );
+			LOADDATA( &usTemp, pBuffer, 2 );
+			if( uiSize )
+			{
+				pusTemp = (INT16*)MemAlloc( uiSize * sizeof( INT16 ) );
+				LOADDATA( pusTemp, pBuffer, uiSize * sizeof( INT16 ) );
+				MemFree( pusTemp );
+			}
+	}
+	if( uiFlags & MAP_NPCSCHEDULES_SAVED )
+	{
+		SCHEDULENODE *pSchedule = NULL;
+		SCHEDULENODE temp;
+		UINT8 ubNum;
+		LOADDATA( &ubNum, pBuffer, sizeof( UINT8 ) );
+		gubScheduleID = 1;
+		while( ubNum )
+		{
+			LOADDATA( &temp, pBuffer, sizeof( SCHEDULENODE ) );
+
+			ubNum--;
+		}
+	}
+
+	// ATE: If we are to extract radar map, do so!
+
+	if( ( uiFlags & MAP_RADARMAP_SAVED ) && fExtractRadarMap )
+	{
+		// We have a buffer o' radar image data
+		//phImage
+
+		// Generate HIMAGE!
+		{
+			STCIHeader	Header;
+
+			LOADDATA( &Header, pBuffer, STCI_HEADER_SIZE );
+
+			// Determine from the header the data stored in the file. and run the appropriate loader
+			if (Header.fFlags & STCI_INDEXED)
+			{
+				UINT32			uiFileSectionSize;
+				PTR					pSTCIPalette;
+				STCIHeader	*pHeader = &Header;
+
+
+				{ // Allocate memory for reading in the palette
+					if ( pHeader->Indexed.uiNumberOfColours != 256)
+					{ 
+						return( FALSE );
+					}
+					uiFileSectionSize = pHeader->Indexed.uiNumberOfColours * STCI_PALETTE_ELEMENT_SIZE;
+					pSTCIPalette = MemAlloc( uiFileSectionSize );
+					if (pSTCIPalette == NULL)
+					{
+						return( FALSE );
+					}
+
+					// ATE: Memset: Jan 16/99
+					memset( pSTCIPalette, 0, uiFileSectionSize );
+
+					// Read in the palett
+					LOADDATA( pSTCIPalette,  pBuffer, uiFileSectionSize );
+
+					STCISetPalette( pSTCIPalette, hImage );
+
+					hImage->fFlags |= IMAGE_PALETTE;
+					// Free the temporary buffer
+					MemFree( pSTCIPalette );
+
+					if (pHeader->fFlags & STCI_ETRLE_COMPRESSED)
+					{
+						// load data for the subimage (object) structures
+						Assert( sizeof( ETRLEObject ) == STCI_SUBIMAGE_SIZE );
+						hImage->usNumberOfObjects = pHeader->Indexed.usNumberOfSubImages;
+						uiFileSectionSize = hImage->usNumberOfObjects * STCI_SUBIMAGE_SIZE;
+						hImage->pETRLEObject = MemAlloc( uiFileSectionSize );
+						if (hImage->pETRLEObject == NULL)
+						{
+							MemFree( hImage->pPalette );
+							return( FALSE );
+						}
+
+						LOADDATA( hImage->pETRLEObject,  pBuffer, uiFileSectionSize );
+
+						hImage->uiSizePixData = pHeader->uiStoredSize;
+						hImage->fFlags |= IMAGE_TRLECOMPRESSED;
+					}
+
+					// allocate memory for and read in the image data
+					hImage->pImageData = MemAlloc( pHeader->uiStoredSize );
+
+					LOADDATA( hImage->pImageData,  pBuffer, pHeader->uiStoredSize );
+					hImage->fFlags |= IMAGE_BITMAPDATA;
+				}
+			}
+
+			hImage->usWidth = Header.usWidth;
+			hImage->usHeight = Header.usHeight;
+			hImage->ubBitDepth = Header.ubDepth;
+		}
+
+	}
+
+	if ( fWriteSummaryFile )
+	{
+		RenderProgressBar( 0, 100 ); 
 	}
 	//RenderProgressBar( 1, 100 ); 
 
@@ -2641,7 +2833,7 @@ BOOLEAN EvaluateWorldEx(UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BO
 extern UINT8 GetCurrentSummaryVersion();
 extern void LoadShadeTablesFromTextFile();
 
-BOOLEAN LoadWorld( UINT8	*puiFilename )
+BOOLEAN LoadWorld( UINT8	*puiFilename, BOOLEAN fOldMap, BOOLEAN fFatalErrorOnCaompatibilityFail  )
 {
 	HWFILE					hfile;
 	FLOAT						dMajorMapVersion;
@@ -2666,14 +2858,17 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 
 	LoadShadeTablesFromTextFile();
 
-	// Append exension to filename!
-	if ( gfForceLoad )	
 	{
-		sprintf( aFilename, "MAPS\\%s", gzForceLoadFile );
-	}
-	else
-	{
-		sprintf( aFilename, "MAPS\\%s", puiFilename );
+		// Append exension to filename!
+		if ( fOldMap )
+		{
+			// Use default directory...
+			sprintf( aFilename, "%s\\%s", GetDefaultMapsDirectory( ), puiFilename );			
+		}
+		else
+		{
+			sprintf( aFilename, "%s\\%s", GetMapsDirectory( ), puiFilename );
+		}
 	}
 
 	// RESET FLAGS FOR OUTDOORS/INDOORS
@@ -2713,9 +2908,33 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 			return FALSE;
 		}
 	#endif
+/*
+	if( dMajorMapVersion >= 4.00 )
+	{
+		LOADDATA( &ubMinorMapVersion, pBuffer, sizeof( UINT8 ) );
+	}
+*/
 
 	LOADDATA( &ubMinorMapVersion, pBuffer, sizeof( UINT8 ) );
 	
+	// ATE: JA25 - check for version incompatibility
+	if ( !fOldMap && ubMinorMapVersion < gubMinorMapVersion )
+	{
+		if ( fFatalErrorOnCaompatibilityFail )
+		{
+			SET_ERROR( "Incompatible map." );
+		}			
+		return( FALSE );
+	}
+
+	if ( fOldMap && ubMinorMapVersion == gubMinorMapVersion )
+	{
+		if ( fFatalErrorOnCaompatibilityFail )
+		{
+			SET_ERROR(  "Incompatible custom map used for campaign." );
+		}
+		return( FALSE );
+	}
 	// CHECK FOR NON-COMPATIBLE VERSIONS!
 	// CHECK FOR MAJOR MAP VERSION INCOMPATIBLITIES
 	//if ( dMajorMapVersion < gdMajorMapVersion )
@@ -3067,7 +3286,7 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 	SetRelativeStartAndEndPercentage( 0, 85, 86, L"Loading map information..." );
 	RenderProgressBar( 0, 0 );
 
-	LoadMapInformation( &pBuffer );
+	LoadMapInformation( &pBuffer, fOldMap );
 	
 	if( uiFlags & MAP_FULLSOLDIER_SAVED )
 	{
@@ -3156,7 +3375,7 @@ BOOLEAN LoadWorld( UINT8	*puiFilename )
 
 	// SAVE FILENAME
 	strcpy( gzLastLoadedFile, puiFilename	);
-	LoadRadarScreenBitmap( puiFilename );
+	LoadRadarScreenBitmap( puiFilename, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
 
 	RenderProgressBar( 0, 80 );
 	
@@ -3949,14 +4168,14 @@ void ReloadTileset( UINT8 ubID )
 	giCurrentTilesetID = ubID;
 
 	// Save Map
-	SaveWorld( TEMP_FILE_FOR_TILESET_CHANGE );
+	SaveWorld( TEMP_FILE_FOR_TILESET_CHANGE, FALSE  );
 
 	//IMPORTANT:  If this is not set, the LoadTileset() will assume that
 	//it is loading the same tileset and ignore it...
 	giCurrentTilesetID = iCurrTilesetID;
 
 	// Load Map with new tileset
-	LoadWorld( TEMP_FILE_FOR_TILESET_CHANGE );
+	LoadWorld( TEMP_FILE_FOR_TILESET_CHANGE, FALSE, TRUE );
 
 	// Delete file
 	sprintf( aFilename, "MAPS\\%s", TEMP_FILE_FOR_TILESET_CHANGE );

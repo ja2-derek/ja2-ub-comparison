@@ -50,6 +50,9 @@ void TacticalSquadListBtnCallBack(MOUSE_REGION * pRegion, INT32 iReason );
 // subtractor for squad list from size of radar view region height
 #define SUBTRACTOR_FOR_SQUAD_LIST 0
 
+extern UNDERGROUND_SECTORINFO* FindUnderGroundSector( INT16 sMapX, INT16 sMapY, UINT8 bMapZ );
+extern BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BOOLEAN fWriteSummaryFile, BOOLEAN fExtractRadarMap, HIMAGE hImage );
+
 
 INT16			gsRadarX;
 INT16			gsRadarY;
@@ -85,12 +88,14 @@ BOOLEAN InitRadarScreen( )
 		return( TRUE );
 }
 
-BOOLEAN LoadRadarScreenBitmap( CHAR8 *aFilename )
+BOOLEAN LoadRadarScreenBitmap( CHAR8 *aFilename, INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ )
 {
   VOBJECT_DESC    VObjectDesc;
 	CHAR8						zFilename[ 260 ];
 	INT32						cnt;
 	HVOBJECT				hVObject;
+	BOOLEAN fOldMap = TRUE;
+
 
 	strcpy( zFilename, aFilename );
 
@@ -106,6 +111,30 @@ BOOLEAN LoadRadarScreenBitmap( CHAR8 *aFilename )
 	 // If we are in a cave or basement..... dont get a new one...
 	 if( !gfBasement && !gfCaves )
 */
+	 // OK, there, cheif, check and see which loader for maps to use
+		if( !sSectorZ )
+		{
+			if ( SectorInfo[ ( SECTOR( sSectorX , sSectorY ) ) ].fCustomSector )
+			{
+				fOldMap = FALSE;
+			}
+		}
+		else
+		{
+			// Find sector info and see if this is a custom map
+			UNDERGROUND_SECTORINFO *pSector=NULL;
+
+			pSector = FindUnderGroundSector( (INT16)sSectorY, (INT16)sSectorX, (UINT8)sSectorZ );
+
+			if ( pSector )
+			{
+				if ( pSector->fCustomSector )
+				{
+					fOldMap = FALSE;
+				}
+			}
+		}
+
 	 {
 		 // Remove extension
 		 for ( cnt = strlen( zFilename )-1; cnt >=0; cnt-- )
@@ -115,10 +144,32 @@ BOOLEAN LoadRadarScreenBitmap( CHAR8 *aFilename )
 				 zFilename[ cnt ] = '\0';
 			 }
 		 }
+		if( !fOldMap )
+		{
+			HIMAGE			hImage;
+			SUMMARYFILE *pSummary;
 
-		 // Grab the Map image
-		 VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-		 sprintf( VObjectDesc.ImageFile, "RADARMAPS\\%s.STI", zFilename );
+			hImage = MemAlloc( sizeof( image_type ) );
+
+			memset( hImage, 0, sizeof( image_type ) );
+
+			pSummary = (SUMMARYFILE*)MemAlloc( sizeof( SUMMARYFILE ) );
+			memset( pSummary, 0, sizeof( SUMMARYFILE ) );
+
+			EvaluateWorldEx( zFilename, 0, pSummary, FALSE, TRUE, hImage );
+			MemFree( pSummary );
+
+			// We now have extracted the HIMAGE - now create video object
+			VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMHIMAGE;
+			VObjectDesc.hImage				= hImage;
+		}
+		else
+		{
+			 // Grab the Map image
+			 VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
+			 sprintf( VObjectDesc.ImageFile, "RADARMAPS\\%s.STI", zFilename );
+		}
+		
 
 		 CHECKF(AddVideoObject(&VObjectDesc, &gusRadarImage));
 

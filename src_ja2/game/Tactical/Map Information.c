@@ -36,7 +36,7 @@ BOOLEAN gfWorldLoaded;
 MAPCREATE_STRUCT gMapInformation;
 
 //Current minor map version updater.
-#define MINOR_MAP_VERSION		25
+#define MINOR_MAP_VERSION		27
 UINT8 gubMinorMapVersion = MINOR_MAP_VERSION;
 
 /*
@@ -117,14 +117,30 @@ void SaveMapInformation( HWFILE fp )
 {
 	UINT32 uiBytesWritten;
 
+	// Make random filler 
+	UINT32		i;
+
+	for ( i = 0; i < MAP_INFO_RANDOM_FILLER_SIZE; i++ )
+	{
+		gMapInformation.uiRandomFiller[ i ] = (UINT8)Random( 200 );
+	}
+
 	gMapInformation.ubMapVersion = MINOR_MAP_VERSION;
 	FileWrite( fp, &gMapInformation, sizeof( MAPCREATE_STRUCT ), &uiBytesWritten );
 }
 
-void LoadMapInformation( INT8 **hBuffer )
+void LoadMapInformation( INT8 **hBuffer, BOOLEAN fOldVersion )
 {
-	LOADDATA( &gMapInformation, *hBuffer, sizeof( MAPCREATE_STRUCT ) );
-	//FileRead( hfile, &gMapInformation, sizeof( MAPCREATE_STRUCT ), &uiBytesRead);
+	if ( fOldVersion )
+	{
+		// read from a point
+		LOADDATA( &( gMapInformation.sNorthGridNo ), *hBuffer, sizeof( MAPCREATE_STRUCT ) - MAP_INFO_RANDOM_FILLER_SIZE );
+	}
+	else
+	{
+		LOADDATA( &gMapInformation, *hBuffer, sizeof( MAPCREATE_STRUCT ) );
+		//FileRead( hfile, &gMapInformation, sizeof( MAPCREATE_STRUCT ), &uiBytesRead);
+	}
 
 	// ATE: OK, do some handling here for basement level scroll restrictions
 	// Calcuate world scrolling restrictions
@@ -589,22 +605,6 @@ void AutoCalculateItemNoOverwriteStatus()
 	}
 }
 
-void ValidateAndUpdateMapVersionIfNecessary()
-{
-	//Older versions of mercs may require updating due to past bug fixes, new changes, etc.
-	if( gMapInformation.ubMapVersion < MINOR_MAP_VERSION )
-	{
-		SetRelativeStartAndEndPercentage( 0, 92, 93, L"Updating older map version..." );
-		RenderProgressBar( 0, 0 );
-		UpdateOldVersionMap();
-	}
-	else if( gMapInformation.ubMapVersion > MINOR_MAP_VERSION )
-	{
-		//we may have a problem...
-		AssertMsg( 0, "Map version is greater than the current version (old ja2.exe?)" );
-	}
-	AutoCalculateItemNoOverwriteStatus() ;
-}
 
 #ifdef JA2EDITOR
 #include "Exit Grids.h"
