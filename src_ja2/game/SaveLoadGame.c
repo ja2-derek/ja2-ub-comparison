@@ -1190,6 +1190,8 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 
   TrashAllSoldiers( );
 
+	HandleRemovingPowerGenFanSound();
+
 	//Empty the dialogue Queue cause someone could still have a quote in waiting
 	EmptyDialogueQueue( );
 
@@ -1405,7 +1407,7 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 
 		//Since there is no 
 		if( SaveGameHeader.sSectorX == -1 || SaveGameHeader.sSectorY == -1 || SaveGameHeader.bSectorZ == -1 )
-			gubLastLoadingScreenID = LOADINGSCREEN_HELI;
+			gubLastLoadingScreenID = LOADINGSCREEN_NOTHING;
 		else
 			gubLastLoadingScreenID = GetLoadScreenID( SaveGameHeader.sSectorX, SaveGameHeader.sSectorY, SaveGameHeader.bSectorZ );
 
@@ -2530,8 +2532,17 @@ Ja25  no meanwhile
 		gTacticalStatus.ubAttackBusyCount = 0;
 	}
 
+	//if we need to modify the map in any way, put the code in here
+	HandleSectorSpecificModificatioToMap( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE );
+
 	// fix squads
 	CheckSquadMovementGroups();
+
+	SetUpValidCampaignSectors( );
+
+	//Reinit the movement costs
+//	InitStrategicMovementCosts();
+
 
 	//The above function LightSetBaseLevel adjusts ALL the level node light values including the merc node,
 	//we must reset the values
