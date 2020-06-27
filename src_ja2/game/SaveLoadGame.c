@@ -1390,6 +1390,11 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 		{
 			//Load the sector
 			SetCurrentWorldSector( sLoadSectorX, sLoadSectorY, bLoadSectorZ );
+
+			if ( gfGlobalError )
+			{
+				return( FALSE );
+			}
 		}
 	}
 	else
