@@ -1,6 +1,7 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "TileEngine All.h"
 	#include "PreBattle Interface.h"
+	#include "CustomMapHeader.h"
 	#include "Ja25 Strategic Ai.h"
 #else
 	#include "worlddef.h"
@@ -61,6 +62,8 @@
 	#include "Buildings.h"
 #endif
 
+#include "MapUtility.h"
+
 #define  SET_MOVEMENTCOST( a, b, c, d )				( ( gubWorldMovementCosts[ a ][ b ][ c ] < d ) ? ( gubWorldMovementCosts[ a ][ b ][ c ] = d ) : 0 );
 #define  FORCE_SET_MOVEMENTCOST( a, b, c, d )	( gubWorldMovementCosts[ a ][ b ][ c ] = d )
 #define  SET_CURRMOVEMENTCOST( a, b )					SET_MOVEMENTCOST( usGridNo, a, 0, b ) 
@@ -92,6 +95,10 @@ UINT8						gubCurrentLevel;
 INT32						giCurrentTilesetID = 0;
 CHAR8						gzLastLoadedFile[ 260 ];
 
+INT32						giOldTilesetUsed;
+
+BOOLEAN					gfTriedToLoadOldMapVersion = FALSE;
+
 UINT32			gCurrentBackground = FIRSTTEXTURE;
 
 
@@ -121,7 +128,13 @@ INT8 IsHiddenTileMarkerThere( INT16 sGridNo );
 extern void SetInterfaceHeightLevel( );
 extern void GetRootName( INT8 *pDestStr, INT8 *pSrcStr );
 
-BOOLEAN EvaluateWorldEx(UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BOOLEAN fWriteSummaryFile);
+BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BOOLEAN fWriteSummaryFile, BOOLEAN fExtractRadarMap, HIMAGE hImage );
+
+extern BOOLEAN gfUseLoadScreenProgressBar;
+extern UINT16 gusLeftmostShaded;
+extern BOOLEAN STCISetPalette( PTR pSTCIPalette, HIMAGE hImage );
+
+
 
 void SaveMapLights( HWFILE hfile );
 void LoadMapLights( INT8 **hBuffer );
@@ -606,6 +619,9 @@ void BuildTileShadeTables(  )
 				{
           fForceRebuildForSlot = FALSE;
 
+          // ATE: Funckly stuff here now - 
+          // Force rebuild of shade table for this item for specialized tile files because
+          // of a data fuck up
       		GetRootName( cRootFile, TileSurfaceFilenames[ uiLoop ] );
 
           if ( strcmp( cRootFile, "grass2" ) == 0 )
