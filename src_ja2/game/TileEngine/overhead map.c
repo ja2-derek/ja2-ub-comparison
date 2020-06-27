@@ -404,7 +404,7 @@ void HandleOverheadMap( )
 	RestoreBackgroundRects( );
 
 	// RENDER!!!!!!!!
-	RenderOverheadMap( 0, (WORLD_COLS/2), 0, 0, SCREEN_BUFFER_WIDTH, 320, FALSE );
+	RenderOverheadMap( FRAME_BUFFER, 0, (WORLD_COLS/2), 0, 0, SCREEN_BUFFER_WIDTH, 320, FALSE );
 
 	HandleTalkingAutoFaces( );
 
@@ -682,7 +682,7 @@ INT16 GetModifiedOffsetLandHeight( INT32 sGridNo )
 }
 
 
-void RenderOverheadMap( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, BOOLEAN fFromMapUtility )
+void RenderOverheadMap( UINT32 uiRenderSurface, INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStartPointX_S, INT16 sStartPointY_S, INT16 sEndXS, INT16 sEndYS, BOOLEAN fFromMapUtility )
 {
 	INT8				bXOddFlag = 0;
 	INT16				sModifiedHeight = 0;
@@ -710,7 +710,7 @@ void RenderOverheadMap( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 	if ( gfOverheadMapDirty )
 	{
 		// Black out.......
-		ColorFillVideoSurfaceArea( FRAME_BUFFER, sStartPointX_S, sStartPointY_S, sEndXS,	sEndYS, 0 );
+		ColorFillVideoSurfaceArea( uiRenderSurface, sStartPointX_S, sStartPointY_S, sEndXS,	sEndYS, 0 );
 
 		InvalidateScreen( );
 		gfOverheadMapDirty = FALSE;
@@ -723,9 +723,9 @@ void RenderOverheadMap( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 
 
 		// Zero out area!
-		//ColorFillVideoSurfaceArea( FRAME_BUFFER, 0, 0, (INT16)(SCREEN_BUFFER_WIDTH), (INT16)(gsVIEWPORT_WINDOW_END_Y), Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
+		//ColorFillVideoSurfaceArea( uiRenderSurface, 0, 0, (INT16)(SCREEN_BUFFER_WIDTH), (INT16)(gsVIEWPORT_WINDOW_END_Y), Get16BPPColor( FROMRGB( 0, 0, 0 ) ) );
 
-		pDestBuf = LockVideoSurface( FRAME_BUFFER, &uiDestPitchBYTES );
+		pDestBuf = LockVideoSurface( uiRenderSurface, &uiDestPitchBYTES );
 
 		do
 		{
@@ -761,8 +761,8 @@ void RenderOverheadMap( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 						pTile->vo->pShadeCurrent= gSmTileSurf[ pTile->fType ].vo->pShades[pNode->ubShadeLevel];
 
 						// RENDER!
-						//BltVideoObjectFromIndex(  FRAME_BUFFER, SGR1, gSmallTileDatabase[ gpWorldLevelData[ usTileIndex ].pLandHead->usIndex ], sX, sY, VO_BLT_SRCTRANSPARENCY, NULL );
-						//BltVideoObjectFromIndex(  FRAME_BUFFER, SGR1, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL );
+						//BltVideoObjectFromIndex(  uiRenderSurface, SGR1, gSmallTileDatabase[ gpWorldLevelData[ usTileIndex ].pLandHead->usIndex ], sX, sY, VO_BLT_SRCTRANSPARENCY, NULL );
+						//BltVideoObjectFromIndex(  uiRenderSurface, SGR1, 0, sX, sY, VO_BLT_SRCTRANSPARENCY, NULL );
 						Blt8BPPDataTo16BPPBufferTransparent((UINT16*)pDestBuf, uiDestPitchBYTES, pTile->vo, sX, sY, pTile->usSubIndex );
 
 						pNode = pNode->pPrevNode;
@@ -1053,29 +1053,29 @@ void RenderOverheadMap( INT16 sStartPointX_M, INT16 sStartPointY_M, INT16 sStart
 		}
 
 
-		UnLockVideoSurface( FRAME_BUFFER );
+		UnLockVideoSurface( uiRenderSurface );
 
 		// OK, blacken out edges of smaller maps...
 		if ( gMapInformation.ubRestrictedScrollID != 0 )
 		{
 			CalculateRestrictedMapCoords( NORTH, &sX1, &sY1, &sX2, &sY2, sEndXS, sEndYS );
-			ColorFillVideoSurfaceArea( FRAME_BUFFER, sX1, sY1, sX2, sY2, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) ); 
+			ColorFillVideoSurfaceArea( uiRenderSurface, sX1, sY1, sX2, sY2, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) ); 
 
 			CalculateRestrictedMapCoords( WEST, &sX1, &sY1, &sX2, &sY2, sEndXS, sEndYS );
-			ColorFillVideoSurfaceArea( FRAME_BUFFER, sX1, sY1, sX2, sY2, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) ); 
+			ColorFillVideoSurfaceArea( uiRenderSurface, sX1, sY1, sX2, sY2, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) ); 
 
 			CalculateRestrictedMapCoords( SOUTH, &sX1, &sY1, &sX2, &sY2, sEndXS, sEndYS );
-			ColorFillVideoSurfaceArea( FRAME_BUFFER, sX1, sY1, sX2, sY2, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) ); 
+			ColorFillVideoSurfaceArea( uiRenderSurface, sX1, sY1, sX2, sY2, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) ); 
 
 			CalculateRestrictedMapCoords( EAST, &sX1, &sY1, &sX2, &sY2, sEndXS, sEndYS );
-			ColorFillVideoSurfaceArea( FRAME_BUFFER, sX1, sY1, sX2, sY2, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) ); 
+			ColorFillVideoSurfaceArea( uiRenderSurface, sX1, sY1, sX2, sY2, Get16BPPColor( FROMRGB( 0, 0, 0 ) ) ); 
 
 		}
 
 		if ( !fFromMapUtility )
 		{
 			// Render border!
-			BltVideoObjectFromIndex( FRAME_BUFFER, uiOVERMAP, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL );
+			BltVideoObjectFromIndex( uiRenderSurface, uiOVERMAP, 0, 0, 0, VO_BLT_SRCTRANSPARENCY, NULL );
 		}
 
     // Update the save buffer
