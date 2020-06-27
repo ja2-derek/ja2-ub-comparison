@@ -4218,6 +4218,7 @@ INT8 IsHiddenTileMarkerThere( INT16 sGridNo )
 	return( -1 );
 }
 
+#ifdef JA2EDITOR
 
 void ReloadTileset( UINT8 ubID )
 {
@@ -4226,6 +4227,10 @@ void ReloadTileset( UINT8 ubID )
 
 	// Set gloabal
 	giCurrentTilesetID = ubID;
+
+	gusLeftmostShaded = 162;
+	gfUseLoadScreenProgressBar = TRUE;
+	CreateProgressBar( 0, 152, 327, 490, 343 );
 
 	// Save Map
 	SaveWorld( TEMP_FILE_FOR_TILESET_CHANGE, FALSE  );
@@ -4242,8 +4247,16 @@ void ReloadTileset( UINT8 ubID )
 
 	FileDelete( aFilename );
 
-}
+	//added to fix problem when changing tilesets in the editor
+	sprintf( gubFilename, "%S", gzFilename );
 
+
+	gfUseLoadScreenProgressBar = FALSE;
+	RemoveProgressBar( 0 );
+	SetFontShadow(DEFAULT_SHADOW);
+
+}
+#endif
 
 void SaveMapLights( HWFILE hfile )
 {
