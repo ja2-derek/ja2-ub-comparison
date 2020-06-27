@@ -131,10 +131,21 @@ void InitNewOverheadDB( UINT8 ubTilesetID )
 
 		if ( hVObject == NULL )
 		{
-			// TRY loading from default directory
-			FilenameForBPP( gTilesets[ GENERIC_1 ].TileSurfaceFilenames[ uiLoop ], cFileBPP);
-			// Adjust for tileset position
-			sprintf( cAdjustedFile, "TILESETS\\0\\T\\%s", cFileBPP );	
+			//If the map uses tilesets from Ja2 ( 0 - 49 ), use t0 as the default
+			if( ubTilesetID < DEFAULT_JA25_TILESET )
+			{
+				// TRY loading from default directory
+				FilenameForBPP( gTilesets[ GENERIC_1 ].TileSurfaceFilenames[ uiLoop ], cFileBPP);
+				// Adjust for tileset position
+				sprintf( cAdjustedFile, "TILESETS\\0\\T\\%s", cFileBPP );	
+			}
+			else
+			{
+				// TRY loading from default directory
+				FilenameForBPP( gTilesets[ DEFAULT_JA25_TILESET ].TileSurfaceFilenames[ uiLoop ], cFileBPP);
+				// Adjust for tileset position
+				sprintf( cAdjustedFile, "TILESETS\\50\\T\\%s", cFileBPP );	
+			}
 
 			// LOAD ONE WE KNOW ABOUT!
 			VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
@@ -145,7 +156,7 @@ void InitNewOverheadDB( UINT8 ubTilesetID )
 			{
 				// LOAD ONE WE KNOW ABOUT!
 				VObjectDesc.fCreateFlags = VOBJECT_CREATE_FROMFILE;
-				strcpy( VObjectDesc.ImageFile, "TILESETS\\0\\T\\grass.sti");
+				strcpy( VObjectDesc.ImageFile, "TILESETS\\50\\T\\grass.sti");
 				hVObject = CreateVideoObject( &VObjectDesc );
 			}
 		}

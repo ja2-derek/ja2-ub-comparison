@@ -1507,7 +1507,7 @@ void RenderTiles(UINT32 uiFlags, INT32 iStartPointX_M, INT32 iStartPointY_M, INT
 											// ATE: If in the editor, change this to a little higher value
 											if (bItemCount == MAX_RENDERED_ITEMS)
 											{
-												//CONTINUE, DO NOT RENDER
+												//CONTINUE, DONOT RENDER
 												if(!fLinkedListDirection)
 													pNode = pNode->pPrevNode;
 												else
