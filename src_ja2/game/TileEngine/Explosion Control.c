@@ -2998,7 +2998,10 @@ void SetOffPanicBombs( UINT8 ubID, INT8 bPanicTrigger )
 	gTacticalStatus.sPanicTriggerGridNo[ bPanicTrigger ] = NOWHERE;
 	if ( (gTacticalStatus.sPanicTriggerGridNo[0] == NOWHERE) && 
 				(gTacticalStatus.sPanicTriggerGridNo[1] == NOWHERE) && 
-				(gTacticalStatus.sPanicTriggerGridNo[2] == NOWHERE) )
+				(gTacticalStatus.sPanicTriggerGridNo[2] == NOWHERE) && 
+				(gTacticalStatus.sPanicTriggerGridNo[3] == NOWHERE) && 
+				(gTacticalStatus.sPanicTriggerGridNo[4] == NOWHERE) && 
+				(gTacticalStatus.sPanicTriggerGridNo[5] == NOWHERE) )
 	{
 		gTacticalStatus.fPanicFlags &= ~(PANIC_TRIGGERS_HERE);
 	}
@@ -3016,6 +3019,18 @@ void SetOffPanicBombs( UINT8 ubID, INT8 bPanicTrigger )
 
 		case 2:
 			SetOffBombsByFrequency( ubID, PANIC_FREQUENCY_3 );
+			break;
+
+		case 3:
+			SetOffBombsByFrequency( ubID, PANIC_FREQUENCY_4 );
+			break;
+
+		case 4:
+			SetOffBombsByFrequency( ubID, PANIC_FREQUENCY_5 );
+			break;
+
+		case 5:
+			SetOffBombsByFrequency( ubID, PANIC_FREQUENCY_6 );
 			break;
 
 		default:

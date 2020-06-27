@@ -159,7 +159,7 @@ void FindPanicBombsAndTriggers( void )
 		if (gWorldBombs[ uiBombIndex ].fExists)
 		{
 			pObj = &(gWorldItems[ gWorldBombs[ uiBombIndex ].iItemIndex ].o);
-			if (pObj->bFrequency == PANIC_FREQUENCY || pObj->bFrequency == PANIC_FREQUENCY_2 || pObj->bFrequency == PANIC_FREQUENCY_3 )
+			if (pObj->bFrequency == PANIC_FREQUENCY || pObj->bFrequency == PANIC_FREQUENCY_2 || pObj->bFrequency == PANIC_FREQUENCY_3 || pObj->bFrequency == PANIC_FREQUENCY_4 || pObj->bFrequency == PANIC_FREQUENCY_5 || pObj->bFrequency == PANIC_FREQUENCY_6 )
 			{
 				if (pObj->usItem == SWITCH)
 				{
@@ -176,6 +176,18 @@ void FindPanicBombsAndTriggers( void )
 
 						case PANIC_FREQUENCY_3:
 							bPanicIndex = 2;
+							break;
+
+						case PANIC_FREQUENCY_4:
+							bPanicIndex = 3;
+							break;
+						
+						case PANIC_FREQUENCY_5:
+							bPanicIndex = 5;
+							break;
+						
+						case PANIC_FREQUENCY_6:
+							bPanicIndex = 5;
 							break;
 						
 						default:
