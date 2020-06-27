@@ -236,6 +236,7 @@ BOOLEAN InitializeWorld( )
 	gTileDatabaseSize = 0;
 	gSurfaceMemUsage = 0;
 	giCurrentTilesetID = -1;
+	giOldTilesetUsed = -1;
 
 	// DB Adds the _8 to the names if we're in 8 bit mode. 
 	//ProcessTilesetNamesForBPP();
@@ -356,6 +357,20 @@ BOOLEAN LoadTileSurfaces( char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID )
 	SetRelativeStartAndEndPercentage( 0, 1, 35, L"Tile Surfaces" );
   for (uiLoop = 0; uiLoop < NUMBEROFTILETYPES; uiLoop++)
 	{
+		// ATE: Set flag indicating to use another default
+		// tileset
+
+		// 1 ) If we are going from JA2 to JA25
+		if ( giOldTilesetUsed < DEFAULT_JA25_TILESET && ubTilesetID >= DEFAULT_JA25_TILESET )
+		{
+			gbDefaultSurfaceUsed[ uiLoop ] = FALSE;
+		}
+		// 2) From JA25 to JA2
+		if ( ( giOldTilesetUsed >= DEFAULT_JA25_TILESET || giOldTilesetUsed == -1 ) && ubTilesetID < DEFAULT_JA25_TILESET )
+		{
+			gbDefaultSurfaceUsed[ uiLoop ] = FALSE;
+		}
+
 
 		uiPercentage = (uiLoop * 100) / (NUMBEROFTILETYPES-1);
 		RenderProgressBar( 0, uiPercentage );
@@ -421,11 +436,24 @@ BOOLEAN LoadTileSurfaces( char ppTileSurfaceFilenames[][32], UINT8 ubTilesetID )
 					// ATE: If here, don't load default surface if already loaded...
 					if ( !gbDefaultSurfaceUsed[ uiLoop ] )
 					{
-						strcpy( TileSurfaceFilenames[uiLoop], gTilesets[ GENERIC_1 ].TileSurfaceFilenames[uiLoop] );//(char *)(ppTileSurfaceFilenames + (65 * uiLoop)) );
-						if (AddTileSurface( gTilesets[ GENERIC_1 ].TileSurfaceFilenames[uiLoop], uiLoop, GENERIC_1, FALSE ) == FALSE)
+						//If the map uses tilesets from Ja2 ( 0 - 49 ), use t0 as the default
+						if( ubTilesetID < DEFAULT_JA25_TILESET && uiLoop != SPECIALTILES )
 						{
-							DestroyTileSurfaces(  );
-							return( FALSE );
+							strcpy( TileSurfaceFilenames[uiLoop], gTilesets[ GENERIC_1 ].TileSurfaceFilenames[uiLoop] );//(char *)(ppTileSurfaceFilenames + (65 * uiLoop)) );
+							if (AddTileSurface( gTilesets[ GENERIC_1 ].TileSurfaceFilenames[uiLoop], uiLoop, GENERIC_1, FALSE ) == FALSE)
+							{
+								DestroyTileSurfaces(  );
+								return( FALSE );
+							}
+						}
+						else
+						{
+							strcpy( TileSurfaceFilenames[uiLoop], gTilesets[ DEFAULT_JA25_TILESET ].TileSurfaceFilenames[uiLoop] );//(char *)(ppTileSurfaceFilenames + (65 * uiLoop)) );
+							if (AddTileSurface( gTilesets[ DEFAULT_JA25_TILESET ].TileSurfaceFilenames[uiLoop], uiLoop, DEFAULT_JA25_TILESET, FALSE ) == FALSE)
+							{
+								DestroyTileSurfaces(  );
+								return( FALSE );
+							}
 						}
 					}
 					else
@@ -482,7 +510,7 @@ BOOLEAN AddTileSurface( char * cFilename, UINT32 ubType, UINT8 ubTilesetID, BOOL
 	gTileSurfaceArray[ ubType ] = TileSurf;
 
 	// OK, if we were not the default tileset, set value indicating that!
-	if ( ubTilesetID != GENERIC_1 )
+	if ( ubTilesetID != DEFAULT_JA25_TILESET && ubTilesetID != 0 )
 	{
 		gbDefaultSurfaceUsed[ ubType ] = FALSE;
 	}
@@ -528,6 +556,21 @@ void BuildTileShadeTables(  )
 	{
 		gfForceBuildShadeTables = FALSE;
 	}
+
+
+	// ATE: Set flag indicating to use another default
+	// tileset
+	// 1 ) If we are going from JA2 to JA25
+	if ( giOldTilesetUsed < DEFAULT_JA25_TILESET && giCurrentTilesetID >= DEFAULT_JA25_TILESET )
+	{
+		gfForceBuildShadeTables = TRUE;
+	}
+	// 2) From JA25 to JA2
+	if ( ( giOldTilesetUsed >= DEFAULT_JA25_TILESET || giOldTilesetUsed == -1 ) && giCurrentTilesetID < DEFAULT_JA25_TILESET )
+	{
+		gfForceBuildShadeTables = TRUE;
+	}
+
 	//now, determine if we are using specialized colors.
 	if( gpLightColors[0].peRed || gpLightColors[0].peGreen ||	gpLightColors[0].peBlue )
 	{ //we are, which basically means we force build the shadetables.  However, the one
@@ -3704,6 +3747,7 @@ void TrashMapTile(INT16 MapTile)
 
 BOOLEAN LoadMapTileset( INT32 iTilesetID )
 {
+	giOldTilesetUsed = giCurrentTilesetID;
 
 	if ( iTilesetID >= NUM_TILESETS )
 	{
