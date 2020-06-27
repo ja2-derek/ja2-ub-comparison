@@ -6885,6 +6885,13 @@ void RenderGridNoVisibleDebugInfo( INT16 sStartPointX_M, INT16 sStartPointY_M, I
 
 void ExamineZBufferRect( INT16 sLeft, INT16 sTop, INT16 sRight, INT16 sBottom)
 {
+	//if the current sector is H7
+	if( gWorldSectorX == 7 && gWorldSectorY == 8 && gbWorldSectorZ == 0 )
+	{
+		//get out
+		return;
+	}
+
 	CalcRenderParameters( sLeft, sTop, sRight, sBottom );
 
 	ExamineZBufferForHiddenTiles( gsStartPointX_M, gsStartPointY_M, gsStartPointX_S, gsStartPointY_S, gsEndXS, gsEndYS );
