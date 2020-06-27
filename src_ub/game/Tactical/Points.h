@@ -67,7 +67,10 @@
 #define AP_READY_PISTOL         1
 #define AP_READY_RIFLE          2
 #define AP_READY_SAW            0
-#define AP_READY_DUAL           3
+// JA2Gold: reduced dual AP cost from 3 to 1
+//#define AP_READY_DUAL           3
+#define AP_READY_DUAL           1
+
 
 #define AP_MIN_AIM_ATTACK       0       // minimum permitted extra aiming
 #define AP_MAX_AIM_ATTACK       4       // maximum permitted extra aiming
