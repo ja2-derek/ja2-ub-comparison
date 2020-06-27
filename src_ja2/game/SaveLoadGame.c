@@ -259,7 +259,10 @@ typedef struct
 	BOOLEAN	fShowMapScreenHelpText;							//If true, displays help in mapscreen
 
 	INT32		iSortStateForMapScreenList;
+/*
+JA25: no tixa
 	BOOLEAN	fFoundTixa;
+*/
 
 	UINT32	uiTimeOfLastSkyriderMonologue;
 	BOOLEAN fShowCambriaHospitalHighLight;
@@ -274,8 +277,8 @@ Ja25 no meanwhiles
 	BOOLEAN								gfMeanwhileTryingToStart;
 	BOOLEAN								gfInMeanwhile;
 */
-
 	BOOLEAN ubPlayerProgressSkyriderLastCommentedOn;
+
 
 	// list of dead guys for squads...in id values -> -1 means no one home 
 	INT16 sDeadMercs[ NUMBER_OF_SQUADS ][ NUMBER_OF_SOLDIERS_PER_SQUAD ];
@@ -598,6 +601,8 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 	SaveGameHeader.uiSavedGameVersion = guiSavedGameVersion;
 	wcscpy( SaveGameHeader.sSavedGameDesc, pGameDesc );
 	strcpy( SaveGameHeader.zGameVersionNumber, czVersionNumber );
+	wcscpy( SaveGameHeader.zVersionLabel, zVersionLabel );
+	
 
 	SaveGameHeader.uiFlags;
 
@@ -611,6 +616,8 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 
 	//Get the sector value to save.
 	GetBestPossibleSectorXYZValues( &SaveGameHeader.sSectorX, &SaveGameHeader.sSectorY, &SaveGameHeader.bSectorZ );
+
+	strcpy( SaveGameHeader.zCampaignName, GetCurrentCampaign( ) );
 
 /*
 
@@ -723,6 +730,21 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 
 
 
+	//Save the strategic information
+	if( !SaveStrategicInfoToSavedFile( hFile ) )
+	{
+		goto FAILED_TO_SAVE;
+	}
+
+
+
+	//save the underground information
+	if( !SaveUnderGroundSectorInfoToSaveGame( hFile ) )
+	{
+		goto FAILED_TO_SAVE;
+	}
+
+
 
 	// save the strategic events
 	if( !SaveStrategicEventsToSavedGame( hFile ) )
@@ -789,24 +811,6 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 	{
 		goto FAILED_TO_SAVE;
 	}
-
-
-
-	//Save the strategic information
-	if( !SaveStrategicInfoToSavedFile( hFile ) )
-	{
-		goto FAILED_TO_SAVE;
-	}
-
-
-
-
-	//save the underground information
-	if( !SaveUnderGroundSectorInfoToSaveGame( hFile ) )
-	{
-		goto FAILED_TO_SAVE;
-	}
-
 
 
 
@@ -928,11 +932,13 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 
 
 
+/*
+Ja25:	No town loyalty
 	if( !SaveStrategicTownLoyaltyToSaveGameFile( hFile ) )
 	{
 		goto FAILED_TO_SAVE;
 	}
-
+*/
 
 
 	if( !SaveVehicleInformationToSaveGameFile( hFile ) )
@@ -977,12 +983,13 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 	}
 
 
-
+/*
+Ja25:	no creatures
 	if( !SaveCreatureDirectives( hFile ) )
 	{
 		goto FAILED_TO_SAVE;
 	}
-
+*/
 
 	if( !SaveStrategicStatusToSaveGameFile( hFile ) )
 	{
@@ -1063,6 +1070,22 @@ Ja25:  No Strategic AI
 	{
 		goto FAILED_TO_SAVE;
 	}
+
+
+	//save Ja25 info
+	if( !SaveJa25SaveInfoToSaveGame( hFile ) )
+	{
+		goto FAILED_TO_SAVE;
+	}
+
+
+
+	//Save the tactical info
+	if( !SaveJa25TacticalInfoToSaveGame( hFile ) )
+	{
+		goto FAILED_TO_SAVE;
+	}
+
 
 	
 	//sss
@@ -1234,6 +1257,24 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 		return(FALSE);
 	}
 
+	// ATE: Check if we've saved a game in a different campaign
+	if( SaveGameHeader.uiSavedGameVersion >= 1016 )
+	{
+		// Check
+		if ( stricmp( SaveGameHeader.zCampaignName, GetCurrentCampaign( ) ) != 0 )
+		{
+			// Set campaign to this one!
+			if ( !SetCampaignString( SaveGameHeader.zCampaignName, TRUE ) )
+			{
+				// Error!
+				FileClose( hFile );
+				guiBrokenSaveGameVersion = SaveGameHeader.uiSavedGameVersion;
+				guiSaveGameVersion=0;
+				return(FALSE);
+			}
+		}
+	}
+
 	guiJA2EncryptionSet = CalcJA2EncryptionSet( &SaveGameHeader );
 
 	guiBrokenSaveGameVersion = SaveGameHeader.uiSavedGameVersion;
@@ -1295,6 +1336,36 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 
 	//Re-init the heli gridnos and time..
 	InitializeHeliGridnoAndTime( TRUE );
+
+
+	if ( guiSaveGameVersion > 1013 )
+	{
+		//Load the strategic Information
+		if( !LoadStrategicInfoFromSavedFile( hFile ) )
+		{
+			FileClose( hFile );
+			guiSaveGameVersion=0;
+			return( FALSE );
+		}
+
+		uiRelEndPerc += 1;
+		SetRelativeStartAndEndPercentage( 0, uiRelStartPerc, uiRelEndPerc, L"Strategic Information..." );
+		RenderProgressBar( 0, 100 );
+		uiRelStartPerc = uiRelEndPerc;
+
+	}
+
+	if ( guiSaveGameVersion > 1016 )
+	{
+		if( !LoadUnderGroundSectorInfoFromSavedGame( hFile ) )
+		{
+			FileClose( hFile );
+			guiSaveGameVersion=0;
+			return( FALSE );
+		}
+
+	}
+
 
 	//if the world was loaded when saved, reload it, otherwise dont
 	if( SaveGameHeader.fWorldLoaded || SaveGameHeader.uiSavedGameVersion < 50 )
@@ -1470,20 +1541,20 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 	}
 
 
-
-	uiRelEndPerc += 1;
-	SetRelativeStartAndEndPercentage( 0, uiRelStartPerc, uiRelEndPerc, L"Strategic Information..." );
-	RenderProgressBar( 0, 100 );
-	uiRelStartPerc = uiRelEndPerc;
-
-
-
-	//Load the strategic Information
-	if( !LoadStrategicInfoFromSavedFile( hFile ) )
+	if ( guiSaveGameVersion < 1014 )
 	{
-		FileClose( hFile );
-		guiSaveGameVersion=0;
-		return( FALSE );
+		//Load the strategic Information
+		if( !LoadStrategicInfoFromSavedFile( hFile ) )
+		{
+			FileClose( hFile );
+			guiSaveGameVersion=0;
+			return( FALSE );
+		}
+
+		uiRelEndPerc += 1;
+		SetRelativeStartAndEndPercentage( 0, uiRelStartPerc, uiRelEndPerc, L"Strategic Information..." );
+		RenderProgressBar( 0, 100 );
+		uiRelStartPerc = uiRelEndPerc;
 	}
 
 
@@ -1495,11 +1566,14 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 
 
 	//Load the underground information
-	if( !LoadUnderGroundSectorInfoFromSavedGame( hFile ) )
+	if ( guiSaveGameVersion < 1017 )
 	{
-		FileClose( hFile );
-		guiSaveGameVersion=0;
-		return( FALSE );
+		if( !LoadUnderGroundSectorInfoFromSavedGame( hFile ) )
+		{
+			FileClose( hFile );
+			guiSaveGameVersion=0;
+			return( FALSE );
+		}
 	}
 
 
@@ -1726,6 +1800,8 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 
 
 
+/*
+Ja25:	no town loyalty
 
 	uiRelEndPerc += 0;
 	SetRelativeStartAndEndPercentage( 0, uiRelStartPerc, uiRelEndPerc, L"Town Loyalty..." );
@@ -1744,8 +1820,7 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 			return(FALSE);
 		}
 	}
-
-
+*/
 
 
 
@@ -1868,6 +1943,8 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 
 
 
+/*
+Ja25:	no creatures
 	uiRelEndPerc += 1;
 	SetRelativeStartAndEndPercentage( 0, uiRelStartPerc, uiRelEndPerc, L"Creature Spreading..." );
 	RenderProgressBar( 0, 100 );
@@ -1885,6 +1962,7 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 			return(FALSE);
 		}
 	}
+*/
 
 
 
@@ -2156,6 +2234,27 @@ Ja25  no meanwhile
 	if( SaveGameHeader.uiSavedGameVersion < 85 )
 	{
 		HandleOldBobbyRMailOrders();
+	}
+
+
+	if( SaveGameHeader.uiSavedGameVersion >= 85 )
+	{
+		if ( !LoadJa25SaveInfoFromSavedGame( hFile ) )
+		{
+			FileClose( hFile );
+			guiSaveGameVersion=0;
+			return( FALSE );
+		}
+	}
+
+	if( SaveGameHeader.uiSavedGameVersion >= 1004 )
+	{
+		if ( !LoadJa25TacticalInfoFromSavedGame( hFile ) )
+		{
+			FileClose( hFile );
+			guiSaveGameVersion=0;
+			return( FALSE );
+		}
 	}
 
 
@@ -2772,6 +2871,15 @@ BOOLEAN LoadSoldierStructure( HWFILE hFile )
 				}
 			}
 
+			//Ja25:  ALL player mercs need to know when they are hired ( for display in mapscreen )
+			if( guiSaveGameVersion < 1009 )
+			{
+				if( Menptr[ cnt ].iStartContractTime == 0 )
+				{
+					Menptr[ cnt ].iStartContractTime = 1;
+				}
+			}
+
 #ifdef GERMAN
 			// Fix neutral flags
 			if ( guiSaveGameVersion < 94 )
@@ -2789,6 +2897,8 @@ BOOLEAN LoadSoldierStructure( HWFILE hFile )
 				Menptr[ cnt ].ubNextToPreviousAttackerID = NOBODY;
 			}
 
+			//if the soldier has the NON weapon version of the merc knofe or merc umbrella
+			ConvertMercKnifeAndUmbrellaToBeWeapons( &Menptr[ cnt ] );
 		}
 	}
 
@@ -3897,8 +4007,10 @@ BOOLEAN SaveGeneralInfo( HWFILE hFile )
 	sGeneralInfo.fShowMapScreenHelpText = fShowMapScreenHelpText;
 
 	sGeneralInfo.iSortStateForMapScreenList = giSortStateForMapScreenList;
+/*
+JA25: no tixa
 	sGeneralInfo.fFoundTixa = fFoundTixa;
-
+*/
 	sGeneralInfo.uiTimeOfLastSkyriderMonologue = guiTimeOfLastSkyriderMonologue;
 	sGeneralInfo.fSkyRiderSetUp = fSkyRiderSetUp;
 
@@ -3948,7 +4060,7 @@ Ja25 no meanwhiles
 	memcpy( &sGeneralInfo.fSamSiteFound, &fSamSiteFound, NUMBER_OF_SAMS * sizeof( BOOLEAN ) );
 
 //Ja25	No terrorists		sGeneralInfo.ubNumTerrorists = gubNumTerrorists;
-	sGeneralInfo.ubCambriaMedicalObjects = gubCambriaMedicalObjects;
+//Ja25  no cambria		sGeneralInfo.ubCambriaMedicalObjects = gubCambriaMedicalObjects;
 
 	sGeneralInfo.fDisableTacticalPanelButtons = gfDisableTacticalPanelButtons;
 
@@ -3969,7 +4081,7 @@ Ja25 no meanwhiles
 	sGeneralInfo.sMercArriveSectorX	 = gsMercArriveSectorX;
 	sGeneralInfo.sMercArriveSectorY	 = gsMercArriveSectorY;
 
-//	sGeneralInfo.fCreatureMeanwhileScenePlayed = gfCreatureMeanwhileScenePlayed;
+//ja25 no creatures		sGeneralInfo.fCreatureMeanwhileScenePlayed = gfCreatureMeanwhileScenePlayed;
 
 	//save the global player num
 	sGeneralInfo.ubPlayerNum = gbPlayerNum;
@@ -4154,8 +4266,10 @@ BOOLEAN LoadGeneralInfo( HWFILE hFile )
 
 
 	giSortStateForMapScreenList = sGeneralInfo.iSortStateForMapScreenList;
+/*
+JA25: no tixa
 	fFoundTixa = sGeneralInfo.fFoundTixa;
-
+*/
 	guiTimeOfLastSkyriderMonologue = sGeneralInfo.uiTimeOfLastSkyriderMonologue;
 	fSkyRiderSetUp = sGeneralInfo.fSkyRiderSetUp;
 
@@ -4204,7 +4318,7 @@ Ja25 no meanwhiles
 	memcpy( &fSamSiteFound, &sGeneralInfo.fSamSiteFound, NUMBER_OF_SAMS * sizeof( BOOLEAN ) );
 
 //Ja25	No terrorists		gubNumTerrorists = sGeneralInfo.ubNumTerrorists;
-	gubCambriaMedicalObjects = sGeneralInfo.ubCambriaMedicalObjects;
+//ja25 no cambria	gubCambriaMedicalObjects = sGeneralInfo.ubCambriaMedicalObjects;
 
 	gfDisableTacticalPanelButtons = sGeneralInfo.fDisableTacticalPanelButtons;
 
@@ -4231,7 +4345,7 @@ Ja25 no meanwhiles
 	gsMercArriveSectorX = sGeneralInfo.sMercArriveSectorX;
 	gsMercArriveSectorY = sGeneralInfo.sMercArriveSectorY;
 
-//	gfCreatureMeanwhileScenePlayed = sGeneralInfo.fCreatureMeanwhileScenePlayed;
+//ja25 no creatures	gfCreatureMeanwhileScenePlayed = sGeneralInfo.fCreatureMeanwhileScenePlayed;
 
 	//load the global player num
 	gbPlayerNum = sGeneralInfo.ubPlayerNum;
@@ -4831,4 +4945,22 @@ UINT32 CalcJA2EncryptionSet( SAVED_GAME_HEADER * pSaveGameHeader )
 	}
 
 	return( uiEncryptionSet );
+}
+
+void ConvertMercKnifeAndUmbrellaToBeWeapons( SOLDIERTYPE *pSoldier )
+{
+	INT32 iCnt;
+
+	for( iCnt=0; iCnt< NUM_INV_SLOTS; iCnt++)
+	{
+		if( pSoldier->inv[ iCnt ].usItem == SAM_GARVER_COMBAT_KNIFE_OLD )
+		{
+			pSoldier->inv[ iCnt ].usItem = SAM_GARVER_COMBAT_KNIFE;
+		}
+
+		if( pSoldier->inv[ iCnt ].usItem == MERC_UMBRELLA_OLD )
+		{
+			pSoldier->inv[ iCnt ].usItem = MERC_UMBRELLA;
+		}
+	}
 }

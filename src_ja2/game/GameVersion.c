@@ -11,12 +11,21 @@
 //
  
 
+	#ifdef GERMAN 
+
 	//RELEASE BUILD VERSION 
-	INT16		zVersionLabel[16]		= { L"Release v1.12" }; 
+	INT16		zVersionLabel[16]		= { L"Release v.1.01" }; 
+
+	#else
+
+		//RELEASE BUILD VERSION 
+		INT16		zVersionLabel[16]		= { L"Release v.1.02" }; 
+
+	#endif
 
 
 
-INT8		czVersionNumber[16]	= { "Build 04.12.02" };
+INT8		czVersionNumber[16]	= { "Build 02.12.01" };
 INT16		zTrackingNumber[16]	= { L"Z" };
 	
 
@@ -24,6 +33,10 @@ INT16		zTrackingNumber[16]	= { L"Z" };
 //		Keeps track of the saved game version.  Increment the saved game version whenever 
 //	you will invalidate the saved game file
 
-#define			SAVE_GAME_VERSION					99
+// Ja25	
+//#define			SAVE_GAME_VERSION					96
+
+//Increment Save Game Version to a High Value so we know the save is for the expansion pack
+#define			SAVE_GAME_VERSION					1017
 
 const	UINT32	guiSavedGameVersion = SAVE_GAME_VERSION;

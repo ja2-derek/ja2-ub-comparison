@@ -46,7 +46,11 @@ typedef struct
 
 	UINT32	uiRandom;
 
-	UINT8		ubFiller[110];
+	INT16		zVersionLabel[16];
+
+	INT8		zCampaignName[ 60 ];
+
+	UINT8		ubFiller[18];
 
 } SAVED_GAME_HEADER;
 
@@ -75,5 +79,7 @@ void GetBestPossibleSectorXYZValues( INT16 *psSectorX, INT16 *psSectorY, INT8 *p
 
 UINT32	guiLastSaveGameNum;
 INT8		GetNumberForAutoSave( BOOLEAN fLatestAutoSave );
+
+UINT32 CalcJA2EncryptionSet( SAVED_GAME_HEADER * pSaveGameHeader );
 
 #endif
