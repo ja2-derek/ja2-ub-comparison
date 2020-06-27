@@ -86,6 +86,10 @@
 	extern UINT16 gzErrorCatchString[256];
 #endif
 
+#ifdef JA2EDITOR
+extern	UINT16 gzFilename[31];
+#endif
+
 // TEMP
 BOOLEAN					gfForceLoadPlayers = FALSE;
 CHAR8						gzForceLoadFile[100 ];
@@ -1684,7 +1688,13 @@ BOOLEAN SaveWorld( UINT8	*puiFilename, BOOLEAN fDoRadarMap )
 	UINT8			ubCombine;
 	UINT8			bCounts[ WORLD_MAX ][8];
 
-	sprintf( aFilename, "MAPS\\%s", puiFilename );
+
+	STRING512 zOriginalDir;
+
+	GetFileManCurrentDirectory( zOriginalDir );
+
+
+	sprintf( aFilename, "%s\\%s", GetMapsDirectory(), puiFilename );
 
 	// Open file
 	hfile = FileOpen( aFilename, FILE_ACCESS_WRITE | FILE_CREATE_ALWAYS, FALSE );
@@ -2319,7 +2329,7 @@ BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, B
 		}
 	}
 	strcat( szFilename, ".dat" );
-	sprintf( szDirFilename, "MAPS\\%s", szFilename );
+	sprintf( szDirFilename, "%s\\%s", GetMapsDirectory(), szFilename );
 
 	if( gfMajorUpdate )
 	{
@@ -4243,7 +4253,7 @@ void ReloadTileset( UINT8 ubID )
 	LoadWorld( TEMP_FILE_FOR_TILESET_CHANGE, FALSE, TRUE );
 
 	// Delete file
-	sprintf( aFilename, "MAPS\\%s", TEMP_FILE_FOR_TILESET_CHANGE );
+	sprintf( aFilename, "%s\\%s", GetMapsDirectory(), TEMP_FILE_FOR_TILESET_CHANGE );
 
 	FileDelete( aFilename );
 
