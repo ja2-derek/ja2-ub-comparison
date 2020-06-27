@@ -111,12 +111,14 @@
 
 
 void GetBestPossibleSectorXYZValues( INT16 *psSectorX, INT16 *psSectorY, INT8 *pbSectorZ );
+void ConvertMercKnifeAndUmbrellaToBeWeapons( SOLDIERTYPE *pSoldier );
+
 extern void NextLoopCheckForEnoughFreeHardDriveSpace();
 extern void UpdatePersistantGroupsFromOldSave( UINT32 uiSavedGameVersion );
 extern void TrashAllSoldiers( );
 extern void ResetJA2ClockGlobalTimers( void );
 
-extern BeginLoadScreen();
+
 extern EndLoadScreen();
 
 //Global variable used
