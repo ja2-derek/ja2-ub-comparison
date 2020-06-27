@@ -51,6 +51,284 @@ ITEM_SORT_ENTRY DealerItemSortInfo[ ] =
 //		The second is the amount of the items the dealer will try to keep in his inventory
 
 
+
+
+DEALER_POSSIBLE_INV gRaulInventory[] = 
+{
+	//Rare guns/ammo that Tony will buy although he won't ever sell them
+	{	ROCKET_RIFLE,					0 },
+	{	AUTO_ROCKET_RIFLE,		0 },
+	{ AUTOMAG_III,					0 },
+	{ HAND_CANNON,					0 },
+	{ CLIP_CANNON_BALL,			0 },
+	{ BARRETT,							1 },
+
+
+	//Weapons
+	{ GLOCK_17,							1 },		/* Glock 17        */	
+	{ GLOCK_18,							1 },		/* Glock 18        */	
+	{ BERETTA_92F,					1 },		/* Beretta 92F     */	
+	{ BERETTA_93R,					1 },		/* Beretta 93R     */	
+	{ SW38,									1 },		/* .38 S&W Special */	
+	{ BARRACUDA,						1 },		/* .357 Barracuda  */	
+	{ DESERTEAGLE,					1 },		/* .357 DesertEagle*/ 
+	{ M1911,								1 },		/* .45 M1911			 */ 
+	{ MP5K,									1 },		/* H&K MP5K      	 */	
+	{ MAC10,								1 },		/* .45 MAC-10	     */
+
+	{ THOMPSON,							1 },		/* Thompson M1A1   */	
+	{ COMMANDO,							1 },		/* Colt Commando   */	
+	{ MP53,									1 },		/* H&K MP53		 		 */	
+	{ AKSU74,								1 },		/* AKSU-74         */ 
+	{ TYPE85,								1 },		/* Type-85         */ 
+	{ SKS,									1 },		/* SKS             */ 
+	{ DRAGUNOV,							1 },		/* Dragunov        */ 
+	{ M24,									1 },		/* M24             */ 
+	{ AUG,									1 },		/* Steyr AUG       */
+
+	{ G41,									1 },		/* H&K G41         */ 
+	{ MINI14,								1 },		/* Ruger Mini-14   */ 
+	{ C7,										1 },		/* C-7             */ 
+	{ FAMAS,								1 },		/* FA-MAS          */ 
+	{ AK74,									1 },		/* AK-74           */ 
+	{ AKM,									1 },		/* AKM             */ 
+	{ M14,									1 },		/* M-14            */ 
+	{ G3A3,									1 },		/* H&K G3A3        */ 
+	{ FNFAL,								1 },		/* FN-FAL          */
+
+	{ MINIMI,								1 },
+	{ RPK74,								1 },
+	{ HK21E,								1 },
+
+	{ M870,									1 },		/* Remington M870  */	
+	{ SPAS15,								1 },		/* SPAS-15         */ 
+
+	{ GLAUNCHER,						1 },		/* grenade launcher*/
+	{ UNDER_GLAUNCHER,			1 },		/* underslung g.l. */
+	{ ROCKET_LAUNCHER,			1 },		/* rocket Launcher */
+	{ MORTAR,								1 },
+
+	// SAP guns
+	{ G11,									1 },
+	{ CAWS,									1 },
+	{ P90,									1 },
+
+	{ DART_GUN,							1 },
+
+	{ CALICO_960,						1 },
+	{ PSG1,									1 },
+	{ L85,									1 },
+	{ TAR21,								1 },
+	{ VAL_SILENT,						0 },
+	{ MICRO_UZI,						3 },
+	{ CALICO_950,						1 },
+	{ CALICO_900,						1 },
+	{ HARTFORD_6_SHOOTER,		0 },
+
+	//Ammo
+	{ CLIP9_15,							8 },
+	{ CLIP9_30,							6 },
+	{ CLIP9_15_AP,					3 },		/* CLIP9_15_AP */			
+	{ CLIP9_30_AP,				  3 },		/* CLIP9_30_AP */	
+	{ CLIP9_15_HP,				  3 },		/* CLIP9_15_HP */	
+	{ CLIP9_30_HP,				  3 },		/* CLIP9_30_HP */	
+
+	{ CLIP38_6,							10},		/* CLIP38_6 */
+	{ CLIP38_6_AP,				  5 },		/* CLIP38_6_AP */
+	{ CLIP38_6_HP,				  5 },		/* CLIP38_6_HP */
+
+	{ CLIP45_7,							6 },		/* CLIP45_7 */				// 70
+
+	{ CLIP45_30,					  8 },		/* CLIP45_30 */
+	{ CLIP45_7_AP,					3 },		/* CLIP45_7_AP */		
+	{ CLIP45_30_AP,					3 },		/* CLIP45_30_AP */	
+	{ CLIP45_7_HP,					3 },		/* CLIP45_7_HP */		
+	{ CLIP45_30_HP,					3 },		/* CLIP45_30_HP */	
+
+	{ CLIP357_6,					  6 },		/* CLIP357_6 */			
+	{ CLIP357_9,					  5 },		/* CLIP357_9 */			
+	{ CLIP357_6_AP,				  3 },		/* CLIP357_6_AP */	
+	{ CLIP357_9_AP,					3 },		/* CLIP357_9_AP */	
+	{ CLIP357_6_HP,					3 },		/* CLIP357_6_HP */			//80 
+	{ CLIP357_9_HP,					3 },		/* CLIP357_9_HP */	
+
+	{ CLIP545_30_AP,				6 },		/* CLIP545_30_AP */	
+	{ CLIP545_30_HP,				3 },		/* CLIP545_30_HP */	
+
+	{ CLIP556_30_AP,				8 },		/* CLIP556_30_AP */	
+	{ CLIP556_30_HP,				4 },		/* CLIP556_30_HP */	
+
+	{ CLIP762W_10_AP,				6 },		/* CLIP762W_10_AP */
+	{ CLIP762W_30_AP,				5 },		/* CLIP762W_30_AP */
+	{ CLIP762W_10_HP,				3 },		/* CLIP762W_10_HP */
+	{ CLIP762W_30_HP,				3 },		/* CLIP762W_30_HP */
+
+	{ CLIP762N_5_AP,				8 },		/* CLIP762N_5_AP */			//90
+	{ CLIP762N_20_AP,				5 },		/* CLIP762N_20_AP */
+	{ CLIP762N_5_HP,				3 },		/* CLIP762N_5_HP */	
+	{ CLIP762N_20_HP,				3 },		/* CLIP762N_20_HP */	
+
+	{ CLIP47_50_SAP,				6 },		/* CLIP47_50_SAP */		
+
+	{ CLIP57_50_AP,					6 },		/* CLIP57_50_AP */		
+	{ CLIP57_50_HP,					6 },		/* CLIP57_50_HP */		
+
+	{ CLIP12G_7,						9 },		/* CLIP12G_7 */				
+	{ CLIP12G_7_BUCKSHOT,   9 },		/* CLIP12G_7_BUCKSHOT */
+
+	{ CLIPCAWS_10_SAP,			5 },		/* CLIPCAWS_10_SAP */			
+	{ CLIPCAWS_10_FLECH,		3 },		/* CLIPCAWS_10_FLECH */			//100
+
+//	{ CLIPROCKET_AP,				3 },
+//	{ CLIPROCKET_HE,				1 },
+//	{ CLIPROCKET_HEAT,			1 },
+
+	{ CLIPDART_SLEEP,				3	},
+
+
+	{ CLIP50_11_SAP,				9	},
+
+	{ CLIP9_50,							3	},
+	{ CLIP9_50_AP,					4	},
+	{ CLIP9_50_HP,					2	},
+
+	{ CLIP9_20,							6	},
+	
+//	{ CLIPFLAME,						5	},
+
+	// "launchables" (New! From McCain!) - these are basically ammo
+	{ GL_HE_GRENADE,				2 },
+	{ GL_TEARGAS_GRENADE,		2 },
+	{ GL_STUN_GRENADE,			2 },
+	{ GL_SMOKE_GRENADE,			2 },
+	{	MORTAR_SHELL,					1 },
+	{ GL_FLARE,							3 },
+
+	// knives
+	{	SAM_GARVER_COMBAT_KNIFE,0 },
+	{	COMBAT_KNIFE,					3 },
+	{	THROWING_KNIFE,				6 },
+	{	BRASS_KNUCKLES,				1 },
+	{	MACHETE,							1 },
+
+	// attachments
+	{ SILENCER,							3 },
+	{ SNIPERSCOPE,					3 },
+	{ LASERSCOPE,						1 },
+	{ BIPOD,								3 },
+	{ DUCKBILL,							2 },
+
+	// grenades
+	{ STUN_GRENADE,					5 },
+	{ TEARGAS_GRENADE,			5 },
+	{ MUSTARD_GRENADE,			5 },
+	{ MINI_GRENADE,					5 },
+	{ HAND_GRENADE,					5 },
+	{ SMOKE_GRENADE,				5 },
+
+	//HE WILL BUUY ARMOUR
+	{ STEEL_HELMET,							0	},
+	{ FLAK_JACKET,							0	},
+	{ KEVLAR_VEST,							0	},
+	{ KEVLAR_LEGGINGS,					0 },
+	{ KEVLAR_HELMET,						0	},
+	{ KEVLAR2_VEST,							0 },
+	{	SPECTRA_VEST,							0 },
+	{	SPECTRA_LEGGINGS,					0 },
+	{	SPECTRA_HELMET,						0 },
+
+	{ LAST_DEALER_ITEM,	NO_DEALER_ITEM },		//Last One
+};
+
+
+
+//
+// Betty		( All purpose convenience store )
+//
+DEALER_POSSIBLE_INV gBettyInventory[] = 
+{
+	//If tex is in the game
+	{ TEX_MOVIE_ATTACK_CLYDESDALES,		0 },
+	{ TEX_MOVIE_WILD_EAST,						0 },
+	{ TEX_MOVIE_HAVE_HONDA,						0 },
+
+
+	// things that she WILL be able to sell, but not until after the BLOOD CAT  quest
+	{ FIRSTAIDKIT,			5 },
+	{ MEDICKIT,					3 },
+	{ COMPOUND18,				1 },
+	{ CERAMIC_PLATES,		1 },
+	{ LAME_BOY,					1 },
+
+	//for the laptop quest
+	{ LAPTOP_TRANSMITTER, 0 },
+
+	{ PORNOS,						1 },
+
+
+	{	COMBAT_KNIFE,			2 },
+	{ THROWING_KNIFE,		3 },
+	{	MACHETE,					1 },
+
+	{ FLAK_JACKET,			2	},
+	{ STEEL_HELMET,			3 },
+	{ LEATHER_JACKET,		1 },
+	{ SUNGOGGLES,				3 },
+	{	GASMASK,					1 },
+	{ NIGHTGOGGLES,			3 },
+	{ EXTENDEDEAR,			2 },
+
+	{	CAMOUFLAGEKIT,		2 },
+
+//	{ LASERSCOPE,								3 },
+
+	{ CANTEEN,					5 },
+	{ CROWBAR,					1 },
+	{ JAR,							3 },
+
+
+//	{	METALDETECTOR,						2 },
+	{	WIRECUTTERS,			1 },
+
+	{	DUCT_TAPE,				1 },
+	{ LOCKSMITHKIT,			4 },
+	{ TOOLKIT,					3 },
+
+//	{ SILVER_PLATTER,		1 },
+	{ WALKMAN,					1 },
+	{ PORTABLETV,				1 },
+	{ FUMBLE_PAK,				1 },
+	{ GOLDWATCH,				1 },
+	{ GOLFCLUBS,				1 },
+	{ QUICK_GLUE,				1 },
+	{ COPPER_WIRE,			2 },
+	{ BATTERIES,				3 },
+
+	{	BREAK_LIGHT,			5 },		// flares
+
+	{ TSHIRT,						2 },
+	{ CIGARS,						3 },
+
+//	{	XRAY_BULB,				1 },
+
+	{	CHEWING_GUM,				1 },
+	{	BEER,								2 },
+	{	WINE,								2 },
+	{	ALCOHOL,								2 },
+	{	CIGARS,							1 },
+
+	{ MERC_WRISTWATCH,		0 },
+	{ CHE_GUEVARA_CANTEEN,		0 },
+	{	SAM_GARVER_COMBAT_KNIFE,0 },
+	{	MERC_UMBRELLA,			0 },
+	
+	{ LAST_DEALER_ITEM,	NO_DEALER_ITEM },		//Last One
+};
+
+
+
+
+#ifdef USE_OLD_DEALERS
 //
 // Tony ( Weapons only )
 //
@@ -628,7 +906,7 @@ DEALER_POSSIBLE_INV gFredoInventory[] =
 	{ LAST_DEALER_ITEM,	NO_DEALER_ITEM },		//Last One
 };
 
-
+#endif //USE_OLD_DEALERS
 
 // prototypes
 
