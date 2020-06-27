@@ -3146,12 +3146,18 @@ BOOLEAN LoadFilesFromSavedGame( STR pSrcFileName, HWFILE hFile )
 
 	//if there is nothing in the file, return;
 	if( uiFileSize == 0 )
+	{
+		FileClose( hSrcFile );
 		return( TRUE );
+	}
 
 	//Allocate a buffer to read the data into
 	pData = MemAlloc( uiFileSize );
 	if( pData == NULL )
+	{
+		FileClose( hSrcFile );
 		return( FALSE );
+	}
 
 
 	// Read into the buffer
@@ -3172,6 +3178,7 @@ BOOLEAN LoadFilesFromSavedGame( STR pSrcFileName, HWFILE hFile )
 	FileWrite( hSrcFile, pData, uiFileSize, &uiNumBytesWritten );
 	if( uiNumBytesWritten != uiFileSize )
 	{
+		FileClose( hSrcFile );
 		DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("FAILED to Write to the %s File", pSrcFileName ) );
 		//Free the buffer
 		MemFree( pData );
