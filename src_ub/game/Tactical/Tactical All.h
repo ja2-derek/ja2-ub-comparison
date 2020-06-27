@@ -219,6 +219,6 @@
 #include "AimMembers.h"
 #include "BobbyRMailOrder.h"
 #include "end game.h"
-
+#include "DisplayCover.h"
 
 #endif
