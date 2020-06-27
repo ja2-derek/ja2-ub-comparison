@@ -560,6 +560,9 @@ BOOLEAN SaveGame( UINT8 ubSaveGameID, STR16 pGameDesc )
 	//Create the name of the file
 	CreateSavedGameFileNameFromNumber( ubSaveGameID, zSaveGameName );
 
+	//If there attributes on the file, clear them
+	FileClearAttributes( zSaveGameName );
+
 	//if the file already exists, delete it
 	if( FileExists( zSaveGameName ) )
 	{
@@ -1237,6 +1240,9 @@ BOOLEAN LoadSavedGame( UINT8 ubSavedGameID )
 
 	//Create the name of the file
 	CreateSavedGameFileNameFromNumber( ubSavedGameID, zSaveGameName );
+
+	//If there attributes on the file, clear them
+	FileClearAttributes( zSaveGameName );
 
 	// open the save game file
 	hFile = FileOpen( zSaveGameName, FILE_ACCESS_READ | FILE_OPEN_EXISTING, FALSE );
