@@ -135,7 +135,7 @@ BOOLEAN LoadRadarScreenBitmap( CHAR8 *aFilename, INT16 sSectorX, INT16 sSectorY,
 			}
 		}
 
-	 {
+	 
 		 // Remove extension
 		 for ( cnt = strlen( zFilename )-1; cnt >=0; cnt-- )
 		 {
@@ -181,7 +181,7 @@ BOOLEAN LoadRadarScreenBitmap( CHAR8 *aFilename, INT16 sSectorX, INT16 sSectorY,
 		 		hVObject->pShades[ 0 ]	= Create16BPPPaletteShaded( hVObject->pPaletteEntry, 255, 255, 255, FALSE );
 		 		hVObject->pShades[ 1 ]	= Create16BPPPaletteShaded( hVObject->pPaletteEntry, 100, 100, 100, FALSE );
 		 }
-	 }
+	 
 
 	 // Dirty interface
 	 fInterfacePanelDirty = TRUE;
