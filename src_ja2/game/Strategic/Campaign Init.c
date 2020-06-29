@@ -48,6 +48,7 @@ UNDERGROUND_SECTORINFO* NewUndergroundNode( UINT8 ubSectorX, UINT8 ubSectorY, UI
 // setup which know facilities are in which cities
 void InitKnowFacilitiesFlags( )
 {
+/*
 	SECTORINFO *pSector;
 
 	// Cambria hospital
@@ -80,12 +81,14 @@ void InitKnowFacilitiesFlags( )
 	pSector = &SectorInfo[SEC_O4];
 	pSector->uiFacilitiesFlags |= SFCF_AIRPORT;
 
+*/
 	return;
 }
 
 
 void InitMiningLocations()
 {
+/*
 	SECTORINFO *pSector;
 	//Set up mining sites
 	
@@ -113,6 +116,8 @@ void InitMiningLocations()
 	pSector = &SectorInfo[SEC_H3];
 	pSector->uiFlags |= SF_MINING_SITE;
 //	pSector->ubIncomeValue = 100;
+
+*/
 }
 
 //Mobile groups are handled separately from sectors, because they are on the move.  
@@ -181,10 +186,14 @@ void TrashUndergroundSectorInfo()
 //changes to the maps, require changes accordingly.
 void BuildUndergroundSectorInfoList()
 {
+	TrashUndergroundSectorInfo();
+
+/*
+Ja25:  These basement levels are not in the exp.
+
 	UNDERGROUND_SECTORINFO *curr;
 	SECTORINFO			   *pSector = NULL;
 
-	TrashUndergroundSectorInfo();
 
 	//********************
 	//* BASEMENT LEVEL 1 *
@@ -336,6 +345,7 @@ void BuildUndergroundSectorInfoList()
 	//G4_B3
 	curr = NewUndergroundNode( 4, 7, 3 );
 	curr->ubAdjacentSectors |= SOUTH_ADJACENT_SECTOR;
+*/
 }
 
 //This is the function that is called only once, when the player begins a new game.  This will calculate
