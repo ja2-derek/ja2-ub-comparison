@@ -219,7 +219,11 @@ Ja25: No bobby ray
 			HandleNPCSystemEvent( pEvent->uiParam );
 			break;
 		case EVENT_SECOND_AIRPORT_ATTENDANT_ARRIVED:
+			Assert( 0 );
+/*
+Ja25 no airport
 			AddSecondAirportAttendant();
+*/
 			break;
 		case EVENT_HELICOPTER_HOVER_TOO_LONG:
 			HandleHeliHoverLong( );

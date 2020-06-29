@@ -1172,6 +1172,9 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement( SOLDIERTYPE *pSoldi
 	/// which screen are we in?
 	if ( (guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )
 	{
+		MercDepartEquipmentBoxCallBack( MSG_BOX_RETURN_OK );
+/*
+Ja25: Dont need to prompt user for location to drop equipment.  Just drop it in the current sector
 		if( fInSector == FALSE )
 		{			
 			// set up for mapscreen
@@ -1181,10 +1184,13 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement( SOLDIERTYPE *pSoldi
 		{
 			DoMapMessageBox( MSG_BOX_BASIC_STYLE, sString, MAP_SCREEN, ( UINT16 )( ( fAddRehireButton ? MSG_BOX_FLAG_OKCONTRACT : MSG_BOX_FLAG_OK  ) ), MercDepartEquipmentBoxCallBack );
 		}
-
+*/
 	}
 	else
 	{
+		MercDepartEquipmentBoxCallBack( MSG_BOX_RETURN_OK );
+/*
+Ja25: Dont need to prompt user for location to drop equipment.  Just drop it in the current sector
 		if( fInSector == FALSE )
 		{
 			// set up for all otherscreens
@@ -1194,6 +1200,7 @@ void NotifyPlayerOfMercDepartureAndPromptEquipmentPlacement( SOLDIERTYPE *pSoldi
 		{
 			DoMessageBox(  MSG_BOX_BASIC_STYLE, sString,  guiCurrentScreen, ( UINT16 ) ( MSG_BOX_FLAG_USE_CENTERING_RECT | ( fAddRehireButton ? MSG_BOX_FLAG_OKCONTRACT : MSG_BOX_FLAG_OK  ) ) ,  MercDepartEquipmentBoxCallBack,  &pCenteringRect );
 		}
+*/
 	}
 	
 	if( pSoldier->fSignedAnotherContract == TRUE )
