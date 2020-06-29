@@ -3678,7 +3678,7 @@ ja25 no queen
 */
 				Assert( 0 );
 /*
-
+Ja25:	No Krott
 				if ( gMercProfiles[ SERGEANT ].bMercStatus != MERC_IS_DEAD )
 				{
 					// give loyalty bonus to Alma
