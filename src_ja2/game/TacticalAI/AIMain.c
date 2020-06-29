@@ -99,7 +99,6 @@ void DebugAI( STR szOutput )
 
 BOOLEAN InitAI( void )
 {
-	FILE *		DebugFile;
 
 #ifdef _DEBUG
 	if (gfDisplayCoverValues)

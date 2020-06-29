@@ -796,7 +796,7 @@ Ja25:  No bobbyr shipments, therefore no damage to it
 void HandleEarlyMorningEvents( void )
 {
 	UINT32					cnt;
-	UINT32					uiAmount;
+//	UINT32					uiAmount;
 
 	// loop through all *NPCs* and reset "default response used recently" flags
 	for (cnt = FIRST_RPC; cnt < NUM_PROFILES; cnt++)

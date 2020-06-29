@@ -877,7 +877,6 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 					}
 				}
 
-				// JA2Gold
 				if( gGameOptions.ubDifficultyLevel == DIF_LEVEL_EASY )
 				{
 					if (fSkipLocation)
