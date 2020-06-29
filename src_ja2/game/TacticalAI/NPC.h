@@ -191,7 +191,7 @@ BOOLEAN SaveBackupNPCInfoToSaveGameFile( HWFILE hFile );
 BOOLEAN LoadBackupNPCInfoFromSavedGameFile( HWFILE hFile, UINT32 uiSaveGameVersion );
 
 
-void UpdateDarrelScriptToGoTo( SOLDIERTYPE * pSoldier );
+// Ja25 NO darrel  void UpdateDarrelScriptToGoTo( SOLDIERTYPE * pSoldier );
 
 #define WALTER_BRIBE_AMOUNT 20000
 
