@@ -120,6 +120,9 @@ void InitMiningLocations()
 */
 }
 
+
+/*
+Ja25 Not needed ( i dont think it is used anyway )
 //Mobile groups are handled separately from sectors, because they are on the move.  
 void GeneratePatrolGroups()
 {
@@ -166,6 +169,7 @@ void GeneratePatrolGroups()
 	AddWaypointToPGroup( pGroup, 10, 14 ); //N10
 	pGroup->ubTransportationMask = CAR;
 }
+*/
 
 void TrashUndergroundSectorInfo()
 {
@@ -353,10 +357,19 @@ Ja25:  These basement levels are not in the exp.
 //This is also highly effected by the game's difficulty setting.
 void InitNewCampaign()
 {
+	INT32 iSectorID;
+
 	//First clear all the sector information of all enemy existance.  Conveniently, the
 	//ubGroupType is also cleared, which is perceived to be an empty group.
 	memset( &SectorInfo, 0, sizeof( SECTORINFO ) * 256 );
-	InitStrategicMovementCosts();
+
+	//Initialize the sectorinfo structure so all sectors don't point to a garrisonID.
+	for( iSectorID = 0; iSectorID <= 255; iSectorID++ )
+	{
+		SectorInfo[ iSectorID ].ubGarrisonID = NO_GARRISON;
+	}
+
+//	InitStrategicMovementCosts();
 	RemoveAllGroups();
 
 	InitMiningLocations();

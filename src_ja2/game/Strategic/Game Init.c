@@ -414,6 +414,9 @@ Ja25 MERC is available from the begining
 		SetPendingNewScreen(LAPTOP_SCREEN);
 		gubScreenCount = 1;
 
+		//init the bloodcats
+		InitJa25StrategicAiBloodcats( );
+
 		//Set the fact the game is in progress
 		gTacticalStatus.fHasAGameBeenStarted = TRUE;
 

@@ -1921,7 +1921,43 @@ Ja25: No meanwhiles
 				//decrement the value, otherwise the queen will continue searching to infinity.
 				gubNumAwareBattles--;
 			}
+
+			//if a battle could occur
+			if( PlayerMercsInSector( (UINT8)gWorldSectorX, (UINT8)gWorldSectorY, gbWorldSectorZ ) != 0 )
+			{
+				fBattleGoingToStart = TRUE;
+			}
 		}
+	}
+
+	//if the enemy group is at its final destination
+	if( !pGroup->fPlayer && GroupAtFinalDestination( pGroup ) )
+	{
+		// Check to see if this is an AI sector
+		INT16 sJa25SaiSectorValue = GetJA25SectorID( pGroup->ubSectorX, pGroup->ubSectorY, pGroup->ubSectorZ );
+
+		if ( sJa25SaiSectorValue != -1 )
+		{
+			// If we were told to attack, reset flag
+			if ( gJa25AiSectorStruct[ sJa25SaiSectorValue ].fEnemyEnrouteToAttack )
+			{
+				gJa25AiSectorStruct[ sJa25SaiSectorValue ].fEnemyEnrouteToAttack = FALSE;
+			}
+		}
+
+
+		//add the enemies to the sector
+/*
+		SectorInfo[ SECTOR( pGroup->ubSectorX, pGroup->ubSectorY ) ].ubNumAdmins += pGroup->pEnemyGroup->ubNumAdmins;
+		SectorInfo[ SECTOR( pGroup->ubSectorX, pGroup->ubSectorY ) ].ubNumTroops += pGroup->pEnemyGroup->ubNumTroops;
+		SectorInfo[ SECTOR( pGroup->ubSectorX, pGroup->ubSectorY ) ].ubNumElites += pGroup->pEnemyGroup->ubNumElites;
+		if( fBattleGoingToStart )
+		{
+			SectorInfo[ SECTOR( pGroup->ubSectorX, pGroup->ubSectorY ) ].ubAdminsInBattle = pGroup->pEnemyGroup->ubNumAdmins;
+			SectorInfo[ SECTOR( pGroup->ubSectorX, pGroup->ubSectorY ) ].ubTroopsInBattle = pGroup->pEnemyGroup->ubNumTroops;
+			SectorInfo[ SECTOR( pGroup->ubSectorX, pGroup->ubSectorY ) ].ubElitesInBattle = pGroup->pEnemyGroup->ubNumElites;
+		}
+*/
 	}
 	gfWaitingForInput = FALSE;
 }
@@ -3151,20 +3187,24 @@ void HandleArrivalOfReinforcements( GROUP *pGroup )
 		ResetMortarsOnTeamCount();
 		AddPossiblePendingEnemiesToBattle();
 	}
-	//Update the known number of enemies in the sector.
-	pSector = &SectorInfo[ SECTOR( pGroup->ubSectorX, pGroup->ubSectorY ) ];
-	iNumEnemiesInSector = NumEnemiesInSector( pGroup->ubSectorX, pGroup->ubSectorY );
-	if( iNumEnemiesInSector )
+
+	if( pGroup->ubSectorZ == 0 )
 	{
-		if( pSector->bLastKnownEnemies >= 0 )
+		//Update the known number of enemies in the sector.
+		pSector = &SectorInfo[ SECTOR( pGroup->ubSectorX, pGroup->ubSectorY ) ];
+		iNumEnemiesInSector = NumEnemiesInSector( pGroup->ubSectorX, pGroup->ubSectorY );
+		if( iNumEnemiesInSector )
 		{
-			pSector->bLastKnownEnemies = (INT8)iNumEnemiesInSector;
+			if( pSector->bLastKnownEnemies >= 0 )
+			{
+				pSector->bLastKnownEnemies = (INT8)iNumEnemiesInSector;
+			}
+			//if we don't know how many enemies there are, then we can't update this value.
 		}
-		//if we don't know how many enemies there are, then we can't update this value.
-	}
-	else
-	{
-		pSector->bLastKnownEnemies = 0;
+		else
+		{
+			pSector->bLastKnownEnemies = 0;
+		}
 	}
 }
 
@@ -5074,5 +5114,42 @@ UINT8 NumberMercsInVehicleGroup( GROUP *pGroup )
 		return (UINT8)GetNumberInVehicle( iVehicleID );
 	}
 	return 0;
+}
+
+
+
+GROUP* CreateNewEnemyGroupDepartingFromSectorUsingZLevel( UINT32 uiSector, UINT8 ubSectorZ, UINT8 ubNumAdmins, UINT8 ubNumTroops, UINT8 ubNumElites )
+{
+	GROUP *pNew;
+	AssertMsg( uiSector >= 0 && uiSector <= 255, String( "CreateNewEnemyGroup with out of range value of %d", uiSector ) );
+	pNew = (GROUP*)MemAlloc( sizeof( GROUP ) );
+	AssertMsg( pNew, "MemAlloc failure during CreateNewEnemyGroup." );
+	memset( pNew, 0, sizeof( GROUP ) );
+	pNew->pEnemyGroup = (ENEMYGROUP*)MemAlloc( sizeof( ENEMYGROUP ) );
+	AssertMsg( pNew->pEnemyGroup, "MemAlloc failure during enemy group creation." );
+	memset( pNew->pEnemyGroup, 0, sizeof( ENEMYGROUP ) );
+	pNew->pWaypoints = NULL;
+	pNew->ubSectorX = (UINT8)SECTORX( uiSector );
+	pNew->ubSectorY = (UINT8)SECTORY( uiSector );
+	pNew->ubSectorZ = ubSectorZ;
+	pNew->ubOriginalSector = (UINT8)uiSector;
+	pNew->fPlayer = FALSE;
+	pNew->ubMoveType = CIRCULAR;
+	pNew->ubNextWaypointID = 0;
+	pNew->ubFatigueLevel = 100;
+	pNew->ubRestAtFatigueLevel = 0;
+	pNew->pEnemyGroup->ubNumAdmins = ubNumAdmins;
+	pNew->pEnemyGroup->ubNumTroops = ubNumTroops;
+	pNew->pEnemyGroup->ubNumElites = ubNumElites;
+	pNew->ubGroupSize = (UINT8)(ubNumAdmins + ubNumTroops + ubNumElites);
+	pNew->ubTransportationMask = FOOT;
+	pNew->fVehicle = FALSE;
+	pNew->ubCreatedSectorID = pNew->ubOriginalSector;
+	pNew->ubSectorIDOfLastReassignment = 255;
+
+
+	if( AddGroupToList( pNew ) )
+		return pNew;
+	return NULL;
 }
 

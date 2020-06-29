@@ -21,7 +21,7 @@
 	#include "Town Militia.h"
 #endif
 
-#define SAI_VERSION		29
+#define SAI_VERSION		27
 
 /*
 STRATEGIC AI -- UNDERLYING PHILOSOPHY

@@ -29,6 +29,10 @@
 #endif
 
 
+
+void HandleBloodCatDeaths( SECTORINFO *pSector );
+
+
 //The sector information required for the strategic AI.  Contains the number of enemy troops,
 //as well as intentions, etc.
 SECTORINFO SectorInfo[256];
@@ -168,7 +172,11 @@ UINT8 NumStationaryEnemiesInSector( INT16 sSectorX, INT16 sSectorY )
 	{ //If no garrison, no stationary.
 		return( 0 );
 	}
-	
+
+	Assert( 0 );
+	return( 0 );
+/*
+Ja25:  no garrison, should never get here
 	// don't count roadblocks as stationary garrison, we want to see how many enemies are in them, not question marks
 	if ( gGarrisonGroup[ pSector->ubGarrisonID ].ubComposition == ROADBLOCK )
 	{
@@ -177,9 +185,10 @@ UINT8 NumStationaryEnemiesInSector( INT16 sSectorX, INT16 sSectorY )
 	}
 
 	return (UINT8)(pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites);
+*/
 }
 
-UINT8 NumMobileEnemiesInSector( INT16 sSectorX, INT16 sSectorY )
+UINT8 NumMobileEnemiesInSector( INT16 sSectorX, INT16 sSectorY, UINT8 ubSectorZ )
 {
 	GROUP *pGroup;
 	SECTORINFO *pSector;
@@ -191,19 +200,20 @@ UINT8 NumMobileEnemiesInSector( INT16 sSectorX, INT16 sSectorY )
 	pGroup = gpGroupList;
 	while( pGroup )
 	{
-		if( !pGroup->fPlayer && !pGroup->fVehicle && pGroup->ubSectorX == sSectorX && pGroup->ubSectorY == sSectorY )
+		if( !pGroup->fPlayer && !pGroup->fVehicle && pGroup->ubSectorX == sSectorX && pGroup->ubSectorY == sSectorY  && pGroup->ubSectorZ == ubSectorZ )
 		{
 			ubNumTroops += pGroup->ubGroupSize;
 		}
 		pGroup = pGroup->next;
 	}
 
+	/*
 	pSector = &SectorInfo[ SECTOR( sSectorX, sSectorY ) ];
 	if( pSector->ubGarrisonID == ROADBLOCK )
 	{ //consider these troops as mobile troops even though they are in a garrison
 		ubNumTroops += (UINT8)(pSector->ubNumAdmins + pSector->ubNumTroops + pSector->ubNumElites);
 	}
-
+*/
 	return ubNumTroops;
 }
 
@@ -359,10 +369,23 @@ BOOLEAN PrepareEnemyForSectorBattle()
 	INT32 i, num;
 	INT16 sNumSlots;
 
+	//if the player has WON in this sector before, we must destroy the ENEMIES soldier init list links
+	HandleRemovingEnemySoldierInitLinksIfPlayerEverWonInSector();
+
 	gfPendingEnemies = FALSE;
 
 	if( gbWorldSectorZ > 0 )
-		return PrepareEnemyForUndergroundBattle();
+	{
+		PrepareEnemyForUndergroundBattle();
+
+		if( gpBattleGroup )
+		{
+			HandleArrivalOfReinforcements( gpBattleGroup );
+
+			gpBattleGroup = NULL;
+		}
+		return( TRUE );
+	}
 
 	if( gpBattleGroup && !gpBattleGroup->fPlayer )
 	{ //The enemy has instigated the battle which means they are the ones entering the conflict.
@@ -379,7 +402,7 @@ BOOLEAN PrepareEnemyForSectorBattle()
 					!pGroup->pEnemyGroup->ubTroopsInBattle &&
 					!pGroup->pEnemyGroup->ubElitesInBattle )
 			{
-				HandleArrivalOfReinforcements( pGroup );
+				HandleArrivalOfReinforcements( gpBattleGroup );
 			}
 			pGroup = pGroup->next;
 		}
@@ -798,6 +821,9 @@ JA25:  No mike or iggy
 						if( pSector->bBloodCats )
 						{
 							pSector->bBloodCats--;
+
+							//handle anything important when bloodcats die
+							HandleBloodCatDeaths( pSector );
 						}
 					}
 
@@ -1495,10 +1521,11 @@ void EnemyCapturesPlayerSoldier( SOLDIERTYPE *pSoldier )
 
 void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap()
 {
-	INT32 i;
-	BOOLEAN fMadeCorpse;
-	INT8 bKilledEnemies = 0, bKilledCreatures = 0, bKilledRebels = 0, bKilledCivilians = 0;
+//	INT32 i;
+//	BOOLEAN fMadeCorpse;
+//	INT8 bKilledEnemies = 0, bKilledCreatures = 0, bKilledRebels = 0, bKilledCivilians = 0;
 	return;
+/*
 	//If any of the soldiers are dying, kill them now.
 	for( i = gTacticalStatus.Team[ ENEMY_TEAM ].bFirstID; i <= gTacticalStatus.Team[ ENEMY_TEAM ].bLastID; i++ )
 	{
@@ -1571,6 +1598,7 @@ void HandleEnemyStatusInCurrentMapBeforeLoadingNewMap()
 		pSector->ubElitesInBattle = 0;
 		pSector->ubCreaturesInBattle = 0;
 	}
+*/
 }
 
 BOOLEAN PlayerSectorDefended( UINT8 ubSectorID )
@@ -1650,5 +1678,42 @@ BOOLEAN OnlyHostileCivsInSector()
 	}
 	//We only have hostile civilians, don't allow time compression.
 	return TRUE;
+}
+
+void HandleBloodCatDeaths( SECTORINFO *pSector )
+{
+	//if the current sector is the first part of the town
+	if( gWorldSectorX == 10 && gWorldSectorY == 9 && gbWorldSectorZ == 0 )
+	{
+		//if ALL the bloodcats are killed
+		if( pSector->bBloodCats == 0 )
+		{
+			INT8 bId1=-1;
+			INT8 bId2=-1;
+			INT8 bNum=0;
+
+			SetFactTrue( FACT_PLAYER_KILLED_ALL_BETTYS_BLOODCATS );
+
+			//Instantly have betties missing items show up
+			DailyCheckOnItemQuantities( TRUE );
+
+			// Now have a merc say the killed bloodcat quote
+			bNum = Get3RandomQualifiedMercs( &bId1, &bId2, NULL );
+
+			//if there are some qualified mercs
+			if( bNum != 0 )
+			{
+				//must make sure TEX doesnt say the quote
+				if( bId1 != NOBODY && Menptr[ bId1 ].ubProfile != TEX )
+				{
+					TacticalCharacterDialogue( &Menptr[ bId1 ], QUOTE_RENEW_REFUSAL_DUE_TO_LACK_OF_FUNDS );
+				}
+				else if( bId2 != NOBODY && Menptr[ bId2 ].ubProfile != TEX )
+				{
+					TacticalCharacterDialogue( &Menptr[ bId2 ], QUOTE_RENEW_REFUSAL_DUE_TO_LACK_OF_FUNDS );
+				}
+			}
+		}
+	}
 }
 
