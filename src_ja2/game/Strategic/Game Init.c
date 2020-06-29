@@ -63,7 +63,10 @@ UINT8			gubScreenCount=0;
 
 void InitNPCs( void )
 {
-	MERCPROFILESTRUCT * pProfile;
+//	MERCPROFILESTRUCT * pProfile;
+
+/* 
+Ja25:	no skyrider
 
 	// add the pilot at a random location!
 	pProfile = &(gMercProfiles[ SKYRIDER ]);
@@ -93,8 +96,10 @@ void InitNPCs( void )
 
 	// use alternate map, with Skyrider's shack, in this sector
 	SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
+*/
 
-
+/*
+JA25: no madlab
 	// set up Madlab's secret lab (he'll be added when the meanwhile scene occurs)
 
 	switch( Random( 4 ) )
@@ -113,7 +118,11 @@ void InitNPCs( void )
 			SectorInfo[ SECTOR( 4, MAP_ROW_E ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
 			break;
 	}
-	
+*/
+
+/*
+Ja25: No mickey
+
 	// add Micky in random location
 
 	pProfile = &(gMercProfiles[MICKY]);
@@ -149,10 +158,12 @@ void InitNPCs( void )
 
 	// use alternate map in this sector
 	//SectorInfo[ SECTOR( pProfile->sSectorX, pProfile->sSectorY ) ].uiFlags |= SF_USE_ALTERNATE_MAP;
+*/
 
   gfPlayerTeamSawJoey = FALSE;
 
-
+/*
+Ja25: no bob and gabby
 	if ( gGameOptions.fSciFi )
 	{
 		// add Bob
@@ -190,14 +201,17 @@ void InitNPCs( void )
 			pSector->uiFlags |= SF_USE_ALTERNATE_MAP;
 		}
 	}
-
+*/
 	// init hospital variables
 	giHospitalTempBalance = 0;
 	giHospitalRefund = 0;
 	gbHospitalPriceModifier = 0;
 
+/*
+Ja25 No Devin
 	// set up Devin so he will be placed ASAP
 	gMercProfiles[ DEVIN ].bNPCData = 3;
+*/
 }
 
 void InitBloodCatSectors()
