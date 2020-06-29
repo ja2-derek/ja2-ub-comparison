@@ -114,7 +114,7 @@ void DisplayCoverOfSelectedGridNo( )
 				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zNewTacticalMessages[ TCTL_MSG__DISPLAY_COVER ] );
 
 				//increment the display cover counter ( just seeing how many times people use it )
-				//gJa25SaveStruct.uiDisplayCoverCounter++;
+				gJa25SaveStruct.uiDisplayCoverCounter++;
 			}
 
 			gbLastStance = bStance;
@@ -613,7 +613,7 @@ void DisplayRangeToTarget( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo )
 	}
 
 	//increment the display gun range counter ( just seeing how many times people use it )
-	//gJa25SaveStruct.uiDisplayGunRangeCounter++;
+	gJa25SaveStruct.uiDisplayGunRangeCounter++;
 }
 
 
@@ -648,7 +648,7 @@ void DisplayGridNoVisibleToSoldierGrid( )
 				//pop up a message to say we are in the display cover routine
 				ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, zNewTacticalMessages[ TCTL_MSG__LOS ] );
 				//increment the display LOS counter ( just seeing how many times people use it )
-				//gJa25SaveStruct.uiDisplayLosCounter++;
+				gJa25SaveStruct.uiDisplayLosCounter++;
 			}
 
 			gsLastVisibleToSoldierGridNo = sGridNo;
