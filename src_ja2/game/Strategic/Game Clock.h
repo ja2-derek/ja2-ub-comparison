@@ -11,8 +11,8 @@
 // the mouse region around the clock (bigger)
 #define			CLOCK_REGION_START_X			552
 #define			CLOCK_REGION_START_Y			SCREEN_BUFFER_HEIGHT - 24
-#define			CLOCK_REGION_WIDTH				( 620 - CLOCK_REGION_START_X )
-#define			CLOCK_REGION_HEIGHT				( 468 - CLOCK_REGION_START_Y )
+#define			CLOCK_REGION_WIDTH				( 68 )
+#define			CLOCK_REGION_HEIGHT				( 12 )
 
 #define			NUM_SEC_IN_DAY						86400
 #define			NUM_SEC_IN_HOUR						3600
