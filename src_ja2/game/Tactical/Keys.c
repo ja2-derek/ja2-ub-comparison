@@ -1994,10 +1994,13 @@ void ExamineDoorsOnEnteringSector( )
 	// If this is any omerta tow, don't do it...
 	bTownId = GetTownIdForSector( gWorldSectorX, gWorldSectorY );
 
+/*
+Ja25:  No omerta
 	if ( bTownId == OMERTA )
 	{
 		return;
 	}
+*/
 
 	// Check time...
 	if ( ( GetWorldTotalMin( ) - gTacticalStatus.uiTimeSinceLastInTactical ) < 30 )
@@ -2052,10 +2055,13 @@ void HandleDoorsChangeWhenEnteringSectorCurrentlyLoaded( )
 	// If this is any omerta tow, don't do it...
 	bTownId = GetTownIdForSector( gWorldSectorX, gWorldSectorY );
 
+/*
+Ja25:  No omerta
 	if ( bTownId == OMERTA )
 	{
 		return;
 	}
+*/
 
 	// 1 ) there is at least one human being in that sector.
 	// check for civ
