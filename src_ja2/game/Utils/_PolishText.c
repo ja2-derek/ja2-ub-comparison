@@ -706,7 +706,7 @@ STR16 gzMercSkillText[] =
 	L"Broñ bia³a",
 	L"Snajper",
 	L"Kamufla¿",
-	L"(Eksp.)",
+	L"(Ekspert)",
 };
 
 
@@ -841,16 +841,16 @@ STR16 pLandTypeStrings[] =
 	L"Wybrze¿e, droga",
 	L"Pustynia, droga",
 	L"Bagno, droga",
-	L"Las, Rakiety Z-P",
-	L"Pustynia, Rakiety Z-P",
-	L"Tropiki, Rakiety Z-P",
-	L"Meduna, Rakiety Z-P",
+	L"Las, Rakiety Ziemia-Powietrze",
+	L"Pustynia, Rakiety Ziemia-Powietrze",
+	L"Tropiki, Rakiety Ziemia-Powietrze",
+	L"Meduna, Rakiety Ziemia-Powietrze",
 	
 	//These are descriptions for special sectors
 	L"Szpital w Cambrii",
 	L"Lotnisko w Drassen",
 	L"Lotnisko w Medunie",
-	L"Rakiety Z-P",
+	L"Rakiety Ziemia-Powietrze",
 	L"Kryjówka rebeliantów", //The rebel base underground in sector A10
 	L"Tixa - Lochy",	//The basement of the Tixa Prison (J9)
 	L"Gniazdo stworzeñ",	//Any mine sector with creatures in it
@@ -1164,7 +1164,7 @@ UINT16 TacticalStr[][ MED_STRING_LENGTH ] =
 	L"Zamek nie ma pu³apek.",
 	L"Zamkniête.",
 	L"DRZWI",
-	L"ZABEZP.",
+	L"ZABEZPIECZONE",
 	L"ZAMKNIÊTE",
 	L"OTWARTE",
 	L"ROZWALONE",
@@ -1293,7 +1293,7 @@ UINT16 TacticalStr[][ MED_STRING_LENGTH ] =
 	L"Wyjœcie z sektora",
 	L"OK",
 	L"Anuluj",
-	L"Wybrany najemnik",
+	L"Wybrani najemnicy",
 	L"Wszyscy najemnicy w oddziale",
 	L"IdŸ do sektora",
 	L"Otwórz mapê",
@@ -1781,9 +1781,9 @@ STR16 pTransactionText[] =
 	L"Zastaw na ¿ycie dla - %s", 		// medical deposit for merc
 	L"Analiza profilu w IMP", 		// IMP is the acronym for International Mercenary Profiling
 	L"Ubezpieczneie dla - %s", 
-	L"Redukcja ubezp. dla - %s",
-	L"Przed³. ubezp. dla - %s", 				// johnny contract extended
-	L"Anulowano ubezp. dla - %s", 
+	L"Redukcja ubezpieczenia dla - %s",
+	L"Przed³u¿enie ubezpieczenia dla - %s", 				// johnny contract extended
+	L"Anulowanie ubezpieczenia dla - %s", 
 	L"Odszkodowanie za - %s", 		// insurance claim for merc
 	L"1 dzieñ", 				// merc's contract extended for a day
 	L"1 tydzieñ", 				// merc's contract extended for a week
@@ -1791,13 +1791,13 @@ STR16 pTransactionText[] =
 	L"Przychód z kopalni", 
 	L"", //String nuked
 	L"Zakup kwiatów",
-	L"Pe³ny zwrot zastawu za - %s",
-	L"Czêœciowy zwrot zastawu za - %s",
-	L"Brak zwrotu zastawu za - %s",
+	L"Pe³ny zwrot zastawu na ¿ycie dla - %s",
+	L"Czêœciowy zwrot zastawu na ¿ycie dla - %s",
+	L"Brak zwrotu zastawu na ¿ycie dla - %s",
 	L"Zap³ata dla - %s",		// %s is the name of the npc being paid
 	L"Transfer funduszy do - %s", 			// transfer funds to a merc
 	L"Transfer funduszy od - %s", 		// transfer funds from a merc
-	L"Samoobrona w - %s", // initial cost to equip a town's militia
+	L"Wyposa¿enie samoobrony w - %s", // initial cost to equip a town's militia
 	L"Zakupy u - %s.",	//is used for the Shop keeper interface.  The dealers name will be appended to the end of the string.
 	L"%s wp³aci³(a) pieni¹dze.",
 };
@@ -2222,7 +2222,7 @@ STR16 pBookMarkStrings[] =
 	L"Bobby Ray's",
 	L"I.M.P",
 	L"M.E.R.C.",
-	L"Pogrzeby",
+	L"Zk³. pogrzebowy",
 	L"Kwiaty",
 	L"Ubezpieczenia",
 	L"Anuluj",
@@ -2600,8 +2600,8 @@ STR16			sFuneralString[] =
 	L"KARTKI POGRZE- BOWE",
 
 	// The text that comes up when you click on any of the links ( except for send flowers ).
-	L"Niestety, z powodu œmierci w rodzinie, nie dzia³aj¹ jeszcze wszystkie elementy tej strony.",
-	L"Przepraszamy za powy¿sze uniedogodnienie."
+	L"Niestety nie wszystkie punkty ceremonii zosta³y dope³nione na tej stronie. Omy³ka ta zapewne spowodowana jest g³êbokim ¿alem po stracie ukochanej osoby.",
+	L"Sk³adamy wyrazy najg³êbszego wspó³czucia w tych ciê¿kich chwilach, jednak, to chyba nie wszystko."
 };
 
 // Text for the florist Home page
@@ -3309,7 +3309,7 @@ STR16		zOptionsToggleText[] =
 	L"Dialogi",
 	L"Wycisz potwierdzenia",
 	L"Napisy",
-	L"Wstrzymuj napisy",
+	L"Wstrzumuj napisy",
 	L"Animowany dym",
 	L"Drastyczne sceny",
 	L"Nigdy nie ruszaj mojej myszki!",
@@ -3350,7 +3350,7 @@ STR16	zOptionsScreenHelpText[] =
 	L"Wy³¹cz tê opcjê, jeœli nie lubisz widoku krwi.",
 
 	//Never move my mouse
-	L"Wy³¹cz tê opcjê, aby kursor myszki automatycznie ustawia³ siê nad pojawiaj¹cymi siê okienkami dialogowymi.",
+	L"W³¹cz tê opcjê, aby kursor myszki automatycznie ustawia³ siê nad pojawiaj¹cymi siê okienkami dialogowymi.",
 
 	//Old selection method
 	L"W³¹cz tê opcjê, aby wybór postaci dzia³a³ tak jak w poprzedniej wersji gry.",
@@ -3521,8 +3521,8 @@ STR16 pMessageStrings[] =
 	L"Wersja",
 	L"Wolna pozycja na szybki zapis",
 	L"Ta pozycja zarezerwowana jest na szybkie zapisy wykonywane podczas gry kombinacj¹ klawiszy ALT+S.",
-	L"Otw.",
-	L"Zamkn.",
+	L"Otwarty",
+	L"Zamkniêty",
 	L"Brak miejsca na dysku twardym.  Na dysku wolne jest %s MB, a wymagane jest przynajmniej %s MB.",
 	L"Najêto - %s z A.I.M.", 
 	L"%s z³apa³(a) %s",		//'Merc name' has caught 'item' -- let SirTech know if name comes after item.
@@ -3802,8 +3802,8 @@ STR16 sRepairsDoneString[] =
 STR16 zGioDifConfirmText[]=
 {
 	L"Wybrano opcjê Nowicjusz. Opcja ta jest przeznaczona dla niedoœwiadczonych graczy, lub dla tych, którzy nie maj¹ ochoty na d³ugie i ciê¿kie walki. Pamiêtaj, ¿e opcja ta ma wp³yw na przebieg ca³ej gry. Czy na pewno chcesz graæ w trybie Nowicjusz?",
-	L"Wybrano opcjê Doœwiadczony. Opcja ta jest przenaczona dla graczy posiadaj¹cych ju¿ pewne doœwiadczenie w grach tego typu. Pamiêtaj, ¿e opcja ta ma wp³yw na przebieg ca³ej gry. Czy na pewno chcesz graæ w trybie Doœwiadczony?",
-	L"Wybrano opcjê Ekspert. Jakby co, to ostrzegaliœmy ciê. Nie obwiniaj nas, jeœli wrócisz w plastikowym worku. Pamiêtaj, ¿e opcja ta ma wp³yw na przebieg ca³ej gry. Czy na pewno chcesz graæ w trybie Ekspert?",
+	L"Wybrano opcjê	Doœwiadczony. Opcja ta jest przenaczona dla graczy posiadaj¹cych ju¿ pewne doœwiadczenie w grach tego typu. Pamiêtaj, ¿e opcja ta ma wp³yw na przebieg ca³ej gry. Czy na pewno chcesz graæ w trybie Doœwiadczony?",
+	L"Wybrano opcjê	Ekspert. Jakby co, to ostrzegaliœmy ciê. Nie obwiniaj nas, jeœli wrócisz w plastikowym worku. Pamiêtaj, ¿e opcja ta ma wp³yw na przebieg ca³ej gry. Czy na pewno chcesz graæ w trybie Ekspert?",
 };
 
 
@@ -3854,7 +3854,7 @@ STR16 gzLateLocalizedString[] =
 	
 	L"%s - brak wolnych miejsc!",  //(ex "The ice cream truck is full")
 
-  L"%s nie potrzebuje pierwszej pomocy lecz opieki lekarza lub d³u¿szego odpoczynku.",
+  L"%s does not need immediate first aid or bandaging but rather more serious medical attention and/or rest.",
 
 	//20
 	//Happens when you get shot in the legs, and you fall down.

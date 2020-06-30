@@ -140,8 +140,11 @@ UINT16 AmmoCaliber[][20] =
 	L"5.7mm",
 	L"Monster",
 	L"Rocket",
-	L"", // dart
-	L"", // flame
+	L"dart", // dart
+	L"Cannon Ball", // cannon ball
+	L".50 cal",
+	L"",
+	L"9mm Heavy",
 };
 
 // This BobbyRayAmmoCaliber is virtually the same as AmmoCaliber however the bobby version doesnt have as much room for the words.
@@ -242,7 +245,7 @@ UINT16 Message[][STRING_LENGTH] =
 	L"no burst fire",
 	L"large magazine",
 	L"small magazine",
-
+	L"silent",							//Ja25: New string
 	// In the following two lines, all %s's are merc names
 
 	L"%s's camouflage has worn off.",
@@ -295,8 +298,15 @@ UINT16 Message[][STRING_LENGTH] =
 
 // the names of the towns in the game
 
+//Ja25: All new text
 STR16 pTownNames[] =
 {
+	L"",
+	L"Varrez",
+	L"Abandoned Mine",			//name of the mine
+};
+/*
+Ja25 Old towns, dont need anymore
 	L"",
 	L"Omerta",
 	L"Drassen",
@@ -311,6 +321,8 @@ STR16 pTownNames[] =
 	L"Meduna",
 	L"Chitzena",
 };
+*/
+
 
 // the types of time compression. For example: is the timer paused? at normal speed, 5 minutes per second, etc.
 // min is an abbreviation for minutes
@@ -702,20 +714,20 @@ STR16 gzMercSkillText[] =
 {
 	L"No Skill",
 	L"Lock picking",
-	L"Hand to hand",
+	L"Hand to hand combat",		//JA25: modified
 	L"Electronics",
-	L"Night ops",
+	L"Night operations",			//JA25: modified
 	L"Throwing",
 	L"Teaching",
 	L"Heavy Weapons",
 	L"Auto Weapons",
-	L"Stealthy",
+	L"Stealth",
 	L"Ambidextrous",
 	L"Thief",
 	L"Martial Arts",
 	L"Knifing",
-	L"On Roof Bonus to hit",
-	L"Camouflaged",
+	L"Rooftop Sniping",				//JA25: modified
+	L"Camouflage",						//JA25: modified
 	L"(Expert)",
 };
 
@@ -869,6 +881,13 @@ STR16 pLandTypeStrings[] =
 										//leading to the secret shelter underneath the palace
 	L"Shelter",				//The shelter underneath the queen's palace
 	L"",							//Unused
+	L"Complex",				//Ja25: New Text
+	L"Guard Post",		//Ja25: New Text
+	L"Crash Site",		//Ja25: New Text
+	L"PowerPlant",		//Ja25: New Text
+	L"Mountains",			//Ja25: New Text
+	L"Unknown",				//Ja25: New Text
+
 };
 
 STR16 gpStrategicString[] =
@@ -1229,7 +1248,7 @@ UINT16 TacticalStr[][ MED_STRING_LENGTH ] =
 
 	// In the next string, the first %s is a name and the second %s is an amount of money (including $ sign)
 
-	L"Hire %s for %s per day?",
+	L"Hire %s for a 1 time fee of %s?", //Ja25: modified
 
 	// This line is used repeatedly to ask player if they wish to participate in a boxing match. 
 
@@ -1698,6 +1717,7 @@ STR16 pSenderNameList[] =
 	L"Kingpin",
 	L"John Kulba",
 	L"A.I.M.",
+	L"Miguel Cordona",		//Ja25:  New
 };
 
 
@@ -1786,8 +1806,11 @@ STR16 pTransactionText[] =
 	L"Anonymous Deposit",
 	L"Transaction Fee", 
 	L"Hired", 				// Merc was hired
+	L"Reimbursement for %s",  //Ja25: new
 	L"Bobby Ray Purchase", 		// Bobby Ray is the name of an arms dealer
-	L"Settled Accounts at M.E.R.C.",
+//Ja25: MERC now has a 1 time fee
+//	L"Settled Accounts at M.E.R.C.",
+	L"Hired %s from M.E.R.C.",		//Ja25: new text
 	L"Medical Deposit for %s", 		// medical deposit for merc
 	L"IMP Profile Analysis", 		// IMP is the acronym for International Mercenary Profiling
 	L"Purchased Insurance for %s", 
@@ -1914,13 +1937,13 @@ STR16 pMapErrorString[] =
 	L"%s could not join %s as it is already full",
 	L"%s could not join %s as it is too far away.",
 //21-25
-	L"The mine in %s has been captured by Deidranna's forces!",
-	L"Deidranna's forces have just invaded the SAM site in %s",
-	L"Deidranna's forces have just invaded %s",
-	L"Deidranna's forces have just been spotted in %s.",
-	L"Deidranna's forces have just taken over %s.",
+	L"The mine in %s has been captured by enemy forces!",
+	L"Enemy forces have just invaded the SAM site in %s",
+	L"Enemy forces have just invaded %s",
+	L"Enemy forces have just been spotted in %s.",
+	L"Enemy forces have just taken over %s.",
 //26-30
-	L"At least one of your mercs could not be put asleep.",
+	L"At least one of your mercs are not tired.",
 	L"At least one of your mercs could not be woken up.",
 	L"Militia will not appear until they have finished training.",
 	L"%s cannot be given movement orders at this time.",
@@ -2035,7 +2058,8 @@ STR16 pImpButtonText[] =
 {
 	L"About Us", 			// about the IMP site
 	L"BEGIN", 			// begin profiling
-	L"Personality", 		// personality section
+//	L"Personality", 		// personality section
+	L"Specialties",	//JA25 New:
 	L"Attributes", 		// personal stats/attributes section
 	L"Portrait", 			// the personal portrait selection
 	L"Voice %d", 			// the voice selection
@@ -2063,10 +2087,17 @@ STR16 pImpButtonText[] =
 
 STR16 pExtraIMPStrings[] =
 {
-	L"To Commence Actual Profiling, Select Personality.",
+/*
+Old
+	L"To Commence Actual Profiling, Select Personality.", //Ja25 New:
 	L"Now That You Have Completed Personality, Select Your Attributes.",
 	L"With Attributes Now Allocated, You Can Proceed to Portrait Selection.",
 	L"To Complete The Process, Select The Voice Sample That Best Fits You.",
+*/
+	L"To commence actual profiling, select a Portrait.",	//Ja25 New
+	L"Having put a face with your name, choose your Voice.",	//Ja25 New
+	L"With your voice heard, you can proceed to the Specialties selection.",	//Ja25 New
+	L"To complete the process, select the Attributes that best represent you.",	//Ja25 New
 };
 
 STR16 pFilesTitle[] =
@@ -2380,7 +2411,7 @@ STR16 pPersonelTeamStrings[] =
 {
 	L"Current Team",
 	L"Departures",
-	L"Daily Cost:",
+	L"Average Cost:",	//Ja25: New text
 	L"Highest Cost:",
 	L"Lowest Cost:",
 	L"Killed in Action:",
@@ -2906,9 +2937,10 @@ STR16			CharacterInfo[] =
 
 	// the contract expenses' area
 
-	L"Fee",							
+//JA25	L"Fee",							dont need anymore
+	L"Mission Fee",							
 	L"Contract",				
-	L"one day",					
+	L"1 time fee",	//Ja25: modified
 	L"one week",
 	L"two weeks",
 
@@ -2921,7 +2953,8 @@ STR16			CharacterInfo[] =
 
 	L"Additional Info",				// Title for the additional info for the merc's bio
 	L"Active Members",		//20		// Title of the page
-	L"Optional Gear:",				// Displays the optional gear cost
+//Ja25:	L"Optional Gear:",				// Displays the optional gear cost
+	L"Gear Included with current promotion:",	//Ja25: new
 	L"MEDICAL deposit required",			// If the merc required a medical deposit, this is displayed
 };
 
@@ -2937,7 +2970,7 @@ STR16			VideoConfercingText[] =
 
 	//Text on the buttons to select the length of time the merc can be hired
 
-	L"One Day",										
+	L"One Time Fee",//Ja25 modified
 	L"One Week",
 	L"Two Weeks",
 
@@ -3082,7 +3115,7 @@ STR16			AimScreenText[] =
 	
 	L"A.I.M. and the A.I.M. logo are registered trademarks in most countries.",
 	L"So don't even think of trying to copy us.",
-	L"Copyright 1998-1999 A.I.M., Ltd.  All rights reserved.",
+	L"Copyright 2000 A.I.M., Ltd.  All rights reserved.",			//Ja25 modified to 2000
 
 	//Text for an advertisement that gets displayed on the AIM page
 
@@ -3309,7 +3342,7 @@ STR16	gzMoneyWithdrawMessageText[] =
 
 STR16	gzCopyrightText[] = 
 {
-	L"Copyright (C) 1999 Sir-tech Canada Ltd.  All rights reserved.",
+	L"Copyright (C) 2000 Sir-tech Canada Ltd.  All rights reserved.",		//JA25 modified to 2000
 };
 
 //option Text
@@ -3406,8 +3439,8 @@ STR16	gzGIOScreenText[] =
 {
 	L"INITIAL GAME SETTINGS",
 	L"Game Style",
-	L"Realistic",
-	L"Sci Fi",
+	L"Save Anytime",
+	L"Iron Man",
 	L"Gun Options",
 	L"Tons of Guns",
 	L"Normal",
@@ -3418,9 +3451,9 @@ STR16	gzGIOScreenText[] =
 	L"Ok",
 	L"Cancel",
 	L"Extra Difficulty",
-	L"Save Anytime",
-	L"Iron Man",
-	L"Disabled for Demo",
+	L"Unlimited Time",
+	L"Timed Turns",
+	L"Disabled for Expansion Pack",			//Ja25: new string
 };
 
 STR16 pDeliveryLocationStrings[] =
@@ -3507,7 +3540,7 @@ STR16 pMessageStrings[] =
 	L"Game Saved.",
 	L"QuickSave", //The name of the quicksave file (filename, text reference)
 	L"SaveGame",	//The name of the normal savegame file, such as SaveGame01, SaveGame02, etc.
-	L"sav",				//The 3 character dos extension (represents sav)
+	L"sve",				//Ja25:  Dont need to translate.  This the Saved Game extension  ( Changed so it wont ovewrite Ja2 saves ) //The 3 character dos extension (represents sav)
 	L"..\\SavedGames", //The name of the directory where games are saved.
 	L"Day",
 	L"Mercs",
@@ -3532,7 +3565,7 @@ STR16 pMessageStrings[] =
 	L"This slot is reserved for Quick Saves made from the tactical and map screens using ALT+S.",
 	L"Opened",
 	L"Closed",
-	L"You are running low on disk space.  You only have %sMB free and Jagged Alliance 2 requires %sMB.",
+	L"You are running low on disk space.  You only have %sMB free and Jagged Alliance 2.5 requires %sMB.", //Ja25: 
 	L"Hired %s from AIM", 
 	L"%s has caught %s.",		//'Merc name' has caught 'item' -- let SirTech know if name comes after item.
 	L"%s has taken the drug.", //'Merc name' has taken the drug
@@ -3705,6 +3738,7 @@ STR16 pNewNoiseStr[] =
 	L"%s hears a %s CREAKING coming from %s.",
 	L"%s hears a %s SPLASHING coming from %s.",
 	L"%s hears a %s IMPACT coming from %s.",
+	L"%s hears a %s GUNSHOT to %s.",								//@@@ added Feb21,2000, JA25: new string
 	L"%s hears a %s EXPLOSION to %s.",
 	L"%s hears a %s SCREAM to %s.",
 	L"%s hears a %s IMPACT to %s.",
@@ -3751,7 +3785,7 @@ STR16	gzCreditNames[]=
 	L"Eric \"WTF\" Cheng",
 	L"Lynn Holowka",
 	L"Norman \"NRG\" Olsen",
-	L"George Brooks",
+	L"George Brook",
 	L"Andrew Stacey",
 	L"Scot Loving",
 	L"Andrew \"Big Cheese\" Emmons",
@@ -3760,7 +3794,7 @@ STR16	gzCreditNames[]=
 	L"Joey \"Joeker\" Whelan",
 };
 
-
+//Ja25: @@@ this entire section changed
 STR16	gzCreditNameTitle[]=
 {
 	L"Game Internals Programmer", 			// Chris Camfield
@@ -3773,27 +3807,28 @@ STR16	gzCreditNameTitle[]=
 	L"Artist Extraordinaire",						// Norman \"NRG\" Olsen
 	L"Sound Guru",											// George Brooks
 	L"Screen Designer/Artist",					// Andrew Stacey
-	L"Lead Artist/Animator",						// Scot Loving
-	L"Lead Programmer",									// Andrew \"Big Cheese Doddle\" Emmons
-	L"Programmer",											// Dave French
+	L"JA2 Lead Artist",											// Scot Loving
+	L"JA2 Lead Programmer",									// Andrew \"Big Cheese Doddle\" Emmons
+	L"JA2UB Lead Programmer",											// Dave French
 	L"Strategic Systems & Game Balance Programmer",					// Alex Meduna
-	L"Portraits Artist",								// Joey \"Joeker\" Whelan",
+	L"JA2UB Lead Artist",								// Joey \"Joeker\" Whelan",
 };
 
+//Ja25: @@@ this entire section changed
 STR16	gzCreditNameFunny[]=
 {
-	L"", 																			// Chris Camfield
+	L"(JA3 Lead Designer)", 																			// Chris Camfield
 	L"(still learning punctuation)",					// Shaun Lyng
-	L"(\"It's done. I'm just fixing it\")",	//Kris \"The Cow Rape Man\" Marnes
+	L"(\"It's dead and buried. Dont touch it!\")",	//Kris \"The Cow Rape Man\" Marnes
 	L"(getting much too old for this)",				// Ian Currie
 	L"(and working on Wizardry 8)",						// Linda Currie
 	L"(forced at gunpoint to also do QA)",			// Eric \"WTF\" Cheng
 	L"(Left us for the CFSA - go figure...)",	// Lynn Holowka
 	L"",																			// Norman \"NRG\" Olsen
-	L"",																			// George Brooks
+	L"Are you my daddy?",																			// George Brooks
 	L"(Dead Head and jazz lover)",						// Andrew Stacey
 	L"(his real name is Robert)",							// Scot Loving
-	L"(the only responsible person)",					// Andrew \"Big Cheese Doddle\" Emmons
+	L"(now heading up JA3)",									// Andrew \"Big Cheese Doddle\" Emmons
 	L"(can now get back to motocrossing)",	// Dave French
 	L"(stolen from Wizardry 8)",							// Alex Meduna
 	L"(did items and loading screens too!)",	// Joey \"Joeker\" Whelan",
@@ -3941,7 +3976,7 @@ STR16 gzLateLocalizedString[] =
 	//55 
 	L"Can't compress time while viewing sector inventory.",
 
-	L"The Jagged Alliance 2 PLAY DISK was not found. Program will now exit.",
+	L"The Jagged Alliance 2.5 CD was not found. Program will now exit.", //JA25
 
 	L"Items successfully combined.",
 	

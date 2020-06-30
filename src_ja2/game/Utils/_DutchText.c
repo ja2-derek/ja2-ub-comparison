@@ -606,32 +606,20 @@ STR16 pRemoveMercStrings[] =
 STR16 pAttributeMenuStrings[] =
 {
 	L"Kracht",
-	L"Behendigheid",
-	L"Lenigheid",
-	L"Gezondheid",
-	L"Scherpschutterskunst",
-	L"Medisch",
-	L"Mechanisch",
-	L"Leiderschap",
-	L"Explosief",
-	L"Annuleren",
-};
-
-/*
-STR16 pAttributeMenuStrings[] =
-{
-	L"Kracht",
+	L"Slimheid",
 	L"Behendig",
 	L"Beweging",
+	L"Health",
 	L"Schietkunst",
-	L"Trefzekerheid",
+	L"Precisie",
 	L"Medisch",
 	L"Technisch",
+	L"Leadership",
 	L"Leaderschip",
-	L"Precisie",
+	L"Explosives",
 	L"Stop",
+
 };
-*/
 
 STR16 pTrainingMenuStrings[] =
 {
