@@ -419,8 +419,11 @@ void DailyCheckOnItemQuantities( BOOLEAN fInstallyHaveItemsAppear )
 		if( gArmsDealerStatus[ ubArmsDealer ].fOutOfBusiness )
 			continue;
 
+/* 
+Ja25:  No longer resets his cash, what he starts with is what he gets
 		//Reset the arms dealers cash on hand to the default initial value
 		gArmsDealerStatus[ ubArmsDealer ].uiArmsDealersCash = ArmsDealerInfo[ ubArmsDealer ].iInitialCash;
+*/
 
 		//if the arms dealer isn't supposed to have any items (includes all repairmen)
 		if( ArmsDealerInfo[ ubArmsDealer ].uiFlags & ARMS_DEALER_HAS_NO_INVENTORY )

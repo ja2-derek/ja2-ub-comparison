@@ -7466,7 +7466,10 @@ Ja25:  No jake in exp
 	// he must have enough cash left to give change
 	Assert( gArmsDealerStatus[ gbSelectedArmsDealerID ].uiArmsDealersCash >= uiAmount );
 	// subtract change from dealer's cash
+	if( gArmsDealerStatus[ gbSelectedArmsDealerID ].uiArmsDealersCash >= uiAmount )
 	gArmsDealerStatus[ gbSelectedArmsDealerID ].uiArmsDealersCash -= uiAmount;
+	else
+		gArmsDealerStatus[ gbSelectedArmsDealerID ].uiArmsDealersCash;
 }
 
 
