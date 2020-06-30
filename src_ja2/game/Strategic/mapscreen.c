@@ -4034,6 +4034,8 @@ Ja25 No meanwhiles
 		HandleExitsFromMapScreen( );
 	}
 
+	//Handle the strategic AI
+	JA25_HandleUpdateOfStrategicAi();
 
 	return( MAP_SCREEN );
 }

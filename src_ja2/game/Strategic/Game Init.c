@@ -289,6 +289,11 @@ void InitStrategicLayer( void )
 	InitSquads();
 	// Init vehicles
 	InitVehicles( );
+	
+	InitJa25StrategicAi( );
+
+	// Init movement costs....
+	InitStrategicMovementCosts();
 /*
 Ja25 no loyalty
 	// init town loyalty

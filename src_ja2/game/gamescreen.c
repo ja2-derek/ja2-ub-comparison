@@ -418,6 +418,9 @@ UINT32  MainGameScreenHandle(void)
 		#endif
 	}
 
+	//Handle the strategic AI
+	JA25_HandleUpdateOfStrategicAi();
+
 #if 0
 	{
 		PTR pData, pDestBuf;
