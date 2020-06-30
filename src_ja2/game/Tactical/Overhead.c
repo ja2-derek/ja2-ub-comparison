@@ -3475,6 +3475,29 @@ no queen, or queen monster
 	//The queen AI layer must process the event by subtracting forces, etc.
 	ProcessQueenCmdImplicationsOfDeath( pSoldierOld );
 
+	//if the person was Raul, and we are to say the blown up quotes
+	if( pSoldierOld->ubProfile == RAUL && IsJa25GeneralFlagSet( JA_GF__RAUL_BLOW_HIMSELF_UP ) )
+	{
+		UINT8 SoldierId1;
+		UINT8 SoldierId2;
+
+		//Get some random Soldier ID's of the valid mercs
+		if( Get3RandomQualifiedMercs( &SoldierId1, &SoldierId2, NULL ) != 0 )
+		{		
+			//Say the "he blew himself up quote"
+			TacticalCharacterDialogue( &Menptr[SoldierId1], QUOTE_GREETING );
+
+			//if there isnt a second soldier
+			if( SoldierId2 == NOBODY )
+			{
+				SoldierId2 = SoldierId1;
+			}
+
+			//say the "darn he took the inventoruy with him"
+			TacticalCharacterDialogue( &Menptr[SoldierId2], QUOTE_SMALL_TALK );
+		}
+	}
+
 	// OK, check for existence of any more badguys!
 	CheckForEndOfBattle( FALSE );
 }

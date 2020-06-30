@@ -92,6 +92,7 @@ void DialogueMessageBoxCallBack( UINT8 ubExitValue );
 void CarmenLeavesSectorCallback( void );
 void PerformJerryMiloAction301();
 void PerformJerryMiloAction302();
+void HandleRaulBlowingHimselfUp();
 void DisplayJerryBreakingLaptopTransmitterPopup();
 
 #define		TALK_PANEL_FACE_X				6
@@ -4306,6 +4307,12 @@ Ja25: No miguel
 			case NPC_ACTION_TRIGGER_JERRY_CONVERSATION_WITH_PGC_2:
 				PerformJerryMiloAction302();
 				break;
+			case NPC_ACTION_RAUL_BLOWS_HIMSELF_UP:
+				HandleRaulBlowingHimselfUp();
+				break;
+			case NPC_ACTION_HAVE_DEALER_OPEN_BUY_SELL_SCREEN:
+				HaveNpcOpenUpDealerScreen( ubTargetNPC );
+				break;
 			default:
 				ScreenMsg( FONT_MCOLOR_RED, MSG_TESTVERSION, L"No code support for NPC action %d", usActionCode );
 				break;
@@ -5101,6 +5108,28 @@ void PerformJerryMiloAction302()
 	DeleteTalkingMenu();
 }
 
+
+void HandleRaulBlowingHimselfUp()
+{
+	SOLDIERTYPE *pSoldier=NULL;
+	UINT16			usItem=0;
+
+	//Find Raul
+	pSoldier = FindSoldierByProfileID( RAUL, FALSE );
+
+	//if he exists
+	if( pSoldier )
+	{
+		//First lower his life, artificially
+		pSoldier->bLife = 5;
+
+		//blow himself up with, hmmm, lets say TNT.  :)
+		usItem = HAND_GRENADE;
+		IgniteExplosion( RAUL, CenterX( pSoldier->sGridNo ), CenterY( pSoldier->sGridNo ), 0, pSoldier->sGridNo, usItem, pSoldier->bLevel );
+
+		SetJa25GeneralFlag( JA_GF__RAUL_BLOW_HIMSELF_UP );
+	}
+}
 void DisplayJerryBreakingLaptopTransmitterPopup()
 {
 	CHAR16	zString[512];
@@ -5129,4 +5158,12 @@ void DisplayJerryBreakingLaptopTransmitterPopup()
 	gJa25SaveStruct.fJerryBreakingLaptopOccuring = TRUE;
 }
 
+
+void HaveNpcOpenUpDealerScreen( UINT8 ubProfileID )
+{
+	DeleteTalkingMenu( );
+
+	//Enter the shopkeeper interface
+	EnterShopKeeperInterfaceScreen( gTalkPanel.ubCharNum );
+}
 }

@@ -918,9 +918,16 @@ INT8 GetDealersMaxItemAmount( UINT8 ubDealerID, UINT16 usItemIndex )
 {
 	switch( ubDealerID )
 	{
+		case ARMS_DEALER_RAUL:
+			return( GetMaxItemAmount( gRaulInventory, usItemIndex ) );
+			break;
+
 		case ARMS_DEALER_BETTY:
 			return( GetMaxItemAmount( gBettyInventory, usItemIndex ) );
 			break;
+
+/*
+Ja25: Not in exp.
 		case ARMS_DEALER_TONY:
 			return( GetMaxItemAmount( gTonyInventory, usItemIndex ) );
 			break;
@@ -996,7 +1003,7 @@ INT8 GetDealersMaxItemAmount( UINT8 ubDealerID, UINT16 usItemIndex )
 		case ARMS_DEALER_MANNY:
 			return( GetMaxItemAmount( gMannyInventory, usItemIndex ) );
 			break;
-
+*/
 		default:
 			Assert( FALSE );
 			return( 0 );
@@ -1028,9 +1035,16 @@ DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory( UINT8 ubArmsDealerID 
 {
 	switch( ubArmsDealerID )
 	{
+		case ARMS_DEALER_RAUL:
+			return( gRaulInventory );
+			break;
+
 		case ARMS_DEALER_BETTY:
 			return( gBettyInventory );
 			break;
+
+/* 
+Ja25 
 		case ARMS_DEALER_TONY:
 			return( gTonyInventory );
 			break;
@@ -1106,7 +1120,7 @@ DEALER_POSSIBLE_INV *GetPointerToDealersPossibleInventory( UINT8 ubArmsDealerID 
 		case ARMS_DEALER_MANNY:
 			return( gMannyInventory );
 			break;
-
+*/
 		default:
 			return( NULL );
 	}
@@ -1176,9 +1190,13 @@ UINT8 GetCurrentSuitabilityForItem( INT8 bArmsDealer, UINT16 usItemIndex )
 			return(ITEM_SUITABILITY_ALWAYS);
 	}
 
-
+/*
+Ja25: changed dealers
 	// If it's not BobbyRay, Tony, or Devin
 	if ((bArmsDealer != -1) && (bArmsDealer != ARMS_DEALER_TONY) && (bArmsDealer != ARMS_DEALER_DEVIN))
+*/
+	// If it's not BobbyRay, Tony, or Devin
+//	if( (bArmsDealer != -1) && ( bArmsDealer != 	ARMS_DEALER_RAUL && ( bArmsDealer != ARMS_DEALER_BETTY ) ) )
 	{
 		// all the other dealers have very limited inventories, so their suitability remains constant at all times in game
 		return(ITEM_SUITABILITY_HIGH);
@@ -1196,9 +1214,9 @@ UINT8 GetCurrentSuitabilityForItem( INT8 bArmsDealer, UINT16 usItemIndex )
 		ubMinCoolness += 1;
 		ubMaxCoolness += 1;
 	}
-	else if (bArmsDealer == ARMS_DEALER_DEVIN)
+	else if (bArmsDealer == ARMS_DEALER_RAUL)
 	{
-		// almost everything Devin sells is pretty cool (4+), so gotta apply a minimum or he'd have nothing early on
+		// almost everything Raul sells is pretty cool (4+), so gotta apply a minimum or he'd have nothing early on
 		if ( ubMinCoolness < 3 )
 		{
 			ubMinCoolness = 3;
@@ -1253,6 +1271,22 @@ UINT8 ChanceOfItemTransaction( INT8 bArmsDealer, UINT16 usItemIndex, BOOLEAN fDe
 		fBobbyRay = TRUE;
 	}
 
+
+	//if the dealer is Raul, and the gun is the Barrett
+	if( usItemIndex == BARRETT && bArmsDealer == ARMS_DEALER_RAUL )
+	{
+		//if the delear is restocking 
+		if( !fDealerIsSelling)
+		{
+			//if the player has already purchased the barrett
+			if( gArmsDealerStatus[ bArmsDealer ].ubSpecificDealerFlags & ARMS_DEALER_FLAG__RAUL_HAS_SOLD_BARRETT_TO_PLAYER )
+			{
+				//no chance of restocking this weapon
+				return( 0 );
+			}
+		}
+	}
+
 	ubItemCoolness = Item[ usItemIndex ].ubCoolness;
 
 	switch (GetCurrentSuitabilityForItem( bArmsDealer, usItemIndex ) )
@@ -1279,7 +1313,16 @@ UINT8 ChanceOfItemTransaction( INT8 bArmsDealer, UINT16 usItemIndex, BOOLEAN fDe
 			break;
 
 		case ITEM_SUITABILITY_HIGH:
-			ubChance = (fBobbyRay) ? 75 : 50;
+
+			//Added because the Exp needs to have most guns available to the user
+			if( !fDealerIsSelling && ( ARMS_DEALER_BIG_GUNS & GetArmsDealerItemTypeFromItemNumber( usItemIndex ) ) )
+			{
+				ubChance = 80;
+			}
+			else
+			{
+				ubChance = (fBobbyRay) ? 50 : 75;		//JA25: changed to increase likely hood of item appearing
+			}
 			break;
 
 		case ITEM_SUITABILITY_ALWAYS:

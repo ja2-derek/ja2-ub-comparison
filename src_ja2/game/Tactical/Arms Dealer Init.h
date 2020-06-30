@@ -126,6 +126,11 @@ enum
 // Franz Hinkle
 #define	ARMS_DEALER_FLAG__FRANZ_HAS_SOLD_VIDEO_CAMERA_TO_PLAYER		0x00000001	// Franz Hinkle has sold the video camera to the player
 
+//Raul
+#define	ARMS_DEALER_FLAG__RAUL_HAS_SOLD_BARRETT_TO_PLAYER					0x00000001	// Raul has sold the Barrett to the player
+#define	ARMS_DEALER_FLAG__RAUL_SAID_QUOTE_48											0x00000002	// Raul said the quote for when the player first puts the hand cannon down
+#define	ARMS_DEALER_FLAG__RAUL_SAID_QUOTE_49											0x00000004	// Quote for when player removes hand cannon from players offer area
+#define	ARMS_DEALER_FLAG__RAUL_SAID_QUOTE_50											0x00000008	// Quote for when player adds the hand cannon AGAIN into the players offer area
 
 // THIS STRUCTURE HAS UNCHANGING INFO THAT DOESN'T GET SAVED/RESTORED/RESET
 typedef struct
@@ -163,7 +168,8 @@ typedef struct
 
 	UINT32	uiTimePlayerLastInSKI;	// game time (in total world minutes) when player last talked to this dealer in SKI
 
-	UINT8		ubPadding[ 8 ];
+	BOOLEAN	fHasSoldSomethingToPlayer;	//If set, the player has at some point sold something to the player
+	UINT8		ubPadding[ 7 ];
 
 } ARMS_DEALER_STATUS;
 
@@ -299,5 +305,8 @@ BOOLEAN DealerItemIsSafeToStack( UINT16 usItemIndex );
 UINT32 CalculateOvernightRepairDelay( UINT8 ubArmsDealer, UINT32 uiTimeWhenFreeToStartIt, UINT32 uiMinutesToFix );
 UINT32 CalculateMinutesClosedBetween( UINT8 ubArmsDealer, UINT32 uiStartTime, UINT32 uiEndTime );
 
+void AddTexsVideosToBettysInventory();
+
+void DailyCheckOnItemQuantities( BOOLEAN fInstallyHaveItemsAppear );
 
 #endif

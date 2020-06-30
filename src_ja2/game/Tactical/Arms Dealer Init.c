@@ -33,7 +33,7 @@
 #define PRICE_CLASS_CHEAP									1
 #define PRICE_CLASS_EXPENSIVE							2
 
-void ConvertCreatureBloodToElixir( void );
+//Ja25: No creatures void ConvertCreatureBloodToElixir( void );
 
 UINT8 gubLastSpecialItemAddedAtElement = 255;
 
@@ -45,33 +45,38 @@ ARMS_DEALER_INFO  ArmsDealerInfo[ NUM_ARMS_DEALERS ] =
 									//Price			Price							Of											Cash	
 									//Modifier	Modifier					Dealer
 
-/* Tony  */					{ 0.75f,	1.25f,	TONY,			ARMS_DEALER_BUYS_SELLS, 15000,	ARMS_DEALER_SOME_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
-/* Franz Hinkle */	{ 1.0f,		1.5f,		FRANZ,		ARMS_DEALER_BUYS_SELLS,	5000,	ARMS_DEALER_SOME_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
-/* Keith Hemps */		{ 0.75f,	1.0f,		KEITH,		ARMS_DEALER_BUYS_SELLS,	1500,	ARMS_DEALER_ONLY_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
-/* Jake Cameron */	{ 0.8f,		1.1f,		JAKE,			ARMS_DEALER_BUYS_SELLS,	2500,	ARMS_DEALER_ONLY_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
-/* Gabby Mulnick*/	{ 1.0f,		1.0f,		GABBY,		ARMS_DEALER_BUYS_SELLS,	3000,	ARMS_DEALER_GIVES_CHANGE																},
+/* Raul  */					{ 0.80f,	1.8f,	RAUL,			ARMS_DEALER_BUYS_SELLS, 20000,	ARMS_DEALER_SOME_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
+/* Betty  */				{ 0.75f,	1.25f,	BETTY,		ARMS_DEALER_BUYS_SELLS, 10000,	ARMS_DEALER_SOME_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
 
-/* Devin Connell*/	{ 0.75f,	1.25f,	DEVIN,		ARMS_DEALER_SELLS_ONLY,	5000,	ARMS_DEALER_GIVES_CHANGE																},
-/* Howard Filmore*/	{ 1.0f,		1.0f,		HOWARD,		ARMS_DEALER_SELLS_ONLY,	3000,	ARMS_DEALER_GIVES_CHANGE																},
-/* Sam Rozen */			{ 1.0f,		1.0f,		SAM,			ARMS_DEALER_SELLS_ONLY,	3000,	ARMS_DEALER_GIVES_CHANGE																},
-/* Frank */					{ 1.0f,		1.0f,		FRANK,		ARMS_DEALER_SELLS_ONLY,	 500,	ARMS_DEALER_ACCEPTS_GIFTS																},
+//JA25: None of the dealers below are in the exp
+/* Tony  * /					{ 0.75f,	1.25f,	TONY,			ARMS_DEALER_BUYS_SELLS, 15000,	ARMS_DEALER_SOME_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
+/* Franz Hinkle 	{ 1.0f,		1.5f,		FRANZ,		ARMS_DEALER_BUYS_SELLS,	5000,	ARMS_DEALER_SOME_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
+/* Keith Hemps 		{ 0.75f,	1.0f,		KEITH,		ARMS_DEALER_BUYS_SELLS,	1500,	ARMS_DEALER_ONLY_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
+/* Jake Cameron 	{ 0.8f,		1.1f,		JAKE,			ARMS_DEALER_BUYS_SELLS,	2500,	ARMS_DEALER_ONLY_USED_ITEMS | ARMS_DEALER_GIVES_CHANGE	},
+/* Gabby Mulnick	{ 1.0f,		1.0f,		GABBY,		ARMS_DEALER_BUYS_SELLS,	3000,	ARMS_DEALER_GIVES_CHANGE																},
 
-/* Bar Bro 1 */			{ 1.0f,		1.0f,		HERVE,		ARMS_DEALER_SELLS_ONLY,	 250,	ARMS_DEALER_ACCEPTS_GIFTS																},
-/* Bar Bro 2 */			{ 1.0f,		1.0f,		PETER,		ARMS_DEALER_SELLS_ONLY,	 250,	ARMS_DEALER_ACCEPTS_GIFTS																},
-/* Bar Bro 3 */			{ 1.0f,		1.0f,		ALBERTO,	ARMS_DEALER_SELLS_ONLY,	 250,	ARMS_DEALER_ACCEPTS_GIFTS																},
-/* Bar Bro 4 */			{ 1.0f,		1.0f,		CARLO,		ARMS_DEALER_SELLS_ONLY,	 250,	ARMS_DEALER_ACCEPTS_GIFTS																},
+/*
+/* Devin Connell	{ 0.75f,	1.25f,	DEVIN,		ARMS_DEALER_SELLS_ONLY,	5000,	ARMS_DEALER_GIVES_CHANGE																},
+/* Howard Filmore	{ 1.0f,		1.0f,		HOWARD,		ARMS_DEALER_SELLS_ONLY,	3000,	ARMS_DEALER_GIVES_CHANGE																},
+/* Sam Rozen 			{ 1.0f,		1.0f,		SAM,			ARMS_DEALER_SELLS_ONLY,	3000,	ARMS_DEALER_GIVES_CHANGE																},
+/* Frank 					{ 1.0f,		1.0f,		FRANK,		ARMS_DEALER_SELLS_ONLY,	 500,	ARMS_DEALER_ACCEPTS_GIFTS																},
 
-/* Micky O'Brien*/	{ 1.0f,		1.4f,		MICKY,		ARMS_DEALER_BUYS_ONLY, 10000,	ARMS_DEALER_HAS_NO_INVENTORY | ARMS_DEALER_GIVES_CHANGE },
+/* Bar Bro 1 			{ 1.0f,		1.0f,		HERVE,		ARMS_DEALER_SELLS_ONLY,	 250,	ARMS_DEALER_ACCEPTS_GIFTS																},
+/* Bar Bro 2 			{ 1.0f,		1.0f,		PETER,		ARMS_DEALER_SELLS_ONLY,	 250,	ARMS_DEALER_ACCEPTS_GIFTS																},
+/* Bar Bro 3 			{ 1.0f,		1.0f,		ALBERTO,	ARMS_DEALER_SELLS_ONLY,	 250,	ARMS_DEALER_ACCEPTS_GIFTS																},
+/* Bar Bro 4 		{ 1.0f,		1.0f,		CARLO,		ARMS_DEALER_SELLS_ONLY,	 250,	ARMS_DEALER_ACCEPTS_GIFTS																},
+
+/* Micky O'Brien	{ 1.0f,		1.4f,		MICKY,		ARMS_DEALER_BUYS_ONLY, 10000,	ARMS_DEALER_HAS_NO_INVENTORY | ARMS_DEALER_GIVES_CHANGE },
 
 										//Repair	Repair
 										//Speed		Cost
-/* Arnie Brunzwell*/{ 0.1f,		0.8f,		ARNIE,		ARMS_DEALER_REPAIRS,		1500,	ARMS_DEALER_HAS_NO_INVENTORY | ARMS_DEALER_GIVES_CHANGE	},
-/* Fredo */					{ 0.6f,		0.6f,		FREDO,		ARMS_DEALER_REPAIRS,		1000,	ARMS_DEALER_HAS_NO_INVENTORY | ARMS_DEALER_GIVES_CHANGE },
-/* Perko */					{ 1.0f,		0.4f,	  PERKO,		ARMS_DEALER_REPAIRS,		1000,	ARMS_DEALER_HAS_NO_INVENTORY | ARMS_DEALER_GIVES_CHANGE },
+/* Arnie Brunzwell{ 0.1f,		0.8f,		ARNIE,		ARMS_DEALER_REPAIRS,		1500,	ARMS_DEALER_HAS_NO_INVENTORY | ARMS_DEALER_GIVES_CHANGE	},
+/* Fredo 					{ 0.6f,		0.6f,		FREDO,		ARMS_DEALER_REPAIRS,		1000,	ARMS_DEALER_HAS_NO_INVENTORY | ARMS_DEALER_GIVES_CHANGE },
+/* Perko 					{ 1.0f,		0.4f,	  PERKO,		ARMS_DEALER_REPAIRS,		1000,	ARMS_DEALER_HAS_NO_INVENTORY | ARMS_DEALER_GIVES_CHANGE },
 
-/* Elgin */					{ 1.0f,		1.0f,	  DRUGGIST,	ARMS_DEALER_SELLS_ONLY,	 500,	ARMS_DEALER_ACCEPTS_GIFTS																},
-/* Manny */					{ 1.0f,		1.0f,	  MANNY,		ARMS_DEALER_SELLS_ONLY,	 500,	ARMS_DEALER_ACCEPTS_GIFTS																},
-
+/* Elgin 					{ 1.0f,		1.0f,	  DRUGGIST,	ARMS_DEALER_SELLS_ONLY,	 500,	ARMS_DEALER_ACCEPTS_GIFTS																},
+/* Manny 					{ 1.0f,		1.0f,	  MANNY,		ARMS_DEALER_SELLS_ONLY,	 500,	ARMS_DEALER_ACCEPTS_GIFTS																},
+*/
 };
 
 
@@ -91,13 +96,15 @@ void		AddSpecialItemToArmsDealerInventoryAtElement( UINT8 ubArmsDealer, UINT16 u
 
 void		RemoveRandomItemFromArmsDealerInventory( UINT8 ubArmsDealer, UINT16 usItemIndex, UINT8 ubHowMany );
 
-void		DailyCheckOnItemQuantities();
+//void		DailyCheckOnItemQuantities( BOOLEAN fInstallyHaveItemsAppear );
 void		SimulateArmsDealerCustomer();
 
 BOOLEAN AdjustCertainDealersInventory();
 void		LimitArmsDealersInventory( UINT8 ubArmsDealer, UINT32 uDealerItemType, UINT8 ubMaxNumberOfItemType );
 void		GuaranteeAtLeastOneItemOfType( UINT8 ubArmsDealer, UINT32 uiDealerItemType );
 void		GuaranteeAtLeastXItemsOfIndex( UINT8 ubArmsDealer, UINT16 usItemIndex, UINT8 ubHowMany );
+void		GuaranteeAtMostNumOfItemsForItem( UINT8 ubArmsDealer, INT16 sItemIndex, UINT8 ubAtMostNumItems );
+//void		GuaranteeAtLeastNumOfItemsForItem( UINT8 ubArmsDealer, INT16 sItemIndex, UINT8 ubAtLeastNumItems );
 
 BOOLEAN AllocMemsetSpecialItemArray( DEALER_ITEM_HEADER *pDealerItem, UINT8 ubElementsNeeded );
 BOOLEAN ResizeSpecialItemArray( DEALER_ITEM_HEADER *pDealerItem, UINT8 ubElementsNeeded );
@@ -120,8 +127,9 @@ void GuaranteeMinimumAlcohol( UINT8 ubArmsDealer );
 BOOLEAN ItemIsARocketRifle( INT16 sItemIndex );
 
 BOOLEAN GetArmsDealerShopHours( UINT8 ubArmsDealer, UINT32 *puiOpeningTime, UINT32 *puiClosingTime );
-
-
+UINT8	GetFirstValidSpecialItemFromDealer( UINT8 ubArmsDealer, INT16 sItemIndex );
+void	BoobyTrapDealersItem( OBJECTTYPE *pTempObject );
+BOOLEAN CanThisItemBeSoldToSimulatedCustomer( UINT8 ubArmsDealerID, UINT16 usItemIndex );
 
 void InitAllArmsDealers()
 {
@@ -318,7 +326,7 @@ void DailyUpdateOfArmsDealersInventory()
 	SimulateArmsDealerCustomer();
 
 	//if there are some items that are out of stock, order some more
-	DailyCheckOnItemQuantities();
+	DailyCheckOnItemQuantities( FALSE );
 
 	//make sure certain items are in stock and certain limits are respected
 	AdjustCertainDealersInventory( );
@@ -348,6 +356,11 @@ void SimulateArmsDealerCustomer()
 		//loop through all items of the same type
 		for( usItemIndex = 1; usItemIndex < MAXITEMS; usItemIndex++ )
 		{
+			if( !CanThisItemBeSoldToSimulatedCustomer( ubArmsDealer, usItemIndex ) )
+			{
+				continue;
+			}
+
 			//if there are some of these in stock
 			if( gArmsDealersInventory[ ubArmsDealer ][ usItemIndex ].ubTotalItems > 0)
 			{
@@ -389,7 +402,7 @@ void SimulateArmsDealerCustomer()
 }
 
 
-void DailyCheckOnItemQuantities()
+void DailyCheckOnItemQuantities( BOOLEAN fInstallyHaveItemsAppear )
 {
 	UINT8		ubArmsDealer;
 	UINT16	usItemIndex;
@@ -437,6 +450,14 @@ void DailyCheckOnItemQuantities()
 							// figure out how many items to reorder (items are reordered an entire batch at a time)
 							ubNumItems = HowManyItemsToReorder( ubMaxSupply, gArmsDealersInventory[ ubArmsDealer ][ usItemIndex ].ubTotalItems );
 
+							//if the dealer is betty, and we are to ADD the stuff instantly
+							if( ubArmsDealer == ARMS_DEALER_BETTY && fInstallyHaveItemsAppear &&
+									( usItemIndex == MEDICKIT || usItemIndex == FIRSTAIDKIT ) )
+							{
+								ubNumItems = ubMaxSupply + ubMaxSupply/2;
+							}
+
+
 							// if this is the first day the player is eligible to have access to this thing
 							if ( !fPrevElig )
 							{
@@ -446,10 +467,18 @@ void DailyCheckOnItemQuantities()
 							}
 							else
 							{
+/*
+//Ja25 Neither dealer is in
 								if ( ( ubArmsDealer == ARMS_DEALER_TONY ) || ( ubArmsDealer == ARMS_DEALER_DEVIN ) )
 								{
 									// the stuff Tony and Devin sell is imported, so it takes longer to arrive (for game balance)
 									ubReorderDays = ( UINT8) ( 2 + Random( 2 ) );	// 2-3 days
+								}
+								else
+*/
+								if( fInstallyHaveItemsAppear )
+								{
+									ubReorderDays = 0;
 								}
 								else
 								{
@@ -462,6 +491,12 @@ void DailyCheckOnItemQuantities()
 								// post new order
 								gArmsDealersInventory[ ubArmsDealer ][ usItemIndex ].ubQtyOnOrder = ubNumItems;
 								gArmsDealersInventory[ ubArmsDealer ][ usItemIndex ].uiOrderArrivalTime = uiArrivalDay;
+
+								if( fInstallyHaveItemsAppear )
+								{
+									usItemIndex--;
+									continue;
+								}
 							}
 						}
 					}
@@ -476,6 +511,13 @@ void DailyCheckOnItemQuantities()
 						//reset order
 						gArmsDealersInventory[ ubArmsDealer ][ usItemIndex ].ubQtyOnOrder = 0;
 						gArmsDealersInventory[ ubArmsDealer ][ usItemIndex ].uiOrderArrivalTime = 0;
+
+						//if the dealer is RAUL
+						if( ubArmsDealer == ARMS_DEALER_RAUL )
+						{
+							//set the fact the raul refreshed his inventory
+							SetFactTrue( FACT_RAULS_INVENTORY_CHANGED_SINCE_LAST_VISIT );
+						}
 					}
 				}
 			}
@@ -515,6 +557,25 @@ void ConvertCreatureBloodToElixir( void )
 
 BOOLEAN AdjustCertainDealersInventory( )
 {
+	//Adjust Raul's items (this restocks *instantly* 1/day, doesn't use the reorder system)
+//	GuaranteeAtLeastOneItemOfType( ARMS_DEALER_RAUL, ARMS_DEALER_BIG_GUNS );
+//	LimitArmsDealersInventory( ARMS_DEALER_RAUL, ARMS_DEALER_BIG_GUNS, 6 );
+//	LimitArmsDealersInventory( ARMS_DEALER_RAUL, ARMS_DEALER_HANDGUNCLASS, 5 );
+//	LimitArmsDealersInventory( ARMS_DEALER_RAUL, ARMS_DEALER_AMMO, 10 );
+
+	//if Raul hasnt yet sold the barret
+	if( !( gArmsDealerStatus[ ARMS_DEALER_RAUL ].ubSpecificDealerFlags & ARMS_DEALER_FLAG__RAUL_HAS_SOLD_BARRETT_TO_PLAYER ) )
+	{
+		//Guarentee at least 1 Barrett
+		GuaranteeAtLeastXItemsOfIndex( ARMS_DEALER_RAUL, BARRETT, 1 );
+		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_RAUL, BARRETT, 1 );
+	}
+	else
+	{
+		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_RAUL, BARRETT, 0 );
+	}
+
+
 	//if the player hasnt done the "killed the annoying bloodcats" quest for betty, 
 	if( gubQuest[ QUEST_FIX_LAPTOP ] != QUESTDONE )
 	{
@@ -526,12 +587,31 @@ BOOLEAN AdjustCertainDealersInventory( )
 		//if the quest is done, dont have 1
 		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_BETTY, LAPTOP_TRANSMITTER, 0 );
 	}
+
+
+	//Guarntee 1 laptop transmitter to be at betty's
+	GuaranteeAtLeastXItemsOfIndex( ARMS_DEALER_BETTY, PORNOS, 1 );
+
+	//if the player hasnt done the "killed the annoying bloodcats" quest for betty, 
+	if( gubQuest[ QUEST_GET_RID_BLOODCATS_AT_BETTYS ] != QUESTDONE )
+	{
+		//make sure she doesnt sell these items just yet
+		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_BETTY, FIRSTAIDKIT, 0 );
+		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_BETTY, MEDICKIT, 0 );
+		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_BETTY, COMPOUND18, 0 );
+		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_BETTY, CERAMIC_PLATES, 0 );
+		GuaranteeAtMostNumOfItemsForItem( ARMS_DEALER_BETTY, LAME_BOY, 0 );
+	}
+
+	
+/*
 	//Adjust Tony's items (this restocks *instantly* 1/day, doesn't use the reorder system)
 	GuaranteeAtLeastOneItemOfType( ARMS_DEALER_TONY, ARMS_DEALER_BIG_GUNS );
 	LimitArmsDealersInventory( ARMS_DEALER_TONY, ARMS_DEALER_BIG_GUNS, 2 );
 	LimitArmsDealersInventory( ARMS_DEALER_TONY, ARMS_DEALER_HANDGUNCLASS, 3 );
 	LimitArmsDealersInventory( ARMS_DEALER_TONY, ARMS_DEALER_AMMO, 8 );
 
+Ja25: None of these dealers are in exp.
 	//Adjust all bartenders' alcohol levels to a minimum
 	GuaranteeMinimumAlcohol( ARMS_DEALER_FRANK );
 	GuaranteeMinimumAlcohol( ARMS_DEALER_BAR_BRO_1 );
@@ -555,6 +635,7 @@ BOOLEAN AdjustCertainDealersInventory( )
 	{
 		GuaranteeAtLeastXItemsOfIndex( ARMS_DEALER_FRANZ, VIDEO_CAMERA, 1 );
 	}
+*/
 
 
 	return( TRUE );
@@ -1131,6 +1212,8 @@ BOOLEAN CanDealerTransactItem( UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN f
 		case ARMS_DEALER_BUYS_SELLS:
 			switch ( ubArmsDealer )
 			{
+/*
+Ja25 No dealers whcih do both in exp.  ( yet )
 				case ARMS_DEALER_JAKE:
 				case ARMS_DEALER_KEITH:
 				case ARMS_DEALER_FRANZ:
@@ -1141,7 +1224,7 @@ BOOLEAN CanDealerTransactItem( UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN f
 					}
 					//else selling inventory uses their inventory list
 					break;
-
+*/
 				default:
 					// the others go by their inventory list
 					break;
@@ -1174,8 +1257,13 @@ BOOLEAN CanDealerRepairItem( UINT8 ubArmsDealer, UINT16 usItemIndex )
 		return(FALSE);
 	}
 
+//Ja25: TEMP!!!
+	return( FALSE );
+
 	switch ( ubArmsDealer )
 	{
+/*
+Ja25 neither in exp.
 		case ARMS_DEALER_ARNIE:
 		case ARMS_DEALER_PERKO:
 			// repairs ANYTHING non-electronic
@@ -1192,7 +1280,7 @@ BOOLEAN CanDealerRepairItem( UINT8 ubArmsDealer, UINT16 usItemIndex )
 				return(TRUE);
 			}
 			break;
-
+*/
 		default:
 			AssertMsg( FALSE, String( "CanDealerRepairItem(), Arms Dealer %d is not a recognized repairman!.  AM 1.", ubArmsDealer ) );
 	}
@@ -1322,10 +1410,17 @@ UINT8 DetermineDealerItemCondition( UINT8 ubArmsDealer, UINT16 usItemIndex )
 	{
 		// if he ONLY has used items, or 50% of the time if he carries both used & new items
 		if ( ( ArmsDealerInfo[ ubArmsDealer ].uiFlags & ARMS_DEALER_ONLY_USED_ITEMS ) ||
-			 ( ( ArmsDealerInfo[ ubArmsDealer ].uiFlags & ARMS_DEALER_SOME_USED_ITEMS ) && ( Random( 100 ) < 50 ) ) )
+			 ( ( ArmsDealerInfo[ ubArmsDealer ].uiFlags & ARMS_DEALER_SOME_USED_ITEMS ) && ( Random( 100 ) < 30 ) ) )	//Ja25: lowered chance of used
 		{
 			// make the item a used one
-			ubCondition = (UINT8)(20 + Random( 60 ));
+			ubCondition = (UINT8)(40 + Random( 50 ));
+
+			//The barrett should be in good condition
+			if( usItemIndex == BARRETT )
+			{
+				ubCondition = 100;
+			}
+
 		}
 	}
 
@@ -1879,6 +1974,7 @@ BOOLEAN AddDeadArmsDealerItemsToWorld( UINT8 ubMercID )
 	OBJECTTYPE TempObject;
 	DEALER_SPECIAL_ITEM *pSpecialItem;
 	SPECIAL_ITEM_INFO SpclItemInfo;
+	BOOLEAN	fBoobyTrapItemsWhenDropping=FALSE;
 
 
 	//Get Dealer ID from from merc Id
@@ -1904,6 +2000,18 @@ BOOLEAN AddDeadArmsDealerItemsToWorld( UINT8 ubMercID )
 		return( FALSE );
 	}
 
+
+	//if Raul blew him,self up, dont drop any items
+	if( pSoldier->ubProfile == RAUL && IsJa25GeneralFlagSet( JA_GF__RAUL_BLOW_HIMSELF_UP ) )
+	{
+		return( TRUE );
+	}
+
+	//if the dealer is raul, and he is DEAD
+	if( ubMercID == RAUL && pSoldier->bLife <= 0 )
+	{
+		fBoobyTrapItemsWhenDropping = TRUE;
+	}
 
 	//loop through all the items in the dealer's inventory, and drop them all where the dealer was set up.
 
@@ -1936,6 +2044,13 @@ BOOLEAN AddDeadArmsDealerItemsToWorld( UINT8 ubMercID )
 					ubNowDropping = min( ubLeftToDrop, ubHowManyMaxAtATime );
 
 					MakeObjectOutOfDealerItems( usItemIndex, &SpclItemInfo, &TempObject, ubNowDropping );
+
+					//if the items should be booby traped when adding them to the world
+					if( fBoobyTrapItemsWhenDropping )
+					{
+						BoobyTrapDealersItem( &TempObject );
+					}
+
 					AddItemToPool( pSoldier->sInitialGridNo, &TempObject, INVISIBLE, 0, 0, 0 );
 					
 					ubLeftToDrop -= ubNowDropping;
@@ -1953,6 +2068,13 @@ BOOLEAN AddDeadArmsDealerItemsToWorld( UINT8 ubMercID )
 				if ( pSpecialItem->fActive )
 				{
 					MakeObjectOutOfDealerItems(usItemIndex, &(pSpecialItem->Info), &TempObject, 1 );
+
+					//if the items should be booby traped when adding them to the world
+					if( fBoobyTrapItemsWhenDropping )
+					{
+						BoobyTrapDealersItem( &TempObject );
+					}
+
 					AddItemToPool( pSoldier->sInitialGridNo, &TempObject, INVISIBLE, 0, 0, 0 );
 					RemoveItemFromArmsDealerInventory( bArmsDealer, usItemIndex, &(pSpecialItem->Info), 1 );
 				}
@@ -1974,6 +2096,12 @@ BOOLEAN AddDeadArmsDealerItemsToWorld( UINT8 ubMercID )
 		if( !CreateMoney( gArmsDealerStatus[ bArmsDealer ].uiArmsDealersCash, &TempObject ) )
 		{
 			return( FALSE );
+		}
+
+		//if the items should be booby traped when adding them to the world
+		if( fBoobyTrapItemsWhenDropping )
+		{
+			BoobyTrapDealersItem( &TempObject );
 		}
 
 		//add the money item to the dealers feet
@@ -2230,6 +2358,8 @@ UINT32 CalculateSimpleItemRepairTime( UINT8 ubArmsDealer, UINT16 usItemIndex, IN
 	//		 for a full 100% status repair...  Not bad.
 	uiTimeToRepair = (UINT32)( uiRepairCost * ArmsDealerInfo[ ubArmsDealer ].dRepairSpeed );
 
+/*
+JA25: not in exp.
 	// repairs on electronic items take twice as long if the guy doesn't have the skill
 	// for dealers, this means anyone but Fredo the Electronics guy takes twice as long (but doesn't charge double)
 	// (Mind you, current he's the ONLY one who CAN repair Electronics at all!  Oh well.)
@@ -2237,6 +2367,7 @@ UINT32 CalculateSimpleItemRepairTime( UINT8 ubArmsDealer, UINT16 usItemIndex, IN
 	{
 		uiTimeToRepair *= 2;
 	}
+*/
 
 	// avoid "instant" repairs on really cheap, barely damaged crap...
 	if (uiTimeToRepair < MIN_REPAIR_TIME_IN_MINUTES)
@@ -2495,6 +2626,8 @@ UINT16 CalcValueOfItemToDealer( UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN 
 	// figure out the price class this dealer prefers
 	switch ( ubArmsDealer )
 	{
+/*
+Ja25: no specific dealers yet.
 		case ARMS_DEALER_JAKE:
 			ubDealerPriceClass = PRICE_CLASS_JUNK;
 			break;
@@ -2504,6 +2637,7 @@ UINT16 CalcValueOfItemToDealer( UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN 
 		case ARMS_DEALER_FRANZ:
 			ubDealerPriceClass = PRICE_CLASS_EXPENSIVE;
 			break;
+*/
 
 		// other dealers don't use this system
 		default:
@@ -2520,10 +2654,12 @@ UINT16 CalcValueOfItemToDealer( UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN 
 
 	// the rest of this function applies only to the "general" dealers ( Jake, Keith, and Franz )
 
+/*
+Ja25:
 	// Micky & Gabby specialize in creature parts & such, the others don't buy these at all (exception: jars)
 	if ( ( usItemIndex != JAR ) &&
-				( DoesItemAppearInDealerInventoryList( ARMS_DEALER_MICKY, usItemIndex, TRUE ) ||
-					DoesItemAppearInDealerInventoryList( ARMS_DEALER_GABBY, usItemIndex, TRUE ) ) )
+				( DoesItemAppearInDealerInventoryList( ARMS_DEALER_MICKY, usItemIndex, TRUE ) ) ||
+					DoesItemAppearInDealerInventoryList( ARMS_DEALER_GABBY, usItemIndex, TRUE ) )
 	{
 		return( 0 );
 	}
@@ -2536,6 +2672,7 @@ UINT16 CalcValueOfItemToDealer( UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN 
 			return( 0 );
 		}
 	}
+*/
 
 
 	// figure out which price class it belongs to
@@ -2578,12 +2715,15 @@ UINT16 CalcValueOfItemToDealer( UINT8 ubArmsDealer, UINT16 usItemIndex, BOOLEAN 
 	}
 
 
+/*
+Ja25 no Tony in the exp
 	// Tony specializes in guns, weapons, and ammo, so make others pay much less for that kind of stuff
 	if ( DoesItemAppearInDealerInventoryList( ARMS_DEALER_TONY, usItemIndex, TRUE ) )
 	{
 		// others pay only 1/2 of that value!
 		usValueToThisDealer /= 2;
 	}
+*/
 
 
 	// minimum bet $1 !
@@ -2629,6 +2769,8 @@ BOOLEAN LoadIncompleteArmsDealersStatus( HWFILE hFile, BOOLEAN fIncludesElgin, B
 		return( FALSE );
 	}
 
+/*
+Ja25: Neither dealer is in exp.
 	if ( !fIncludesElgin )
 	{
 		// initialize Elgin now...
@@ -2640,6 +2782,7 @@ BOOLEAN LoadIncompleteArmsDealersStatus( HWFILE hFile, BOOLEAN fIncludesElgin, B
 		// initialize Manny now...
 		InitializeOneArmsDealer( ARMS_DEALER_MANNY );
 	}
+*/
 
 	return(TRUE);
 }
@@ -2874,4 +3017,62 @@ void GuaranteeAtMostNumOfItemsForItem( UINT8 ubArmsDealer, INT16 sItemIndex, UIN
 		}
 	}
 }
+
+
+void AddTexsVideosToBettysInventory()
+{
+	GuaranteeAtLeastXItemsOfIndex( ARMS_DEALER_BETTY, TEX_MOVIE_ATTACK_CLYDESDALES, 1 );
+	GuaranteeAtLeastXItemsOfIndex( ARMS_DEALER_BETTY, TEX_MOVIE_WILD_EAST, 1 );
+	GuaranteeAtLeastXItemsOfIndex( ARMS_DEALER_BETTY, TEX_MOVIE_HAVE_HONDA, 1 );
+}
+
+UINT8	GetFirstValidSpecialItemFromDealer( UINT8 ubArmsDealer, INT16 sItemIndex )
+{
+	UINT8 ubElement = 0;
+
+	Assert( gArmsDealersInventory[ ubArmsDealer ][ sItemIndex ].ubTotalItems > 0 );
+	Assert( gArmsDealersInventory[ ubArmsDealer ][ sItemIndex ].ubElementsAlloced > 0 );
+
+	while( 1 )
+	{
+		if( gArmsDealersInventory[ ubArmsDealer ][ sItemIndex ].SpecialItem[ ubElement ].fActive )
+		{
+			return( ubElement );
+		}
+
+		ubElement++;
+	}
+}
+
+
+void BoobyTrapDealersItem( OBJECTTYPE *pTempObject )
+{
+	INT8 bTrapLevel = 4 + Random( 6 );
+	pTempObject->bTrap = bTrapLevel;
+
+	//Make money real tough to untrap
+	if( pTempObject->usItem == MONEY )
+	{
+		pTempObject->bTrap = 10;
+	}
+}
+
+BOOLEAN CanThisItemBeSoldToSimulatedCustomer( UINT8 ubArmsDealerID, UINT16 usItemIndex )
+{
+	switch( ubArmsDealerID )
+	{
+		case ARMS_DEALER_BETTY:
+			//if the item is..
+
+			if( usItemIndex == TEX_MOVIE_ATTACK_CLYDESDALES ||
+					usItemIndex == TEX_MOVIE_WILD_EAST ||
+					usItemIndex == TEX_MOVIE_HAVE_HONDA ||
+					usItemIndex == LAPTOP_TRANSMITTER )
+			{
+				return( FALSE );
+			}
+			break;
+	}
+
+	return( TRUE );
 }
