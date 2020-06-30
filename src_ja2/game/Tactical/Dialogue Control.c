@@ -1823,12 +1823,29 @@ INT8 *GetDialogueDataFilename( UINT8 ubCharacterNum, UINT16 usQuoteNum, BOOLEAN 
 	{
 		if ( fWavFile )
 		{
+#ifdef RUSSIANGOLD
+			// CJC Nov 28 2002: change to accomodate Russians
+			switch( ubCharacterNum )
+			{
+				case 59:
+				case 60:
+				case 61:
+				case 63:
+				case 64:
+				case 73:
+				case 74:
+				case 75:
+				case 76:
+					sprintf( zFileName,"NPC_SPEECH\\d_U_%02d_%03d.wav",ubCharacterNum,usQuoteNum );
+					break;
+				default:
+					sprintf( zFileName,"NPC_SPEECH\\d_%03d_%03d.wav",ubCharacterNum,usQuoteNum );
+					break;
+			}
+#else
 			// build name of wav file (characternum + quotenum)
-			#ifdef RUSSIAN
-				sprintf( zFileName,"NPC_SPEECH\\g_%03d_%03d.wav",ubCharacterNum,usQuoteNum );
-			#else
 				sprintf( zFileName,"NPC_SPEECH\\d_%03d_%03d.wav",ubCharacterNum,usQuoteNum );
-			#endif
+#endif
 		}
 		else
 		{
@@ -1859,33 +1876,104 @@ INT8 *GetDialogueDataFilename( UINT8 ubCharacterNum, UINT16 usQuoteNum, BOOLEAN 
 
 		if ( fWavFile )
 		{
+#ifdef RUSSIANGOLD
+			// CJC Nov 28 2002: change to accomodate Russians... stupid...
+			switch( ubCharacterNum )
+			{
+				case 59:
+				case 60:
+				case 61:
+				case 63:
+				case 64:
+				case 73:
+				case 74:
+				case 75:
+				case 76:
+					sprintf( zFileName,"NPC_SPEECH\\U_%02d_%03d.wav",ubFileNumID,usQuoteNum );
+					break;
+				default:
+					sprintf( zFileName,"NPC_SPEECH\\%03d_%03d.wav",ubFileNumID,usQuoteNum );
+					break;
+			}
+#else
 			sprintf( zFileName,"NPC_SPEECH\\%03d_%03d.wav",ubFileNumID,usQuoteNum );
+#endif
 		}
 		else
 		{
+#ifdef RUSSIANGOLD
+			switch( ubFileNumID )
+			{
+				case 57:
+				case 58:
+				case 59:
+				case 60:
+				case 61:
+				case 63:
+				case 64:
+					// assume EDT files are in EDT directory on HARD DRIVE
+					sprintf( zFileName,"NPCDATA\\U_%02d.EDT", ubFileNumID );
+					break;
+				default:
+					// assume EDT files are in EDT directory on HARD DRIVE
+					sprintf( zFileName,"NPCDATA\\%03d.EDT", ubFileNumID );
+					break;
+			}
+#else
 		// assume EDT files are in EDT directory on HARD DRIVE
 			sprintf( zFileName,"NPCDATA\\%03d.EDT", ubFileNumID );
+#endif
 		}
 	}
 	else
 	{
 		if ( fWavFile )
 		{
-			#ifdef RUSSIAN
-				if( ubCharacterNum >= FIRST_RPC && gMercProfiles[ ubCharacterNum ].ubMiscFlags & PROFILE_MISC_FLAG_RECRUITED )
+#ifdef RUSSIANGOLD
+			switch( ubCharacterNum )
 				{
-					sprintf( zFileName,"SPEECH\\r_%03d_%03d.wav",ubCharacterNum,usQuoteNum );
+				case 57:
+				case 58:
+				case 59:
+				case 60:
+				case 61:
+				case 63:
+				case 64:
+					sprintf( zFileName,"SPEECH\\U_%02d_%03d.wav",ubCharacterNum,usQuoteNum );
+					break;
+				default:
+					sprintf( zFileName,"SPEECH\\%03d_%03d.wav",ubCharacterNum,usQuoteNum );
+					break;
 				}
-				else
-			#endif
-			{	// build name of wav file (characternum + quotenum)
+#else
+			// build name of wav file (characternum + quotenum)
 				sprintf( zFileName,"SPEECH\\%03d_%03d.wav",ubCharacterNum,usQuoteNum );
-			}
+#endif
 		}
 		else
 		{
+#ifdef RUSSIANGOLD
+			switch( ubCharacterNum )
+			{
+				case 57:
+				case 58:
+				case 59:
+				case 60:
+				case 61:
+				case 63:
+				case 64:
+					// assume EDT files are in EDT directory on HARD DRIVE
+					sprintf( zFileName,"MERCEDT\\U_%02d.EDT", ubCharacterNum );
+					break;
+				default:
+					// assume EDT files are in EDT directory on HARD DRIVE
+					sprintf( zFileName,"MERCEDT\\%03d.EDT", ubCharacterNum );
+					break;
+			}
+#else
 			// assume EDT files are in EDT directory on HARD DRIVE
 			sprintf( zFileName,"MERCEDT\\%03d.EDT", ubCharacterNum );
+#endif
 		}
 	}
 
