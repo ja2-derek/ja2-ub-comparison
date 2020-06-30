@@ -3795,12 +3795,12 @@ void PerformTransaction( UINT32 uiMoneyFromPlayersAccount )
 		if( uiArmsDealersItemsCost > uiPlayersTotalMoneyValue )
 		{
 			//if the player doesn't have enough money in his account to pay the rest
-			if( uiArmsDealersItemsCost > uiPlayersTotalMoneyValue + LaptopSaveInfo.iCurrentBalance )
+			if( (INT32)uiArmsDealersItemsCost > (INT32)uiPlayersTotalMoneyValue + LaptopSaveInfo.iCurrentBalance )
 			{
 				// tell player he can't possibly afford this
 				SpecialCharacterDialogueEvent( DIALOGUE_SPECIAL_EVENT_SHOPKEEPER, 6,0, 0, giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI );
 				SpecialCharacterDialogueEvent( DIALOGUE_SPECIAL_EVENT_SKIP_A_FRAME, 0,0, 0, giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI );
-				SpecialCharacterDialogueEvent( DIALOGUE_SPECIAL_EVENT_SHOPKEEPER, 0, ( uiArmsDealersItemsCost - ( LaptopSaveInfo.iCurrentBalance + uiPlayersTotalMoneyValue ) ), 0, giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI );
+				SpecialCharacterDialogueEvent( DIALOGUE_SPECIAL_EVENT_SHOPKEEPER, 0, ( (INT32)uiArmsDealersItemsCost - ( LaptopSaveInfo.iCurrentBalance + (INT32)uiPlayersTotalMoneyValue ) ), 0, giShopKeeperFaceIndex, DIALOGUE_SHOPKEEPER_UI );
 			}
 			else
 			{
@@ -5796,7 +5796,7 @@ void EnableDisableEvaluateAndTransactionButtons()
 	}
 
 
-	if( uiArmsDealerTotalCost > uiPlayersOfferAreaTotalCost + LaptopSaveInfo.iCurrentBalance )
+	if( (INT32)uiArmsDealerTotalCost > (INT32)uiPlayersOfferAreaTotalCost + LaptopSaveInfo.iCurrentBalance )
 	{
 		DisableButton( guiSKI_TransactionButton );
 	}
