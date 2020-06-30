@@ -918,6 +918,10 @@ Ja25 no creatures
 		// ATE: Set Flag for being visited...
 		SetSectorFlag( sMapX, sMapY, bMapZ, SF_HAS_ENTERED_TACTICAL );
 
+		// If any emails should be sent from this sector
+		HandleEmailBeingSentWhenEnteringSector( sMapX, sMapY, bMapZ, FALSE );
+
+
 		// ATE; Reset some flags for creature sayings....
 		gTacticalStatus.fSaidCreatureFlavourQuote = FALSE;
 		gTacticalStatus.fHaveSeenCreature					= FALSE;
@@ -3261,8 +3265,13 @@ JA25: There is no mines
 */
 	// Daily merc reputation processing events
 	AddEveryDayStrategicEvent( EVENT_SETUP_TOWN_OPINION, 0, 0 );
+
+
+/*
+Ja25:  No enrico mail
 	// Daily checks for E-mail from Enrico
 	AddEveryDayStrategicEvent( EVENT_ENRICO_MAIL, ENRICO_MAIL_TIME , 0 );
+*/
 
 	// Hourly update of all sorts of things
 	AddPeriodStrategicEvent( EVENT_HOURLY_UPDATE, 60, 0 );
@@ -4726,4 +4735,84 @@ void HandlePotentialMoraleHitForSkimmingSectors( GROUP *pGroup )
 }
 
 
+
+void HandleEmailBeingSentWhenEnteringSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fLaptopJustGotFixed )
+{
+	SOLDIERTYPE *pSoldier=NULL;
+
+	//
+	// if this sector is a sector we are to send an email to the player from
+	//
+
+	//if the laptop transmiter is not working yet
+	if( gubQuest[ QUEST_FIX_LAPTOP ] != QUESTDONE && !fLaptopJustGotFixed )
+	{
+		//we will send these emails later
+		return;
+	}
+
+	//if miguel is alive
+	if( gubFact[ FACT_PLAYER_IMPORTED_SAVE_MIGUEL_DEAD ] == FALSE )
+	{
+		//if its either J11 or I12 ( or we just got the email back up and we have been to the sector
+		if( ( ( sMapY == 10 && sMapX == 11 ) || ( sMapY == 9 && sMapX == 12 ) && bMapZ == 0 ) ||
+			fLaptopJustGotFixed && 
+			( GetSectorFlagStatus( 11, 10, 0, SF_HAS_ENTERED_TACTICAL ) == TRUE || GetSectorFlagStatus( 12, 9, 0, SF_HAS_ENTERED_TACTICAL ) == TRUE ) )
+		{
+			//and we havent sent it before
+			if( !( gJa25SaveStruct.ubEmailFromSectorFlag & SECTOR_EMAIL__J11_J12 ) )
+			{
+				pSoldier = FindSoldierByProfileID( MANUEL, TRUE );
+
+				//if Manuel isnt on the team
+				if( pSoldier == NULL || gMercProfiles[ MANUEL ].bMercStatus == MERC_IS_DEAD )
+				{
+					//email 8a
+					AddEmail( EMAIL_MIGUELSORRY, EMAIL_MIGUELSORRY_LENGTH, MAIL_MIGUEL,  GetWorldTotalMin() );
+				}
+				else
+				{
+					//email 8b
+					AddEmail( EMAIL_MIGUELMANUEL, EMAIL_MIGUELMANUEL_LENGTH, MAIL_MIGUEL,  GetWorldTotalMin() );
+				}
+
+				//Remeber we sent it
+				gJa25SaveStruct.ubEmailFromSectorFlag |= SECTOR_EMAIL__J11_J12;
+			}
+		}
+
+		//if its the power generator sector
+		if( sMapY == 10 && sMapX == 13 && bMapZ == 0 ||
+			fLaptopJustGotFixed && GetSectorFlagStatus( 13, 10, 0, SF_HAS_ENTERED_TACTICAL ) == TRUE )
+		{
+			//and we havent sent it before
+			if( !( gJa25SaveStruct.ubEmailFromSectorFlag & SECTOR_EMAIL__POWER_GEN ) )
+			{
+				AddEmail( EMAIL_MIGUELSICK, EMAIL_MIGUELSICK_LENGTH, MAIL_MIGUEL,  GetWorldTotalMin() );
+
+				//Remeber we sent it
+				gJa25SaveStruct.ubEmailFromSectorFlag |= SECTOR_EMAIL__POWER_GEN;
+			}
+		}
+	}
+
+
+	//if its the tunnel sector
+	if( sMapY == 10 && sMapX == 14 && bMapZ == 1 ||
+		fLaptopJustGotFixed && GetSectorFlagStatus( 14, 10, 1, SF_HAS_ENTERED_TACTICAL ) == TRUE	)
+	{
+		//and we havent sent it before
+		if( !( gJa25SaveStruct.ubEmailFromSectorFlag & SECTOR_EMAIL__TUNNEL ) )
+		{
+			//If Jerry isnt dead
+			if( gMercProfiles[ JERRY ].bMercStatus != MERC_IS_DEAD )
+			{
+				AddEmail( EMAIL_PILOTFOUND, EMAIL_PILOTFOUND_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+			}
+
+			//Remeber we sent it
+			gJa25SaveStruct.ubEmailFromSectorFlag |= SECTOR_EMAIL__TUNNEL;
+		}
+	}
+}
 

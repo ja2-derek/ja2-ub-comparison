@@ -143,6 +143,8 @@ INT8 HireMerc( MERC_HIRE_STRUCT *pHireMerc)
 		return( MERC_HIRE_FAILED );
 	}
 
+/*
+Ja25: No enrico, therefore, no email
 	if( DidGameJustStart() )
 	{
 		// OK, CHECK FOR FIRST GUY, GIVE HIM SPECIAL ITEM!
@@ -165,6 +167,8 @@ INT8 HireMerc( MERC_HIRE_STRUCT *pHireMerc)
 
 		pHireMerc->ubInsertionCode				= INSERTION_CODE_CHOPPER;
 	}
+*/
+
 
 
 	//record how long the merc will be gone for

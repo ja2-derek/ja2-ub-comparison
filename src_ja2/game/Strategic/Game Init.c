@@ -407,13 +407,28 @@ Ja25 no meanwhiles
 		// this is for the "mercs climbing down from a rope" animation, NOT Skyrider!!
 		ResetHeliSeats( );
 
+/*
+Ja25, dont need all these emails added
 		// Setup two new messages!
 		AddPreReadEmail(OLD_ENRICO_1,OLD_ENRICO_1_LENGTH,MAIL_ENRICO,  GetWorldTotalMin() );
 		AddPreReadEmail(OLD_ENRICO_2,OLD_ENRICO_2_LENGTH,MAIL_ENRICO,  GetWorldTotalMin() );
 		AddPreReadEmail(RIS_REPORT,RIS_REPORT_LENGTH,RIS_EMAIL,  GetWorldTotalMin() );
 		AddPreReadEmail(OLD_ENRICO_3,OLD_ENRICO_3_LENGTH,MAIL_ENRICO,  GetWorldTotalMin() );
-		AddEmail(IMP_EMAIL_INTRO,IMP_EMAIL_INTRO_LENGTH,CHAR_PROFILE_SITE,  GetWorldTotalMin() );
 		//AddEmail(ENRICO_CONGRATS,ENRICO_CONGRATS_LENGTH,MAIL_ENRICO, GetWorldTotalMin() );
+*/
+
+		//Add the initial email from enrico
+		AddEmail( EMAIL_STARTGAME, EMAIL_STARTGAME_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+
+		//Add the initial email from AIM
+		AddEmail( EMAIL_AIMDISCOUNT, EMAIL_AIMDISCOUNT_LENGTH, AIM_SITE,  GetWorldTotalMin() );
+
+		//if the player is not importing the saved game
+		if( !gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+		{
+			// add the imp site email
+			AddEmail(IMP_EMAIL_INTRO,IMP_EMAIL_INTRO_LENGTH,CHAR_PROFILE_SITE,  GetWorldTotalMin() );
+		}
 
 		GivePlayerStartingJa25Money();
 
