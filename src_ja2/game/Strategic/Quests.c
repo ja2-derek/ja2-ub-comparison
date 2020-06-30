@@ -1370,6 +1370,8 @@ void InitQuestEngine()
 	// semi-hack to make the letter quest start right away
 	CheckForQuests( 1 );
 
+/*
+Ja25:	no cambria
 	if ( gGameOptions.fSciFi )
 	{
 		// 3 medical boosters
@@ -1379,6 +1381,7 @@ void InitQuestEngine()
 	{
 		gubCambriaMedicalObjects = 18;
 	}
+*/
 
 	gubBoxingMatchesWon = 0;
 	gubBoxersRests = 0;

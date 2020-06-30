@@ -3240,8 +3240,12 @@ no assassins
 				uiLoyaltyValue = BuildLoyaltyEventValue( BALIME, LOYALTY_PENALTY_ELDIN_KILLED, FALSE );
 				// post the event, 30 minute delay
 				AddStrategicEvent( EVENT_TOWN_LOYALTY_UPDATE, GetWorldTotalMin() + 30, uiLoyaltyValue );
-*/
+* /
+
+/*
+Ja25:	no balime
 				DecrementTownLoyalty( BALIME, LOYALTY_PENALTY_ELDIN_KILLED );
+* /				
 				break;
 			case JOEY:
 				// check to see if Martha can see this
@@ -3256,8 +3260,11 @@ no assassins
 					uiLoyaltyValue = BuildLoyaltyEventValue( CAMBRIA, LOYALTY_PENALTY_MARTHA_HEART_ATTACK, FALSE );
 					// post the event, 30 minute delay
 					AddStrategicEvent( EVENT_TOWN_LOYALTY_UPDATE, GetWorldTotalMin() + 30, uiLoyaltyValue );
-*/
+* /
+/*
+Ja25:	no cambria
 					DecrementTownLoyalty( CAMBRIA, LOYALTY_PENALTY_MARTHA_HEART_ATTACK );
+* /
 				}
 				else	// Martha doesn't see it.  She lives, but Joey is found a day or so later anyways
 				{
@@ -3266,8 +3273,12 @@ no assassins
 					uiLoyaltyValue = BuildLoyaltyEventValue( CAMBRIA, LOYALTY_PENALTY_JOEY_KILLED, FALSE );
 					// post the event, 30 minute delay
 					AddStrategicEvent( EVENT_TOWN_LOYALTY_UPDATE, GetWorldTotalMin() + ( ( 12 + Random(13)) * 60 ), uiLoyaltyValue );
-*/
+* /
+
+/*
+Ja25:	No cambria
 					DecrementTownLoyalty( CAMBRIA, LOYALTY_PENALTY_JOEY_KILLED );
+* /
 				}
 				break;
 			case DYNAMO:
