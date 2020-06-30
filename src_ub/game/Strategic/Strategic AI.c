@@ -443,7 +443,7 @@ Ja25 No strategic ai
 void EvolveQueenPriorityPhase( BOOLEAN fForceChange );
 */
 
-//extern INT16 sWorldSectorLocationOfFirstBattle;
+extern INT16 sWorldSectorLocationOfFirstBattle;
 
 /*
 Ja25 No strategic ai
@@ -2279,6 +2279,16 @@ void SendReinforcementsForGarrison( INT32 iDstGarrisonID, UINT16 usDefencePoints
 	if( iRandom < giReinforcementPool )
 	{ //use the pool and send the requested amount from SECTOR P3 (queen's palace)
 		QUEEN_POOL:
+
+		//KM : Sep 9, 1999
+		//If the player owns sector P3, any troops that spawned there were causing serious problems, seeing battle checks
+		//were not performed!
+		if( !StrategicMap[ CALCULATE_STRATEGIC_INDEX( 3, 16 ) ].fEnemyControlled )
+		{ //Queen can no longer send reinforcements from the palace if she doesn't control it!
+			return;
+		}
+
+
 		if( !giReinforcementPool )
 		{
 			ValidateWeights( 11 );
@@ -3205,6 +3215,33 @@ Ja25: No Queen
 		}
 	}
 
+	if( ubSAIVersion < 28 )
+	{
+		GROUP *pNext;
+		if( !StrategicMap[ CALCULATE_STRATEGIC_INDEX( 3, 16 ) ].fEnemyControlled )
+		{ //Eliminate all enemy groups in this sector, because the player owns the sector, and it is not
+			//possible for them to spawn there!
+			pGroup = gpGroupList;
+			while( pGroup )
+			{
+				pNext = pGroup->next;
+				if( !pGroup->fPlayer )
+				{
+					if( pGroup->ubSectorX == 3 && pGroup->ubSectorY == 16 && !pGroup->ubPrevX && !pGroup->ubPrevY )
+					{
+						ClearPreviousAIGroupAssignment( pGroup );
+						RemovePGroup( pGroup );
+					}
+				}
+				pGroup = pNext;
+			}
+		}
+	}
+	if( ubSAIVersion < 29 )
+	{
+		InitStrategicMovementCosts();
+	}
+
 	//KM : Aug 11, 1999 -- Patch fix:  Blindly update the airspace control.  There is a bug somewhere 
 	//		 that is failing to keep this information up to date, and I failed to find it.  At least this 
 	//		 will patch saves.
@@ -3430,12 +3467,10 @@ void EvolveQueenPriorityPhase( BOOLEAN fForceChange )
 
 void ExecuteStrategicAIAction( UINT16 usActionCode, INT16 sSectorX, INT16 sSectorY )
 {
-//	GROUP *pGroup, *pPendingGroup = NULL;
-	GROUP *pPendingGroup = NULL;
-//	SECTORINFO *pSector;
-//	UINT8 ubSectorID;
-//	UINT8 ubNumSoldiers;
-
+	GROUP *pGroup, *pPendingGroup = NULL;
+	SECTORINFO *pSector;
+	UINT8 ubSectorID;
+	UINT8 ubNumSoldiers;
 	switch( usActionCode )
 	{
 		case STRATEGIC_AI_ACTION_WAKE_QUEEN:
