@@ -7,12 +7,15 @@
 
 #define			MAP_WORLD_X						18
 #define			MAP_WORLD_Y						18
-#define START_SECTOR_X  9 // A9 - Omerta
-#define START_SECTOR_Y  1
+#define START_SECTOR_X  JA2_5_START_SECTOR_X
+#define START_SECTOR_Y  JA2_5_START_SECTOR_Y
 
+/*
+Ja25 Old Town Names
 // Sector name identifiers
 enum {
-  BLANK_SECTOR=0,
+  OLD_BLANK_SECTOR=0,
+
 	OMERTA,
 	DRASSEN,
 	ALMA,
@@ -25,10 +28,27 @@ enum {
 	BALIME,
 	MEDUNA,
   CHITZENA,
+
+	OLD_NUM_TOWNS
+} OLD_Towns;
+*/
+
+enum
+{
+	BLANK_SECTOR=0,
+
+//	GUARD_POST,
+	TOWN_1,
+//	POWER_GEN,
+//	COMPLEX,
+	ABANDONED_MINE_SECTOR,
+	
 	NUM_TOWNS
 } Towns;
 
-#define FIRST_TOWN	OMERTA
+// JA25 #define FIRST_TOWN	OMERTA
+#define FIRST_TOWN	TOWN_1
+
 //#define PALACE			NUM_TOWNS
 
 

@@ -285,6 +285,8 @@ void AddTextToTownBox( void )
 
 	switch( usTownSectorIndex )
 	{
+/*
+	Ja25:	None of these sectors are in the exp.
 		case SEC_B13:
 			AddMonoString( &hStringHandle, pLandTypeStrings[ DRASSEN_AIRPORT_SITE ] );
 			break;
@@ -312,6 +314,8 @@ void AddTextToTownBox( void )
 				AddMonoString( &hStringHandle, pLandTypeStrings[ MEDUNA_SAM_SITE ] );
 			}
 			else
+*/
+		default:
 			{ // town name
 				swprintf( wString, L"%s", pTownNames[ ubTownId ] );
 				AddMonoString( &hStringHandle, wString );

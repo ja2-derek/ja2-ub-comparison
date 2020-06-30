@@ -1816,15 +1816,33 @@ void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *
 	else if( bSectorZ != 0 )
 	{
 		pUnderground = FindUnderGroundSector( sSectorX, sSectorY, bSectorZ );
-		if( pUnderground && ( pUnderground->fVisited || gfGettingNameFromSaveLoadScreen ) )
+
+		if ( pUnderground )
+		{
+			// ATE: Check if this is a custom sector
+			if ( pUnderground->fCustomSector )
+			{
+				// Use sector name...
+				swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pUnderground->zCustomLevelName );			
+				return;
+			}
+		}
+
+		//Ja25:  DEF: Changed cause we dont need to know the underground status if we are loading a saved game
+		// and the underground sector WILL NOT be loaded when we first load to the main menu
+//		if( pUnderground && ( pUnderground->fVisited || gfGettingNameFromSaveLoadScreen ) )
+		if( ( pUnderground && pUnderground->fVisited ) || gfGettingNameFromSaveLoadScreen )
 		{
 			bMineIndex = GetIdOfMineForSector( sSectorX, sSectorY, bSectorZ );
 			if( bMineIndex != -1 )
 			{
-				swprintf( zString, L"%c%d: %s %s", 'A' + sSectorY - 1, sSectorX, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], pwMineStrings[ 0 ] );
+//Ja25				swprintf( zString, L"%c%d: %s %s", 'A' + sSectorY - 1, sSectorX, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ], pwMineStrings[ 0 ] );
+				swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pTownNames[ GetTownAssociatedWithMine( bMineIndex ) ] );
 			}
 			else switch( SECTOR( sSectorX, sSectorY ) )
 			{
+/* 
+Ja25:  Not in the game
 				case SEC_A10:
 					swprintf( zString, L"A10: %s", pLandTypeStrings[ REBEL_HIDEOUT ] );
 					break;
@@ -1839,6 +1857,23 @@ void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *
 					break;
 				case SEC_P3:
 					swprintf( zString, L"P3: %s", pLandTypeStrings[ SHELTER ] );
+					break;
+*/
+				//caves under power genplant
+				case SEC_J13:
+					swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pTownNames[ 2 ] );
+					break;
+
+				// Final Complex
+				case SEC_K15:
+				case SEC_L15:
+					swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ FINAL_COMPLEX ] );
+					break;
+
+				//Tunnels
+				case SEC_J14:
+				case SEC_K14:
+					swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ TUNNEL ] );
 					break;
 				default:
 					swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ CREATURE_LAIR ] );
@@ -1864,6 +1899,8 @@ void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *
 			// are we dealing with the unfound towns?
 			switch( ubSectorID )
 			{
+/*
+Ja25: None of these sectors are in the game
 				case SEC_D2: //Chitzena SAM
 					if( !fSamSiteFound[ SAM_SITE_ONE ] )
 						wcscat( zString, pLandTypeStrings[ TROPICS ] );
@@ -1888,6 +1925,47 @@ void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *
 					else 
 						wcscat( zString, pLandTypeStrings[ SAM_SITE ] );
 					break;
+*/
+
+				case SEC_H7:
+//					if( pSector->fSurfaceWasEverPlayerControlled )
+					if( GetSectorFlagStatus( 7, 8, 0, SF_ALREADY_VISITED ) == TRUE  || gfGettingNameFromSaveLoadScreen )
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ CRASH_SITE_TYPE ] );
+					else
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ MOUNTAINS_TYPE ] );
+					break;
+
+				case SEC_H8:
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ MOUNTAINS_TYPE ] );
+					break;
+
+				//Guard Post
+				case SEC_H9:
+					if( GetSectorFlagStatus( 9, 8, 0, SF_ALREADY_VISITED ) == TRUE  || gfGettingNameFromSaveLoadScreen )
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ GUARD_POST_TYPE ] );
+					else
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ MOUNTAINS_TYPE ] );
+					break;
+
+				case SEC_J13:
+					if( GetSectorFlagStatus( 13, 10, 0, SF_ALREADY_VISITED ) == TRUE  || gfGettingNameFromSaveLoadScreen )
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ POWER_PLANT_TYPE ] );
+					else
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ UNKNOWN_TYPE ] );
+					break;
+
+				//Complex
+				case SEC_K15:
+					if( GetSectorFlagStatus( 15, 11, 0, SF_ALREADY_VISITED ) == TRUE  || gfGettingNameFromSaveLoadScreen )
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ FINAL_COMPLEX ] );
+					else
+						swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ UNKNOWN_TYPE ] );
+					break;
+
+				case SEC_K16:
+					swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, pLandTypeStrings[ SPARSE ] );
+					break;
+
 				default:
 					wcscat( zString, pLandTypeStrings[ ubLandType ] );
 					break;
@@ -1897,6 +1975,8 @@ void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *
 		{
 			switch( ubSectorID )
 			{
+/*
+Ja25:  None of these sectors are in the game
 				case SEC_B13:
 					if( fDetailed )
 						wcscat( zString, pLandTypeStrings[ DRASSEN_AIRPORT_SITE ] );
@@ -1927,7 +2007,10 @@ void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *
 					else
 						wcscat( zString, pTownNames[ MEDUNA ] );
 					break;
+*/
 				default:
+/*
+Ja25: No meduna
 					if( ubSectorID == SEC_N4 && fSamSiteFound[ SAM_SITE_FOUR ] )
 					{	//Meduna's SAM site
 						if( fDetailed )
@@ -1936,6 +2019,7 @@ void GetSectorIDString( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ , CHAR16 *
 							wcscat( zString, pLandTypeStrings[ SAM_SITE ] );
 					}
 					else 
+*/
 					{	//All other towns that are known since beginning of the game.
 						wcscat( zString, pTownNames[ bTownNameID ] );
 						if( fDetailed )
@@ -3231,6 +3315,11 @@ void SetupNewStrategicGame( )
 			StrategicMap[ CALCULATE_STRATEGIC_INDEX( sSectorX, sSectorY ) ].fEnemyControlled = TRUE;
 		}
 	}
+
+	//Ja25
+	// Make the initial sector free of enemies
+	StrategicMap[ CALCULATE_STRATEGIC_INDEX( START_SECTOR_X, START_SECTOR_Y ) ].fEnemyControlled = FALSE;
+
 
 	//Initialize the game time
 	InitNewGameClock();

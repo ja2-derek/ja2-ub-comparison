@@ -5421,7 +5421,7 @@ BOOLEAN HandleTimeCompressWithTeamJackedInAndGearedToGo( void )
 		return( FALSE );
 	}
 
-	// select starting sector (A9 - Omerta)
+	// select starting sector
 	ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );
 
 	// load starting sector

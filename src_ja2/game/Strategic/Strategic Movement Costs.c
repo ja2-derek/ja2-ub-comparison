@@ -2717,6 +2717,9 @@ void InitStrategicRowP()
 
 void InitStrategicMovementCosts()
 {
+	SetUpValidCampaignSectors( );
+
+	//Setup sectors that cannot be highlighted on the mapscreen map
 	InitStrategicRowA();
 	InitStrategicRowB();
 	InitStrategicRowC();

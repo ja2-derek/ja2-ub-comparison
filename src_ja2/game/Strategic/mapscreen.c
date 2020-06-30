@@ -3287,7 +3287,7 @@ Ja25 no orta
 		}
 		else	// no loaded sector
 		{
-			// only select A9 - Omerta IF there is no current selection, otherwise leave it as is
+			// only select Starting grid # IF there is no current selection, otherwise leave it as is
 			if ( ( sSelMapX == 0 ) || ( sSelMapY == 0 ) || ( iCurrentMapSectorZ == -1 ) )
 			{
 				ChangeSelectedMapSector( START_SECTOR_X, START_SECTOR_Y, 0 );

@@ -372,11 +372,12 @@ UINT32 guiMapBorderEtaPopUp;
 // heli pop up 
 UINT32 guiMapBorderHeliSectors;
 
-// list of map sectors that player isn't allowed to even highlight
-BOOLEAN sBadSectorsList[ WORLD_MAP_X ][ WORLD_MAP_X ];
-
-
-INT16 sBaseSectorList[]={
+//NUM_TOWNS
+INT16 sBaseSectorList[]=
+{
+	SECTOR(  10, 8 ), // Ferrenz
+};
+/*Ja25:  New Towns
 	// NOTE: These co-ordinates must match the top left corner of the 3x3 town tiles cutouts in Interface/MilitiaMaps.sti!
 	SECTOR(  9, 1 ), // Omerta
 	SECTOR( 13, 2 ), // Drassen
@@ -391,11 +392,17 @@ INT16 sBaseSectorList[]={
 	SECTOR(  3,14 ), // Meduna
 	SECTOR(  2, 1 ), // Chitzena
 };
+*/
+
 
 // position of town names on the map
 // these are no longer PIXELS, but 10 * the X,Y position in SECTORS (fractions possible) to the X-CENTER of the town
 POINT pTownPoints[]={
 	{ 0 ,  0 },
+	{ 100, 80 },
+	{ 100, 90 },
+/*
+Ja25: 
 	{ 90, 10}, // Omerta
 	{125, 40}, // Drassen
 	{130, 90}, // Alma
@@ -408,6 +415,7 @@ POINT pTownPoints[]={
 	{110,120}, // Balime
 	{ 45,150}, // Meduna
 	{ 15, 20}, // Chitzena
+*/
 };
 
 
@@ -944,7 +952,9 @@ void ShowTownText( void )
 	SetFont(MAP_FONT);
   SetFontBackground(FONT_MCOLOR_BLACK);
 
- 	for( bTown = FIRST_TOWN; bTown < NUM_TOWNS; bTown++)
+	bTown = TOWN_1;
+//Ja25: only need to display 1 town
+// 	for( bTown = FIRST_TOWN; bTown < NUM_TOWNS; bTown++)
 	{
 		// skip Orta/Tixa until found
 //Ja25:	No orta or tixa		if( ( ( fFoundOrta != FALSE ) || ( bTown != ORTA ) ) && ( ( bTown != TIXA ) || ( fFoundTixa != FALSE) ) )
@@ -3848,8 +3858,7 @@ void DisplayThePotentialPathForHelicopter(INT16 sMapX, INT16 sMapY )
 BOOLEAN IsTheCursorAllowedToHighLightThisSector( INT16 sSectorX, INT16 sSectorY )
 {
 	// check to see if this sector is a blocked out sector?
-
-	if( sBadSectorsList[ sSectorX ][ sSectorY ] )
+	if ( !SectorInfo[ ( SECTOR( sSectorX, sSectorY ) ) ].fValidSector )
 	{
 		return  ( FALSE );
 	}
@@ -3860,46 +3869,68 @@ BOOLEAN IsTheCursorAllowedToHighLightThisSector( INT16 sSectorX, INT16 sSectorY 
 	}
 }
 
-void SetUpBadSectorsList( void )
+void SetUpValidCampaignSectors( void )
 {
-	// initalizes all sectors to highlighable and then the ones non highlightable are marked as such
-	INT8 bY;
 
-	memset( &sBadSectorsList, 0, sizeof( sBadSectorsList ) );
 
-	// the border regions
-	for( bY = 0; bY < WORLD_MAP_X; bY++ )
-	{
-	  sBadSectorsList[ 0 ][ bY ] = sBadSectorsList[ WORLD_MAP_X - 1 ][ bY ] = sBadSectorsList[ bY ][ 0 ] = sBadSectorsList[ bY ][ WORLD_MAP_X - 1 ] = TRUE;
-	}
 	
+	SectorInfo[ ( SECTOR( 7 , 8 ) ) ].fValidSector = TRUE;		//H7
+	SectorInfo[ ( SECTOR( 7 , 8 ) ) ].fCampaignSector = TRUE;
 
-	sBadSectorsList[ 4 ][ 1 ] = TRUE;
-	sBadSectorsList[ 5 ][ 1 ] = TRUE;
-	sBadSectorsList[ 16 ][ 1 ] = TRUE;
-	sBadSectorsList[ 16 ][ 5 ] = TRUE;
-	sBadSectorsList[ 16 ][ 6 ] = TRUE;
-  
+	SectorInfo[ ( SECTOR( 8 , 8 ) ) ].fValidSector = TRUE;		//H8
+	SectorInfo[ ( SECTOR( 8 , 8 ) ) ].fCampaignSector = TRUE;	
 
-	sBadSectorsList[ 16 ][ 10 ] = TRUE;
-	sBadSectorsList[ 16 ][ 11 ] = TRUE;
-	sBadSectorsList[ 16 ][ 12 ] = TRUE;
-	sBadSectorsList[ 16 ][ 13 ] = TRUE;
-	sBadSectorsList[ 16 ][ 14 ] = TRUE;
-	sBadSectorsList[ 16 ][ 15 ] = TRUE;
-	sBadSectorsList[ 16 ][ 16 ] = TRUE;
+	SectorInfo[ ( SECTOR( 9 , 8 ) ) ].fValidSector = TRUE;		//H9
+	SectorInfo[ ( SECTOR( 9 , 8 ) ) ].fCampaignSector = TRUE;		//H9
 
-	sBadSectorsList[ 15 ][ 13 ] = TRUE;
-	sBadSectorsList[ 15 ][ 14 ] = TRUE;
-	sBadSectorsList[ 15 ][ 15 ] = TRUE;
-	sBadSectorsList[ 15 ][ 16 ] = TRUE;
+	SectorInfo[ ( SECTOR( 10 , 8 ) ) ].fValidSector = TRUE;		//H10
+	SectorInfo[ ( SECTOR( 10 , 8 ) ) ].fCampaignSector = TRUE;		
 
-	sBadSectorsList[ 14 ][ 14 ] = TRUE;
-	sBadSectorsList[ 14 ][ 15 ] = TRUE;
-	sBadSectorsList[ 14 ][ 16 ] = TRUE;
 
-	sBadSectorsList[ 13 ][ 14 ] = TRUE;
-	return;
+	SectorInfo[ ( SECTOR( 11, 8 ) ) ].fValidSector = TRUE;		//H11
+	SectorInfo[ ( SECTOR( 11, 8 ) ) ].fCampaignSector = TRUE;		
+
+
+	SectorInfo[ ( SECTOR( 9 , 9 ) ) ].fValidSector = TRUE;		//I9
+	SectorInfo[ ( SECTOR( 9 , 9 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 10 , 9 ) ) ].fValidSector = TRUE;		//I10
+	SectorInfo[ ( SECTOR( 10 , 9 ) ) ].fCampaignSector = TRUE;		
+
+
+	SectorInfo[ ( SECTOR( 11 , 9 ) ) ].fValidSector = TRUE;		//I11
+	SectorInfo[ ( SECTOR( 11 , 9 ) ) ].fCampaignSector = TRUE;	
+
+	SectorInfo[ ( SECTOR( 12 , 9 ) ) ].fValidSector = TRUE;		//I12
+	SectorInfo[ ( SECTOR( 12 , 9 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 13 , 9 ) ) ].fValidSector = TRUE;		//I13
+	SectorInfo[ ( SECTOR( 13 , 9 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 11 , 10 ) ) ].fValidSector = TRUE;		//J11
+	SectorInfo[ ( SECTOR( 11 , 10 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 12 , 10 ) ) ].fValidSector = TRUE;		//J12
+	SectorInfo[ ( SECTOR( 12 , 10 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 13 , 10 ) ) ].fValidSector = TRUE;		//J13
+	SectorInfo[ ( SECTOR( 13 , 10 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 14 , 10 ) ) ].fValidSector = TRUE;		//J14
+	SectorInfo[ ( SECTOR( 14 , 10 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 14 , 11 ) ) ].fValidSector = TRUE;		//K14
+	SectorInfo[ ( SECTOR( 14 , 11 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 15 , 11 ) ) ].fValidSector = TRUE;		//K15
+	SectorInfo[ ( SECTOR( 15 , 11 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 16 , 11 ) ) ].fValidSector = TRUE;		//K16
+	SectorInfo[ ( SECTOR( 16 , 11 ) ) ].fCampaignSector = TRUE;		
+
+	SectorInfo[ ( SECTOR( 15 , 12 ) ) ].fValidSector = TRUE;		//L15
+	SectorInfo[ ( SECTOR( 15 , 12 ) ) ].fCampaignSector = TRUE;		
+
 }
 
 
