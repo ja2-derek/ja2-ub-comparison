@@ -662,6 +662,10 @@ Ja25: no queen
 		}
 	}
 
+	//Modify the enemies stat based on game difficulty ( higher stats on hard, etc.. )
+	ModifyEnemyAtrributesBasedOnGameDifficulty( &tempDetailedPlacement );
+
+
 	if ( pSoldier = TacticalCreateSoldier( &tempDetailedPlacement, &ubID ) )
 	{
 		curr->pSoldier = pSoldier;

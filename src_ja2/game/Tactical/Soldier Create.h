@@ -230,4 +230,6 @@ BOOLEAN InternalTacticalRemoveSoldier( UINT16 usSoldierIndex, BOOLEAN fRemoveVeh
 void OkayToUpgradeEliteToSpecialProfiledEnemy( SOLDIERCREATE_STRUCT *pp );
 extern BOOLEAN gfProfiledEnemyAdded; //needs to be saved (used by the above function)
 
+void		ModifyEnemyAtrributesBasedOnGameDifficulty( SOLDIERCREATE_STRUCT *pp );
+
 #endif

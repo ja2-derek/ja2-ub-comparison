@@ -48,19 +48,25 @@
 
 // THESE 3 DIFFICULTY FACTORS MUST ALWAYS ADD UP TO 100% EXACTLY!!!
 #define DIFF_FACTOR_PLAYER_PROGRESS			50
-#define DIFF_FACTOR_PALACE_DISTANCE			30
-#define DIFF_FACTOR_GAME_DIFFICULTY			20
+#define DIFF_FACTOR_PALACE_DISTANCE			40
+#define DIFF_FACTOR_GAME_DIFFICULTY			10
 
 // additional difficulty modifiers
 #define DIFF_MODIFIER_SOME_PROGRESS			+5
 #define DIFF_MODIFIER_NO_INCOME					-5
 #define DIFF_MODIFIER_DRASSEN_MILITIA		+10
 
-
+/*
+Ja25: No Palace, changed for complex
 #define PALACE_SECTOR_X 3
 #define PALACE_SECTOR_Y 16
 
 #define MAX_PALACE_DISTANCE		20
+*/
+#define PALACE_SECTOR_X 15
+#define PALACE_SECTOR_Y 11
+
+#define MAX_PALACE_DISTANCE		8
 
 
 //Private functions used within TacticalCreateStruct()
@@ -69,7 +75,13 @@ BOOLEAN TacticalCopySoldierFromProfile( SOLDIERTYPE *pSoldier, SOLDIERCREATE_STR
 BOOLEAN TacticalCopySoldierFromCreateStruct( SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct );
 void CopyProfileItems( SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruct );
 UINT8 GetLocationModifier( UINT8 ubSoldierClass );
+
+INT32		EnemyStatModifier( INT32 iStat, UINT8 ubType );
 void ReduceHighExpLevels( INT8 *pbExpLevel );
+void Ja25ScaleAllEnemiesByValue( bExpScaleValue );
+INT8 JA25SecondHighestExpLevelOnPlayersTeam( );
+INT8 JA25HighestExpLevelOnTeam( INT8 bTeam );
+INT32 Ja25EnemyExpLevelModifier( INT8 bCurrentExpLevel );
 
 
 BOOLEAN gfProfiledEnemyAdded = FALSE;
@@ -1114,7 +1126,6 @@ void InitSoldierStruct( SOLDIERTYPE *pSoldier )
 
 	pSoldier->ubAttackerID					= NOBODY;
 	pSoldier->ubPreviousAttackerID	= NOBODY;
-	pSoldier->ubNextToPreviousAttackerID	= NOBODY;
 
 	//Set AI Delay!
 	pSoldier->uiAIDelay							= 100;
@@ -1157,6 +1168,9 @@ void InitSoldierStruct( SOLDIERTYPE *pSoldier )
 	pSoldier->uiXRayActivatedTime			= 0;
 	pSoldier->bBulletsLeft						= 0;
 	pSoldier->bVehicleUnderRepairID		= -1;
+
+
+	ResetSoldierDamageInflictedByTeamArray( pSoldier );
 }
 
 
@@ -1317,13 +1331,16 @@ INT8 CalcDifficultyModifier( UINT8 ubSoldierClass )
 		bDiffModifier += DIFF_MODIFIER_SOME_PROGRESS;
 	}
 
+
+/*
+Ja25:  dont need this in the exp.  No mines
 	// drop it down a bit if we still don't have any mine income
 	if ( PredictIncomeFromPlayerMines() == 0 )
 	{
 		// -5
 		bDiffModifier += DIFF_MODIFIER_NO_INCOME;
 	}
-
+*/
 
 	// adjust for progress level (0 to +50)
 	ubProgressModifier = ( ubProgress * DIFF_FACTOR_PLAYER_PROGRESS ) / 100;
@@ -2008,6 +2025,10 @@ SOLDIERTYPE* TacticalCreateAdministrator()
 	bp.bBodyType = -1;
 	bp.ubSoldierClass = SOLDIER_CLASS_ADMINISTRATOR;
 	CreateDetailedPlacementGivenBasicPlacementInfo( &pp, &bp );
+
+	//Modify the enemies stat based on game difficulty ( higher stats on hard, etc.. )
+	ModifyEnemyAtrributesBasedOnGameDifficulty( &pp );
+
 	pSoldier = TacticalCreateSoldier( &pp, &ubID );
 	if ( pSoldier )
 	{
@@ -2040,6 +2061,10 @@ SOLDIERTYPE* TacticalCreateArmyTroop()
 	bp.bAttitude = (INT8) Random( MAXATTITUDES );
 	bp.bBodyType = -1;
 	bp.ubSoldierClass = SOLDIER_CLASS_ARMY;
+
+	//Modify the enemies stat based on game difficulty ( higher stats on hard, etc.. )
+	ModifyEnemyAtrributesBasedOnGameDifficulty( &pp );
+	
 	CreateDetailedPlacementGivenBasicPlacementInfo( &pp, &bp );
 	pSoldier = TacticalCreateSoldier( &pp, &ubID );
 	if ( pSoldier )
@@ -2075,6 +2100,9 @@ SOLDIERTYPE* TacticalCreateEliteEnemy()
 	bp.bBodyType = -1;
 	bp.ubSoldierClass = SOLDIER_CLASS_ELITE;
 	CreateDetailedPlacementGivenBasicPlacementInfo( &pp, &bp );
+
+	//Modify the enemies stat based on game difficulty ( higher stats on hard, etc.. )
+	ModifyEnemyAtrributesBasedOnGameDifficulty( &pp );
 
 	//SPECIAL!  Certain events in the game can cause profiled NPCs to become enemies.  The two cases are 
 	//adding Mike and Iggy.  We will only add one NPC in any given combat and the conditions for setting
@@ -2149,7 +2177,7 @@ void RandomizeRelativeLevel( INT8 *pbRelLevel, UINT8 ubSoldierClass )
 	// of bad and poor, with avg about best), while enemies in the SW will have lots of great and good, with avg about as
 	// lousy as it gets.  Militia are generally unmodified by distance, and never get bad or great at all.
 
-	// this returns 0 to DIFF_FACTOR_PALACE_DISTANCE (0 to +30)
+	// this returns 0 to DIFF_FACTOR_PALACE_DISTANCE (0 to +40)
 	ubLocationModifier = GetLocationModifier( ubSoldierClass );
 
 	// convert to 0 to 10 (divide by 3), the subtract 5 to get a range of -5 to +5
@@ -2473,9 +2501,144 @@ void TrashAllSoldiers( )
 }
 
 
-
+//Ja25:  Return value between 0 and 40
 UINT8 GetLocationModifier( UINT8 ubSoldierClass )
 {
+	INT16 sSectorX, sSectorY, sSectorZ;
+	BOOLEAN fSuccess;
+	UINT8 ubLocationModifier;
+
+	// where is all this taking place?
+	fSuccess = GetCurrentBattleSectorXYZ( &sSectorX, &sSectorY, &sSectorZ );
+	Assert( fSuccess );
+
+	//switch on the sector, to determine modifer
+	//the modifier is based between 0 and 40.  40 being the "hardest"
+	switch( SECTOR( sSectorX, sSectorY ) )
+	{
+		//Starting sector
+		case SEC_H7:
+			ubLocationModifier = 4;
+			break;
+
+		//First sector that has enemies in it
+		case SEC_H8:
+			ubLocationModifier = 8;
+			break;
+
+		//Guard Post
+		case SEC_H9:
+			ubLocationModifier = 14;
+			break;
+
+		// The 2 "empty" sectors before the town ( north and west of town )
+		case SEC_H10:
+		case SEC_I9:
+			ubLocationModifier = 12;
+			break;
+
+		//the town of varrez
+		case SEC_I10:
+			ubLocationModifier = 16;
+			break;
+		case SEC_I11:
+			ubLocationModifier = 19;
+			break;
+
+
+		// The 2 "empty" sectors after the town ( east and south of town )
+		case SEC_I12:
+		case SEC_J11:
+			ubLocationModifier = 22;
+			break;
+
+		//The abandoned mine
+		case SEC_I13:
+			ubLocationModifier = 22;
+			break;
+
+		//"empty field" that player can take to avoid going through the mine
+		case SEC_J12:
+			ubLocationModifier = 22;
+			break;
+
+		//The power Generator facility
+		case SEC_J13:
+			{
+				//the top floor
+				switch( sSectorZ )
+				{
+					//Main floor
+					case 0:
+						ubLocationModifier = 26;
+						break;
+
+					//Basement level
+					case 1:
+						ubLocationModifier = 15;
+						break;
+					default:
+						Assert( 0 );
+						break;
+				}
+			}
+			break;
+
+		//tunnel levels, no enemies
+		case SEC_J14:
+		case SEC_K14:
+			ubLocationModifier = 35;
+			break;
+
+		case SEC_K15:
+		{
+				//the top floor
+				switch( sSectorZ )
+				{
+					//Main floor
+					case 0:
+						ubLocationModifier = 30;
+						break;
+
+					//Basement level
+					case 1:
+						ubLocationModifier = 28;
+						break;
+					case 2:
+						ubLocationModifier = 35;
+						break;
+
+					default:
+						Assert( 0 );
+						break;
+				}
+		}
+		break;
+		case SEC_L15:
+		{
+				//the top floor
+				switch( sSectorZ )
+				{
+					//Basement level
+					case 2:
+						ubLocationModifier = 40;
+						break;
+					case 3:
+						ubLocationModifier = 40;
+						break;
+
+					default:
+						Assert( 0 );
+						break;
+				}
+		}
+		break;
+	}
+
+/*
+
+	Ja25:  Need a more accurate method
+
 	UINT8 ubLocationModifier;
 	UINT8 ubPalaceDistance;
 	INT16 sSectorX, sSectorY, sSectorZ;
@@ -2493,6 +2656,16 @@ UINT8 GetLocationModifier( UINT8 ubSoldierClass )
 
 	switch ( bTownId )
 	{
+		case GUARD_POST:
+			// enemy troops in these special places are stronger than geography would indicate
+			ubPalaceDistance = 4;
+			break;
+		case TOWN_1:
+			// enemy troops in these special places are stronger than geography would indicate
+			ubPalaceDistance = 2;
+			break;
+/*
+Ja25:	New towns
 		case ORTA:
 		case TIXA:
 			// enemy troops in these special places are stronger than geography would indicate
@@ -2503,7 +2676,7 @@ UINT8 GetLocationModifier( UINT8 ubSoldierClass )
 			// enemy troops in these special places are stronger than geography would indicate
 			ubPalaceDistance = 10;
 			break;
-
+* /
 		default:
 			// how far is this sector from the palace ?
 			// the distance returned is in sectors, and the possible range is about 0-20
@@ -2516,7 +2689,7 @@ UINT8 GetLocationModifier( UINT8 ubSoldierClass )
 
 	// adjust for distance from Queen's palace (P3) (0 to +30)
 	ubLocationModifier = ( ( MAX_PALACE_DISTANCE - ubPalaceDistance ) * DIFF_FACTOR_PALACE_DISTANCE ) / MAX_PALACE_DISTANCE;
-
+*/
 	return( ubLocationModifier );
 }
 
@@ -2640,3 +2813,107 @@ void ReduceHighExpLevels( INT8 *pbExpLevel )
 	// else leave it alone
 
 }
+
+#define	ENEMY_ATTRIBUTE_PERCENT_CHANGE__EASY							( -10 )
+#define	ENEMY_ATTRIBUTE_PERCENT_CHANGE__NOMRAL						( 0 )
+#define	ENEMY_ATTRIBUTE_PERCENT_CHANGE__HARD							( 10 )
+
+#define	ENEMY_ATTRIBUTE_PERCENT_CHANGE_IMPORTING_EASY			( 5 )
+#define	ENEMY_ATTRIBUTE_PERCENT_CHANGE_IMPORTING_NORMAL		( 0 )
+#define	ENEMY_ATTRIBUTE_PERCENT_CHANGE_IMPORTING_HARD			( 0 )
+
+
+void ModifyEnemyAtrributesBasedOnGameDifficulty( SOLDIERCREATE_STRUCT *pp )
+{
+	//only modify non profiled mercs
+	if( pp->ubProfile	!= NO_PROFILE )
+	{
+		return;
+	}
+
+	//Exp Level
+//	pp->bExpLevel = EnemyStatModifier( pp->bExpLevel, 0 );
+
+	//Agility
+	pp->bAgility = EnemyStatModifier( pp->bAgility, 0 );
+
+	//Dexterity
+	pp->bDexterity = EnemyStatModifier( pp->bDexterity, 0 );
+
+	//Life
+	pp->bLifeMax = EnemyStatModifier( pp->bLifeMax, 0 );
+
+	//must change the life values aswell
+	pp->bLife = pp->bLifeMax;
+
+	//Marksmanship
+	pp->bMarksmanship = EnemyStatModifier( pp->bMarksmanship, 0 );
+
+	//Strength
+	pp->bStrength = EnemyStatModifier( pp->bStrength, 0 );
+
+	//Wisdom
+	pp->bWisdom = EnemyStatModifier( pp->bWisdom, 0 );
+
+	//leadership
+	pp->bLeadership = EnemyStatModifier( pp->bLeadership, 0 );
+}
+
+INT32 EnemyStatModifier( INT32 iStat, UINT8 ubType )
+{
+	INT32 iAttribute=0;
+	FLOAT	fChange=0.0f;
+	FLOAT fImportModification=0.0f;
+	FLOAT	fTotalStatChange=0.0f;
+
+	switch( gGameOptions.ubDifficultyLevel )
+	{
+		case DIF_LEVEL_EASY:
+			fChange = iStat * ( ENEMY_ATTRIBUTE_PERCENT_CHANGE__EASY / (FLOAT)100 );
+
+			//if the player imported their saved game
+			if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+			{
+				fImportModification = iStat * ( ENEMY_ATTRIBUTE_PERCENT_CHANGE_IMPORTING_EASY / (FLOAT)100 );
+			}
+
+			break;
+		case DIF_LEVEL_MEDIUM:
+			fChange = iStat * ( ENEMY_ATTRIBUTE_PERCENT_CHANGE__NOMRAL / (FLOAT)100 );
+
+			//if the player imported their saved game
+			if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+			{
+				fImportModification = iStat * ( ENEMY_ATTRIBUTE_PERCENT_CHANGE_IMPORTING_NORMAL / (FLOAT)100 );
+			}
+
+			break;
+		case DIF_LEVEL_HARD:
+			fChange = iStat * ( ENEMY_ATTRIBUTE_PERCENT_CHANGE__HARD / (FLOAT)100 );
+
+			//if the player imported their saved game
+			if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+			{
+				fImportModification = iStat * ( ENEMY_ATTRIBUTE_PERCENT_CHANGE_IMPORTING_HARD / (FLOAT)100 );
+			}
+
+			break;
+	}
+	//Determine the total change
+	fTotalStatChange = fChange + fImportModification;
+
+	//Round off to nearest decimal point
+	if( fTotalStatChange > 0 )
+		fTotalStatChange += .5;
+	else
+		fTotalStatChange -= .5;
+
+	//Modify the stat
+	iAttribute = iStat + (INT32)( fTotalStatChange );
+
+	//make sure we are not going over or under the  extrememes
+	iAttribute = max( 0, min( iAttribute, 100 ) );
+
+	return( iAttribute );
+}
+
