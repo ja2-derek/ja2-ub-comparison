@@ -1,6 +1,9 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "JA2 All.h"
+	#include "CustomMap.h"
 	#include "ImportJa2SaveScreen.h"
+	#include "CustomMapBriefingScreen.h"
+	#include "CustomMapMercChoosing.h"
 #else
 	#include "Screens.h"
 #endif
@@ -34,6 +37,11 @@ Screens GameScreens[MAX_SCREENS] =
 	{ IntroScreenInit,						IntroScreenHandle,						IntroScreenShutdown					},
 	{ CreditScreenInit,						CreditScreenHandle,						CreditScreenShutdown				},
 
+#ifdef ENABLE_CUSTOM_MAP_INTERFACE
+	{ CustomMapInit,							CustomMapHandle,							CustomMapShutdown				},
+	{ CMBriefingScreenInit,				CMBriefingScreenHandle,				CMBriefingScreenShutdown	},
+	{ CMMercChoosingInit,					CMMercChoosingHandle,					CMMercChoosingShutdown				},
+#endif
 
 
 	{ QuestDebugScreenInit,				QuestDebugScreenHandle,		QuestDebugScreenShutdown		},

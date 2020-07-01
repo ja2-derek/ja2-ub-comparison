@@ -47,7 +47,10 @@ enum
 	PREFERENCES,
 	CREDITS,
 	QUIT,
-	NUM_MENU_ITEMS
+	NUM_MENU_ITEMS,
+
+	CUSTOM_MAP,
+
 };
 
 #define		MAINMENU_X					( (	SCREEN_BUFFER_WIDTH - 214 ) / 2 )
@@ -248,6 +251,14 @@ void HandleMainMenuScreen()
 				gbHandledMainMenu = 0;
 				gfMainMenuScreenExit = TRUE;
 				break;
+
+#ifdef	ENABLE_CUSTOM_MAP_INTERFACE
+			case CUSTOM_MAP:
+				guiMainMenuExitScreen = CUSTOM_MAP_LOAD_SCREEN;
+				gbHandledMainMenu = 0;
+				gfMainMenuScreenExit = TRUE;
+				break;
+#endif
 		}
 	}
 }
@@ -425,6 +436,20 @@ void HandleMainMenuInput()
 				case 's':
 					gbHandledMainMenu = CREDITS;
 					break;						
+
+#ifdef	ENABLE_CUSTOM_MAP_INTERFACE
+				case 'm':
+					//Remember that the player is using custom maps
+					gJa25SaveStruct.fInCustomMap = TRUE;
+
+					gGameOptions.ubDifficultyLevel = DIF_LEVEL_MEDIUM;
+
+//					gbHandledMainMenu = CUSTOM_MAP;
+					gbHandledMainMenu = NEW_GAME;
+					gfMainMenuScreenExit = TRUE;
+					SetMainMenuExitScreen( INIT_SCREEN );
+					break;
+#endif
 			}
 		}
 	}

@@ -16,12 +16,14 @@
 #endif
 
 extern void	InitStrategicMovementCosts();
+extern void MakeBadSectorListFromMapsOnHardDrive( BOOLEAN fDisplayMessages );
+
 void InitKnowFacilitiesFlags( );
 
 UNDERGROUND_SECTORINFO* gpUndergroundSectorInfoTail = NULL;
 
 
-UNDERGROUND_SECTORINFO* NewUndergroundNode( UINT8 ubSectorX, UINT8 ubSectorY, UINT8 ubSectorZ )
+UNDERGROUND_SECTORINFO* NewUndergroundNode( UINT8 ubSectorX, UINT8 ubSectorY, UINT8 ubSectorZ, BOOLEAN fCampaignSector )
 {
 	UNDERGROUND_SECTORINFO *curr;
 	curr = (UNDERGROUND_SECTORINFO*)MemAlloc( sizeof( UNDERGROUND_SECTORINFO ) );	
@@ -31,6 +33,15 @@ UNDERGROUND_SECTORINFO* NewUndergroundNode( UINT8 ubSectorX, UINT8 ubSectorY, UI
 	curr->ubSectorX = ubSectorX;
 	curr->ubSectorY = ubSectorY;
 	curr->ubSectorZ = ubSectorZ;
+
+	if ( fCampaignSector )
+	{
+		curr->fCampaignSector = TRUE;
+	}
+	else
+	{
+		curr->fCustomSector = TRUE;
+	}
 
 	if( gpUndergroundSectorInfoTail )
 	{

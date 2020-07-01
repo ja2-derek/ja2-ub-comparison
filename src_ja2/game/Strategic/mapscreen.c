@@ -566,6 +566,8 @@ INT32 giFlashContractBaseTime = 0;
 UINT32 guiFlashCursorBaseTime = 0;
 INT32 giPotCharPathBaseTime = 0; 
 
+BOOLEAN	gfProcessCustomMaps = FALSE;
+
 /*
 // next and prev
 INT32 giMapInvPrev;
@@ -691,7 +693,9 @@ extern CHAR16		gzUserDefinedButton2[ 128 ];
 extern BOOLEAN gfMilitiaPopupCreated;
 
 
-
+extern void MakeBadSectorListFromMapsOnHardDrive( BOOLEAN fDisplayMessages );
+extern void AddCustomMap( INT32 iRow, INT32 iCol, BOOLEAN fDisplayMessages, BOOLEAN fMessageIfNotExist );
+extern void UpdateCustomMapMovementCosts();
 
 
 
@@ -3485,6 +3489,12 @@ Ja25 no orta
 		}
 	}
 
+	if ( gfProcessCustomMaps )
+	{
+		MakeBadSectorListFromMapsOnHardDrive( TRUE );
+
+		gfProcessCustomMaps = FALSE;
+	}
 
 	// check to see if we need to rebuild the characterlist for map screen
 	HandleRebuildingOfMapScreenCharacterList( );
@@ -5261,7 +5271,15 @@ void GetMapKeyboardInput( UINT32 *puiNewEvent )
 					break;
 
 				case 'c':
+
+					if ( fAlt )
+					{
+						MakeBadSectorListFromMapsOnHardDrive( TRUE );
+					}
+					else
+					{
 					RequestContractMenu();
+					}
 					break;
 
 				case 'd':
@@ -5329,12 +5347,25 @@ void GetMapKeyboardInput( UINT32 *puiNewEvent )
 					break;
 				case 'm':
 					// only handle border button keyboard equivalents if the button is visible!
+					if ( fAlt )
+					{
+						INT16 sMapX, sMapY;
+
+						// Get sector that is hilighted...
+						if ( GetMouseMapXY(&sMapX, &sMapY) )
+						{
+							AddCustomMap( sMapY, sMapX, TRUE, TRUE );
+							UpdateCustomMapMovementCosts();
+						}
+					}
+					else
+					{
 					if ( !fShowMapInventoryPool )
 					{
 						// toggle show mines flag
 						ToggleShowMinesMode();
 					}
-
+					}
 					break;
 				case 'n':
 					break;

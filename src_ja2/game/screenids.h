@@ -1,6 +1,10 @@
 #ifndef __SCREEN_IDS
 #define __SCREEN_IDS
 
+
+#include "CustomMap.h"
+
+
 typedef enum ScreenTypes
 {
 	EDIT_SCREEN,
@@ -28,6 +32,12 @@ typedef enum ScreenTypes
 	DEMO_EXIT_SCREEN,
 	INTRO_SCREEN,
 	CREDIT_SCREEN,
+
+#ifdef ENABLE_CUSTOM_MAP_INTERFACE
+	CUSTOM_MAP_LOAD_SCREEN,
+	CUSTOM_MAP_BRIEFING_SCREEN,
+	CUSTOM_MAP_MERC_CHOOSING_SCREEN,
+#endif
 
 
 	QUEST_DEBUG_SCREEN,

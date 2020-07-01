@@ -282,6 +282,8 @@ UINT32 guiPreviousSidePanel;
 
 extern UINT32 guiVObjectSize;
 extern UINT32 guiVSurfaceSize;
+extern BOOLEAN gfProcessCustomMaps;
+
 
 
 INT32 iHighLightBookLine=-1;
@@ -2477,6 +2479,10 @@ BOOLEAN LeaveLapTopScreen( void )
 				gfDontStartTransitionFromLaptop = TRUE;
 				/*InitHelicopterEntranceByMercs( );
 				fFirstTimeInGameScreen = TRUE;*/
+
+				// ATE: Set flag to look for custom maps
+				gfProcessCustomMaps = TRUE;
+
 				return( TRUE );
 			}
 		}

@@ -9,6 +9,8 @@
 
 #include "Ja25 Strategic Ai.h"
 
+void MakeBadSectorListFromMapsOnHardDrive( BOOLEAN fDisplayMessages );
+void UpdateCustomMapMovementCosts();
 UINT8 gubEncryptionArray3[ BASE_NUMBER_OF_ROTATION_ARRAYS * 3 ][ NEW_ROTATION_ARRAY_SIZE ] =
 {
     {
@@ -2736,6 +2738,9 @@ void InitStrategicMovementCosts()
 	InitStrategicRowN();
 	InitStrategicRowO();
 	InitStrategicRowP();
+
+  UpdateCustomMapMovementCosts();
+
 }
 
 UINT8 GetTraversability( INT16 sStartSector, INT16 sEndSector )
@@ -2773,4 +2778,434 @@ BOOLEAN SectorIsImpassable( INT16 sSector )
 	// returns true if the sector is impassable in all directions
 	return( SectorInfo[ sSector ].ubTraversability[ THROUGH_STRATEGIC_MOVE ] == GROUNDBARRIER ||
 		SectorInfo[ sSector ].ubTraversability[ THROUGH_STRATEGIC_MOVE ] == EDGEOFWORLD );
+}
+
+
+void AddCustomMap( INT32 iRow, INT32 iCol, BOOLEAN fDisplayMessages, BOOLEAN fMessageIfNotExist )
+{
+	UINT8			zMapName[200];
+	SUMMARYFILE *pSummary;
+	INT8			bLevel;
+	UNDERGROUND_SECTORINFO *pSector=NULL;
+
+
+	// if we are the first secotr, ignore!
+	if ( iRow == START_SECTOR_Y && iCol == START_SECTOR_X )
+	{
+		return;
+	}
+
+
+	for ( bLevel = 0; bLevel < 4; bLevel++ )
+	{
+		// ATE: Check for existance of 'remove' file - if so, remove this sector from list, adjust
+		// movement costs accordingly...
+		if ( bLevel == 0 )
+		{
+			sprintf( zMapName, "%s\\%S%c%d.nomap", GetMapsDirectory( ), JA25_EXP_MAP_NAME_PREFIX, iRow + 'A' -1, iCol );
+
+			if ( FileExistsNoDB( zMapName ) )
+			{
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fValidSector = FALSE;
+
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubTravelRating = 50;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubTraversability[ NORTH_STRATEGIC_MOVE ]		= EDGEOFWORLD;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubTraversability[ EAST_STRATEGIC_MOVE ]		= EDGEOFWORLD;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubTraversability[ SOUTH_STRATEGIC_MOVE ]		= EDGEOFWORLD;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubTraversability[ WEST_STRATEGIC_MOVE ]		= EDGEOFWORLD;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubTraversability[ THROUGH_STRATEGIC_MOVE ] = EDGEOFWORLD;
+
+				// update adjacent movement costs
+				if( iRow > 1 )
+				{
+					SectorInfo[ ( SECTOR( iCol, iRow-1 ) ) ].ubTraversability[ SOUTH_STRATEGIC_MOVE ] = EDGEOFWORLD;
+				}
+					
+				if( iCol > 1 )
+				{
+					SectorInfo[ ( SECTOR( iCol-1, iRow ) ) ].ubTraversability[ EAST_STRATEGIC_MOVE ] = EDGEOFWORLD;
+				}
+					
+				if( iRow < 16 )
+				{
+					SectorInfo[ ( SECTOR( iCol, iRow+1 ) ) ].ubTraversability[ NORTH_STRATEGIC_MOVE ] = EDGEOFWORLD;
+				}
+					
+				if( iCol < 16 )
+				{
+					SectorInfo[ ( SECTOR( iCol+1, iRow ) ) ].ubTraversability[ WEST_STRATEGIC_MOVE ] = EDGEOFWORLD;
+				}
+				continue;
+			}
+		}
+
+		if ( bLevel == 0 )
+		{
+			sprintf( zMapName, "%s\\%S%c%d.dat", GetMapsDirectory( ), JA25_EXP_MAP_NAME_PREFIX, iRow + 'A' -1, iCol );
+		}
+		else
+		{
+			sprintf( zMapName, "%s\\%S%c%d_b%d.dat", GetMapsDirectory() , JA25_EXP_MAP_NAME_PREFIX, iRow + 'A' -1, iCol, bLevel );
+		}
+
+		//check to see if there is a map here
+		if ( !FileExistsNoDB( zMapName ) )
+		{
+			if ( fMessageIfNotExist && bLevel == 0 )
+			{
+				if ( fDisplayMessages )
+				{
+					sprintf( zMapName, "%S%c%d", JA25_EXP_MAP_NAME_PREFIX, iRow + 'A' -1, iCol );
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map file does not exist." );
+				}
+			}
+			//return;
+			continue;
+		}
+
+		if ( bLevel == 0 )
+		{
+			sprintf( zMapName, "%S%c%d", JA25_EXP_MAP_NAME_PREFIX, iRow + 'A' -1, iCol );
+		}
+		else
+		{
+			sprintf( zMapName, "%S%c%d_b%d", JA25_EXP_MAP_NAME_PREFIX, iRow + 'A' -1, iCol, bLevel );
+		}
+
+		// OK, now check a bunch of conditions...
+		
+		// Is this level a virgin?
+		if ( bLevel == 0 )
+		{
+			if ( GetSectorFlagStatus( (INT16)iCol, (INT16)iRow, 0, SF_ALREADY_VISITED ) )
+			{
+				if ( fDisplayMessages )
+				{
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map has already been visited." );
+				}
+				continue;
+			}
+		}
+		else
+		{
+			pSector = FindUnderGroundSector( (INT16)iCol, (INT16)iRow, bLevel );
+
+			if ( pSector )
+			{
+				if ( pSector->fVisited )
+				{
+					if ( fDisplayMessages )
+					{
+						ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+						ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map has already been visited." );
+					}
+					continue;
+				}
+			}
+		}
+
+		// Is this the current sector?
+		if ( gWorldSectorX == iCol && gWorldSectorY == iRow && gbWorldSectorZ == bLevel )
+		{
+			if ( fDisplayMessages )
+			{
+				ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+				ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map is the current sector." );
+			}
+			continue;
+		}
+		
+		// I guess we need to load level to get the map information....?
+		// we don't want to destroy the level we're in, however....
+		pSummary = (SUMMARYFILE*)MemAlloc( sizeof( SUMMARYFILE ) );
+		memset( pSummary, 0, sizeof( SUMMARYFILE ) );
+
+		if ( !EvaluateWorldEx( zMapName, 0, pSummary, FALSE, FALSE, NULL ) )
+		{
+			if ( fDisplayMessages )
+			{
+				// Spew message
+				ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+				
+				if ( gfTriedToLoadOldMapVersion )
+				{
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Incompatible map." );
+				}
+			}
+		}
+		else
+		{
+			JA25_SECTOR_AI		SectorAIInfo;
+			UINT8							ubNumAdmins, ubNumTroops, ubNumElites, ubNumBloodcats;
+
+			//Test some stuff here, like the total # of placements, enemies, etc
+			switch( gGameOptions.ubDifficultyLevel )
+			{
+				case DIF_LEVEL_EASY:
+					ubNumAdmins = pSummary->MapInfo.ubNumAdminsE;
+					ubNumTroops = pSummary->MapInfo.ubNumTroopsE;
+					ubNumElites = pSummary->MapInfo.ubNumElitesE;
+					ubNumBloodcats = pSummary->MapInfo.ubNumBloodcatsE;
+					break;
+				case DIF_LEVEL_MEDIUM:
+					ubNumAdmins = pSummary->MapInfo.ubNumAdminsN;
+					ubNumTroops = pSummary->MapInfo.ubNumTroopsN;
+					ubNumElites = pSummary->MapInfo.ubNumElitesN;
+					ubNumBloodcats = pSummary->MapInfo.ubNumBloodcatsN;
+					break;
+				case DIF_LEVEL_HARD:
+					ubNumAdmins = pSummary->MapInfo.ubNumAdminsD;
+					ubNumTroops = pSummary->MapInfo.ubNumTroopsD;
+					ubNumElites = pSummary->MapInfo.ubNumElitesD;
+					ubNumBloodcats = pSummary->MapInfo.ubNumBloodcatsD;
+					break;
+			}
+
+			if( pSummary->MapInfo.sNorthGridNo	== -1 )
+			{
+				if ( fDisplayMessages )
+				{
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map needs NORTH entry point." );
+				}
+				MemFree( pSummary );
+				continue;
+			}
+
+			if( pSummary->MapInfo.sEastGridNo	== -1 )
+			{
+				if ( fDisplayMessages )
+				{
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map needs EAST entry point." );
+				}
+				MemFree( pSummary );
+				continue;
+			}
+
+			if( pSummary->MapInfo.sWestGridNo	== -1 )
+			{
+				if ( fDisplayMessages )
+				{
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map needs WEST entry point." );
+				}
+				MemFree( pSummary );
+				continue;
+			}
+
+			if( pSummary->MapInfo.sSouthGridNo	== -1 )
+			{
+				if ( fDisplayMessages )
+				{
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map needs SOUTH entry point." );
+				}
+				MemFree( pSummary );
+				continue;
+			}
+
+			if( pSummary->MapInfo.sCenterGridNo	== -1 )
+			{
+				if ( fDisplayMessages )
+				{
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map needs CENTER entry point." );
+				}
+				MemFree( pSummary );
+				continue;
+			}
+
+
+			if ( ( pSummary->ubAdminDetailed + pSummary->ubTroopDetailed + pSummary->ubEliteDetailed ) != 32 )
+			{
+				if ( fDisplayMessages )
+				{
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map requires 32 enemy placements." );
+				}
+				MemFree( pSummary );
+				continue;
+			}
+
+			// Check total populations
+			if ( ( ubNumTroops + ubNumAdmins + ubNumElites ) > 32 )
+			{
+				if ( fDisplayMessages )
+				{
+					ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+					ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Map population total must be less than 32." );
+				}
+				MemFree( pSummary );
+				continue;
+			}
+
+			// Check insertion gridno if baaenment
+			if ( bLevel > 0 )
+			{
+				if ( pSummary->MapInfo.sInsertionGridNo == -1 )
+				{
+					if ( fDisplayMessages )
+					{
+						ScreenMsg( MSG_FONT_RED, MSG_CHAT, L"Failed to add map: %S.", zMapName );
+						ScreenMsg( FONT_MCOLOR_DKRED, MSG_INTERFACE, L"Underground level needs invasion insertion gridno value." );
+					}
+					MemFree( pSummary );
+					continue;					
+				}
+			}
+
+			//We're good!
+			if ( fDisplayMessages )
+			{
+				ScreenMsg( FONT_MCOLOR_WHITE, MSG_CHAT, L"Added Custom map: %S.", zMapName );
+			}
+
+			//if the sector shoulnd have a map there
+			if ( bLevel == 0 )
+			{
+				if ( SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fCampaignSector )
+				{
+					// ATE: This has been changed, if a campaign sector, just remove flag...
+					SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fCampaignSector = FALSE;
+					//continue;
+				}
+			}
+			else
+			{
+				// See if this sector exists, and if so is it a campagin sectior?
+				pSector = FindUnderGroundSector( (INT16)iCol, (INT16)iRow, bLevel );
+
+				if ( pSector )
+				{
+					if ( pSector->fCampaignSector )
+					{
+						// ATE: This has been changed, if a campaign sector, just remove flag...
+						pSector->fCampaignSector = FALSE;
+						//continue;
+					}
+				}
+			}
+
+			if ( bLevel == 0 )
+			{
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fValidSector = TRUE;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fCustomSector = TRUE;
+
+				// Seed level
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubNumAdmins = ubNumAdmins;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubNumTroops = ubNumTroops;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].ubNumElites = ubNumElites;
+				SectorInfo[ ( SECTOR( iCol , iRow ) ) ].bBloodCats  = ubNumBloodcats;
+
+				wcscpy( SectorInfo[ ( SECTOR( iCol , iRow ) ) ].zCustomLevelName, pSummary->MapInfo.zLevelName );
+			}
+			else
+			{
+				pSector = NewUndergroundNode( (UINT8)iCol, (UINT8)iRow, bLevel, FALSE );
+
+				// Seed
+				pSector->ubNumAdmins = ubNumAdmins;
+				pSector->ubNumTroops = ubNumTroops;
+				pSector->ubNumElites = ubNumElites;
+
+				wcscpy( pSector->zCustomLevelName, pSummary->MapInfo.zLevelName );
+			}
+
+
+			// Seed AI
+			memset( &SectorAIInfo, 0, sizeof( SectorAIInfo ) );
+			
+			SectorAIInfo.iSectorID = SECTOR( iCol , iRow ) ;
+			SectorAIInfo.bSectorZ = bLevel;
+			SectorAIInfo.bBaseNumEnemies = pSummary->MapInfo.ubBaseNumEnemies;
+			SectorAIInfo.bRandomNumEnemies = 4;
+			SectorAIInfo.bProbabilityOfAttacking = pSummary->MapInfo.ubAttackProbabilityRate;
+			SectorAIInfo.bMaxProbabilityForAttackingSector = 60;
+			SectorAIInfo.ubMinimumProbabiltyBeforeAttack = pSummary->MapInfo.ubGracePeriod;
+			SectorAIInfo.fAutoDirection = pSummary->MapInfo.fAutoDirection;
+			SectorAIInfo.ubInsertionDirection = pSummary->MapInfo.ubInsertionDirection;
+			SectorAIInfo.sInsertionGridNo = pSummary->MapInfo.sInsertionGridNo;
+			SectorAIInfo.fCustomSector = TRUE;
+			SectorAIInfo.ubLoadingScreenID =  pSummary->MapInfo.ubLoadingScreenID;
+
+			AddJA25AIDataToSector( &SectorAIInfo );
+
+			if ( bLevel == 0 )
+			{
+				SetNumberOfJa25BloodCatsInSector( SectorAIInfo.iSectorID, ubNumBloodcats, pSummary->CreatureTeam.ubNumAnimals );
+			}
+		}
+
+		MemFree( pSummary );
+	}	
+
+
+}
+
+
+void MakeBadSectorListFromMapsOnHardDrive( BOOLEAN fDisplayMessages )
+{
+	INT32			iRow, iCol;
+
+	SetUpValidCampaignSectors( );
+
+	//loop through all the sectors
+	for( iRow=1; iRow<=16; iRow++ )
+	{
+		for( iCol=1; iCol<=16; iCol++ )
+		{
+			AddCustomMap( iRow, iCol, fDisplayMessages, FALSE );
+		}
+	}
+
+	UpdateCustomMapMovementCosts();
+}
+
+
+void UpdateCustomMapMovementCosts()
+{
+	INT32			iRow, iCol;
+
+	//loop through all the sectors
+	for( iRow=1; iRow<=16; iRow++ )
+	{
+		for( iCol=1; iCol<=16; iCol++ )
+		{
+			if( SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fValidSector && SectorInfo[ ( SECTOR( iCol , iRow ) ) ].fCustomSector )
+			{
+				SectorInfo[ ( SECTOR( iCol, iRow ) ) ].ubTraversability[ THROUGH_STRATEGIC_MOVE ] = PLAINS;
+
+				//sector above is clear
+				if( iRow > 1 && SectorInfo[ ( SECTOR( iCol , iRow - 1 ) ) ].fValidSector )
+				{
+					SectorInfo[ ( SECTOR( iCol, iRow-1 ) ) ].ubTraversability[ SOUTH_STRATEGIC_MOVE ] = PLAINS;
+					SectorInfo[ ( SECTOR( iCol, iRow ) ) ].ubTraversability[ NORTH_STRATEGIC_MOVE ] = PLAINS;
+				}
+					
+				//sector west is clear
+				if( iCol > 1 && SectorInfo[ ( SECTOR( iCol - 1 , iRow ) ) ].fValidSector )
+				{
+					SectorInfo[ ( SECTOR( iCol-1, iRow ) ) ].ubTraversability[ EAST_STRATEGIC_MOVE ] = PLAINS;
+					SectorInfo[ ( SECTOR( iCol, iRow ) ) ].ubTraversability[ WEST_STRATEGIC_MOVE ] = PLAINS;
+				}
+					
+				//sector south is clear
+				if( iRow < 16 && SectorInfo[ ( SECTOR( iCol , iRow + 1 ) ) ].fValidSector )
+				{
+					SectorInfo[ ( SECTOR( iCol, iRow+1 ) ) ].ubTraversability[ NORTH_STRATEGIC_MOVE ] = PLAINS;
+					SectorInfo[ ( SECTOR( iCol, iRow ) ) ].ubTraversability[ SOUTH_STRATEGIC_MOVE ] = PLAINS;
+				}
+					
+				//sector east is clear
+				if( iCol < 16 && SectorInfo[ ( SECTOR( iCol + 1 , iRow ) ) ].fValidSector )
+				{
+					SectorInfo[ ( SECTOR( iCol+1, iRow ) ) ].ubTraversability[ WEST_STRATEGIC_MOVE ] = PLAINS;
+					SectorInfo[ ( SECTOR( iCol, iRow ) ) ].ubTraversability[ EAST_STRATEGIC_MOVE ] = PLAINS;
+				}
+			}
+		}
+	}
 }

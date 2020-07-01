@@ -5,6 +5,7 @@
 	#include "Ja25Update.h"
 	#include "Ja25_Tactical.h"
 	#include "Ja25 Strategic Ai.h"
+	#include "CustomMapHeader.h"
 #else
 	#include "strategicmap.h"
 	#include "strategic.h"
@@ -577,6 +578,17 @@ void GetShortSectorString( INT16 sMapX,INT16 sMapY, STR16 sString )
 
 void GetMapFileName(INT16 sMapX,INT16 sMapY, INT8 bSectorZ, STR8 bString, BOOLEAN fUsePlaceholder, BOOLEAN fAddAlternateMapLetter )
 {
+	//if the player is using the custom maps
+#ifdef	ENABLE_CUSTOM_MAP_INTERFACE
+	if( gJa25SaveStruct.fInCustomMap )
+	{
+		// This is the string to return, but...
+		sprintf( bString, "%s", gSelectedCustomScenario.pMap[ gSelectedCustomScenario.iCurrentMap ].pFileNameArray );
+	}
+
+	else
+#endif
+	{
 	CHAR8	 bTestString[ 150 ];
 	CHAR8	 bExtensionString[ 15 ];
 
@@ -974,7 +986,16 @@ BOOLEAN MapExists( UINT8 *szFilename )
 {
 	UINT8 str[50];
 	HWFILE fp;
-	sprintf( str, "MAPS\\%s", szFilename );
+#ifdef	ENABLE_CUSTOM_MAP_INTERFACE
+	if( gJa25SaveStruct.fInCustomMap )
+	{
+		sprintf( str, "CUSTOMMAPS\\%s\\%s", gSelectedCustomScenario.zScenarioDirName, szFilename );
+	}
+	else
+#endif
+	{
+		sprintf( str, "%s\\%s", GetMapsDirectory( ), szFilename );
+	}
 	fp = FileOpen( str, FILE_ACCESS_READ, FALSE );
 	if( !fp )
 		return FALSE;
@@ -1317,6 +1338,17 @@ void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOl
 		CheckForKingpinsMoneyMissing( TRUE );
 	}
 */
+
+	// ATE: if this is a custom map, return
+	if ( bOldSectorZ == 0 )
+	{
+		if ( SectorInfo[ SECTOR( sOldSectorY, sOldSectorX ) ].fCustomSector )
+		{
+			return;
+		}
+	}
+
+
 	if ( sOldSectorX == 13 && sOldSectorY == MAP_ROW_H && bOldSectorZ == 0 && CheckFact( FACT_CONRAD_SHOULD_GO, 0 ) )
 	{
 		// remove Conrad from the map
@@ -1892,6 +1924,14 @@ Ja25:  Not in the game
 		pSector = &SectorInfo[ ubSectorID ];
 		ubLandType = pSector->ubTraversability[ 4 ];
 		swprintf( zString, L"%c%d: ", 'A' + sSectorY - 1, sSectorX );
+
+		// ATE: Use custom map name
+		if ( SectorInfo[ ( SECTOR( sSectorX , sSectorY ) ) ].fCustomSector )
+		{			
+			swprintf( zString, L"%c%d: %s", 'A' + sSectorY - 1, sSectorX, SectorInfo[ ( SECTOR( sSectorX , sSectorY ) ) ].zCustomLevelName );
+			return;
+		}
+
 
 		if ( bTownNameID == BLANK_SECTOR )
 		{

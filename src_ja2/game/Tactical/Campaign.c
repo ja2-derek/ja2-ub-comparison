@@ -1230,6 +1230,13 @@ UINT8 CurrentPlayerProgressPercentage(void)
 	UINT8 ubCurrentProgress;
 	INT8	bFurthestSectorPlayerOwns=-1;
 
+	//if the player is using the custom maps
+#ifdef	ENABLE_CUSTOM_MAP_INTERFACE
+	if( gJa25SaveStruct.fInCustomMap )
+	{
+		return( 50 );
+	}
+#endif
 
 	//Get the furthest sector the player owns
 	bFurthestSectorPlayerOwns = GetTheFurthestSectorPlayerOwns();

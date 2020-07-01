@@ -292,8 +292,13 @@ void InitStrategicLayer( void )
 	
 	InitJa25StrategicAi( );
 
+	// Now, make list of custom maps
+//	MakeBadSectorListFromMapsOnHardDrive( FALSE );
+
 	// Init movement costs....
 	InitStrategicMovementCosts();
+
+	// Init custom maps
 /*
 Ja25 no loyalty
 	// init town loyalty
@@ -442,8 +447,16 @@ Ja25 MERC is available from the begining
 		}
 */
 
-
-
+#ifdef	ENABLE_CUSTOM_MAP_INTERFACE
+		//If the player is going to be playing a custom map
+		if( gJa25SaveStruct.fInCustomMap )
+		{
+			SetLaptopExitScreen( INIT_SCREEN );
+			SetPendingNewScreen( CUSTOM_MAP_LOAD_SCREEN );
+		}
+		else
+#endif
+		{
 		SetLaptopExitScreen( INIT_SCREEN );
 		SetPendingNewScreen(LAPTOP_SCREEN);
 		gubScreenCount = 1;

@@ -232,13 +232,15 @@ typedef struct SECTORINFO
 
 	BOOLEAN fSurfaceWasEverPlayerControlled;
 
-	UINT8		bFiller1;
-	UINT8		bFiller2;
-	UINT8		bFiller3;
+	BOOLEAN	fValidSector;
+	BOOLEAN	fCustomSector;
+	BOOLEAN	fCampaignSector;
 
 	UINT32	uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
 
-	INT8 bPadding[ 41 ];
+	UINT16	zCustomLevelName[ 16 ];
+
+	INT8 bPadding[ 9 ];
 
 }SECTORINFO;
 
@@ -266,7 +268,14 @@ typedef struct UNDERGROUND_SECTORINFO
 	UINT8 ubElitesInBattle, ubTroopsInBattle, ubAdminsInBattle, ubCreaturesInBattle;
 
 	UINT32	uiNumberOfWorldItemsInTempFileThatCanBeSeenByPlayer;
-	INT8 bPadding[36];
+
+	BOOLEAN	fCustomSector;
+	BOOLEAN	fCampaignSector;
+
+	UINT16	zCustomLevelName[ 16 ];
+
+	INT8 bPadding[2];
+
 	//no padding left!
 }UNDERGROUND_SECTORINFO;
 
