@@ -5108,6 +5108,32 @@ void PerformJerryMiloAction302()
 	DeleteTalkingMenu();
 }
 
+void DelayedSayingOfMercQuote( UINT32 uiParam )
+{
+	SOLDIERTYPE *pSoldier=NULL;
+	UINT16 usProfileID;
+	UINT16 usQuoteNum;
+
+	usProfileID = 0x0000FFFF & uiParam;
+	usQuoteNum = uiParam >> 16;
+
+	//if its a normal quote
+	if( usQuoteNum < DQ__NORMAL_DELAYED_QUOTE )
+	{
+	}
+	else
+	{
+		
+			case DQ__START_EVERYONE_TALKING_AT_END_OF_GAME:
+				EndGameEveryoneSayTheirGoodByQuotes();
+				break;
+
+			case DQ__FADE_OUT_TO_END_GAME_CINEMATIC:
+				HandleFadingOutToEndGameCinematics();
+				break;
+		}
+	}
+}
 
 void HandleRaulBlowingHimselfUp()
 {

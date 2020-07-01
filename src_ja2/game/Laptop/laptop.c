@@ -4,6 +4,7 @@
 	#include "BrokenLink.h"
 	#include "BobbyRShipments.h"
 	#include "Ja25 Strategic Ai.h"
+	#include "end game.h"
 #else
 	#include "sgp.h"
 	#include "Utilities.h"
@@ -1096,6 +1097,11 @@ void ExitLaptop()
 //	CloseLibrary( LIBRARY_LAPTOP );
 	//pause the game because we dont want time to advance in the laptop
 	UnPauseGame();
+
+	if( gTacticalStatus.uiFlags & IN_ENDGAME_SEQUENCE )
+	{
+		HandleJa25EndGameAndGoToCreditsScreen( FALSE );
+	}
 
 }
 
@@ -2440,6 +2446,14 @@ BOOLEAN LeaveLapTopScreen( void )
 	
 	if( ExitLaptopDone( ) )
 	{
+		//if we are in the end game situation, the player can be in laptop to view their emails.
+		//When they leave laptop, they must go to the credits screen
+		if( gTacticalStatus.uiFlags & IN_ENDGAME_SEQUENCE )
+		{
+			SetLaptopExitScreen( CREDIT_SCREEN );
+		  SetPendingNewScreen( guiExitScreen );
+			return( TRUE );
+		}
 
 	  // exit screen is set
 		// set new screen

@@ -840,7 +840,16 @@ UINT32  MainGameScreenHandle(void)
 	// Are we entering map screen? if so, wait a frame!
 	if ( gfEnteringMapScreen > 0 )
 	{
+		//if we are in the end game mode
+		if( gTacticalStatus.uiFlags & IN_ENDGAME_SEQUENCE )
+		{
+			//dont allow going to mapscreen
+			gfEnteringMapScreen = FALSE;
+		}
+		else
+		{
 		gfEnteringMapScreen++;
+		}
 	}	
 	
  return( GAME_SCREEN );

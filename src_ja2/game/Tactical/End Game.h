@@ -18,8 +18,17 @@ void EndQueenDeathEndgame( );
 void HandleQueenBitchDeath( SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel );
 void BeginHandleQueenBitchDeath( SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel );
 */
-
 void HandleDoneLastEndGameQuote( );
+
+void DoneFadeOutEndCinematic( void );
+
+void HandleJa25EndGameAndGoToCreditsScreen( BOOLEAN fFromTactical );
+
+void HandleEveryoneDoneTheirEndGameQuotes();
+
+void EndGameEveryoneSayTheirGoodByQuotes( void );
+
+void EnterTacticalInFinalSector();
 
 
 #endif

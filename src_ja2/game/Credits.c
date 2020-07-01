@@ -11,7 +11,17 @@
 
 //externals
 extern HVSURFACE ghFrameBuffer;
+typedef struct
+{
+	CHAR8				zName[20];
+	UINT8				ubRandomVal;
+	BOOLEAN			fPreload;
+	BOOLEAN			fBadGuy;
+	BOOLEAN			fDontAllowTwoInRow;
+	BOOLEAN			fStopDialogue;
 
+} BATTLESNDS_STRUCT;
+extern	BATTLESNDS_STRUCT	 gBattleSndsData[];
 
 
 //local Defines
@@ -65,6 +75,7 @@ enum
 
 //#define		CRDT_NAME_OF_CREDIT_FILE				"BINARYDATA\\Credits.txt"
 #define		CRDT_NAME_OF_CREDIT_FILE				"BINARYDATA\\Credits.edt"
+#define		CRDT_NAME_OF_NO_LAPTOP_CREDIT_FILE				"BINARYDATA\\Nolaptop.edt"
 
 #define		CREDITS_LINESIZE								80 * 2
 
@@ -83,6 +94,8 @@ enum
 #define		CRDT_FONT_JUSTIFICATION					'J'
 #define		CRDT_TITLE_FONT_COLOR						'C'
 #define		CRDT_ACTIVE_FONT_COLOR					'R'
+
+#define		CRDT_PLAY_QUOTE									'Q'
 
 //Flags:
 #define		CRDT_TITLE											'T'
@@ -234,6 +247,10 @@ BOOLEAN		gfPauseCreditScreen = FALSE;
 
 HWFILE		ghFile;
 
+
+BOOLEAN		gfPlayersLaptopWasntWorkingAtEndOfGame=FALSE;
+
+BOOLEAN		gfOverideToListenToSoundsInCreditSceen=FALSE;
 //ggg
 
 
@@ -264,6 +281,8 @@ STR16			GetNextCreditCode( STR16 pString, UINT32 *pSizeOfCode );
 void			HandleCreditFlags( UINT32 uiFlags );
 void			HandleCreditEyeBlinking();
 void			InitCreditEyeBlinking();
+CHAR*			GetNameOfCreditFile();
+
 //ppp
 
 
@@ -549,6 +568,13 @@ void			GetCreditScreenUserInput()
 			{
 
 				case ESC:
+					if( gfPlayersLaptopWasntWorkingAtEndOfGame )
+					{
+						guiCurrentCreditRecord = 0;
+						gfPlayersLaptopWasntWorkingAtEndOfGame = FALSE;
+					}
+					else
+					{
 					//Exit out of the screen
 					SetCreditsExitScreen( MAINMENU_SCREEN );
 					break;
@@ -946,10 +972,24 @@ BOOLEAN	GetNextCreditFromTextFile()
 
 	//Get the current Credit record
 	uiStartLoc = CREDITS_LINESIZE * guiCurrentCreditRecord;
-	if( !LoadEncryptedDataFromFile( CRDT_NAME_OF_CREDIT_FILE, zOriginalString, uiStartLoc, CREDITS_LINESIZE ) )
+	if( !LoadEncryptedDataFromFile( GetNameOfCreditFile(), zOriginalString, uiStartLoc, CREDITS_LINESIZE ) )
+	{
+		if( gfPlayersLaptopWasntWorkingAtEndOfGame )
+		{
+			guiCurrentCreditRecord = 0;
+			gfPlayersLaptopWasntWorkingAtEndOfGame = FALSE;
+			uiStartLoc = CREDITS_LINESIZE * guiCurrentCreditRecord;
+
+			if( !LoadEncryptedDataFromFile( GetNameOfCreditFile(), zOriginalString, uiStartLoc, CREDITS_LINESIZE ) )
+			{
+				return( FALSE );
+			}
+		}
+		else
 	{
 		//there are no more credits
 		return( FALSE );
+	}
 	}
 
 	//Increment to the next crdit record
@@ -1150,6 +1190,72 @@ UINT32	GetAndHandleCreditCodeFromCodeString( STR16 pzCode )
 		return( CRDT_FLAG__END_SECTION );
 	}
 
+	else if( pzCode[0] == CRDT_PLAY_QUOTE )
+	{
+		//if the player has finished the game, they should here the sounds
+		if( gGameSettings.fPlayerFinishedTheGame || gfOverideToListenToSoundsInCreditSceen )
+		{
+			UINT32 uiTemp;
+			UINT8  ubProfile=0;
+			UINT8	 ubQuoteNum=0;
+			UINT8	 ubTypeOfQuote=0;
+			UINT8	 ubPan=0;
+			CHAR		zFileName[256];
+
+			//get the code
+			swscanf( &pzCode[1], L"%d%*s", &uiTemp );
+
+			//Get the information out of the number
+			ubProfile = 0x000000FF & uiTemp;
+			ubQuoteNum = ( 0x0000FF00 & uiTemp ) >> 8;
+			ubTypeOfQuote = ( 0x00FF0000 & uiTemp ) >> 16;
+			ubPan = ( 0xFF000000 & uiTemp ) >> 24;
+
+			//if its a normal profiled quote
+			if( ubTypeOfQuote == 0 )
+			{
+				if( ubProfile >= FIRST_RPC )
+				{
+					sprintf( zFileName,"NPC_SPEECH\\%03d_%03d.wav", ubProfile, ubQuoteNum );
+				}
+				else
+				{
+					sprintf( zFileName,"SPEECH\\%03d_%03d.wav", ubProfile, ubQuoteNum );
+				}
+			}
+
+			//else if it is a hired rpc quote
+			else if( ubTypeOfQuote == 1 )
+			{
+				sprintf( zFileName,"SPEECH\\%03d_%03d.wav", ubProfile, ubQuoteNum );
+			}
+
+			//else it is a battlesnd
+			else
+			{
+				sprintf( zFileName, "BATTLESNDS\\%03d_%s.wav", ubProfile, gBattleSndsData[ ubQuoteNum ].zName );
+			}
+
+
+			//middle
+			if( ubPan == 0 )
+				ubPan = MIDDLE;
+			else if( ubPan == 1 )
+				ubPan = FARLEFT;
+			else
+				ubPan = FARRIGHT;
+
+			PlayJA2SampleFromFile( zFileName, RATE_11025, HIGHVOLUME, 1, ubPan );
+		}
+
+		//else they shouldnt here the sounds
+		else
+		{
+			return( CRDT_NODE_NONE );
+		}
+
+	}
+
 	//else its an error
 	else
 	{
@@ -1292,3 +1398,15 @@ void HandleCreditEyeBlinking()
 	}
 }
 
+CHAR* GetNameOfCreditFile()
+{
+	//if the players laptop wasnt working
+	if( gfPlayersLaptopWasntWorkingAtEndOfGame )
+	{
+		return( CRDT_NAME_OF_NO_LAPTOP_CREDIT_FILE );
+	}
+	else
+	{
+		return( CRDT_NAME_OF_CREDIT_FILE );
+	}
+}

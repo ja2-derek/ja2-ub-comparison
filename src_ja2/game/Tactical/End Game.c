@@ -24,10 +24,18 @@
 
 INT16 sStatueGridNos[] = { 13829, 13830, 13669, 13670 };
 
-SOLDIERTYPE *gpKillerSoldier = NULL;
-INT16				 gsGridNo;
-INT8				 gbLevel;
+//SOLDIERTYPE *gpKillerSoldier = NULL;
+//INT16				 gsGridNo;
+//INT8				 gbLevel;
 
+
+extern	BOOLEAN			gfPlayersLaptopWasntWorkingAtEndOfGame;
+
+void HandleAddingTheEndGameEmails();
+void EndFadeToCredits( void );
+void FadeToCredits( void );
+void InFinalSectorAfterFadeIn( void );
+void FadeOutToLaptopOnEndGame( void );
 
 // This function checks if our statue exists in the current sector at given gridno
 BOOLEAN DoesO3SectorStatueExistHere( INT16 sGridNo )
@@ -350,18 +358,40 @@ void EndQueenDeathEndgame( )
 
 void DoneFadeOutEndCinematic( void )
 {
-	// DAVE PUT SMAKER STUFF HERE!!!!!!!!!!!!
-	// :)
-  gTacticalStatus.uiFlags &= (~IN_ENDGAME_SEQUENCE);
+	INT32 cnt;
+	SOLDIERTYPE *pSoldier;
 
+	//Change the currently selecter sector in mapscreen
+	ChangeSelectedMapSector( 16, 11, 0 );
 
-	// For now, just quit the freaken game...
-//	InternalLeaveTacticalScreen( MAINMENU_SCREEN );
+	//
+	// Loop through all the soldiers and move any of them that are in the complex to be in the safe sector near ther
+	//
+	cnt = gTacticalStatus.Team[ gbPlayerNum ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ gbPlayerNum ].bLastID; cnt++,pSoldier++)
+	{       
+		// if the soldier was in the complex
+		if( pSoldier->bActive && 
+				pSoldier->sSectorX == 15 && ( pSoldier->sSectorY == 11 || pSoldier->sSectorY == 12 ) )
+		{
+			if ( GetGroup( pSoldier->ubGroupID ) )
+			{
+				//move them to the 'fake' sector
+				PlaceGroupInSector( pSoldier->ubGroupID, 15, 11, 16, 11, 0, FALSE );
+			}
+			else
+			{
+				pSoldier->sSectorX = 16;
+				pSoldier->sSectorY = 11;
+				pSoldier->bSectorZ = 0;
+			}
+		}
+	}
 
+	//
+	// Go watch the movies
+	//
 	InternalLeaveTacticalScreen( INTRO_SCREEN );
-//	guiCurrentScreen = INTRO_SCREEN;
-
-
 	SetIntroType( INTRO_ENDING );
 }
 
@@ -488,3 +518,201 @@ void HandleQueenBitchDeath( SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLe
 }
 
 */
+
+void EndGameEveryoneSayTheirGoodByQuotes( void )
+{
+	INT32 cnt;
+	SOLDIERTYPE *pSoldier;
+
+	// Start end cimimatic....
+  gTacticalStatus.uiFlags |= IN_ENDGAME_SEQUENCE;
+
+	//lock the interface
+	guiPendingOverrideEvent = LU_BEGINUILOCK;
+	HandleTacticalUI( );
+
+	//
+	// first thing is to loop through team and look for QUALIFIED mercs on the team to say special end game quote
+	//
+	cnt = gTacticalStatus.Team[ gbPlayerNum ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ gbPlayerNum ].bLastID; cnt++,pSoldier++)
+	{       
+		// Are we in this sector, On the current squad?
+		if( pSoldier->bActive && pSoldier->bLife >= OKLIFE && !AM_AN_EPC( pSoldier ) && IsSoldierQualifiedMerc( pSoldier ) )
+		{
+			TacticalCharacterDialogue( pSoldier, QUOTE_RENEWING_CAUSE_BUDDY_2_ON_TEAM );	
+		}
+	}
+
+	//
+	// Next is to loop through ENTIRE team and say end quote...
+	//
+	cnt = gTacticalStatus.Team[ gbPlayerNum ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ gbPlayerNum ].bLastID; cnt++,pSoldier++)
+	{       
+		// Are we in this sector, On the current squad?
+		if ( pSoldier->bActive && pSoldier->bLife >= OKLIFE && !AM_AN_EPC( pSoldier ) )
+		{
+			TacticalCharacterDialogue( pSoldier, QUOTE_END_GAME_COMMENT );	
+		}
+	}
+
+	// Add queue event to proceed w/ smacker cimimatic
+	SpecialCharacterDialogueEvent( DIALOGUE_SPECIAL_EVENT_MULTIPURPOSE, MULTIPURPOSE_SPECIAL_EVENT_TEAM_MEMBERS_DONE_TALKING, 0,0,0,0 );
+}
+
+
+void HandleAddingTheEndGameEmails()
+{
+	BOOLEAN				fMiguelAlive=FALSE;
+	BOOLEAN				fManuelAlive=FALSE;
+	BOOLEAN				fManuelHired=FALSE;
+
+
+	//Miguel alive
+	if( gubFact[ FACT_PLAYER_IMPORTED_SAVE_MIGUEL_DEAD ] )
+		fMiguelAlive = FALSE;
+	else
+		fMiguelAlive = TRUE;
+
+	//manuel alive
+	if( gMercProfiles[ MANUEL ].bMercStatus == MERC_IS_DEAD )
+		fManuelAlive = FALSE;
+	else
+		fManuelAlive = TRUE;
+
+	//manuel hired
+	if( gMercProfiles[ MANUEL ].ubMiscFlags & PROFILE_MISC_FLAG_RECRUITED )
+		fManuelHired = TRUE;
+	else
+		fManuelHired = FALSE;
+
+	//
+	// Determine the EMAIL to be sent out to the player
+	//
+
+
+	// email # 12a - Miguel dead, Manuel never recruited
+	if( !fMiguelAlive && !fManuelHired )
+	{
+		AddEmail( EMAIL_CONGRATS, EMAIL_CONGRATS_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+	}
+		
+	// email # 12b - Miguel alive, Manuel never recruited
+	else if( fMiguelAlive && !fManuelHired )
+	{
+		AddEmail( EMAIL_CONGRATSICK, EMAIL_CONGRATSICK_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+	}
+
+	// email # 12c - Miguel alive, Manuel dead
+	else if( fMiguelAlive && !fManuelAlive )
+	{
+		AddEmail( EMAIL_CONGRATMIGMANUELDEAD, EMAIL_CONGRATMIGMANUELDEAD_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+	}
+
+	// email # 12d - Miguel alive, Manuel recruited and alive
+	else if( fMiguelAlive && fManuelAlive && fManuelHired )
+	{
+		AddEmail( EMAIL_CONGRATMIGMANUELALIVE, EMAIL_CONGRATMIGMANUELALIVE_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+	}
+
+	// email # 12e - Miguel dead, Manuel dead
+	else if( !fMiguelAlive && !fManuelAlive )
+	{
+		AddEmail( EMAIL_CONGRATMANUELDEAD, EMAIL_CONGRATMANUELDEAD_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+	}
+
+	// email # 12f -  Miguel dead, Manuel recruited and alive
+	else if( !fMiguelAlive && fManuelAlive && fManuelHired )
+	{
+		AddEmail( EMAIL_CONGRATMANUELALIVE, EMAIL_CONGRATMANUELALIVE_LENGTH, MAIL_ENRICO,  GetWorldTotalMin() );
+	}
+
+	else
+	{
+		Assert( 0 );
+	}
+}
+
+
+void HandleEveryoneDoneTheirEndGameQuotes()
+{
+	// UnLock UI!
+	guiPendingOverrideEvent = LU_ENDUILOCK;
+	HandleTacticalUI( );
+
+	//if laptop is still BROKEN
+	if( gubQuest[ QUEST_FIX_LAPTOP ] == QUESTINPROGRESS )
+	{
+		gfPlayersLaptopWasntWorkingAtEndOfGame = TRUE;
+
+		// otherwise, go to the credits screen
+		HandleJa25EndGameAndGoToCreditsScreen( TRUE );
+	}
+	else
+	{
+		gfPlayersLaptopWasntWorkingAtEndOfGame = FALSE;
+
+		gFadeOutDoneCallback = FadeOutToLaptopOnEndGame;
+
+		FadeOutGameScreen( );	
+	}
+}
+
+void HandleJa25EndGameAndGoToCreditsScreen( BOOLEAN fFromTactical )
+{
+	if( fFromTactical )
+	{
+		FadeToCredits( );
+	}
+	else
+	{
+		//Reset flag indicating we are in the end game sequence
+		gTacticalStatus.uiFlags &= ~IN_ENDGAME_SEQUENCE;
+
+		//We want to reinitialize the game
+		ReStartingGame();	
+	}
+}
+
+void EnterTacticalInFinalSector()
+{
+	gFadeInDoneCallback = InFinalSectorAfterFadeIn;
+
+	FadeInGameScreen( );
+}
+
+void InFinalSectorAfterFadeIn( void )
+{
+	//Have everyone start talking
+	DelayedMercQuote( NOBODY, DQ__START_EVERYONE_TALKING_AT_END_OF_GAME, GetWorldTotalSeconds() + 2 );
+}
+
+void FadeToCredits( void )
+{
+	gFadeOutDoneCallback = EndFadeToCredits;
+
+	FadeOutGameScreen( );	
+}
+
+void EndFadeToCredits( void )
+{
+	//then we can go strait to the laptop screen
+	InternalLeaveTacticalScreen( CREDIT_SCREEN );
+
+	//Reset flag indicating we are in the end game sequence
+	gTacticalStatus.uiFlags &= ~IN_ENDGAME_SEQUENCE;
+
+	//We want to reinitialize the game
+	ReStartingGame();	
+}
+
+void FadeOutToLaptopOnEndGame( void )
+{
+
+	//then we can go strait to the laptop screen
+	InternalLeaveTacticalScreen( LAPTOP_SCREEN );
+
+	//Add the end Game Emails
+	HandleAddingTheEndGameEmails();
+}

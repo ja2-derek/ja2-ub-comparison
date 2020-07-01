@@ -3,6 +3,7 @@
 	#include "Intro.h"
 	#include "Cinematics.h"
 	#include "Ja25_Tactical.h"
+	#include "end game.h"
 #else
 	#include "sgp.h"
 	#include "sys globals.h"
@@ -328,6 +329,16 @@ void PrepareToExitIntroScreen()
 
 		gfDoneWithSplashScreen = TRUE;
 		guiIntroExitScreen = INIT_SCREEN;
+	}
+	else if( gbIntroScreenMode == INTRO_ENDING )
+	{
+		guiIntroExitScreen = GAME_SCREEN;
+		SetCurrentWorldSector( 16, 11, 0 );
+
+		EnterTacticalInFinalSector();
+
+		//Dont leave tactical
+		gfEnteringMapScreen = FALSE;
 	}
 	else
 	{
