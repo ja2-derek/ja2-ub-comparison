@@ -674,6 +674,10 @@ extern BOOLEAN ItemIsARocketRifle( INT16 sItemIndex );
 
 
 
+
+void AskUserToAttachTransmitterToLaptop();
+void AttachLaptopTransmitterToLaptop( UINT8 ubExitValue );
+
 //ppp
 
 
