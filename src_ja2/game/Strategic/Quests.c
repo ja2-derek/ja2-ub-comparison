@@ -924,11 +924,14 @@ Ja25: NO Carmen
 			break;		
 
 		case FACT_RECEIVING_INCOME_FROM_DCAC:
+			Assert( 0 );
+/*
 			gubFact[usFact] = ( 
 				( PredictDailyIncomeFromAMine( MINE_DRASSEN ) > 0 ) &&
 				( PredictDailyIncomeFromAMine( MINE_ALMA ) > 0 ) &&
 				( PredictDailyIncomeFromAMine( MINE_CAMBRIA ) > 0 ) &&
 				( PredictDailyIncomeFromAMine( MINE_CHITZENA ) > 0 ) );
+*/
 			break;
 
 		case FACT_PLAYER_BEEN_TO_K4:
@@ -1017,15 +1020,18 @@ Ja25 no loyalty
 			break;
 
 		case FACT_PLAYER_OWNS_2_TOWNS_INCLUDING_OMERTA:
-			gubFact[usFact] = ( ( GetNumberOfWholeTownsUnderControl() == 3 ) && IsTownUnderCompleteControlByPlayer( OMERTA ) );
+			Assert( 0 );
+//Ja25:  New Towns			gubFact[usFact] = ( ( GetNumberOfWholeTownsUnderControl() == 3 ) && IsTownUnderCompleteControlByPlayer( OMERTA ) );
 			break;
 
 		case FACT_PLAYER_OWNS_3_TOWNS_INCLUDING_OMERTA:
-			gubFact[usFact] = ( ( GetNumberOfWholeTownsUnderControl() == 5 ) && IsTownUnderCompleteControlByPlayer( OMERTA ) );
+			Assert( 0 );
+//Ja25:  New Towns						gubFact[usFact] = ( ( GetNumberOfWholeTownsUnderControl() == 5 ) && IsTownUnderCompleteControlByPlayer( OMERTA ) );
 			break;
 
 		case FACT_PLAYER_OWNS_4_TOWNS_INCLUDING_OMERTA:
-			gubFact[usFact] = ( ( GetNumberOfWholeTownsUnderControl() >= 6 ) && IsTownUnderCompleteControlByPlayer( OMERTA ) );
+			Assert( 0 );
+//Ja25:  New Towns						gubFact[usFact] = ( ( GetNumberOfWholeTownsUnderControl() >= 6 ) && IsTownUnderCompleteControlByPlayer( OMERTA ) );
 			break;
 
 		case FACT_PLAYER_FOUGHT_THREE_TIMES_TODAY:
@@ -1164,6 +1170,23 @@ Ja25 no loyalty
 			break;
 
 		case FACT_PLAYER_SPOKE_TO_DRASSEN_MINER:
+		case FACT_PLAYER_IN_CONTROLLED_DRASSEN_MINE:
+		case FACT_PLAYER_SPOKE_TO_CAMBRIA_MINER:
+		case FACT_PLAYER_IN_CONTROLLED_CAMBRIA_MINE:
+		case FACT_PLAYER_SPOKE_TO_CHITZENA_MINER:
+		case FACT_PLAYER_IN_CONTROLLED_CHITZENA_MINE:
+		case FACT_PLAYER_SPOKE_TO_ALMA_MINER:
+		case FACT_PLAYER_IN_CONTROLLED_ALMA_MINE:
+		case FACT_PLAYER_SPOKE_TO_GRUMM_MINER:
+		case FACT_PLAYER_IN_CONTROLLED_GRUMM_MINE:
+			//no miners
+			Assert( 0 );
+			break;
+
+/*
+Ja25 no head miners
+
+		case FACT_PLAYER_SPOKE_TO_DRASSEN_MINER:
 			gubFact[usFact] = SpokenToHeadMiner( MINE_DRASSEN );
 			break;
 		case FACT_PLAYER_IN_CONTROLLED_DRASSEN_MINE:
@@ -1193,7 +1216,7 @@ Ja25 no loyalty
 		case FACT_PLAYER_IN_CONTROLLED_GRUMM_MINE:
 			gubFact[usFact] = ( GetIdOfMineForSector( gWorldSectorX, gWorldSectorY, gbWorldSectorZ ) == MINE_GRUMM && !(StrategicMap[ gWorldSectorX + MAP_WORLD_X * gWorldSectorY ].fEnemyControlled) );
 			break;
-
+*/
 		case FACT_ENOUGH_LOYALTY_TO_TRAIN_MILITIA:
 			gubFact[usFact] = InTownSectorWithTrainingLoyalty( gWorldSectorX, gWorldSectorY );
 			break;

@@ -286,6 +286,7 @@ Ja25 No meanwhiles
 			break;
 */
 		case EVENT_BEGIN_CREATURE_QUEST:
+			Assert( 0 );
 			break;
 		case EVENT_CREATURE_SPREAD:
 			Assert( 0 );
@@ -367,7 +368,8 @@ Ja25 No strategic ai
 			}
 			break;
 		case EVENT_MERC_SITE_BACK_ONLINE:
-			GetMercSiteBackOnline();
+			Assert( 0 );
+//			GetMercSiteBackOnline();
 			break;
 		case EVENT_INVESTIGATE_SECTOR:
 			Assert( 0 );
@@ -402,7 +404,8 @@ Ja25 No strategic ai
 			break;
 
 		case EVENT_MERC_MERC_WENT_UP_LEVEL_EMAIL_DELAY:
-			MERCMercWentUpALevelSendEmail( (UINT8) pEvent->uiParam );
+//			Assert( 0 );
+//			MERCMercWentUpALevelSendEmail( (UINT8) pEvent->uiParam );
 			break;
 
 		case EVENT_MERC_SITE_NEW_MERC_AVAILABLE:
