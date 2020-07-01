@@ -26,7 +26,7 @@
 
 
 INT8		czVersionNumber[16]	= { "Build 02.12.01" };
-INT16		zTrackingNumber[16]	= { L"Z" };
+INT16		zTrackingNumber[16]	= { L"Y" };
 	
 
 //
