@@ -39,6 +39,10 @@ MAPCREATE_STRUCT gMapInformation;
 #define MINOR_MAP_VERSION		27
 UINT8 gubMinorMapVersion = MINOR_MAP_VERSION;
 
+
+void AutoCalculateItemNoOverwriteStatus();
+
+
 /*
 MINOR_MAP_VERSION Log -- Created by Kris Morness, November 14, 1997
 Version 0 -- Kris -- obsolete November 14, 1997
@@ -573,6 +577,24 @@ void UpdateOldVersionMap()
 		}
 	}
 }
+
+void ValidateAndUpdateMapVersionIfNecessary()
+{
+	//Older versions of mercs may require updating due to past bug fixes, new changes, etc.
+	if( gMapInformation.ubMapVersion < MINOR_MAP_VERSION )
+	{
+		SetRelativeStartAndEndPercentage( 0, 92, 93, L"Updating older map version..." );
+		RenderProgressBar( 0, 0 );
+		UpdateOldVersionMap();
+	}
+	else if( gMapInformation.ubMapVersion > MINOR_MAP_VERSION )
+	{
+		//we may have a problem...
+		AssertMsg( 0, "Map version is greater than the current version (old ja2.exe?)" );
+	}
+	AutoCalculateItemNoOverwriteStatus() ;
+}
+
 
 void AutoCalculateItemNoOverwriteStatus() 
 {
