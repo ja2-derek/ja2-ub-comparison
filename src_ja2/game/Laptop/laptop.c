@@ -2613,7 +2613,7 @@ BOOLEAN HandleExit( void )
 		// Set an event to send this email ( day 2 8:00-12:00 )
 		if( ( LaptopSaveInfo.fIMPCompletedFlag == FALSE ) && ( LaptopSaveInfo.fSentImpWarningAlready == FALSE ) )
 		{
-			AddFutureDayStrategicEvent( EVENT_HAVENT_MADE_IMP_CHARACTER_EMAIL, (8 + Random(4) ) * 60, 0, 1 );
+			AddFutureDayStrategicEvent( EVENT_HAVENT_MADE_IMP_CHARACTER_EMAIL, LAPTOP__HAVENT_CREATED_IMP_REMINDER_EMAIL_ARRIVE_TIME, 0, 1 );
 
 /*
  Moved to an event that gets triggered the next day: HaventMadeImpMercEmailCallBack()
