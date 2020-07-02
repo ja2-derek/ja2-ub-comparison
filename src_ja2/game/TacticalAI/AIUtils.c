@@ -1973,6 +1973,17 @@ INT8 CalcMorale(SOLDIERTYPE *pSoldier)
 	 bMoraleCategory += 2;
  }
 
+  // if soldier is currently not under fire and not critically injured
+ if (!pSoldier->bUnderFire)
+ {
+   bMoraleCategory++;
+ }
+
+ // if he's just been shot, reduce morale
+ if( pSoldier->bShock )
+ {
+	 bMoraleCategory--;
+ }
 
  // if still full of energy
  if (pSoldier->bBreath > 75)
@@ -1999,14 +2010,16 @@ INT8 CalcMorale(SOLDIERTYPE *pSoldier)
      bMoraleCategory--;
 
    // if getting REALLY low on life
-   if (pSoldier->bLife < 20)
+   if (pSoldier->bLife < 28)
+	 {
      bMoraleCategory--;
+		 if (bMoraleCategory > MORALE_WORRIED)
+		 {
+			 bMoraleCategory = MORALE_WORRIED;
+		 }
+	 }
   }
 
-
- // if soldier is currently not under fire
- if (!pSoldier->bUnderFire)
-   bMoraleCategory++;
 
 
  // if adjustments made it outside the allowed limits

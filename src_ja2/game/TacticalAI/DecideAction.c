@@ -1956,8 +1956,8 @@ Ja25: No queen
 				 // modify RED movement tendencies according to morale
 				 switch (pSoldier->bAIMorale)
 					{
-					 case MORALE_HOPELESS:  bSeekPts = -99; bHelpPts = -99; bHidePts  = +1; bWatchPts =	-99; break;
-					 case MORALE_WORRIED:   bSeekPts += -1; bHelpPts +=  0; bHidePts += +1; bWatchPts +=	1; break;
+					 case MORALE_HOPELESS:  bSeekPts = -99; bHelpPts = -99; bHidePts  = +2; bWatchPts =	-99; break;
+					 case MORALE_WORRIED:   bSeekPts += -2; bHelpPts +=  0; bHidePts += +2; bWatchPts +=	1; break;
 					 case MORALE_NORMAL:    bSeekPts +=  0; bHelpPts +=  0; bHidePts +=  0; bWatchPts +=	0; break;
 					 case MORALE_CONFIDENT: bSeekPts += +1; bHelpPts +=  0; bHidePts += -1; bWatchPts +=	0; break;
 					 case MORALE_FEARLESS:  bSeekPts += +1; bHelpPts +=  0; bHidePts =  -1; bWatchPts +=  0; break;
@@ -1987,6 +1987,21 @@ Ja25: No queen
 					 case AGGRESSIVE:    bSeekPts += +1; bHelpPts +=  0; bHidePts += -1; bWatchPts +=  0; break;
 					 case ATTACKSLAYONLY:bSeekPts += +1; bHelpPts +=  0; bHidePts += -1; bWatchPts +=  0; break;
 					}
+
+				 /*
+				 // modify for being injured/under fire
+				 if (pSoldier->bShock > 0 || pSoldier->bUnderFire)
+				 {
+					// should be more inclined to take cover
+					bSeekPts += -1; bHelpPts += -1; bHidePts += +1; bWatchPts += -1;
+					
+					if ( pSoldier->bShock > 4)
+					{
+						// really take cover
+						bSeekPts += -1; bHelpPts += -1; bHidePts += +1; bWatchPts += -1;
+					}
+				 }
+				 */
 				}
 
 				if (!gfTurnBasedAI)
