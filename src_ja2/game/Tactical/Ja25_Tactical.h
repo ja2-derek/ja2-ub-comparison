@@ -34,8 +34,20 @@ typedef struct
 */
 
 
+void		HandleCommanderMorrisNewMercWantsNoteDelayedSpeech();
+
+void		DisplayCommanderMorrisNote( SOLDIERTYPE *pSoldier );
+
+void		HandleShowingRadioLocatorsInMorrisArea();
+
+void		HandleNewMercSayingContentsOfMorrisNote( SOLDIERTYPE *pSoldier );
+
+void		HandlePlayerHittingSwitchToLaunchMissles();
+
 void		HandleStartingEveryoneTalkingAtEndOfGame();
 
 void		HandleFadingOutToEndGameCinematics();
+
+void		HandleOpenControlPanelToRevealSwitchInMorrisArea();
 
 #endif

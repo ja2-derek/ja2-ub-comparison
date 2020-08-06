@@ -3172,6 +3172,24 @@ void HandleNPCTeamMemberDeath( SOLDIERTYPE *pSoldierOld )
 
 		switch( pSoldierOld->ubProfile )
 		{
+			case MORRIS:
+				{
+					INT8 bSoldierID;
+
+					//Geta a random soldier ID
+					bSoldierID = RandomSoldierIdFromNewMercsOnPlayerTeam();
+
+					//if there is any
+					if( bSoldierID != -1 )
+					{
+						//say the MORRIS dead quote
+						TacticalCharacterDialogue( &Menptr[ bSoldierID ], QUOTE_LEARNED_TO_HATE_MERC_1_ON_TEAM_WONT_RENEW );
+					}					
+				}
+				break;
+
+/*
+Ja25: none of these characters are in the exp.
 			case BRENDA:
 				SetFactTrue( FACT_BRENDA_DEAD );
 				{

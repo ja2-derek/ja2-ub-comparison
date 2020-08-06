@@ -783,6 +783,16 @@ void StartNPCAI(SOLDIERTYPE *pSoldier)
 		// If we are not in an interrupt situation!
 		if( (( gTacticalStatus.uiFlags & TURNBASED ) && ( gTacticalStatus.uiFlags & INCOMBAT )) && gubOutOfTurnPersons == 0 )
 		{
+			//if this is Morris
+			if( pSoldier->ubProfile == MORRIS )
+			{
+				//if we are to say the line if we are hurt the player
+				if( gJa25SaveStruct.fMorrisToSayHurtPlayerQuoteNextTurn )
+				{
+					TriggerNPCRecord( MORRIS, 6 );
+				}
+			}
+
 			if( ( ( pSoldier->bVisible != -1 && pSoldier->bLife) || ( gTacticalStatus.uiFlags & SHOW_ALL_MERCS ) ) && ( fInValidSoldier == FALSE ) )
 			{
 				// If we are on a roof, set flag for rendering...

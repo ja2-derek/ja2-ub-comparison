@@ -838,6 +838,14 @@ Ja25: no mike
 
 		ExecuteCharacterDialogue( QItem->ubCharacterNum, QItem->usQuoteNum, QItem->iFaceIndex, QItem->bUIHandlerID, QItem->fFromSoldier );
 
+
+		//Ja25: test
+		if( QItem->ubCharacterNum == MORRIS )
+		{
+			if( QItem->usQuoteNum == 0 )
+			{
+			}
+		}
 	}
 	else if( QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_SKIP_A_FRAME )
 	{
@@ -2794,6 +2802,13 @@ void TextOverlayClickCallback( MOUSE_REGION * pRegion, INT32 iReason )
 		{
 			InitJerriesSpeechCallBack();
 		}
+
+		//else the Commander morris note is being displayed
+		else if( gJa25SaveStruct.ubDisplayCommanderMorrisNote != DMN__NOT_TO_DISPLAY_IT ||
+						 gJa25SaveStruct.ubDisplayCommanderMorrisNote != DMN__FINISHED )
+		{
+			HandlePlayerClosingMorrisNoteDisplayedOnScreen();
+		}
 	}
 	else if (iReason & MSYS_CALLBACK_REASON_LOST_MOUSE )
 	{
@@ -3121,4 +3136,26 @@ void RemoveJerryMiloBrokenLaptopOverlay()
 		}
 	}
 }
+
+void HandlePlayerClosingMorrisNoteDisplayedOnScreen()
+{
+	RemoveVideoOverlay( giTextBoxOverlay );
+	giTextBoxOverlay = -1;
+
+	if ( fTextBoxMouseRegionCreated )
+	{
+		MSYS_RemoveRegion( &gTextBoxMouseRegion );
+		fTextBoxMouseRegionCreated = FALSE; 
+	}
+
+	if( gJa25SaveStruct.ubDisplayCommanderMorrisNote == DMN__DISPLAY_PART_2 )
+	{
+		gJa25SaveStruct.ubDisplayCommanderMorrisNote = DMN__FINISHED;
+
+		HandleShowingRadioLocatorsInMorrisArea();
+	}
+	else
+	{
+		DelayedMercQuote( gJa25SaveStruct.bNewMercProfileIDForSayingMorrisNote, DQ__MORRIS_NOTE_DISPLAY_NOTE_1, GetWorldTotalSeconds() + 1 );
+	}
 }

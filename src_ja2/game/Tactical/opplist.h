@@ -72,7 +72,8 @@ extern INT8 gbLookDistance[8][8];
 extern INT8 gfKnowAboutOpponents;
 
 extern BOOLEAN   gfPlayerTeamSawJoey;
-extern BOOLEAN   gfMikeShouldSayHi;
+//extern BOOLEAN   gfMikeShouldSayHi;
+extern BOOLEAN   gfMorrisShouldSayHi;
 
 
 extern INT16			gsWatchedLoc[ TOTAL_SOLDIERS ][ NUM_WATCHED_LOCS ];

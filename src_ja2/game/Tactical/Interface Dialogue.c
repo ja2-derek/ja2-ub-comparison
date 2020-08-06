@@ -5123,7 +5123,31 @@ void DelayedSayingOfMercQuote( UINT32 uiParam )
 	}
 	else
 	{
+		switch( usQuoteNum )
+		{
+			case DQ__MORRIS_NOTE_NEW_MERC_DELAY:
+				HandleCommanderMorrisNewMercWantsNoteDelayedSpeech();
+				break;
+			case DQ__MORRIS_NOTE_DISPLAY_NOTE_1:
+			case DQ__MORRIS_NOTE_DISPLAY_NOTE_2:
+			{
+				//Get the soldier that should say the quote
+				pSoldier = FindSoldierByProfileID( (UINT8)usProfileID, FALSE );
+				if( pSoldier == NULL )
+					return;
+
+				DisplayCommanderMorrisNote( pSoldier );
+			}
+			break;
 		
+			case DQ__NEW_MERC_SAY_NOTE_QUOTES:
+				//Get the soldier that should say the quote
+				pSoldier = FindSoldierByProfileID( (UINT8)usProfileID, FALSE );
+				if( pSoldier == NULL )
+					return;
+
+				HandleNewMercSayingContentsOfMorrisNote( pSoldier );
+				break;
 			case DQ__START_EVERYONE_TALKING_AT_END_OF_GAME:
 				EndGameEveryoneSayTheirGoodByQuotes();
 				break;

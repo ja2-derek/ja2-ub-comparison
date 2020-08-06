@@ -2364,6 +2364,17 @@ void CopyProfileItems( SOLDIERTYPE *pSoldier, SOLDIERCREATE_STRUCT *pCreateStruc
 						// to provide one which doesn't work and would confuse everything.
 						switch( pCreateStruct->ubProfile )
 						{
+							case MORRIS:
+								if ( pProfile->inv[ cnt ] >= KEY_1 && pProfile->inv[ cnt ] <= KEY_32)
+								{
+									CreateKeyObject( &(pSoldier->inv[ cnt ] ), pProfile->bInvNumber[ cnt ], 32 );
+								}
+								else
+								{
+									memset( &(pSoldier->inv[cnt]), 0, sizeof( OBJECTTYPE ) );
+								}
+								break;
+
 /*
 Ja25:  No brewseter, doreen or skipper
 							case BREWSTER:
