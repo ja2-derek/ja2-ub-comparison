@@ -157,6 +157,9 @@ void SurrenderMessageBoxCallBack( UINT8 ubExitValue )
 
 	if ( ubExitValue == MSG_BOX_RETURN_YES )
 	{
+		// CJC Dec 1 2002: fix multiple captures
+		BeginCaptureSquence();
+
     // Do capture....
 		cnt = gTacticalStatus.Team[ gbPlayerNum ].bFirstID;
 
