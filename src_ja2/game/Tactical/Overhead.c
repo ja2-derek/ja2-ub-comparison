@@ -6319,6 +6319,11 @@ Ja25  no meanwhile
 
 		//Whenever returning TRUE, make sure you clear gfBlitBattleSectorLocator;
 		gfBlitBattleSectorLocator = FALSE;
+
+
+		//When all the enemy gets killed, reveal the items they dropped
+		RevealAllDroppedEnemyItems();
+
 		return( TRUE );
 	}
 

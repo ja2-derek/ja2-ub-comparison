@@ -344,6 +344,26 @@ void HandleHowPlayerGotThroughFan()
 		}
 
 }
+
+void RevealAllDroppedEnemyItems()
+{
+	UINT32 uiCnt=0;
+
+	//loop through all the items
+	for(uiCnt=0; uiCnt<guiNumWorldItems; uiCnt++ )
+	{
+		//if the item exists AND the item was droppped from an enemy
+		if( gWorldItems[ uiCnt ].fExists && gWorldItems[ uiCnt ].usFlags & WORLD_ITEM_DROPPED_FROM_ENEMY )
+		{
+			gWorldItems[ uiCnt ].bVisible = VISIBLE;
+		}
+	}
+
+	// Make team look for items
+	AllSoldiersLookforItems( TRUE );
+
+}
+
 void HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex )
 {
 	INT8	bID=-1;

@@ -34,6 +34,8 @@ typedef struct
 */
 
 
+
+void RevealAllDroppedEnemyItems();
 void		HandleInitialEventsInHeliCrash();
 void		HandleCommanderMorrisNewMercWantsNoteDelayedSpeech();
 
