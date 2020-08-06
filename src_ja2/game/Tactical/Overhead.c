@@ -3527,6 +3527,8 @@ no queen, or queen monster
 	//if the NPC is a dealer, add the dealers items to the ground
 	AddDeadArmsDealerItemsToWorld( pSoldierOld->ubProfile );
 
+	HandleDeathInPowerGenSector( pSoldierOld );
+	HandleWhenCertainPercentageOfEnemiesDie();
 	//The queen AI layer must process the event by subtracting forces, etc.
 	ProcessQueenCmdImplicationsOfDeath( pSoldierOld );
 

@@ -1591,7 +1591,7 @@ BOOLEAN EnterSector( INT16 sSectorX, INT16 sSectorY , INT8 bSectorZ )
 
 	RemoveLoadingScreenProgressBar();
 	//RemoveProgressBar( 0 );
-
+ 
 	if( gfEnterTacticalPlacementGUI )
 	{
 		SetPendingNewScreen(GAME_SCREEN);

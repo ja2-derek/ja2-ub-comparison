@@ -26,7 +26,9 @@
 // Function Prototypes
 //
 //*******************************************************************
+void		StopPowerGenFan();
 void		HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex );
+UINT32	GetNumberOfTurnsPowerGenFanWillBeStoppedFor();
 //ppp
 
 //*******************************************************************
@@ -35,9 +37,313 @@ void		HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex 
 //
 //*******************************************************************
 
+BOOLEAN	IsSoldierQualifiedMercForSeeingPowerGenFan( SOLDIERTYPE *pSoldier )
+{
+	if( pSoldier->ubProfile == MANUEL		||
+			pSoldier->ubProfile ==  53 || //PGCMale3
+			pSoldier->ubProfile ==  55 || //PGCFem2
+			pSoldier->ubProfile ==  57		//PGCMale4
+		)
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
 
 
 
+void StopPowerGenFan()
+{
+	UINT16 usTileIndex;
+	UINT16 usGridNo = 10980;
+	SOLDIERTYPE *pSoldier=NULL;
+
+	// ATE: If destroyed, don't go into here
+	if( gJa25SaveStruct.ubStateOfFanInPowerGenSector == PGF__BLOWN_UP )
+	{
+		return;
+	}
+
+	//If the fan is already stopped, or has been stopped in the past
+	if( gJa25SaveStruct.ubStateOfFanInPowerGenSector == PGF__STOPPED ||
+			IsJa25GeneralFlagSet( JA_GF__POWER_GEN_FAN_HAS_BEEN_STOPPED ) )
+	{
+		//leave
+		return;
+	}
+
+	//if we are in turn based combat
+	if( !((gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT)) )
+	{
+		return;
+	}
+
+	//Remeber how the player got through
+	SetJa25GeneralFlag( JA_GF__POWER_GEN_FAN_HAS_BEEN_STOPPED );
+
+	gJa25SaveStruct.ubStateOfFanInPowerGenSector = PGF__STOPPED;
+
+	//Set the fact that player stopped the fan
+	SetFactTrue( FACT_FAN_STOPPPED );
+
+	//Is biggens on the team
+	pSoldier = FindSoldierByProfileID( BIGGENS, TRUE );
+	if( pSoldier != NULL )
+	{
+		SetFactTrue( FACT_BIGGENS_ON_TEAM_AND_FAN_STOPPED );
+	}
+
+	//Turn off the power gen fan sound
+	HandleRemovingPowerGenFanSound();
+
+	//remeber which turn the fan stopped on
+	gJa25SaveStruct.uiTurnPowerGenFanWentDown = gJa25SaveStruct.uiTacticalTurnCounter;
+
+
+	//
+	// Replace the Fan graphic
+	//
+
+	// Turn on permenant changes....
+	ApplyMapChangesToMapTempFile( TRUE );
+
+	//Add the exit grid to the power gen fan
+	AddExitGridForFanToPowerGenSector();
+
+	// Remove it!
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIFTHOSTRUCT, (INT8)( 1 ), &usTileIndex );
+	RemoveStruct( usGridNo, usTileIndex );
+	
+
+	// Add the new one
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIFTHOSTRUCT, (INT8)( 7 ), &usTileIndex );
+	AddStructToHead( usGridNo, usTileIndex );
+
+	ApplyMapChangesToMapTempFile( FALSE );
+
+	//Recompile the movement costs since we have added a exit grid
+	RecompileLocalMovementCosts( usGridNo );
+
+	gpWorldLevelData[ usGridNo ].uiFlags |= MAPELEMENT_REVEALED;
+
+	// Re-render the world!
+	gTacticalStatus.uiFlags |= NOHIDE_REDUNDENCY;
+
+	// FOR THE NEXT RENDER LOOP, RE-EVALUATE REDUNDENT TILES
+	SetRenderFlags(RENDER_FLAG_FULL);
+}
+
+void HandleStartingFanBackUp()
+{
+	//if the fan has been stopped for the right amount of time
+	if( gJa25SaveStruct.uiTacticalTurnCounter == ( gJa25SaveStruct.uiTurnPowerGenFanWentDown + GetNumberOfTurnsPowerGenFanWillBeStoppedFor() ) )
+	{
+		//if it is stopped
+		if( gJa25SaveStruct.ubStateOfFanInPowerGenSector == PGF__STOPPED )
+		{
+			StartFanBackUpAgain();
+		}
+	}
+}
+
+
+void StartFanBackUpAgain()
+{
+	UINT16 usTileIndex;
+	UINT16 usGridNo=10980;
+
+	// ATE: If destroyed, don't go into here
+	if( gJa25SaveStruct.ubStateOfFanInPowerGenSector == PGF__BLOWN_UP )
+	{
+		return;
+	}
+
+	//Remeber how the player got through
+	gJa25SaveStruct.ubStateOfFanInPowerGenSector = PGF__RUNNING_NORMALLY;
+
+
+	//Start the fan sound
+	HandleAddingPowerGenFanSound();
+
+
+	//
+	// Replace the Fan graphic
+	//
+
+	// Turn on permenant changes....
+	ApplyMapChangesToMapTempFile( TRUE );
+
+	// Remove it!
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIFTHOSTRUCT, (INT8)( 7 ), &usTileIndex );
+	RemoveStruct( usGridNo, usTileIndex );
+	
+
+	// Add the new one
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIFTHOSTRUCT, (INT8)( 1 ), &usTileIndex );
+	AddStructToHead( usGridNo, usTileIndex );
+
+	ApplyMapChangesToMapTempFile( FALSE );
+
+	//Recompile the movement costs since we have added a exit grid
+	RecompileLocalMovementCosts( usGridNo );
+
+	gpWorldLevelData[ usGridNo ].uiFlags |= MAPELEMENT_REVEALED;
+
+	// Re-render the world!
+	gTacticalStatus.uiFlags |= NOHIDE_REDUNDENCY;
+
+	//Remove the exit grid
+	RemoveExitGridFromWorld( PGF__FAN_EXIT_GRID_GRIDNO );
+
+	// FOR THE NEXT RENDER LOOP, RE-EVALUATE REDUNDENT TILES
+	SetRenderFlags(RENDER_FLAG_FULL);
+}
+
+void HandlePowerGenAlarm()
+{
+	static UINT32 uiLastTime=0;
+	static UINT32 uiAlarmCounter=0;
+	UINT32 uiCurTime=0;
+
+	//if its not the right sector
+	if( !( gWorldSectorX == 13 && gWorldSectorY == MAP_ROW_J && gbWorldSectorZ == 0 ) )
+	{
+		//leave
+		return;
+	}
+
+	//if the fan is not stopped
+	if( gJa25SaveStruct.ubStateOfFanInPowerGenSector != PGF__STOPPED )
+	{
+		uiAlarmCounter = 0;
+		//leave
+		return;
+	}
+
+	uiCurTime = GetJA2Clock();
+
+	if( ( uiCurTime - uiLastTime ) >= TCTL__DELAY_BETWEEN_ALARM_SOUNDS )
+	{
+		uiAlarmCounter++;
+
+		PlayJA2SampleFromFile( "SOUNDS\\AlarmFan.wav", RATE_11025, MIDVOLUME, 1, MIDDLE );
+
+		uiLastTime = uiCurTime;
+
+	
+		if( uiAlarmCounter == 2 && !IsJa25GeneralFlagSet( JA_GF__BIGGENS_SAID_QUOTE_117 ) )
+		{
+			//
+			// Have merc say the quote, if the conditions are right
+			//
+			if( gubFact[ FACT_PLAYER_KNOWS_ABOUT_FAN_STOPPING ] )
+			{
+				INT8 bID = RandomSoldierIdFromNewMercsOnPlayerTeam();
+
+				if( bID != -1 )
+				{
+					TacticalCharacterDialogue( &Menptr[ bID ], QUOTE_PERSONALITY_BIAS_WITH_MERC_2 );
+				}
+			}
+			else
+			{
+				UINT8 bSoldierId1, bSoldierId2, bSoldierId3;
+				Get3RandomQualifiedMercs( &bSoldierId1, &bSoldierId2, &bSoldierId3 );
+
+				if( bSoldierId1 != -1 && Menptr[ bSoldierId1 ].ubProfile != BIGGENS )
+				{
+					TacticalCharacterDialogue( &Menptr[ bSoldierId1 ], QUOTE_PERSONALITY_BIAS_WITH_MERC_1 );
+				}
+				else if( bSoldierId2 != -1 && Menptr[ bSoldierId2 ].ubProfile != BIGGENS )
+				{
+					TacticalCharacterDialogue( &Menptr[ bSoldierId2 ], QUOTE_PERSONALITY_BIAS_WITH_MERC_1 );
+				}
+				else if( bSoldierId3 != -1 && Menptr[ bSoldierId3 ].ubProfile != BIGGENS )
+				{
+					TacticalCharacterDialogue( &Menptr[ bSoldierId3 ], QUOTE_PERSONALITY_BIAS_WITH_MERC_1 );
+				}
+			}
+		}
+	}
+}
+
+
+
+
+void HandleAddingPowerGenFanSound()
+{
+	INT16 sGridNo;
+
+	//if its not already playing
+	if( gJa25SaveStruct.iPowerGenFanPositionSndID != -1 )
+	{
+		return;
+	}
+
+	if( gbWorldSectorZ == 0 )
+		sGridNo = 10979;
+	else
+		sGridNo = 19749;
+
+	//Create the new ambient fan sound
+	gJa25SaveStruct.iPowerGenFanPositionSndID = NewPositionSnd( sGridNo, POSITION_SOUND_STATIONARY_OBJECT, 0, POWER_GEN_FAN_SOUND );
+
+	SetPositionSndsInActive( );
+	SetPositionSndsActive( );
+}
+
+void HandleRemovingPowerGenFanSound()
+{
+	//if there is an ambience sound playing
+	if( gJa25SaveStruct.iPowerGenFanPositionSndID != -1 )
+	{
+		//delete it
+		DeletePositionSnd( gJa25SaveStruct.iPowerGenFanPositionSndID );
+
+		gJa25SaveStruct.iPowerGenFanPositionSndID = -1;
+	}
+}
+
+
+void AddExitGridForFanToPowerGenSector()
+{
+	EXITGRID ExitGrid;
+
+	memset( &ExitGrid, 0, sizeof( EXITGRID ) );
+
+	ExitGrid.ubGotoSectorX = 14;
+	ExitGrid.ubGotoSectorY = MAP_ROW_J;
+	ExitGrid.ubGotoSectorZ = 1;
+	ExitGrid.usGridNo = 19749;
+
+	//Add the exit grid when the fan is either stopped or blown up
+	AddExitGridToWorld( PGF__FAN_EXIT_GRID_GRIDNO, &ExitGrid );
+}
+
+void HandleHowPlayerGotThroughFan()
+{
+		switch( gJa25SaveStruct.ubStateOfFanInPowerGenSector )
+		{
+			case PGF__STOPPED:
+				gJa25SaveStruct.ubHowPlayerGotThroughFan = PG__PLAYER_STOPPED_FAN_TO_GET_THROUGH;
+				break;
+			
+			case PGF__BLOWN_UP:
+				gJa25SaveStruct.ubHowPlayerGotThroughFan = PG__PLAYER_BLEW_UP_FAN_TO_GET_THROUGH;
+			
+				//If the player blew up the fan, then the enemies can hear it in the tunnel and prepare for it.
+				gJa25SaveStruct.uiJa25GeneralFlags |= JA_GF__DID_PLAYER_MAKE_SOUND_GOING_THROUGH_TUNNEL_GATE;
+				break;
+		}
+
+}
 void HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex )
 {
 	INT8	bID=-1;
@@ -110,6 +416,138 @@ void HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex )
 	}
 }
 
+void HandleDeathInPowerGenSector( SOLDIERTYPE *pSoldier )
+{
+	//if this is NOT the power gen sector
+	if( gWorldSectorX != 13 || gWorldSectorY != 10 || gbWorldSectorZ != 0 )
+	{
+		return;
+	}
+	else
+	{
+		BOOLEAN fFoundValidEnemy=FALSE;
+		UINT8		ubNumFlagedEnemiesInSector=0;
+		INT16		sRandomSlotGridNo;
+		UINT8		uiCnt;
+		SOLDIERINITNODE	*pInitListSoldier;
+
+		#define NUM_ENEMIES_SLOTS			4
+
+		INT16	sEnemyPlacementGridNo[ NUM_ENEMIES_SLOTS ]=
+						{
+							15100,
+							12220,
+							14155,
+							13980,
+						};
+
+		//
+		// Count number of Flaged guys still left
+		//
+		for( uiCnt=0; uiCnt<NUM_ENEMIES_SLOTS; uiCnt++ )
+		{
+			//Choose a random ID
+			sRandomSlotGridNo = sEnemyPlacementGridNo[ uiCnt ];
+
+			//is this soldier still alive
+			if( IsSoldierAliveWithInitListGridNo( sRandomSlotGridNo ) )
+			{
+				ubNumFlagedEnemiesInSector++;
+			}
+		}
+
+
+		//
+		// Chooose a random slot ID for the enemy
+		//
+
+
+		for( uiCnt=0; uiCnt<50; uiCnt++ )
+		{
+			//Choose a random ID
+			sRandomSlotGridNo = sEnemyPlacementGridNo[ Random( NUM_ENEMIES_SLOTS ) ];
+
+			//is this soldier still alive
+			if( IsSoldierAliveWithInitListGridNo( sRandomSlotGridNo ) )
+			{
+				pInitListSoldier = FindSoldierInitNodeWithID( pSoldier->ubID );
+
+				//is this the same soldier
+				if( pInitListSoldier && pInitListSoldier->pBasicPlacement->usStartingGridNo == sRandomSlotGridNo )
+				{
+					fFoundValidEnemy = TRUE;
+				}
+
+				//we are done, 
+				break;
+			}
+		}
+
+		// if we found an enemy, or this is the 2nd last enemy in the sector
+		if( fFoundValidEnemy || ubNumFlagedEnemiesInSector <= 2 )
+		{
+			StopPowerGenFan();
+		}
+	}		
+}
+
+
+BOOLEAN IsSoldierAliveWithInitListGridNo( INT16 sInitListGridNo )
+{
+	SOLDIERINITNODE *curr;
+	curr = gSoldierInitHead;
+	while( curr )
+	{
+		if( curr->pBasicPlacement->usStartingGridNo == sInitListGridNo && curr->pSoldier != NULL )
+		{
+			if ( curr->pSoldier->bLife >= OKLIFE )
+			{
+				return( TRUE );
+			}
+		}
+		curr = curr->next;
+	}
+	return( FALSE );
+}
+void HandleFanStartingAtEndOfCombat()
+{
+	//if its not the right sector
+	if( !( gWorldSectorX == 13 && gWorldSectorY == MAP_ROW_J && gbWorldSectorZ == 0 ) )
+	{
+		//leave
+		return;
+	}
+
+	//if the fan is not stopped
+	if( gJa25SaveStruct.ubStateOfFanInPowerGenSector != PGF__STOPPED )
+	{
+		//leave
+		return;
+	}
+
+	StartFanBackUpAgain();
+}void HandleFanStartingAtEndOfCombat()
+
+void HandleFanStartingAtEndOfCombat()
+{
+	//if its not the right sector
+	if( !( gWorldSectorX == 13 && gWorldSectorY == MAP_ROW_J && gbWorldSectorZ == 0 ) )
+	{
+		//leave
+		return;
+	}
+
+	//if the fan is not stopped
+	if( gJa25SaveStruct.ubStateOfFanInPowerGenSector != PGF__STOPPED )
+	{
+		//leave
+		return;
+	}
+
+	StartFanBackUpAgain();
+}
+
+
 void HandleInitialEventsInHeliCrash()
 {
 	SOLDIERTYPE *pSoldier=NULL;
@@ -128,6 +566,29 @@ void HandleInitialEventsInHeliCrash()
 		}
 	}
 }
+
+
+UINT32 GetNumberOfTurnsPowerGenFanWillBeStoppedFor()
+{
+	UINT32 uiNumTurns = PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_EASY;
+
+	switch( gGameOptions.ubDifficultyLevel )
+	{
+		case DIF_LEVEL_EASY:
+			uiNumTurns = PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_EASY;
+			break;
+		case DIF_LEVEL_MEDIUM:
+			uiNumTurns = PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_NORMAL;
+			break;
+		case DIF_LEVEL_HARD:
+			uiNumTurns = PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_HARD;
+			break;
+	}
+
+	return( uiNumTurns );
+}
+
+
 void DisplayCommanderMorrisNote( SOLDIERTYPE *pSoldier )
 {
 	CHAR16	zString[1024];

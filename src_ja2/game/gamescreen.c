@@ -592,6 +592,8 @@ UINT32  MainGameScreenHandle(void)
 	if ( !ARE_IN_FADE_IN( ) )
 	{
 		HandleAirRaid( );
+
+		HandlePowerGenAlarm();
 	}
 
 	if ( gfGameScreenLocateToSoldier )

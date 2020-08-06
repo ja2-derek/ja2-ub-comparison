@@ -305,6 +305,11 @@ INT16 PickGridNoToWalkIn( SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection, UIN
 
 void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ );
 void HandlePotentialMoraleHitForSkimmingSectors( GROUP *pGroup );
+void AddExitGridForFanToPowerGenSector();
+void HandleMovingEnemiesCloseToEntranceInFirstTunnelMap();
+void HandleMovingEnemiesCloseToEntranceInSecondTunnelMap();
+void HandleFirstPartOfTunnelFanSound();
+void HandlePowerGenFanSoundModification();
 
 
 extern void InitializeTacticalStatusAtBattleStart();
@@ -1464,6 +1469,10 @@ BOOLEAN EnterSector( INT16 sSectorX, INT16 sSectorY , INT8 bSectorZ )
 		}
 	}
 
+	//if we need to modify the map in any way, put the code in here
+//	HandleSectorSpecificModificatioToMap( sSectorX, sSectorY, bSectorZ );
+
+
 	RemoveLoadingScreenProgressBar();
 	//RemoveProgressBar( 0 );
 
@@ -1471,11 +1480,16 @@ BOOLEAN EnterSector( INT16 sSectorX, INT16 sSectorY , INT8 bSectorZ )
 	{
 		SetPendingNewScreen(GAME_SCREEN);
 		InitTacticalPlacementGUI();
+		HandleSectorSpecificModificatioToMap( sSectorX, sSectorY, bSectorZ, FALSE );
 	}
 	else
 	{
+		// in this case HandleSectorSpecific gets called inside PrepareLoadedSector()
 		PrepareLoadedSector();
 	}
+
+	//if we need to modify the map in any way, put the code in here
+	//HandleSectorSpecificModificatioToMap( sSectorX, sSectorY, bSectorZ, FALSE );
 
 //	UnPauseGame( );
 
@@ -4954,5 +4968,162 @@ void HandleEmailBeingSentWhenEnteringSector( INT16 sMapX, INT16 sMapY, INT8 bMap
 			gJa25SaveStruct.ubEmailFromSectorFlag |= SECTOR_EMAIL__TUNNEL;
 		}
 	}
+
+
+
+
+	}
+}
+void HandleMovingEnemiesCloseToEntranceInFirstTunnelMap()
+{
+	SOLDIERTYPE *pSoldier=NULL;
+	UINT8	ubIndex=0;
+	UINT32 cnt;
+	BOOLEAN	fDone=FALSE;
+	INT16							sXPos, sYPos;
+	INT16 sGridNos[27]={ 18200, 18360, 18520,
+											 18199, 18359, 18519,
+											 18198, 18358, 18518,
+											 18197, 18357, 18517,
+											 18196, 18356, 18516,
+											 18195, 18355, 18515,
+											 18194, 18354, 18514,
+											 18193, 18353, 18513,
+											 18035, 18034, 18033,
+	};
+
+
+	//
+	//Move some of the enemies to be 'near' them player when the enter the room
+	//
+
+	// Loop through the list and move some of the enemies
+	cnt = gTacticalStatus.Team[ ENEMY_TEAM ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ ENEMY_TEAM ].bLastID; cnt++, pSoldier++)
+	{	
+		//if the soldier is active,
+		if ( pSoldier->bActive  )
+		{
+			fDone = FALSE;
+			while( !fDone )
+			{
+				//if there is no one in the gridno
+				if( WhoIsThere2( sGridNos[ ubIndex ], 0 ) == NOBODY )
+				{
+					// move the soldier to the modified location
+					ConvertGridNoToCenterCellXY( sGridNos[ ubIndex ], &sXPos, &sYPos );
+					EVENT_SetSoldierPosition( pSoldier, sXPos, sYPos );
+//					SetSoldierGridNo( pSoldier, sGridNos[ ubIndex ], TRUE );
+					ubIndex++;
+					fDone=TRUE;
+				}
+				else
+				{
+					ubIndex++;
+				}
+
+				if( ubIndex >= 27 )
+				{
+					Assert( 0 );
+					return;
+				}
+			}
+		}
+	}
+}
+
+void HandleMovingEnemiesCloseToEntranceInSecondTunnelMap()
+{
+	SOLDIERTYPE *pSoldier=NULL;
+	UINT8	ubIndex=0;
+	BOOLEAN	fDone=FALSE;
+	UINT32 cnt;
+	INT16							sXPos, sYPos;
+	INT16 sGridNos[30]={ 4900, 4901, 4902, 4903, 4904, 
+											 5060, 5061, 5062, 5063, 5064,
+											 5220, 5221, 5222, 5223, 5224,
+											 5380, 5381, 5382, 5383, 5384,
+											 5540, 5541, 5542, 5543, 5544,
+											 5700, 5701, 5702, 5703, 5704 };
+
+
+
+	//
+	//Move some of the enemies to be 'near' them player when the enter the room
+	//
+
+	// Loop through the list and move some of the enemies
+	cnt = gTacticalStatus.Team[ ENEMY_TEAM ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ ENEMY_TEAM ].bLastID; cnt++, pSoldier++)
+	{	
+		//if the soldier is active,
+		if ( pSoldier->bActive  )
+		{
+			fDone = FALSE;
+			while( !fDone )
+			{
+				//if there is no one in the gridno
+				if( WhoIsThere2( sGridNos[ ubIndex ], 0 ) == NOBODY )
+				{
+					// move the soldier to the modified location
+					ConvertGridNoToCenterCellXY( sGridNos[ ubIndex ], &sXPos, &sYPos );
+					EVENT_SetSoldierPosition( pSoldier, sXPos, sYPos );
+//					SetSoldierGridNo( pSoldier, sGridNos[ ubIndex ], TRUE );
+					ubIndex++;
+					fDone=TRUE;
+				}
+				else
+				{
+					ubIndex++;
+				}
+
+				if( ubIndex >= 26 )
+				{
+					Assert( 0 );
+					return;
+				}
+			}
+		}
+	}
+}
+
+void HandlePowerGenFanSoundModification()
+{
+	SetTileAnimCounter( TILE_ANIM__FAST_SPEED );
+
+	switch( gJa25SaveStruct.ubStateOfFanInPowerGenSector )
+	{
+		case PGF__RUNNING_NORMALLY:
+			HandleAddingPowerGenFanSound();
+
+			//MAKE SURE the fan does not have an exit grid
+			RemoveExitGridFromWorld( PGF__FAN_EXIT_GRID_GRIDNO );
+			break;
+		
+		case PGF__STOPPED:
+			//Add an exit grid to the map
+			AddExitGridForFanToPowerGenSector();
+			break;
+		
+		case PGF__BLOWN_UP:
+			break;
+
+		default:
+			Assert( 0 );
+	}
+}
+
+void HandleFirstPartOfTunnelFanSound()
+{
+	switch( gJa25SaveStruct.ubStateOfFanInPowerGenSector )
+	{
+		case PGF__RUNNING_NORMALLY:
+		case PGF__STOPPED:
+
+			//add the sound to the world
+			HandleAddingPowerGenFanSound();
+			break;
+	}
+}
 }
 
