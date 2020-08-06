@@ -2,6 +2,7 @@
 	#include "JA2 All.h"
 	#include "Intro.h"
 	#include "Cinematics.h"
+	#include "Cinematics Bink.h"
 	#include "Ja25_Tactical.h"
 	#include "end game.h"
 #else
@@ -46,7 +47,7 @@ UINT32		guiIntroExitScreen = INTRO_SCREEN;
 
 extern	BOOLEAN	gfDoneWithSplashScreen;
 
-SMKFLIC *gpSmackFlic = NULL;
+BINKFLIC *gpSmackFlic = NULL;
 
 #define		SMKINTRO_FIRST_VIDEO				255
 #define		SMKINTRO_NO_VIDEO						-1
@@ -193,7 +194,7 @@ BOOLEAN EnterIntroScreen()
 	}
 
 	//initialize smacker
-	SmkInitialize( ghWindow, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT);
+	BinkInitialize( ghWindow, SCREEN_BUFFER_WIDTH, SCREEN_BUFFER_HEIGHT );
 
 
 	//get the index opf the first video to watch
@@ -224,7 +225,7 @@ void ExitIntroScreen()
 {
 
 	//shutdown smaker
-	SmkShutdown();
+	BinkShutdownVideo( );
 }
 
 void HandleIntroScreen()
@@ -237,7 +238,7 @@ void HandleIntroScreen()
 
 
 	//handle smaker each frame
-	fFlicStillPlaying = SmkPollFlics();
+	fFlicStillPlaying = BinkPollFlics();
 
 	//if the flic is not playing
 	if( !fFlicStillPlaying )
@@ -267,6 +268,7 @@ void		GetIntroScreenUserInput()
 	InputAtom Event;
 	POINT  MousePos;
 
+	static BOOLEAN gfOldMouseState = FALSE;
 
 	GetCursorPos(&MousePos);
 
@@ -301,10 +303,16 @@ void		GetIntroScreenUserInput()
 			switch( Event.usParam )
 			{
 				case ESC:
+
+					// ATE: if in splash, don't exit all!
+					BinkCloseFlic( gpSmackFlic );
+					if ( gbIntroScreenMode != INTRO_SPLASH )
+					{
 					PrepareToExitIntroScreen();
+					}
 					break;
 				case SPACE:
-					SmkCloseFlic( gpSmackFlic );
+					BinkCloseFlic( gpSmackFlic );
 					break;
 
 			}
@@ -312,10 +320,17 @@ void		GetIntroScreenUserInput()
 	}
 
 	// if the user presses either mouse button
-	if( gfLeftButtonState || gfRightButtonState )
+	if( !gfLeftButtonState && !gfRightButtonState  && gfOldMouseState )
 	{
 		//advance to the next flic
-		SmkCloseFlic( gpSmackFlic );
+		BinkCloseFlic( gpSmackFlic );
+
+		gfOldMouseState = FALSE;
+	}
+
+	if( gfLeftButtonState || gfRightButtonState )
+	{
+		gfOldMouseState = TRUE;
 	}
 }
 
@@ -474,7 +489,7 @@ void StartPlayingIntroFlic( INT32 iIndexOfFlicToPlay )
 	if( iIndexOfFlicToPlay != -1 )
 	{
 		//start playing a flic
-		gpSmackFlic = SmkPlayFlic( gpzSmackerFileNames[ iIndexOfFlicToPlay ], 0, 0, TRUE );
+		gpSmackFlic = BinkPlayFlic( gpzSmackerFileNames[ iIndexOfFlicToPlay ], 0, 0, BINK_FLIC_AUTOCLOSE | BINK_FLIC_CENTER_VERTICAL );
 
 		if( gpSmackFlic != NULL )
 		{
