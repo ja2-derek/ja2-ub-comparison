@@ -8,6 +8,8 @@
 
 extern HVSURFACE ghFrameBuffer;
 
+extern JA25_SECTOR_AI	*gJa25AiSectorStruct;
+
 UINT8 ErrorLoadScreen( BOOLEAN fNight, UINT32 uiLineNumber );
 
 
@@ -19,12 +21,114 @@ UINT8 GetLoadScreenID( INT16 sSectorX, INT16 sSectorY, INT8 bSectorZ )
 	SECTORINFO *pSector;
 	UINT8 ubSectorID;
 	BOOLEAN fNight = FALSE;
+	INT16		sJa25SaiSectorValue;
 
 	ubSectorID = SECTOR( sSectorX, sSectorY );
 	if( NightTime() ) //before 5AM or after 9PM
 	{
 		fNight = TRUE;
 	}
+
+	// OK, get JA25 AI information, this will tell us if we are a custom map
+	sJa25SaiSectorValue = GetJA25SectorID( sSectorX, sSectorY, bSectorZ );
+	
+	if( sJa25SaiSectorValue != -1 && gJa25AiSectorStruct[ sJa25SaiSectorValue ].fCustomSector )
+	{
+		// OK, ID depends on day or night
+		switch( gJa25AiSectorStruct[ sJa25SaiSectorValue ].ubLoadingScreenID )
+		{
+			case LOADINGSCREEN_DAY_SNOW:
+
+				if ( fNight )
+					return( LOADINGSCREEN_NIGHT_SNOW );
+				return( LOADINGSCREEN_DAY_SNOW );
+				break;
+
+			case LOADINGSCREEN_GUARDPOST_DAY:
+
+				if ( fNight )
+					return( LOADINGSCREEN_GUARDPOST_NIGHT );
+				return( LOADINGSCREEN_GUARDPOST_DAY );
+				break;
+
+			case LOADINGSCREEN_POWERPLANT_DAY:
+
+				if ( fNight )
+					return( LOADINGSCREEN_POWERPLANT_NIGHT );
+				return( LOADINGSCREEN_POWERPLANT_DAY );
+				break;
+
+			case LOADINGSCREEN_DAYGENERIC:
+
+				if ( fNight )
+					return( LOADINGSCREEN_NIGHTGENERIC );
+				return( LOADINGSCREEN_DAYGENERIC );
+				break;
+
+			case LOADINGSCREEN_DAYTOWN1:
+
+				if ( fNight )
+					return( LOADINGSCREEN_NIGHTTOWN1 );
+				return( LOADINGSCREEN_DAYTOWN1 );
+				break;
+
+			case LOADINGSCREEN_DAYTOWN2:
+
+				if ( fNight )
+					return( LOADINGSCREEN_NIGHTTOWN2 );
+				return( LOADINGSCREEN_DAYTOWN2 );
+				break;
+
+			case LOADINGSCREEN_DAYFOREST:
+
+				if ( fNight )
+					return( LOADINGSCREEN_NIGHTFOREST );
+				return( LOADINGSCREEN_DAYFOREST );
+				break;
+
+			case LOADINGSCREEN_MINE:
+
+				return( LOADINGSCREEN_MINE );
+				break;
+
+			case LOADINGSCREEN_CAVE:
+
+				return( LOADINGSCREEN_CAVE );
+				break;
+
+			case LOADINGSCREEN_DAYPINE:
+
+				if ( fNight )
+					return( LOADINGSCREEN_NIGHTPINE );
+				return( LOADINGSCREEN_DAYPINE );
+				break;
+
+			case LOADINGSCREEN_DAYMINE:
+
+				if ( fNight )
+					return( LOADINGSCREEN_NIGHTMINE );
+				return( LOADINGSCREEN_DAYMINE );
+				break;
+
+			case LOADINGSCREEN_DAYWILD:
+
+				if ( fNight )
+					return( LOADINGSCREEN_NIGHTWILD );
+				return( LOADINGSCREEN_DAYWILD );
+				break;
+
+			case LOADINGSCREEN_COMPLEX_BASEMENT_GENERIC:
+
+				return( LOADINGSCREEN_COMPLEX_BASEMENT_GENERIC );
+				break;
+		}
+
+		if ( fNight )
+			return( LOADINGSCREEN_NIGHTGENERIC );
+		return( LOADINGSCREEN_DAYGENERIC );
+
+	}
+
 
 	switch( bSectorZ )
 	{
