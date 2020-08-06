@@ -1455,12 +1455,15 @@ void RenderIconsForUpperLeftCornerPiece( INT8 bCharNumber )
 
 	GetVideoObject(&hHandle, guiULICONS);
 
+//Ja25:		Removed the aim merc check because aim mercs are hired for a 1 time fee
+/*
 	// if merc is an AIM merc
 	if( Menptr[ gCharactersList[ bCharNumber ].usSolID ].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC )
 	{
 		// finite contract length icon
 		BltVideoObject( guiSAVEBUFFER, hHandle, 0, CHAR_ICON_X, CHAR_ICON_CONTRACT_Y, VO_BLT_SRCTRANSPARENCY, NULL );
 	}
+*/
 
 /*
 JA25: No medical deposit, and no insurance
@@ -2093,6 +2096,9 @@ void DrawCharacterInfo(INT16 sCharNumber)
 	{
 		swprintf( sString, L"%s", gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
 	}
+
+//Ja25:		Removed the aim merc check because aim mercs are hired for a 1 time fee
+/*
 	// what kind of merc
 	else if(pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC || pSoldier->ubProfile == SLAY )
 	{
@@ -2155,6 +2161,7 @@ void DrawCharacterInfo(INT16 sCharNumber)
 		}
 	}
 	else if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC )
+	else if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC || pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC )
 	{
 		INT32 iBeenHiredFor = ( GetWorldTotalMin( ) / NUM_MIN_IN_DAY ) - pSoldier->iStartContractTime;
 
@@ -2163,6 +2170,14 @@ void DrawCharacterInfo(INT16 sCharNumber)
 	else
 	{
 		swprintf( sString, L"%s", gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
+	}
+*/
+
+	//JA25: Mercs are hired for a time fee contract.  Should only display the length from when they were hired
+	{
+		INT32 iBeenHiredFor = ( GetWorldTotalMin( ) / NUM_MIN_IN_DAY ) - pSoldier->iStartContractTime + 1;
+
+		swprintf(sString, L"%d%s", iBeenHiredFor, gpStrategicString[ STR_PB_DAYS_ABBREVIATION ] ); 
 	}
 
 
@@ -2175,6 +2190,8 @@ void DrawCharacterInfo(INT16 sCharNumber)
 	DrawString(sString,usX,usY, CHAR_FONT);
 
 
+//Ja25:		Removed the aim merc check because aim mercs are hired for a 1 time fee
+/*
 	// salary
 	if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC )
 	{
@@ -2193,6 +2210,16 @@ void DrawCharacterInfo(INT16 sCharNumber)
 		}
 	}
 	else
+*/
+	 if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER )
+	 {
+			iDailyCost = COST_OF_PROFILE;
+	 }
+	 else if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ||  pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC )
+	 {
+		 iDailyCost = gMercProfiles[ pSoldier->ubProfile ].uiWeeklySalary;
+	 }
+	 else
 	{
 		iDailyCost = gMercProfiles[ pSoldier->ubProfile ].sSalary;
 	}
@@ -8622,7 +8649,8 @@ void HandleShadingOfLinesForContractMenu( void )
 	// grab the character
 	pSoldier = &Menptr[ gCharactersList[ bSelectedContractChar ].usSolID ];
 
-
+//Ja25:		Removed the aim merc check because aim mercs are hired for a 1 time fee
+/*
 	// is guy in AIM? and well enough to talk and make such decisions?
 	if( ( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ) && ( pSoldier->bLife >= OKLIFE ) )
 	{
@@ -8659,6 +8687,7 @@ void HandleShadingOfLinesForContractMenu( void )
 		}
 	}
 	else
+*/
 	{
 		// can't extend contract duration
 		ShadeStringInBox( ghContractBox, CONTRACT_MENU_DAY );
@@ -11146,7 +11175,8 @@ BOOLEAN CanExtendContractForCharSlot( INT8 bCharNumber )
 
 	// if a vehicle, in transit, or a POW
 	if( ( pSoldier->uiStatusFlags & SOLDIER_VEHICLE ) ||
-			( pSoldier->bAssignment == IN_TRANSIT ) ||
+//JA25: must allow the player to be able to dismiss mercs while they are intransit
+//			( pSoldier->bAssignment == IN_TRANSIT ) ||
 			( pSoldier->bAssignment == ASSIGNMENT_POW ) )
 	{
 		// can't extend contracts at this time
@@ -11342,11 +11372,14 @@ BOOLEAN HandleCtrlOrShiftInTeamPanel( INT8 bCharNumber )
 
 INT32 GetContractExpiryTime( SOLDIERTYPE *pSoldier )
 {
+//Ja25:		Removed the aim merc check because aim mercs are hired for a 1 time fee
+/*
 	if( ( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC ) || ( pSoldier->ubProfile == SLAY ) )
 	{
 		return ( pSoldier->iEndofContractTime );
 	}
 	else
+*/
 	{
 		// never - really high number
 		return ( 999999 );
@@ -12225,7 +12258,9 @@ void GetMapscreenMercDepartureString( SOLDIERTYPE *pSoldier, wchar_t sString[], 
 	INT32 iHoursRemaining = 0;
 
 
-	if( ( pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC && pSoldier->ubProfile != SLAY ) || pSoldier->bLife == 0 )
+//Ja25:		Removed the aim merc check because aim mercs are hired for a 1 time fee
+//	if( ( pSoldier->ubWhatKindOfMercAmI != MERC_TYPE__AIM_MERC && pSoldier->ubProfile != SLAY ) || pSoldier->bLife == 0 )
+	if( ( pSoldier->ubProfile != SLAY ) || pSoldier->bLife == 0 )
 	{
 		swprintf( sString, L"%s", gpStrategicString[ STR_PB_NOTAPPLICABLE_ABBREVIATION ] );
 	}

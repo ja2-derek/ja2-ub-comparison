@@ -5310,12 +5310,15 @@ void UpdateHelpTextForMapScreenMercIcons( void )
 	}
 	else
 	{
+//Ja25:		Removed the aim merc check because aim mercs are hired for a 1 time fee
+/*
 		// if merc is an AIM merc
 		if( Menptr[ gCharactersList[ bSelectedInfoChar ].usSolID ].ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC )
 		{
 			SetRegionFastHelpText( &(gContractIconRegion), zMarksMapScreenText[ 22 ] );
 		}
 		else
+*/
 		{
 			SetRegionFastHelpText( &(gContractIconRegion), L"" );
 		}

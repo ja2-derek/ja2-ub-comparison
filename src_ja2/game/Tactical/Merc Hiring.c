@@ -2,6 +2,7 @@
 	#include "Tactical All.h"
 	#include "strategic.h"
 	#include "Ja25Update.h"
+	#include "MapScreen Quotes.h"
 	#include "Ja25 Strategic Ai.h"
 #else
 	#include <stdio.h>
@@ -70,6 +71,7 @@ INT16	gsMercArriveSectorX = START_SECTOR_X;
 INT16	gsMercArriveSectorY = START_SECTOR_Y;
 
 void CheckForValidArrivalSector( );
+void AddItemToMerc( UINT8 ubNewMerc, INT16 sItemType );
 
 #define	NUM_INITIAL_GRIDNOS_FOR_HELI_CRASH		7
 
@@ -168,6 +170,32 @@ Ja25: No enrico, therefore, no email
 		pHireMerc->ubInsertionCode				= INSERTION_CODE_CHOPPER;
 	}
 */
+
+	//MErc mercs come with an umbrella
+	if( ( ubCurrentSoldier >= 40 && ubCurrentSoldier <= 50 ) || ubCurrentSoldier == GASTON || ubCurrentSoldier == STOGIE )
+	{
+		AddItemToMerc( iNewIndex, MERC_UMBRELLA );
+	}
+
+	//if this is an AIM or MERC merc
+	if( gJa25SaveStruct.fHaveAimandMercOffferItems )
+	{
+		//if its an aim merc
+		if( ubCurrentSoldier < 40 )
+		{
+			//give the mercs one of the promo items
+			AddItemToMerc( iNewIndex, SAM_GARVER_COMBAT_KNIFE );
+		}
+
+		// if its a merc merc
+		else if( ubCurrentSoldier <= 50 || ubCurrentSoldier == GASTON || ubCurrentSoldier == STOGIE )
+		{
+			//give the mercs one of the promo items
+			AddItemToMerc( iNewIndex, CHE_GUEVARA_CANTEEN );
+			AddItemToMerc( iNewIndex, MERC_WRISTWATCH );
+			AddItemToMerc( iNewIndex, SAM_GARVER_COMBAT_KNIFE );
+		}
+	}
 
 
 
@@ -296,7 +324,7 @@ Ja25: No enrico, therefore, no email
 		gMercProfiles[ pSoldier->ubProfile ].iMercMercContractLength = 1;
 
 		//Set starting conditions for the merc
-		pSoldier->iStartContractTime = GetWorldDay( );
+//		pSoldier->iStartContractTime = GetWorldDay( );
 
 		AddHistoryToPlayersLog(HISTORY_HIRED_MERC_FROM_MERC, ubCurrentSoldier, GetWorldTotalMin(), -1, -1 );
 	}
@@ -312,6 +340,9 @@ Ja25: No enrico, therefore, no email
 		pSoldier->ubWhatKindOfMercAmI = MERC_TYPE__NPC;
 		//pSoldier->iTotalContractCharge = -1;
 	}
+
+	//Ja25:  Need to set start time for all mercs
+	pSoldier->iStartContractTime = GetWorldDay( );
 
 	//remove the merc from the Personnel screens departed list ( if they have never been hired before, its ok to call it )
 	RemoveNewlyHiredMercFromPersonnelDepartedList( pSoldier->ubProfile );
@@ -460,8 +491,8 @@ BOOLEAN IsMercHireable( UINT8 ubMercID )
 			( gMercProfiles[ ubMercID ].bMercStatus == MERC_HIRED_BUT_NOT_ARRIVED_YET ) || 
 			( gMercProfiles[ ubMercID ].bMercStatus == MERC_IS_DEAD ) ||
 			( gMercProfiles[ ubMercID ].uiDayBecomesAvailable > 0 ) ||
-			( gMercProfiles[ ubMercID ].bMercStatus == MERC_WORKING_ELSEWHERE ) ||
 			( gMercProfiles[ ubMercID ].bMercStatus == MERC_FIRED_AS_A_POW ) ||
+			( gMercProfiles[ ubMercID ].bMercStatus == MERC_WORKING_ELSEWHERE ) ||
 			( gMercProfiles[ ubMercID ].bMercStatus == MERC_RETURNING_HOME ) )
 		return(FALSE);
 	else
@@ -872,4 +903,20 @@ void UpdateJerryMiloInInitialSector()
 	//Lock the interface
 	guiPendingOverrideEvent = LU_BEGINUILOCK;
 }
+
+void AddItemToMerc( UINT8 ubNewMerc, INT16 sItemType )
+{
+	// OK, give this item to our merc!
+	OBJECTTYPE Object;
+	BOOLEAN	fReturn=FALSE;
+
+	// make an objecttype
+	memset( &Object, 0, sizeof( OBJECTTYPE ) );
+	Object.usItem						= sItemType;
+	Object.ubNumberOfObjects = 1;
+	Object.bStatus[0]				= 100;
+
+	// Give it 
+	fReturn = AutoPlaceObject( MercPtrs[ ubNewMerc ], &Object, FALSE );
+	Assert( fReturn );
 }

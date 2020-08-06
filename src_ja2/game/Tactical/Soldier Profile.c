@@ -323,19 +323,13 @@ BOOLEAN LoadMercProfiles(void)
 
 		// OK, if we are a created slot, this will get overriden at some time..
 
-		//add up the items the merc has for the usOptionalGearCost 
+//Ja25:  No optional gear cost in the exp		
 		gMercProfiles[ uiLoop ].usOptionalGearCost = 0;
-		for ( uiLoop2 = 0; uiLoop2< NUM_INV_SLOTS; uiLoop2++ )
-		{
-			if ( gMercProfiles[ uiLoop ].inv[ uiLoop2 ] != NOTHING )
-			{
-				//get the item
-				usItem = gMercProfiles[ uiLoop ].inv[ uiLoop2 ];
-			
-				//add the cost
-				gMercProfiles[ uiLoop ].usOptionalGearCost += Item[ usItem ].usPrice;
-			}
-		}
+/*
+Ja25:  No optional gear cost in the exp		
+		//Calculate the mercs optional gear cost
+		CalculateMercsOptionalGearCost( &gMercProfiles[ uiLoop ] );
+*/
 
 		//These variables to get loaded in
 		gMercProfiles[ uiLoop ].fUseProfileInsertionInfo = FALSE;
@@ -713,6 +707,12 @@ void StartSomeMercsOnAssignment(void)
 	// some randomly picked A.I.M. mercs will start off "on assignment" at the beginning of each new game
 	for( uiCnt = 0; uiCnt < AIM_AND_MERC_MERCS; uiCnt++)
 	{
+		// if he's an AIM/M.E.R.C. merc
+		if( !IsProfileIdAnAimOrMERCMerc( (UINT8)uiCnt ) )
+		{
+			continue;
+		}
+
 		pProfile = &(gMercProfiles[ uiCnt ]);
 
 		//Make sure stigie and Gaston are available at the start of the game
@@ -733,7 +733,8 @@ void StartSomeMercsOnAssignment(void)
 		}
 
 		// calc chance to start on assignment
-		uiChance = 5 * pProfile->bExpLevel;
+//Ja25: Lowered		uiChance = 5 * pProfile->bExpLevel;
+		uiChance = 3 * pProfile->bExpLevel;
 
 		if (Random(100) < uiChance)
 		{
@@ -1024,6 +1025,9 @@ Ja25 no loyalty
 	{
 		AddCharacterToAnySquad( pNewSoldier );
 	}
+
+	//Ja25:  Need to set start time for all mercs
+	pNewSoldier->iStartContractTime = GetWorldDay( );
 
   ResetDeadSquadMemberList( pNewSoldier->bAssignment );
 
@@ -1507,6 +1511,28 @@ BOOLEAN DoesNPCOwnBuilding( SOLDIERTYPE *pSoldier, INT16 sGridNo )
   }
 
   return( FALSE );
+}
+
+
+//Calculate the mercs optional gear cost
+void CalculateMercsOptionalGearCost( MERCPROFILESTRUCT *pProfile )
+{
+	UINT32	uiLoop2;
+	UINT16	usItem;
+
+	//add up the items the merc has for the usOptionalGearCost 
+	pProfile->usOptionalGearCost = 0;
+	for ( uiLoop2 = 0; uiLoop2< NUM_INV_SLOTS; uiLoop2++ )
+	{
+		if ( pProfile->inv[ uiLoop2 ] != NOTHING )
+		{
+			//get the item
+			usItem = pProfile->inv[ uiLoop2 ];
+		
+			//add the cost
+			pProfile->usOptionalGearCost += Item[ usItem ].usPrice;
+		}
+	}
 }
 
 BOOLEAN IsProfileIdAnAimOrMERCMerc( UINT8 ubProfileID )

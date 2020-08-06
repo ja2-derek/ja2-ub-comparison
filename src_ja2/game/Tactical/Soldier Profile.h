@@ -194,6 +194,8 @@ void DecideOnAssassin( void );
 extern BOOLEAN gubNumTerrorists;
 */
 
+void CalculateMercsOptionalGearCost( MERCPROFILESTRUCT *pProfile );
+
 /*
 Ja25 no terrorists
 void MakeRemainingTerroristsTougher( void );

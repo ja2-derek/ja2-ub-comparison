@@ -863,6 +863,16 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 		EndCurrentContractRenewal( );
 	}
 	
+	// ATE: Remove strategic event
+	if ( pSoldier->ubProfile != NO_PROFILE )
+	{
+		if ( gMercProfiles[ pSoldier->ubProfile ].bMercStatus == MERC_HIRED_BUT_NOT_ARRIVED_YET )
+		{
+			DeleteStrategicEvent( EVENT_DELAYED_HIRING_OF_MERC, pSoldier->ubID );
+		}
+	}
+
+
 	// ATE: Determine which HISTORY ENTRY to use...
 	if ( pSoldier->ubLeaveHistoryCode == 0 )
 	{
@@ -887,6 +897,8 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 	//The merc is leaving for some other reason
 	else
 	{
+		// remove him from any existing merc slot he could be in
+		RemoveMercSlot( pSoldier );
 		AddCharacterToOtherList( pSoldier );
 	}
 
@@ -894,6 +906,11 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 	if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__NPC )
 	{
 		SetupProfileInsertionDataForSoldier( pSoldier ); 
+
+		//Make sure the merc will NOT be in this sector if we return to it
+		gMercProfiles[ pSoldier->ubProfile ].sSectorX = 0;
+		gMercProfiles[ pSoldier->ubProfile ].sSectorY = 0;
+		gMercProfiles[ pSoldier->ubProfile ].bSectorZ	= 0;
 	}
 
 	//if the merc has been let go while the merc is in transit
@@ -940,8 +957,6 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 			}
 			else
 			{
-				// remove him from any existing merc slot he could be in
-				RemoveMercSlot( pSoldier );
         TakeSoldierOutOfVehicle( pSoldier );
 			}
 		}
@@ -1210,6 +1225,10 @@ Ja25: Dont need to prompt user for location to drop equipment.  Just drop it in 
 */
 	}
 	
+	//JA25  Added Unlockpause state becuase the above codce was relying on the message box code to unlock
+	// the pause state.
+	UnLockPauseState();
+
 	if( pSoldier->fSignedAnotherContract == TRUE )
 	{
 		//fCurrentMercFired = FALSE;
@@ -1563,6 +1582,11 @@ BOOLEAN ContractIsGoingToExpireSoon( SOLDIERTYPE *pSoldier )
 {
 	// get hour contract is going to expire....
 	UINT32 uiCheckHour;
+
+	//Ja25:	if the merc is an AIM merc return false cause aim mercs are hired "indefinately"
+	if( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__AIM_MERC )
+		return( FALSE );
+
 
 	// First at least make sure same day....
 	if( ( pSoldier->iEndofContractTime /1440 ) <= (INT32)GetWorldDay( ) )

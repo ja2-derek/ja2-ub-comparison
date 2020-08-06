@@ -6827,6 +6827,13 @@ void BeginRemoveMercFromContract( SOLDIERTYPE *pSoldier )
 	// This function will setup the quote, then start dialogue beginning the actual leave sequence
 	if( ( pSoldier->bLife > 0 ) && ( pSoldier->bAssignment != ASSIGNMENT_POW ) )
 	{
+		//if the merc cant leave
+		if( !CanMercBeAllowedToLeaveTeam( pSoldier ) )
+		{
+			HaveMercSayWhyHeWontLeave( pSoldier );
+			return;
+		}
+
 		if( ( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__MERC ) || ( pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__NPC ) )
 		{
 			HandleImportantMercQuote( pSoldier,  QUOTE_RESPONSE_TO_MIGUEL_SLASH_QUOTE_MERC_OR_RPC_LETGO );
@@ -11491,4 +11498,35 @@ BOOLEAN UnjamGunsOnSoldier( SOLDIERTYPE *pOwnerSoldier, SOLDIERTYPE *pRepairSold
 	}
 
 	return ( fAnyGunsWereUnjammed );
+}
+
+
+BOOLEAN CanMercBeAllowedToLeaveTeam( SOLDIERTYPE *pSoldier )
+{
+/*
+	//if we are in sector... J14_1 && K14_1
+	if( gWorldSectorX == 14 && gWorldSectorY == MAP_ROW_J && gbWorldSectorZ == 1 ||	
+			gWorldSectorX == 14 && gWorldSectorY == MAP_ROW_K && gbWorldSectorZ == 1 )
+*/
+	//if we are in, or passed the tunnels
+	if( pSoldier->sSectorX >= 14 )
+	{
+		//dont allow anyone to leave
+		return( FALSE );
+	}
+
+	return( TRUE );
+}
+
+void HaveMercSayWhyHeWontLeave( SOLDIERTYPE *pSoldier )
+{
+	//if the merc is qualified
+	if( IsSoldierQualifiedMerc( pSoldier ) )
+	{
+		TacticalCharacterDialogue( pSoldier, QUOTE_ANSWERING_MACHINE_MSG );
+	}
+	else
+	{
+		TacticalCharacterDialogue( pSoldier, QUOTE_REFUSING_ORDER );
+	}
 }
