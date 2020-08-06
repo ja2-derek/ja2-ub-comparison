@@ -70,7 +70,8 @@ enum
 	SMKINTRO_END_NOSKYRIDER_HELICOPTER,
 
 	SMKINTRO_SPLASH_SCREEN,
-	SMKINTRO_SPLASH_TALONSOFT,
+	SMKINTRO_SPLASH_INTERPLAY,
+
 	SMKINTRO_HELI_CRASH_SCENE_1,
 
 	//there are no more videos shown for the endgame
@@ -95,13 +96,13 @@ CHAR		*gpzSmackerFileNames[] =
 	"INTRO\\Heli_Sky.smk",
 	"INTRO\\Heli_NoSky.smk",
 
-	"INTRO\\SplashScreen.smk",
-	"INTRO\\TalonSoftid_endhold.smk",
 	"INTRO\\SplashScreen.bik",
 	"INTRO\\IPLYLogo.bik",
 
 	//Ja25: New videos
 	"INTRO\\Intro.bik",
+
+	"INTRO\\MissileEnding.bik"
 };
 
 
@@ -158,6 +159,8 @@ UINT32	IntroScreenHandle( void )
 
 	HandleIntroScreen();
 
+	SetCurrentCursorFromDatabase( VIDEO_NO_CURSOR );
+
 	ExecuteBaseDirtyRectQueue();
 	EndFrameBufferRender();
 
@@ -177,7 +180,11 @@ BOOLEAN EnterIntroScreen()
 {
 	INT32 iFirstVideoID = -1;
 
+	// CLEAR THE FRAME BUFFER
 	ClearMainMenu();
+
+	//Clear out all the saved background rects
+	EmptyBackgroundRects( );
 
 
 	SetCurrentCursorFromDatabase( VIDEO_NO_CURSOR );
@@ -185,6 +192,11 @@ BOOLEAN EnterIntroScreen()
 	// Don't play music....
 	SetMusicMode( MUSIC_NONE );
 
+	if( FileExists( "..\\NoIntro.txt" ) )
+	{
+		PrepareToExitIntroScreen();
+		return( TRUE );
+	}
 
 	//if the library doesnt exist, exit
 	if( !IsLibraryOpened( LIBRARY_INTRO ) )
@@ -438,6 +450,10 @@ Ja25: no begining intro
 		{
 			switch( uiCurrentVideo )
 			{
+				case SMKINTRO_FIRST_VIDEO:
+					iStringToUse = SMKINTRO_LAST_END_GAME;
+					break;
+			}
 
 /*
 				case SMKINTRO_FIRST_VIDEO:
@@ -467,15 +483,27 @@ Ja25: no begining intro
 		break;
 
 		case INTRO_SPLASH:
+
+
+			// CJC Nov 18 2002: disabled Interplay screen
+
+			/*
 			switch( uiCurrentVideo )
 			{
 				case SMKINTRO_FIRST_VIDEO:
+
+#ifdef AUSSIE
+					iStringToUse = SMKINTRO_SPLASH_SCREEN;
+#else
+					iStringToUse = SMKINTRO_SPLASH_INTERPLAY;
+#endif
+					break;
+				case SMKINTRO_SPLASH_INTERPLAY:
 					iStringToUse = SMKINTRO_SPLASH_SCREEN;
 					break;
-				case SMKINTRO_SPLASH_SCREEN:
-					//iStringToUse = SMKINTRO_SPLASH_TALONSOFT;
-					break;
 			}
+			*/
+
 			break;
 	}
 
@@ -485,6 +513,11 @@ Ja25: no begining intro
 
 void StartPlayingIntroFlic( INT32 iIndexOfFlicToPlay )
 {
+	UINT32 uiTop=0;
+
+	if( uiTop )
+	{
+	}
 
 	if( iIndexOfFlicToPlay != -1 )
 	{
