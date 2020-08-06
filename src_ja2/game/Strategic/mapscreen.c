@@ -3338,6 +3338,17 @@ Ja25 no orta
 		{
 			fFirstTimeInMapScreen = FALSE;
 //			fShowMapScreenHelpText = TRUE;
+
+			//Get Jerry Milo to say his opening quote, if he hasnt said it before
+			if( !HasJerryMiloSaidQuoteBefore( MILO_QUOTE__OPENING_GREETING_PART_1 ) )
+				JerryMiloDelayedTalk( MILO_QUOTE__OPENING_GREETING_PART_1, 1100 );
+		}
+
+		//Should Jerry popup a new quote now
+		else if( DidPlayerInitiallyHaveLessThen6MercsAndNowHaveExactly6AndHasntSaidFullLoadQuote() )
+		{
+			//Get Jerry Milo to say his opening quote
+			JerryMiloDelayedTalk( MILO_QUOTE__ALREADY_HAS_6_MERCS, 500 );
 		}
 
 		fShowMapInventoryPool = FALSE;
@@ -3644,11 +3655,17 @@ Ja25 no orta
 	
 	InterruptTimeForMenus( );
 
+	//Handle Jerry Milo quotes
+	HandleJerryMiloQuotes( FALSE );
+
 	// place down background
 	BlitBackgroundToSaveBuffer( );
 
 	if( fLeavingMapScreen == TRUE )
 	{
+		//specify that we are leaving mapscreen
+		HandleJerryMiloQuotes( TRUE );
+
 		return( MAP_SCREEN );
 	}
 
@@ -10338,6 +10355,12 @@ void TellPlayerWhyHeCantCompressTime( void )
 	if ( PauseStateLocked() )
 	{
 	}
+	else if( DoesPlayerHaveNoMercsHiredAndJerryHasntSaidQuoteYet() )
+	{
+		//JerryMiloTalk( MILO_QUOTE__PLAYER_HAS_NO_MERCS ); AA
+        DoMapMessageBox( MSG_BOX_BASIC_STYLE, pMapScreenJustStartedHelpText[ 0 ], MAP_SCREEN, MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback );
+	}
+
 	else if( gfAtLeastOneMercWasHired == FALSE )
 	{
 		// no mercs hired, ever
@@ -10369,6 +10392,12 @@ void TellPlayerWhyHeCantCompressTime( void )
 	{
 		DoMapMessageBox( MSG_BOX_BASIC_STYLE, gzLateLocalizedString[ 55 ], MAP_SCREEN, MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback );
 	}
+	else if( !WillJerryMiloAllowThePlayerToCompressTimeAtBeginingOfGame() )
+	{
+		//Have jerry say why the player cant compress time
+		HaveJerrySayWhyPlayerCantTimeCompressAtBeginningOfGame();
+	}
+
 	// ARM: THIS TEST SHOULD BE THE LAST ONE, BECAUSE IT ACTUALLY RESULTS IN SOMETHING HAPPENING NOW.
 	// KM:  Except if we are in a creature lair and haven't loaded the sector yet (no battle yet)
 	else if( gTacticalStatus.uiFlags & INCOMBAT || gTacticalStatus.fEnemyInSector )

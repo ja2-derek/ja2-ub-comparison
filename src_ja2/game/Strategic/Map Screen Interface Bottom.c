@@ -1358,6 +1358,16 @@ Ja25 no creatures
 	}
 */
 
+	//if the player hasnt been to the initial sector yet
+	/*if( !GetSectorFlagStatus( 7, 8, 0, SF_HAS_ENTERED_TACTICAL ) )
+	{
+		//if there is something that jerry wants to say
+		if( !WillJerryMiloAllowThePlayerToCompressTimeAtBeginingOfGame() )
+		{
+			return( FALSE );
+		}
+	}*/
+
 	return( TRUE );
 }
 

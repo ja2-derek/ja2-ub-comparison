@@ -34,6 +34,7 @@ typedef struct
 */
 
 
+void		HandleInitialEventsInHeliCrash();
 void		HandleCommanderMorrisNewMercWantsNoteDelayedSpeech();
 
 void		DisplayCommanderMorrisNote( SOLDIERTYPE *pSoldier );

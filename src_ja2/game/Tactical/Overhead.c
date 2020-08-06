@@ -106,6 +106,7 @@
 
 extern UINT8	gubAICounter;
 
+extern	BOOLEAN		gfFirstTimeInGameHeliCrash;
 
 #define RT_DELAY_BETWEEN_AI_HANDLING 50
 #define RT_AI_TIMESLICE 10
@@ -954,6 +955,42 @@ BOOLEAN ExecuteOverhead( )
 					}
 				}
 
+				// ATE: JA25 additon - poll for getting up from start of game...
+				if( pSoldier->fWaitingToGetupFromJA25Start )
+				{
+					if( !DialogueActive( ) )
+					{
+						///if the timer is done, AND no one is talking
+						if( TIMECOUNTERDONE( pSoldier->GetupFromJA25StartCounter, 0 ) )
+						{
+							//make sure they wont say this again
+							pSoldier->fWaitingToGetupFromJA25Start = FALSE;
+
+							//
+							//Get the soldier that should say the quote
+							//
+
+							//if the merc is one of the mercs who has Quote 80, say that
+							if( pSoldier->ubProfile == GASTON ||
+									pSoldier->ubProfile == STOGIE ||
+									pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER )
+							{
+								TacticalCharacterDialogue( pSoldier, QUOTE_REPUTATION_REFUSAL );
+							}
+							else
+							{
+								// Now make them say their curse sound
+								DoMercBattleSound( pSoldier, BATTLE_SOUND_CURSE1 );
+							}
+
+							SpecialCharacterDialogueEvent( DIALOGUE_SPECIAL_EVENT_MULTIPURPOSE, pSoldier->ubProfile, 0, 0, pSoldier->iFaceIndex, 0 );
+						}
+					}
+					else
+					{
+						pSoldier->GetupFromJA25StartCounter += giTimerDiag;
+					}
+				}
 				// Checkout fading
 				if ( pSoldier->fBeginFade )
 				{

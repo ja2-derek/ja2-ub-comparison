@@ -1,6 +1,8 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Tactical All.h"
 	#include "PreBattle Interface.h"
+	#include "MapScreen Quotes.h"
+	#include "Intro.h"
 	#include "Ja25_Tactical.h"
 	#include "Ja25 Strategic Ai.h"
 #else
@@ -1174,6 +1176,31 @@ Ja25: removed the flag, no militia
 			}
 		}
 */
+		else if( QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_JERRY_MILO )
+		{
+			//switch on the quote that is being spoken
+			switch( QItem->uiSpecialEventData )
+			{				
+				case JM_SE__SHOW_RADIO_LOCATOR:
+					HandleShowingRadioLocatorsInMorrisArea();
+					break;
+
+				case JM_SE__HEADING_TO_TRACONA:
+
+					// play the heli crash video
+					SetIntroType( INTRO_HELI_CRASH );
+
+					//Go to the intro screen
+					RequestTriggerExitFromMapscreen( MAP_EXIT_TO_INTRO_SCREEN );
+					break;
+
+
+				default:
+					//nothing
+					break;
+			}
+		}
+
 		else if( QItem->uiSpecialEventFlag & DIALOGUE_SPECIAL_EVENT_ENTER_MAPSCREEN )
 		{
 			if( !(guiTacticalInterfaceFlags & INTERFACE_MAPSCREEN ) )

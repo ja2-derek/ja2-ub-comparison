@@ -4,6 +4,7 @@
 	#include "HelpScreen.h"
 	#include "Ja25Update.h"
 	#include "Ja25 Strategic Ai.h"
+	#include "MapScreen Quotes.h"
 #else
 	#include "sgp.h"
 	#include "jascreens.h"
@@ -290,6 +291,9 @@ void InitStrategicLayer( void )
 	// Init vehicles
 	InitVehicles( );
 	
+	//Reset Jerry Quotes
+	//HandleJerryMiloQuotes( TRUE ); //AA
+	
 	InitJa25StrategicAi( );
 
 	// Now, make list of custom maps
@@ -458,8 +462,14 @@ Ja25 MERC is available from the begining
 #endif
 		{
 		SetLaptopExitScreen( INIT_SCREEN );
+//Ja25; Start in laptop again			SetPendingNewScreen( MAP_SCREEN );
 		SetPendingNewScreen(LAPTOP_SCREEN);
+		}
 		gubScreenCount = 1;
+
+		//Init the initial hweli crash sequence variable
+		InitializeHeliGridnoAndTime( FALSE );
+		//InitJerryMiloInfo(); AA
 
 		//init the bloodcats
 		InitJa25StrategicAiBloodcats( );
@@ -823,4 +833,7 @@ void ReStartingGame()
 	gpCustomizableTimerCallback = NULL;
 
 	gubCheatLevel = STARTING_CHEAT_LEVEL;
+
+	//Reset the variable
+	fFirstTimeInMapScreen = TRUE;
 }

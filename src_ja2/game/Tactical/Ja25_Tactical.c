@@ -110,6 +110,24 @@ void HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex )
 	}
 }
 
+void HandleInitialEventsInHeliCrash()
+{
+	SOLDIERTYPE *pSoldier=NULL;
+	INT32 cnt;
+
+	//first, loop through all the mercs and injure them
+	cnt = gTacticalStatus.Team[ OUR_TEAM ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; cnt++,pSoldier++)
+	{    
+		//if the merc is alive
+		if( pSoldier->bActive )
+		{
+			pSoldier->bLife -= ( 3 + Random( 5 ) );
+			pSoldier->sBreathRed = ( 15 + Random( 15 ) ) * 100;
+			pSoldier->bActionPoints = 0;
+		}
+	}
+}
 void DisplayCommanderMorrisNote( SOLDIERTYPE *pSoldier )
 {
 	CHAR16	zString[1024];

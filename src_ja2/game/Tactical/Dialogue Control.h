@@ -215,6 +215,7 @@ enum{
 	MINER_OSWALD_EXTERNAL_FACE,
 	MINER_CALVIN_EXTERNAL_FACE,
 	MINER_CARL_EXTERNAL_FACE,
+	JERRY_MELO_FACE,
 	NUMBER_OF_EXTERNAL_NPC_FACES,
 };
 
@@ -341,6 +342,8 @@ void PauseDialogueQueue( void );
 void UnPauseDialogueQueue( void );
 
 void SetExternMapscreenSpeechPanelXY( INT16 sXPos, INT16 sYPos );
+
+void RemoveJerryMiloBrokenLaptopOverlay();
 
 
 #endif

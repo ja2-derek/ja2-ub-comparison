@@ -70,6 +70,7 @@ enum
 
 	SMKINTRO_SPLASH_SCREEN,
 	SMKINTRO_SPLASH_TALONSOFT,
+	SMKINTRO_HELI_CRASH_SCENE_1,
 
 	//there are no more videos shown for the endgame
 	SMKINTRO_LAST_END_GAME,
@@ -95,6 +96,11 @@ CHAR		*gpzSmackerFileNames[] =
 
 	"INTRO\\SplashScreen.smk",
 	"INTRO\\TalonSoftid_endhold.smk",
+	"INTRO\\SplashScreen.bik",
+	"INTRO\\IPLYLogo.bik",
+
+	//Ja25: New videos
+	"INTRO\\Intro.bik",
 };
 
 
@@ -316,12 +322,26 @@ void		GetIntroScreenUserInput()
 
 void PrepareToExitIntroScreen()
 {
+/*
+Ja25: no begining intro
 	//if its the intro at the begining of the game
 	if( gbIntroScreenMode == INTRO_BEGINING )
 	{
 		//go to the init screen
 		guiIntroExitScreen = INIT_SCREEN;
 	}
+*/
+	//if its the heli crash intro 
+	if( gbIntroScreenMode == INTRO_HELI_CRASH )
+	{
+		//go to the init screen
+//Ja25: no longer going to initscreen ( cause this is now AFTER mapscreen )
+//		guiIntroExitScreen = INIT_SCREEN;
+
+		guiIntroExitScreen = GAME_SCREEN;
+		SetCurrentWorldSector( sSelMapX, sSelMapY, ( UINT8 )iCurrentMapSectorZ );
+	}
+
 	else if( gbIntroScreenMode == INTRO_SPLASH )
 	{
 		//display a logo when exiting
@@ -360,6 +380,8 @@ INT32 GetNextIntroVideo( UINT32 uiCurrentVideo )
 	//switch on whether it is the beginging or the end game video
 	switch( gbIntroScreenMode )
 	{
+/*
+Ja25: no begining intro
 		//the video at the begining of the game
 		case INTRO_BEGINING:
 		{
@@ -386,6 +408,15 @@ INT32 GetNextIntroVideo( UINT32 uiCurrentVideo )
 			}
 		}
 		break;
+*/
+		case INTRO_HELI_CRASH:
+			switch( uiCurrentVideo )
+			{
+				case SMKINTRO_FIRST_VIDEO:
+					iStringToUse = SMKINTRO_HELI_CRASH_SCENE_1;
+					break;
+			}
+			break;
 
 		//end game
 		case INTRO_ENDING:
@@ -461,10 +492,18 @@ void StartPlayingIntroFlic( INT32 iIndexOfFlicToPlay )
 
 void SetIntroType( INT8 bIntroType )
 {
+/*
+Ja25: no intro videos
 	if( bIntroType == INTRO_BEGINING )
 	{
 		gbIntroScreenMode = INTRO_BEGINING;
 	}
+*/
+	if( bIntroType == INTRO_HELI_CRASH )
+	{
+		gbIntroScreenMode = INTRO_HELI_CRASH;
+	}
+
 	else if( bIntroType == INTRO_ENDING )
 	{
 		gbIntroScreenMode = INTRO_ENDING;

@@ -3,6 +3,7 @@
 	#include "Loading Screen.h"
 	#include "Enemy Soldier Save.h"
 	#include "Ja25Update.h"
+	#include "MapScreen Quotes.h"
 	#include "Ja25_Tactical.h"
 	#include "Ja25 Strategic Ai.h"
 	#include "CustomMapHeader.h"
@@ -946,6 +947,10 @@ Ja25 no creatures
     gTacticalStatus.fHasEnteredCombatModeSinceEntering = FALSE;
     gTacticalStatus.fDontAddNewCrows          = FALSE;
 
+		//Call this function, if Jerry doesnt need to be added, it will return
+		UpdateJerryMiloInInitialSector();
+
+
     // Adjust delay for tense quote
     gTacticalStatus.sCreatureTenseQuoteDelay = (INT16)( 10 + Random( 20 ) );
 
@@ -1356,6 +1361,12 @@ void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOl
 		gMercProfiles[ CONRAD ].sSectorY = 0;
 	}
 
+	if( sOldSectorX == 7 && sOldSectorY == MAP_ROW_H && bOldSectorZ == 0 )
+	{
+		// remove Jerry from the map
+		gMercProfiles[ JERRY ].sSectorX = 0;
+		gMercProfiles[ JERRY ].sSectorY = 0;
+	}
 /*
 Ja25 no cambria hospital
 	if ( sOldSectorX == HOSPITAL_SECTOR_X && sOldSectorY == HOSPITAL_SECTOR_Y && bOldSectorZ == HOSPITAL_SECTOR_Z )

@@ -119,6 +119,7 @@ extern				BOOLEAN				gfTopMessageDirty;
 extern				BOOLEAN		gfFailedToSaveGameWhenInsideAMessageBox;
 extern				BOOLEAN		gfFirstHeliRun;
 extern				BOOLEAN		gfRenderFullThisFrame;
+extern				BOOLEAN		gfFirstTimeInGameHeliCrash;
 
 
 

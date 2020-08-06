@@ -92,6 +92,7 @@ void DialogueMessageBoxCallBack( UINT8 ubExitValue );
 void CarmenLeavesSectorCallback( void );
 void PerformJerryMiloAction301();
 void PerformJerryMiloAction302();
+void HandleMercArrivesQuotesFromHeliCrashSequence();
 void HandleRaulBlowingHimselfUp();
 void DisplayJerryBreakingLaptopTransmitterPopup();
 
@@ -5158,6 +5159,24 @@ void DelayedSayingOfMercQuote( UINT32 uiParam )
 		}
 	}
 }
+
+void HandleMercArrivesQuotesFromHeliCrashSequence()
+{
+	UINT32 uiCnt;
+	SOLDIERTYPE *pSoldier=NULL;
+
+	uiCnt = gTacticalStatus.Team[ gbPlayerNum ].bFirstID;
+
+	// look for all mercs on the same team, 
+	for ( pSoldier = MercPtrs[ uiCnt ]; uiCnt <= gTacticalStatus.Team[ gbPlayerNum ].bLastID; uiCnt++,pSoldier++)
+	{
+		if ( pSoldier->bActive && pSoldier->bLife >= OKLIFE && pSoldier->bInSector )
+		{
+			HandleMercArrivesQuotes( pSoldier );
+		}
+	}
+}
+
 
 void HandleRaulBlowingHimselfUp()
 {
