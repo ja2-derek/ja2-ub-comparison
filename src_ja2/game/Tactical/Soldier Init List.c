@@ -525,11 +525,11 @@ BOOLEAN AddPlacementToWorld( SOLDIERINITNODE *curr )
 		//Special case code when adding icecream truck.
 		if( !gfEditMode )
 		{
-			// CJC, August 18, 1999: don't do this code unless the ice cream truck is on our team
-			if ( FindSoldierByProfileID( ICECREAMTRUCK, TRUE ) != NULL )
+/*
+Ja25:  NO hamoues in exp
+			if( curr->pDetailedPlacement->bBodyType == ICECREAMTRUCK )
 			{
-				if( curr->pDetailedPlacement->bBodyType == ICECREAMTRUCK )
-				{ //Check to see if Hamous is here and not recruited.  If so, add truck
+				//Check to see if Hamous is here and not recruited.  If so, add truck
 					if( gMercProfiles[ HAMOUS ].sSectorX != gWorldSectorX ||
 							gMercProfiles[ HAMOUS ].sSectorY != gWorldSectorY ||
 							gMercProfiles[ HAMOUS ].bSectorZ )
@@ -542,7 +542,7 @@ BOOLEAN AddPlacementToWorld( SOLDIERINITNODE *curr )
 						return TRUE;
 					}
 				}
-			}
+*/
 		}
 		CreateDetailedPlacementGivenStaticDetailedPlacementAndBasicPlacementInfo(
 			&tempDetailedPlacement, curr->pDetailedPlacement, curr->pBasicPlacement );		
