@@ -1372,6 +1372,20 @@ void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOl
 		gMercProfiles[ JERRY ].sSectorX = 0;
 		gMercProfiles[ JERRY ].sSectorY = 0;
 	}
+
+	//if the player is leaving a sector with  Tex in it
+	if( sOldSectorX == gMercProfiles[ TEX ].sSectorX && sOldSectorY == gMercProfiles[ TEX ].sSectorY && bOldSectorZ == 0 && gMercProfiles[ TEX ].ubLastDateSpokenTo != 0 )
+	{
+		pSoldier = FindSoldierByProfileID( TEX, TRUE );
+
+		//if the npc isnt on the players team AND the player has never spoken to them
+		if( pSoldier == NULL && gMercProfiles[ TEX ].ubLastDateSpokenTo != 0 )
+		{
+			// remove Tex from the map
+			gMercProfiles[ TEX ].sSectorX = 0;
+			gMercProfiles[ TEX ].sSectorY = 0;
+		}
+	}
 /*
 Ja25 no cambria hospital
 	if ( sOldSectorX == HOSPITAL_SECTOR_X && sOldSectorY == HOSPITAL_SECTOR_Y && bOldSectorZ == HOSPITAL_SECTOR_Z )
@@ -4997,7 +5011,28 @@ void HandleEmailBeingSentWhenEnteringSector( INT16 sMapX, INT16 sMapY, INT8 bMap
 		}
 	}
 
+void ShouldNpcBeAddedToSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
+{
+	//if Tex has never been added before 
+	if( !( gJa25SaveStruct.fNpcHasBeenAdded & SECTOR_ADDED_NPC__TEX ) )
+	{
+		//and tex is TO be added
+		if( gubFact[ FACT_TEX_IS_IN_GAME_AND_ALIVE_IN_STORE ] )
+		{
+			//if it is the right sector
+			if( sMapY == MAP_ROW_I && sMapX == 10 && bMapZ == 0 )
+			{
+				//Change his sector values to 
+				gMercProfiles[ TEX ].sSectorX = sMapX;
+				gMercProfiles[ TEX ].sSectorY = sMapY;
+				gMercProfiles[ TEX ].bSectorZ = bMapZ;
 
+				//remember that we have added him
+				gJa25SaveStruct.fNpcHasBeenAdded |= SECTOR_ADDED_NPC__TEX;
+			}
+		}
+	}
+}
 
 
 	}

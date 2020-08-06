@@ -94,6 +94,9 @@ void PerformJerryMiloAction301();
 void PerformJerryMiloAction302();
 void HandleMercArrivesQuotesFromHeliCrashSequence();
 void HandleRaulBlowingHimselfUp();
+void HandleTexFlushingToilet();
+void HandleTexMakingHimselfAlreadyBeIntroduced();
+void HandleTexBecomingCamoed();
 void DisplayJerryBreakingLaptopTransmitterPopup();
 
 #define		TALK_PANEL_FACE_X				6
@@ -4320,6 +4323,19 @@ Ja25: No miguel
 			case NPC_ACTION_RAUL_BLOWS_HIMSELF_UP:
 				HandleRaulBlowingHimselfUp();
 				break;
+
+			case NPC_ACTION_TEX_FLUSHES_TOILET:
+				HandleTexFlushingToilet();
+				break;
+
+			case NPC_ACTION_MARK_TEX_AS_ALREADY_INTRODUCED_HIMSELF:
+				HandleTexMakingHimselfAlreadyBeIntroduced();
+				break;
+
+			case NPC_ACTION_MAKE_TEX_CAMOED:
+				HandleTexBecomingCamoed();
+				break;
+
 			case NPC_ACTION_HAVE_DEALER_OPEN_BUY_SELL_SCREEN:
 				HaveNpcOpenUpDealerScreen( ubTargetNPC );
 				break;
@@ -5344,6 +5360,51 @@ void HandleRaulBlowingHimselfUp()
 		SetJa25GeneralFlag( JA_GF__RAUL_BLOW_HIMSELF_UP );
 	}
 }
+
+
+void HandleTexFlushingToilet()
+{
+	PlayJA2SampleFromFile( "SOUNDS\\ToiletFlush.wav", RATE_11025, HIGHVOLUME, 1, MIDDLE );
+}
+
+
+
+void HandleTexMakingHimselfAlreadyBeIntroduced()
+{
+	gMercProfiles[ TEX ].ubLastDateSpokenTo = GetWorldDay( );
+}
+
+
+void HandleTexBecomingCamoed()
+{
+	SOLDIERTYPE *pSoldier=NULL;
+
+	//Find TEX
+	pSoldier = FindSoldierByProfileID( TEX, FALSE );
+
+	//if we found him
+	if( pSoldier != NULL )
+	{
+		//make him camoed
+		pSoldier->bCamo = 100;
+		CreateSoldierPalettes( pSoldier );
+	}
+
+	//Then set him to be camo'ed in the profile ( cause he is still an RPC and we are just about to hire him )
+	gMercProfiles[ TEX ].bSkillTrait2 = CAMOUFLAGED;
+
+	//Close down the talking menu...
+	DeleteTalkingMenu( );
+
+//		InitTalkingMenu( pSoldier->ubProfile, pSoldier->sGridNo );
+
+	// Trigger Tex to say the quote, this will cause the radio locater to come up giving a pause to make it appear that he
+	// put on camoflauge
+	TriggerNPCRecord( TEX, 15 );
+}
+
+
+
 void DisplayJerryBreakingLaptopTransmitterPopup()
 {
 	CHAR16	zString[512];

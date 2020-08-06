@@ -986,6 +986,13 @@ BOOLEAN StrategicRemoveMerc( SOLDIERTYPE *pSoldier )
 //Ja25: No medical deposit refund		CalculateMedicalDepositRefund( pSoldier );
 	}
 
+	//if the merc is TEX
+	if( pSoldier->ubProfile == TEX )
+	{
+		//Since we are firing him, get rid of the camo
+		gMercProfiles[ pSoldier->ubProfile ].bSkillTrait2 = NO_SKILLTRAIT;
+	}
+
 	//remove the merc from the tactical 
 	TacticalRemoveSoldier( pSoldier->ubID );
 

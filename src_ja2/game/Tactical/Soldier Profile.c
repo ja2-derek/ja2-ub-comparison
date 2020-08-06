@@ -990,6 +990,13 @@ BOOLEAN RecruitRPC( UINT8 ubCharNum )
 	// OK, set recruit flag..
 	gMercProfiles[ ubCharNum ].ubMiscFlags |= PROFILE_MISC_FLAG_RECRUITED;
 
+	//if the merc is TEX
+	if( ubCharNum == TEX )
+	{
+		//Then set him to be camo'ed
+		gMercProfiles[ TEX ].bSkillTrait2 = CAMOUFLAGED;
+	}
+
 	// Add this guy to our team!
 	pNewSoldier = ChangeSoldierTeam( pSoldier, gbPlayerNum );
 

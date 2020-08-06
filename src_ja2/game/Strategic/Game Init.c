@@ -469,6 +469,14 @@ Ja25 MERC is available from the begining
 
 		//Init the initial hweli crash sequence variable
 		InitializeHeliGridnoAndTime( FALSE );
+			SetFactTrue( FACT_TEX_IS_IN_GAME_AND_ALIVE_IN_STORE );
+		//If tex is in the game ( John is NOT in the game )
+		if( gJa25SaveStruct.fJohnKulbaIsInGame == FALSE )
+		{
+			//make sure Betty offers his videos for sale
+			AddTexsVideosToBettysInventory();
+		}
+
 		//InitJerryMiloInfo(); AA
 
 		//init the bloodcats
