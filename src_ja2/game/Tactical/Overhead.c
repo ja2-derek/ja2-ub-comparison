@@ -150,7 +150,7 @@ extern void CheckForAlertWhenEnemyDies( SOLDIERTYPE * pDyingSoldier );
 extern void PlaySoldierFootstepSound( SOLDIERTYPE *pSoldier );
 extern void HandleKilledQuote( SOLDIERTYPE *pKilledSoldier, SOLDIERTYPE *pKillerSoldier, INT16 sGridNo, INT8 bLevel );
 extern UINT16 PickSoldierReadyAnimation( SOLDIERTYPE *pSoldier, BOOLEAN fEndReady );
-
+BOOLEAN CanMsgBoxForPlayerToBeNotifiedOfSomeoneElseInSector();
 
 extern void PlayStealthySoldierFootstepSound( SOLDIERTYPE *pSoldier );
 
@@ -6317,6 +6317,13 @@ Ja25  no meanwhile
 			}
 		}
 
+
+		//Is someone important is in this sector
+		if( CanMsgBoxForPlayerToBeNotifiedOfSomeoneElseInSector() )
+		{
+			AddStrategicEventUsingSeconds( EVENT_DELAY_SOMEONE_IN_SECTOR_MSGBOX, 10, 0 );
+		}
+
 		//Whenever returning TRUE, make sure you clear gfBlitBattleSectorLocator;
 		gfBlitBattleSectorLocator = FALSE;
 
@@ -8208,4 +8215,75 @@ void DoCreatureTensionQuote( SOLDIERTYPE *pSoldier )
   { 
     TacticalCharacterDialogue( pSoldier, (INT16)iQuoteToUse );
   }
+}
+
+
+void SetMsgBoxForPlayerBeNotifiedOfSomeoneElseInSector()
+{
+	//if the player in the same sector as MANUEL
+	if( !CanMsgBoxForPlayerToBeNotifiedOfSomeoneElseInSector() )
+	{
+		return;
+	}
+
+	gJa25SaveStruct.fShouldMsgBoxComeUpSayingSomeoneImportantIsInSector = TRUE;
+}
+
+void HandleThePlayerBeNotifiedOfSomeoneElseInSector()
+{
+	//if we shouldnt be here, get out
+	if( !gJa25SaveStruct.fShouldMsgBoxComeUpSayingSomeoneImportantIsInSector )
+	{
+		return;
+	}
+
+	//if somehting else is going on, leave
+	if( gTacticalStatus.fAutoBandageMode ||
+			DialogueActive( ) ||
+			gTacticalStatus.fAutoBandagePending ||
+			guiPendingScreen == MSG_BOX_SCREEN ||
+			guiCurrentScreen == MSG_BOX_SCREEN ||
+			AreWeInAUIMenu( )
+		)
+	{
+		return;
+	}
+
+	gJa25SaveStruct.fShouldMsgBoxComeUpSayingSomeoneImportantIsInSector = FALSE;
+
+	//if the player in the same sector as MANUEL
+	if( !CanMsgBoxForPlayerToBeNotifiedOfSomeoneElseInSector() )
+	{
+		return;
+	}
+
+	DoMessageBox( MSG_BOX_BASIC_STYLE, zNewTacticalMessages[ TACT_MSG__SOMEONE_ELSE_IN_SECTOR ], GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_OK, NULL, NULL );
+
+}
+
+BOOLEAN CanMsgBoxForPlayerToBeNotifiedOfSomeoneElseInSector()
+{
+	// ATE: if this is a custom map, return
+	if ( gbWorldSectorZ == 0 )
+	{
+		if ( SectorInfo[ SECTOR( gWorldSectorY, gWorldSectorX ) ].fCustomSector )
+		{
+			return( FALSE );
+		}
+	}
+
+	if( ( gWorldSectorX == gMercProfiles[ MANUEL ].sSectorX && gWorldSectorY == gMercProfiles[ MANUEL ].sSectorY && gbWorldSectorZ == gMercProfiles[ MANUEL ].bSectorZ ) )
+	{
+		//IF MANUEL is already hired
+		if( gMercProfiles[ MANUEL ].ubMiscFlags & PROFILE_MISC_FLAG_RECRUITED )
+		{
+			//then we shouldnt display the message
+			return( FALSE );
+		}
+
+		return( TRUE );
+	}
+
+	return( FALSE );
+}
 }

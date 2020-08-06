@@ -356,5 +356,10 @@ void SetSoldierNonNeutral( SOLDIERTYPE * pSoldier );
 void SetSoldierNeutral( SOLDIERTYPE * pSoldier );
 
 
+void HandleThePlayerBeNotifiedOfSomeoneElseInSector();
+void SetMsgBoxForPlayerBeNotifiedOfSomeoneElseInSector();
+
+void HandleDisplayingOfPlayerLostDialogue( void );
+
 
 #endif
