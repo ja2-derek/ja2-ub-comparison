@@ -1427,22 +1427,24 @@ void CreateDetailedPlacementGivenBasicPlacementInfo( SOLDIERCREATE_STRUCT *pp, B
 				{
 					INT32 iRandom;
 					iRandom = Random( 100 );
-					if( iRandom < 8 )
+					if( iRandom < 20 )
 					{ //8% chance FATCIV
 						pp->bBodyType = FATCIV;
 					}
-					else if( iRandom < 38 )
+					else if( iRandom < 60 )
 					{ //30% chance MANCIV
 						pp->bBodyType = MANCIV;
 					}
-					else if( iRandom < 57 )
+					else if( iRandom < 80 )
 					{ //19% chance MINICIV
 						pp->bBodyType = MINICIV;
 					}
-					else if( iRandom < 76 )
+					else //if( iRandom < 76 )
 					{ //19% chance DRESSCIV
 						pp->bBodyType = DRESSCIV;
 					}
+/*
+Ja25 No kids, too bad!!
 					else if( iRandom < 88 )
 					{ //12% chance HATKIDCIV
 						pp->bBodyType = HATKIDCIV;
@@ -1451,6 +1453,7 @@ void CreateDetailedPlacementGivenBasicPlacementInfo( SOLDIERCREATE_STRUCT *pp, B
 					{ //12% chance KIDCIV
 						pp->bBodyType = KIDCIV;
 					}
+*/
 				}
 				break;
 		}

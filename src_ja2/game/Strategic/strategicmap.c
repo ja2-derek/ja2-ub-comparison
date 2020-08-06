@@ -3459,9 +3459,12 @@ JA25: There is no mines
 	// Daily mine production processing events
 	AddEveryDayStrategicEvent( EVENT_SETUP_MINE_INCOME, 0, 0 );
 */
+
+/*
+Ja25 no town opinions
 	// Daily merc reputation processing events
 	AddEveryDayStrategicEvent( EVENT_SETUP_TOWN_OPINION, 0, 0 );
-
+*/
 
 /*
 Ja25:  No enrico mail
