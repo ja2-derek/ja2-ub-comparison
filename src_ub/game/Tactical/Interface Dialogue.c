@@ -2474,6 +2474,17 @@ Ja25 no loyalty
 				{
 					sGridNo = 10852;
 				}
+				// JA3Gold: unlock the doors instead of opening them
+				{
+					DOOR* pDoor;
+					
+					pDoor = FindDoorInfoAtGridNo( sGridNo );
+					if (pDoor)
+					{
+						pDoor->fLocked = FALSE;
+					}
+				}
+				/*
 				// handle door opening here
 				{
 					STRUCTURE * pStructure;
@@ -2498,6 +2509,7 @@ Ja25 no loyalty
 						}
 					}
 				}
+				*/
 				break;
 
 			case NPC_ACTION_POSSIBLY_ADVERTISE_CINDY:
