@@ -1886,7 +1886,7 @@ Ja25 No meanwhiles
 					{
 						if ( CHEATER_CHEAT_LEVEL( ) )
 						{
-							ChangeSoldiersBodyType( INFANT_MONSTER, TRUE );
+							//ChangeSoldiersBodyType( INFANT_MONSTER, TRUE );
 						}
 					}
 					else if( fCtrl ) //toggle between the different npc debug modes
@@ -1906,7 +1906,7 @@ Ja25 No meanwhiles
 					{
 						if ( CHEATER_CHEAT_LEVEL( ) )
 						{
-							EVENT_InitNewSoldierAnim( MercPtrs[ gusSelectedSoldier ], KID_SKIPPING, 0 , TRUE );
+							//EVENT_InitNewSoldierAnim( MercPtrs[ gusSelectedSoldier ], KID_SKIPPING, 0 , TRUE );
 
 							//ChangeSoldiersBodyType( LARVAE_MONSTER, TRUE );
 							//MercPtrs[ gusSelectedSoldier ]->usAttackingWeapon = TANK_CANNON;
@@ -1925,7 +1925,7 @@ Ja25 No meanwhiles
 					{
 						if ( CHEATER_CHEAT_LEVEL( ) )
 						{
-							ChangeSoldiersBodyType( CRIPPLECIV, TRUE );
+						//	ChangeSoldiersBodyType( CRIPPLECIV, TRUE );
 						}
 					}
 					else
@@ -1940,7 +1940,7 @@ Ja25 No meanwhiles
 					{
 						if ( CHEATER_CHEAT_LEVEL( ) )
 						{
-							ChangeSoldiersBodyType( YAM_MONSTER, TRUE );
+						//	ChangeSoldiersBodyType( YAM_MONSTER, TRUE );
 						}
 					}
 					else
@@ -2014,7 +2014,17 @@ Ja25 No meanwhiles
 
 						}
 					}
-					break;
+
+					if ( gubCheatLevel == 6 )
+					{
+						gubCheatLevel++;
+						fGoodCheatLevelKey = TRUE;
+					}
+					else
+					{
+						RESET_CHEAT_LEVEL( );
+					}
+
 
 				case '/':
 
@@ -2030,25 +2040,7 @@ Ja25 No meanwhiles
 
 					if ( fCtrl )
 					{
-#ifdef GERMAN
-						if ( gubCheatLevel == 3 )
-						{
-							gubCheatLevel++;
-							fGoodCheatLevelKey = TRUE;
-						}
-						else if ( gubCheatLevel == 5 )
-						{
-							gubCheatLevel++;
-							// ATE; We're done.... start cheat mode....
-							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[ MSG_CHEAT_LEVEL_TWO ] );
-							SetHistoryFact( HISTORY_CHEAT_ENABLED, 0, GetWorldTotalMin(), -1, -1 );
-						}
-						else
-						{
-							RESET_CHEAT_LEVEL();
-						}
-#else
-						if ( gubCheatLevel == 1 )
+						if ( gubCheatLevel == 2 )
 						{
 							gubCheatLevel++;
 							fGoodCheatLevelKey = TRUE;
@@ -2057,7 +2049,6 @@ Ja25 No meanwhiles
 						{
 							RESET_CHEAT_LEVEL();
 						}
-#endif
 					}
 					else if ( fAlt )
 					{
@@ -2088,23 +2079,12 @@ Ja25 No meanwhiles
 					{
 						if ( CHEATER_CHEAT_LEVEL( ) )
 						{
-							*puiNewEvent = I_NEW_BADMERC;
+							//*puiNewEvent = I_NEW_BADMERC;
 						}
 					}
 					else if( fCtrl )
 					{
-#ifndef GERMAN
-						if ( gubCheatLevel == 2 )
-						{
-							gubCheatLevel++;
-							fGoodCheatLevelKey = TRUE;
-						}
-						else if ( gubCheatLevel == 3 )
-						{
-							gubCheatLevel++;
-							fGoodCheatLevelKey = TRUE;
-						}
-						else if ( gubCheatLevel == 5 )
+						if ( gubCheatLevel == 0 )
 						{
 							gubCheatLevel++;
 							fGoodCheatLevelKey = TRUE;
@@ -2113,17 +2093,6 @@ Ja25 No meanwhiles
 						{
 							RESET_CHEAT_LEVEL( );
 						}
-#else
-						if ( gubCheatLevel == 6 )
-						{
-							gubCheatLevel++;
-							fGoodCheatLevelKey = TRUE;
-						}
-						else
-						{
-							RESET_CHEAT_LEVEL( );
-						}
-#endif
 						//gGameSettings.fOptions[ TOPTION_HIDE_BULLETS ] ^= TRUE;
 					}
 					else
@@ -2205,6 +2174,18 @@ Ja25 No meanwhiles
 							ToggleViewAllItems();
 						}
 					}
+					else if( fCtrl )
+					{
+						if ( gubCheatLevel == 1 )
+						{
+							gubCheatLevel++;
+							fGoodCheatLevelKey = TRUE;
+						}
+						else
+						{
+							RESET_CHEAT_LEVEL( );
+						}
+					}
 					else
 					{
 						SOLDIERTYPE *pSoldier;
@@ -2282,34 +2263,13 @@ Ja25 No meanwhiles
 
 					if( fCtrl )
 					{
-#ifdef GERMAN
-						if ( gubCheatLevel == 1 )
-						{
-							gubCheatLevel++;
-							fGoodCheatLevelKey = TRUE;
-						}
-						else
-						{
-							RESET_CHEAT_LEVEL();
-						}
-#else
-						if ( gubCheatLevel == 0 )
-						{
-							gubCheatLevel++;
-							fGoodCheatLevelKey = TRUE;
-						}
-						else
-						{
-							RESET_CHEAT_LEVEL();
-						}
-#endif
 					}
 					else if ( fAlt )
 					{
 
 						if ( CHEATER_CHEAT_LEVEL( ) )
 						{
-							*puiNewEvent = I_NEW_MERC;
+							//*puiNewEvent = I_NEW_MERC;
 						}
 					}
 					else
@@ -2352,31 +2312,11 @@ Ja25 No meanwhiles
 					{
 						if ( CHEATER_CHEAT_LEVEL( ) )
 						{
-							CreateRandomItem();
+							//CreateRandomItem();
 						}
 					}
 					else if( fCtrl )
 					{
-#ifdef GERMAN
-						if ( gubCheatLevel == 0 )
-						{
-							fGoodCheatLevelKey = TRUE;
-							gubCheatLevel++;
-						}
-#else
-						if ( gubCheatLevel == 4 )
-						{
-							gubCheatLevel++;
-							fGoodCheatLevelKey = TRUE;
-							// ATE; We're done.... start cheat mode....
-							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[ MSG_CHEAT_LEVEL_TWO ] );
-							SetHistoryFact( HISTORY_CHEAT_ENABLED, 0, GetWorldTotalMin(), -1, -1 );
-						}
-						else
-						{
-							RESET_CHEAT_LEVEL();
-						}
-#endif
 					}
 					else
 					{
@@ -2421,7 +2361,7 @@ Ja25 No meanwhiles
 						{
 							if ( CHEATER_CHEAT_LEVEL( ) )
 							{
-								GrenadeTest1();
+								//GrenadeTest1();
 							}
 						}
 					}
@@ -2519,15 +2459,15 @@ Ja25 No meanwhiles
 					{
 						if ( INFORMATION_CHEAT_LEVEL( ) )
 						{
-							*puiNewEvent = I_LEVELNODEDEBUG;
-							CountLevelNodes();
+							//*puiNewEvent = I_LEVELNODEDEBUG;
+							//CountLevelNodes();
 						}
 					}
 					else if( fCtrl )
 					{
 						if ( INFORMATION_CHEAT_LEVEL( ) )
 						{
-							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Memory Used: %d + %d = %d vs: %d", guiMemTotal, giMemUsedInSurfaces, ( guiMemTotal + giMemUsedInSurfaces), ( giStartingMemValue - MemGetFree() ) );						
+							//ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, L"Memory Used: %d + %d = %d vs: %d", guiMemTotal, giMemUsedInSurfaces, ( guiMemTotal + giMemUsedInSurfaces), ( giStartingMemValue - MemGetFree() ) );						
 						}
 					}
 					else
@@ -2619,22 +2559,6 @@ Ja25 No meanwhiles
 					}
 					else if( fCtrl )
 					{
-#ifdef GERMAN
-						if ( gubCheatLevel == 4 )
-						{
-							fGoodCheatLevelKey = TRUE;
-							gubCheatLevel++;
-#if 0
-							// ATE: Level one reached.....
-							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[ MSG_CHEAT_LEVEL_ONE ] );
-#endif
-						}
-						else
-						{
-							RESET_CHEAT_LEVEL();
-						}
-#endif
-
 #if 0
 						if ( INFORMATION_CHEAT_LEVEL( ) )
 						{
@@ -2792,12 +2716,20 @@ Ja25 No meanwhiles
 					}
 					else if( fCtrl )
 					{
-						if ( CHEATER_CHEAT_LEVEL( ) )
+						if ( gubCheatLevel == 4 )
 						{
-							TestCapture( );
+							gubCheatLevel++;
+							fGoodCheatLevelKey = TRUE;
 
-							//EnterCombatMode( gbPlayerNum );
+							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[ MSG_CHEAT_LEVEL_ONE ] );
 						}
+						else
+						{
+							RESET_CHEAT_LEVEL( );
+						}
+
+						//Ja25: Toggle the shadowing 
+						gGameSettings.fOptions[ TOPTION_SHADE_TACTICAL_MSGS ] = !	gGameSettings.fOptions[ TOPTION_SHADE_TACTICAL_MSGS ];
 					}
 					else
 						ToggleTreeTops();
@@ -2853,17 +2785,15 @@ Ja25 No meanwhiles
 						INT32 cnt;
 						SOLDIERTYPE *pSoldier;
 
-#ifdef GERMAN
-						if ( gubCheatLevel == 2 )
+						if ( gubCheatLevel == 3 )
 						{
-							fGoodCheatLevelKey = TRUE;
 							gubCheatLevel++;
+							fGoodCheatLevelKey = TRUE;
 						}
 						else
 						{
 							RESET_CHEAT_LEVEL();
 						}
-#endif
 
 						if ( CHEATER_CHEAT_LEVEL( ) && gusSelectedSoldier != NOBODY )
 						{
@@ -2926,6 +2856,8 @@ Ja25 No meanwhiles
 					}
 					else if( fCtrl )
 					{
+/*
+Ja25 no flame throuwer
 						if ( CHEATER_CHEAT_LEVEL( ) )
 						{
 							if ( gusSelectedSoldier != NOBODY )
@@ -2933,6 +2865,7 @@ Ja25 No meanwhiles
 								CreateItem( FLAMETHROWER, 100, &( MercPtrs[ gusSelectedSoldier ]->inv[ HANDPOS ]) );
 							}
 						}
+*/
 					}
 					else 
 						ToggleWireFrame();
@@ -2941,6 +2874,8 @@ Ja25 No meanwhiles
 				case 'y':
 					if( fAlt )
 					{
+/*
+Ja25:  Sick of crashes, commenting out
 						OBJECTTYPE		Object;
 						SOLDIERTYPE *pSoldier;
 
@@ -2958,7 +2893,24 @@ Ja25 No meanwhiles
 				    pSoldier = FindSoldierByProfileID( ROBOT, FALSE );
 
 						AutoPlaceObject( pSoldier, &Object, FALSE );
+*/
+					}
+					else if( fCtrl )
+					{
+						if( gubCheatLevel == 5 )
+						{
+							gubCheatLevel++;
+							fGoodCheatLevelKey = TRUE;
 
+							//We be done with the cheats, they are now enabled
+							ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, pMessageStrings[ MSG_CHEAT_LEVEL_TWO ] );
+							SetHistoryFact( HISTORY_CHEAT_ENABLED, 0, GetWorldTotalMin(), -1, -1 );
+
+					}
+					else
+					{
+							RESET_CHEAT_LEVEL( );
+						}
 					}
 					else
 					{
@@ -3890,7 +3842,7 @@ void GrenadeTest1()
 	if ( GetMouseXY( &sX, &sY ) )
 	{
 		OBJECTTYPE		Object;
-		Object.usItem = MUSTARD_GRENADE;
+		Object.usItem = MORTAR_SHELL;//MUSTARD_GRENADE;
 		Object.bStatus[ 0 ] = 100;
 		Object.ubNumberOfObjects = 1;
 		CreatePhysicalObject( &Object, 60,  (FLOAT)(sX * CELL_X_SIZE), (FLOAT)(sY * CELL_Y_SIZE ), 256, -20, 20, 158, NOBODY, THROW_ARM_ITEM, 0 );
