@@ -68,10 +68,10 @@ UINT8	gubNumEntries[ NUM_CIV_QUOTES ] =
 	3,
 	10,
 
-	3,
-	3,
-	3,
-	3,
+	14,
+	14,
+	14,
+	14,
 	3,
 	3,
 	3,
@@ -241,6 +241,7 @@ INT8 GetCivType( SOLDIERTYPE *pCiv )
 		return( CIV_TYPE_NA );
 	}
 
+/*
 	// ATE: Check if this person is married.....
 	// 1 ) check sector....
 	if ( gWorldSectorX == 10 && gWorldSectorY == 6 && gbWorldSectorZ == 0 )
@@ -252,6 +253,7 @@ INT8 GetCivType( SOLDIERTYPE *pCiv )
 			return( CIV_TYPE_MARRIED_PC );
 		}
 	}
+*/
 
 	// OK, look for enemy type - MUST be on enemy team, merc bodytype
 	if ( pCiv->bTeam == ENEMY_TEAM && IS_MERC_BODY_TYPE( pCiv ) )
@@ -431,16 +433,46 @@ void BeginCivQuote( SOLDIERTYPE *pCiv, UINT8 ubCivQuoteID, UINT8 ubEntryID, INT1
 UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN fCanUseHints )
 {
 	UINT8	ubCivType;
-	INT8	bTownId;
-	BOOLEAN	bCivLowLoyalty = FALSE;
-	BOOLEAN	bCivHighLoyalty = FALSE;
-	INT8		bCivHint;
-  INT8    bMineId;
+//	INT8	bTownId;
+//	BOOLEAN	bCivLowLoyalty = FALSE;
+//	BOOLEAN	bCivHighLoyalty = FALSE;
+//	INT8		bCivHint=-1;
+//  INT8    bMineId;
   BOOLEAN bMiners = FALSE;
 
 	(*pubCivHintToUse) = 0;
 
 	ubCivType = GetCivType( pCiv );
+
+	if( ubCivType != CIV_TYPE_ENEMY )
+	{
+		//if the civ is not an enemy
+		if ( pCiv->bNeutral )
+		{
+			return( CIV_QUOTE__CIV_NOT_ENEMY );
+		}
+		else
+		{
+			//
+			//the civ is an enemy
+			//
+
+			//if the civ can fight
+			if( pCiv->ubBodyType == REGMALE || pCiv->ubBodyType == REGFEMALE || pCiv->ubBodyType == BIGMALE )
+			{
+				return( CIV_QUOTE__CIV_ENEMY_CAN_FIGHT );
+			}
+			else if( pCiv->bLife < pCiv->bLifeMax )
+			{
+				return( CIV_QUOTE__CIV_HURT );
+			}
+			else
+			{
+				return( CIV_QUOTE__CIV_ENEMY_GENERIC );
+			}
+		}
+	}
+
 
 	if ( ubCivType == CIV_TYPE_ENEMY )
 	{
@@ -469,11 +501,18 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 		}
 	}
 
+	return( 255 );
+}
+
+/*
+Ja25:
+
+* /
 	// Are we in a town sector?
 	// get town id
 	bTownId = GetTownIdForSector( gWorldSectorX, gWorldSectorY );
 
-
+/* Ja25: 
 	// If a married PC...
 	if ( ubCivType == CIV_TYPE_MARRIED_PC )
 	{
@@ -510,7 +549,7 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 			return( CIV_QUOTE_GOONS_ENEMIES );
 		}
 	}
-
+* /
 	// ATE: Cowering people take precedence....
 	if ( ( pCiv->uiStatusFlags & SOLDIER_COWERING ) || ( pCiv->bTeam == CIV_TEAM && ( gTacticalStatus.uiFlags & INCOMBAT ) ) )
 	{
@@ -523,7 +562,7 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 			return( CIV_QUOTE_KIDS_COWER );
 		}
 	}
-
+/* Ja25: No Factory Kids
 	// Kid slaves...
 	if ( pCiv->ubCivilianGroup == FACTORY_KIDS_GROUP )
 	{
@@ -537,17 +576,20 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 			return( CIV_QUOTE_KID_SLAVES );
 		}
 	}
-
+* /
 	// BEGGERS
 	if ( pCiv->ubCivilianGroup == BEGGARS_CIV_GROUP )
 	{
 		// Check if we are in a town...
 		if( bTownId != BLANK_SECTOR && gbWorldSectorZ == 0 )
 		{
+/*
+Ja25:	no san mona
 			if ( bTownId == SAN_MONA && ubCivType == CIV_TYPE_ADULT )
 			{
 				return( CIV_QUOTE_SAN_MONA_BEGGERS );
 			}
+* / 
 		}
 
 		// DO normal beggers...
@@ -561,6 +603,7 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 		}
 	}
 
+/* Ja25: 
 	// REBELS
 	if ( pCiv->ubCivilianGroup == REBEL_CIV_GROUP )
 	{
@@ -593,11 +636,14 @@ UINT8 DetermineCivQuoteEntry( SOLDIERTYPE *pCiv, UINT8 *pubCivHintToUse, BOOLEAN
 		}
 	}
 
+/*
+Ja25 not needed
   // If we are in medunna, and queen is dead, use these...
   if ( bTownId == MEDUNA && CheckFact( FACT_QUEEN_DEAD, 0 ) )
   {
     return( CIV_QUOTE_DEIDRANNA_DEAD );
   }
+*/
 
 /*
 Ja25 no loyalty
@@ -708,7 +754,7 @@ Ja25 no loyalty
 			return( CIV_QUOTE_KIDS_HIGH_LOYALTY );
 		}
 	}
-*/
+
 
 	// All purpose quote here....
 	if ( ubCivType == CIV_TYPE_ADULT )
@@ -721,7 +767,7 @@ Ja25 no loyalty
 	}
 
 }
-
+*/
 
 void HandleCivQuote( )
 {
@@ -758,6 +804,11 @@ void StartCivQuote( SOLDIERTYPE *pCiv )
 	{
 		// Determine which quote to say.....
 		ubCivQuoteID = DetermineCivQuoteEntry( pCiv, &ubCivHintToUse, TRUE );
+	}
+
+	if( ubCivQuoteID == 255 )
+	{
+		return;
 	}
 
 	// Determine entry id
