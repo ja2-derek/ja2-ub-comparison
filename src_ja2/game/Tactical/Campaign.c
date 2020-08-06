@@ -1138,6 +1138,10 @@ void HandleUnhiredMercImprovement( MERCPROFILESTRUCT *pProfile )
 // handles possible death of mercs not currently working for the player
 void HandleUnhiredMercDeaths( INT32 iProfileID )
 {
+	//We dont want to have people killed oversees in the exp.
+	return;
+
+/*
 	UINT8 ubMaxDeaths;
 	INT16 sChance;
 	MERCPROFILESTRUCT *pProfile = &(gMercProfiles[ iProfileID ]);
@@ -1215,6 +1219,7 @@ void HandleUnhiredMercDeaths( INT32 iProfileID )
 			AddEmailWithSpecialData(MERC_DIED_ON_OTHER_ASSIGNMENT, MERC_DIED_ON_OTHER_ASSIGNMENT_LENGTH, AIM_SITE, GetWorldTotalMin(), 0, iProfileID );
 		}
 	}
+	*/
 }
 
 
