@@ -17,6 +17,9 @@
 #define MAXCIVLASTNAMES		30
 UINT16 CivLastNames[MAXCIVLASTNAMES][10];
 
+#define	NUM_ASSIST_SLOTS				156				//used for when the player asssists in killing the enemty
+ 
+
 // ANDREW: these are defines for OKDestanation usage - please move to approprite file
 #define IGNOREPEOPLE    0
 #define PEOPLETOO       1

@@ -3512,10 +3512,12 @@ no queen, or queen monster
 		}
 
 		// if it was assisted by a player's merc
-		if (ubAssister != NOBODY && MercPtrs[ ubAssister ]->bTeam == gbPlayerNum )
+//		if (pSoldierOld->ubPreviousAttackerID != NOBODY && MercPtrs[ pSoldierOld->ubPreviousAttackerID ]->bTeam == gbPlayerNum )
+		if( HasAnyPlayerMercAssistedInKillingEnemy( pSoldierOld ) )
 		{
 			// EXPERIENCE CLASS GAIN:  Earned an assist
-			StatChange( MercPtrs[ ubAssister ], EXPERAMT, (UINT16)( 5 * pSoldierOld->bExpLevel ), FALSE );
+//			StatChange( MercPtrs[ pSoldierOld->ubPreviousAttackerID ], EXPERAMT, (UINT16)( 5 * pSoldierOld->bExpLevel ), FALSE );
+			RewardExperienceToPlayerMercsWhoAssitedTheKill( pSoldierOld, ( 5 * pSoldierOld->bExpLevel ) );
 		}
 	}
 

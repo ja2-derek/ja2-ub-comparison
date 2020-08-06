@@ -353,7 +353,9 @@ typedef struct
 	INT32	iMercMercContractLength;		//Used for MERC mercs, specifies how many days the merc has gone since last page
 
 	UINT32	uiTotalCostToDate;			// The total amount of money that has been paid to the merc for their salary
-	UINT8		ubBuffer[4];
+
+	UINT16	usTotalKills;						// total kills the player has had ( only used if the player imported the mercs from ja2 )
+	UINT16	usTotalAssists;					// total assists the player has had ( only used if the player imported the mercs from ja2 )
 } MERCPROFILESTRUCT;
 
 #define TIME_BETWEEN_HATED_COMPLAINTS 24

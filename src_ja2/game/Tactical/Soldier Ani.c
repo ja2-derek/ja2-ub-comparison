@@ -3115,8 +3115,6 @@ BOOLEAN HandleSoldierDeath( SOLDIERTYPE *pSoldier , BOOLEAN *pfMadeCorpse )
 		}
 		else
 		{
-			UINT8	ubAssister;
-
 			// IF this guy has an attacker and he's a good guy, play sound
 			if ( pSoldier->ubAttackerID != NOBODY )
 			{
@@ -3165,36 +3163,22 @@ BOOLEAN HandleSoldierDeath( SOLDIERTYPE *pSoldier , BOOLEAN *pfMadeCorpse )
 
 			}
 
-			// JA2 Gold: if previous and current attackers are the same, the next-to-previous attacker gets the assist
-			if (pSoldier->ubPreviousAttackerID == pSoldier->ubAttackerID)
-			{
-				ubAssister = pSoldier->ubNextToPreviousAttackerID;
-			}
-			else
-			{
-				ubAssister = pSoldier->ubPreviousAttackerID;
-			}
 
-			if ( ubAssister != NOBODY && ubAssister != pSoldier->ubAttackerID )
-			{
-				if ( MercPtrs[ ubAssister ]->bTeam == gbPlayerNum )
-				{		
-					gMercProfiles[ MercPtrs[ ubAssister ]->ubProfile ].usAssists++;
-				}
-				else if ( MercPtrs[ ubAssister ]->bTeam == MILITIA_TEAM )
+			// handle assist
+			if( HasAnyPlayerMercAssistedInKillingEnemy( pSoldier ) )
 				{
-					// get an assist - 1 points
-					MercPtrs[ ubAssister ]->ubMilitiaKills += 1;
-				}
+				IncrementAssistCountForMercsWhoDamagedEnemy( pSoldier );
 			}
 			/*
-			// handle assist
+JA25:  removed because it doesnt work.  If 1 merc injures an enemy, then a diff merc hits 2 more time to kill, the 
+			first merc wont get the assist
 			// if killer is assister, don't increment
 			if ( pSoldier->ubPreviousAttackerID != NOBODY && pSoldier->ubPreviousAttackerID != pSoldier->ubAttackerID )
 			{
 				if ( MercPtrs[ pSoldier->ubPreviousAttackerID ]->bTeam == gbPlayerNum )
 				{		
-					gMercProfiles[ MercPtrs[ pSoldier->ubPreviousAttackerID ]->ubProfile ].usAssists++;
+//					gMercProfiles[ MercPtrs[ pSoldier->ubPreviousAttackerID ]->ubProfile ].usAssists++;
+					IncrementAssistCountForMercsWhoDamagedEnemy( pSoldier );
 				}
 				else if ( MercPtrs[ pSoldier->ubPreviousAttackerID ]->bTeam == MILITIA_TEAM )
 				{

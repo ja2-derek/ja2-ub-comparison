@@ -7938,13 +7938,6 @@ void ReleaseSoldiersAttacker( SOLDIERTYPE *pSoldier )
 		// ATE: Removed...
 		//if ( pSoldier->ubAttackerID != NOBODY )
 		{
-			// JA2 Gold
-			// set next-to-previous attacker, so long as this isn't a repeat attack
-			if (pSoldier->ubPreviousAttackerID != pSoldier->ubAttackerID)
-			{
-				pSoldier->ubNextToPreviousAttackerID = pSoldier->ubPreviousAttackerID;
-			}
-
 			// get previous attacker id
 			pSoldier->ubPreviousAttackerID = pSoldier->ubAttackerID;
 
@@ -11048,6 +11041,139 @@ void BeginTyingToFall( SOLDIERTYPE *pSoldier )
     pSoldier->fFallClockwise = FALSE;
   }
 }
+
+
+void HandleEnemyHurtByPlayerSoldier( SOLDIERTYPE *pEnemySoldier, UINT8 ubTeamMercID, INT16 sDamageInflicted )
+{
+	UINT8	ubPercentDamage=0;
+
+	if ( ubTeamMercID == NOBODY )
+	{
+		return;
+	}
+
+	//Determine the percentage of damage the merc inflicated
+	ubPercentDamage = (UINT8)( sDamageInflicted / (FLOAT)pEnemySoldier->bLifeMax * 100 );
+
+	//Store it in the victims array of people who assited
+	pEnemySoldier->ubPercentDamageInflictedByTeam[ ubTeamMercID ] += ubPercentDamage;
+}
+
+void ResetSoldierDamageInflictedByTeamArray( SOLDIERTYPE *pSoldier )
+{
+	//reset the array
+	memset( pSoldier->ubPercentDamageInflictedByTeam, 0, NUM_ASSIST_SLOTS );
+}
+
+void RewardExperienceToPlayerMercsWhoAssitedTheKill( SOLDIERTYPE *pEnemySoldier, INT32 iTotalNumChances )
+{
+	UINT8 ubCnt;
+	UINT16 usNumChance;
+	UINT8	ubTotalDamageByAssister=0;
+
+
+	//First determine the max amount of damage inflicted by the 'assisters'
+	for( ubCnt=0; ubCnt<NUM_ASSIST_SLOTS; ubCnt++ )
+	{
+		//if the soldier has helped kill the enemy, but didnt kill him
+		//We want to know the total amount of damage by the 'assisters' not inclduing the person who kills the merc
+		if( pEnemySoldier->ubPercentDamageInflictedByTeam[ ubCnt ] > 0 && ubCnt != pEnemySoldier->ubAttackerID )
+		{
+			ubTotalDamageByAssister += pEnemySoldier->ubPercentDamageInflictedByTeam[ ubCnt ];
+		}
+	}
+
+	//NExt alloc the rewards based off the ratio of damage the particular merc inflicted
+
+	for( ubCnt=0; ubCnt<NUM_ASSIST_SLOTS; ubCnt++ )
+	{
+		//if the soldier has helped kill the enemy, but he is not the person who killed the enemy
+		if( pEnemySoldier->ubPercentDamageInflictedByTeam[ ubCnt ] > 0 && ubCnt != pEnemySoldier->ubAttackerID )
+		{
+			usNumChance = (UINT16)( iTotalNumChances * ( pEnemySoldier->ubPercentDamageInflictedByTeam[ ubCnt ] / (FLOAT)ubTotalDamageByAssister ) + 0.5);
+
+			// EXPERIENCE CLASS GAIN:  Earned an assist
+			StatChange( MercPtrs[ ubCnt ], EXPERAMT, usNumChance, FALSE );
+		}
+	}
+}
+
+void IncrementAssistCountForMercsWhoDamagedEnemy( SOLDIERTYPE *pEnemySoldier )
+{
+	UINT8 ubCnt;
+
+	for( ubCnt=0; ubCnt<NUM_ASSIST_SLOTS; ubCnt++ )
+	{
+		//if the soldier has helped kill the enemy, but didnt actually kill him
+		if( pEnemySoldier->ubPercentDamageInflictedByTeam[ ubCnt ] > 0 && ubCnt != pEnemySoldier->ubAttackerID )
+		{
+			//increment the assist count
+			if ( MercPtrs[ ubCnt ]->ubProfile != NO_PROFILE )
+			{
+				gMercProfiles[ MercPtrs[ ubCnt ]->ubProfile ].usAssists++;
+			}
+		}
+	}
+}
+
+
+BOOLEAN HasAnyPlayerMercAssistedInKillingEnemy( SOLDIERTYPE *pEnemySoldier )
+{
+	UINT8 ubCnt;
+
+	for( ubCnt=0; ubCnt<NUM_ASSIST_SLOTS; ubCnt++ )
+	{
+		//if the soldier has helped kill the enemy, but didnt actually kill him
+		if( pEnemySoldier->ubPercentDamageInflictedByTeam[ ubCnt ] > 0 && ubCnt != pEnemySoldier->ubAttackerID )
+		{
+			return( TRUE );
+		}
+	}
+	return( FALSE );
+}
+
+
+BOOLEAN IsThisFenceElectrified( INT16 sGridNo )
+{
+	//if this sector is...
+	if( gWorldSectorX == 13 && gWorldSectorY == 10 && gbWorldSectorZ == 0 )
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
+
+void HandleCuttinAnElectrifiedFence( SOLDIERTYPE *pSoldier, INT16 sGridNo )
+{
+	// insert electrical sound effect here
+	PlayJA2Sample( DOOR_ELECTRICITY, RATE_11025, SoundVolume( MIDVOLUME, sGridNo ), 1, SoundDir( sGridNo ) );	
+
+	// Set attacker's ID
+	pSoldier->ubAttackerID = pSoldier->ubID;
+
+	// Increment  being attacked count
+	pSoldier->bBeingAttackedCount++;
+	gTacticalStatus.ubAttackBusyCount++;
+	//SetUIBusy( pSoldier->ubID );
+
+	SoldierTakeDamage( pSoldier, 0, (UINT16) (20 + PreRandom( 20 )), (UINT16) ((6 + PreRandom( 6 ) * 1000)), TAKE_DAMAGE_ELECTRICITY, NOBODY, sGridNo, 0, TRUE );
+}
+
+
+BOOLEAN IsSoldierAnImpMercWithBothJa2AndJa25BattleSnds( SOLDIERTYPE *pSoldier )
+{
+	//Valid IMP mercs do not include the new PGC male 4.  That merc doesnt have battlesnds from ja2
+	if( pSoldier->ubProfile > BUBBA && pSoldier->ubProfile < LAST_IMP_MERC )
+	{
+		return( TRUE );
+	}
+
+	return( FALSE );
+}
+
 
 void SetSoldierAsUnderAiControl( SOLDIERTYPE *pSoldierToSet )
 {
