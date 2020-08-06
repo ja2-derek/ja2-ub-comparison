@@ -866,6 +866,8 @@ void ReStartingGame()
 	// Reset timer callbacks
 	gpCustomizableTimerCallback = NULL;
 
+	gubCheatLevel = STARTING_CHEAT_LEVEL;
+
 	//Reset the variable
 	fFirstTimeInMapScreen = TRUE;
 }
