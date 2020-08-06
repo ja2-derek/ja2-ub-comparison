@@ -4308,6 +4308,15 @@ Ja25: No miguel
 			case NPC_ACTION_TRIGGER_JERRY_CONVERSATION_WITH_PGC_2:
 				PerformJerryMiloAction302();
 				break;
+
+			case NPC_ACTION_BIGGENS_DETONATES_BOMBS:
+				HaveBiggensDetonatingExplosivesByTheMine();
+				break;
+
+			case NPC_ACTION_LEAVING_NPC_TALK_MENU:
+				HandleSpecificQuoteWhenLeavingNpcTalkMenu();
+				break;
+
 			case NPC_ACTION_RAUL_BLOWS_HIMSELF_UP:
 				HandleRaulBlowingHimselfUp();
 				break;
@@ -4579,7 +4588,25 @@ void DialogueMessageBoxCallBack( UINT8 ubExitValue )
 		case NPC_ACTION_ASK_ABOUT_PAYING_RPC_WITH_DAILY_SALARY:
 			if ( ubExitValue == MSG_BOX_RETURN_YES )
 			{
+				//if the player cannot afford to hire the npc
+				if( LaptopSaveInfo.iCurrentBalance < gMercProfiles[ubProfile].sSalary )
+				{
+					//Set a flag indicating that you cannot afford the merc
+					gfDisplayMsgBoxSayingCantAffordNPC = TRUE;
+				}
+				else
+				{
+					//First Deduct the money out of the players account
+					AddTransactionToPlayersBook( PAYMENT_TO_NPC, ubProfile, GetWorldTotalMin(), -gMercProfiles[ubProfile].sSalary );
+
 				TriggerNPCRecord( ubProfile, 1 );
+
+					//if the person is BIGGENS
+					if( ubProfile == BIGGENS )
+					{
+						SetFactTrue( FACT_BIGGENS_IS_ON_TEAM );
+					}
+				}
 			}
 			else
 			{
@@ -5160,6 +5187,124 @@ void DelayedSayingOfMercQuote( UINT32 uiParam )
 	}
 }
 
+void HaveBiggensDetonatingExplosivesByTheMine()
+{
+	SOLDIERTYPE *pSoldier = NULL;
+	UINT8	ubID=NOBODY;
+
+	pSoldier = FindSoldierByProfileID( BIGGENS, FALSE );
+	if( pSoldier != NULL )
+	{
+		ubID = pSoldier->ubID;
+	}
+	//Have Biggens Triger the bombs by the cave wall
+	SetOffBombsByFrequency( ubID, FIRST_MAP_PLACED_FREQUENCY + 1 );
+}
+
+
+void ReplaceMineEntranceGraphicWithCollapsedEntrance()
+{
+	UINT16									usTileIndex;
+	UINT16 usGridNo=12745;
+
+	//Make sure wed ont blow things up twice
+	if( gJa25SaveStruct.fBiggensUsedDetonator )
+		return;
+
+	//Remeber that biggens detonated the explosives
+	gJa25SaveStruct.fBiggensUsedDetonator = TRUE;
+
+	// Turn on permenant changes....
+	ApplyMapChangesToMapTempFile( TRUE );
+
+	// Remove it!
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIRSTOSTRUCT, (INT8)( 1 ), &usTileIndex );
+
+	AddStructToHead( usGridNo, usTileIndex );
+
+	//remove the exit grid from the world
+	RemoveExitGridFromWorld( 12422 );
+	RemoveExitGridFromWorld( 12423 );
+	AddRemoveExitGridToUnloadedMapTempFile( 12422, 13, MAP_ROW_I, 0 );
+	AddRemoveExitGridToUnloadedMapTempFile( 12423, 13, MAP_ROW_I, 0 );
+
+	gpWorldLevelData[ usGridNo ].uiFlags |= MAPELEMENT_REVEALED;
+
+
+	// Re-render the world!
+	gTacticalStatus.uiFlags |= NOHIDE_REDUNDENCY;
+
+	// FOR THE NEXT RENDER LOOP, RE-EVALUATE REDUNDENT TILES
+	InvalidateWorldRedundency( );
+	SetRenderFlags(RENDER_FLAG_FULL);
+
+	// Redo movement costs....
+	RecompileLocalMovementCostsFromRadius( usGridNo, 5 );
+
+
+
+
+	//
+	// Apply changes to the underground mine
+	//
+
+	//Remove the old tunnel pieces first
+
+	//First half of entrance
+	usGridNo = 13057;
+
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIRSTDECORATIONS, (INT8)( 1 ), &usTileIndex );
+
+	RemoveStructFromUnLoadedMapTempFile( usGridNo, usTileIndex, 13, MAP_ROW_I, 1 );
+
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIRSTDECORATIONS, (INT8)( 5 ), &usTileIndex );
+
+	//Apply changes
+	AddStructToUnLoadedMapTempFile( usGridNo, usTileIndex, 13, MAP_ROW_I, 1 );
+
+
+
+	// 2nd half of entrance
+	usGridNo = 12897;
+
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIRSTDECORATIONS, (INT8)( 2 ), &usTileIndex );
+
+	RemoveStructFromUnLoadedMapTempFile( usGridNo, usTileIndex, 13, MAP_ROW_I, 1 );
+
+	// Get index for it...
+	GetTileIndexFromTypeSubIndex( FIRSTDECORATIONS, (INT8)( 6 ), &usTileIndex );
+
+	//Apply changes
+	AddStructToUnLoadedMapTempFile( usGridNo, usTileIndex, 13, MAP_ROW_I, 1 );
+
+	//Remove the exit grid
+	AddRemoveExitGridToUnloadedMapTempFile( usGridNo, 13, MAP_ROW_I, 1 );
+
+	// Turn off permenant changes....
+	ApplyMapChangesToMapTempFile( FALSE );
+}
+
+
+// This function checks if we should replace the mine entrance graphic
+BOOLEAN IsMineEntranceInSectorI13AtThisGridNo( INT16 sGridNo )
+{
+	// First check current sector......
+	if( gWorldSectorX == 13 && gWorldSectorY == MAP_ROW_I && gbWorldSectorZ == 0 )
+	{
+		//if this is the right gridno
+		if( sGridNo == 12421 )
+		{
+			return( TRUE );
+		}
+	}
+
+	return( FALSE );
+}
+
 void HandleMercArrivesQuotesFromHeliCrashSequence()
 {
 	UINT32 uiCnt;
@@ -5228,11 +5373,31 @@ void DisplayJerryBreakingLaptopTransmitterPopup()
 }
 
 
+void HandleCannotAffordNpcMsgBox()
+{
+	CHAR16	zString[512];
+	if( !gfDisplayMsgBoxSayingCantAffordNPC )
+	{
+		return;
+	}
+
+	//display a msg box saying cant afford merc
+	swprintf( zString, zNewTacticalMessages[ TACT_MSG__CANNOT_AFFORD_MERC ], gMercProfiles[BIGGENS].zNickname );
+	DoMessageBox( MSG_BOX_BASIC_STYLE, zString, GAME_SCREEN, ( UINT8 )MSG_BOX_FLAG_OK, CantAffordMercCallback, NULL );
+
+	gfDisplayMsgBoxSayingCantAffordNPC = FALSE;
+}
+
+void CantAffordMercCallback( UINT8 ubExitValue )
+{
+	//Make the RPC say a quote
+	TriggerNPCRecord( BIGGENS, 0 );
+}
 void HaveNpcOpenUpDealerScreen( UINT8 ubProfileID )
 {
 	DeleteTalkingMenu( );
 
 	//Enter the shopkeeper interface
 	EnterShopKeeperInterfaceScreen( gTalkPanel.ubCharNum );
-}
+
 }

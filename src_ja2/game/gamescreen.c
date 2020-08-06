@@ -121,7 +121,8 @@ extern				BOOLEAN		gfFirstHeliRun;
 extern				BOOLEAN		gfRenderFullThisFrame;
 extern				BOOLEAN		gfFirstTimeInGameHeliCrash;
 
-
+extern				void HandleCannotAffordNpcMsgBox();
+extern				BOOLEAN	gfDisplayMsgBoxSayingCantAffordNPC;
 
 // The InitializeGame function is responsible for setting up all data and Gaming Engine
 // tasks which will run the game
@@ -637,6 +638,11 @@ UINT32  MainGameScreenHandle(void)
 		}
 	}
 
+	//if we are to display a mesg box about cant afford biggens
+	if( gfDisplayMsgBoxSayingCantAffordNPC )
+	{
+		HandleCannotAffordNpcMsgBox();
+	}
 
 
 	HandleHeliDrop( );

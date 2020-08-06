@@ -351,6 +351,7 @@ enum
 	NPC_ACTION_TRIGGER_MADLAB_32,
 	NPC_ACTION_TRIGGER_BREWSTER_BY_WARDEN_PROXIMITY, // 298
 
+	NPC_ACTION_BIGGENS_DETONATES_BOMBS = 305,
 
 	NPC_ACTION_RAUL_BLOWS_HIMSELF_UP=306,
 
@@ -372,6 +373,12 @@ extern UINT32 CalcMedicalCost( UINT8 ubId );
 
 BOOLEAN							gfInTalkPanel;
 
+void HaveBiggensDetonatingExplosivesByTheMine();
+
+// This function checks if we should replace the mine entrance graphic
+BOOLEAN IsMineEntranceInSectorI13AtThisGridNo( INT16 sGridNo );
+
+void ReplaceMineEntranceGraphicWithCollapsedEntrance();
 
 
 #endif

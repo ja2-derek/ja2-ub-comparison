@@ -275,6 +275,14 @@ void MercDailyUpdate()
 				//increment the number of days the mercs has been on the team
 				pSoldier->iTotalContractLength++;
 
+				//if the RPC is Biggens
+				if( pSoldier->ubProfile == BIGGENS )
+				{
+					//Biggens takes a 1 time fee, no daily rate
+					iMoneyOwedToMerc = 0;
+				}
+				else
+				{
 				//if the player owes the npc money, the balance field will be negative
 				if( gMercProfiles[ pSoldier->ubProfile ].iBalance < 0 )
 				{
@@ -285,6 +293,7 @@ void MercDailyUpdate()
 				{
 					//else the player only owes the salary
 					iMoneyOwedToMerc = sSalary;
+				}
 				}
 
 				//if the player owes money

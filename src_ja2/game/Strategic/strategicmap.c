@@ -3199,6 +3199,34 @@ BOOLEAN OKForSectorExit( INT8 bExitDirection, UINT16 usAdditionalData, UINT32 *p
 	}
 	*/
 		
+	//
+	// Check to see if we are in the I13 map were Biggens has explosives all around.  If we are, the player can
+	// tactically traverse and bypass the explosives.  Not good.  We need to avoid that.
+	//
+
+	//if we are in I13, and we are wanting to exit through an exit grid, and it is the right gridno
+	if( gWorldSectorX == 13 && gWorldSectorY == MAP_ROW_I && gbWorldSectorZ == 0 && 
+			bExitDirection == -1 &&
+			usAdditionalData == 12422 )
+	{
+		SOLDIERTYPE *pSoldier = NULL;
+
+		//Get biggens soldier ptr
+		pSoldier = FindSoldierByProfileID( BIGGENS, TRUE );
+
+		//if biggens hasnt been recruited yet
+		if( pSoldier == NULL )
+		{
+			//if the explosives are still there
+			if( !gJa25SaveStruct.fBiggensUsedDetonator )
+			{
+				//we shouldnt allow the user to tactically traverse out of here
+				return( FALSE );
+			}
+		}
+	}
+
+		
 	gfInvalidTraversal = FALSE;
 	gfLoneEPCAttemptingTraversal = FALSE;
 	gubLoneMercAttemptingToAbandonEPCs = 0;
