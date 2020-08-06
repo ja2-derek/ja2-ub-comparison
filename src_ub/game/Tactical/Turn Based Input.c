@@ -2691,7 +2691,8 @@ Ja25 No meanwhiles
 							}
 						}
 					}
-					else if( fAlt )
+					else 
+					if( fAlt )
 					{
 						if( !fDisableMapInterfaceDueToBattle && !( gTacticalStatus.uiFlags & ENGAGED_IN_CONV ) )
 						{

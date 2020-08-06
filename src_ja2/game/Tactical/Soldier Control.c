@@ -8209,7 +8209,7 @@ void EVENT_SoldierBeginBladeAttack( SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 
 	//UINT32 uiMercFlags;
 	UINT16 usSoldierIndex;
 	UINT8 ubTDirection;
-	BOOLEAN fChangeDirection = FALSE;
+//	BOOLEAN fChangeDirection = FALSE;
 	ROTTING_CORPSE *pCorpse;
 
 	// Increment the number of people busy doing stuff because of an attack

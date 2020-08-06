@@ -712,7 +712,7 @@ void ChooseWeaponForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bWeaponC
 void ChooseGrenadesForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bGrenades, INT8 bGrenadeClass, BOOLEAN fGrenadeLauncher )
 {
 	OBJECTTYPE Object;
-	INT16 sNumPoints;
+	UINT16 usNumPoints;
 	UINT16 usItem;
 	UINT8 ubBaseQuality;
 	UINT8 ubQualityVariation;
@@ -726,10 +726,10 @@ void ChooseGrenadesForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bGrena
 	UINT8 ubNumFlare = 0;
 	
 	//determine how many *points* the enemy will get to spend on grenades...
-	sNumPoints = bGrenades * bGrenadeClass;
+	usNumPoints = bGrenades * bGrenadeClass;
 
 	//no points, no grenades!
-	if( !sNumPoints )
+	if( !usNumPoints )
 		return;
 
 	// special mortar shell handling
@@ -750,34 +750,34 @@ void ChooseGrenadesForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bGrena
 
 
 	//now, purchase the grenades.
-	while( sNumPoints > 0 )
+	while( usNumPoints )
 	{
-		if( sNumPoints >= 20 )
+		if( usNumPoints >= 20 )
 		{ //Choose randomly between mustard and regular
 			if( Random( 2 ) && !fGrenadeLauncher )
-				ubNumMustard++, sNumPoints -= 10;
+				ubNumMustard++, usNumPoints -= 10;
 			else
-				ubNumReg++, sNumPoints -= 9;
+				ubNumReg++, usNumPoints -= 9;
 		}
 
-		if( sNumPoints >= 10 )
+		if( usNumPoints >= 10 )
 		{ //Choose randomly between any
 			switch( Random( 7 ) )
 			{
 				case 0:	if ( !fGrenadeLauncher )
 								{
-									ubNumMustard++;		sNumPoints -= 10;	break;
+									ubNumMustard++;		usNumPoints -= 10;	break;
 								}
 								// if grenade launcher, pick regular instead
-				case 1: ubNumReg++;				sNumPoints -= 9;		break;
+				case 1: ubNumReg++;				usNumPoints -= 9;		break;
 				case 2: if ( !fGrenadeLauncher ) 
 								{
-									ubNumMini++;			sNumPoints -= 7;		break;
+									ubNumMini++;			usNumPoints -= 7;		break;
 								}
 								// if grenade launcher, pick tear instead
-				case 3: ubNumTear++;			sNumPoints -= 6;		break;
-				case 4: ubNumStun++;			sNumPoints -= 5;		break;
-				case 5: ubNumSmoke++;			sNumPoints -= 4;		break;
+				case 3: ubNumTear++;			usNumPoints -= 6;		break;
+				case 4: ubNumStun++;			usNumPoints -= 5;		break;
+				case 5: ubNumSmoke++;			usNumPoints -= 4;		break;
 				case 6: if (!fGrenadeLauncher )
 						{
 							ubNumFlare++;			sNumPoints -= 3;		

@@ -6633,7 +6633,7 @@ void ItemPickupScrollDown( GUI_BUTTON *btn, INT32 reason )
 
 void ItemPickupAll( GUI_BUTTON *btn, INT32 reason )
 {
-	INT32 cnt;
+	UINT32 cnt;
 
 
 	if(reason & MSYS_CALLBACK_REASON_LBUTTON_DWN )
@@ -6723,7 +6723,7 @@ void ItemPickMenuMouseMoveCallback( MOUSE_REGION * pRegion, INT32 iReason )
 {
 	UINT32					uiItemPos;
 	ITEM_POOL				*pTempItemPool;
-	INT32						bPos;
+	INT8						bPos;
 	static					BOOLEAN	bChecked = FALSE;
 
 	uiItemPos = MSYS_GetRegionUserData( pRegion, 0 );
@@ -6731,7 +6731,7 @@ void ItemPickMenuMouseMoveCallback( MOUSE_REGION * pRegion, INT32 iReason )
 
 	if (iReason & MSYS_CALLBACK_REASON_MOVE)
 	{
-		bPos = ( uiItemPos + gItemPickupMenu.ubScrollAnchor );
+		bPos = ( (UINT8)uiItemPos + gItemPickupMenu.ubScrollAnchor );
 
 		if ( bPos < gItemPickupMenu.ubTotalItems )
 		{
@@ -6786,7 +6786,7 @@ void ItemPickupBackgroundClick( MOUSE_REGION * pRegion, INT32 iReason )
 
 void ItemPickMenuMouseClickCallback( MOUSE_REGION * pRegion, INT32 iReason )
 {
-	INT32				  	uiItemPos;
+	UINT32					uiItemPos;
 	UINT8						cnt;
 	BOOLEAN					fEnable = FALSE;
 

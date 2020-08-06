@@ -1138,7 +1138,6 @@ UINT32 UIHandleEndTurn( UI_EVENT *pUIEvent )
 	}
 	else
 	{
-		//if we are to use auto saves AND the player is ALLOWS to save
 		if( FileExists( "..\\AutoSave.pls" ) && CanGameBeSaved() )
 		{
 			//Save the game

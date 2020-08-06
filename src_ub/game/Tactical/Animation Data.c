@@ -782,8 +782,9 @@ STRUCTURE_FILE_REF	*InternalGetAnimationStructureRef( UINT16 usSoldierID, UINT16
 
 	// ATE: Alright - we all hate exception coding but ness here...
 	// return STANDING struct for these - which start standing but end prone
-	if ( ( usAnimState == FALLFORWARD_FROMHIT_STAND || usAnimState == GENERIC_HIT_STAND || usAnimState == STANDING_BURST_HIT ||
-			 usAnimState == FALLFORWARD_FROMHIT_CROUCH ) && !fUseAbsolute )
+	// CJC August 14 2002: added standing burst hit to this list
+	if ( ( usAnimState == FALLFORWARD_FROMHIT_STAND || usAnimState == GENERIC_HIT_STAND || 
+			 usAnimState == FALLFORWARD_FROMHIT_CROUCH || usAnimState == STANDING_BURST_HIT ) && !fUseAbsolute )
 	{
 		return( gAnimStructureDatabase[ MercPtrs[ usSoldierID ]->ubBodyType ][ S_STRUCT ].pStructureFileRef );
 	}

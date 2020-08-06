@@ -229,7 +229,7 @@ void	QueryTBLeftButton( UINT32 *puiNewEvent )
 	SOLDIERTYPE								 *pSoldier;
 	UINT16						usMapPos;
 	static BOOLEAN	fClickHoldIntercepted = FALSE;
-	BOOLEAN						fOnInterTile = FALSE;
+//	BOOLEAN						fOnInterTile = FALSE;
 	static BOOLEAN  fCanCheckForSpeechAdvance = FALSE;
 	static INT16		sMoveClickGridNo					= 0;
 
@@ -2658,7 +2658,7 @@ Ja25 No meanwhiles
 					}
 					break;
 				case 's':
-
+				{
 					if( fCtrl )
 					{
 						if( !fDisableMapInterfaceDueToBattle && !( gTacticalStatus.uiFlags & ENGAGED_IN_CONV ) )
@@ -2703,6 +2703,7 @@ Ja25 No meanwhiles
 						gfPlotNewMovement = TRUE;
 						HandleStanceChangeFromUIKeys( ANIM_STAND );
 					}
+				}
 					break;
 
 				case 't':
@@ -4425,7 +4426,7 @@ void HandleStanceChangeFromUIKeys( UINT8 ubAnimHeight )
 	// If we have multiple guys selected, make all change stance!
 	SOLDIERTYPE *		pSoldier;
 	INT32						cnt;
-	SOLDIERTYPE			*pFirstSoldier = NULL;
+//	SOLDIERTYPE			*pFirstSoldier = NULL;
 	
 	if ( gTacticalStatus.fAtLeastOneGuyOnMultiSelect )
 	{
@@ -4483,7 +4484,7 @@ void HandleStealthChangeFromUIKeys(  )
 	// If we have multiple guys selected, make all change stance!
 	SOLDIERTYPE *		pSoldier;
 	INT32						cnt;
-	SOLDIERTYPE			*pFirstSoldier = NULL;
+//	SOLDIERTYPE			*pFirstSoldier = NULL;
 	
 	if ( gTacticalStatus.fAtLeastOneGuyOnMultiSelect )
 	{

@@ -3199,7 +3199,7 @@ void HandleNPCTeamMemberDeath( SOLDIERTYPE *pSoldierOld )
 
 	if (pSoldierOld->bTeam == CIV_TEAM )
 	{
-		SOLDIERTYPE * pOther;
+//		SOLDIERTYPE * pOther;
 
     // ATE: Added string to player
     if ( bVisible != -1 && pSoldierOld->ubProfile != NO_PROFILE )
