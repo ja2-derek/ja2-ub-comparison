@@ -154,7 +154,7 @@ BOOLEAN fFirstClickInAssignmentScreenMask = FALSE;
 // render pre battle interface?
 extern BOOLEAN gfRenderPBInterface;
 extern BOOLEAN fMapScreenBottomDirty;
-extern SOLDIERTYPE *pMilitiaTrainerSoldier;
+//extern SOLDIERTYPE *pMilitiaTrainerSoldier;
 
 // in the mapscreen?
 extern BOOLEAN fInMapMode;
@@ -404,7 +404,7 @@ BOOLEAN HandleShowingOfMovementBox( void );
 void ReportTrainersTraineesWithoutPartners( void );
 BOOLEAN ValidTrainingPartnerInSameSectorOnAssignmentFound( SOLDIERTYPE *pSoldier, INT8 bTargetAssignment, INT8 bTargetStat );
 
-extern void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining( SOLDIERTYPE *pSoldier );
+//extern void AddSectorForSoldierToListOfSectorsThatCompletedMilitiaTraining( SOLDIERTYPE *pSoldier );
 
 extern BOOLEAN SectorIsImpassable( INT16 sSector );
 
@@ -907,8 +907,8 @@ BOOLEAN CanCharacterRepairButDoesntHaveARepairkit( SOLDIERTYPE *pSoldier )
 // check that character is alive, oklife, has repair skill, and equipment, etc.
 BOOLEAN CanCharacterRepair( SOLDIERTYPE *pSoldier )
 {
-	INT8 bPocket = 0;
-	BOOLEAN fToolKitFound = FALSE;
+//	INT8 bPocket = 0;
+//	BOOLEAN fToolKitFound = FALSE;
 
 	if ( !BasicCanCharacterAssignment( pSoldier, TRUE ) )
 	{
@@ -3868,6 +3868,7 @@ INT16 GetSoldierStudentPts( SOLDIERTYPE *pSoldier, INT8 bTrainStat, BOOLEAN fAtG
 	UINT32	uiCnt;
 	SOLDIERTYPE * pTrainer;
 
+	usBestMaxTrainerPts=0;
 	// assume training impossible for max pts
 	*pusMaxPts = 0;
 
