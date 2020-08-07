@@ -513,7 +513,7 @@ void ChangeSoldiersAssignment( SOLDIERTYPE *pSoldier, INT8 bAssignment )
 BOOLEAN BasicCanCharacterAssignment( SOLDIERTYPE * pSoldier, BOOLEAN fNotInCombat )
 {
 	// global conditions restricting all assignment changes
-	if ( SectorIsImpassable( (INT16) SECTOR( pSoldier->sSectorX, pSoldier->sSectorY ) ) )
+	if( SectorIsImpassable( (INT16) SECTOR( pSoldier->sSectorX, pSoldier->sSectorY ) ) && pSoldier->bSectorZ == 0 )
 	{
 		return( FALSE );
 	}	
@@ -4894,7 +4894,7 @@ BOOLEAN DisplayRepairMenu( SOLDIERTYPE *pSoldier )
 	// PLEASE NOTE: make sure any changes you do here are reflected in all 3 routines which must remain in synch:
 	// CreateDestroyMouseRegionForRepairMenu(), DisplayRepairMenu(), and HandleShadingOfLinesForRepairMenu().
 
-	if( pSoldier->bSectorZ == 0 )
+//JA25:	if( pSoldier->bSectorZ == 0 )
 	{
 		// run through list of vehicles and see if any in sector
 		for ( iVehicleIndex = 0; iVehicleIndex < ubNumberOfVehicles; iVehicleIndex++ )
@@ -7768,7 +7768,7 @@ void AssignmentMenuBtnCallback( MOUSE_REGION * pRegion, INT32 iReason )
 						pSoldier -> bOldAssignment = pSoldier -> bAssignment;
 						
 
-						if( pSoldier -> bSectorZ ==0 )
+					//Ja25: 	if( pSoldier -> bSectorZ ==0 )
 						{
 							fShowRepairMenu = FALSE;
 
