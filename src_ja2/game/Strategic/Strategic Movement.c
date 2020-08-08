@@ -4924,6 +4924,12 @@ BOOLEAN HandlePlayerGroupEnteringSectorToCheckForNPCsOfNote( GROUP *pGroup )
 	// get the strategic sector value
 	sStrategicSector = sSectorX + MAP_WORLD_X * sSectorY;
 
+	// ATE: if this is a custom map, return
+	if ( SectorInfo[ SECTOR( sSectorY, sSectorX ) ].fCustomSector )
+	{
+		return( FALSE );
+	}
+
 	// skip towns/pseudo-towns (anything that shows up on the map as being special)
 	if( StrategicMap[ sStrategicSector ].bNameId != BLANK_SECTOR )
 	{

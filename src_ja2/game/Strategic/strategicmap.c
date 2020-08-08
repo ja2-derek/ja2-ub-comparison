@@ -1447,6 +1447,32 @@ BOOLEAN EnterSector( INT16 sSectorX, INT16 sSectorY , INT8 bSectorZ )
 		SetSectorFlag( sSectorX, sSectorY, bSectorZ, SF_ALREADY_VISITED );
 	}
 
+	{
+		BOOLEAN fOldMap = TRUE;
+
+		if( !bSectorZ )
+		{
+			if ( SectorInfo[ ( SECTOR( sSectorX , sSectorY ) ) ].fCustomSector )
+			{
+				fOldMap = FALSE;
+			}
+		}
+		else
+		{
+			// Find sector info and see if this is a custom map
+			UNDERGROUND_SECTORINFO *pSector=NULL;
+
+			pSector = FindUnderGroundSector( (INT16)sSectorX, (INT16)sSectorY, bSectorZ );
+
+			if ( pSector )
+			{
+				if ( pSector->fCustomSector )
+				{
+					fOldMap = FALSE;
+				}
+			}
+		}
+
 
 	GetMapFileName( sSectorX, sSectorY, bSectorZ,  bFilename, TRUE, TRUE );
 
