@@ -873,7 +873,8 @@ BOOLEAN TurnSoldierIntoCorpse( SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc, BOOLE
 	  {
 		  pObj = &( pSoldier->inv[ cnt ] );
 
-		  if ( pObj->usItem != NOTHING )
+			//make sure it is an item, AND its not a bloodcat
+		  if ( pObj->usItem != NOTHING && pSoldier->ubBodyType != BLOODCAT )
 		  {
 			  // Check if it's supposed to be dropped
 			  if ( !( pObj->fFlags & OBJECT_UNDROPPABLE ) || pSoldier->bTeam == gbPlayerNum )
@@ -882,6 +883,14 @@ BOOLEAN TurnSoldierIntoCorpse( SOLDIERTYPE *pSoldier, BOOLEAN fRemoveMerc, BOOLE
 				  if ( !(Item[ pObj->usItem ].fFlags & ITEM_DEFAULT_UNDROPPABLE) )
 				  {
 					  ReduceAmmoDroppedByNonPlayerSoldiers( pSoldier, cnt );
+
+						//if this soldier was an enemy
+						if( pSoldier->bTeam == ENEMY_TEAM )
+						{
+							//add a flag to the item so when all enemies are killed, we can run through and reveal all the enemies items
+							usItemFlags |= WORLD_ITEM_DROPPED_FROM_ENEMY;
+						}
+
 					  AddItemToPool( pSoldier->sGridNo, pObj, bVisible , pSoldier->bLevel, usItemFlags, -1 );
 				  }
 			  }

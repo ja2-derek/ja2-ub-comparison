@@ -6659,7 +6659,14 @@ Ja25: No meanwhiles
 						bVisible = 1;
 					}
 
-					AddItemToPool( pSoldier->sGridNo, &(pSoldier->inv[ HANDPOS ]), bVisible, pSoldier->bLevel, 0, -1 );
+					//if this soldier was an enemy
+					else if( pSoldier->bTeam == ENEMY_TEAM )
+					{
+							//add a flag to the item so when all enemies are killed, we can run through and reveal all the enemies items
+							usItemFlags |= WORLD_ITEM_DROPPED_FROM_ENEMY;
+					}
+
+					AddItemToPool( pSoldier->sGridNo, &(pSoldier->inv[ HANDPOS ]), bVisible, pSoldier->bLevel, usItemFlags, -1 );
 					DeleteObj( &(pSoldier->inv[HANDPOS]) );
 				}
 			}
