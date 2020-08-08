@@ -2095,11 +2095,13 @@ INT8 GetAPsToStealItem( SOLDIERTYPE *pSoldier, INT16 usMapPos )
 
 	sAPCost = PlotPath( pSoldier, usMapPos, NO_COPYROUTE, NO_PLOT, TEMPORARY, (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints );
 
-	// If point cost is zero, return 0
-	if ( sAPCost != 0 )
-	{
 		// ADD APS TO PICKUP
 		sAPCost += AP_STEAL_ITEM;
+
+	// CJC August 13 2002: added cost to stand into equation
+	if (!(PTR_STANDING))
+	{
+		sAPCost += GetAPsToChangeStance( pSoldier, ANIM_STAND );
 	}
 
 	return( (INT8)sAPCost );
