@@ -2340,11 +2340,11 @@ UINT8 SoldierDifficultyLevel( SOLDIERTYPE * pSoldier )
 
 		// hard code militia;
 		case SOLDIER_CLASS_GREEN_MILITIA:
-			bDifficulty = 0;
+			bDifficulty = 2;
 			break;
 
 		case SOLDIER_CLASS_REG_MILITIA:
-			bDifficulty = 2;
+			bDifficulty = 3;
 			break;
 
 		case SOLDIER_CLASS_ELITE_MILITIA:
