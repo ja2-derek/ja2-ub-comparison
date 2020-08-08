@@ -178,7 +178,7 @@ Ja25:  New Towns, no loyalty
 			if ((bTownId >= FIRST_TOWN) && (bTownId < NUM_TOWNS))
 			{
 				// don't do these for takeovers of Omerta sectors at the beginning of the game
-				if ((bTownId != OMERTA) || (GetWorldDay() != 1))
+//Ja25:  New towns				if ((bTownId != OMERTA) || (GetWorldDay() != 1))
 				{
 					ubSectorID = (UINT8)SECTOR( sMapX, sMapY );
 					if( !bMapZ && ubSectorID != SEC_J9 && ubSectorID != SEC_K4 )
