@@ -1079,7 +1079,7 @@ void HourlyCamouflageUpdate( void )
 			// if the merc has non-zero camo, degrade it by 1%
 			if( ( pSoldier->bCamo > 0) && ( !( HAS_SKILL_TRAIT( pSoldier, CAMOUFLAGED) ) ) )
 			{
-				pSoldier->bCamo -= 2;
+				pSoldier->bCamo -= 3;
 				if (pSoldier->bCamo <= 0)
 				{
 					pSoldier->bCamo = 0;
