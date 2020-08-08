@@ -1007,6 +1007,10 @@ void ChangeCharacterListSortMethod( INT32 iValue );
 void MapscreenMarkButtonsDirty();
 
 
+void HandleWhenPlayerHasNoMercsAndNoLaptop();
+//ppp
+
+
 extern BOOLEAN CanRedistributeMilitiaInSector( INT16 sClickedSectorX, INT16 sClickedSectorY, INT8 bClickedTownId );
 
 extern INT32 GetNumberOfMercsInUpdateList( void );
@@ -4090,6 +4094,9 @@ Ja25 No meanwhiles
 
 	//Handle the strategic AI
 	JA25_HandleUpdateOfStrategicAi();
+
+	//Should the msg box come up telling the user that they lost?
+	//AA HandleWhenPlayerHasNoMercsAndNoLaptop();
 
 	return( MAP_SCREEN );
 }
@@ -12705,5 +12712,24 @@ void MapscreenMarkButtonsDirty()
 			// don't redraw the town button, it would wipe out a chunk of the attribute menu
 			UnMarkButtonDirty( giMapBorderButtons[ MAP_BORDER_TOWN_BTN ] );
 		}
+	}
+}
+
+void HandleWhenPlayerHasNoMercsAndNoLaptop()
+{
+	const UINT8	ubNumLoopsToDisplay=50;
+
+	if( gJa25SaveStruct.ubDisplayPlayerLostMsgBox == 0 || 
+			gJa25SaveStruct.ubDisplayPlayerLostMsgBox >= ubNumLoopsToDisplay ||
+			guiCurrentScreen == MSG_BOX_SCREEN )
+	{
+		return;
+	}
+
+	gJa25SaveStruct.ubDisplayPlayerLostMsgBox += 1;
+
+	if( gJa25SaveStruct.ubDisplayPlayerLostMsgBox == ubNumLoopsToDisplay )
+	{
+		DoMapMessageBox( MSG_BOX_BASIC_STYLE, zNewTacticalMessages[ TCTL_MSG__PLAYER_LOST_SHOULD_RESTART ], MAP_SCREEN, MSG_BOX_FLAG_OK, NULL );
 	}
 }

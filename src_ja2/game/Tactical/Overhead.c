@@ -5978,6 +5978,7 @@ BOOLEAN CheckForEndOfCombatMode( BOOLEAN fIncrementTurnsNotSeen )
 void DeathNoMessageTimerCallback( void )
 {
   CheckAndHandleUnloadingOfCurrentWorld();
+HandleDisplayingOfPlayerLostDialogue();
 }
 
 
@@ -7893,6 +7894,9 @@ void EndBattleWithUnconsciousGuysCallback( UINT8 bExitValue )
 {
 	// Enter mapscreen.....
 	CheckAndHandleUnloadingOfCurrentWorld();
+
+	HandleDisplayingOfPlayerLostDialogue();
+
 }
 
 
@@ -8286,4 +8290,32 @@ BOOLEAN CanMsgBoxForPlayerToBeNotifiedOfSomeoneElseInSector()
 
 	return( FALSE );
 }
+
+INT8 NumMercsOnPlayerTeam( )
+{
+	INT32					cnt;
+	SOLDIERTYPE   *pSoldier;
+	UINT8         ubCount = 0;
+
+	cnt = gTacticalStatus.Team[ OUR_TEAM ].bFirstID;
+
+  // look for all mercs on the same team, 
+  for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; cnt++,pSoldier++)
+	{       
+		if( pSoldier->bActive && pSoldier->bLife > 0 )
+		{
+			ubCount++;
+		}
+	}
+
+	return( ubCount );
+}
+
+void HandleDisplayingOfPlayerLostDialogue( void )
+{
+	//if the laptop transmitter is broken, and the player doesnt have any other team members
+	if( gubQuest[ QUEST_FIX_LAPTOP ] != QUESTDONE &&  NumMercsOnPlayerTeam( ) == 0 )
+	{
+		gJa25SaveStruct.ubDisplayPlayerLostMsgBox	= 1;	
+	}
 }

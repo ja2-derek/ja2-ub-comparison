@@ -360,6 +360,7 @@ void HandleThePlayerBeNotifiedOfSomeoneElseInSector();
 void SetMsgBoxForPlayerBeNotifiedOfSomeoneElseInSector();
 
 void HandleDisplayingOfPlayerLostDialogue( void );
+INT8	NumMercsOnPlayerTeam( );
 
 
 #endif

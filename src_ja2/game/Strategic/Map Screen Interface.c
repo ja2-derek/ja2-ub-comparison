@@ -5570,6 +5570,9 @@ Ja25:	No san mona
 
 		// put up the message informing the player of the event 
 		DoScreenIndependantMessageBox( sStringB, MSG_BOX_FLAG_OK, MapScreenDefaultOkBoxCallback );
+
+		HandleDisplayingOfPlayerLostDialogue( );
+
 		return( TRUE );
 	}
 	
