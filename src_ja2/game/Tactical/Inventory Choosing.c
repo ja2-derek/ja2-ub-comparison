@@ -235,8 +235,11 @@ void GenerateRandomEquipment( SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8
 			bHelmetClass = bRating;
 			// no leggings
 
+/*
+JA25: make sure that there are no enemies with knives added
 			if( Random( 2 ) )
 				bKnifeClass = bRating;
+*/
 
 			bAmmoClips = (INT8)(1 + Random( 2 ));
 
@@ -306,8 +309,11 @@ void GenerateRandomEquipment( SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8
 				}
 			}
 
+/*
+JA25: make sure that there are no enemies with knives added
 			if( Random( 2 ) )
 				bKnifeClass = bRating;
+*/
 
 			if( ( bRating > MIN_EQUIPMENT_CLASS ) && bRating < MAX_EQUIPMENT_CLASS )
 			{
@@ -393,8 +399,11 @@ void GenerateRandomEquipment( SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass, INT8
 				bAttachClass = bRating;
 			}
 
+/*
+JA25: make sure that there are no enemies with knives added
 			if( Random( 2 ) )
 				bKnifeClass = bRating;
+*/
 
 			if( ( bRating > MIN_EQUIPMENT_CLASS ) && bRating < MAX_EQUIPMENT_CLASS )
 			{
@@ -1341,6 +1350,11 @@ void ChooseKitsForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bKitClass 
 
 void ChooseMiscGearForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bMiscClass )
 {
+	//
+	// Ja25: No misc. items to be given to soldiers!!
+	// 
+	return;
+/*
 	UINT16 i;
 	INVTYPE *pItem;
 	UINT16 usRandom;
@@ -1414,6 +1428,7 @@ void ChooseMiscGearForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bMiscC
 			i++;
 		}
 	}
+*/
 }
 
 
