@@ -459,6 +459,12 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 			return;	// no grenades, can't fire the GLAUNCHER
 		}
 		ubSafetyMargin = Explosive[ Item[ pSoldier->inv[ bPayloadPocket ].usItem ].ubClassIndex ].ubRadius;
+		if ( bPayloadPocket == GL_FLARE )
+		{
+			// light isn't quite so nasty as explosives and the radius is high so reduce this...
+			ubSafetyMargin /= 2;
+		}
+
 		usGrenade = pSoldier->inv[ bPayloadPocket ].usItem;
 	}
 	else if (usInHand == ROCKET_LAUNCHER)
@@ -482,13 +488,15 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 	{
 		// else it's a plain old grenade, now in his hand
 		bPayloadPocket = HANDPOS;
-		ubSafetyMargin = Explosive[ Item[ pSoldier->inv[ bPayloadPocket ].usItem ].ubClassIndex ].ubRadius;
 		usGrenade = pSoldier->inv[ bPayloadPocket ].usItem;
 
-		if (usGrenade == BREAK_LIGHT)
 		{
-			// JA2Gold: light isn't as nasty as explosives
-			ubSafetyMargin /= 2;
+			ubSafetyMargin = Explosive[ Item[ usGrenade ].ubClassIndex ].ubRadius;
+			if ( usGrenade == BREAK_LIGHT || usGrenade == GL_FLARE )
+			{
+				// light isn't quite so nasty as explosives and the radius is high so reduce this...
+				ubSafetyMargin /= 2;
+			}
 		}
 	}
 
@@ -678,6 +686,7 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 	// this is try to minimize enemies wasting their (limited) toss attacks, with the exception of break lights
 	if (usGrenade != BREAK_LIGHT)
 	{
+		// this is try to minimize enemies wasting their (limited) toss attacks:
 		switch( ubDiff )
 		{
 			case 0:
@@ -1604,8 +1613,9 @@ INT32 EstimateThrowDamage( SOLDIERTYPE *pSoldier, UINT8 ubItemPos, SOLDIERTYPE *
 			break;
 	}
 
-	// JA2Gold: added
-	if ( pSoldier->inv[ubItemPos].usItem == BREAK_LIGHT )
+	// Dave: put in value here based on light level in target tile
+	//	bLightLevel = LightTrueLevel( sGridNo, pOpponent->bLevel);
+	if ( pSoldier->inv[ubItemPos].usItem == GL_FLARE || pSoldier->inv[ubItemPos].usItem == BREAK_LIGHT )
 	{
 		return( 5 * ( LightTrueLevel( pOpponent->sGridNo, pOpponent->bLevel ) - NORMAL_LIGHTLEVEL_DAY ) );
 	}
