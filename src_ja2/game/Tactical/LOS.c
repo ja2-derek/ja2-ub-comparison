@@ -1206,7 +1206,8 @@ INT32 LineOfSightTest( FLOAT dStartX, FLOAT dStartY, FLOAT dStartZ, FLOAT dEndX,
 														iStructureHeight = StructureHeight( pStructure );
 														fResolveHit = ( iCurrCubesAboveLevelZ != (iStructureHeight - 1) );
 													}
-													else if ( (iLoop >= (iDistance - CLOSE_TO_FIRER) ) && (iCurrCubesAboveLevelZ <= iEndCubesZ) && bAware )
+													// add a small fractional value to account for rounding error in long LOS calls
+													else if ( (iLoop + iDistance / 50 >= (iDistance - CLOSE_TO_FIRER) ) && (iCurrCubesAboveLevelZ <= iEndCubesZ) && bAware )
 													{
 														// if we are in the same vertical cube as our destination,
 														// and this is the height of the structure, and we are aware
@@ -2651,7 +2652,8 @@ UINT8 CalcChanceToGetThrough( BULLET * pBullet )
 					{
 						guiLocalStructureCTH[iNumLocalStructures] = uiChanceOfHit;
 					}
-					else if ( (pBullet->iDistanceLimit - pBullet->iLoop <= CLOSE_TO_FIRER) && (iCurrCubesAboveLevelZ <= pBullet->bEndCubesAboveLevelZ) && iCurrCubesAboveLevelZ == (StructureHeight( pStructure ) - 1) )
+					//small adjustment to deal with fractional loss at distance
+					else if ( (pBullet->iLoop + pBullet->iDistanceLimit / 50 >= pBullet->iDistanceLimit - CLOSE_TO_FIRER) && (iCurrCubesAboveLevelZ <= pBullet->bEndCubesAboveLevelZ) && iCurrCubesAboveLevelZ == (StructureHeight( pStructure ) - 1) )
 					{
 						guiLocalStructureCTH[iNumLocalStructures] = uiChanceOfHit;
 					}
@@ -3805,7 +3807,7 @@ void MoveBullet( INT32 iBullet )
 							iNumLocalStructures++;
 						}
 					}
-					else if ( (pBullet->iDistanceLimit - pBullet->iLoop <= CLOSE_TO_FIRER) && (iCurrCubesAboveLevelZ <= pBullet->bEndCubesAboveLevelZ) && iCurrCubesAboveLevelZ == (StructureHeight( pStructure ) - 1) )
+					else if ( (pBullet->iLoop + pBullet->iDistanceLimit / 50 >= pBullet->iDistanceLimit - CLOSE_TO_FIRER) && (iCurrCubesAboveLevelZ <= pBullet->bEndCubesAboveLevelZ) && iCurrCubesAboveLevelZ == (StructureHeight( pStructure ) - 1) )
 					{
 						// near target and at top of structure and at same level as bullet's end
 						// requires roll
