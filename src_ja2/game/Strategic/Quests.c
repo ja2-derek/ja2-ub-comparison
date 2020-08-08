@@ -1422,6 +1422,21 @@ void CheckForQuests( UINT32 uiDay )
 #endif
 
 
+
+  // -------------------------------------------------------------------------------
+	// QUEST 23 : Detroy missles
+	// -------------------------------------------------------------------------------
+	// The game always starts with destrouy missles quest, so turn it on if it hasn't
+	// already started
+	if( gubQuest[ QUEST_DESTROY_MISSLES ] == QUESTNOTSTARTED )
+	{
+		StartQuest( QUEST_DESTROY_MISSLES, -1, -1 );
+#ifdef TESTQUESTS
+		ScreenMsg( MSG_FONT_RED, MSG_DEBUG, L"Started DESTORY MISSLES quest");
+#endif
+	}
+
+
 /*
 Ja25: No deliver letter quest, dont start it
   // -------------------------------------------------------------------------------
