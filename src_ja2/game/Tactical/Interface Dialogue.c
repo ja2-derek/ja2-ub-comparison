@@ -5152,6 +5152,15 @@ void PerformJerryMiloAction302()
 	DeleteTalkingMenu();
 }
 
+void DelayedMercQuote( UINT16 usProfileID, UINT32 uiQuoteNum, UINT32 uiTimeTillQuoteSaid )
+{
+	UINT32 uiParam;
+
+	uiParam = usProfileID + ( uiQuoteNum << 16 );
+
+	AddStrategicEventUsingSeconds( EVENT_SAY_DELAYED_MERC_QUOTE, uiTimeTillQuoteSaid, uiParam );
+}
+
 void DelayedSayingOfMercQuote( UINT32 uiParam )
 {
 	SOLDIERTYPE *pSoldier=NULL;

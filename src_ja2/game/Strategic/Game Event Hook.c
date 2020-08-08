@@ -416,6 +416,10 @@ Ja25 No strategic ai
 			ShouldEnemiesBeAddedToInitialSector();
 			break;
 
+		case EVENT_SAY_DELAYED_MERC_QUOTE:
+			DelayedSayingOfMercQuote( pEvent->uiParam );
+			break;
+
 		case EVENT_DELAY_SOMEONE_IN_SECTOR_MSGBOX:
 			SetMsgBoxForPlayerBeNotifiedOfSomeoneElseInSector();
 			break;

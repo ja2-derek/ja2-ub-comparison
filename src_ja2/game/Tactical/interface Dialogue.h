@@ -376,6 +376,8 @@ extern UINT32 CalcMedicalCost( UINT8 ubId );
 
 BOOLEAN							gfInTalkPanel;
 
+void DelayedSayingOfMercQuote( UINT32 uiParam );
+void DelayedMercQuote( UINT16 usProfileID, UINT32 uiQuoteNum, UINT32 uiTimeTillQuoteSaid );
 void HaveBiggensDetonatingExplosivesByTheMine();
 
 // This function checks if we should replace the mine entrance graphic
