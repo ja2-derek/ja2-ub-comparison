@@ -438,8 +438,10 @@ Ja25 no creatures
 		}
 	}
 
-	ubNumStationaryEnemies = NumStationaryEnemiesInSector( gubPBSectorX, gubPBSectorY );
-	ubNumMobileEnemies = NumMobileEnemiesInSector( gubPBSectorX, gubPBSectorY );
+	//Ja25: no garrisons	
+	//ubNumStationaryEnemies = NumStationaryEnemiesInSector( gubPBSectorX, gubPBSectorY );
+	ubNumStationaryEnemies = 0;
+	ubNumMobileEnemies = NumMobileEnemiesInSector( gubPBSectorX, gubPBSectorY, gubPBSectorZ );
 	ubNumMercs = PlayerMercsInSector( gubPBSectorX, gubPBSectorY, gubPBSectorZ );
 
 	if( gfPersistantPBI )
@@ -452,6 +454,9 @@ Ja25 no creatures
 		{
 			if( gubEnemyEncounterCode != BLOODCAT_AMBUSH_CODE && gubEnemyEncounterCode != ENTERING_BLOODCAT_LAIR_CODE )
 			{
+				gubEnemyEncounterCode = ENTERING_ENEMY_SECTOR_CODE;
+
+				/* JA25
 				if( ubNumStationaryEnemies )
 				{
 					gubEnemyEncounterCode = ENTERING_ENEMY_SECTOR_CODE;
@@ -498,6 +503,7 @@ Ja25 no creatures
 						}
 					}
 				}
+				*/
 			}
 		}
 		else
