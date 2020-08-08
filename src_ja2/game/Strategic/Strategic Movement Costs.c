@@ -7,10 +7,18 @@
 	#include "Strategic Movement.h"
 #endif
 
+#include "Summary Info.h"
 #include "Ja25 Strategic Ai.h"
 
 void MakeBadSectorListFromMapsOnHardDrive( BOOLEAN fDisplayMessages );
 void UpdateCustomMapMovementCosts();
+extern UNDERGROUND_SECTORINFO* NewUndergroundNode( UINT8 ubSectorX, UINT8 ubSectorY, UINT8 ubSectorZ, BOOLEAN fCampaignSector );
+extern BOOLEAN gfTriedToLoadOldMapVersion;
+extern void	SetNumberOfJa25BloodCatsInSector( INT32 iSectorID, INT8 bNumBloodCats, INT8 bBloodCatPlacements  );
+
+extern BOOLEAN EvaluateWorldEx( UINT8 *pSector, UINT8 ubLevel, SUMMARYFILE *pSummary, BOOLEAN fWriteSummaryFile, BOOLEAN fExtractRadarMap, HIMAGE hImage );
+
+
 UINT8 gubEncryptionArray3[ BASE_NUMBER_OF_ROTATION_ARRAYS * 3 ][ NEW_ROTATION_ARRAY_SIZE ] =
 {
     {

@@ -58,7 +58,8 @@ extern BOOLEAN gfGamePaused;
 
 extern UNDERGROUND_SECTORINFO* FindUnderGroundSector( INT16 sMapX, INT16 sMapY, UINT8 bMapZ );
 extern InitVehicles( );
-
+extern void MakeBadSectorListFromMapsOnHardDrive( BOOLEAN fDisplayMessages );
+extern ResetIMPSkillsList( );
 
 UINT8			gubScreenCount=0;
 

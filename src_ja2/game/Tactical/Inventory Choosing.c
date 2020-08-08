@@ -1,5 +1,6 @@
 #ifdef PRECOMPILEDHEADERS
 	#include "Tactical All.h"
+	#include "PreBattle Interface.h"
 #else
 	#include <memory.h>
 	#include "Inventory Choosing.h"

@@ -5299,19 +5299,6 @@ void GetMapKeyboardInput( UINT32 *puiNewEvent )
 					
 
 				case 'b':
-/*
-						// CTRL-B: make player's perception of all sectors correct!
-						if( ( fCtrl )&&( CHEATER_CHEAT_LEVEL( ) ) )
-						{
-							for ( sMapX = 1; sMapX <= 16; sMapX++ )
-							{
-								for ( sMapY = 1; sMapY <= 16; sMapY++ )
-								{
-									MakePlayerPerceptionOfSectorControlCorrect( sMapX, sMapY, 0 );
-								}
-							}
-						}
-*/
 					break;
 
 				case 'c':
@@ -7724,6 +7711,7 @@ void TeamListDestinationRegionBtnCallBack(MOUSE_REGION *pRegion, INT32 iReason )
 	INT32 iValue = 0;
 
 
+	//Ja25:  If the sector inventory is open, DONT allow it to disappear
 	if( fLockOutMapScreenInterface || gfPreBattleInterfaceActive || fShowMapInventoryPool )
 	{
 		return;
@@ -8624,7 +8612,7 @@ void ContractRegionMvtCallback( MOUSE_REGION *pRegion, INT32 iReason )
 void HandleShadingOfLinesForContractMenu( void )
 {
 	SOLDIERTYPE *pSoldier;
-	MERCPROFILESTRUCT *pProfile;
+//	MERCPROFILESTRUCT *pProfile;
 
 
 	if( ( fShowContractMenu == FALSE ) || ( ghContractBox == - 1 ) )

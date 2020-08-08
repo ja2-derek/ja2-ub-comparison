@@ -191,7 +191,7 @@ Ja25:  no garrison, should never get here
 UINT8 NumMobileEnemiesInSector( INT16 sSectorX, INT16 sSectorY, UINT8 ubSectorZ )
 {
 	GROUP *pGroup;
-	SECTORINFO *pSector;
+//	SECTORINFO *pSector;
 	UINT8 ubNumTroops;
 	Assert( sSectorX >= 1 && sSectorX <= 16 );
 	Assert( sSectorY >= 1 && sSectorY <= 16 );
@@ -277,7 +277,7 @@ void GetNumberOfEnemiesInSector( INT16 sSectorX, INT16 sSectorY, UINT8 *pubNumAd
 void EndTacticalBattleForEnemy()
 {
 	GROUP *pGroup;
-	INT32 i, iNumMilitia = 0, iNumEnemies = 0;
+//	INT32 iNumMilitia = 0, iNumEnemies = 0;
 
 	//Clear enemies in battle for all stationary groups in the sector.
 	if( gbWorldSectorZ > 0 )
@@ -1048,6 +1048,8 @@ void AddEnemiesToBattle( GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ub
 	UINT8 ubCurrSlot;
 	UINT8 ubTotalSoldiers;
 	UINT8 bDesiredDirection=0;
+	UINT8	ubCnt;
+
 	switch( ubStrategicInsertionCode )
 	{
 		case INSERTION_CODE_NORTH:	bDesiredDirection = SOUTHEAST;										break;

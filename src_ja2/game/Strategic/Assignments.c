@@ -347,6 +347,10 @@ void AssignmentScreenMaskBtnCallback(MOUSE_REGION * pRegion, INT32 iReason );
 BOOLEAN fGlowContractRegion = FALSE;
 
 
+void HaveMercSayWhyHeWontLeave( SOLDIERTYPE *pSoldier );
+BOOLEAN CanMercBeAllowedToLeaveTeam( SOLDIERTYPE *pSoldier );
+
+
 void HandleShadingOfLinesForSquadMenu( void );
 void HandleShadingOfLinesForVehicleMenu( void );
 void HandleShadingOfLinesForRepairMenu( void );
