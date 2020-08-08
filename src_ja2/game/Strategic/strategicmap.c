@@ -305,7 +305,13 @@ INT16 PickGridNoToWalkIn( SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection, UIN
 
 void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ );
 void HandlePotentialMoraleHitForSkimmingSectors( GROUP *pGroup );
+void HandlePlayerQuotesWhenEnteringFirstTunnelSector();
 void AddExitGridForFanToPowerGenSector();
+void HandleSectorSpecificUnLoadingOfMap( INT16 sMapX, INT16 sMapY, INT8 bMapZ );
+void MakeAllTeamMembersCrouchedThenStand();
+void HandleMovingTheEnemiesToBeNearPlayerWhenEnteringComplexMap();
+void HandleFortifiedDoor();
+void CreateAndAddMoneyObjectToGround( INT16 sGridNo, INT32 iEasyAmount, INT32 iNormalAmount, INT32 iHardAmount );
 void HandleMovingEnemiesCloseToEntranceInFirstTunnelMap();
 void HandleMovingEnemiesCloseToEntranceInSecondTunnelMap();
 void HandleFirstPartOfTunnelFanSound();
@@ -1200,6 +1206,7 @@ Ja25 no creatures or militia
 
 	ScreenMsg( FONT_YELLOW, MSG_DEBUG, L"Current Time is: %d", GetWorldTotalMin() );
 
+	HandleSectorSpecificModificatioToMap( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE );
 	AllTeamsLookForAll( TRUE );
 }
 
@@ -5131,6 +5138,288 @@ void HandleSectorSpecificUnLoadingOfMap( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 		}
 	}
 }
+
+
+void HandleSectorSpecificModificatioToMap( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fLoadingSavedGame )
+{
+//	SOLDIERTYPE *pSoldier=NULL;
+//	INT32				iCash=0;
+
+	//if we are loading a game, dont do this yet ( it will be done after everything is loaded
+	if( gTacticalStatus.uiFlags & LOADING_SAVED_GAME )
+	{
+		return;
+	}
+
+	SetTileAnimCounter( TILE_ANIM__NORMAL_SPEED );
+
+	//if we are being called from LoadSavedGame()
+	if( fLoadingSavedGame )
+	{
+		//
+		// only do certain modifications
+		//
+
+		//if this is the power gen map
+		if( sMapX == 13 && sMapY == MAP_ROW_J && bMapZ == 0 )
+		{
+			HandlePowerGenFanSoundModification();
+		}
+		else	if( sMapX == 14 && sMapY == MAP_ROW_J && bMapZ == 1 )
+		{
+			HandleFirstPartOfTunnelFanSound();
+		}
+
+		//if this is the Final Sector of the complex
+		else if( sMapX == 15 && sMapY == MAP_ROW_L && bMapZ == 3 )
+		{
+			HandleOpenControlPanelToRevealSwitchInMorrisArea();
+		}
+	}
+	else
+	{
+		//if this is the first map
+		if( sMapX == 7 && sMapY == MAP_ROW_H && bMapZ == 0 )
+		{
+		}
+
+		//if this is the guardpost
+		else if( sMapX == 9 && sMapY == MAP_ROW_H && bMapZ == 0 )
+		{
+			//if we havent added the money to the sector before
+			if( !IsJa25GeneralFlagSet( JA_GF__PICKED_UP_MONEY_IN_GUARD_POST ) )
+			{
+				SetJa25GeneralFlag( JA_GF__PICKED_UP_MONEY_IN_GUARD_POST );
+
+				// Add some money to the location
+				CreateAndAddMoneyObjectToGround( 9026, 15000, 10000, 7000 );
+			}
+		}
+
+		//if this is the First sector of the town
+		else if( sMapX == 10 && sMapY == MAP_ROW_I && bMapZ == 0 )
+		{
+			//if we havent added the money to the sector before
+			if( !IsJa25GeneralFlagSet( JA_GF__PICKED_UP_MONEY_IN_FIRST_TOWN ) )
+			{
+				SetJa25GeneralFlag( JA_GF__PICKED_UP_MONEY_IN_FIRST_TOWN );
+
+				// Add some money to the location
+				CreateAndAddMoneyObjectToGround( 11894, 8000, 4000, 3000 );
+				CreateAndAddMoneyObjectToGround( 7906,  12000, 6000, 5000 );
+			}
+		}
+
+		//if this is the power gen map
+		else if( sMapX == 13 && sMapY == MAP_ROW_J && bMapZ == 0 )
+		{
+			HandlePowerGenFanSoundModification();
+		}
+
+		//else if this is the 1st part of tunnel
+		else	if( sMapX == 14 && sMapY == MAP_ROW_J && bMapZ == 1 )
+		{
+			HandleFirstPartOfTunnelFanSound();
+
+			if( IsJa25GeneralFlagSet( JA_GF__MOVE_ENEMIES_TO_EDGE_IN_TUNNEL_1 ) )
+			{
+				HandleMovingEnemiesCloseToEntranceInFirstTunnelMap();
+			}
+		}
+
+		//else if this is the 2nd part of tunnel
+		else	if( sMapX == 14 && sMapY == MAP_ROW_K && bMapZ == 1 )
+		{
+			if( IsJa25GeneralFlagSet( JA_GF__MOVE_ENEMIES_TO_EDGE_IN_TUNNEL_1 ) )
+			{
+				HandleMovingEnemiesCloseToEntranceInSecondTunnelMap();
+			}
+		}
+
+		//else if this is the 1st level in the complex
+		else	if( sMapX == 15 && sMapY == MAP_ROW_K && bMapZ == 1 )
+		{
+			//Make all the team members look like they dropped from a high place
+			//		MakeAllTeamMembersCrouchedThenStand();
+
+			//If the player made noise in the tunnel, enemies should be placed near them
+			HandleMovingTheEnemiesToBeNearPlayerWhenEnteringComplexMap();
+
+			//if the big door should be opened
+			HandleFortifiedDoor();
+		}
+
+		//if this is the Final Sector of the complex
+		else if( sMapX == 15 && sMapY == MAP_ROW_L && bMapZ == 3 )
+		{
+			HandleOpenControlPanelToRevealSwitchInMorrisArea();
+		}
+
+		
+		
+		
+		//if the enemies should go and find the player mercs
+		if( GetSectorEnemyIsToImmediatelySeekEnemyIn() != -1 )
+		{
+			//Make the enemies go find the player mercs
+			SetEnemiesToFindThePlayerMercs();
+		}
+
+		//if this is a sector we feel can be made harder for players ( on hard difficulty levels ), then move some
+		//enemies onto roofs.
+		HandleMovingEnemiesOntoRoofs();		
+	}
+}
+
+void MakeAllTeamMembersCrouchedThenStand()
+{
+	UINT8	cnt;
+	SOLDIERTYPE *pSoldier=NULL;
+
+	//Move some of the enemies to be 'near' them player when the enter the room
+	cnt = gTacticalStatus.Team[ OUR_TEAM ].bFirstID;
+
+	// Loop through the list and move some of the enemies
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; cnt++, pSoldier++)
+	{	
+		//if the soldier is active,
+		if( pSoldier->bActive && pSoldier->bInSector )
+		{
+			EVENT_InitNewSoldierAnim( pSoldier, CRAWLING, 1, TRUE );
+			ChangeSoldierStance( pSoldier, PRONE );
+		}
+	}
+}
+
+void HandleMovingTheEnemiesToBeNearPlayerWhenEnteringComplexMap()
+{
+	SOLDIERTYPE *pSoldier=NULL;
+	UINT8				ubNumEnemiesMoved=0;
+
+	//if we are loading a saved game, or we have already moved the enemies, get out.
+	if( gTacticalStatus.uiFlags & LOADING_SAVED_GAME || 
+			gJa25SaveStruct.uiJa25GeneralFlags & JA_GF__ALREADY_MOVED_ENEMIES_IN_COMPLEX )
+	{
+		return;
+	}
+
+	//if the player made a 'noise' going through the gate at the end of the tunnel sector
+	if( gJa25SaveStruct.uiJa25GeneralFlags & JA_GF__DID_PLAYER_MAKE_SOUND_GOING_THROUGH_TUNNEL_GATE )
+	{
+		UINT8	cnt;
+
+		//
+		//Move some of the enemies to be 'near' them player when the enter the room
+		//
+
+		// Loop through the list and move some of the enemies
+		cnt = gTacticalStatus.Team[ ENEMY_TEAM ].bFirstID;
+		for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ ENEMY_TEAM ].bLastID; cnt++, pSoldier++)
+		{	
+			//if the soldier is active,
+			if ( pSoldier->bActive  )
+			{
+				//
+				// move the soldier to the modified location
+				//
+
+				if( pSoldier->sGridNo	== 13959 )
+				{
+					SetSoldierGridNo( pSoldier, 15705, TRUE );
+					ubNumEnemiesMoved++;
+				}
+
+				if( pSoldier->sGridNo	== 13983 )
+				{
+					SetSoldierGridNo( pSoldier, 15712, TRUE );
+					ubNumEnemiesMoved++;
+				}
+
+				if( pSoldier->sGridNo	== 12543 )
+				{
+					SetSoldierGridNo( pSoldier, 15233, TRUE );
+					ubNumEnemiesMoved++;
+				}
+			}
+		}
+
+		while( ubNumEnemiesMoved < 3 )
+		{
+			cnt = gTacticalStatus.Team[ ENEMY_TEAM ].bFirstID;
+			for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ ENEMY_TEAM ].bLastID; cnt++, pSoldier++)
+			{	
+				//if the soldier is active,
+				if ( pSoldier->bActive  && pSoldier->sGridNo != 15705 && pSoldier->sGridNo != 15712 && pSoldier->sGridNo != 15233 )
+				{
+					//
+					// move the soldier to the modified location
+					//
+
+					if( ubNumEnemiesMoved == 0 )
+					{
+						SetSoldierGridNo( pSoldier, 15706, TRUE );
+						ubNumEnemiesMoved++;
+					}
+
+					if( ubNumEnemiesMoved == 1 )
+					{
+						SetSoldierGridNo( pSoldier, 15713, TRUE );
+						ubNumEnemiesMoved++;
+					}
+
+					if( ubNumEnemiesMoved == 2 )
+					{
+						SetSoldierGridNo( pSoldier, 15234, TRUE );
+						ubNumEnemiesMoved++;
+					}
+				}
+			}
+		}
+
+		//Remeber we have moved the enemies
+		gJa25SaveStruct.uiJa25GeneralFlags |= JA_GF__ALREADY_MOVED_ENEMIES_IN_COMPLEX;
+	}
+}
+
+void HandleFortifiedDoor()
+{
+	//if the fortified door should be open
+	if( gJa25SaveStruct.ubStatusOfFortifiedDoor == FD__OPEN )
+	{
+		ModifyDoorStatus( 11419, TRUE, DONTSETDOORSTATUS );
+	}
+}
+
+void CreateAndAddMoneyObjectToGround( INT16 sGridNo, INT32 iEasyAmount, INT32 iNormalAmount, INT32 iHardAmount )
+{
+	OBJECTTYPE	Object;
+	INT32				iCash=0;
+//	INT8				bAmountToAdd=0;
+
+	switch( gGameOptions.ubDifficultyLevel )
+	{
+		case DIF_LEVEL_EASY:
+			iCash = iEasyAmount;
+			break;
+
+		case DIF_LEVEL_MEDIUM:
+			iCash = iNormalAmount;
+			break;
+
+		case DIF_LEVEL_HARD:
+			iCash = iHardAmount;
+			break;
+
+		default:
+			Assert(0);
+	}
+
+	CreateMoney( iCash, &Object );
+
+	//add the item to the world
+	AddItemToPool( sGridNo, &Object, FALSE, 0, 0, 0 );
+}
+
 void HandleMovingEnemiesCloseToEntranceInFirstTunnelMap()
 {
 	SOLDIERTYPE *pSoldier=NULL;
