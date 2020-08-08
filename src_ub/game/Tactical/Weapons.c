@@ -1441,9 +1441,14 @@ BOOLEAN UseHandToHand( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fStea
 	UINT8								ubExpGain;
 
 	// Deduct points!
+	// August 13 2002: unless stealing - APs already deducted elsewhere
+
+//	if (!fStealing)
+	{
  	sAPCost = CalcTotalAPsToAttack( pSoldier, sTargetGridNo, FALSE, pSoldier->bAimTime );
 
 	DeductPoints( pSoldier, sAPCost, 0 );
+	}
 	
 	// See if a guy is here!
 	pTargetSoldier = SimpleFindSoldier( sTargetGridNo, pSoldier->bTargetLevel );
