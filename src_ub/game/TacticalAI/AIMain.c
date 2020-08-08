@@ -2507,17 +2507,10 @@ void CheckForChangingOrders(SOLDIERTYPE *pSoldier)
 			break;
 		case STATUS_YELLOW:
 			break;
-		case STATUS_BLACK:
-			if (pSoldier->bOrders == ONGUARD)
-			{
-				// crank up ONGUARD to CLOSEPATROL
-				pSoldier->bOrders++;
-			}
-			break;
 		default:
-			if (pSoldier->bOrders == CLOSEPATROL)
+			if ((pSoldier->bOrders == ONGUARD) || (pSoldier->bOrders == CLOSEPATROL))
 			{
-				// crank up CLOSEPATROL to FARPATROL
+				// crank up ONGUARD to CLOSEPATROL, and CLOSEPATROL to FARPATROL
 				pSoldier->bOrders++;       // increase roaming range by 1 category
 			}
 			else if ( pSoldier->bTeam == MILITIA_TEAM )

@@ -2210,7 +2210,8 @@ INT16 RoamingRange(SOLDIERTYPE *pSoldier, INT16 * pusFromGridNo)
 									else
 									{
 										return( 5 );
-									}		case ONGUARD:					return( 5 );
+									}		
+		case ONGUARD:					return( 5 );
 		case CLOSEPATROL:			return( 15 );
 		case RNDPTPATROL:
 		case POINTPATROL:			return(10 );     // from nextPatrolGrid, not whereIWas
