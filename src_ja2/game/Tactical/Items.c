@@ -39,6 +39,8 @@
 	#include "Cursors.h"
 #endif
 
+#include "PathAIDebug.h"
+
 #define ANY_MAGSIZE 255
 
 void RemoveObjs( OBJECTTYPE * pObj, UINT8 ubNumberToRemove );
@@ -3724,7 +3726,7 @@ UINT16 UseKitPoints( OBJECTTYPE * pObj, UINT16 usPoints, SOLDIERTYPE *pSoldier )
 	{
 	//	GenerateMapEdgepoints();
 
-			//gfDrawPathPoints = !gfDrawPathPoints;
+		gfDrawPathPoints = !gfDrawPathPoints;
 
 		//gfDrawPathPoints = TRUE;
 		//GlobalReachableTest( pSoldier->sGridNo );
@@ -3743,6 +3745,8 @@ UINT16 UseKitPoints( OBJECTTYPE * pObj, UINT16 usPoints, SOLDIERTYPE *pSoldier )
 
 	void DoChrisTest( SOLDIERTYPE * pSoldier )
 	{
+//		gfDisplayCoverValues = !gfDisplayCoverValues;
+
 		/*
 		UINT32 uiLoop;
 
@@ -3770,7 +3774,7 @@ UINT16 UseKitPoints( OBJECTTYPE * pObj, UINT16 usPoints, SOLDIERTYPE *pSoldier )
 			}
 		}
 		*/
-	
+	/*
 				UINT32	uiLoop;
 
 
@@ -3830,7 +3834,7 @@ UINT16 UseKitPoints( OBJECTTYPE * pObj, UINT16 usPoints, SOLDIERTYPE *pSoldier )
 			}
 			
 		}
-		
+		*/
 
 		/*
 		UINT32		uiEntryTime, uiExitTime;
