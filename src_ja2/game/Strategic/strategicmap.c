@@ -426,6 +426,13 @@ Ja25: No meanwhiles
 	InvalidateScreen( );
 	RefreshScreen( NULL );
 
+	//if we are going to the intro screen, return before putting up a loadscreen
+	if( gbExitingMapScreenToWhere == MAP_EXIT_TO_INTRO_SCREEN )
+	{
+		SetPendingNewScreen( INTRO_SCREEN );
+		return;
+	}
+
 	//If we are loading a saved game, use the Loading screen we saved into the SavedGameHeader file
 	// ( which gets reloaded into gubLastLoadingScreenID )
 	if( !gfGotoSectorTransition )

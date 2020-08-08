@@ -1589,7 +1589,7 @@ BOOLEAN AnyUsableRealMercenariesOnTeam( void )
 
 void RequestTriggerExitFromMapscreen( INT8 bExitToWhere )
 {
-	Assert( ( bExitToWhere >= MAP_EXIT_TO_LAPTOP ) && ( bExitToWhere <= MAP_EXIT_TO_SAVE ) );
+	Assert( ( bExitToWhere >= MAP_EXIT_TO_LAPTOP ) && ( bExitToWhere <= MAP_EXIT_TO_INTRO_SCREEN ) );
 
 	// if allowed to do so
 	if ( AllowedToExitFromMapscreenTo( bExitToWhere ) )
@@ -1617,7 +1617,7 @@ void RequestTriggerExitFromMapscreen( INT8 bExitToWhere )
 
 BOOLEAN AllowedToExitFromMapscreenTo( INT8 bExitToWhere )
 {
-	Assert( ( bExitToWhere >= MAP_EXIT_TO_LAPTOP ) && ( bExitToWhere <= MAP_EXIT_TO_SAVE ) );
+	Assert( ( bExitToWhere >= MAP_EXIT_TO_LAPTOP ) && ( bExitToWhere <= MAP_EXIT_TO_INTRO_SCREEN ) );
 
 	// if already leaving, disallow any other attempts to exit
 	if ( fLeavingMapScreen )
@@ -1760,6 +1760,11 @@ void HandleExitsFromMapScreen( void )
 					gfCameDirectlyFromGame = TRUE;
 					guiPreviousOptionScreen = guiCurrentScreen;
 					SetPendingNewScreen( SAVE_LOAD_SCREEN );
+					break;
+
+				case MAP_EXIT_TO_INTRO_SCREEN:
+//					SetPendingNewScreen( INTRO_SCREEN );
+					BeginLoadScreen();
 					break;
 
 				default:

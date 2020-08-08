@@ -15,6 +15,7 @@ enum{
 	MAP_EXIT_TO_OPTIONS,
 	MAP_EXIT_TO_LOAD,
 	MAP_EXIT_TO_SAVE,
+	MAP_EXIT_TO_INTRO_SCREEN,
 };
 
 // there's no button for entering SAVE/LOAD screen directly...
