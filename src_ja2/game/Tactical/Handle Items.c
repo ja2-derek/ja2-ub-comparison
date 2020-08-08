@@ -1773,6 +1773,13 @@ void SoldierGetItemFromWorld( SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGr
 		}
 	}
 
+	//if the item is valid
+	if( usItem != 0 )
+	{
+		//handle the picking up of a new ja25 gun
+		HandleNewGunComment( pSoldier, usItem, TRUE );
+	}
+
 	// Aknowledge....
 	if( pSoldier->bTeam == OUR_TEAM && !fDidSayCoolQuote && !fSaidBoobyTrapQuote )
 	{

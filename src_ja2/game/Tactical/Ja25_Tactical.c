@@ -16,16 +16,31 @@
 
 #define		TCTL__DELAY_BETWEEN_ALARM_SOUNDS													4000
 
+#define		NUM_NEW_GUN_QUOTES																				15
+
 
 #define		PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_EASY								2
 #define		PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_NORMAL							2
 #define		PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_HARD								1
 
+
+
+typedef struct
+{
+	INT16		sItem;
+	BOOLEAN	fHasBeenSaid;
+
+} NEW_GUN_QUOTES_STRUCT;
+
+
 //*******************************************************************
 //
 // Global Variables
 //
-//******************************************************************
+//*******************************************************************
+
+NEW_GUN_QUOTES_STRUCT gNewGunQuotes[ NUM_NEW_GUN_QUOTES ];
+
 
 //*******************************************************************
 //
@@ -33,6 +48,11 @@
 //
 //*******************************************************************
 void		StopPowerGenFan();
+void		SetNewGunQuoteToBePlayedForThisGun( INT32 iItemIndex );
+BOOLEAN HasNewGunQuoteBeenPlayedForThisGun( INT32 iItemIndex );
+BOOLEAN IsThisGunANewJa25Gun( INT32 iItemIndex );
+BOOLEAN SaveNewGunQuotesArrayToSaveGameFile( HWFILE hFile );
+BOOLEAN LoadNewGunQuotesArrayToSaveGameFile( HWFILE hFile );
 void		HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex );
 UINT32	GetNumberOfTurnsPowerGenFanWillBeStoppedFor();
 //ppp
@@ -59,6 +79,38 @@ BOOLEAN	IsSoldierQualifiedMercForSeeingPowerGenFan( SOLDIERTYPE *pSoldier )
 	}
 }
 
+
+BOOLEAN	IsSoldierQualifiedGunCommenterMerc( SOLDIERTYPE *pSoldier )
+{
+	if( pSoldier->ubProfile == GASTON		||
+			pSoldier->ubProfile == STOGIE		||
+			pSoldier->ubProfile == TEX			||
+			pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER 
+		)
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
+
+BOOLEAN	IsSoldierQualifiedGunCommenterMerc( SOLDIERTYPE *pSoldier )
+{
+	if( pSoldier->ubProfile == GASTON		||
+			pSoldier->ubProfile == STOGIE		||
+			pSoldier->ubProfile == TEX			||
+			pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER 
+		)
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
 
 
 void StopPowerGenFan()
@@ -426,6 +478,196 @@ void RevealAllDroppedEnemyItems()
 	// Make team look for items
 	AllSoldiersLookforItems( TRUE );
 
+}
+
+
+//returns false if a new merc is not going to handle saying the new quote
+BOOLEAN HandleNewGunComment( SOLDIERTYPE *pSoldier, INT32 iItemIndex, BOOLEAN fFromGround )
+{
+	BOOLEAN fNewMerc = IsSoldierQualifiedGunCommenterMerc( pSoldier );
+
+	if( !fFromGround )
+	{
+		//if this is morris's note, handle it
+		HandlePickingUpMorrisInstructionNote( pSoldier, iItemIndex );
+	}
+
+	//if the quote has already been said
+	if( HasNewGunQuoteBeenPlayedForThisGun( iItemIndex ) )
+	{
+		//get out
+		return( TRUE );
+	}
+
+	//if we are not in tactical or map screen, 
+	if( guiCurrentScreen != GAME_SCREEN && guiCurrentScreen != MAP_SCREEN )
+	{
+		//only remeber that we have picked up the gun at some point
+		SetNewGunQuoteToBePlayedForThisGun( iItemIndex );
+
+		return( FALSE );
+	}
+
+	//if the soldier is a NOT new merc AND this item is from the ground AND the merc didnt say this quote recently
+	if( !fNewMerc && fFromGround && ( pSoldier->usQuoteSaidFlags & SOLDIER_QUOTE_SAID_FOUND_SOMETHING_NICE ) == 0 )
+	{
+		//if the merc can say it
+		if( QuoteExp_GotGunOrUsedGun[ pSoldier->ubProfile ] == QUOTE_FOUND_SOMETHING_SPECIAL )
+		{
+			//Have the merc say his cool item quote
+			TacticalCharacterDialogue( pSoldier, QUOTE_FOUND_SOMETHING_SPECIAL );
+
+			pSoldier->usQuoteSaidFlags |= SOLDIER_QUOTE_SAID_FOUND_SOMETHING_NICE;
+		}
+	}
+
+	//if it is a new merc
+	if( fNewMerc )
+	{
+		//if the item is the hand cannon
+		if( iItemIndex == HAND_CANNON )
+		{
+			//say the new gun quote
+			TacticalCharacterDialogue( pSoldier, QUOTE_PRECEDENT_TO_REPEATING_ONESELF_RENEW );
+		}
+		else
+		{
+			//say the new gun quote
+			TacticalCharacterDialogue( pSoldier, QUOTE_HATE_MERC_1_ON_TEAM_WONT_RENEW );
+		}
+
+		//rememeber we have played the quote
+		SetNewGunQuoteToBePlayedForThisGun( iItemIndex );
+	}
+	
+	return( TRUE );
+}
+
+
+BOOLEAN SaveJa25TacticalInfoToSaveGame( HWFILE hFile )
+{
+	if( !SaveNewGunQuotesArrayToSaveGameFile( hFile ) )
+	{
+		return( FALSE );
+	}
+
+	return( TRUE );
+}
+
+BOOLEAN LoadJa25TacticalInfoFromSavedGame( HWFILE hFile )
+{
+	if( !LoadNewGunQuotesArrayToSaveGameFile( hFile ) )
+	{
+		return( FALSE );
+	}
+
+	return( TRUE );
+}
+
+
+
+BOOLEAN SaveNewGunQuotesArrayToSaveGameFile( HWFILE hFile )
+{
+	UINT32 uiNumBytesWritten;
+	UINT32	uiSize = sizeof( NEW_GUN_QUOTES_STRUCT ) * NUM_NEW_GUN_QUOTES;
+
+	FileWrite( hFile, &gNewGunQuotes, uiSize, &uiNumBytesWritten );
+	if( uiNumBytesWritten != uiSize )
+	{
+		return( FALSE );
+	}
+
+	return( TRUE );
+}
+
+BOOLEAN LoadNewGunQuotesArrayToSaveGameFile( HWFILE hFile )
+{
+	UINT32 uiNumBytesRead;
+	UINT32	uiSize = sizeof( NEW_GUN_QUOTES_STRUCT ) * NUM_NEW_GUN_QUOTES;
+
+	FileRead( hFile, &gNewGunQuotes, uiSize, &uiNumBytesRead );
+	if( uiNumBytesRead != uiSize )
+	{
+		return( FALSE );
+	}
+
+	if( guiSaveGameVersion < 1005 )
+	{
+		InitNewGunArray();
+	}
+
+	return( TRUE );
+}
+
+void InitNewGunArray()
+{
+	INT32 iCnt=0;
+
+	gNewGunQuotes[iCnt++].sItem = BARRETT;
+	gNewGunQuotes[iCnt++].sItem = CALICO_960;
+	gNewGunQuotes[iCnt++].sItem = PSG1;
+	gNewGunQuotes[iCnt++].sItem = L85;
+	gNewGunQuotes[iCnt++].sItem = TAR21;
+	gNewGunQuotes[iCnt++].sItem = VAL_SILENT;
+	gNewGunQuotes[iCnt++].sItem = MICRO_UZI;
+	gNewGunQuotes[iCnt++].sItem = HAND_CANNON;
+	gNewGunQuotes[iCnt++].sItem = CALICO_950;
+	gNewGunQuotes[iCnt++].sItem = CALICO_900;
+}
+
+
+BOOLEAN IsThisGunANewJa25Gun( INT32 iItemIndex )
+{
+	//if this gun ISNT a new gun
+	if( !( iItemIndex == BARRETT	||
+			iItemIndex == CALICO_960	|| 
+			iItemIndex == PSG1				|| 
+			iItemIndex == L85					|| 
+			iItemIndex == TAR21				|| 
+			iItemIndex == VAL_SILENT	|| 
+			iItemIndex == MICRO_UZI		|| 
+			iItemIndex == HAND_CANNON ||
+			iItemIndex == CALICO_950	|| 
+			iItemIndex == CALICO_900 ) )
+	{
+		return( FALSE );
+	}
+
+	return( TRUE );
+}
+
+
+
+BOOLEAN HasNewGunQuoteBeenPlayedForThisGun( INT32 iItemIndex )
+{
+	INT32 iCnt;
+
+	for( iCnt=0; iCnt<NUM_NEW_GUN_QUOTES; iCnt++)
+	{
+		//if this is the item
+		if( gNewGunQuotes[ iCnt ].sItem == iItemIndex )
+		{
+			//return wether it has been said
+			return( gNewGunQuotes[ iCnt ].fHasBeenSaid );
+		}
+	}
+
+	return( TRUE );
+}
+
+void SetNewGunQuoteToBePlayedForThisGun( INT32 iItemIndex )
+{
+	INT32 iCnt;
+
+	for( iCnt=0; iCnt<NUM_NEW_GUN_QUOTES; iCnt++)
+	{
+		//if this is the item
+		if( gNewGunQuotes[ iCnt ].sItem == iItemIndex )
+		{
+			gNewGunQuotes[ iCnt ].fHasBeenSaid = TRUE;
+			return;
+		}
+	}
 }
 
 void HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex )
