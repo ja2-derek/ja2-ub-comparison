@@ -120,6 +120,9 @@ Ja25: No meanwhiles
 	}
 */
 
+	//Remeber the player owns this sector.  Used for Ja25 SAI
+	SetJa25SectorOwnedStatus( sMapX, sMapY, bMapZ, TRUE );
+
 	if( bMapZ == 0 )
 	{
 		usMapSector = sMapX + ( sMapY * MAP_WORLD_X );
@@ -319,6 +322,9 @@ BOOLEAN SetThisSectorAsEnemyControlled( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BO
 	{
 		return( FALSE );
 	}
+
+	//Remeber the enemy owns this sector.  Used for Ja25 SAI
+	SetJa25SectorOwnedStatus( sMapX, sMapY, bMapZ, FALSE );
 
 	if( bMapZ == 0 )
 	{
