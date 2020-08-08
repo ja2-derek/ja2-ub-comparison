@@ -717,6 +717,10 @@ INT32 HandleItem( SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 us
 
 				if ( EnoughPoints( pSoldier, sAPCost, 0, fFromUI ) )
 				{
+					// OK, set UI
+					// ATE: Set UI here, not below so that if UI is unset, we don't set again!
+					SetUIBusy( pSoldier->ubID );
+
 					// CHECK IF WE ARE AT THIS GRIDNO NOW
 					if ( pSoldier->sGridNo != sActionGridNo )
 					{
@@ -733,9 +737,6 @@ INT32 HandleItem( SOLDIERTYPE *pSoldier, UINT16 usGridNo, INT8 bLevel, UINT16 us
 					{
 						EVENT_SoldierBeginCutFence( pSoldier, sAdjustedGridNo, ubDirection );
 					}
-
-					// OK, set UI
-					SetUIBusy( pSoldier->ubID );
 
 					if ( fFromUI )
 					{
