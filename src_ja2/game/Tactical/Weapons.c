@@ -41,6 +41,9 @@
 	#include "SaveLoadMap.h"
 #endif
 
+#define	MIN_DAMAGE_FOR_SILENCER_TO_MAKE_NOISE				85
+
+
 #define MINCHANCETOHIT          1
 #define MAXCHANCETOHIT          99
 
@@ -1201,12 +1204,38 @@ Ja25 No meanwhiles
 	}
 	else
 	{
+		INT8	bStatus=-1;
+
 		// if the weapon has a silencer attached
 		bSilencerPos = FindAttachment( &(pSoldier->inv[HANDPOS]), SILENCER );
 		if (bSilencerPos != -1)
 		{
+			bStatus = pSoldier->inv[HANDPOS].bAttachStatus[bSilencerPos];
+		}
+
+		//Ja25:  if failed Check, see of the gun is the VAL_SILENT gun
+		else if( pSoldier->inv[HANDPOS].usItem == VAL_SILENT )
+		{
+			bStatus = pSoldier->inv[HANDPOS].bGunStatus;
+		}
+
+		//if there is a weapon that is silenced
+		if( bStatus != -1 )
+		{
+			INT32 iVolume = 0;
+
 			// reduce volume by a percentage equal to silencer's work %age (min 1)
-			ubVolume = 1 + ((100 - WEAPON_STATUS_MOD(pSoldier->inv[HANDPOS].bAttachStatus[bSilencerPos])) / (100 / (ubVolume - 1)));
+			iVolume = 1 + ( ( MIN_DAMAGE_FOR_SILENCER_TO_MAKE_NOISE - bStatus ) / (MIN_DAMAGE_FOR_SILENCER_TO_MAKE_NOISE / (ubVolume - 1) ) );
+
+			//make sure the volume is within legal limits
+			if( iVolume > 0 && iVolume < 100 )
+			{
+				ubVolume = (UINT8)iVolume;
+			}
+			else
+			{
+				ubVolume = 1;
+			}
 		}
 	}
 
