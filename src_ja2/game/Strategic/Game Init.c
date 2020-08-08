@@ -342,6 +342,8 @@ Ja25 no loyalty
 	// Reset these flags or mapscreen could be disabled and cause major headache.
 	fDisableDueToBattleRoster = FALSE;
 	fDisableMapInterfaceDueToBattle = FALSE;
+
+	ResetIMPSkillsList( );
 }
 
 void ShutdownStrategicLayer()
