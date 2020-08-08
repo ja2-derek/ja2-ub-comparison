@@ -338,10 +338,12 @@ INT32 SkillCheck( SOLDIERTYPE * pSoldier, INT8 bReason, INT8 bChanceMod )
 			// only a max of ~20% chance
 			iSkill = EffectiveWisdom( pSoldier ) / 10 + EffectiveExpLevel( pSoldier );
 			break;
+/*
 		case LIE_TO_QUEEN_CHECK:
 			// competitive check vs the queen's wisdom and leadership... poor guy!
 			iSkill = 50 * ( EffectiveWisdom( pSoldier ) + EffectiveLeadership( pSoldier ) ) / ( gMercProfiles[ QUEEN ].bWisdom + gMercProfiles[ QUEEN ].bLeadership );
 			break;
+*/
 		case ATTACHING_SPECIAL_ITEM_CHECK:
 		case ATTACHING_SPECIAL_ELECTRONIC_ITEM_CHECK:
 			iSkill = EffectiveMechanical( pSoldier );
