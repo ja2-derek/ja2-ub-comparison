@@ -671,6 +671,16 @@ void GenerateProsString( UINT16 * zItemPros, OBJECTTYPE * pObject, UINT32 uiPixL
 		}
 	}
 
+	//if the item is the VAL Silent sniper
+	if( usItem == VAL_SILENT )
+	{
+		zTemp = Message[STR_SILENT];
+		if ( !AttemptToAddSubstring( zItemPros, zTemp, &uiStringLength, uiPixLimit ) )
+		{
+			return;			
+		}
+	}
+
 	if ( zItemPros[0] == 0 )
 	{
 		// empty string, so display "None"
