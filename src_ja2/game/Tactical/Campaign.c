@@ -698,7 +698,7 @@ void ChangeStat( MERCPROFILESTRUCT *pProfile, SOLDIERTYPE *pSoldier, UINT8 ubSta
 //	DEF: 03/06/99 Now sets an event that will be processed later in the day
 //						ubEmailOffset = MERC_UP_LEVEL_BIFF + MERC_UP_LEVEL_LENGTH_BIFF * ( ubMercMercIdValue ); 
 //						AddEmail( ubEmailOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetWorldTotalMin() );
-						AddStrategicEvent( EVENT_MERC_MERC_WENT_UP_LEVEL_EMAIL_DELAY, GetWorldTotalMin( ) + 60 + Random( 60 ), ubMercMercIdValue );
+//						AddStrategicEvent( EVENT_MERC_MERC_WENT_UP_LEVEL_EMAIL_DELAY, GetWorldTotalMin( ) + 60 + Random( 60 ), ubMercMercIdValue );
 
 						fChangeSalary = TRUE;
 						break;
@@ -1606,7 +1606,8 @@ UINT8 CalcImportantSectorControl( void )
 	return( ubSectorControlPts );
 }
 
-
+/*
+JA25:
 void MERCMercWentUpALevelSendEmail( UINT8 ubMercMercIdValue )
 {
 	UINT8 ubEmailOffset = 0;
@@ -1614,6 +1615,8 @@ void MERCMercWentUpALevelSendEmail( UINT8 ubMercMercIdValue )
 	ubEmailOffset = MERC_UP_LEVEL_BIFF + MERC_UP_LEVEL_LENGTH_BIFF * ( ubMercMercIdValue ); 
 	AddEmail( ubEmailOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetWorldTotalMin() );
 }
+*/
+
 INT32 GetLevelSubPointsToImprove()
 {
 	//if the player imported the save, have them increase exp level a bit slower then if they didnt import
