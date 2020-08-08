@@ -333,6 +333,7 @@ void CalcBestShot(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestShot)
   }
 }
 
+// JA2Gold: added
 BOOLEAN CloseEnoughForGrenadeToss( INT16 sGridNo, INT16 sGridNo2 )
 {
 	INT16	sTempGridNo;
@@ -686,6 +687,8 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 
 
 	if ( usGrenade != ROCK && usGrenade != ROCK2 )
+	// this is try to minimize enemies wasting their (limited) toss attacks, with the exception of break lights
+	if (usGrenade != BREAK_LIGHT)
 	{
 		// this is try to minimize enemies wasting their (limited) toss attacks:
 		switch( ubDiff )
@@ -884,7 +887,7 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 							if (usOppDist < 2)
 							{
 								ubOppsAdjacent++;
-								if (ubOppsAdjacent > 1)
+								if (ubOppsAdjacent > 1 || usGrenade == BREAK_LIGHT)
 								{
 									fSkipLocation = FALSE;
 									// add to exclusion list so we don't consider it again
@@ -1622,6 +1625,22 @@ INT32 EstimateThrowDamage( SOLDIERTYPE *pSoldier, UINT8 ubItemPos, SOLDIERTYPE *
 		}
 	}
 
+	switch ( pSoldier->inv[ ubItemPos ].usItem )
+	{
+		case GL_SMOKE_GRENADE:
+		case SMOKE_GRENADE:
+			// Don't want to value throwing smoke very much.  This value is based relative
+			// to the value for knocking somebody down, which was giving values that were
+			// too high
+			return( 5 );
+		case ROCKET_LAUNCHER:
+			ubExplosiveIndex = Item[ C1 ].ubClassIndex;
+			break;
+		default:
+			ubExplosiveIndex = Item[ pSoldier->inv[ubItemPos].usItem ].ubClassIndex;
+			break;
+	}
+
 	// Dave: put in value here based on light level in target tile
 	//	bLightLevel = LightTrueLevel( sGridNo, pOpponent->bLevel);
 	if ( pSoldier->inv[ubItemPos].usItem == GL_FLARE || pSoldier->inv[ubItemPos].usItem == BREAK_LIGHT )
@@ -1629,18 +1648,6 @@ INT32 EstimateThrowDamage( SOLDIERTYPE *pSoldier, UINT8 ubItemPos, SOLDIERTYPE *
 		return( 5 * ( LightTrueLevel( pOpponent->sGridNo, pOpponent->bLevel ) - NORMAL_LIGHTLEVEL_DAY ) );
 	}
 
-	if ( pSoldier->inv[ubItemPos].usItem == ROCKET_LAUNCHER )
-	{
-		ubExplosiveIndex = Item[ C1 ].ubClassIndex;
-	}
-	else if ( pSoldier->inv[ubItemPos].usItem == TANK_SHELL )
-	{
-		ubExplosiveIndex = Item[ TANK_SHELL ].ubClassIndex;
-	}
-	else
-	{
-		ubExplosiveIndex = Item[ pSoldier->inv[ubItemPos].usItem ].ubClassIndex;
-	}
 
 	iExplosDamage = ( ( (INT32) Explosive[ ubExplosiveIndex ].ubDamage ) * 3) / 2;
 	iBreathDamage = ( ( (INT32) Explosive[ ubExplosiveIndex ].ubStunDamage ) * 5) / 4;
