@@ -1608,6 +1608,11 @@ UINT16 GetAPsToGiveItem( SOLDIERTYPE *pSoldier, UINT16 usMapPos )
 
 INT8 GetAPsToReloadGunWithAmmo( OBJECTTYPE * pGun, OBJECTTYPE * pAmmo )
 {
+	if (pGun->usItem == HAND_CANNON )
+	{
+		return( AP_RELOAD_GUN * 2 );
+	}
+
 	if (Item[ pGun->usItem ].usItemClass == IC_LAUNCHER)
 	{
 		// always standard AP cost

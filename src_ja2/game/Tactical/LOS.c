@@ -2214,6 +2214,10 @@ BOOLEAN BulletHitMerc( BULLET * pBullet, STRUCTURE * pStructure, BOOLEAN fIntend
 			iImpact = iDamage;
 		}
 		uiChanceThrough = (UINT8) __max( 0, ( iImpact - 20 ) );
+		if ( pFirer->inv[ HANDPOS ].usItem == HAND_CANNON ) // hand cannon
+		{
+			uiChanceThrough += 40;
+		}
 		if (PreRandom( 100 ) < uiChanceThrough )
 		{
 			// bullet MAY go through
@@ -2232,6 +2236,15 @@ BOOLEAN BulletHitMerc( BULLET * pBullet, STRUCTURE * pStructure, BOOLEAN fIntend
 
 	if (fStopped)
 	{
+		if ( pFirer->inv[ HANDPOS ].usItem == HAND_CANNON && Random( 20 ) > 0 ) // 5% chance of loss
+		{
+			CreateItem( CLIP_CANNON_BALL, (INT8) pBullet->ubItemStatus, &Object );
+
+			// add cannon ball in this tile
+			AddItemToPool( pTarget->sGridNo, &Object, -1 , pTarget->bLevel, 0, 0 );
+			NotifySoldiersToLookforItems();
+		}
+
 		RemoveBullet( pBullet->iBullet );
 	}
   else
