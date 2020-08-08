@@ -3463,11 +3463,14 @@ INT8 FireBulletGivenTarget( SOLDIERTYPE * pFirer, FLOAT dEndX, FLOAT dEndY, FLOA
 	{
 		usBulletFlags |= BULLET_FLAG_SMALL_MISSILE;
 	}
+/*
+Ja25 no flame throuwer
 	else if ( usHandItem == FLAMETHROWER )
 	{
 		usBulletFlags |= BULLET_FLAG_FLAME;
 		ubSpreadIndex = 2;
 	}
+*/
 
 	ubImpact = Weapon[ usHandItem ].ubImpact;
 //	if (!fFake)
