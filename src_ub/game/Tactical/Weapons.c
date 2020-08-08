@@ -2654,9 +2654,18 @@ Ja25
 
 	if ( !(pSoldier->uiStatusFlags & SOLDIER_PC ) )	// if this is a computer AI controlled enemy
 	{
+		if ( gGameOptions.ubDifficultyLevel == DIF_LEVEL_EASY )
+		{
+			// On easy, penalize all enemies by 5%
+			iChance -= 5;
+		}
+		else
+		{
 		// max with 0 to prevent this being a bonus, for JA2 it's just a penalty to make early enemies easy
-		//JA25:  According to Chris, this is giving the ai players a bonus to hit.  Changed from __max to __min for exp.
+			// CJC note: IDIOT!  This should have been a min.  It's kind of too late now...
+			// CJC 2002-05-17: changed the max to a min to make this work.
 		iChance += __min( 0, gbDiff[DIFF_ENEMY_TO_HIT_MOD][ SoldierDifficultyLevel( pSoldier ) ] );
+	}
 	}
 
 	// if shooter is being affected by gas
