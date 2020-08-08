@@ -1307,6 +1307,18 @@ INT16 FindClosestClimbPointAvailableToAI( SOLDIERTYPE * pSoldier, INT16 sStartGr
 		sRoamingRange = RoamingRange( pSoldier, &sRoamingOrigin );
 	}
 
+	//if the enemy is on the roof currently
+	if( pSoldier->bLevel == 1 )
+	{
+		//if the soldier is currently on close patrol or on guard
+		if( pSoldier->bOrders == ONGUARD || pSoldier->bOrders == CLOSEPATROL )
+		{
+			//Make it so he cant climb down off the roof
+			return( NOWHERE );
+		}
+	}
+
+
 	// since climbing necessary involves going an extra tile, we compare against 1 less than the roam range... 
 	// or add 1 to the distance to the climb point
 
