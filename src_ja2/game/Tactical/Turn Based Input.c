@@ -1835,6 +1835,19 @@ Ja25 No meanwhiles
 						HandleSelectMercSlot( 5, LOCATEANDSELECT_MERC );
 					break;
 
+				case F9:
+
+					if( fCtrl )
+					{
+					}
+					else
+					{
+						#ifdef JA2EDITOR
+						//	*puiNewEvent = I_ENTER_EDIT_MODE;
+						//	gfMercResetUponEditorEntry = !fAlt;
+						#endif
+					}
+					break;
 
 				case F11:
 
