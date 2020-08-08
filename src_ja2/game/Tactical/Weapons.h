@@ -271,4 +271,6 @@ INT32 HTHImpact( SOLDIERTYPE * pSoldier, SOLDIERTYPE * pTarget, INT32 iHitBy, BO
 
 UINT16 GunRange( OBJECTTYPE * pObj );
 
+INT16 MaxDistanceForMessyDeathAdjustedForWeapon( INT16 sFiringItem );
+
 #endif

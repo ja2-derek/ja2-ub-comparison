@@ -82,7 +82,7 @@ BOOLEAN UseGun( SOLDIERTYPE *pSoldier , INT16 sTargetGridNo );
 BOOLEAN UseBlade( SOLDIERTYPE *pSoldier , INT16 sTargetGridNo );
 BOOLEAN UseThrown( SOLDIERTYPE *pSoldier , INT16 sTargetGridNo );
 BOOLEAN UseLauncher( SOLDIERTYPE *pSoldier , INT16 sTargetGridNo );
-
+INT16 MaxDistanceForMessyDeathAdjustedForWeapon( INT16 sFiringItem );
 INT32 HTHImpact( SOLDIERTYPE * pSoldier, SOLDIERTYPE * pTarget, INT32 iHitBy, BOOLEAN fBladeAttack );
 
 BOOLEAN gfNextShotKills = FALSE;
@@ -3347,7 +3347,7 @@ INT32 BulletImpact( SOLDIERTYPE *pFirer, SOLDIERTYPE * pTarget, UINT8 ubHitLocat
 		{
 			case AIM_SHOT_HEAD:
 				// is the blow deadly enough for an instant kill?
-				if ( PythSpacesAway( pFirer->sGridNo, pTarget->sGridNo ) <= MAX_DISTANCE_FOR_MESSY_DEATH )
+				if ( PythSpacesAway( pFirer->sGridNo, pTarget->sGridNo ) <= MaxDistanceForMessyDeathAdjustedForWeapon( pFirer->inv[ HANDPOS ].usItem ) )
 				{
 					if (iImpactForCrits > MIN_DAMAGE_FOR_INSTANT_KILL && iImpactForCrits < pTarget->bLife)
 					{
@@ -3394,7 +3394,7 @@ INT32 BulletImpact( SOLDIERTYPE *pFirer, SOLDIERTYPE * pTarget, UINT8 ubHitLocat
 				// normal damage to torso
 				// is the blow deadly enough for an instant kill?
 				// since this value is much lower than the others, it only applies at short range...
-				if ( PythSpacesAway( pFirer->sGridNo, pTarget->sGridNo ) <= MAX_DISTANCE_FOR_MESSY_DEATH )
+				if ( PythSpacesAway( pFirer->sGridNo, pTarget->sGridNo ) <= MaxDistanceForMessyDeathAdjustedForWeapon( pFirer->inv[ HANDPOS ].usItem ) )
 				{
 					if (iImpact > MIN_DAMAGE_FOR_INSTANT_KILL && iImpact < pTarget->bLife)
 					{
@@ -4511,4 +4511,33 @@ BOOLEAN WillExplosiveWeaponFail( SOLDIERTYPE *pSoldier, OBJECTTYPE *pObj )
   }
 
   return( FALSE );
+}
+
+
+INT16 MaxDistanceForMessyDeathAdjustedForWeapon( INT16 sFiringItem )
+{
+	INT16 sDistance=0;
+
+	//if the gun is a barrett
+	if( sFiringItem == BARRETT )
+	{
+		//this gun can shoot REAL far, so its messy death check should be extend a little
+		sDistance = 28;
+	}
+	else if( sFiringItem == DRAGUNOV || sFiringItem == M24 || sFiringItem == PSG1 || sFiringItem == HAND_CANNON )
+	{
+		//tiles
+		sDistance = 15;
+	}
+	else if( sFiringItem == VAL_SILENT )
+	{
+		//tiles
+		sDistance = 12;
+	}
+	else
+	{
+		sDistance = MAX_DISTANCE_FOR_MESSY_DEATH;
+	}
+	
+	return( sDistance );
 }

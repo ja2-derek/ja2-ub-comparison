@@ -3850,7 +3850,7 @@ void SoldierGotHitGunFire( SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT16 sD
 			{
 				if ( gGameSettings.fOptions[ TOPTION_BLOOD_N_GORE ] )
 				{
-					if (SpacesAway( pSoldier->sGridNo, Menptr[ubAttackerID].sGridNo ) <= MAX_DISTANCE_FOR_MESSY_DEATH)
+					if (SpacesAway( pSoldier->sGridNo, Menptr[ubAttackerID].sGridNo ) <= MaxDistanceForMessyDeathAdjustedForWeapon( Menptr[ubAttackerID].inv[HANDPOS].usItem ))
 					{
 						usNewGridNo = NewGridNo( (UINT16)pSoldier->sGridNo, (INT8)( DirectionInc( pSoldier->bDirection ) ) );
 
@@ -3871,7 +3871,7 @@ void SoldierGotHitGunFire( SOLDIERTYPE *pSoldier, UINT16 usWeaponIndex, INT16 sD
 			{
 				if ( gGameSettings.fOptions[ TOPTION_BLOOD_N_GORE ] )
 				{
-					if (SpacesAway( pSoldier->sGridNo, Menptr[ubAttackerID].sGridNo ) <= MAX_DISTANCE_FOR_MESSY_DEATH)
+					if (SpacesAway( pSoldier->sGridNo, Menptr[ubAttackerID].sGridNo ) <= MaxDistanceForMessyDeathAdjustedForWeapon( Menptr[ubAttackerID].inv[HANDPOS].usItem ) )
 					{
 
 						// possibly play torso explosion anim!
