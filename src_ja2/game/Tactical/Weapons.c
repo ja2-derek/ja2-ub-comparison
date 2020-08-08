@@ -1255,12 +1255,6 @@ Ja25 No meanwhiles
 		pSoldier->inv[ pSoldier->ubAttackingHand ].bStatus[ 0 ]--;		
 	}
 
-	// reduce monster smell (gunpowder smell)
-	if ( pSoldier->bMonsterSmell > 0 && Random( 2 ) == 0 )
-	{
-		pSoldier->bMonsterSmell--;
-	}
-
 	return( TRUE );
 }
 
@@ -1423,13 +1417,6 @@ BOOLEAN UseBlade( SOLDIERTYPE *pSoldier , INT16 sTargetGridNo )
 		DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("@@@@@@@ Freeing up attacker - missed in knife attack") );
 		FreeUpAttacker( (UINT8) pSoldier->ubID );
 	}
-
-	// possibly reduce monster smell
-	if ( pSoldier->bMonsterSmell > 0 && Random( 5 ) == 0 )
-	{
-		pSoldier->bMonsterSmell--;
-	}
-
 
 	return( TRUE );
 }
@@ -1674,13 +1661,6 @@ BOOLEAN UseHandToHand( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo, BOOLEAN fStea
 			}
 		}
 	}
-
-	// possibly reduce monster smell (gunpowder smell)
-	if ( pSoldier->bMonsterSmell > 0 && Random( 5 ) == 0 )
-	{
-		pSoldier->bMonsterSmell--;
-	}
-
 
 	return( TRUE );
 }
