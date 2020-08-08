@@ -73,7 +73,8 @@
 #define HTH_MODE_STAB 2
 #define HTH_MODE_STEAL 3
 
-#define	MAX_CONDITION_FOR_PENALTY_WHEN_FIRING									85
+// JA2 GOLD: for weapons and attachments, give penalties only for status values below 85
+#define WEAPON_STATUS_MOD( x ) ( (x) >= 85 ? 100 : (((x) * 100) / 85) )
 
 extern void TeamChangesSides( UINT8 ubTeam, INT8 bSide );
 
@@ -398,7 +399,7 @@ UINT16 GunRange( OBJECTTYPE * pObj )
 		}
 		else
 		{
-			return( Weapon[ pObj->usItem ].usRange + (GUN_BARREL_RANGE_BONUS * pObj->bAttachStatus[ bAttachPos ] / 100 ) );
+			return( Weapon[ pObj->usItem ].usRange + (GUN_BARREL_RANGE_BONUS * WEAPON_STATUS_MOD(pObj->bAttachStatus[ bAttachPos ]) / 100 ) );
 		}
 
 	}
@@ -1322,7 +1323,7 @@ BOOLEAN UseBlade( SOLDIERTYPE *pSoldier , INT16 sTargetGridNo )
 			iImpact = HTHImpact( pSoldier, pTargetSoldier, (iHitChance - iDiceRoll), TRUE );
 
 			// modify this by the knife's condition (if it's dull, not much good)
-			iImpact = ( iImpact * pSoldier->inv[pSoldier->ubAttackingHand].bStatus[0] ) / 100;
+			iImpact = ( iImpact * WEAPON_STATUS_MOD(pSoldier->inv[pSoldier->ubAttackingHand].bStatus[0]) ) / 100;
 
 			// modify by hit location
 			AdjustImpactByHitLocation( iImpact, pSoldier->bAimShotLocation, &iImpact, &iImpactForCrits );
@@ -2461,7 +2462,7 @@ UINT32 CalcChanceToHitGun(SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime
   usInHand = pSoldier->usAttackingWeapon;
 
 	// DETERMINE BASE CHANCE OF HITTING
-	iGunCondition = pInHand->bGunStatus;
+	iGunCondition = WEAPON_STATUS_MOD( pInHand->bGunStatus );
 
 	if (usInHand == ROCKET_LAUNCHER)
 	{
@@ -2558,7 +2559,7 @@ Ja25
 			bAttachPos = FindAttachment( pInHand, BIPOD );
 			if (bAttachPos != ITEM_NOT_FOUND)
 			{	// extra bonus to hit for a bipod, up to half the prone bonus itself
-				iBonus += iBonus * pInHand->bAttachStatus[bAttachPos] / 100 / 2;
+				iBonus += (iBonus * WEAPON_STATUS_MOD(pInHand->bAttachStatus[bAttachPos]) / 100) / 2;
 			}
 			iChance += iBonus;
 		}
@@ -2710,7 +2711,7 @@ Ja25
 			iScopeBonus = ((SNIPERSCOPE_AIM_BONUS * ubAimTime) * (iRange - MIN_SCOPE_RANGE)) / 100;
 
 			// adjust for scope condition, only has full affect at 100%
-			iScopeBonus = (iScopeBonus * pInHand->bAttachStatus[bAttachPos]) / 100;
+			iScopeBonus = (iScopeBonus * WEAPON_STATUS_MOD(pInHand->bAttachStatus[bAttachPos])) / 100;
 
 			// reduce effective range by the bonus obtained from the scope
 			iSightRange -= iScopeBonus;
@@ -2727,11 +2728,11 @@ Ja25
 
 			if ( usInHand == ROCKET_RIFLE || usInHand == AUTO_ROCKET_RIFLE )
 			{
-				bLaserStatus = pInHand->bGunStatus;
+				bLaserStatus = WEAPON_STATUS_MOD(pInHand->bGunStatus);
 			}
 			else
 			{
-				bLaserStatus = pInHand->bAttachStatus[ bAttachPos ];
+				bLaserStatus = WEAPON_STATUS_MOD(pInHand->bAttachStatus[ bAttachPos ]);
 			}
 			 
 			// laser scope isn't of much use in high light levels; add something for that
@@ -4361,7 +4362,7 @@ UINT32 CalcThrownChanceToHit(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAimTi
 	// if iChance exists, but it's a mechanical item being used
 	if ((iChance > 0) && (Item[ usHandItem ].usItemClass == IC_LAUNCHER ))
 		// reduce iChance to hit DIRECTLY by the item's working condition
-		iChance = (iChance * pSoldier->inv[HANDPOS].bStatus[0]) / 100;
+		iChance = (iChance * WEAPON_STATUS_MOD(pSoldier->inv[HANDPOS].bStatus[0])) / 100;
 
 	// MAKE SURE CHANCE TO HIT IS WITHIN DEFINED LIMITS
 	if (iChance < MINCHANCETOHIT)
