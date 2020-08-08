@@ -334,6 +334,13 @@ void LoadSchedules( INT8 **hBuffer )
 	SCHEDULENODE *pSchedule = NULL;
 	SCHEDULENODE temp;
 	UINT8 ubNum;
+
+	// delete all the schedules we might have loaded (though we shouldn't have any loaded!!)
+	if ( gpScheduleList )
+	{
+		DestroyAllSchedules();
+	}
+
 	LOADDATA( &ubNum, *hBuffer, sizeof( UINT8 ) );
 	gubScheduleID = 1;
 	while( ubNum )
