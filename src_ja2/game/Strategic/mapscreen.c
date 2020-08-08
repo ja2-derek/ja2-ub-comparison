@@ -848,7 +848,7 @@ void EnableDisableTeamListRegionsAndHelpText( void );
 // merc about to leave, flash contract time
 BOOLEAN AnyMercsLeavingRealSoon();
 void HandleContractTimeFlashForMercThatIsAboutLeave( void );
-
+void DisplayMsgBoxSayingWhyMercDropOffWontWork();
 
 // Mouse Region Callbacks
 
@@ -4667,6 +4667,13 @@ UINT32 HandleMapUI( )
 				// not zoomed out, make sure this is a valid sector
         if( IsTheCursorAllowedToHighLightThisSector( sMapX, sMapY ) == FALSE )
 				{
+					//if we are int eh changine the initial drop off sector mode
+					if ( gfInChangeArrivalSectorMode )
+					{
+						//display a message as to why we cant chnage the drop off location
+						DisplayMsgBoxSayingWhyMercDropOffWontWork();
+					}
+
           // do nothing, return
 					return( MAP_SCREEN );
 				}
@@ -12713,6 +12720,11 @@ void MapscreenMarkButtonsDirty()
 			UnMarkButtonDirty( giMapBorderButtons[ MAP_BORDER_TOWN_BTN ] );
 		}
 	}
+}
+
+void DisplayMsgBoxSayingWhyMercDropOffWontWork()
+{
+	DoMapMessageBox( MSG_BOX_BASIC_STYLE, zNewTacticalMessages[ TCTL_MSG__INVALID_DROPOFF_SECTOR ], MAP_SCREEN, MSG_BOX_FLAG_OK, NULL );
 }
 
 void HandleWhenPlayerHasNoMercsAndNoLaptop()
