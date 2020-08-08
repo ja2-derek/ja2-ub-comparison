@@ -333,6 +333,64 @@ void AddExitGridForFanToPowerGenSector()
 	AddExitGridToWorld( PGF__FAN_EXIT_GRID_GRIDNO, &ExitGrid );
 }
 
+BOOLEAN HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( SOLDIERTYPE *pSoldierAtDoor, BOOLEAN fSayQuoteOnlyOnce )
+{
+	INT8					bSlot;
+	UINT32				cnt;
+	UINT8					ubID;
+	SOLDIERTYPE		*pSoldier;
+
+
+	//is this the right sector
+	if( !( gWorldSectorX == 14 && gWorldSectorY == MAP_ROW_K && gbWorldSectorZ == 1 ) )
+	{
+		//wrong door
+		return( FALSE );
+	}
+
+	//if the player has already said the quote
+	if( IsJa25GeneralFlagSet( JA_GF__PLAYER_SAID_GATE_LOCKED_QUOTE ) )
+	{
+		return( FALSE );
+	}
+
+	//
+	// look to see if anyone on the team has wire cutters
+	//
+	// loop throught the team and see if anyone in this sector has the wire cutter
+	cnt = gTacticalStatus.Team[ OUR_TEAM ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; cnt++,pSoldier++)
+	{
+    //if the soldier is in the sector
+		if( pSoldier->bActive && pSoldier->bInSector && ( pSoldier->bLife >= CONSCIOUSNESS ) &&
+				 !( pSoldier->uiStatusFlags & SOLDIER_VEHICLE ) && !AM_A_ROBOT( pSoldier ) )
+		{
+			bSlot = FindObj( pSoldier, WIRECUTTERS );
+			if( bSlot != NO_SLOT )
+			{
+				//the merc has wire cutters
+				return( FALSE );
+			}
+		}
+	}
+
+	ubID = RandomSoldierIdFromNewMercsOnPlayerTeam();
+
+	if( ubID != -1 )
+	{
+		//have the merc say the quote about the tough gate
+		TacticalCharacterDialogue( &Menptr[ ubID ], QUOTE_IMPATIENT_QUOTE );
+	}
+
+	//remeber we said the quote
+	if( fSayQuoteOnlyOnce )
+	{
+		SetJa25GeneralFlag( JA_GF__PLAYER_SAID_GATE_LOCKED_QUOTE );
+	}
+
+	return( TRUE );
+}
+
 void HandleHowPlayerGotThroughFan()
 {
 		switch( gJa25SaveStruct.ubStateOfFanInPowerGenSector )

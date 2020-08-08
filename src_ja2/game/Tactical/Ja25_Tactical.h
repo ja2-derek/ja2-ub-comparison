@@ -34,6 +34,7 @@ typedef struct
 */
 
 
+BOOLEAN HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( SOLDIERTYPE *pSoldier, BOOLEAN fSayQuoteOnlyOnce );
 
 void RevealAllDroppedEnemyItems();
 void		HandleInitialEventsInHeliCrash();

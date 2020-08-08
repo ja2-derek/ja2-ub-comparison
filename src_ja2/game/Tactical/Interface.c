@@ -2526,6 +2526,9 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn,INT32 reason)
 		{
 			// OK, set cancle code!
 			gOpenDoorMenu.fMenuHandled = 2;
+
+			//Handle someone trying to open the door in the tunnel gate`
+			HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( gOpenDoorMenu.pSoldier, FALSE );
 		}
 
 		// Switch on command....
@@ -2556,6 +2559,14 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn,INT32 reason)
 
 		if ( uiBtnID == iActionIcons[ BOOT_DOOR_ICON ] )
 		{
+			//Handle someone trying to open the door in the tunnel gate`
+			if( HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( gOpenDoorMenu.pSoldier, TRUE ) )
+			{
+				// OK, set cancle code!
+				gOpenDoorMenu.fMenuHandled = 2;
+			}
+			else
+			{
 			// Boot door
 			if ( EnoughPoints(  gOpenDoorMenu.pSoldier, AP_BOOT_DOOR, BP_BOOT_DOOR, FALSE ) )
 			{
@@ -2569,6 +2580,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn,INT32 reason)
 				// OK, set cancle code!
 				gOpenDoorMenu.fMenuHandled = 2;
 			}
+		}
 		}
 
 		if ( uiBtnID == iActionIcons[ USE_KEYRING_ICON ] )
@@ -2624,6 +2636,14 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn,INT32 reason)
 
 		if ( uiBtnID == iActionIcons[ EXPLOSIVE_DOOR_ICON ] )
 		{
+			//Handle someone trying to open the door in the tunnel gate`
+			if( HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( gOpenDoorMenu.pSoldier, TRUE ) )
+			{
+				// OK, set cancle code!
+				gOpenDoorMenu.fMenuHandled = 2;
+			}
+			else
+			{
 			// Explode
 			if ( EnoughPoints(  gOpenDoorMenu.pSoldier, AP_EXPLODE_DOOR, BP_EXPLODE_DOOR, FALSE ) )
 			{
@@ -2637,6 +2657,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn,INT32 reason)
 				// OK, set cancle code!
 				gOpenDoorMenu.fMenuHandled = 2;
 			}
+		}
 		}
 
 		if ( uiBtnID == iActionIcons[ UNTRAP_DOOR_ICON ] )
@@ -2658,6 +2679,14 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn,INT32 reason)
 
 		if ( uiBtnID == iActionIcons[ USE_CROWBAR_ICON ] )
 		{
+			//Handle someone trying to open the door in the tunnel gate`
+			if( HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( gOpenDoorMenu.pSoldier, TRUE ) )
+			{
+				// OK, set cancle code!
+				gOpenDoorMenu.fMenuHandled = 2;
+			}
+			else
+			{
 			// Explode
 			if ( EnoughPoints(  gOpenDoorMenu.pSoldier, AP_USE_CROWBAR, BP_USE_CROWBAR, FALSE ) )
 			{
@@ -2670,6 +2699,7 @@ void BtnDoorMenuCallback(GUI_BUTTON *btn,INT32 reason)
 			{
 				// OK, set cancle code!
 				gOpenDoorMenu.fMenuHandled = 2;
+				}
 			}
 		}
 

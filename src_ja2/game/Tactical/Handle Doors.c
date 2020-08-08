@@ -31,6 +31,7 @@ BOOLEAN gfSetPerceivedDoorState = FALSE;
 
 
 BOOLEAN HandleDoorsOpenClose( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE * pStructure, BOOLEAN fNoAnimations );
+void HandleForceingTheTunnelGate( INT16 sGridNo );
 
 void HandleDoorChangeFromGridNo( SOLDIERTYPE *pSoldier, INT16 sGridNo, BOOLEAN fNoAnimations )
 {
@@ -575,6 +576,9 @@ BOOLEAN HandleOpenableStruct( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE *p
 								// it's locked....
 								ChangeSoldierState( pSoldier, GetAnimStateForInteraction( pSoldier, fDoor, END_OPEN_LOCKED_DOOR ), 0, FALSE );
 
+								//If this is the tunnel sector, and the merc failed opening the fence door, play a quote
+								HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( pSoldier, FALSE );
+
 								// Do we have a quote for locked stuff?
 								// Now just show on message bar
 								if ( !AM_AN_EPC( pSoldier ) )
@@ -612,6 +616,12 @@ BOOLEAN HandleOpenableStruct( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE *p
 						}
 						else
 						{
+							//If this is the tunnel sector, and the merc failed opening the fence door, play a quote
+							if( HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( pSoldier, TRUE ) )
+							{
+							}
+							else
+							{
 							// Attempt to force door
 							if ( AttemptToSmashDoor( pSoldier, pDoor ) )
 							{
@@ -626,6 +636,10 @@ BOOLEAN HandleOpenableStruct( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE *p
 							}
 							ProcessImplicationsOfPCMessingWithDoor( pSoldier );
 						}
+						}
+
+						//Handle Special code for the gate in the tunnel
+						HandleForceingTheTunnelGate( sGridNo );
 						break;
 
 
@@ -711,6 +725,9 @@ BOOLEAN HandleOpenableStruct( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE *p
 							}
 							else
 							{
+								//If this is the tunnel sector, and the merc failed opening the fence door, play a quote
+								HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( pSoldier, FALSE );
+
 								//ScreenMsg( MSG_FONT_YELLOW, MSG_INTERFACE, TacticalStr[ DOOR_LOCK_HAS_NOT_BEEN_PICKED_STR ] );
 							}
 							ProcessImplicationsOfPCMessingWithDoor( pSoldier );
@@ -734,6 +751,9 @@ BOOLEAN HandleOpenableStruct( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE *p
 						}
 						else
 						{
+							//If this is the tunnel sector, and the merc failed opening the fence door, play a quote
+							HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( pSoldier, FALSE );
+
 							if ( ExamineDoorForTraps( pSoldier, pDoor ) )
 							{
 								// We have a trap. Use door pointer to determine what type, etc
@@ -793,6 +813,10 @@ BOOLEAN HandleOpenableStruct( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE *p
 							else
 							{
 								ChangeSoldierState( pSoldier, GetAnimStateForInteraction( pSoldier, fDoor, END_OPEN_LOCKED_DOOR ), 0, FALSE );
+
+								//If this is the tunnel sector, and the merc failed opening the fence door, play a quote
+								if( HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( pSoldier, FALSE ) )
+								{
 								// Do we have a quote for locked stuff?
 								// Now just show on message bar
 								//ScreenMsg( MSG_FONT_YELLOW, MSG_INTERFACE, TacticalStr[ DOOR_NOT_PROPER_KEY_STR ], pSoldier->name );
@@ -801,6 +825,7 @@ BOOLEAN HandleOpenableStruct( SOLDIERTYPE *pSoldier, INT16 sGridNo, STRUCTURE *p
 								if ( Random( 2 ) )
 								{
 									DoMercBattleSound( pSoldier, BATTLE_SOUND_CURSE1 );
+									}
 								}
 							}
 						}
@@ -1435,4 +1460,22 @@ void SetDoorString( INT16 sGridNo )
 #endif
 	}
 
+}
+
+void HandleForceingTheTunnelGate( INT16 sGridNo )
+{
+	//if this isnt the Last sector of the tunnel
+	if( !( gWorldSectorX == 14 && gWorldSectorY == MAP_ROW_K && gbWorldSectorZ == 1 ) )
+	{
+		return;
+	}
+
+	//if it is not the right gridno
+	if( sGridNo != 4742 )
+	{
+		return;
+	}
+
+	//If the player blew up the fan, then the enemies can hear it in the tunnel and prepare for it.
+	gJa25SaveStruct.uiJa25GeneralFlags |= JA_GF__DID_PLAYER_MAKE_SOUND_GOING_THROUGH_TUNNEL_GATE;
 }
