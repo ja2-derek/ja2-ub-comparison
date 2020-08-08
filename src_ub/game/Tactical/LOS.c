@@ -1729,6 +1729,57 @@ INT32 SoldierTo3DLocationLineOfSightTest( SOLDIERTYPE * pStartSoldier, INT16 sGr
 	return( LineOfSightTest( (FLOAT) CenterX( pStartSoldier->sGridNo ), (FLOAT) CenterY( pStartSoldier->sGridNo ), dStartZPos, (FLOAT) sXPos, (FLOAT) sYPos, dEndZPos, ubTileSightLimit, gubTreeSightReduction[ANIM_STAND], bAware, 0, FALSE, NULL ) );
 }
 
+INT32 SoldierToBodyPartLineOfSightTest( SOLDIERTYPE * pStartSoldier, INT16 sGridNo, INT8 bLevel, UINT8 ubAimLocation, UINT8 ubTileSightLimit, INT8 bAware )
+{
+	SOLDIERTYPE * pEndSoldier;
+	UINT8 ubTargetID;
+	FLOAT			dStartZPos, dEndZPos;
+	INT16			sXPos, sYPos;
+	BOOLEAN		fOk;
+	UINT8			ubPosType;
+
+	// CJC August 13, 2002: for this routine to work there MUST be a target at the location specified
+	ubTargetID = WhoIsThere2( sGridNo, bLevel );
+	if (ubTargetID == NOBODY)
+	{
+		return( 0 );
+	}
+	pEndSoldier = MercPtrs[ubTargetID];
+
+	CHECKF( pStartSoldier );
+
+	fOk = CalculateSoldierZPos( pStartSoldier, LOS_POS, &dStartZPos );
+	CHECKF( fOk );
+
+	switch( ubAimLocation ) 
+	{
+		case AIM_SHOT_HEAD:
+			ubPosType = HEAD_TARGET_POS;
+			break;
+		case AIM_SHOT_TORSO:
+			ubPosType = TORSO_TARGET_POS;
+			break;
+		case AIM_SHOT_LEGS:
+			ubPosType = LEGS_TARGET_POS;
+			break;
+		default:
+			ubPosType = TARGET_POS;
+			break;
+	}
+
+	fOk = CalculateSoldierZPos( pEndSoldier, ubPosType, &dEndZPos );
+	if (!fOk)
+	{
+		return( FALSE );
+	}
+
+	ConvertGridNoToXY( sGridNo, &sXPos, &sYPos );
+	sXPos = sXPos * CELL_X_SIZE + (CELL_X_SIZE / 2);
+	sYPos = sYPos * CELL_Y_SIZE + (CELL_Y_SIZE / 2);
+
+	return( LineOfSightTest( (FLOAT) CenterX( pStartSoldier->sGridNo ), (FLOAT) CenterY( pStartSoldier->sGridNo ), dStartZPos, (FLOAT) sXPos, (FLOAT) sYPos, dEndZPos, ubTileSightLimit, gubTreeSightReduction[ANIM_STAND], bAware, 0, FALSE, NULL ) );
+}
+
 INT32 SoldierToVirtualSoldierLineOfSightTest( SOLDIERTYPE * pStartSoldier, INT16 sGridNo, INT8 bLevel, INT8 bStance, UINT8 ubTileSightLimit, INT8 bAware )
 {
 	FLOAT						dStartZPos, dEndZPos;

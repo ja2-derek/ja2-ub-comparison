@@ -2615,7 +2615,25 @@ Ja25
 	// give some leeway to allow people to spot for each other... 
 	// use distance limitation for LOS routine of 2 x maximum distance EVER visible, so that we get accurate
 	// calculations out to around 50 tiles.  Because we multiply max distance by 2, we must divide by 2 later
+
+	// CJC August 13 2002:  Wow, this has been wrong the whole time.  bTargetCubeLevel seems to be generally set to 2 -
+	// but if a character is shooting at an enemy in a particular spot, then we should be using the target position on the body.
+
+	// CJC August 13, 2002
+	// If the start soldier has a body part they are aiming at, and know about the person in the tile, then use that height instead
+	iSightRange = -1;
+
+	ubTargetID = WhoIsThere2( sGridNo, pSoldier->bTargetLevel );
+	// best to use team knowledge as well, in case of spotting for someone else
+	if (ubTargetID != NOBODY && pSoldier->bOppList[ubTargetID] == SEEN_CURRENTLY || gbPublicOpplist[pSoldier->bTeam][ubTargetID] == SEEN_CURRENTLY)
+	{
+		iSightRange = SoldierToBodyPartLineOfSightTest( pSoldier, sGridNo, pSoldier->bTargetLevel, pSoldier->bAimShotLocation, (UINT8) (MaxDistanceVisible() * 2), TRUE );	
+	}
+	
+	if (iSightRange == -1) // didn't do a bodypart-based test
+	{
 	iSightRange = SoldierTo3DLocationLineOfSightTest( pSoldier, sGridNo, pSoldier->bTargetLevel, pSoldier->bTargetCubeLevel, (UINT8) (MaxDistanceVisible() * 2), TRUE );
+	}
 	
 	iSightRange *= 2;
 
