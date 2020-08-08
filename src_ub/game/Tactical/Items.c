@@ -1312,6 +1312,28 @@ INT8 FindGLGrenade( SOLDIERTYPE * pSoldier )
 INT8 FindThrowableGrenade( SOLDIERTYPE * pSoldier )
 {
 	INT8 bLoop;
+	BOOLEAN fCheckForFlares = FALSE;
+
+	// JA2Gold: give some priority to looking for flares when at night
+	// this is AI only so we can put in some customization for night
+	if (GetTimeOfDayAmbientLightLevel() == NORMAL_LIGHTLEVEL_NIGHT)
+	{
+		if (pSoldier->bLife > (pSoldier->bLifeMax / 2))
+		{
+			fCheckForFlares = TRUE;
+		}
+	}
+	if (fCheckForFlares)
+	{
+		// Do a priority check for flares first
+		for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++)
+		{
+			if (pSoldier->inv[ bLoop ].usItem == BREAK_LIGHT)
+			{
+				return( bLoop );
+			}
+		}
+	}
 
 	for (bLoop = 0; bLoop < NUM_INV_SLOTS; bLoop++)
 	{
