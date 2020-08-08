@@ -1224,6 +1224,47 @@ INT32 FindBestPath(SOLDIERTYPE *s , INT16 sDestination, INT8 ubLevel, INT16 usMo
 						if (pDoorStructure)
 						{
 							fDoorIsOpen = (pDoorStructure->fFlags & STRUCTURE_OPEN) != 0;
+							
+							//if this is the FIRST PART of the town sector
+							if( !fDoorIsOpen && gWorldSectorX == 10 && gWorldSectorY == 9 && gbWorldSectorZ == 0 )
+							{
+								if( iDoorGridNo == 6820 || iDoorGridNo == 6020 || iDoorGridNo == 6660 || iDoorGridNo == 5860 )
+								{
+									//if the soldier is not on the players team
+									if( s && s->bTeam != OUR_TEAM )
+									{
+										goto NEXTDIR;
+									}
+								}
+							}
+							
+							//else if this is the UPPER PART of the comple
+							else if( !fDoorIsOpen && gWorldSectorX == 15 && gWorldSectorY == 11 && gbWorldSectorZ == 0 )
+							{
+								if( iDoorGridNo == 13378 || iDoorGridNo == 13379 )
+								{
+									//if the soldier is not on the players team
+									if( s && s->bTeam != OUR_TEAM )
+									{
+										goto NEXTDIR;
+									}
+								}
+							}
+
+							//else if this is the Middle PART of the comple
+							else if( !fDoorIsOpen && gWorldSectorX == 15 && gWorldSectorY == 11 && gbWorldSectorZ == 1 )
+							{
+								if( iDoorGridNo == 11418 || iDoorGridNo == 11419 )
+								{
+									//if the soldier is not on the players team
+									if( s && s->bTeam != OUR_TEAM )
+									{
+										goto NEXTDIR;
+									}
+								}
+							}
+
+
 						}
 						else
 						{
