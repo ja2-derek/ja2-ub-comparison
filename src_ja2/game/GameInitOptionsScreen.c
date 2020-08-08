@@ -1084,14 +1084,17 @@ void DoneFadeOutForExitGameInitOptionScreen( void )
 	// JA2Gold: iron man
 	gGameOptions.fIronManMode = GetCurrentGameSaveButtonSetting();
 
+//JA25: No longer going to the intro screen
+//	gubGIOExitScreen = INTRO_SCREEN;
 
-//	gubGIOExitScreen = INIT_SCREEN;
-	gubGIOExitScreen = INTRO_SCREEN;
+	//Goto the mapscren
+	gubGIOExitScreen = INIT_SCREEN;
 
 	//set the fact that we should do the intro videos
-//	gbIntroScreenMode = INTRO_BEGINING;
+/*
+Ja25: No intro videos
 		SetIntroType( INTRO_BEGINING );
-
+*/
 	ExitGIOScreen();
 
 //	gFadeInDoneCallback = DoneFadeInForExitGameInitOptionScreen;
