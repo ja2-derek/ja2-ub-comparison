@@ -1553,17 +1553,9 @@ void HandleEquipmentLeftInOmerta( UINT32 uiSlotIndex )
 
 	if( pItem )
 	{
-		if ( guiLeaveListOwnerProfileId[ uiSlotIndex ] != NO_PROFILE )
-		{
 			swprintf( sString, pLeftEquipmentString[ 0 ], gMercProfiles[ guiLeaveListOwnerProfileId[ uiSlotIndex ] ].zNickname );
 			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, sString);
 		}
-		else
-		{
-			swprintf( sString, L"A departing merc has left their equipment in Omerta." );
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, sString);
-		}
-	}
 
 	while( pItem )
 	{
@@ -1596,17 +1588,9 @@ void HandleEquipmentLeftInDrassen( UINT32 uiSlotIndex )
 
 	if( pItem )
 	{
-		if ( guiLeaveListOwnerProfileId[ uiSlotIndex ] != NO_PROFILE )
-		{
 			swprintf( sString, pLeftEquipmentString[ 1 ], gMercProfiles[ guiLeaveListOwnerProfileId[ uiSlotIndex ] ].zNickname );
 			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, sString);
 		}
-		else
-		{
-			swprintf( sString, L"A departing merc has left their equipment in Drassen." );
-			ScreenMsg( FONT_MCOLOR_LTYELLOW, MSG_INTERFACE, sString);
-		}
-	}
 
 	while( pItem )
 	{
