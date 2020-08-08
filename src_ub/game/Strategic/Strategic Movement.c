@@ -1402,25 +1402,30 @@ void AwardExperienceForTravelling( GROUP * pGroup )
 	while ( pPlayerGroup ) 
 	{
 		pSoldier = pPlayerGroup->pSoldier;
-		if( pSoldier && pSoldier->bLifeMax < 100 && !AM_A_ROBOT( pSoldier ) && 
+		if( pSoldier  && !AM_A_ROBOT( pSoldier ) && 
 				!AM_AN_EPC( pSoldier ) && !(pSoldier->uiStatusFlags & SOLDIER_VEHICLE) )
 		{
+			if ( pSoldier->bLifeMax < 100 )
+			{
 			// award exp...
 			// amount was originally based on getting 100-bLifeMax points for 12 hours of travel (720)
 			// but changed to flat rate since StatChange makes roll vs 100-lifemax as well!
-			uiPoints = ( pGroup->uiTraverseTime / (450 / __max( 1, (100 - pSoldier->bLifeMax ) ) ) );
+				uiPoints = pGroup->uiTraverseTime / (450 / 100 - pSoldier->bLifeMax );
 			if ( uiPoints > 0 )
 			{
 				StatChange( pSoldier, HEALTHAMT, (UINT8) uiPoints, FALSE );
 			}
+			}
 
+			if ( pSoldier->bStrength < 100 )
+			{
 			uiCarriedPercent = CalculateCarriedWeight( pSoldier );
 			if ( uiCarriedPercent > 50 )
 			{
-				uiPoints = ( pGroup->uiTraverseTime / (450 / __max( 1, (100 - pSoldier->bStrength ) ) ) );
+					uiPoints = pGroup->uiTraverseTime / (450 / (100 - pSoldier->bStrength ) );
 				StatChange( pSoldier, STRAMT, ( UINT16 ) ( uiPoints * ( uiCarriedPercent - 50) / 100 ), FALSE );
 			}
-
+			}
 		}
 		pPlayerGroup = pPlayerGroup->next;
 	}
