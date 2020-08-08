@@ -6181,6 +6181,12 @@ Ja25: No meanwhiles
 	}
 */
 
+	// ATE: JA25 addition - ignore getup check if flag set....
+	if ( pSoldier->fIgnoreGetupFromCollapseCheck )
+	{
+		return;
+	}
+
 	if ( pSoldier->bCollapsed )
 	{
 		if ( pSoldier->bLife >= OKLIFE && pSoldier->bBreath >= OKBREATH && (pSoldier->bSleepDrugCounter == 0) )
