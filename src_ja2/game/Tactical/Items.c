@@ -1279,6 +1279,7 @@ BOOLEAN GLGrenadeInSlot(SOLDIERTYPE *pSoldier, INT8 bSlot )
 		case GL_TEARGAS_GRENADE:
 		case GL_STUN_GRENADE:
 		case GL_SMOKE_GRENADE:
+		case GL_FLARE:
 			return(TRUE);
 		default:
 			return(FALSE);
