@@ -267,7 +267,9 @@ void HandleMainMenuScreen()
 
 BOOLEAN InitMainMenu( )
 {
-  VOBJECT_DESC    VObjectDesc;
+//  VOBJECT_DESC    VObjectDesc;
+	VSURFACE_DESC		vs_desc;
+
 
 //	gfDoHelpScreen = 0;
 
@@ -277,8 +279,16 @@ BOOLEAN InitMainMenu( )
 	//Create the background mouse mask
 	CreateDestroyBackGroundMouseMask( TRUE );
 
-	CreateDestroyMainMenuButtons( TRUE );
+	vs_desc.fCreateFlags = VSURFACE_CREATE_FROMFILE | VSURFACE_SYSTEM_MEM_USAGE;
+	strcpy(vs_desc.ImageFile, "INTERFACE\\MM24Background.sti");
+	if( !AddVideoSurface( &vs_desc, &guiMainMenuBackGroundImage ) )
+	{
+		Assert( 0 );
+		return( FALSE );
+	}
 
+/*
+old graphics
 	// load background graphic and add it
 	VObjectDesc.fCreateFlags=VOBJECT_CREATE_FROMFILE;
 	FilenameForBPP("LOADSCREENS\\MainMenuBackGround.sti", VObjectDesc.ImageFile);
@@ -289,6 +299,11 @@ BOOLEAN InitMainMenu( )
 //	FilenameForBPP("INTERFACE\\Ja2_2.sti", VObjectDesc.ImageFile);
 	FilenameForBPP("LOADSCREENS\\Ja2Logo.sti", VObjectDesc.ImageFile);
 	CHECKF(AddVideoObject(&VObjectDesc, &guiJa2LogoImage ));
+*/
+
+
+	//Create the buttons
+	CreateDestroyMainMenuButtons( TRUE );
 
 /*
 	// Gray out some buttons based on status of game!
@@ -336,8 +351,11 @@ void ExitMainMenu( )
 
 	CreateDestroyMainMenuButtons( FALSE );
 	
-	DeleteVideoObjectFromIndex( guiMainMenuBackGroundImage );
-	DeleteVideoObjectFromIndex( guiJa2LogoImage );
+//	DeleteVideoObjectFromIndex( guiMainMenuBackGroundImage );
+//	DeleteVideoObjectFromIndex( guiJa2LogoImage );
+
+	DeleteVideoSurfaceFromIndex( guiMainMenuBackGroundImage );
+
 
 	gMsgBox.uiExitScreen = MAINMENU_SCREEN;
 /*
@@ -640,6 +658,9 @@ BOOLEAN CreateDestroyMainMenuButtons( BOOLEAN fCreate )
 
 void RenderMainMenu()
 {
+	HVSURFACE hVSurface;
+	HVSURFACE hVSaveSurface;
+/*
   HVOBJECT hPixHandle;
 
 	//Get and display the background image
@@ -650,6 +671,11 @@ void RenderMainMenu()
 	GetVideoObject(&hPixHandle, guiJa2LogoImage );
   BltVideoObject( FRAME_BUFFER, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY,NULL);
   BltVideoObject( guiSAVEBUFFER, hPixHandle, 0, 188, 15, VO_BLT_SRCTRANSPARENCY,NULL);
+*/
+	GetVideoSurface( &hVSurface, guiMainMenuBackGroundImage );
+	GetVideoSurface( &hVSaveSurface, guiSAVEBUFFER );
+	BltVideoSurfaceToVideoSurface( ghFrameBuffer, hVSurface, 0, 0, 0, 0, NULL );
+	BltVideoSurfaceToVideoSurface( hVSaveSurface, hVSurface, 0, 0, 0, 0, NULL );
 
 
 	DrawTextToScreen( gzCopyrightText[ 0 ], 0, 465, SCREEN_BUFFER_WIDTH, FONT10ARIAL, FONT_MCOLOR_WHITE, FONT_MCOLOR_BLACK, FALSE, CENTER_JUSTIFIED );	
