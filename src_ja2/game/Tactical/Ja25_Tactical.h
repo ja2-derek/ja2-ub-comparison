@@ -37,6 +37,8 @@ typedef struct
 BOOLEAN HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( SOLDIERTYPE *pSoldier, BOOLEAN fSayQuoteOnlyOnce );
 
 void RevealAllDroppedEnemyItems();
+
+
 BOOLEAN HandleNewGunComment( SOLDIERTYPE *pSoldier, INT32 iItemIndex, BOOLEAN fFromGround );
 
 void		HandleJa25EnemyExpLevelModifier( );

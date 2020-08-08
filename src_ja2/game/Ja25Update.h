@@ -13,7 +13,15 @@
 
 #define 	JA25_PROF_DAT "BINARYDATA\\Ja25Prof.dat"
 
+
+
+BOOLEAN ConvertJa2SaveToJa2_5();
+
+BOOLEAN ImportOldProfilesAndProcessThem();
 void GivePlayerStartingJa25Money();
 
+UINT32	HandleDifficultyModifierForImportedGames();
+
+BOOLEAN DoesJa25ImportSaveExistAndSeemValid();
 
 #endif

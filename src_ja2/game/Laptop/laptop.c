@@ -2640,8 +2640,13 @@ void HaventMadeImpMercEmailCallBack()
 		//if the player STILL hasnt made an imp merc yet
 		if( ( LaptopSaveInfo.fIMPCompletedFlag == FALSE ) && ( LaptopSaveInfo.fSentImpWarningAlready == FALSE ) )
 		{
+			//if the player DIDNT import the save
+			if( !gubFact[ FACT_PLAYER_IMPORTED_SAVE ] )
+			{
+				//send a follow up email to the player
 			LaptopSaveInfo.fSentImpWarningAlready = TRUE;
-			AddEmail(IMP_EMAIL_AGAIN,IMP_EMAIL_AGAIN_LENGTH,1, GetWorldTotalMin( ) );
+				AddEmail( IMP_EMAIL_AGAIN, IMP_EMAIL_AGAIN_LENGTH, CHAR_PROFILE_SITE, GetWorldTotalMin( ) );
+			}
 		}
 	}
 }

@@ -25,9 +25,14 @@
 #define MAX_STAT_VALUE 100			// for stats and skills
 #define MAXEXPLEVEL     10      // maximum merc experience level
 
-#define SKILLS_SUBPOINTS_TO_IMPROVE		25
-#define ATTRIBS_SUBPOINTS_TO_IMPROVE	50
-#define LEVEL_SUBPOINTS_TO_IMPROVE		350    // per current level!	(Can't go over 6500, 10x must fit in USHORT!)
+#define SKILLS_SUBPOINTS_TO_IMPROVE										15		//18	//Ja2 Value: 25
+#define ATTRIBS_SUBPOINTS_TO_IMPROVE									30		//35	//Ja2 Value: 50
+
+#define LEVEL_SUBPOINTS_TO_IMPROVE										200		//245	//Ja2 Value: 350    // per current level!	(Can't go over 6500, 10x must fit in USHORT!)
+#define LEVEL_SUBPOINTS_TO_IMPROVE_IMPORTED_GAME			245		//Ja2 Value: 350    // per current level!	(Can't go over 6500, 10x must fit in USHORT!)
+
+// DONT use LEVEL_SUBPOINTS_TO_IMPROVE directory, use the function GetLevelSubPointsToImprove()
+INT32 GetLevelSubPointsToImprove();
 
 #define WORKIMPROVERATE  2      // increase to make working  mercs improve more
 #define TRAINIMPROVERATE 2      // increase to make training mercs improve more

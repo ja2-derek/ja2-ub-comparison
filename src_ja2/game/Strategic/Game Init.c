@@ -470,7 +470,24 @@ Ja25 MERC is available from the begining
 
 		//Init the initial hweli crash sequence variable
 		InitializeHeliGridnoAndTime( FALSE );
+
+		//JA25 
+		//If the user has selected to import the old ja2 characters, load them up
+		if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+		{
+			//load the profiles from the players Ja2 converted save
+			if( !ImportOldProfilesAndProcessThem() )
+			{
+				//an error occured, display error message and return back to the main menu
+
+				return( FALSE );
+			}
+		}
+		else
+		{
 			SetFactTrue( FACT_TEX_IS_IN_GAME_AND_ALIVE_IN_STORE );
+		}
+
 		//If tex is in the game ( John is NOT in the game )
 		if( gJa25SaveStruct.fJohnKulbaIsInGame == FALSE )
 		{
@@ -774,6 +791,9 @@ BOOLEAN QuickGameMemberHireMerc( UINT8 ubCurrentSoldier )
 void ReStartingGame()
 {
 	UINT16	cnt;
+
+	//reset the flag that says we imported a Ja2 save
+	gJa25SaveStruct.fImportCharactersFromOldJa2Save = FALSE;
 
 	//Pause the game
 	gfGamePaused = TRUE;

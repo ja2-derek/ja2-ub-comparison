@@ -1066,7 +1066,7 @@ UINT16 SubpointsPerPoint(UINT8 ubStat, INT8 bExpLevel)
       break;
 
     case EXPERAMT:
-			usSubpointsPerPoint = LEVEL_SUBPOINTS_TO_IMPROVE * bExpLevel;
+			usSubpointsPerPoint = bExpLevel * GetLevelSubPointsToImprove();
       break;
 
     default:
@@ -1614,3 +1614,16 @@ void MERCMercWentUpALevelSendEmail( UINT8 ubMercMercIdValue )
 	ubEmailOffset = MERC_UP_LEVEL_BIFF + MERC_UP_LEVEL_LENGTH_BIFF * ( ubMercMercIdValue ); 
 	AddEmail( ubEmailOffset, MERC_UP_LEVEL_LENGTH_BIFF, SPECK_FROM_MERC, GetWorldTotalMin() );
 }
+INT32 GetLevelSubPointsToImprove()
+{
+	//if the player imported the save, have them increase exp level a bit slower then if they didnt import
+	if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+	{
+		return( LEVEL_SUBPOINTS_TO_IMPROVE_IMPORTED_GAME );
+	}
+	else
+	{
+		return( LEVEL_SUBPOINTS_TO_IMPROVE );
+	}
+}
+
