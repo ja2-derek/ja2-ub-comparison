@@ -310,6 +310,11 @@ void HandleMovingEnemiesCloseToEntranceInFirstTunnelMap();
 void HandleMovingEnemiesCloseToEntranceInSecondTunnelMap();
 void HandleFirstPartOfTunnelFanSound();
 void HandlePowerGenFanSoundModification();
+BOOLEAN MoveEnemyFromGridNoToRoofGridNo( INT16 sSourceGridNo, INT16 sDestGridNo );
+void		HandleMovingEnemiesOntoRoofs();
+
+//ppp
+
 
 
 extern void InitializeTacticalStatusAtBattleStart();
@@ -5224,5 +5229,70 @@ void HandleFirstPartOfTunnelFanSound()
 			break;
 	}
 }
+
+void HandleMovingEnemiesOntoRoofs()
+{
+	if( gWorldSectorX <= 0 || gWorldSectorY <= 0 || gbWorldSectorZ < 0 )
+	{
+		return;
+	}
+
+	//if this is the sector south of the town
+	if( gWorldSectorX == 11 && gWorldSectorY == MAP_ROW_J && gbWorldSectorZ == 0 )
+	{
+		switch( gGameOptions.ubDifficultyLevel )
+		{
+			case DIF_LEVEL_EASY:
+			case DIF_LEVEL_MEDIUM:
+				break;
+			case DIF_LEVEL_HARD:
+				MoveEnemyFromGridNoToRoofGridNo( 15446, 13993 );
+				MoveEnemyFromGridNoToRoofGridNo( 15436, 14006 );
+				break;
+		}
+	}
+
+	//else if this is the sector south of the town
+	else if( gWorldSectorX == 11 && gWorldSectorY == MAP_ROW_H && gbWorldSectorZ == 0 )
+	{
+		switch( gGameOptions.ubDifficultyLevel )
+		{
+			case DIF_LEVEL_EASY:
+			case DIF_LEVEL_MEDIUM:
+				break;
+			case DIF_LEVEL_HARD:
+				MoveEnemyFromGridNoToRoofGridNo( 8711, 5521 );
+				break;
+		}
+	}
+}
+
+
+
+BOOLEAN MoveEnemyFromGridNoToRoofGridNo( INT16 sSourceGridNo, INT16 sDestGridNo )
+{
+	SOLDIERTYPE *pSoldier=NULL;
+	INT32				cnt;
+	INT16				sXPos, sYPos;
+
+	cnt = gTacticalStatus.Team[ ENEMY_TEAM ].bFirstID;
+  for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ ENEMY_TEAM ].bLastID; cnt++, pSoldier++)
+	{	
+		if( pSoldier->bLife >= OKLIFE && pSoldier->bActive && pSoldier->bInSector &&
+				pSoldier->sGridNo == sSourceGridNo )
+		{
+			SetSoldierHeight( pSoldier, 50.0 );
+
+			// move soldier
+			ConvertGridNoToCenterCellXY( sDestGridNo, &sXPos, &sYPos );
+			EVENT_SetSoldierPosition( pSoldier, sXPos, sYPos );
+
+			return( TRUE );
+//			pSoldier->bOrders = SEEKENEMY;
+		}
+	}
+
+	return( FALSE );
+
 }
 
