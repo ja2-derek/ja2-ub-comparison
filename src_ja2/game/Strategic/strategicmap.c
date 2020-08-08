@@ -760,7 +760,10 @@ BOOLEAN	SetCurrentWorldSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 {
 	UNDERGROUND_SECTORINFO	*pUnderWorld=NULL;
 	BOOLEAN									fChangeMusic = TRUE;
+	BOOLEAN									fWorldWasLoaded=FALSE;
+	INT16										sOldMapX, sOldMapY, sOldMapZ;
 
+	sOldMapX=sOldMapY=sOldMapZ = 0;
 	
 	// ATE: Zero out accounting functions
 	memset( gbMercIsNewInThisSector, 0, sizeof( gbMercIsNewInThisSector ) );
@@ -807,13 +810,24 @@ Ja25 no militia
 
 	if( gWorldSectorX && gWorldSectorY && gbWorldSectorZ != -1 )
 	{
+		//remember the old sector
+		sOldMapX = gWorldSectorX;
+		sOldMapY = gWorldSectorY;
+		sOldMapZ = gbWorldSectorZ;
+
 		HandleDefiniteUnloadingOfWorld( ABOUT_TO_LOAD_NEW_MAP );
+		fWorldWasLoaded = TRUE;
 	}
 
 	// make this the currently loaded sector
 	gWorldSectorX  = sMapX;
 	gWorldSectorY  = sMapY;
 	gbWorldSectorZ = bMapZ;
+
+	if( fWorldWasLoaded )
+	{
+		HandleSectorSpecificUnLoadingOfMap( sOldMapX, sOldMapY, (UINT8)sOldMapZ );
+	}
 
 	// update currently selected map sector to match
 	ChangeSelectedMapSector( sMapX, sMapY, bMapZ );
@@ -5076,6 +5090,45 @@ void ShouldNpcBeAddedToSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 }
 
 
+	}
+}
+void HandleSectorSpecificUnLoadingOfMap( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
+{
+	//if this is the power gen map
+	if( sMapX == 13 && sMapY == MAP_ROW_J && bMapZ == 0 )
+	{
+		BOOLEAN fGoingToTunnelSector=FALSE;
+
+		//if we are going to the first sector if the tunnel
+		if( gWorldSectorX == 14 &&
+				gWorldSectorY == MAP_ROW_J &&
+				gbWorldSectorZ == 1 )
+		{
+			fGoingToTunnelSector = TRUE;
+		}
+
+		switch( gJa25SaveStruct.ubStateOfFanInPowerGenSector )
+		{
+			case PGF__RUNNING_NORMALLY:
+				HandleRemovingPowerGenFanSound();
+				break;
+		}
+
+		//Remeber how the player got through
+		HandleHowPlayerGotThroughFan();
+	}
+	//else if this is the 1st level of tunne;l
+	else	if( sMapX == 14 && sMapY == MAP_ROW_J && bMapZ == 1 )
+	{
+		switch( gJa25SaveStruct.ubStateOfFanInPowerGenSector )
+		{
+			case PGF__RUNNING_NORMALLY:
+			case PGF__STOPPED:
+
+				//remove the sound to the world
+				HandleRemovingPowerGenFanSound();
+				break;
+		}
 	}
 }
 void HandleMovingEnemiesCloseToEntranceInFirstTunnelMap()

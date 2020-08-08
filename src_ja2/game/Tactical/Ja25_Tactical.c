@@ -13,7 +13,13 @@
 // Local Defines
 //
 //*******************************************************************
-;
+
+#define		TCTL__DELAY_BETWEEN_ALARM_SOUNDS													4000
+
+
+#define		PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_EASY								2
+#define		PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_NORMAL							2
+#define		PGF__NUM_TURNS_TILL_START_FAN_BACK_UP_HARD								1
 
 //*******************************************************************
 //

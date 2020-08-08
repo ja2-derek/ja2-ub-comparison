@@ -353,6 +353,12 @@ void EndTurnEvents( void )
 
 	// decay AI warning values from corpses
 	DecayRottingCorpseAIWarnings();
+
+	//increment the number of tactical turns that have gone by in turn based mode
+	gJa25SaveStruct.uiTacticalTurnCounter++;
+
+	//if the fan should start up
+	HandleStartingFanBackUp();
 }
 
 void BeginTeamTurn( UINT8 ubTeam )
