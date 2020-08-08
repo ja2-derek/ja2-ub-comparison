@@ -4754,7 +4754,7 @@ void BlitMineText( INT16 sMapX, INT16 sMapY )
 
 		// set coordinates for start of mine text 
 		sScreenX += MAP_GRID_X / 2;			// centered around middle of mine square
-		sScreenY += MAP_GRID_Y + 1;			// slightly below
+//ja25		sScreenY += MAP_GRID_Y + 1;			// slightly below
 	}
 
 
@@ -4770,11 +4770,11 @@ void BlitMineText( INT16 sMapX, INT16 sMapY )
 	ubMineIndex = GetMineIndexForSector( sMapX, sMapY );
 
 	// display associated town name, followed by "mine"
-	swprintf( wString, L"%s %s", pTownNames[ GetTownAssociatedWithMine( GetMineIndexForSector( sMapX, sMapY ) ) ],  pwMineStrings[ 0 ] );
+//JA25:	swprintf( wString, L"%s %s", pTownNames[ GetTownAssociatedWithMine( GetMineIndexForSector( sMapX, sMapY ) ) ],  pwMineStrings[ 0 ] );
+	swprintf( wString, L"%s", pTownNames[ GetTownAssociatedWithMine( GetMineIndexForSector( sMapX, sMapY ) ) ] );
 	AdjustXForLeftMapEdge(wString, &sScreenX);
 	mprintf( ( sScreenX - StringPixLength( wString, MAP_FONT ) / 2 ) , sScreenY + ubLineCnt * GetFontHeight( MAP_FONT ) , wString );
-	ubLineCnt++;
-
+//	ubLineCnt++;
 
 /*
 Ja25
