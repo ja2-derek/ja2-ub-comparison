@@ -3944,6 +3944,11 @@ INT8 DrawUIMovementPath( SOLDIERTYPE *pSoldier, UINT16 usMapPos, UINT32 uiFlags 
 					sActionGridNo = sAdjustedGridNo;
 				}
 				sAPCost += AP_STEAL_ITEM;
+				// CJC August 13 2002: take into account stance in AP prediction
+				if (!(PTR_STANDING))
+				{
+					sAPCost += GetAPsToChangeStance( pSoldier, ANIM_STAND );
+				}
 				sAPCost += UIPlotPath( pSoldier, sActionGridNo, NO_COPYROUTE, fPlot, TEMPORARY, (UINT16)pSoldier->usUIMovementMode, NOT_STEALTH, FORWARD, pSoldier->bActionPoints);
 
 				if ( sActionGridNo != pSoldier->sGridNo )
