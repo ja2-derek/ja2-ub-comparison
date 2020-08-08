@@ -489,7 +489,11 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 		// else it's a plain old grenade, now in his hand
 		bPayloadPocket = HANDPOS;
 		usGrenade = pSoldier->inv[ bPayloadPocket ].usItem;
-
+		if ( usGrenade == ROCK || usGrenade == ROCK2 )
+		{
+			ubSafetyMargin = 0;
+		}
+		else
 		{
 			ubSafetyMargin = Explosive[ Item[ usGrenade ].ubClassIndex ].ubRadius;
 			if ( usGrenade == BREAK_LIGHT || usGrenade == GL_FLARE )
@@ -684,7 +688,7 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 
 
 	// this is try to minimize enemies wasting their (limited) toss attacks, with the exception of break lights
-	if (usGrenade != BREAK_LIGHT)
+	if ( usGrenade != ROCK && usGrenade != ROCK2 && usGrenade != BREAK_LIGHT)
 	{
 		// this is try to minimize enemies wasting their (limited) toss attacks:
 		switch( ubDiff )
@@ -855,10 +859,17 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 
 						if (usOppDist)
 						{
+							if ( usGrenade && usGrenade == ROCK )
+							{
+								iEstDamage = 0;
+							}
+							else
+							{
 							// reduce the estimated damage for his distance from gridno
 							// use 100% at range 0, 80% at range 1, and 60% at range 2, etc.
 							iEstDamage = (iEstDamage * (100 - (20 * usOppDist))) / 100;
 							//NumMessage("THROW reduced usEstDamage = ",usEstDamage);
+						}
 						}
 						else
 						{
@@ -1597,6 +1608,23 @@ INT32 EstimateThrowDamage( SOLDIERTYPE *pSoldier, UINT8 ubItemPos, SOLDIERTYPE *
 	INT32 iExplosDamage, iBreathDamage, iArmourAmount, iDamage = 0;
 	INT8	bSlot;
 
+	if ( pSoldier->bTeam == CIV_TEAM && (pSoldier->inv[ubItemPos].usItem == ROCK || pSoldier->inv[ubItemPos].usItem == ROCK2) )
+	{
+		//
+		// Want to make CIVs more likely to through rocks when further away, up close looks dumb
+		//
+
+		//if the CIV is fairly close the opponent
+		if( PythSpacesAway( pSoldier->sGridNo, pOpponent->sGridNo ) < 5 )
+		{
+			return( 10 );//Ja25 was 50
+		}
+		else
+		{
+			return( 100 );//Ja25 was 50
+		}
+	}
+
 	switch ( pSoldier->inv[ ubItemPos ].usItem )
 	{
 		case GL_SMOKE_GRENADE:
@@ -1865,6 +1893,11 @@ void CheckIfTossPossible(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 					pBestThrow->bWeaponIn = FindThrowableGrenade( pSoldier );
 				}
 			}
+		}
+
+		if ( PTR_CIVILIAN && pBestThrow->bWeaponIn == NO_SLOT )
+		{
+			pBestThrow->bWeaponIn = FindObjClass( pSoldier, IC_THROWN );
 		}
 	}
 

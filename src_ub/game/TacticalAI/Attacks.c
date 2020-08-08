@@ -686,9 +686,8 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 	//NumMessage("ubOpponentCnt = ",ubOpponentCnt);
 
 
-	if ( usGrenade != ROCK && usGrenade != ROCK2 )
 	// this is try to minimize enemies wasting their (limited) toss attacks, with the exception of break lights
-	if (usGrenade != BREAK_LIGHT)
+	if ( usGrenade != ROCK && usGrenade != ROCK2 && usGrenade != BREAK_LIGHT)
 	{
 		// this is try to minimize enemies wasting their (limited) toss attacks:
 		switch( ubDiff )
