@@ -38,6 +38,8 @@ BOOLEAN HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( SOLDIERTYPE *pSold
 
 void RevealAllDroppedEnemyItems();
 BOOLEAN HandleNewGunComment( SOLDIERTYPE *pSoldier, INT32 iItemIndex, BOOLEAN fFromGround );
+
+void		HandleJa25EnemyExpLevelModifier( );
 void		HandleInitialEventsInHeliCrash();
 void		HandleCommanderMorrisNewMercWantsNoteDelayedSpeech();
 

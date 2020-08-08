@@ -54,6 +54,11 @@ BOOLEAN IsThisGunANewJa25Gun( INT32 iItemIndex );
 BOOLEAN SaveNewGunQuotesArrayToSaveGameFile( HWFILE hFile );
 BOOLEAN LoadNewGunQuotesArrayToSaveGameFile( HWFILE hFile );
 void		HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex );
+void		Ja25ScaleAllEnemiesByValue( INT8 bExpScaleValue );
+INT8		JA25SecondHighestExpLevelOnPlayersTeam( );
+INT8		JA25HighestExpLevelOnTeam( INT8 bTeam );
+INT8		JA25SecondHighestExpLevelOnEnemiesTeam( );
+INT8		CountNumberOfMercsOnSameTeamOfSameExpLevel( INT8 bTeam, INT8 bExpLevel );
 UINT32	GetNumberOfTurnsPowerGenFanWillBeStoppedFor();
 //ppp
 
@@ -835,6 +840,275 @@ BOOLEAN IsSoldierAliveWithInitListGridNo( INT16 sInitListGridNo )
 	}
 	return( FALSE );
 }
+
+#define	JA25__MAX_EXP_DECREASE							(-2)
+#define	JA25__MIN_EXP_LEVEL_AFTER_CHANGE		(2)
+
+void HandleJa25EnemyExpLevelModifier( )
+{
+	INT8 bPlayerExpLevel=0;
+	INT8 bEnemyExpLevel=0;
+	INT8 bDifference=0;
+
+	if( gTacticalStatus.uiFlags & LOADING_SAVED_GAME )
+	{
+		return;
+	}
+
+	//if there are no enemies
+	if( NumEnemyInSector() == 0 )
+	{
+		//get out
+		return;
+	}
+
+	switch( gGameOptions.ubDifficultyLevel )
+	{
+		case DIF_LEVEL_EASY:
+
+			//Get the 2nd highest player exp level
+			bPlayerExpLevel = JA25SecondHighestExpLevelOnPlayersTeam( );
+
+			//get the enemies exp level
+			bEnemyExpLevel = JA25SecondHighestExpLevelOnEnemiesTeam( );
+
+			//get the difference b/n the 2
+			bDifference = bPlayerExpLevel - bEnemyExpLevel;
+			
+			//if the players exp level is less then enemies
+			if( bDifference < 0 )
+			{
+				//if the difference 
+				if( bDifference < JA25__MAX_EXP_DECREASE )
+				{
+					bDifference = JA25__MAX_EXP_DECREASE;
+				}
+
+				//Degrade all the enemies exp levels by difference
+				Ja25ScaleAllEnemiesByValue( bDifference );
+			}
+			break;
+		case DIF_LEVEL_MEDIUM:
+
+			//if the player imported the save
+			if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+			{
+				//Get the 2nd highest player exp level
+				bPlayerExpLevel = JA25SecondHighestExpLevelOnPlayersTeam( );
+
+				//get the best enemies exp level
+				bEnemyExpLevel = JA25HighestExpLevelOnTeam( ENEMY_TEAM );
+
+				//get the difference b/n the 2
+				bDifference = bPlayerExpLevel - bEnemyExpLevel;
+				
+				//if the players exp level is greater then enemies
+				if( bDifference > 0 )
+				{
+					//Upgrade all the enemies exp levels by difference
+					Ja25ScaleAllEnemiesByValue( bDifference );
+				}
+			}
+
+			break;
+		case DIF_LEVEL_HARD:
+			//Get the highest player exp level
+			bPlayerExpLevel = JA25HighestExpLevelOnTeam( OUR_TEAM );
+
+			//get the best enemies exp level
+			bEnemyExpLevel = JA25HighestExpLevelOnTeam( ENEMY_TEAM );
+
+			//get the difference b/n the 2
+			bDifference = bPlayerExpLevel - bEnemyExpLevel;
+			
+			//if the players exp level is greater then enemies
+			if( bDifference > 0 )
+			{
+				//if the player imported the save
+				if( gJa25SaveStruct.fImportCharactersFromOldJa2Save )
+				{
+					//Upgrade all the enemies exp levels by difference
+					Ja25ScaleAllEnemiesByValue( bDifference );
+				}
+				else
+				{
+					//Upgrade all the enemies exp levels by 1
+					Ja25ScaleAllEnemiesByValue( 1 );
+				}
+			}
+			break;
+	}
+}
+
+INT8 JA25HighestExpLevelOnTeam( INT8 bTeam )
+{
+	INT32 cnt;
+	SOLDIERTYPE *pSoldier=NULL;
+	INT8	bHighestExpLevel=0;
+
+	cnt = gTacticalStatus.Team[ bTeam ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ bTeam ].bLastID; cnt++, pSoldier++)
+	{
+		if( pSoldier->bActive )
+		{
+			if( bHighestExpLevel < pSoldier->bExpLevel )
+			{
+				bHighestExpLevel = pSoldier->bExpLevel;
+			}
+		}
+	}
+
+	return( bHighestExpLevel );
+}
+
+
+INT8 JA25SecondHighestExpLevelOnPlayersTeam( )
+{
+	INT32 cnt;
+	SOLDIERTYPE *pSoldier=NULL;
+	INT8	bHighestExpLevel=0;
+	INT8	b2ndHighestExpLevel=0;
+	INT8  bNumber=0;
+
+	cnt = gTacticalStatus.Team[ OUR_TEAM ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; cnt++, pSoldier++)
+	{
+		if( pSoldier->bActive )
+		{
+			if( bHighestExpLevel < pSoldier->bExpLevel )
+			{
+				bHighestExpLevel = pSoldier->bExpLevel;
+			}
+
+			else if( b2ndHighestExpLevel < pSoldier->bExpLevel )
+			{
+				b2ndHighestExpLevel = pSoldier->bExpLevel;
+			}
+		}
+	}
+
+	//Count number of people on team with same EXP level
+	bNumber = CountNumberOfMercsOnSameTeamOfSameExpLevel( OUR_TEAM, bHighestExpLevel );
+
+	//if there are more then 2 mercs on the team with the same high exp level
+	if( bNumber >= 2 )
+	{
+		//use the highest exp level
+		b2ndHighestExpLevel = bHighestExpLevel;
+	}
+	else
+	{
+		//else we are to only decuct 1 exp level from the main guy so there isnt a HUGE descrepincy b/n 1 super merc
+		//and a bunch of low level losers on a team
+		b2ndHighestExpLevel = bHighestExpLevel - 1;
+	}
+
+	return( b2ndHighestExpLevel );
+}
+
+INT8 JA25SecondHighestExpLevelOnEnemiesTeam( )
+{
+	INT32 cnt;
+	SOLDIERTYPE *pSoldier=NULL;
+	INT8	bHighestExpLevel=0;
+	INT8	b2ndHighestExpLevel=0;
+	INT8	bNumber=0;
+
+	//Get the highest exp level on the enemy team
+	bHighestExpLevel = JA25HighestExpLevelOnTeam( ENEMY_TEAM );
+
+	//Count number of people on team with same EXP level
+	bNumber = CountNumberOfMercsOnSameTeamOfSameExpLevel( ENEMY_TEAM, bHighestExpLevel );
+
+	//if there are more then 2 enemies at the high exp level
+	if( bNumber > 2 )
+	{
+		//use the highest value
+		b2ndHighestExpLevel = bHighestExpLevel;
+	}
+	else
+	{
+		//otherwise loop through and determine the second highest exp level
+		cnt = gTacticalStatus.Team[ ENEMY_TEAM ].bFirstID;
+		for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ ENEMY_TEAM ].bLastID; cnt++, pSoldier++)
+		{
+			if( pSoldier->bActive )
+			{
+				//if the exp level is less then the highest
+				if( pSoldier->bExpLevel < bHighestExpLevel )
+				{
+					//is this a new second highest level
+					if( b2ndHighestExpLevel < pSoldier->bExpLevel )
+					{
+						b2ndHighestExpLevel = pSoldier->bExpLevel;
+					}
+				}
+			}
+		}
+	}
+
+	return( b2ndHighestExpLevel );
+}
+
+
+void Ja25ScaleAllEnemiesByValue( INT8 bExpScaleValue )
+{
+	INT32 cnt;
+	SOLDIERTYPE *pSoldier=NULL;
+	INT8		bNewExpLevel=0;
+
+	cnt = gTacticalStatus.Team[ ENEMY_TEAM ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ ENEMY_TEAM ].bLastID; cnt++, pSoldier++)
+	{
+		if( pSoldier->bActive )
+		{
+			bNewExpLevel = pSoldier->bExpLevel + bExpScaleValue;
+
+			if( bNewExpLevel > 10 )
+			{
+				bNewExpLevel = 10;
+			}
+			//else if the new value will bring it below 1
+			else if( bNewExpLevel < 1 )
+			{
+				bNewExpLevel = 1;
+			}
+
+			//if the enemy originally had a higher exp level AND will now go below set level
+			else if( pSoldier->bExpLevel > JA25__MIN_EXP_LEVEL_AFTER_CHANGE && bNewExpLevel < JA25__MIN_EXP_LEVEL_AFTER_CHANGE )
+			{
+				bNewExpLevel = JA25__MIN_EXP_LEVEL_AFTER_CHANGE;
+			}
+
+
+			pSoldier->bExpLevel = bNewExpLevel;
+		}
+	}
+}
+
+INT8 CountNumberOfMercsOnSameTeamOfSameExpLevel( INT8 bTeam, INT8 bExpLevel )
+{
+	INT8	bNumber=0;
+	SOLDIERTYPE *pSoldier=NULL;
+	INT32 cnt;
+
+	cnt = gTacticalStatus.Team[ bTeam ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ bTeam ].bLastID; cnt++, pSoldier++)
+	{
+		if( pSoldier->bActive )
+		{
+			if( bExpLevel == pSoldier->bExpLevel )
+			{
+				bNumber++;
+			}
+		}
+	}
+
+	return( bNumber );
+}
+
+
+
 void HandleFanStartingAtEndOfCombat()
 {
 	//if its not the right sector

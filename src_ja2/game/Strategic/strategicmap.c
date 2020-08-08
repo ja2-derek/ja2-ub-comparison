@@ -1207,6 +1207,10 @@ Ja25 no creatures or militia
 	ScreenMsg( FONT_YELLOW, MSG_DEBUG, L"Current Time is: %d", GetWorldTotalMin() );
 
 	HandleSectorSpecificModificatioToMap( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, FALSE );
+
+	//If there needs to be modifications done to the enemy exp levels...
+	HandleJa25EnemyExpLevelModifier( );
+
 	AllTeamsLookForAll( TRUE );
 }
 
