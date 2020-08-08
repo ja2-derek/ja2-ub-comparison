@@ -2266,7 +2266,7 @@ INT16 FindClosestBoxingRingSpot( SOLDIERTYPE * pSoldier, BOOLEAN fInRing )
 				if ( (fInRing && ubRoom == BOXING_RING) || (!fInRing && ubRoom != BOXING_RING ) && LegalNPCDestination(pSoldier,sGridNo,IGNORE_PATH,NOWATER,0) )
 				{
 					iDistance = abs( sXOffset ) + abs( sYOffset );
-					if ( iDistance < iClosestDistance )
+					if ( iDistance < iClosestDistance && WhoIsThere2( sGridNo, 0 ) == NOBODY )
 					{
 						sClosestSpot = sGridNo;
 						iClosestDistance = iDistance;

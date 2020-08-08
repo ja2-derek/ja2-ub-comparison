@@ -340,6 +340,26 @@ BOOLEAN CloseEnoughForGrenadeToss( INT16 sGridNo, INT16 sGridNo2 )
 	INT16	sXPos, sYPos, sXPos2, sYPos2;
 	UINT8	ubMovementCost;
 
+	if (sGridNo == sGridNo2 )
+	{
+		// checking the same space; if there is a closed door next to location in ANY direction then forget it 
+		// (could be the player closed a door on us)
+		for (bDirection = 0; bDirection < NUM_WORLD_DIRECTIONS; bDirection++)
+		{
+			sTempGridNo = NewGridNo( sGridNo, DirectionInc( bDirection ) );
+			ubMovementCost = gubWorldMovementCosts[ sTempGridNo ][ bDirection ][ 0 ];
+			if ( IS_TRAVELCOST_DOOR( ubMovementCost ) )
+			{
+				ubMovementCost = DoorTravelCost( NULL, sTempGridNo, ubMovementCost, FALSE, NULL );
+			}
+			if ( ubMovementCost >= TRAVELCOST_BLOCKED)
+			{
+				return( FALSE );
+			}
+		}
+	}
+	else
+	{
 	if ( CardinalSpacesAway( sGridNo, sGridNo2 ) > 2 )
 	{
 		return( FALSE );
@@ -371,6 +391,7 @@ BOOLEAN CloseEnoughForGrenadeToss( INT16 sGridNo, INT16 sGridNo2 )
 			return( FALSE );
 		}
 	} while( sTempGridNo != sGridNo2 );
+	}
 
 	return( TRUE );
 }
@@ -587,38 +608,57 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 			{
 				// cheat; only allow throw if person is REALLY within 2 tiles of where last seen
 
-				// Weird detail: if the opponent is in the same location then they may have closed a door on us.
-				// In which case, don't throw!
+				// JA2Gold: UB checks were screwed up
+				/*
 				if ( pOpponent->sGridNo == gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ] )
 				{
 					continue;
 				}
-				else if ( CloseEnoughForGrenadeToss( pOpponent->sGridNo, gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ] ) )
+				else */
+				if ( !CloseEnoughForGrenadeToss( pOpponent->sGridNo, gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ] ) )
+				{
+					continue;
+				}
+
+				sOpponentTile[ubOpponentCnt] = gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ];
+				bOpponentLevel[ubOpponentCnt] = gbLastKnownOppLevel[ pSoldier->ubID ][ pOpponent->ubID ];
+
+				// JA2Gold: commented out 
+				/*
+				if ( SpacesAway( pOpponent->sGridNo, gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ] ) > 2 )
 				{
 					continue;
 				}
 				sOpponentTile[ubOpponentCnt] = gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ];
 				bOpponentLevel[ubOpponentCnt] = gbLastKnownOppLevel[ pSoldier->ubID ][ pOpponent->ubID ];
+				*/
 			}
 			else if (bPersOL == HEARD_LAST_TURN )
 			{
 				// cheat; only allow throw if person is REALLY within 2 tiles of where last seen				
 
+				// screen out some ppl who have thrown
+				if ( PreRandom( 3 ) == 0 )
+				{
+					continue;
+				}
+
 				// Weird detail: if the opponent is in the same location then they may have closed a door on us.
 				// In which case, don't throw!
+
+				// JA2Gold: UB checks were screwed up
+				/*
 				if ( pOpponent->sGridNo == gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ] )
 				{
 					continue;
 				}
-				else if ( CloseEnoughForGrenadeToss( pOpponent->sGridNo, gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ] ) )
+				else 
+				*/
+				if ( !CloseEnoughForGrenadeToss( pOpponent->sGridNo, gsLastKnownOppLoc[ pSoldier->ubID ][ pOpponent->ubID ] ) )
 				{
 					continue;
 				}
-				if ( !pSoldier->bUnderFire && pSoldier->bShock == 0 )
-				{
-					continue;
-				}
-				if ( PreRandom( 3 ) == 0 )
+				if ( usGrenade != BREAK_LIGHT && !pSoldier->bUnderFire && pSoldier->bShock == 0 )
 				{
 					continue;
 				}
@@ -875,6 +915,7 @@ void CalcBestThrow(SOLDIERTYPE *pSoldier, ATTACKTYPE *pBestThrow)
 					}
 				}
 
+				// JA2Gold change to >=
 				if( ubOppsAdjacent >= 1 && ubNumExcludedTiles < 100)
 				{
 					// add to exclusion list so we don't calculate for this location twice
