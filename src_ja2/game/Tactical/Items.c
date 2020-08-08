@@ -1225,6 +1225,11 @@ INT8 FindAIUsableObjClass( SOLDIERTYPE * pSoldier, 	UINT32 usItemClass )
 			{
 				continue;
 			}
+			if ( usItemClass == IC_LAUNCHER && pSoldier->inv[bLoop].usItem == UNDER_GLAUNCHER )
+			{
+				// AI can't use under-glauncher's!
+				continue;
+			}
 			return( bLoop );
 		}
 	}
