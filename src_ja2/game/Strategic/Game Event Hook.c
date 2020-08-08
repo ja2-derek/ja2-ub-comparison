@@ -412,6 +412,10 @@ Ja25 No strategic ai
 			NewMercsAvailableAtMercSiteCallBack( );
 			break;
 
+		case EVENT_ATTACK_INITIAL_SECTOR_IF_PLAYER_STILL_THERE:
+			ShouldEnemiesBeAddedToInitialSector();
+			break;
+
 		case EVENT_DELAY_SOMEONE_IN_SECTOR_MSGBOX:
 			SetMsgBoxForPlayerBeNotifiedOfSomeoneElseInSector();
 			break;
