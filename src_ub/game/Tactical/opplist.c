@@ -2429,9 +2429,12 @@ void AddOneOpponent(SOLDIERTYPE *pSoldier)
 			return;
 		}
 		
+		if (pSoldier->bAlertStatus < STATUS_RED)
+		{
+			CheckForChangingOrders(pSoldier);
+		}
 
 		pSoldier->bAlertStatus = STATUS_BLACK;   // force black AI status right away
-		CheckForChangingOrders(pSoldier);
 
 		if (pSoldier->uiStatusFlags & SOLDIER_MONSTER)
 		{
