@@ -3756,6 +3756,11 @@ BOOLEAN LoadPlayerGroupList( HWFILE hFile, GROUP **pGroup )
 		pTemp->ubProfileID = (UINT8)uiProfileID;
 		sTempID = GetSoldierIDFromMercID( pTemp->ubProfileID );
 
+		if ( sTempID == -1 )
+		{
+			continue;
+		}
+
 		//Should never happen
 		//Assert( sTempID != -1 );
 		pTemp->ubID = (UINT8) sTempID;
@@ -3765,8 +3770,10 @@ BOOLEAN LoadPlayerGroupList( HWFILE hFile, GROUP **pGroup )
 		pTemp->next = NULL;
 
 		//if its the first time through
-		if( cnt == 0 )
+		if( !fCreatedHead )
 		{
+			fCreatedHead = TRUE;
+			 
 			pTempGroup->pPlayerList = pTemp;
 			pHead = pTemp;
 		}
