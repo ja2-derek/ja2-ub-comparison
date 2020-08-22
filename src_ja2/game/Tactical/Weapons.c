@@ -2448,7 +2448,6 @@ UINT32 CalcChanceToHitGun(SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime
 	INT8 bBandaged;
 	INT16	sDistVis;
 	UINT8	ubAdjAimPos;
-	UINT8 ubTargetID;
 
 	if ( pSoldier->bMarksmanship == 0 )
 	{
@@ -4229,6 +4228,8 @@ UINT32 CalcThrownChanceToHit(SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubAimTi
 	INT32 iChance, iMaxRange, iRange;
 	UINT16	usHandItem;
 	INT8 bPenalty, bBandaged;
+
+	usHandItem = pSoldier->inv[HANDPOS].usItem;
 
 	if ( pSoldier->bWeaponMode == WM_ATTACHED)
 	{

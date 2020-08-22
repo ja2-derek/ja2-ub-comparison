@@ -2375,6 +2375,7 @@ void SetSoldierGridNo( SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fForceRe
 	INT8		bDir;
 	INT32		cnt;
 	SOLDIERTYPE * pEnemy;
+	INT16		sDist;
 
 	//INT16	sX, sY, sWorldX, sZLevel;
 
@@ -6356,6 +6357,7 @@ UINT8 SoldierTakeDamage( SOLDIERTYPE *pSoldier, INT8 bHeight, INT16 sLifeDeduct,
 	INT8		bBandage;
 	INT16		sAPCost;
 	UINT8		ubBlood;
+	UINT16	usItemFlags=0;
 
   
   pSoldier->ubLastDamageReason = ubReason;

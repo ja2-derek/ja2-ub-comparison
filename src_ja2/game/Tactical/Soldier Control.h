@@ -127,6 +127,7 @@ UINT16 CivLastNames[MAXCIVLASTNAMES][10];
 #define SOLDIER_QUOTE_SAID_BUDDY_1_WITNESSED					0x0040
 #define SOLDIER_QUOTE_SAID_BUDDY_2_WITNESSED					0x0080
 #define SOLDIER_QUOTE_SAID_BUDDY_3_WITNESSED					0x0100
+#define	SOLDIER_QUOTE_SAID_THOUGHT_KILLED_YOU					0x0200
 
 
 #define	SOLDIER_CONTRACT_RENEW_QUOTE_NOT_USED					0
@@ -931,9 +932,13 @@ typedef struct
 	INT16												sLastTwoLocations[2];
   INT16                       bFillerDude;
   INT32                       uiTimeSinceLastBleedGrunt;
-  UINT8						ubNextToPreviousAttackerID;
+	BOOLEAN											fIgnoreGetupFromCollapseCheck;
+	TIMECOUNTER									GetupFromJA25StartCounter;
+	BOOLEAN											fWaitingToGetupFromJA25Start;
 
-	UINT8												bFiller[ 39 ];
+	UINT8												ubPercentDamageInflictedByTeam[NUM_ASSIST_SLOTS];			//The percent of damage inflicted by the player team.  Each element corresponds to the Soldier ID.  Each element contains the percent damage inflicted by that merc
+
+	UINT8												bFiller[ 16 ];
 
 } SOLDIERTYPE;	
 
@@ -1187,6 +1192,12 @@ void CrowsFlyAway( UINT8 ubTeam );
 void DebugValidateSoldierData( );
 
 void BeginTyingToFall( SOLDIERTYPE *pSoldier );
+
+void RewardExperienceToPlayerMercsWhoAssitedTheKill( SOLDIERTYPE *pEnemySoldier, INT32 iTotalNumChances );;
+void ResetSoldierDamageInflictedByTeamArray( SOLDIERTYPE *pSoldier );
+void HandleEnemyHurtByPlayerSoldier( SOLDIERTYPE *pEnemySoldier, UINT8 ubTeamMercID, INT16 sDamageInflicted );
+void IncrementAssistCountForMercsWhoDamagedEnemy( SOLDIERTYPE *pEnemySoldier );
+BOOLEAN HasAnyPlayerMercAssistedInKillingEnemy( SOLDIERTYPE *pEnemySoldier );
 
 void SetSoldierAsUnderAiControl( SOLDIERTYPE *pSoldier );
 void HandlePlayerTogglingLightEffects( BOOLEAN fToggleValue );

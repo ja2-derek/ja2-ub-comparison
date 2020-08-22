@@ -362,6 +362,12 @@ void HandleThePlayerBeNotifiedOfSomeoneElseInSector();
 void SetMsgBoxForPlayerBeNotifiedOfSomeoneElseInSector();
 
 void HandleDisplayingOfPlayerLostDialogue( void );
+
+
+// UTILITY FUNCTIONS
+INT8	NumActiveAndConsciousTeamMembers( UINT8 ubTeam );
+UINT8 NumEnemyInSector( );
+UINT8 NumCapableEnemyInSector( );
 INT8	NumMercsOnPlayerTeam( );
 
 
