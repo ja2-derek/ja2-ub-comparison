@@ -1078,6 +1078,9 @@ Ja25 No Ira
 	//remove the merc from the Personnel screens departed list ( if they have never been hired before, its ok to call it )
 	RemoveNewlyHiredMercFromPersonnelDepartedList( pSoldier->ubProfile );
 
+	//If this is a special NPC, play a quote from the team mates
+	HandlePlayingQuoteWhenHiringNpc( pNewSoldier->ubProfile );
+
 	return( TRUE );
 }
 

@@ -254,7 +254,8 @@ void HandleTacticalEndTurn( )
 		}
 	}
 
-	HandleRPCDescription( );
+//JA25: No Sector Descriptions
+//	HandleRPCDescription( );
 
 }
 
