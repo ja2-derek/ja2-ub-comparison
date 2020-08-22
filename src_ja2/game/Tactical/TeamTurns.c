@@ -1079,6 +1079,12 @@ BOOLEAN StandardInterruptConditionsMet( SOLDIERTYPE * pSoldier, UINT8 ubOpponent
 		return( FALSE );
 	}
 
+	// if the UI is locked by the scripting system then don't allow any interrupts!!
+	if ( gTacticalStatus.uiFlags & ENGAGED_IN_CONV )
+	{
+		return( FALSE );
+	}
+
 	if ( gTacticalStatus.ubAttackBusyCount > 0 )
 	{
 		return( FALSE );
