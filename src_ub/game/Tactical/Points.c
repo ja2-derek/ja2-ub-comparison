@@ -523,6 +523,10 @@ void DeductPoints( SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost )
 		{
 			pSoldier->sBreathRed = 0;
 		}
+		if ( pSoldier->sBreathRed > 10000 )
+		{
+			pSoldier->sBreathRed = 10000;
+		}
 
 		// Get new breath
 		bNewBreath = (UINT8)( pSoldier->bBreathMax - ( (FLOAT)pSoldier->sBreathRed / (FLOAT)100 ) );
@@ -548,13 +552,6 @@ void DeductPoints( SOLDIERTYPE *pSoldier, INT16 sAPCost, INT16 sBPCost )
 			bNewBreath = pSoldier->bBreathMax;
 		}
 		pSoldier->bBreath = bNewBreath;
-
-		if ( pSoldier->sBreathRed > 10000 )
-		{
-			pSoldier->sBreathRed = 10000;
-		}
-
-
 	}
 
 	// UPDATE BAR
