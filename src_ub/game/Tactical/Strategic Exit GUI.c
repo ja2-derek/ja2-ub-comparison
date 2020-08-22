@@ -276,27 +276,29 @@ BOOLEAN InternalInitSectorExitMenu( UINT8 ubDirection, INT16 sAdditionalData )
 		}
 	}
 
-	if( gExitDialog.fMultipleSquadsInSector && gTacticalStatus.fEnemyInSector )
+	if( gTacticalStatus.fEnemyInSector )
+	{
+		if( gExitDialog.fMultipleSquadsInSector )
 	{ //We have multiple squads in a hostile sector.  That means that we can't load the adjacent sector.
 		gExitDialog.fGotoSectorDisabled = TRUE;
 		gExitDialog.fGotoSector = FALSE;
 	}
+		else if( GetNumberOfMilitiaInSector( gWorldSectorX, gWorldSectorY, gbWorldSectorZ ) )
+		{ //Leaving this sector will result in militia being forced to fight the battle, can't load adjacent sector.
+			gExitDialog.fGotoSectorDisabled = TRUE;
+			gExitDialog.fGotoSector = FALSE;
+		}
+		if( !gExitDialog.fMultipleSquadsInSector && !gExitDialog.fAllMoveOn )
+		{
+			gExitDialog.fGotoSectorDisabled = TRUE;
+			gExitDialog.fGotoSector = FALSE;
+		}
+	}
 
-	//KM: Mar2 '99
 	if( !gExitDialog.fMultipleSquadsInSector && gExitDialog.fAllMoveOn )
 	{
 		gExitDialog.fGotoSectorDisabled = TRUE;
-		//KM : August 6, 1999 Patch fix
-		//     Added this code to prevent the player from tactically traversing to the adjacent sector (resulting in loading)
-		//     which would cause the game to crash (loading another sector while a battle is unresolved is BAD
-		if( gTacticalStatus.fEnemyInSector && GetNumberOfMilitiaInSector( gWorldSectorX, gWorldSectorY, gbWorldSectorZ ) )
-		{
-			gExitDialog.fGotoSector = TRUE;
-			gExitDialog.fGotoSectorText = FALSE;
-		}
-		//end
 	}
-	//end
 
 	gExitDialog.ubDirection							= ubDirection;
 	gExitDialog.sAdditionalData					= sAdditionalData;
