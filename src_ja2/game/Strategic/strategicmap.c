@@ -313,6 +313,7 @@ void MakeAllTeamMembersCrouchedThenStand();
 void HandleMovingTheEnemiesToBeNearPlayerWhenEnteringComplexMap();
 void HandleFortifiedDoor();
 void CreateAndAddMoneyObjectToGround( INT16 sGridNo, INT32 iEasyAmount, INT32 iNormalAmount, INT32 iHardAmount );
+void HandleGoingUpOrDownStairsForLoadScreensPurposes( INT16 sCurrentlyInSectorZ, INT16 sGoingToSectorZ );
 void HandleMovingEnemiesCloseToEntranceInFirstTunnelMap();
 void HandleMovingEnemiesCloseToEntranceInSecondTunnelMap();
 void HandleFirstPartOfTunnelFanSound();
@@ -461,6 +462,8 @@ Ja25: No meanwhiles
 	}
 
 
+	//used when determing wether we are going up or down stairs
+	gJa25SaveStruct.ubLoadScreenStairTraversal = LS__NOT_GOING_UP_STAIRS;
 }
 
 void EndLoadScreen( )
@@ -2703,6 +2706,14 @@ void AllMercsWalkedToExitGrid()
 
 			pPlayer = pPlayer->next;
 		}
+
+		//if the X & Y values are the same
+		if( gsAdjacentSectorX == gpAdjacentGroup->ubSectorX && gsAdjacentSectorY == gpAdjacentGroup->ubSectorY )
+		{
+			HandleGoingUpOrDownStairsForLoadScreensPurposes( gpAdjacentGroup->ubSectorZ, gbAdjacentSectorZ );
+		}
+
+
 		SetGroupSectorValue( gsAdjacentSectorX, gsAdjacentSectorY, gbAdjacentSectorZ, gpAdjacentGroup->ubGroupID );
 		AttemptToMergeSeparatedGroups( gpAdjacentGroup, FALSE );
 
@@ -5687,6 +5698,23 @@ void CreateAndAddMoneyObjectToGround( INT16 sGridNo, INT32 iEasyAmount, INT32 iN
 
 	//add the item to the world
 	AddItemToPool( sGridNo, &Object, FALSE, 0, 0, 0 );
+}
+
+
+void HandleGoingUpOrDownStairsForLoadScreensPurposes( INT16 sCurrentlyInSectorZ, INT16 sGoingToSectorZ )
+{
+	if( sCurrentlyInSectorZ == sGoingToSectorZ )
+	{
+		gJa25SaveStruct.ubLoadScreenStairTraversal = LS__NOT_GOING_UP_STAIRS;
+	}
+	else if( sCurrentlyInSectorZ < sGoingToSectorZ )
+	{
+		gJa25SaveStruct.ubLoadScreenStairTraversal = LS__GOING_DOWN_STAIRS;
+	}
+	else
+	{
+		gJa25SaveStruct.ubLoadScreenStairTraversal = LS__GOING_UP_STAIRS;
+	}
 }
 
 void HandleMovingEnemiesCloseToEntranceInFirstTunnelMap()
