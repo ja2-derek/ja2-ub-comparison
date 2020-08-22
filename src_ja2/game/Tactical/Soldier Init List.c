@@ -1629,7 +1629,7 @@ SOLDIERINITNODE* FindSoldierInitNodeWithID( UINT16 usID )
 	curr = gSoldierInitHead;
 	while( curr )
 	{
-		if( curr->pSoldier->ubID == usID )
+		if( curr->pSoldier && curr->pSoldier->ubID == usID )
 			return curr;
 		curr = curr->next;
 	}
