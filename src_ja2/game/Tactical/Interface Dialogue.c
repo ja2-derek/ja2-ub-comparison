@@ -93,12 +93,14 @@ void CarmenLeavesSectorCallback( void );
 void PerformJerryMiloAction301();
 void PerformJerryMiloAction302();
 void HaveQualifiedMercSayQuoteAboutNpcWhenLeavingTalkScreen( UINT8 ubNpcProfileID, UINT32 uiQuoteNum );
+void HandleSpecificQuoteWhenLeavingNpcTalkMenu();
 void HandleMercArrivesQuotesFromHeliCrashSequence();
 void HandleRaulBlowingHimselfUp();
 void HandleTexFlushingToilet();
 void HandleTexMakingHimselfAlreadyBeIntroduced();
 void HandleTexBecomingCamoed();
 void DisplayJerryBreakingLaptopTransmitterPopup();
+void HaveNpcOpenUpDealerScreen( UINT8 ubProfileID );
 
 #define		TALK_PANEL_FACE_X				6
 #define		TALK_PANEL_FACE_Y				9
@@ -667,6 +669,9 @@ void DeleteTalkingMenu( )
 		}
 	}
 
+	//Check to see if a merc should say something
+	CheckForValidQuotesWhenLeavingDealer( gTalkPanel.ubCharNum );
+
   if ( iInterfaceDialogueBox != -1 )
   {
     RemoveMercPopupBoxFromIndex( iInterfaceDialogueBox );
@@ -675,6 +680,13 @@ void DeleteTalkingMenu( )
 
 	// Save time for give item
 	gTacticalStatus.uiTimeCounterForGiveItemSrc = GetJA2Clock( );
+
+	//clear the structure
+	gTalkPanel.bCurSelect	= -1;
+	gTalkPanel.bOldCurSelect = -1;
+	gTalkPanel.fHandled		=		FALSE;
+	gTalkPanel.fOnName		=		FALSE;
+
 }
 
 void RenderTalkingMenu( )
@@ -5241,6 +5253,106 @@ void DelayedSayingOfMercQuote( UINT32 uiParam )
 		}
 	}
 }
+
+
+
+void HandleSpecificQuoteWhenLeavingNpcTalkMenu()
+{
+	SetFactTrue( FACT_MERC_SAY_QUOTE_WHEN_TALK_MENU_CLOSES );
+}
+
+void HaveQualifiedMercSayQuoteAboutNpcWhenLeavingTalkScreen( UINT8 ubNpcProfileID, UINT32 uiQuoteNum )
+{
+	INT8	bNumMercsPresent=-1;
+	UINT8 SoldierIdArray[NUM_MERCS_WITH_NEW_QUOTES];
+	UINT8 ValidSoldierIdArray[NUM_MERCS_WITH_NEW_QUOTES] = {0};
+	UINT8 ubNumValidSoldiers=0;
+	UINT8	ubCnt;
+	SOLDIERTYPE *pSoldier=NULL;
+	SOLDIERTYPE * pNPC;
+
+	pNPC = FindSoldierByProfileID( ubNpcProfileID, FALSE );
+	if( pNPC == NULL )
+	{
+		return;
+	}
+
+	//Get the number and array of the new soldiers
+	bNumMercsPresent = GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( SoldierIdArray, NULL );
+
+	//if the player doesnt have any qualified players on the team
+	if( bNumMercsPresent == -1 )
+	{
+		return;
+	}
+
+
+	//loop through the mercs and see if there in range of the dealer
+	for( ubCnt=0; ubCnt<bNumMercsPresent; ubCnt++)
+	{
+		pSoldier = &Menptr[ SoldierIdArray[ ubCnt ] ];
+
+		// Add guy if he's a candidate...
+		if ( OK_INSECTOR_MERC( pSoldier ) && PythSpacesAway( pNPC->sGridNo, pSoldier->sGridNo ) < 10 && !AM_AN_EPC( pSoldier ) && !( pSoldier->uiStatusFlags & SOLDIER_GASSED ) && !(AM_A_ROBOT( pSoldier )) && !pSoldier->fMercAsleep &&
+			SoldierTo3DLocationLineOfSightTest( pSoldier, pNPC->sGridNo, 0, 0, (UINT8)MaxDistanceVisible(), TRUE ) )
+		{
+			ValidSoldierIdArray[ ubNumValidSoldiers ] = pSoldier->ubID;
+			ubNumValidSoldiers++;
+		}
+	}
+
+	//If there is a valid merc, pick a merc to say the quote
+	if( ubNumValidSoldiers > 0 )
+	{
+		UINT8 ubChosenMerc = (UINT8)Random( ubNumValidSoldiers );
+		TacticalCharacterDialogue( MercPtrs[ ValidSoldierIdArray[ ubChosenMerc ] ], (UINT16)uiQuoteNum );
+	}
+
+	SetFactFalse( FACT_MERC_SAY_QUOTE_WHEN_TALK_MENU_CLOSES );
+}
+
+void CheckForValidQuotesWhenLeavingDealer( UINT8 ubProfile )
+{
+	//if the user is going to the dealer
+	if( gTalkPanel.bCurSelect != -1 && ubTalkMenuApproachIDs[ gTalkPanel.bCurSelect ] == APPROACH_BUYSELL )
+	{
+		return;
+	} 
+
+	//if their scripting event going on, leave
+	if( gTacticalStatus.uiFlags & ENGAGED_IN_CONV )
+	{
+		return;
+	}
+
+
+	if( CheckFact( FACT_MERC_SAY_QUOTE_WHEN_TALK_MENU_CLOSES, 0 ) )
+	{
+		switch( ubProfile )
+		{
+			case BETTY:
+				HaveQualifiedMercSayQuoteAboutNpcWhenLeavingTalkScreen( ubProfile, QUOTE_JOINING_CAUSE_BUDDY_1_ON_TEAM );
+				break;
+
+			case RAUL:
+				//if the Raul is about to blow himself up
+				if( !IsJa25GeneralFlagSet( JA_GF__RAUL_BLOW_HIMSELF_UP ) )
+				{
+					//we can say the quote
+					HaveQualifiedMercSayQuoteAboutNpcWhenLeavingTalkScreen( ubProfile, QUOTE_JOINING_CAUSE_BUDDY_2_ON_TEAM );
+				}
+				break;
+
+			case RUDY:
+				HaveQualifiedMercSayQuoteAboutNpcWhenLeavingTalkScreen( ubProfile, QUOTE_REFUSAL_RENEW_DUE_TO_MORALE );
+				break;
+
+			default:
+				AssertMsg( 0, "Code has not been implemented to handle saying a quote when leaving this NPC" );
+		}
+	}
+}
+
 
 void HaveBiggensDetonatingExplosivesByTheMine()
 {

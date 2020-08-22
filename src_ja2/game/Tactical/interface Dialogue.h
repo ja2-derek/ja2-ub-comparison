@@ -357,8 +357,8 @@ enum
 	NPC_ACTION_TEX_FLUSHES_TOILET=307,
 	NPC_ACTION_MARK_TEX_AS_ALREADY_INTRODUCED_HIMSELF=308,
 	NPC_ACTION_MAKE_TEX_CAMOED=309,
-
 	NPC_ACTION_HAVE_DEALER_OPEN_BUY_SELL_SCREEN=310,
+
 	NPC_ACTION_TURN_TO_FACE_NEAREST_MERC = 500,
 	NPC_ACTION_TURN_TO_FACE_PROFILE_ID_0,
 	
@@ -378,6 +378,8 @@ BOOLEAN							gfInTalkPanel;
 
 void DelayedSayingOfMercQuote( UINT32 uiParam );
 void DelayedMercQuote( UINT16 usProfileID, UINT32 uiQuoteNum, UINT32 uiTimeTillQuoteSaid );
+
+void CheckForValidQuotesWhenLeavingDealer( UINT8 ubProfile );
 void HaveBiggensDetonatingExplosivesByTheMine();
 
 // This function checks if we should replace the mine entrance graphic

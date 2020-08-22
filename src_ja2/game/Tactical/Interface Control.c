@@ -1,3 +1,4 @@
+
 #ifdef PRECOMPILEDHEADERS
 	#include "Tactical All.h"
 #else
@@ -993,6 +994,7 @@ void EraseInterfaceMenus( BOOLEAN fIgnoreUIUnLock )
 	PopDownMovementMenu( );
 	PopDownOpenDoorMenu( );
 	DeleteTalkingMenu( );
+	RemoveJerryMiloBrokenLaptopOverlay();
 }
 
 

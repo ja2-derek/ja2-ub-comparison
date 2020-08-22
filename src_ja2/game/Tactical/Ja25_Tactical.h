@@ -34,10 +34,24 @@ typedef struct
 */
 
 
+
+INT8		RandomProfileIdFromNewMercsOnPlayerTeam();
+INT8		RandomSoldierIdFromNewMercsOnPlayerTeam();
+INT8		GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( UINT8 *pSoldierIdArray, UINT8 *pProfileIdArray );
+BOOLEAN	IsSoldierQualifiedMerc( SOLDIERTYPE *pSoldier );
+BOOLEAN	IsSoldierQualifiedInitialHireMerc( SOLDIERTYPE *pSoldier );
+BOOLEAN	IsSoldierQualifiedMercForSeeingPowerGenFan( SOLDIERTYPE *pSoldier );
+
+BOOLEAN SayQuoteFromAllNewHiredMercButDoGastonLast( UINT8 ubProfile, UINT32 uiQuoteNum );
+//Pass in an array of size NUM_MERCS_WITH_NEW_QUOTES, array will be filled with
+//random soldier IDs of the qualified mercs
+INT8 RandomArrayOfQualifiedMercs( UINT8 *pRandomSoldierIdArray );
+
 BOOLEAN HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( SOLDIERTYPE *pSoldier, BOOLEAN fSayQuoteOnlyOnce );
 
 void RevealAllDroppedEnemyItems();
 
+void HandlePlayingQuoteWhenHiringNpc( UINT8 ubProfile );
 
 BOOLEAN HandleNewGunComment( SOLDIERTYPE *pSoldier, INT32 iItemIndex, BOOLEAN fFromGround );
 

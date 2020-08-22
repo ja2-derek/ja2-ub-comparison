@@ -64,6 +64,9 @@ void SetWatchedLocAsUsed( UINT8 ubID, INT16 sGridNo, INT8 bLevel );
 void DecayWatchedLocs( INT8 bTeam );
 
 void HandleManNoLongerSeen( SOLDIERTYPE * pSoldier, SOLDIERTYPE * pOpponent, INT8 * pPersOL, INT8 * pbPublOL );
+void HandleManNoLongerSeen( SOLDIERTYPE * pSoldier, SOLDIERTYPE * pOpponent, INT8 * pPersOL, INT8 * pbPublOL );
+void HandleSayingSeeEnemyQuote( SOLDIERTYPE *pSoldier );
+void HandleSoldierPossiblySayingSeeEnemyVariation( SOLDIERTYPE *pSoldier );
 
 //#define TESTOPPLIST
 
@@ -2973,8 +2976,7 @@ Ja25 No meanwhiles
 	{
 		if ( fVirginSector )
 		{
-			// First time we've seen a guy this sector
-			TacticalCharacterDialogue( pSoldier, QUOTE_SEE_ENEMY_VARIATION );
+			HandleSayingSeeEnemyQuote( pSoldier );
 		}
 		else
 		{
@@ -6713,4 +6715,65 @@ void MakeBloodcatsHostile( void )
 		}
 	}
 
+
+}
+
+
+void HandleSayingSeeEnemyQuote( SOLDIERTYPE *pSoldier )
+{
+	//if the current sector is i9, h10, and quote 105 has NOT been said
+	if( ( ( gWorldSectorX == 9 && gWorldSectorY == 9 && gbWorldSectorZ == 0 ) ||
+			( gWorldSectorX == 10 && gWorldSectorY == 8 && gbWorldSectorZ == 0 ) ) &&
+			!IsJa25GeneralFlagSet( JA_GF__QUOTE_105_HAS_BEEN_SAID &&
+			SectorInfo[ SECTOR( gWorldSectorX, gWorldSectorY ) ].fCampaignSector ))
+	{
+		//if this merc is a qualified merc
+		if( IsSoldierQualifiedInitialHireMerc( pSoldier ) )
+		{
+			//Have him say his special quote
+			TacticalCharacterDialogue( pSoldier, QUOTE_RENEWING_CAUSE_LEARNED_TO_LIKE_BUDDY_ON_TEAM );
+		}
+		else
+		{
+			INT8	bID;
+
+			//if there is a new merc on the team
+			bID = RandomSoldierIdFromNewMercsOnPlayerTeam();
+			if( bID != -1 )
+			{
+				//Have him say his special quote
+				TacticalCharacterDialogue( &Menptr[ bID ], QUOTE_RENEWING_CAUSE_LEARNED_TO_LIKE_BUDDY_ON_TEAM );
+			}
+			else
+			{
+				//Otherwise have the normal merc say the default line
+				HandleSoldierPossiblySayingSeeEnemyVariation( pSoldier );
+			}
+		}
+
+		//Remeber we said the quote
+		SetJa25GeneralFlag( JA_GF__QUOTE_105_HAS_BEEN_SAID );
+	}
+
+	//Otherwise handle it normally
+	else
+	{
+		HandleSoldierPossiblySayingSeeEnemyVariation( pSoldier );
+	}
+}
+
+
+
+void HandleSoldierPossiblySayingSeeEnemyVariation( SOLDIERTYPE *pSoldier )
+{
+/*
+	if( ( gJa25SaveStruct.uiTacticalTurnCounter - gJa25SaveStruct.uiTurnLastSaidSeeEnemyQuote ) < 20 && gJa25SaveStruct.uiTurnLastSaidSeeEnemyQuote != 0 )
+	{
+		return;
+	}
+*/
+	// First time we've seen a guy this sector
+	TacticalCharacterDialogue( pSoldier, QUOTE_SEE_ENEMY_VARIATION );
+
+	gJa25SaveStruct.uiTurnLastSaidSeeEnemyQuote = gJa25SaveStruct.uiTacticalTurnCounter;
 }

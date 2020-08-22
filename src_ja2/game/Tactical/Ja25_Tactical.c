@@ -54,11 +54,15 @@ BOOLEAN IsThisGunANewJa25Gun( INT32 iItemIndex );
 BOOLEAN SaveNewGunQuotesArrayToSaveGameFile( HWFILE hFile );
 BOOLEAN LoadNewGunQuotesArrayToSaveGameFile( HWFILE hFile );
 void		HandlePickingUpMorrisInstructionNote( SOLDIERTYPE *pSoldier, INT32 iIndex );
+BOOLEAN IsSoldierAliveWithInitListGridNo( INT16 sInitListID );
+
 void		Ja25ScaleAllEnemiesByValue( INT8 bExpScaleValue );
 INT8		JA25SecondHighestExpLevelOnPlayersTeam( );
 INT8		JA25HighestExpLevelOnTeam( INT8 bTeam );
 INT8		JA25SecondHighestExpLevelOnEnemiesTeam( );
 INT8		CountNumberOfMercsOnSameTeamOfSameExpLevel( INT8 bTeam, INT8 bExpLevel );
+
+BOOLEAN	IsSoldierQualifiedGunCommenterMerc( SOLDIERTYPE *pSoldier );
 UINT32	GetNumberOfTurnsPowerGenFanWillBeStoppedFor();
 //ppp
 
@@ -67,6 +71,26 @@ UINT32	GetNumberOfTurnsPowerGenFanWillBeStoppedFor();
 // Functions
 //
 //*******************************************************************
+
+BOOLEAN	IsSoldierQualifiedMerc( SOLDIERTYPE *pSoldier )
+{
+	if( pSoldier->ubProfile == GASTON		||
+			pSoldier->ubProfile == STOGIE		||
+			pSoldier->ubProfile == TEX			||
+			pSoldier->ubProfile == JOHN_K		||
+			pSoldier->ubProfile == BIGGENS	||
+			pSoldier->ubProfile == MANUEL		||
+			pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER 
+		)
+	{
+		return( TRUE );
+	}
+	else
+	{
+		return( FALSE );
+	}
+}
+
 
 BOOLEAN	IsSoldierQualifiedMercForSeeingPowerGenFan( SOLDIERTYPE *pSoldier )
 {
@@ -101,11 +125,11 @@ BOOLEAN	IsSoldierQualifiedGunCommenterMerc( SOLDIERTYPE *pSoldier )
 	}
 }
 
-BOOLEAN	IsSoldierQualifiedGunCommenterMerc( SOLDIERTYPE *pSoldier )
+
+BOOLEAN	IsSoldierQualifiedInitialHireMerc( SOLDIERTYPE *pSoldier )
 {
 	if( pSoldier->ubProfile == GASTON		||
 			pSoldier->ubProfile == STOGIE		||
-			pSoldier->ubProfile == TEX			||
 			pSoldier->ubWhatKindOfMercAmI == MERC_TYPE__PLAYER_CHARACTER 
 		)
 	{
@@ -117,6 +141,241 @@ BOOLEAN	IsSoldierQualifiedGunCommenterMerc( SOLDIERTYPE *pSoldier )
 	}
 }
 
+
+
+INT8 GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( UINT8 *pSoldierIdArray, UINT8 *pProfileIdArray )
+{
+	SOLDIERTYPE *pSoldier=NULL;
+	INT32       cnt;
+	INT8				bNumMercsPresent=0;
+
+	if( pSoldierIdArray )
+		memset( pSoldierIdArray, NOBODY, NUM_MERCS_WITH_NEW_QUOTES );
+
+	if( pProfileIdArray )
+		memset( pProfileIdArray, NO_PROFILE, NUM_MERCS_WITH_NEW_QUOTES );
+
+	cnt = gTacticalStatus.Team[ OUR_TEAM ].bFirstID;
+
+	//Check to see if Gaston, Stogie or the PGC is on the team
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; cnt++,pSoldier++)
+	{    
+		//if the merc is alive, in sector, etc...
+		//Note: cant do the OK_CONTROLLABLE_MERC() cause it does bInSector which is not set when EnterSector is finshed ( we need it then )
+		if( pSoldier->bActive	&&
+				pSoldier->sSectorX == gWorldSectorX &&
+				pSoldier->sSectorY == gWorldSectorY &&
+				pSoldier->bSectorZ == gbWorldSectorZ &&
+				pSoldier->bLife >= OKLIFE &&
+				!pSoldier->fBetweenSectors )
+		{
+			//if the merc is one of the mercs we are looking for
+			if( IsSoldierQualifiedMerc( pSoldier ) )
+			{
+				//if we are to return an array of the mercs
+				if( pProfileIdArray != NULL )
+				{
+					//record the profile num of the merc
+					pProfileIdArray[ bNumMercsPresent ] = pSoldier->ubProfile;
+				}
+
+				//if we are to return an array of the mercs
+				if( pSoldierIdArray != NULL )
+				{
+					//record the soldier num of the merc
+					pSoldierIdArray[ bNumMercsPresent ] = pSoldier->ubID;
+				}
+
+				bNumMercsPresent++;
+			}
+		}
+	}
+
+	return( bNumMercsPresent );
+}
+
+
+
+INT8	RandomProfileIdFromNewMercsOnPlayerTeam()
+{
+	INT8	bNumMercsPresent=-1;
+	UINT8 ProfileIdArray[NUM_MERCS_WITH_NEW_QUOTES];
+
+	//Get the number and array of the new soldiers
+	bNumMercsPresent = GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( NULL, ProfileIdArray );
+
+	Assert( bNumMercsPresent < NUM_MERCS_WITH_NEW_QUOTES );
+
+	if( bNumMercsPresent != 0 )
+	{
+		//return a random merc from the array
+		return( ProfileIdArray[ Random( bNumMercsPresent ) ] );
+	}
+	else
+	{
+		return( -1 );
+	}
+}
+
+
+INT8	RandomSoldierIdFromNewMercsOnPlayerTeam()
+{
+	INT8	bNumMercsPresent=-1;
+	UINT8 SoldierIdArray[NUM_MERCS_WITH_NEW_QUOTES];
+
+	//Get the number and array of the new soldiers
+	bNumMercsPresent = GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( SoldierIdArray, NULL );
+
+	Assert( bNumMercsPresent < NUM_MERCS_WITH_NEW_QUOTES );
+
+	if( bNumMercsPresent != 0 )
+	{
+		//return a random merc from the array
+		return( SoldierIdArray[ Random( bNumMercsPresent ) ] );
+	}
+	else
+	{
+		return( -1 );
+	}
+}
+
+
+INT8 RandomArrayOfQualifiedMercs( UINT8 *pRandomSoldierIdArray )
+{
+	INT8	bNumMercsPresent=-1;
+	UINT8 SoldierIdArray[NUM_MERCS_WITH_NEW_QUOTES];
+	BOOLEAN UsedArray[NUM_MERCS_WITH_NEW_QUOTES];
+	UINT8	ubCnt;
+	BOOLEAN	fFound=FALSE;
+	UINT8		ubRand;
+
+	memset( UsedArray, 0, NUM_MERCS_WITH_NEW_QUOTES );
+	memset( pRandomSoldierIdArray, NOBODY, NUM_MERCS_WITH_NEW_QUOTES );
+
+	//Get the number and array of the new soldiers
+	bNumMercsPresent = GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( SoldierIdArray, NULL );
+
+	Assert( bNumMercsPresent < NUM_MERCS_WITH_NEW_QUOTES );
+
+	if( bNumMercsPresent != 0 )
+	{
+		//loop through all the available mercs
+		for( ubCnt=0; ubCnt<bNumMercsPresent; ubCnt++ )
+		{
+			fFound = FALSE;
+
+			//loop
+			while( !fFound )
+			{
+				ubRand = Random( bNumMercsPresent );
+				if( !UsedArray[ ubRand ] )
+				{
+					UsedArray[ ubRand ] = TRUE;
+					pRandomSoldierIdArray[ubCnt] = SoldierIdArray[ubRand];
+					fFound = TRUE;
+				}
+			}
+		}
+	}
+	return( bNumMercsPresent );
+}
+
+
+INT8 Get3RandomQualifiedMercs( UINT8 *pSoldierId1, UINT8 *pSoldierId2, UINT8 *pSoldierId3 )
+{
+	INT8	bNumMercs;
+	UINT8 RandomSoldierIdArray[ NUM_MERCS_WITH_NEW_QUOTES ];
+	UINT8 ubNumberDifMercsAssigned=0;
+
+	bNumMercs = RandomArrayOfQualifiedMercs( RandomSoldierIdArray );
+
+	if( bNumMercs == 0 )
+	{
+		return( 0 );
+	}
+
+	if( pSoldierId1 != NULL )
+		*pSoldierId1 = NOBODY;
+
+	if( pSoldierId2 != NULL )
+		*pSoldierId2 = NOBODY;
+	
+	if( pSoldierId3 != NULL )
+		*pSoldierId3 = NOBODY;
+
+
+	if( bNumMercs >= 1 && pSoldierId1 != NULL )
+	{
+		*pSoldierId1 = RandomSoldierIdArray[ 0 ];
+		ubNumberDifMercsAssigned++;
+	}
+
+	if( bNumMercs >= 2 && pSoldierId2 != NULL )
+	{
+		*pSoldierId2 = RandomSoldierIdArray[ 1 ];
+		ubNumberDifMercsAssigned++;
+	}
+	else
+	{
+		*pSoldierId2 = RandomSoldierIdArray[ 0 ];
+	}
+
+	if( pSoldierId3 != NULL )
+	{
+		if( bNumMercs >= 3 )
+		{
+			*pSoldierId3 = RandomSoldierIdArray[ 2 ];
+			ubNumberDifMercsAssigned++;
+		}
+		else if( bNumMercs >= 2 )
+		{
+			if( Chance( 50 ) )
+				*pSoldierId3 = RandomSoldierIdArray[ 1 ];
+			else
+				*pSoldierId3 = RandomSoldierIdArray[ 0 ];
+		}
+	}
+
+	return( ubNumberDifMercsAssigned );
+}
+
+
+void HandleWhenCertainPercentageOfEnemiesDie()
+{
+	UINT32				uiPercentEnemiesKilled;
+	UINT8					ubSectorID;
+
+	//if there isnt enemies in the sector
+	if( ( gTacticalStatus.Team[ ENEMY_TEAM ].bMenInSector + gTacticalStatus.ubArmyGuysKilled ) == 0 )
+	{
+		//get out
+		return;
+	}
+	
+	uiPercentEnemiesKilled = (UINT32)( 100 * (UINT32)(gTacticalStatus.ubArmyGuysKilled + 1) / (UINT32)( gTacticalStatus.Team[ ENEMY_TEAM ].bMenInSector + gTacticalStatus.ubArmyGuysKilled ) );	
+
+	ubSectorID = SECTOR( gWorldSectorX, gWorldSectorY );
+
+	switch( gbWorldSectorZ )
+	{
+		case 0:
+			switch( ubSectorID )
+			{
+				case SEC_K15:
+					//all enemies are dead and if the quote hasnt been said yet
+					if( uiPercentEnemiesKilled >= 100 && !( gJa25SaveStruct.uiJa25GeneralFlags & JA_GF__ALL_DEAD_TOP_LEVEL_OF_COMPLEX ) )
+					{
+						INT8 bProfile = RandomProfileIdFromNewMercsOnPlayerTeam();
+
+						if( bProfile != -1 )
+							DelayedMercQuote( bProfile, QUOTE_WONT_RENEW_CONTRACT_LAME_REFUSAL, GetWorldTotalSeconds() + 5 );
+
+						gJa25SaveStruct.uiJa25GeneralFlags |= JA_GF__ALL_DEAD_TOP_LEVEL_OF_COMPLEX;
+					}
+					break;
+			}
+	}
+}
 
 void StopPowerGenFan()
 {
@@ -485,6 +744,73 @@ void RevealAllDroppedEnemyItems()
 
 }
 
+void HandlePlayingQuoteWhenHiringNpc( UINT8 ubProfile )
+{
+	switch( ubProfile )
+	{
+		case MANUEL:
+			SayQuoteFromAllNewHiredMercButDoGastonLast( ubProfile, QUOTE_PRECEDENT_TO_REPEATING_ONESELF );
+			break;
+		case BIGGENS:
+			SayQuoteFromAllNewHiredMercButDoGastonLast( ubProfile, QUOTE_REFUSAL_TO_JOIN_LACK_OF_FUNDS );
+			break;
+		case JOHN_K:
+			SayQuoteFromAllNewHiredMercButDoGastonLast( ubProfile, QUOTE_DEPART_COMMET_CONTRACT_NOT_RENEWED_OR_TERMINATED_UNDER_48 );
+
+			//Delay John saying quote about town
+			DelayedMercQuote( JOHN_K, QUOTE_HATE_MERC_2_ON_TEAM, GetWorldTotalSeconds() + 5 + Random( 10 ) );
+			break;
+		case TEX:
+			SayQuoteFromAllNewHiredMercButDoGastonLast( ubProfile, QUOTE_DEATH_RATE_RENEWAL );
+			break;
+	}
+}
+
+BOOLEAN SayQuoteFromAllNewHiredMercButDoGastonLast( UINT8 ubProfile, UINT32 uiQuoteNum )
+{
+	INT8				bNumMercsPresent=-1;
+	UINT8				SoldierIdArray[NUM_MERCS_WITH_NEW_QUOTES];
+	INT32				iCnt;
+	SOLDIERTYPE *pSoldier=NULL;
+
+	//Get an array of the mercs on the team
+	bNumMercsPresent = GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( SoldierIdArray, NULL );
+
+	if( bNumMercsPresent == -1 )
+	{
+		return( FALSE );
+	}
+
+	for( iCnt=0; iCnt<bNumMercsPresent; iCnt++ )
+	{
+		//Do Gaston and the newly hired RPC last
+		if( Menptr[ SoldierIdArray[ iCnt ] ].ubProfile == GASTON || Menptr[ SoldierIdArray[ iCnt ] ].ubProfile == ubProfile)
+		{
+			continue;
+		}
+
+		TacticalCharacterDialogue( &Menptr[ SoldierIdArray[ iCnt ] ], (UINT16)uiQuoteNum );
+	}
+
+	//if Gaston is on the team, say his quote
+	pSoldier = FindSoldierByProfileID( GASTON, TRUE );
+	if( pSoldier &&
+			pSoldier->sSectorX == gWorldSectorX &&
+			pSoldier->sSectorY == gWorldSectorY &&
+			pSoldier->bSectorZ == gbWorldSectorZ )
+	{
+		TacticalCharacterDialogue( pSoldier, (UINT16)uiQuoteNum );
+	}
+
+	//Say the quote of the newly hired person
+	pSoldier = FindSoldierByProfileID( ubProfile, TRUE );
+	if( pSoldier )
+	{
+		TacticalCharacterDialogue( pSoldier, (UINT16)uiQuoteNum );
+	}
+
+	return( TRUE );
+}
 
 //returns false if a new merc is not going to handle saying the new quote
 BOOLEAN HandleNewGunComment( SOLDIERTYPE *pSoldier, INT32 iItemIndex, BOOLEAN fFromGround )
@@ -1107,7 +1433,38 @@ INT8 CountNumberOfMercsOnSameTeamOfSameExpLevel( INT8 bTeam, INT8 bExpLevel )
 	return( bNumber );
 }
 
+INT8 RandomSoldierIdForAnyMercInSector()
+{
+	UINT8 SoldierIdArray[18];
+	UINT8	ubNumMercsInSector=0;
+	INT32	cnt;
+	SOLDIERTYPE *pSoldier=NULL;
+	UINT8 ubCount=0;
 
+
+	ubNumMercsInSector = PlayerMercsInSector( (UINT8)gWorldSectorX, (UINT8)gWorldSectorY, gbWorldSectorZ );
+
+	if( ubNumMercsInSector == 0 )
+	{
+		return( -1 );
+	}
+
+	memset( SoldierIdArray, 0, 18 );
+
+	//loop through the merc array and fill in the soldier id
+	cnt = gTacticalStatus.Team[ OUR_TEAM ].bFirstID;
+	for ( pSoldier = MercPtrs[ cnt ]; cnt <= gTacticalStatus.Team[ OUR_TEAM ].bLastID; cnt++,pSoldier++)
+	{
+    //if the soldier is in the sector
+		if( pSoldier->bActive && pSoldier->bInSector && ( pSoldier->bLife >= CONSCIOUSNESS ) &&
+				 !( pSoldier->uiStatusFlags & SOLDIER_VEHICLE ) && !AM_A_ROBOT( pSoldier ) )
+		{
+			SoldierIdArray[ ubCount++ ] = cnt;			
+		}
+	}
+
+	return( SoldierIdArray[ Random( ubCount ) ] );
+}
 
 void HandleFanStartingAtEndOfCombat()
 {
@@ -1126,7 +1483,7 @@ void HandleFanStartingAtEndOfCombat()
 	}
 
 	StartFanBackUpAgain();
-}void HandleFanStartingAtEndOfCombat()
+}
 
 void HandleFanStartingAtEndOfCombat()
 {
