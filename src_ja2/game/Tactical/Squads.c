@@ -39,7 +39,7 @@ BOOLEAN fExitingVehicleToSquad = FALSE;
 extern void CheckForAndAddMercToTeamPanel( SOLDIERTYPE *pSoldier );
 extern void RemoveAllPlayersFromSlot( );
 extern INT32 iHelicopterVehicleId;
-
+extern	UINT32 guiPendingScreen;
 
 // update current merc selected in tactical
 void UpdateCurrentlySelectedMerc( SOLDIERTYPE *pSoldier, INT8 bSquadValue );
@@ -465,7 +465,7 @@ BOOLEAN RemoveCharacterFromSquads( SOLDIERTYPE *pCharacter )
 				}
 
 					//if we are not loading a saved game
-				if( !(gTacticalStatus.uiFlags & LOADING_SAVED_GAME ) && guiCurrentScreen == GAME_SCREEN )
+				if( !(gTacticalStatus.uiFlags & LOADING_SAVED_GAME ) && guiCurrentScreen == GAME_SCREEN && guiPendingScreen == NO_PENDING_SCREEN )
         {
 					UpdateCurrentlySelectedMerc( pCharacter, ( INT8 )iCounterA );
         }
