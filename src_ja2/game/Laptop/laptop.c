@@ -112,6 +112,7 @@ enum{
 
 
 
+#define		LAPTOP__HAVENT_CREATED_IMP_REMINDER_EMAIL_ARRIVE_TIME				( (8 + Random(4) ) * 60 )
 
 struct rgbcolor
 {

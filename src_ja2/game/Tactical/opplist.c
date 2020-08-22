@@ -5908,7 +5908,7 @@ void DecayIndividualOpplist(SOLDIERTYPE *pSoldier)
 	if (pSoldier->bLife < OKLIFE)
 	{
 		// must make sure that public opplist is kept to match...
-		for ( uiLoop = 0; uiLoop < TOTAL_SOLDIERS; uiLoop++ )
+		for ( uiLoop = 0; uiLoop < MAX_NUM_SOLDIERS; uiLoop++ )
 		{
 			if ( pSoldier->bOppList[ uiLoop ] == SEEN_CURRENTLY )
 			{
