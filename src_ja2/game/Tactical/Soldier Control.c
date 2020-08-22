@@ -9050,6 +9050,21 @@ void HaultSoldierFromSighting( SOLDIERTYPE *pSoldier, BOOLEAN fFromSightingEnemy
 		DirtyMercPanelInterface( pSoldier, DIRTYLEVEL2 );
 	}
 
+	// ATE: Dave, don't kill me
+	// Here, we need to handle the situation when we're throweing a knife and we see somebody
+	// cause for some reason throwing a knie does not use the pTempObject stuff that all other stuff does...
+	if ( pSoldier->usPendingAnimation == THROW_KNIFE )
+	{
+		// Decrement attack counter...
+		DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("@@@@@@@ Reducing attacker busy count..., ending throw knife because saw something") );
+		ReduceAttackBusyCount( pSoldier->ubID, FALSE );
+
+		// ATE: Goto stationary stance......
+		SoldierGotoStationaryStance( pSoldier );
+
+		DirtyMercPanelInterface( pSoldier, DIRTYLEVEL2 );
+	}
+
 	if ( !( gTacticalStatus.uiFlags & INCOMBAT ) )
 	{
 		EVENT_StopMerc( pSoldier, pSoldier->sGridNo, pSoldier->bDirection );
@@ -9088,6 +9103,9 @@ void HaultSoldierFromSighting( SOLDIERTYPE *pSoldier, BOOLEAN fFromSightingEnemy
 			// Stop pending animation....
 			pSoldier->usPendingAnimation = NO_PENDING_ANIMATION;
 			pSoldier->usPendingAnimation2 = NO_PENDING_ANIMATION;
+
+			// ATE: Nasty bug - clear out any fence jumping that may be in progress
+			pSoldier->fContinueMoveAfterStanceChange = FALSE;
 		}
 
     if ( !pSoldier->fTurningToShoot )
