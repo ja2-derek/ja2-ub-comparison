@@ -2980,6 +2980,8 @@ UINT32 MapScreenInit(void)
 {
 	VOBJECT_DESC VObjectDesc;
 
+	SetUpBadSectorsList( );
+
 	// setup message box system
 	InitGlobalMessageList( );
 
@@ -7251,6 +7253,9 @@ void BlitBackgroundToSaveBuffer( void )
 {
 	INT8 bTempDestChar = -1;
 
+	// render map
+  RenderMapRegionBackground( );
+	
 	if( fDisableDueToBattleRoster == FALSE )
 	{
 	  // render team
@@ -7266,9 +7271,6 @@ void BlitBackgroundToSaveBuffer( void )
 		ForceButtonUnDirty( giCharInfoButton[ 1 ] );
 		RenderPreBattleInterface();
 	}
-
-	// render map
-  RenderMapRegionBackground( );
 
 	// now render lower panel
 	RenderMapScreenInterfaceBottom( );

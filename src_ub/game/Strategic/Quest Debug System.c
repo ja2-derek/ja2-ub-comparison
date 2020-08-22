@@ -656,7 +656,7 @@ UINT32	QuestDebugScreenInit()
 	gusQuestDebugBlue = Get16BPPColor( FROMRGB(  65,  79,  94 ) );
 
 	//Initialize which facts are at the top of the list
-	gusFactAtTopOfList = 400;
+	gusFactAtTopOfList = 0;
 
 	gubCurQuestSelected = 0;
 	gusCurFactSelected = 0;
