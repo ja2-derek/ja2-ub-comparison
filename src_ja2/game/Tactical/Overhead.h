@@ -182,6 +182,8 @@ typedef struct
   UINT32              uiCreatureTenseQuoteLastUpdate;
 
   // PADDING GONE!!!!!
+	//Ja25 new padding
+	UINT8								ubJa25Padding[20];
 
 } TacticalStatusType;
 
