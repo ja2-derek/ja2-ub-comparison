@@ -111,6 +111,7 @@ MOUSE_REGION MapInventoryPoolSlots[ MAP_INVENTORY_POOL_SLOT_COUNT ];
 MOUSE_REGION MapInventoryPoolMask;
 BOOLEAN fMapInventoryItemCompatable[ MAP_INVENTORY_POOL_SLOT_COUNT ];
 BOOLEAN fChangedInventorySlots = FALSE;
+void HandleMouseInCompatableItemForMapSectorInventory( INT32 iCurrentSlot );
 
 // the unseen items list...have to save this
 WORLDITEM *pUnSeenItems = NULL;
@@ -178,7 +179,6 @@ void DrawTextOnMapInventoryBackground( void );
 void DrawTextOnSectorInventory( void );
 INT32 GetTotalNumberOfItemsInSectorStash( void );
 void HandleMapSectorInventory( void );
-void ResetMapSectorInventoryPoolHighLights( void );
 void ReBuildWorldItemStashForLoadedSector( INT32 iNumberSeenItems, INT32 iNumberUnSeenItems, WORLDITEM *pSeenItemsList, WORLDITEM *pUnSeenItemsList );
 BOOLEAN IsMapScreenWorldItemVisibleInMapInventory( WORLDITEM *pWorldItem );
 BOOLEAN IsMapScreenWorldItemInvisibleInMapInventory( WORLDITEM *pWorldItem );
@@ -735,7 +735,7 @@ void MapInvenPoolSlotsMove( MOUSE_REGION * pRegion, INT32 iReason  )
 		iCurrentlyHighLightedItem = -1;
 		fChangedInventorySlots = TRUE;
 		gfCheckForCursorOverMapSectorInventoryItem = FALSE;
-		
+		HandleMouseInCompatableItemForMapSectorInventory( -2 );
 		// re render radar map
 		RenderRadarScreen( );
 	}
@@ -1917,6 +1917,16 @@ void HandleMouseInCompatableItemForMapSectorInventory( INT32 iCurrentSlot )
 	SOLDIERTYPE *pSoldier = NULL;
 	static BOOLEAN fItemWasHighLighted = FALSE;
 
+	if( iCurrentSlot == -2 )
+	{
+		fTeamPanelDirty = TRUE;
+		fMapPanelDirty = TRUE;
+		fItemWasHighLighted = FALSE;
+		giCompatibleItemBaseTime = 0;
+		ResetMapSectorInventoryPoolHighLights( );
+		return;
+	}
+
 	if( iCurrentSlot == -1 )
 	{
 		giCompatibleItemBaseTime = 0;
@@ -1960,12 +1970,13 @@ void HandleMouseInCompatableItemForMapSectorInventory( INT32 iCurrentSlot )
 			{
 				if( HandleCompatibleAmmoUIForMapScreen( pSoldier, iCurrentSlot + ( iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT ), TRUE, FALSE ) )
 				{
-					if( GetJA2Clock( ) - giCompatibleItemBaseTime > 100 )
+//					if( GetJA2Clock( ) - giCompatibleItemBaseTime > 100 )
 					{
 						if( fItemWasHighLighted == FALSE )
 						{
 							fTeamPanelDirty = TRUE;
 							fItemWasHighLighted = TRUE;
+							fMapPanelDirty = TRUE;
 						}
 					}
 				}
@@ -1986,7 +1997,7 @@ void HandleMouseInCompatableItemForMapSectorInventory( INT32 iCurrentSlot )
 		{
 			if( HandleCompatibleAmmoUIForMapInventory( pSoldier, iCurrentSlot, ( iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT ) , TRUE, FALSE ) )
 			{
-				if( GetJA2Clock( ) - giCompatibleItemBaseTime > 100 )
+//				if( GetJA2Clock( ) - giCompatibleItemBaseTime > 100 )
 				{
 					if( fItemWasHighLighted == FALSE )
 					{

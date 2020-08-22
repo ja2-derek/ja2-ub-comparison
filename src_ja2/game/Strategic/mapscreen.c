@@ -6490,6 +6490,20 @@ void BltCharInvPanel()
 		}
 	}
 
+	//Check the Map screen map inventory for compatable ammo for the item that the player is currently
+	//highlighting over the mercs inventory
+	if( fShowMapInventoryPool )
+	{
+		if( gbCheckForMouseOverItemPos != -1 )
+		{
+			if( HandleCompatibleAmmoUIForMapInventory( pSoldier, gbCheckForMouseOverItemPos, ( iCurrentInventoryPoolPage * MAP_INVENTORY_POOL_SLOT_COUNT ), TRUE, TRUE ) )
+			{
+				fTeamPanelDirty = TRUE;
+				fMapPanelDirty = TRUE;
+			}
+		}
+	}
+
   RenderInvBodyPanel(pSoldier, INV_BODY_X, INV_BODY_Y );
 	
 	// reset font destination buffer to the save buffer
@@ -6621,6 +6635,7 @@ void MAPInvMoveCallback( MOUSE_REGION *pRegion, INT32 iReason )
 		gfCheckForMouseOverItem = TRUE;
 		HandleCompatibleAmmoUI( pSoldier, (INT8)uiHandPos, FALSE );
 		gbCheckForMouseOverItemPos = (INT8)uiHandPos;
+		fTeamPanelDirty = TRUE;
 	}
 	if (iReason == MSYS_CALLBACK_REASON_LOST_MOUSE )
 	{
@@ -6628,6 +6643,12 @@ void MAPInvMoveCallback( MOUSE_REGION *pRegion, INT32 iReason )
 		HandleCompatibleAmmoUI( pSoldier, (INT8)uiHandPos, FALSE );
 		gfCheckForMouseOverItem = FALSE;
 		fTeamPanelDirty = TRUE;
+		fMapPanelDirty = TRUE;
+		if( fShowMapInventoryPool )
+		{
+			ResetMapSectorInventoryPoolHighLights( );
+		}
+
 	  gbCheckForMouseOverItemPos = -1;
 	}	
 }
