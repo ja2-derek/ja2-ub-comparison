@@ -2583,6 +2583,9 @@ BOOLEAN InternalInitItemDescriptionBox( OBJECTTYPE *pObject, INT16 sX, INT16 sY,
 
 	if ( (gpItemPointer != NULL) && (gfItemDescHelpTextOffset == FALSE) && (CheckFact( FACT_ATTACHED_ITEM_BEFORE, 0 ) == FALSE) )
 	{
+		//only do it tactical
+		if( guiCurrentScreen == GAME_SCREEN )
+		{
 		// set up help text for attachments
 		for ( cnt = 0; cnt < NUM_INV_HELPTEXT_ENTRIES; cnt++ )
 		{
@@ -2613,6 +2616,7 @@ BOOLEAN InternalInitItemDescriptionBox( OBJECTTYPE *pObject, INT16 sX, INT16 sY,
 
 		SetFactTrue( FACT_ATTACHED_ITEM_BEFORE );
 		gfItemDescHelpTextOffset = TRUE;
+	}
 	}
 
 
