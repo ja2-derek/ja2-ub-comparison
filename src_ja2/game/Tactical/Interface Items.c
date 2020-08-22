@@ -1178,7 +1178,8 @@ BOOLEAN	CompatibleItemForApplyingOnMerc( OBJECTTYPE *pTestObject )
 	// ATE: Would be nice to have flag here to check for these types....
 	if ( usItem == CAMOUFLAGEKIT || usItem == ADRENALINE_BOOSTER || usItem == REGEN_BOOSTER ||
 			 usItem == SYRINGE_3		 || usItem == SYRINGE_4 || usItem == SYRINGE_5 ||
-			 usItem == ALCOHOL			 || usItem == WINE			|| usItem == BEER			 || usItem == CANTEEN || usItem == JAR_ELIXIR )
+			 usItem == ALCOHOL			 || usItem == WINE			|| usItem == BEER			 || usItem == CANTEEN ||
+			 usItem == JAR_ELIXIR		 || usItem == CHE_GUEVARA_CANTEEN )
 	{
 		return( TRUE );
 	}
