@@ -6652,7 +6652,7 @@ BOOLEAN WatchedLocLocationIsEmpty( INT16 sGridNo, INT8 bLevel, INT8 bTeam )
 				continue;
 			}
 			ubID = WhoIsThere2( sTempGridNo, bLevel );
-			if ( ubID != NOBODY && MercPtrs[ ubID ]->bTeam != bTeam )
+			if ( ubID != NOBODY && MercPtrs[ ubID ]->bTeam != bTeam && gbPublicOpplist[ bTeam ][ ubID ] != NOT_HEARD_OR_SEEN )
 			{
 				return( FALSE );
 			}
