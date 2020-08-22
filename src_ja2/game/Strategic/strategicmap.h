@@ -184,6 +184,10 @@ extern INT8 gbGreenToRegPromotions;
 extern INT8 gbRegToElitePromotions;
 extern INT8 gbMilitiaPromotions;
 
+void BeginLoadScreen( );
+
+void HandleSectorSpecificModificatioToMap( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fLoadingSavedGame );
+
 void HandleEmailBeingSentWhenEnteringSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fLaptopJustGotFixed );
 
 void InitializeStrategicMapSectorTownNames( void );

@@ -2,8 +2,10 @@
 	#include "Strategic All.h"
 	#include "HelpScreen.h"
 	#include "Ja25Update.h"
+	#include "MapScreen Quotes.h"
 	#include "Ja25 Strategic Ai.h"
 	#include "_Ja25EnglishText.h"
+	#include "CharProfile.h"
 #else
 	#include "mapscreen.h"
 	#include <stdio.h>
