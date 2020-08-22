@@ -79,6 +79,7 @@ BOOLEAN	gfPausedTacticalRenderFlags					 = FALSE;
 extern void DetermineWhichAssignmentMenusCanBeShown( void );
 extern void HandleAnyMercInSquadHasCompatibleStuff( UINT8 ubSquad, OBJECTTYPE *pObject, BOOLEAN fReset );
 extern BOOLEAN RemoveFlashItemSlot( ITEM_POOL *pItemPool );
+extern		SOLDIERTYPE		*gpSMCurrentMerc;
 
 
 void SetTacticalInterfaceFlags( UINT32 uiFlags )
@@ -90,6 +91,16 @@ void HandleTacticalPanelSwitch( )
 {
 	if ( gfSwitchPanel )
 	{
+		// ATE: JA25 - funny how this is asserting now
+		// because of a test save where the guy
+		// juat has to pickup an item. Fresh game, inv panal not
+		// yet up. It was just coincidence that this worked anyway
+		// because 	gpSMCurrentMerc was not getting re-set
+		if ( gbNewPanel == SM_PANEL )
+		{
+			gpSMCurrentMerc = MercPtrs[ gubNewPanelParam ];
+		}
+
 		SetCurrentInterfacePanel( gbNewPanel );
 		SetCurrentTacticalPanelCurrentMerc( gubNewPanelParam );
 		gfSwitchPanel = FALSE;

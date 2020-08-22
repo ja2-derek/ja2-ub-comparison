@@ -636,7 +636,11 @@ void CheckForDisabledForGiveItem( )
 	UINT8			ubSrcSoldier;
 
 
-	Assert( gpSMCurrentMerc != NULL);
+	//Assert( gpSMCurrentMerc != NULL);
+	if ( gpSMCurrentMerc == NULL )
+	{
+		return;
+	}	
 
 	if ( guiTacticalInterfaceFlags & INTERFACE_SHOPKEEP_INTERFACE )
 	{
