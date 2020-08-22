@@ -5575,6 +5575,12 @@ void ExitCombatMode( )
 
 	DebugMsg( TOPIC_JA2, DBG_LEVEL_3, "Exiting combat mode" );
 
+	// ATE: If UI is busy at this point, UNLUCK, unless in engaged in conv...
+	if ( !( gTacticalStatus.uiFlags & ENGAGED_IN_CONV ) ) 
+	{
+		UnSetUIBusy( (UINT8)gusSelectedSoldier );
+	}
+
 	// Leave combat mode
 	gTacticalStatus.uiFlags &= (~INCOMBAT);
 
