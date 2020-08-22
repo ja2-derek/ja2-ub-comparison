@@ -94,12 +94,15 @@ void PerformJerryMiloAction301();
 void PerformJerryMiloAction302();
 void HaveQualifiedMercSayQuoteAboutNpcWhenLeavingTalkScreen( UINT8 ubNpcProfileID, UINT32 uiQuoteNum );
 void HandleSpecificQuoteWhenLeavingNpcTalkMenu();
+void ReplaceMineEntranceGraphicWithCollapsedEntrance();
 void HandleMercArrivesQuotesFromHeliCrashSequence();
 void HandleRaulBlowingHimselfUp();
 void HandleTexFlushingToilet();
 void HandleTexMakingHimselfAlreadyBeIntroduced();
 void HandleTexBecomingCamoed();
 void DisplayJerryBreakingLaptopTransmitterPopup();
+void HandleCannotAffordNpcMsgBox();
+void CantAffordMercCallback( UINT8 ubExitValue );
 void HaveNpcOpenUpDealerScreen( UINT8 ubProfileID );
 
 #define		TALK_PANEL_FACE_X				6
@@ -207,6 +210,7 @@ INT32 giHospitalTempBalance; // stores amount of money for current doctoring
 INT32 giHospitalRefund; // stores amount of money given to hospital for doctoring that wasn't used
 INT8	gbHospitalPriceModifier; // stores discount being offered
 
+BOOLEAN	gfDisplayMsgBoxSayingCantAffordNPC=FALSE;
 enum
 {
 	HOSPITAL_UNSET = 0,

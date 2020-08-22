@@ -6073,7 +6073,14 @@ void SetInterfaceHeightLevel( )
 		sGridNo = gMapInformation.sWestGridNo;
 	else
 	{
+#ifdef JA2EDITOR
+		// ATE: This will cause probms.....
+		gsRenderHeight = 0;
+		sOldHeight = 0;
+		sGridNo = 0;
+#else
 		Assert(0);
+#endif
 		return;
 	}
 

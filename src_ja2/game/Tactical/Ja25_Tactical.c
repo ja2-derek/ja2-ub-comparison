@@ -1485,26 +1485,6 @@ void HandleFanStartingAtEndOfCombat()
 	StartFanBackUpAgain();
 }
 
-void HandleFanStartingAtEndOfCombat()
-{
-	//if its not the right sector
-	if( !( gWorldSectorX == 13 && gWorldSectorY == MAP_ROW_J && gbWorldSectorZ == 0 ) )
-	{
-		//leave
-		return;
-	}
-
-	//if the fan is not stopped
-	if( gJa25SaveStruct.ubStateOfFanInPowerGenSector != PGF__STOPPED )
-	{
-		//leave
-		return;
-	}
-
-	StartFanBackUpAgain();
-}
-
-
 void HandleInitialEventsInHeliCrash()
 {
 	SOLDIERTYPE *pSoldier=NULL;

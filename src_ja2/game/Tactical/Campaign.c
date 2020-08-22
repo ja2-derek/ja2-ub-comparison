@@ -1376,6 +1376,11 @@ UINT8 CurrentPlayerProgressPercentage(void)
 	if( gfEditMode )
 		return 0;
 
+//JA25:		Maybe just use kills plus the ratio of sectors taken over to not taken over???
+
+
+
+
 /*
 Ja25 Not needed cause there is no mine income in exp.
 	// figure out the player's current mine income
