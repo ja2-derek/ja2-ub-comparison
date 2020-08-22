@@ -224,7 +224,11 @@ void InitPreBattleInterface( GROUP *pBattleGroup, BOOLEAN fPersistantPBI )
 			}
 		}
 
-		if( guiCurrentScreen == GAME_SCREEN && pBattleGroup )
+		// ATE: Added check for fPersistantPBI = TRUE if pBattleGroup == NULL
+		// Searched code and saw that this condition only happens for creatures
+			// fixing a bug
+		//if( guiCurrentScreen == GAME_SCREEN && pBattleGroup )
+		if( guiCurrentScreen == GAME_SCREEN && ( pBattleGroup || fPersistantPBI ) )
 		{
 			gpBattleGroup = pBattleGroup;
 			gfEnteringMapScreen = TRUE;
