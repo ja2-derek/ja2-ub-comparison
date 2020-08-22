@@ -4640,7 +4640,7 @@ INT16 FindAdjacentGridEx( SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 *pubDirect
  }
 
  // CHECK IF IT'S THE SAME ONE AS WE'RE ON, IF SO, RETURN THAT!
- if ( pSoldier->sGridNo == sGridNo && !FindStructure( sGridNo, ( STRUCTURE_SWITCH ) ) )
+ if ( pSoldier->sGridNo == sGridNo && ( !FindStructure( sGridNo, STRUCTURE_SWITCH ) || fForceToPerson ) )
  {
 	 // OK, if we are looking for a door, it may be in the same tile as us, so find the direction we
 	 // have to face to get to the door, not just our initial direction...
