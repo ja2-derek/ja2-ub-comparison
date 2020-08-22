@@ -1582,6 +1582,7 @@ void SoldierGetItemFromWorld( SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGr
 	BOOLEAN					fShouldSayCoolQuote = FALSE;
 	BOOLEAN					fDidSayCoolQuote = FALSE;
   BOOLEAN         fSaidBoobyTrapQuote = FALSE;
+	UINT16					usItem=0;
 
 	// OK. CHECK IF WE ARE DOING ALL IN THIS POOL....
 	if ( iItemIndex == ITEM_PICKUP_ACTION_ALL || iItemIndex == ITEM_PICKUP_SELECTION )
@@ -1614,6 +1615,8 @@ void SoldierGetItemFromWorld( SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGr
 					{
 						// Make copy of item
 						memcpy( &Object, &(gWorldItems[ pItemPool->iItemIndex ].o), sizeof( OBJECTTYPE ) );
+
+						usItem = Object.usItem;
 
 						if ( ItemIsCool( &Object ) )
 						{
@@ -1708,6 +1711,8 @@ void SoldierGetItemFromWorld( SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGr
 				// Make copy of item
 				memcpy( &Object, &(gWorldItems[ iItemIndex ].o), sizeof( OBJECTTYPE ) );
 
+				usItem = Object.usItem;
+
 				if ( ItemIsCool( &Object ) )
 				{
 					fShouldSayCoolQuote = TRUE;
@@ -1765,7 +1770,6 @@ void SoldierGetItemFromWorld( SOLDIERTYPE *pSoldier, INT32 iItemIndex, INT16 sGr
 				// set flag
 				pSoldier->usQuoteSaidFlags |= SOLDIER_QUOTE_SAID_FOUND_SOMETHING_NICE;
 
-				// Say it....
 				// We've found something!
 				TacticalCharacterDialogue( pSoldier, QUOTE_FOUND_SOMETHING_SPECIAL );
 
