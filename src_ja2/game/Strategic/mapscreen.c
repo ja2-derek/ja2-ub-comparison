@@ -4614,7 +4614,8 @@ UINT32 HandleMapUI( )
 								else
 								{
 									// means it's a vehicle and we've clicked an off-road sector
-									MapScreenMessage( FONT_MCOLOR_LTYELLOW, MSG_MAP_UI_POSITION_MIDDLE, pMapErrorString[ 40 ] );
+//Ja25 No vehicles									MapScreenMessage( FONT_MCOLOR_LTYELLOW, MSG_MAP_UI_POSITION_MIDDLE, pMapErrorString[ 40 ] );
+									MapScreenMessage( FONT_MCOLOR_LTYELLOW, MSG_MAP_UI_POSITION_MIDDLE, TacticalStr[ NO_PATH ] );
 								}
 							}
 						}       
