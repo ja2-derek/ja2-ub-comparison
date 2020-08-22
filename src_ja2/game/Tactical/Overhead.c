@@ -311,7 +311,7 @@ UINT8 bDefaultTeamRanges[ MAXTEAMS ][ 2 ] =
 
 COLORVAL bDefaultTeamColors[ MAXTEAMS ] = 
 {
-	FROMRGB( 255, 255, 0 ),
+	FROMRGB( 190, 190, 56 ),		//ja25 original: FROMRGB( 255, 255, 0 ),
 	FROMRGB( 255, 0, 0 ),
 	FROMRGB( 255, 0, 255 ),
 	FROMRGB( 0, 255, 0 ),
