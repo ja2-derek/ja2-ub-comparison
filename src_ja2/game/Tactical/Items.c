@@ -1530,7 +1530,7 @@ BOOLEAN ValidItemAttachment( OBJECTTYPE * pObj, UINT16 usAttachment, BOOLEAN fAt
 		}
 		else
 		{
-			if ( fAttemptingAttachment && ValidAttachmentClass( usAttachment, pObj->usItem ) )
+			if ( fAttemptingAttachment && ValidAttachmentClass( usAttachment, pObj->usItem ) && !gfEditMode )
 			{
 				// well, maybe the player thought he could
 				UINT16	zTemp[ 100 ];
