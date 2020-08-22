@@ -862,7 +862,7 @@ BOOLEAN InitInvSlotInterface( INV_REGION_DESC *pRegionDesc , INV_REGION_DESC *pC
 
 void InitKeyRingInterface( MOUSE_CALLBACK KeyRingClickCallback )
 {
-		MSYS_DefineRegion( &gKeyRingPanel, KEYRING_X, KEYRING_Y, KEYRING_X + KEYRING_WIDTH, KEYRING_X + KEYRING_HEIGHT, MSYS_PRIORITY_HIGH,
+		MSYS_DefineRegion( &gKeyRingPanel, KEYRING_X, KEYRING_Y, KEYRING_X + KEYRING_WIDTH, KEYRING_Y + KEYRING_HEIGHT, MSYS_PRIORITY_HIGH,
 							 MSYS_NO_CURSOR, MSYS_NO_CALLBACK, KeyRingClickCallback ); 
 
 		SetRegionFastHelpText( &(gKeyRingPanel), TacticalStr[ KEYRING_HELP_TEXT ] );
