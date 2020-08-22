@@ -209,4 +209,6 @@ BOOLEAN NPCHasUnusedHostileRecord( UINT8 ubNPC, UINT8 ubApproach );
 
 void ResetOncePerConvoRecordsForAllNPCsInLoadedSector( void );
 
+BOOLEAN HasNpcSaidQuoteBefore( UINT8 ubNPC, UINT8 ubRecord );
+
 #endif

@@ -3296,3 +3296,12 @@ INT8 ConsiderCivilianQuotes( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ, BOO
 
 	return( -1 );
 }
+
+
+BOOLEAN HasNpcSaidQuoteBefore( UINT8 ubNPC, UINT8 ubRecord )
+{
+	if( CHECK_FLAG( gpNPCQuoteInfoArray[ ubNPC ][ ubRecord ].fFlags, QUOTE_FLAG_SAID ) )
+		return( TRUE );
+	else
+		return( FALSE );
+}
