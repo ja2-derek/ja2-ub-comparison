@@ -294,6 +294,8 @@ INT32 CheckBleeding( SOLDIERTYPE *pSoldier );
 void EVENT_InternalSetSoldierDesiredDirection( SOLDIERTYPE *pSoldier, UINT16	usNewDirection, BOOLEAN fInitalMove, UINT16 usAnimState );
 
 
+BOOLEAN IsSoldierAnImpMercWithBothJa2AndJa25BattleSnds( SOLDIERTYPE *pSoldier );
+
 UINT32 SleepDartSuccumbChance( SOLDIERTYPE * pSoldier );
 
 void	EnableDisableSoldierLightEffects( BOOLEAN fEnableLights );
@@ -7102,7 +7104,18 @@ BOOLEAN InternalDoMercBattleSound( SOLDIERTYPE *pSoldier, UINT8 ubBattleSoundID,
 	// OK, build file and play!
 	if ( pSoldier->ubProfile != NO_PROFILE )
 	{
+		UINT8 ubRandom = Random( 100 );
+
+		//if the soldier is a valid imp merc, play there old quotes 50% of the time
+		if( IsSoldierAnImpMercWithBothJa2AndJa25BattleSnds( pSoldier ) && ( ubRandom < 50 ) )
+		{
+			sprintf( zFilename, "BATTLESNDS\\%03d_%s_1.wav", pSoldier->ubProfile, gBattleSndsData[ ubSoundID ].zName );
+		}
+		else
+		{
+			//
 		sprintf( zFilename, "BATTLESNDS\\%03d_%s.wav", pSoldier->ubProfile, gBattleSndsData[ ubSoundID ].zName );
+		}
 		
 		if ( !FileExists( zFilename ) )
 		{
