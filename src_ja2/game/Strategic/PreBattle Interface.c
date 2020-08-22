@@ -255,8 +255,12 @@ void InitPreBattleInterface( GROUP *pBattleGroup, BOOLEAN fPersistantPBI )
 			gubPBSectorY = gpBattleGroup->ubSectorY;
 			gubPBSectorZ = gpBattleGroup->ubSectorZ;
 
+			if( gubPBSectorZ == 0 )
+			{
 			// get number of enemies thought to be here
 			SectorInfo[ SECTOR( gubPBSectorX, gubPBSectorY ) ].bLastKnownEnemies = NumEnemiesInSector( gubPBSectorX, gubPBSectorY );
+			}
+
 			fMapPanelDirty = TRUE;
 		}
 		else
@@ -514,6 +518,12 @@ Ja25 no creatures
 			}
 			else
 			{
+				//ja25:
+				if( gubPBSectorZ )
+				{
+				}
+				else
+				{
 				switch( SECTOR( gubPBSectorX, gubPBSectorY ) )
 				{
 					case SEC_D2:
@@ -528,6 +538,7 @@ Ja25 no creatures
 				}
 			}	
 		}
+	}
 	}
 
 	gfHighPotentialForAmbush = FALSE;
@@ -1041,10 +1052,18 @@ void RenderPreBattleInterface()
 		}
 		else
 		{
+			//ja25
 			// know exactly how many
-			i = NumEnemiesInSector( gubPBSectorX, gubPBSectorY );
+//			i = NumEnemiesInSector( gubPBSectorX, gubPBSectorY );
+			i = NumEnemiesInAnySector( gubPBSectorX, gubPBSectorY, gubPBSectorZ );
+
 			swprintf( str, L"%d", i );
+
+			//JA25
+			if( gubPBSectorZ == 0 )
+			{
 			SectorInfo[ SECTOR( gubPBSectorX, gubPBSectorY ) ].bLastKnownEnemies = (INT8)i;
+		}
 		}
 		x = 57 + (27 - StringPixLength( str, FONT14ARIAL )) / 2;
 		y = 36;
@@ -1256,7 +1275,10 @@ void GoToSectorCallback( GUI_BUTTON *btn, INT32 reason )
 			ExecuteBaseDirtyRectQueue();
 			EndFrameBufferRender( );
 			RefreshScreen( NULL );
-			if( gubPBSectorX == gWorldSectorX && gubPBSectorY == gWorldSectorY && !gbWorldSectorZ )
+
+			//Ja25:
+			//			if( gubPBSectorX == gWorldSectorX && gubPBSectorY == gWorldSectorY && !gbWorldSectorZ )
+			if( gubPBSectorX == gWorldSectorX && gubPBSectorY == gWorldSectorY && gubPBSectorZ == gbWorldSectorZ )
 			{
 				gfGotoSectorTransition = TRUE;
 			}
