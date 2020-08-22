@@ -293,6 +293,8 @@ INT32 CheckBleeding( SOLDIERTYPE *pSoldier );
 
 void EVENT_InternalSetSoldierDesiredDirection( SOLDIERTYPE *pSoldier, UINT16	usNewDirection, BOOLEAN fInitalMove, UINT16 usAnimState );
 
+BOOLEAN IsThisFenceElectrified( INT16 sGridNo );
+void HandleCuttinAnElectrifiedFence( SOLDIERTYPE *pSoldier, INT16 sGridNo );
 
 BOOLEAN IsSoldierAnImpMercWithBothJa2AndJa25BattleSnds( SOLDIERTYPE *pSoldier );
 
@@ -10282,9 +10284,16 @@ void EVENT_SoldierBeginCutFence( SOLDIERTYPE *pSoldier, INT16 sGridNo, UINT8 ubD
 		// SET TARGET GRIDNO
 		pSoldier->sTargetGridNo = sGridNo;
 
+		if( IsThisFenceElectrified( sGridNo ) )
+		{
+			HandleCuttinAnElectrifiedFence( pSoldier, sGridNo );
+		}
+		else
+		{
 		// CHANGE TO ANIMATION
 		EVENT_InitNewSoldierAnim( pSoldier, CUTTING_FENCE, 0 , FALSE );
 	}
+}
 }
 
 
