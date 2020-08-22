@@ -713,7 +713,7 @@ void StartInterrupt( void )
 			{
 				if ( MercPtrs[ iCounter ]->fCloseCall )
 				{
-					if ( MercPtrs[ iCounter ]->bNumHitsThisTurn == 0 && !(MercPtrs[ iCounter ]->usQuoteSaidExtFlags & SOLDIER_QUOTE_SAID_EXT_CLOSE_CALL) && Random( 3 ) == 0 )
+					if ( !gTacticalStatus.fSomeoneHit && MercPtrs[ iCounter ]->bNumHitsThisTurn == 0 && !(MercPtrs[ iCounter ]->usQuoteSaidExtFlags & SOLDIER_QUOTE_SAID_EXT_CLOSE_CALL) && Random( 3 ) == 0  )
 					{
 						// say close call quote!
 						TacticalCharacterDialogue( MercPtrs[ iCounter ], QUOTE_CLOSE_CALL );
@@ -723,6 +723,8 @@ void StartInterrupt( void )
 				}
 			}
 		}
+	  gTacticalStatus.fSomeoneHit = FALSE;
+
 
 	}
 	else
