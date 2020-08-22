@@ -2708,10 +2708,12 @@ void SetSoldierGridNo( SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fForceRe
 		SetSoldierAniSpeed( pSoldier );
 
 	}
+/*
 	else
 	{
 		int i = 0;
 	}
+*/
 }
 
 
@@ -2725,12 +2727,12 @@ void EVENT_FireSoldierWeapon( SOLDIERTYPE *pSoldier, INT16 sTargetGridNo )
 	{
 		return;
 	}
-
+/*
   if ( pSoldier->ubID == 33 )
   {
     int i = 0;
   }
-
+*/
 
 	// Increment the number of people busy doing stuff because of an attack
 	//if ( (gTacticalStatus.uiFlags & TURNBASED) && (gTacticalStatus.uiFlags & INCOMBAT) )
@@ -9656,12 +9658,12 @@ void GetActualSoldierAnimDims( SOLDIERTYPE *pSoldier, INT16 *psHeight, INT16 *ps
 	// OK, noodle here on what we should do... If we take each frame, it will be different slightly
 	// depending on the frame and the value returned here will vary thusly. However, for the
 	// uses of this function, we should be able to use just the first frame...
-
+/*
 	if ( pSoldier->usAniFrame >= gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->usNumberOfObjects )
 	{
 		int i = 0;		
 	}
-
+*/
 	pTrav = &(gAnimSurfaceDatabase[ usAnimSurface ].hVideoObject->pETRLEObject[ pSoldier->usAniFrame ] );
 
 	*psHeight					= (INT16)pTrav->usHeight;
