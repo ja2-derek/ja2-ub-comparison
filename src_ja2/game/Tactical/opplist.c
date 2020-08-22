@@ -1079,7 +1079,7 @@ INT16 DistanceVisible( SOLDIERTYPE *pSoldier, INT8 bFacingDir, INT8 bSubjectDir,
 	bLightLevel = LightTrueLevel(sSubjectGridNo, bLevel);
 
 
-	if ( pSubject && !( pSubject->fMuzzleFlash && (bLightLevel > NORMAL_LIGHTLEVEL_DAY) ) )
+	if ( !pSubject || !( pSubject->fMuzzleFlash && (bLightLevel > NORMAL_LIGHTLEVEL_DAY) ) )
 	{
 		// ATE: Made function to adjust light distence...
 		sDistVisible = AdjustMaxSightRangeForEnvEffects( pSoldier, bLightLevel, sDistVisible );
