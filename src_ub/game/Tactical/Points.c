@@ -618,7 +618,11 @@ INT16 AdjustBreathPts(SOLDIERTYPE *pSold, INT16 sBPCost)
 		}
 	}
 
- if (sBPCost > 0)		// breath DECREASE
+ if ( sBreathFactor == 0 )
+ {
+		sBPCost = 0;
+ }
+ else if (sBPCost > 0)		// breath DECREASE
    // increase breath COST by breathFactor
    sBPCost = ((sBPCost * sBreathFactor) / 100);
  else				// breath INCREASE

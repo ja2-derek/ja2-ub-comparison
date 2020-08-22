@@ -2654,16 +2654,17 @@ void SetSoldierGridNo( SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fForceRe
 				// check each possible enemy
 				for ( cnt = 0; cnt < MAX_NUM_SOLDIERS; cnt++ )
 				{
-					pEnemy = Menptr[ cnt ];
+					pEnemy = MercPtrs[ cnt ];
 					// if this guy is here and alive enough to be looking for us
 					if ( pEnemy->bActive && pEnemy->bInSector && ( pEnemy->bLife >= OKLIFE ) )
 					{
 						// no points for sneaking by the neutrals & friendlies!!!
 				    if ( !pEnemy->bNeutral && ( pSoldier->bSide != pEnemy->bSide ) && (pEnemy->ubBodyType != COW && pEnemy->ubBodyType != CROW) )
 						{
-							// if we SEE this particular oppponent, and he DOESN'T see us...
+							// if we SEE this particular oppponent, and he DOESN'T see us... and he COULD see us...
 							if ( ( pSoldier->bOppList[ cnt ] == SEEN_CURRENTLY) &&
-								 ( pEnemy->bOppList[ pSoldier->ubID ] != SEEN_CURRENTLY ) )
+								 pEnemy->bOppList[ pSoldier->ubID ] != SEEN_CURRENTLY && 
+								 PythSpacesAway( pSoldier->sGridNo, pEnemy->sGridNo ) < DistanceVisible( pEnemy, DIRECTION_IRRELEVANT, DIRECTION_IRRELEVANT, pSoldier->sGridNo, pSoldier->bLevel ) )
 							{
 									// AGILITY (5):  Soldier snuck 1 square past unaware enemy
 									StatChange( pSoldier, AGILAMT, 5, FALSE );

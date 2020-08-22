@@ -2828,7 +2828,9 @@ Ja25
 	else
 	{
 		// Effects based on aiming & sight
-		// New for JA2.5:  3% bonus/penalty for each tile different from range NORMAL_RANGE.
+		// From for JA2.5:  3% bonus/penalty for each tile different from range NORMAL_RANGE.
+		// This doesn't provide a bigger bonus at close range, but stretches it out, making medium 
+		// range less penalized, and longer range more penalized
 		iChance += 3 * ( NORMAL_RANGE - iSightRange ) / CELL_X_SIZE;
 		/*
 		if (iSightRange < NORMAL_RANGE)

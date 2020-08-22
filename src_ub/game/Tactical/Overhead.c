@@ -3491,11 +3491,23 @@ no queen, or queen monster
 	// killing crows/cows is not worth any experience!
 	if ( ( pSoldierOld->ubBodyType != CROW ) && ( pSoldierOld->ubBodyType != COW ) && pSoldierOld->ubLastDamageReason != TAKE_DAMAGE_BLOODLOSS )
 	{
+		UINT8	ubAssister;
+
 		// if it was a kill by a player's merc
 		if (pSoldierOld->ubAttackerID != NOBODY && MercPtrs[ pSoldierOld->ubAttackerID ]->bTeam == gbPlayerNum )
 		{
 			// EXPERIENCE CLASS GAIN:  Earned a kill
 			StatChange( MercPtrs[ pSoldierOld->ubAttackerID ], EXPERAMT, (UINT16)( 10 * pSoldierOld->bExpLevel ), FALSE );
+		}
+
+		// JA2 Gold: if previous and current attackers are the same, the next-to-previous attacker gets the assist
+		if (pSoldierOld->ubPreviousAttackerID == pSoldierOld->ubAttackerID)
+		{
+			ubAssister = pSoldierOld->ubNextToPreviousAttackerID;
+		}
+		else
+		{
+			ubAssister = pSoldierOld->ubPreviousAttackerID;
 		}
 
 		// if it was assisted by a player's merc

@@ -844,6 +844,10 @@ void HandleSight(SOLDIERTYPE *pSoldier, UINT8 ubSightFlags)
 			}
 		}
 	}
+
+	// CJC August 13 2002: at the end of handling sight, reset sight flags to allow interrupts in case an audio cue should
+	// cause someone to see an enemy
+	gubSightFlags |= SIGHT_INTERRUPT;
 }
 
 
@@ -1968,7 +1972,9 @@ No Queen,Joe, or elliot
 						{
 							UINT8 ubRoom;
 
-							if ( InARoom( pOpponent->sGridNo, &ubRoom ) && IN_BROTHEL( ubRoom ) && ( gMercProfiles[ MADAME ].bNPCData == 0 || IN_BROTHEL_GUARD_ROOM( ubRoom ) ) )
+							// JA2 Gold: only go hostile if see player IN guard room
+							//if ( InARoom( pOpponent->sGridNo, &ubRoom ) && IN_BROTHEL( ubRoom ) && ( gMercProfiles[ MADAME ].bNPCData == 0 || IN_BROTHEL_GUARD_ROOM( ubRoom ) ) )
+							if ( InARoom( pOpponent->sGridNo, &ubRoom ) && IN_BROTHEL_GUARD_ROOM( ubRoom ) )
 							{
 								// unauthorized!
 								MakeCivHostile( pSoldier, 2 );
@@ -4521,7 +4527,7 @@ UINT8 MovementNoise( SOLDIERTYPE *pSoldier )
 	}
 	else if (DeepWater( pSoldier->sGridNo ) )
 	{
-		iStealthSkill -= 20; // 10% penalty
+		iStealthSkill -= 20; // 20% penalty
 	}
 
 	if ( pSoldier->bDrugEffect[ DRUG_TYPE_ADRENALINE ] )
