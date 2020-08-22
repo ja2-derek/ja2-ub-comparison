@@ -4400,8 +4400,11 @@ void BoobyTrapMessageBoxCallBack( UINT8 ubExitValue )
 			else
 			{
 				// make sure the item in the world is untrapped
-				gWorldItems[ gpBoobyTrapItemPool->iItemIndex ].o.bTrap = 0;
-				gWorldItems[ gpBoobyTrapItemPool->iItemIndex ].o.fFlags &= ~( OBJECT_KNOWN_TO_BE_TRAPPED );
+				// ATE: Copy object into world items
+				gWorldItems[ gpBoobyTrapItemPool->iItemIndex ].o = Object;
+
+				//gWorldItems[ gpBoobyTrapItemPool->iItemIndex ].o.bTrap = 0;
+				//gWorldItems[ gpBoobyTrapItemPool->iItemIndex ].o.fFlags &= ~( OBJECT_KNOWN_TO_BE_TRAPPED );
 
 				// ATE; If we failed to add to inventory, put failed one in our cursor...
 				gfDontChargeAPsToPickup = TRUE;
