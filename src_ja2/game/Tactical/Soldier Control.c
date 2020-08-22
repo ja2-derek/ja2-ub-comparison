@@ -2531,6 +2531,13 @@ void SetSoldierGridNo( SOLDIERTYPE *pSoldier, INT16 sNewGridNo, BOOLEAN fForceRe
 				}
 			}
 
+			//The player DOESNT want the mercs to cast the fake lights
+			else
+			{
+				//Only light the soldier
+				SetSoldierPersonalLightLevel( pSoldier );			
+			}
+
 			///HandlePlacingRoofMarker( pSoldier, pSoldier->sGridNo, TRUE, FALSE );
 
 			HandleAnimationProfile( pSoldier, pSoldier->usAnimState, FALSE );
