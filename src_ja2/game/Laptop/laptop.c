@@ -760,6 +760,7 @@ UINT32 LaptopScreenInit()
 
 	//No longer inits the laptop screens, now InitLaptopAndLaptopScreens() does
 
+	InitJa25SaveStruct();
 	return( 1 );
 }
 
