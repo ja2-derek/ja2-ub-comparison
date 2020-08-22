@@ -46,6 +46,7 @@ extern void EndCreatureQuest();
 extern GARRISON_GROUP *gGarrisonGroup;
 extern INT32 giGarrisonArraySize;
 
+INT16		gsGridNoForMapEdgePointInfo=-1;
 
 /* Ja25:  no surrendering 
 INT16 gsInterrogationGridNo[3] = { 7756, 7757, 7758 };
@@ -960,6 +961,11 @@ void AddPossiblePendingEnemiesToBattle()
 						ubStrategicInsertionCode = INSERTION_CODE_SOUTH;
 					else if( pGroup->ubSectorY > pGroup->ubPrevY )
 						ubStrategicInsertionCode = INSERTION_CODE_NORTH;
+					else if( gsGridNoForMapEdgePointInfo != -1 )
+					{
+						//Ja25: it doesnt matter the entry point at this point, it will become GRIDNO at a later point
+						ubStrategicInsertionCode = INSERTION_CODE_NORTH;
+					}
 				}
 				else if( pGroup->ubNextX && pGroup->ubNextY )
 				{
@@ -1056,6 +1062,7 @@ void AddEnemiesToBattle( GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ub
 		case INSERTION_CODE_EAST:		bDesiredDirection = SOUTHWEST;										break;
 		case INSERTION_CODE_SOUTH:	bDesiredDirection = NORTHWEST;										break;
 		case INSERTION_CODE_WEST:		bDesiredDirection = NORTHEAST;										break;
+		case INSERTION_CODE_GRIDNO:	bDesiredDirection = NORTHEAST;										break;
 		default:  AssertMsg( 0, "Illegal direction passed to AddEnemiesToBattle()" );	break;
 	}
 
@@ -1090,7 +1097,32 @@ void AddEnemiesToBattle( GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ub
 
 	ubTotalSoldiers = ubNumAdmins + ubNumTroops + ubNumElites;
 
+	if( gsGridNoForMapEdgePointInfo != -1 )
+	{
+		ubStrategicInsertionCode = INSERTION_CODE_GRIDNO;
+	}
+
+	if( ubStrategicInsertionCode == INSERTION_CODE_GRIDNO )
+	{
+		if( gsGridNoForMapEdgePointInfo == -1 )
+		{
+			Assert( 0 );
+			gsGridNoForMapEdgePointInfo=0;
+		}
+
+		for( ubCnt=0; ubCnt<32;ubCnt++)
+		{
+			MapEdgepointInfo.sGridNo[ ubCnt ] = gsGridNoForMapEdgePointInfo;
+		}
+
+		MapEdgepointInfo.ubNumPoints = 32;
+		MapEdgepointInfo.ubStrategicInsertionCode = INSERTION_CODE_GRIDNO;
+	}
+	else
+	{
 	ChooseMapEdgepoints( &MapEdgepointInfo, ubStrategicInsertionCode, (UINT8)(ubNumAdmins+ubNumElites+ubNumTroops) );
+	}
+
 	ubCurrSlot = 0;
 	while( ubTotalSoldiers )
 	{
@@ -1164,6 +1196,8 @@ void AddEnemiesToBattle( GROUP *pGroup, UINT8 ubStrategicInsertionCode, UINT8 ub
 			UpdateMercInSector( pSoldier, gWorldSectorX, gWorldSectorY, gbWorldSectorZ );
 		}
 	}
+
+	gsGridNoForMapEdgePointInfo = -1;
 }
 
 
