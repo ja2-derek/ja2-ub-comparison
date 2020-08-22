@@ -6097,7 +6097,7 @@ Ja25  no meanwhile
 */
 		}
 
-		if( NumEnemyInSector() )
+		if( NumEnemyInSectorExceptCreatures() )
 		{
 			SetThisSectorAsEnemyControlled( gWorldSectorX, gWorldSectorY, gbWorldSectorZ, TRUE );
 		}
@@ -6540,6 +6540,30 @@ UINT8 NumEnemyInSector( )
 
 }
 
+UINT8 NumEnemyInSectorExceptCreatures()
+{
+	SOLDIERTYPE *pTeamSoldier;
+	INT32				cnt = 0;
+	UINT8				ubNumEnemies = 0;
+
+	// Check if the battle is won!
+	// Loop through all mercs and make go
+	for ( pTeamSoldier = Menptr, cnt = 0; cnt < TOTAL_SOLDIERS; pTeamSoldier++, cnt++ )
+	{
+		if ( pTeamSoldier->bActive && pTeamSoldier->bInSector && pTeamSoldier->bLife > 0 && pTeamSoldier->bTeam != CREATURE_TEAM )
+		{
+			// Checkf for any more bacguys
+			if ( !pTeamSoldier->bNeutral && (pTeamSoldier->bSide != 0 ) )
+			{
+				ubNumEnemies++;
+			}
+		}
+	}
+
+	return( ubNumEnemies );
+
+}
+
 
 UINT8 NumEnemyInSectorNotDeadOrDying( )
 {
@@ -6758,6 +6782,8 @@ BOOLEAN CheckForLosingEndOfBattle( )
 					  if ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTNOTSTARTED || ( gubQuest[ QUEST_HELD_IN_ALMA ] == QUESTDONE && gubQuest[ QUEST_INTERROGATION ] == QUESTNOTSTARTED ) )
 					  {
 						  fDoCapture = TRUE;
+							// CJC Dec 1 2002: fix capture sequences
+							BeginCaptureSquence();
 					  }
 				  }
         }

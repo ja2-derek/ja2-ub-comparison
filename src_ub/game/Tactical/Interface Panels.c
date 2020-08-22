@@ -1184,7 +1184,10 @@ void EnableSMPanelButtons( BOOLEAN fEnable , BOOLEAN fFromItemPickup )
 	if ( fFromItemPickup )
 	{
 		// If we have the item pointer up...
-		if ( gpItemPointer != NULL )
+		// CJC Dec 4 2002: or if item pickup menu is up
+		//if ( gpItemPointer != NULL )
+		if ( gpItemPointer != NULL || gfInItemPickupMenu )
+
 		{
 			DisableTacticalTeamPanelButtons( TRUE );
 		}
