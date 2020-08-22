@@ -1593,6 +1593,8 @@ UINT8 CalcImportantSectorControl( void )
 			// if player controlled
 			if ( StrategicMap[ CALCULATE_STRATEGIC_INDEX( ubMapX, ubMapY ) ].fEnemyControlled == FALSE )
 			{
+/*
+Ja25 no miltia or sams
 				// towns where militia can be trained and SAM sites are important sectors
 				if ( MilitiaTrainingAllowedInSector( ubMapX, ubMapY, 0 ) )
 				{
@@ -1602,6 +1604,17 @@ UINT8 CalcImportantSectorControl( void )
 					if ( IsThisSectorASAMSector( ubMapX, ubMapY, 0 ) )
 					{
 						ubSectorControlPts++;
+					}
+				}
+*/
+
+				//if the player is allowed to enter this sector
+				if( SectorInfo[ SECTOR( ubMapX, ubMapY ) ].ubTraversability[ THROUGH_STRATEGIC_MOVE ] != EDGEOFWORLD )
+				{
+					if ( StrategicMap[ CALCULATE_STRATEGIC_INDEX( ubMapX, ubMapY ) ].fEnemyControlled == FALSE )
+					{
+						//Since there are not many sectors, each 1 counts for more
+						ubSectorControlPts += 2;
 					}
 				}
 			}
