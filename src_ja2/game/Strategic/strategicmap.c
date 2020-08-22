@@ -1424,6 +1424,20 @@ void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOl
 			gMercProfiles[ TEX ].sSectorY = 0;
 		}
 	}
+
+	//if the player is leaving a sector with  John kulba in it
+	if( sOldSectorX == gMercProfiles[ JOHN_K ].sSectorX && sOldSectorY == gMercProfiles[ JOHN_K ].sSectorY && bOldSectorZ == 0 && gMercProfiles[ JOHN_K].ubLastDateSpokenTo != 0 )
+	{
+		pSoldier = FindSoldierByProfileID( JOHN_K, TRUE );
+
+		//if the npc isnt on the players team AND the player has never spoken to them
+		if( pSoldier == NULL && gMercProfiles[ JOHN_K ].ubLastDateSpokenTo != 0 )
+		{
+			// remove Tex from the map
+			gMercProfiles[ JOHN_K ].sSectorX = 0;
+			gMercProfiles[ JOHN_K ].sSectorY = 0;
+		}
+	}
 /*
 Ja25 no cambria hospital
 	if ( sOldSectorX == HOSPITAL_SECTOR_X && sOldSectorY == HOSPITAL_SECTOR_Y && bOldSectorZ == HOSPITAL_SECTOR_Z )
@@ -5293,11 +5307,30 @@ void ShouldNpcBeAddedToSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 			}
 		}
 	}
-}
 
+	//if John has never been added before 
+	if( !( gJa25SaveStruct.fNpcHasBeenAdded & SECTOR_ADDED_NPC__JOHN_K ) )
+	{
+		//and John is TO be added ( Tex not in game )
+		if( !gubFact[ FACT_TEX_IS_IN_GAME_AND_ALIVE_IN_STORE ] )
+		{
+			//if it is the right sector
+			if( sMapX == gJa25SaveStruct.ubJohnKulbaInitialSectorX && 
+					sMapY == gJa25SaveStruct.ubJohnKulbaInitialSectorY && 
+					bMapZ == 0 )
+			{
+				//Change his sector values to 
+				gMercProfiles[ JOHN_K ].sSectorX = sMapX;
+				gMercProfiles[ JOHN_K ].sSectorY = sMapY;
+				gMercProfiles[ JOHN_K ].bSectorZ = bMapZ;
 
+				//remember that we have added him
+				gJa25SaveStruct.fNpcHasBeenAdded |= SECTOR_ADDED_NPC__JOHN_K;
+			}
+		}
 	}
 }
+
 void HandleSectorSpecificUnLoadingOfMap( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 {
 	//if this is the power gen map
