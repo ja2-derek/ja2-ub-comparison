@@ -3274,6 +3274,16 @@ void ChangeQuestState( INT32 iNumber )
 {
 	if( ( iNumber >= 0 ) && ( iNumber <= 2 ) )
 	{
+		//if we are to start the quest
+		if( iNumber == QUESTINPROGRESS )
+		{
+			StartQuest( gubCurQuestSelected, -1, -1 );
+		}
+		else if( iNumber == QUESTDONE )
+		{
+			EndQuest( gubCurQuestSelected, -1, -1 );
+		}
+		else
 		gubQuest[ gubCurQuestSelected ] = (UINT8) iNumber;
 		gfRedrawQuestDebugSystem = TRUE;
 	}
@@ -3846,7 +3856,14 @@ void SetQDSMercProfile()
 	if	( GetSoldier( &gTalkingMercSoldier, gusSelectedSoldier ) )
 	{
 		// Change guy!
+		if( gfUseLocalNPCs )
+		{
+			ForceSoldierProfileID( gTalkingMercSoldier, (UINT8)gubCurrentNpcInSector[ gNpcListBox.sCurSelectedItem ] );
+		}
+		else
+		{
 		ForceSoldierProfileID( gTalkingMercSoldier, (UINT8)gNpcListBox.sCurSelectedItem );
+		}
 
 		//if it is an rpc
 		if( gTalkingMercSoldier->ubProfile >= 57 && gTalkingMercSoldier->ubProfile <= 72 )
