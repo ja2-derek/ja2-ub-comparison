@@ -64,7 +64,6 @@ void SetWatchedLocAsUsed( UINT8 ubID, INT16 sGridNo, INT8 bLevel );
 void DecayWatchedLocs( INT8 bTeam );
 
 void HandleManNoLongerSeen( SOLDIERTYPE * pSoldier, SOLDIERTYPE * pOpponent, INT8 * pPersOL, INT8 * pbPublOL );
-void HandleManNoLongerSeen( SOLDIERTYPE * pSoldier, SOLDIERTYPE * pOpponent, INT8 * pPersOL, INT8 * pbPublOL );
 void HandleSayingSeeEnemyQuote( SOLDIERTYPE *pSoldier );
 void HandleSoldierPossiblySayingSeeEnemyVariation( SOLDIERTYPE *pSoldier );
 

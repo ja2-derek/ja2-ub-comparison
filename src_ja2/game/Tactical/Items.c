@@ -45,6 +45,7 @@
 
 void RemoveObjs( OBJECTTYPE * pObj, UINT8 ubNumberToRemove );
 void SetNewItem( SOLDIERTYPE *pSoldier, UINT8 ubInvPos, BOOLEAN fNewItem );
+UINT16 FindAmmoIncludingType( UINT8 ubCalibre, UINT8 ubMagSize, UINT8 ubType );
 
 extern	SOLDIERTYPE *gpItemDescSoldier;
 

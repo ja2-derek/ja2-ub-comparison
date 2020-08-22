@@ -47,15 +47,44 @@ BOOLEAN SayQuoteFromAllNewHiredMercButDoGastonLast( UINT8 ubProfile, UINT32 uiQu
 //random soldier IDs of the qualified mercs
 INT8 RandomArrayOfQualifiedMercs( UINT8 *pRandomSoldierIdArray );
 
+
+INT8 Get3RandomQualifiedMercs( UINT8 *pSoldierId1, UINT8 *pSoldierId2, UINT8 *pSoldierId3 );
+
+void HandleWhenCertainPercentageOfEnemiesDie();
+
+void StartFanBackUpAgain();
+
+void AddExitGridForFanToPowerGenSector();
+
+void HandleAddingPowerGenFanSound();
+void HandleRemovingPowerGenFanSound();
+
+void HandleStartingFanBackUp();
+
+void HandlePowerGenAlarm();
+
+
 BOOLEAN HandlePlayerSayingQuoteWhenFailingToOpenGateInTunnel( SOLDIERTYPE *pSoldier, BOOLEAN fSayQuoteOnlyOnce );
+
+void HandleHowPlayerGotThroughFan();
 
 void RevealAllDroppedEnemyItems();
 
 void HandlePlayingQuoteWhenHiringNpc( UINT8 ubProfile );
 
+
+BOOLEAN LoadJa25TacticalInfoFromSavedGame( HWFILE hFile );
+BOOLEAN SaveJa25TacticalInfoToSaveGame( HWFILE hFile );
+
 BOOLEAN HandleNewGunComment( SOLDIERTYPE *pSoldier, INT32 iItemIndex, BOOLEAN fFromGround );
+void HandleDeathInPowerGenSector( SOLDIERTYPE *pSoldier );
 
 void		HandleJa25EnemyExpLevelModifier( );
+
+INT8		RandomSoldierIdForAnyMercInSector();
+
+void		HandleFanStartingAtEndOfCombat();
+
 void		HandleInitialEventsInHeliCrash();
 void		HandleCommanderMorrisNewMercWantsNoteDelayedSpeech();
 

@@ -320,12 +320,6 @@ COLORVAL bDefaultTeamColors[ MAXTEAMS ] =
 };
 
 
-// UTILITY FUNCTIONS
-INT8	NumActiveAndConsciousTeamMembers( UINT8 ubTeam );
-UINT8 NumEnemyInSector( );
-UINT8 NumEnemyInSectorExceptCreatures();
-UINT8 NumCapableEnemyInSector( );
-
 BOOLEAN KillIncompacitatedEnemyInSector( );
 BOOLEAN CheckForLosingEndOfBattle( );
 void  EndBattleWithUnconsciousGuysCallback( UINT8 bExitValue );
