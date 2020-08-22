@@ -232,6 +232,11 @@ void InitPreBattleInterface( GROUP *pBattleGroup, BOOLEAN fPersistantPBI )
 			gfEnteringMapScreen = TRUE;
 			gfEnteringMapScreenToEnterPreBattleInterface = TRUE;
 			gfUsePersistantPBI = TRUE;
+
+			gubPBSectorX = gpBattleGroup->ubSectorX;
+			gubPBSectorY = gpBattleGroup->ubSectorY;
+			gubPBSectorZ = gpBattleGroup->ubSectorZ;
+
 			return;
 		}
 		
