@@ -2458,7 +2458,10 @@ void RemoveOneOpponent(SOLDIERTYPE *pSoldier)
 
  if ( pSoldier->bOppCnt < 0 )
  {
+	 if( pSoldier->bLife > 0 )
+	 {
 	 DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("Oppcnt for %d (%s) tried to go below 0", pSoldier->ubID, pSoldier->name ) );
+	 }
 	 pSoldier->bOppCnt = 0;
  }
 
