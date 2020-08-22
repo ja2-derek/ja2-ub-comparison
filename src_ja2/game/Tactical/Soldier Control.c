@@ -6513,6 +6513,15 @@ Ja25: No meanwhiles
 		pSoldier->bLife -= sLifeDeduct;
 	}
 
+	//if the soldier is not dead, is an enemy and hurt by the player
+	if( pSoldier->bLife > 0 && 
+			pSoldier->bTeam != gbPlayerNum && 
+			Menptr[ pSoldier->ubAttackerID ].bTeam == gbPlayerNum )
+	{
+		//The player merc 
+		HandleEnemyHurtByPlayerSoldier( pSoldier, pSoldier->ubAttackerID, sLifeDeduct );
+	}
+
 	// ATE: Put some logic in here to allow enemies to die quicker.....
 	// Are we an enemy?
 	if ( pSoldier->bSide != gbPlayerNum && !pSoldier->bNeutral && pSoldier->ubProfile == NO_PROFILE )
