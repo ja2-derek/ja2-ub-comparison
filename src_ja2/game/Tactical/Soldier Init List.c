@@ -999,7 +999,95 @@ void AddSoldierInitListEnemyDefenceSoldiers( UINT8 ubTotalAdmin, UINT8 ubTotalTr
 		curr = curr->next;
 	mark = curr;
 	
-	//ADD PLACEMENTS WITH NO DETAILED PLACEMENT AND PRIORITY EXISTANCE INFORMATION SECOND
+	//Kris: January 11, 2000 -- NEW!!!
+	//PRIORITY EXISTANT SLOTS MUST BE FILLED
+	//This must be done to ensure all priority existant slots are filled before ANY other slots are filled,
+	//even if that means changing the class of the slot.  Also, assume that there are no matching fits left 
+	//for priority existance slots.  All of the matches have been already assigned in the above passes.  
+	//We'll have to convert the soldier type of the slot to match.
+	curr = gSoldierInitHead; 
+	while( curr && ubMaxNum && curr->pBasicPlacement->fPriorityExistance )
+	{
+		if( !curr->pSoldier && curr->pBasicPlacement->bTeam == ENEMY_TEAM )
+		{
+			//Choose which team to use.
+			iRandom = Random( ubMaxNum );
+			if( iRandom < ubTotalElite )
+			{
+				curr->pBasicPlacement->ubSoldierClass = SOLDIER_CLASS_ELITE;
+				ubTotalElite--;
+			}
+			else if( iRandom < ubTotalElite + ubTotalTroops )
+			{
+				curr->pBasicPlacement->ubSoldierClass = SOLDIER_CLASS_ARMY;
+				ubTotalTroops--;
+			}
+			else if( iRandom < ubTotalElite + ubTotalTroops + ubTotalAdmin )
+			{
+				curr->pBasicPlacement->ubSoldierClass = SOLDIER_CLASS_ADMINISTRATOR;
+				ubTotalAdmin--;
+			}
+			else
+				Assert(0);
+			if( AddPlacementToWorld( curr ) )
+			{
+				ubMaxNum--;
+			}
+			else
+				return;
+		}
+		curr = curr->next;
+	}
+	if( !ubMaxNum )
+		return;
+
+	//Recount the slots
+ 	ubElitePDSlots = 0, ubEliteDSlots = 0, ubElitePSlots = 0, ubEliteBSlots = 0;
+	ubTroopPDSlots = 0, ubTroopDSlots = 0, ubTroopPSlots = 0, ubTroopBSlots = 0;
+	ubAdminPDSlots = 0, ubAdminDSlots = 0, ubAdminPSlots = 0, ubAdminBSlots = 0;
+	curr = gSoldierInitHead;
+	while( curr && !curr->pSoldier )
+	{
+		if( curr->pBasicPlacement->bTeam == ENEMY_TEAM )
+		{
+			switch( curr->pBasicPlacement->ubSoldierClass )
+			{
+				case SOLDIER_CLASS_ELITE:
+					if( curr->pBasicPlacement->fPriorityExistance && curr->pDetailedPlacement )
+						ubElitePDSlots++;	
+					else if( curr->pBasicPlacement->fPriorityExistance )
+						ubElitePSlots++;
+					else if( curr->pDetailedPlacement )
+						ubEliteDSlots++;
+					else
+						ubEliteBSlots++;
+					break;
+				case SOLDIER_CLASS_ADMINISTRATOR:		
+					if( curr->pBasicPlacement->fPriorityExistance && curr->pDetailedPlacement )
+						ubAdminPDSlots++;	
+					else if( curr->pBasicPlacement->fPriorityExistance )
+						ubAdminPSlots++;
+					else if( curr->pDetailedPlacement )
+						ubAdminDSlots++;
+					else
+						ubAdminBSlots++;
+					break;
+				case SOLDIER_CLASS_ARMY:						
+					if( curr->pBasicPlacement->fPriorityExistance && curr->pDetailedPlacement )
+						ubTroopPDSlots++;	
+					else if( curr->pBasicPlacement->fPriorityExistance )
+						ubTroopPSlots++;
+					else if( curr->pDetailedPlacement )
+						ubTroopDSlots++;
+					else
+						ubTroopBSlots++;
+					break;
+			}
+		}
+		curr = curr->next;
+	}
+
+	//ADD PLACEMENTS WITH NO PRIORITY EXISTANCE AND DETAILED PLACEMENT INFORMATION
 	//we now have the numbers of available slots for each soldier class, so loop through three times
 	//and randomly choose some (or all) of the matching slots to fill.  This is done randomly.
 	for( ubCurrClass = SOLDIER_CLASS_ADMINISTRATOR; ubCurrClass <= SOLDIER_CLASS_ARMY; ubCurrClass++ )
@@ -1055,47 +1143,6 @@ void AddSoldierInitListEnemyDefenceSoldiers( UINT8 ubTotalAdmin, UINT8 ubTotalTr
 		curr = curr->next;
 	mark = curr;
 
-	//Kris: January 11, 2000 -- NEW!!!
-	//PRIORITY EXISTANT SLOTS MUST BE FILLED
-	//This must be done to ensure all priority existant slots are filled before ANY other slots are filled,
-	//even if that means changing the class of the slot.  Also, assume that there are no matching fits left 
-	//for priority existance slots.  All of the matches have been already assigned in the above passes.  
-	//We'll have to convert the soldier type of the slot to match.
-	curr = gSoldierInitHead; 
-	while( curr && ubMaxNum && curr->pBasicPlacement->fPriorityExistance )
-	{
-		if( !curr->pSoldier && curr->pBasicPlacement->bTeam == ENEMY_TEAM )
-		{
-			//Choose which team to use.
-			iRandom = Random( ubMaxNum );
-			if( iRandom < ubTotalElite )
-			{
-				curr->pBasicPlacement->ubSoldierClass = SOLDIER_CLASS_ELITE;
-				ubTotalElite--;
-			}
-			else if( iRandom < ubTotalElite + ubTotalTroops )
-			{
-				curr->pBasicPlacement->ubSoldierClass = SOLDIER_CLASS_ARMY;
-				ubTotalTroops--;
-			}
-			else if( iRandom < ubTotalElite + ubTotalTroops + ubTotalAdmin )
-			{
-				curr->pBasicPlacement->ubSoldierClass = SOLDIER_CLASS_ADMINISTRATOR;
-				ubTotalAdmin--;
-			}
-			else
-				Assert(0);
-			if( AddPlacementToWorld( curr ) )
-			{
-				ubMaxNum--;
-			}
-			else
-				return;
-		}
-		curr = curr->next;
-	}
-	if( !ubMaxNum )
-		return;
 	
 	//ADD REMAINING PLACEMENTS WITH BASIC PLACEMENT INFORMATION
 	//we now have the numbers of available slots for each soldier class, so loop through three times
