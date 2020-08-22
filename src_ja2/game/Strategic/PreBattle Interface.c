@@ -1302,6 +1302,12 @@ void GoToSectorCallback( GUI_BUTTON *btn, INT32 reason )
 
 			KillPreBattleInterface();
 			SetTacticalInterfaceFlags( 0 );
+
+			//if the enemies should go and find the player mercs
+			if( GetSectorEnemyIsToImmediatelySeekEnemyIn() != -1 )
+			{
+				SetEnemiesToFindThePlayerMercs();
+			}
 		}
 	}
 }
