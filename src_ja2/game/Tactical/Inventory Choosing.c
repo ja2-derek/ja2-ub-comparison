@@ -1531,6 +1531,9 @@ BOOLEAN PlaceObjectInSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, OBJECTTYPE *
 	return FALSE;
 }
 
+
+extern UINT8 gubEnemyEncounterCode;
+
 void RandomlyChooseWhichItemsAreDroppable( SOLDIERCREATE_STRUCT *pp, INT8 bSoldierClass )
 {
 	INT32 i;
@@ -1604,6 +1607,10 @@ void RandomlyChooseWhichItemsAreDroppable( SOLDIERCREATE_STRUCT *pp, INT8 bSoldi
 	fKnife = (Random(3)) ? FALSE : TRUE;
 */
 
+	if( gubEnemyEncounterCode != ENEMY_INVASION_CODE && gubEnemyEncounterCode != ENEMY_ENCOUNTER_CODE )
+	{
+		return;
+	}
 
 	// only enemy soldiers use auto-drop system!
 	// don't use the auto-drop system in auto-resolve: player won't see what's being used & enemies will often win & keep'em 
