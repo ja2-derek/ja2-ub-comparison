@@ -40,6 +40,8 @@
 	#include "Town Militia.h"
 #endif
 
+extern JA25_SECTOR_AI	*gJa25AiSectorStruct;
+
 // the delay for a group about to arrive
 #define ABOUT_TO_ARRIVE_DELAY 5
 
@@ -1505,6 +1507,7 @@ void GroupArrivedAtSector( UINT8 ubGroupID, BOOLEAN fCheckForBattle, BOOLEAN fNe
 	BOOLEAN fFirstTimeInSector = FALSE;
 	BOOLEAN fGroupDestroyed = FALSE;
 	BOOLEAN fVehicleStranded = FALSE;
+	BOOLEAN	fBattleGoingToStart=FALSE;
 
 	// reset
 	gfWaitingForInput = FALSE;
@@ -3711,6 +3714,7 @@ BOOLEAN LoadPlayerGroupList( HWFILE hFile, GROUP **pGroup )
 	UINT32	cnt=0;
 	INT16		sTempID;
 	GROUP		*pTempGroup = *pGroup;
+	BOOLEAN	fCreatedHead = FALSE;
 
 //	pTemp = pGroup;
 

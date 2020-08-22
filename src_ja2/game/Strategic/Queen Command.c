@@ -656,7 +656,7 @@ void ProcessQueenCmdImplicationsOfDeath( SOLDIERTYPE *pSoldier )
 {
 	INT32 iNumEnemiesInSector;
 	SECTORINFO *pSector;
-	UINT16 str[128];
+
 	EvaluateDeathEffectsToSoldierInitList( pSoldier );
 
 	switch( pSoldier->ubProfile )

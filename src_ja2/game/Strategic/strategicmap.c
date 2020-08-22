@@ -112,6 +112,7 @@ BOOLEAN HandleDefiniteUnloadingOfWorld( UINT8 ubUnloadCode );
 
 extern INT16		gsRobotGridNo;
 extern BOOLEAN	gfUndergroundTacticalTraversal;
+extern	INT8 gbExitingMapScreenToWhere;
 
 extern MINE_LOCATION_TYPE gMineLocation[MAX_NUMBER_OF_MINES];
 
@@ -148,6 +149,8 @@ INT8 gbMilitiaPromotions = 0;
 
 
 extern BOOLEAN gfUsePersistantPBI;
+
+extern STRUCTURE * SwapStructureForPartnerForcingGraphicalChangeAndStoreChangeInMap( INT16 sGridNo, STRUCTURE * pStructure );
 
 BOOLEAN		gfUseAlternateMap = FALSE;
 
@@ -295,8 +298,6 @@ STR8 pHortStrings[]={
 "17",
 };
 
-void InitializeStrategicMapSectorTownNames( void );
-
 void DoneFadeOutAdjacentSector( void );
 void DoneFadeOutExitGridSector( void );
 
@@ -306,6 +307,7 @@ INT16 PickGridNoToWalkIn( SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection, UIN
 void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ );
 void HandlePotentialMoraleHitForSkimmingSectors( GROUP *pGroup );
 void HandlePlayerTeamQuotesWhenEnteringSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ );
+void ShouldNpcBeAddedToSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ );
 void HandlePlayerQuotesWhenEnteringFirstTunnelSector();
 void AddExitGridForFanToPowerGenSector();
 void HandleSectorSpecificUnLoadingOfMap( INT16 sMapX, INT16 sMapY, INT8 bMapZ );
@@ -770,7 +772,7 @@ void HandleRPCDescriptionOfSector( INT16 sSectorX, INT16 sSectorY, INT16 sSector
 
 BOOLEAN	SetCurrentWorldSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 {
-	UNDERGROUND_SECTORINFO	*pUnderWorld=NULL;
+//	UNDERGROUND_SECTORINFO	*pUnderWorld=NULL;
 	BOOLEAN									fChangeMusic = TRUE;
 	BOOLEAN									fWorldWasLoaded=FALSE;
 	INT16										sOldMapX, sOldMapY, sOldMapZ;
@@ -1075,9 +1077,9 @@ void RemoveMercsInSector( )
 
 void PrepareLoadedSector()
 {
-	INT32 iCounter = 0;
+//	INT32 iCounter = 0;
 	BOOLEAN fEnemyPresenceInThisSector = FALSE;
-	BOOLEAN fUsingOverride = FALSE;
+//	BOOLEAN fUsingOverride = FALSE;
 	BOOLEAN fAddCivs = TRUE;
 	INT8 bMineIndex = -1;
 
@@ -2356,7 +2358,7 @@ void JumpIntoAdjacentSector( UINT8 ubTacticalDirection, UINT8 ubJumpCode, INT16 
 	SOLDIERTYPE *pValidSoldier = NULL;
 	GROUP *pGroup;
 	UINT32 uiTraverseTime=0;
-	UINT8 ubDirection;
+	UINT8 ubDirection=0;
 	EXITGRID ExitGrid;
 	INT8 bPrevAssignment;
 	UINT8 ubPrevGroupID;
