@@ -1514,6 +1514,11 @@ BOOLEAN EnterSector( INT16 sSectorX, INT16 sSectorY , INT8 bSectorZ )
 		SetSectorFlag( sSectorX, sSectorY, bSectorZ, SF_ALREADY_VISITED );
 	}
 
+
+	CreateLoadingScreenProgressBar();
+
+	//CreateProgressBar( 0, 160, 380, 480, 400 );
+
 	{
 		BOOLEAN fOldMap = TRUE;
 
@@ -1543,19 +1548,10 @@ BOOLEAN EnterSector( INT16 sSectorX, INT16 sSectorY , INT8 bSectorZ )
 
 	GetMapFileName( sSectorX, sSectorY, bSectorZ,  bFilename, TRUE, TRUE );
 
-	//Load the placeholder map if the real map doesn't exist.
-	if( !MapExists( bFilename ) )
+		if( !LoadWorld( bFilename, fOldMap, TRUE ) )
 	{
-		if( !MapExists( "Placeholder1.dat" ) )
-			AssertMsg( 0, "Failed to find Placeholder1.dat (placeholder map)." );
+			return( FALSE );
 	}
-
-	CreateLoadingScreenProgressBar();
-
-	//CreateProgressBar( 0, 160, 380, 480, 400 );
-	if( !LoadWorld( bFilename ) )
-	{
-		return( FALSE );
 	}
 
 	// underground?
