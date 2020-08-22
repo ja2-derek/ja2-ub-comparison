@@ -2212,7 +2212,7 @@ else
 	 {
 		 pOpponent->fBeginFade = FALSE;
 
-		if ( pOpponent->bLevel > 0 && gpWorldLevelData[pSoldier->sGridNo].pRoofHead != NULL )
+		if ( pOpponent->bLevel > 0 && gpWorldLevelData[ pOpponent->sGridNo ].pRoofHead != NULL )
 		{
 			pOpponent->ubFadeLevel = gpWorldLevelData[ pOpponent->sGridNo ].pRoofHead->ubShadeLevel;
 		}
@@ -2428,6 +2428,7 @@ void AddOneOpponent(SOLDIERTYPE *pSoldier)
 			// never become aware of you!
 			return;
 		}
+		
 
 		pSoldier->bAlertStatus = STATUS_BLACK;   // force black AI status right away
 		CheckForChangingOrders(pSoldier);
