@@ -753,6 +753,7 @@ JA25:  No mike or iggy
 		}
 		if( pGroup->ubGroupSize )
 			pGroup->ubGroupSize--;
+		RecalculateGroupWeight( pGroup );
 		if( !pGroup->ubGroupSize )
 		{
 			RemovePGroup( pGroup );
@@ -831,6 +832,7 @@ JA25:  No mike or iggy
 
 					break;
 			}
+			RecalculateSectorWeight( (UINT8)SECTOR( pSoldier->sSectorX, pSoldier->sSectorY ) );
 		}
 		else
 		{ //basement level (UNDERGROUND_SECTORINFO)
@@ -917,7 +919,7 @@ void AddPossiblePendingEnemiesToBattle()
 	pGroup = gpGroupList;
 	while( pGroup && ubSlots )
 	{
-		if( !pGroup->fPlayer && !pGroup->fVehicle && pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY && pGroup->ubSectorZ == gbWorldSectorZ )
+		if( !pGroup->fPlayer && !pGroup->fVehicle && pGroup->ubSectorX == gWorldSectorX && pGroup->ubSectorY == gWorldSectorY && !gbWorldSectorZ )
 		{ //This enemy group is currently in the sector.
 			ubNumElites = ubNumTroops = ubNumAdmins = 0;
 			ubNumAvailable = pGroup->ubGroupSize - pGroup->pEnemyGroup->ubElitesInBattle - pGroup->pEnemyGroup->ubTroopsInBattle - pGroup->pEnemyGroup->ubAdminsInBattle;
@@ -1468,6 +1470,9 @@ void EnemyCapturesPlayerSoldier( SOLDIERTYPE *pSoldier )
 		pSoldier->sSectorY = 9;
 		pSoldier->bSectorZ = 0;
 
+		// put him on the floor!!
+		pSoldier->bLevel = 0;
+
 		// OK, drop all items!
 		for ( i = 0; i < NUM_INV_SLOTS; i++ )
 		{ 
@@ -1498,6 +1503,9 @@ void EnemyCapturesPlayerSoldier( SOLDIERTYPE *pSoldier )
 		pSoldier->sSectorX = 7;
 		pSoldier->sSectorY = 14;
 		pSoldier->bSectorZ = 0;
+		// put him on the floor!!
+		pSoldier->bLevel = 0;
+
 
 		// OK, drop all items!
 		for ( i = 0; i < NUM_INV_SLOTS; i++ )
