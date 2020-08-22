@@ -8085,6 +8085,8 @@ BOOLEAN HostileCiviliansWithGunsPresent( void )
 
 BOOLEAN HostileBloodcatsPresent( void )
 {
+	return( FALSE );
+/*
 	INT32						iLoop;
 	SOLDIERTYPE *		pSoldier;
 
@@ -8107,6 +8109,7 @@ BOOLEAN HostileBloodcatsPresent( void )
 	}
 
 	return( FALSE );
+*/
 }
 
 
