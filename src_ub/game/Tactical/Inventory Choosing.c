@@ -731,6 +731,7 @@ void ChooseGrenadesForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bGrena
 	UINT8 ubNumMini = 0;
 	UINT8 ubNumReg = 0;
 	UINT8 ubNumSmoke = 0;
+	UINT8 ubNumFlare = 0;
 	
 	//determine how many *points* the enemy will get to spend on grenades...
 	usNumPoints = bGrenades * bGrenadeClass;
@@ -769,7 +770,7 @@ void ChooseGrenadesForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bGrena
 
 		if( usNumPoints >= 10 )
 		{ //Choose randomly between any
-			switch( Random( 6 ) )
+			switch( Random( 7 ) )
 			{
 				case 0:	if ( !fGrenadeLauncher )
 								{
@@ -785,9 +786,53 @@ void ChooseGrenadesForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bGrena
 				case 3: ubNumTear++;			usNumPoints -= 6;		break;
 				case 4: ubNumStun++;			usNumPoints -= 5;		break;
 				case 5: ubNumSmoke++;			usNumPoints -= 4;		break;
+				case 6: if (!fGrenadeLauncher )
+						{
+							ubNumFlare++;			sNumPoints -= 3;		
+						}
+						break;
 			}
 		}
 
+		// JA2 Gold: don't make mini-grenades take all points available, and add chance of break lights
+		if( sNumPoints >= 1 && sNumPoints < 10 )
+		{
+			switch( Random( 10 ) )
+			{
+				case 0:
+				case 1:
+				case 2:
+					ubNumSmoke++;
+					sNumPoints -= 4;
+					break;
+				case 3:
+				case 4:
+					ubNumTear++;
+					sNumPoints -= 6;
+					break;
+				case 5:
+				case 6:
+					if (!fGrenadeLauncher)
+					{
+						ubNumFlare++;
+						sNumPoints -= 3;
+					}
+					break;
+				case 7:
+				case 8:
+					ubNumStun++;
+					sNumPoints -= 5;
+					break;
+				case 9:
+					if (!fGrenadeLauncher)
+					{
+						ubNumMini++;
+						sNumPoints -= 7;
+					}
+					break;
+			}
+		}
+		/*
 		if( usNumPoints >= 1 && usNumPoints < 10 )
 		{ //choose randomly between either stun or tear, (normal with rare chance)
 			switch( Random( 10 ) )
@@ -825,6 +870,7 @@ void ChooseGrenadesForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bGrena
 					break;
 			}
 		}
+		*/
 	}
 
 
@@ -899,6 +945,13 @@ void ChooseGrenadesForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bGrena
 		Object.fFlags |= OBJECT_UNDROPPABLE;
 		PlaceObjectInSoldierCreateStruct( pp, &Object );
 	}
+	if( ubNumFlare )
+	{
+		CreateItems( BREAK_LIGHT, (INT8)(ubBaseQuality + Random( ubQualityVariation )), ubNumFlare, &Object );
+		Object.fFlags |= OBJECT_UNDROPPABLE;
+		PlaceObjectInSoldierCreateStruct( pp, &Object );
+	}
+
 }
 
 void ChooseArmourForSoldierCreateStruct( SOLDIERCREATE_STRUCT *pp, INT8 bHelmetClass, INT8 bVestClass, INT8 bLeggingsClass )
