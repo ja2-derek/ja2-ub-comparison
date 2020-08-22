@@ -950,9 +950,16 @@ SOLDIERTYPE *ChangeSoldierTeam( SOLDIERTYPE *pSoldier, UINT8 ubTeam )
 		// fix up the event queue...
 	//	ChangeSoldierIDInQueuedEvents( ubOldID, uiOldUniqueId, pNewSoldier->ubID, pNewSoldier->uiUniqueSoldierIdValue );
 
-		if ( pNewSoldier->ubProfile != NO_PROFILE && ubTeam != gbPlayerNum )
+		if ( pNewSoldier->ubProfile != NO_PROFILE )		
+		{
+			if ( ubTeam == gbPlayerNum )
+			{
+				gMercProfiles[ pNewSoldier->ubProfile ].ubMiscFlags |= PROFILE_MISC_FLAG_RECRUITED;
+			}
+			else
 		{
 			gMercProfiles[ pNewSoldier->ubProfile ].ubMiscFlags &= (~PROFILE_MISC_FLAG_RECRUITED);
+			}
 		}
 
 	}
