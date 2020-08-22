@@ -911,6 +911,9 @@ Ja25 no creatures
 
 	  // Check for helicopter being on the ground in this sector...
 	  HandleHelicopterOnGroundSkyriderProfile( );
+
+		//Check to see if we should add Manuel to this sector, if so add him
+		ShouldNpcBeAddedToSector( gWorldSectorX, gWorldSectorY, bMapZ );
 	}
 
 	//Load and enter the new sector
@@ -1438,6 +1441,22 @@ void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOl
 			gMercProfiles[ JOHN_K ].sSectorY = 0;
 		}
 	}
+
+	//if the player is leaving a sector with  Manuel in it
+	if( sOldSectorX == gMercProfiles[ MANUEL ].sSectorX && sOldSectorY == gMercProfiles[ MANUEL ].sSectorY && bOldSectorZ == 0 )
+	{
+		pSoldier = FindSoldierByProfileID( MANUEL, TRUE );
+
+		//if the npc isnt on the players team AND the player has never spoken to them
+		if( pSoldier == NULL && gMercProfiles[ MANUEL ].ubLastDateSpokenTo != 0 )
+		{
+			// remove Manuel from the map
+			gMercProfiles[ MANUEL ].sSectorX = 0;
+			gMercProfiles[ MANUEL ].sSectorY = 0;
+		}
+	}
+
+
 /*
 Ja25 no cambria hospital
 	if ( sOldSectorX == HOSPITAL_SECTOR_X && sOldSectorY == HOSPITAL_SECTOR_Y && bOldSectorZ == HOSPITAL_SECTOR_Z )
@@ -5285,9 +5304,27 @@ void HandleEmailBeingSentWhenEnteringSector( INT16 sMapX, INT16 sMapY, INT8 bMap
 			gJa25SaveStruct.ubEmailFromSectorFlag |= SECTOR_EMAIL__TUNNEL;
 		}
 	}
+}
 
 void ShouldNpcBeAddedToSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ )
 {
+	//if Manuel has never been added before
+	if( !( gJa25SaveStruct.fNpcHasBeenAdded & SECTOR_ADDED_NPC__MANUEL) )
+	{
+		//if it is the right sector
+		if( ( sMapY == MAP_ROW_H && sMapX == 10 && bMapZ == 0 ) ||
+				( sMapY == MAP_ROW_I && sMapX == 9 && bMapZ == 0 ) )
+		{
+			//Change his sector values to 
+			gMercProfiles[ MANUEL ].sSectorX = sMapX;
+			gMercProfiles[ MANUEL ].sSectorY = sMapY;
+			gMercProfiles[ MANUEL ].bSectorZ = bMapZ;
+
+			//remember that we have added him
+			gJa25SaveStruct.fNpcHasBeenAdded |= SECTOR_ADDED_NPC__MANUEL;
+		}
+	}
+
 	//if Tex has never been added before 
 	if( !( gJa25SaveStruct.fNpcHasBeenAdded & SECTOR_ADDED_NPC__TEX ) )
 	{
