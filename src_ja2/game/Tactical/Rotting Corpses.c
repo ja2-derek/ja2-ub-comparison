@@ -573,6 +573,8 @@ INT32	AddRottingCorpse( ROTTING_CORPSE_DEFINITION *pCorpseDef )
 		pCorpse->fAttractCrowsOnlyWhenOnScreen = FALSE;
 	}
 
+	pCorpse->def.ubAIWarningValue = CORPSE_WARNING_MAX;
+
 	pCorpse->iCachedTileID = pCorpse->pAniTile->sCachedTileID;
 
 	if ( pCorpse->iCachedTileID == -1 )
