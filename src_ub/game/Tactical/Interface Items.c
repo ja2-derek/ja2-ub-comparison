@@ -5853,9 +5853,9 @@ typedef struct
 	INT16					sWidth;
 	INT16					sHeight;
 	INT8					bScrollPage;
-	UINT8					ubScrollAnchor;
-	UINT8					ubTotalItems;
-	UINT8					bCurSelect;
+	INT32			  	ubScrollAnchor;
+	INT32		  		ubTotalItems;
+	INT32		  		bCurSelect;
 	UINT8					bNumSlotsPerPage;
 	UINT32				uiPanelVo;
 	INT32					iUpButtonImages;
