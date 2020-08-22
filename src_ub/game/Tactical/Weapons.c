@@ -4205,7 +4205,7 @@ INT32 CalcMaxTossRange( SOLDIERTYPE * pSoldier, UINT16 usItem, BOOLEAN fArmed )
 		{
 			// start with the range based on the soldier's strength and the item's weight
 			INT32 iThrowingStrength = ( EffectiveStrength( pSoldier ) * 2 + 100 ) / 3;
-			iRange = 2 + ( iThrowingStrength / __max( ( 3 + (Item[usItem].ubWeight) / 3 ), 4 ) );
+			iRange = 2 + ( iThrowingStrength / __min( ( 3 + (Item[usItem].ubWeight) / 3 ), 4 ) );
 		}
 		else
 		{	// not as aerodynamic!
