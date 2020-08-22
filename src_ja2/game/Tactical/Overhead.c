@@ -7102,7 +7102,7 @@ void HandleSuppressionFire( UINT8 ubTargetedMerc, UINT8 ubCausedAttacker )
 					// say we're under heavy fire!
 
 					// ATE: For some reason, we forgot #53!
-					if ( pSoldier->ubProfile != 53 )
+					if ( pSoldier->ubProfile != 53 && pSoldier->ubProfile != 57  )
 					{
 						TacticalCharacterDialogue( pSoldier, QUOTE_UNDER_HEAVY_FIRE );
 					}
