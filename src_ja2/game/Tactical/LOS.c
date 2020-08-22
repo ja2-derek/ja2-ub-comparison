@@ -2969,6 +2969,10 @@ UINT8 CalcChanceToGetThrough( BULLET * pBullet )
 			// beyond max effective range, bullet starts to drop!
 			// since we're doing an increment based on distance, not time, the 
 			// decrement is scaled down depending on how fast the bullet is (effective range)
+			if ( pBullet->iRange == 0 )
+			{
+				pBullet->iRange = 1;
+			}
 			pBullet->qIncrZ -= INT32_TO_FIXEDPT( 100 ) / (pBullet->iRange * 2);
 		}
 
@@ -3604,7 +3608,18 @@ Ja25 no flame throuwer
 		
 		pBullet->iImpact = ubImpact;
 	
+		if ( pFirer->inv[ pFirer->ubAttackingHand ].usItem == THROWING_KNIFE )
+		{
+			pBullet->iRange = CalcMaxTossRange( pFirer, THROWING_KNIFE, TRUE ) * CELL_X_SIZE;
+		}
+		else
+		{
 		pBullet->iRange = GunRange( &(pFirer->inv[pFirer->ubAttackingHand]) );
+		}
+		if ( pBullet->iRange == 0 )
+		{
+			pBullet->iRange = 1;
+		}
 		pBullet->sTargetGridNo = ((INT32)dEndX) / CELL_X_SIZE + ((INT32)dEndY) / CELL_Y_SIZE * WORLD_COLS;
 
 		pBullet->bStartCubesAboveLevelZ = (INT8) CONVERT_HEIGHTUNITS_TO_INDEX( (INT32)dStartZ - CONVERT_PIXELS_TO_HEIGHTUNITS( gpWorldLevelData[ pFirer->sGridNo ].sHeight ) );
