@@ -1712,7 +1712,7 @@ void RandomlyChooseWhichItemsAreDroppable( SOLDIERCREATE_STRUCT *pp, INT8 bSoldi
 			uiItemClass = Item[ pp->Inv[ i ].usItem ].usItemClass;
 			if( uiItemClass == IC_GUN || uiItemClass == IC_LAUNCHER )
 			{
-				if( pp->Inv[ i ].fFlags & OBJECT_NO_OVERWRITE || ItemHasAttachments( &pp->Inv[ i ] ) )
+				if( pp->Inv[ i ].fFlags & OBJECT_NO_OVERWRITE )
 					break;
 				else
 					ubNumMatches++;
