@@ -105,6 +105,7 @@
 #endif
 
 extern UINT8	gubAICounter;
+extern	UINT32 guiPendingScreen;
 
 extern	BOOLEAN		gfFirstTimeInGameHeliCrash;
 
