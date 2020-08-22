@@ -973,6 +973,12 @@ BOOLEAN CheckConditionsForBattle( GROUP *pGroup )
 		gubEnemyEncounterCode = NO_ENCOUNTER_CODE;
 	}
 
+	//if this is true, that strategic ai has just invaded the sector
+	if( GetSectorEnemyIsToImmediatelySeekEnemyIn() != -1 )
+	{
+		gubEnemyEncounterCode = ENEMY_INVASION_CODE;
+	}
+
 	HandleOtherGroupsArrivingSimultaneously( pGroup->ubSectorX, pGroup->ubSectorY, pGroup->ubSectorZ );
 	
 	curr = gpGroupList;
