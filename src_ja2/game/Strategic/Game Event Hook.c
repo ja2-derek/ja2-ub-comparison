@@ -424,6 +424,10 @@ Ja25 No strategic ai
 			SetMsgBoxForPlayerBeNotifiedOfSomeoneElseInSector();
 			break;
 
+		case EVENT_SECTOR_H8_DONT_WAIT_IN_SECTOR:
+			HandleSayingDontStayToLongWarningInSectorH8();
+			break;
+
 		case EVENT_SEND_ENRICO_UNDERSTANDING_EMAIL:
 			HandleEnricosUnderstandingEmail();
 			break;

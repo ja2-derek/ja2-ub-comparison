@@ -92,6 +92,7 @@ void DialogueMessageBoxCallBack( UINT8 ubExitValue );
 void CarmenLeavesSectorCallback( void );
 void PerformJerryMiloAction301();
 void PerformJerryMiloAction302();
+void HaveQualifiedMercSayQuoteAboutNpcWhenLeavingTalkScreen( UINT8 ubNpcProfileID, UINT32 uiQuoteNum );
 void HandleMercArrivesQuotesFromHeliCrashSequence();
 void HandleRaulBlowingHimselfUp();
 void HandleTexFlushingToilet();
@@ -5173,11 +5174,36 @@ void DelayedSayingOfMercQuote( UINT32 uiParam )
 	//if its a normal quote
 	if( usQuoteNum < DQ__NORMAL_DELAYED_QUOTE )
 	{
+		//Get the soldier that should say the quote
+		pSoldier = FindSoldierByProfileID( (UINT8)usProfileID, FALSE );
+		if( pSoldier == NULL )
+			return;
+
+		//
+		// Do Quote specific code here
+		//
+		if( usQuoteNum == QUOTE_DEPARTING_COMMENT_CONTRACT_NOT_RENEWED_OR_48_OR_MORE )
+		{
+			//if the soldier is saying the 'brr its cold' quote, and he has left the sector
+			if( pSoldier->sSectorX != START_SECTOR_X || pSoldier->sSectorY != START_SECTOR_Y && pSoldier->bSectorZ != 0 )
+			{
+				//dont say the quote
+				return;
+			}
+		}
+
+		//Say the quote
+		TacticalCharacterDialogue( pSoldier, usQuoteNum );
 	}
 	else
 	{
 		switch( usQuoteNum )
 		{
+			case DQ__JERRY_BROKE_TRANSMITTER:
+				//Display the popup saying Jerry broke the transmitter
+				DisplayJerryBreakingLaptopTransmitterPopup();
+				break;
+
 			case DQ__MORRIS_NOTE_NEW_MERC_DELAY:
 				HandleCommanderMorrisNewMercWantsNoteDelayedSpeech();
 				break;
@@ -5193,6 +5219,10 @@ void DelayedSayingOfMercQuote( UINT32 uiParam )
 			}
 			break;
 		
+			case DQ__SHOW_RADIO_LOCATOR:
+				BeginMultiPurposeLocator( usProfileID, 0, TRUE );
+				break;
+
 			case DQ__NEW_MERC_SAY_NOTE_QUOTES:
 				//Get the soldier that should say the quote
 				pSoldier = FindSoldierByProfileID( (UINT8)usProfileID, FALSE );

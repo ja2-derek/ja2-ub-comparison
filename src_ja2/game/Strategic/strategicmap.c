@@ -305,6 +305,7 @@ INT16 PickGridNoToWalkIn( SOLDIERTYPE *pSoldier, UINT8 ubInsertionDirection, UIN
 
 void HandleQuestCodeOnSectorExit( INT16 sOldSectorX, INT16 sOldSectorY, INT8 bOldSectorZ );
 void HandlePotentialMoraleHitForSkimmingSectors( GROUP *pGroup );
+void HandlePlayerTeamQuotesWhenEnteringSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ );
 void HandlePlayerQuotesWhenEnteringFirstTunnelSector();
 void AddExitGridForFanToPowerGenSector();
 void HandleSectorSpecificUnLoadingOfMap( INT16 sMapX, INT16 sMapY, INT8 bMapZ );
@@ -333,7 +334,7 @@ extern BOOLEAN gfOverrideSector;
 
 extern STR16 pBullseyeStrings[];
 
-extern void HandleRPCDescription( );
+//Ja25:	extern void HandleRPCDescription( );
 
 
 
@@ -4997,6 +4998,200 @@ void HandlePotentialMoraleHitForSkimmingSectors( GROUP *pGroup )
 }
 
 
+
+typedef struct
+{
+	INT16	sSectorID;
+	INT8	bSectorZ;
+	UINT8	ubQuoteNum;
+} ENTER_SECTOR_PLAYER_QUOTE;
+
+void HandlePlayerTeamQuotesWhenEnteringSector( INT16 sSectorX, INT16 sSectorY, INT16 sSectorZ )
+{
+	UINT32	uiCnt;
+	INT8		bNumValidMercs=-1;
+	INT32		iSectorID = SECTOR( sSectorX, sSectorY );
+	UINT8		ubValidMercProfileIDArray[ NUM_MERCS_WITH_NEW_QUOTES ];
+	SOLDIERTYPE *pSoldier=NULL;
+
+
+	#define	NUM_VALID_SECTORS									6
+	#define	DELAY_FOR_PLAYER_DESC_OF_SECTOR		2
+	ENTER_SECTOR_PLAYER_QUOTE	PlayerSectorDescQuote[ NUM_VALID_SECTORS ] = 
+	{
+		{ SEC_H9,		0,	QUOTE_HATE_MERC_1_ON_TEAM },
+		{ SEC_I9,		0,	QUOTE_LEARNED_TO_HATE_MERC_ON_TEAM },
+		{ SEC_H10,	0,	QUOTE_LEARNED_TO_HATE_MERC_ON_TEAM },
+		{ SEC_I10,	0,	QUOTE_HATE_MERC_2_ON_TEAM },
+		{ SEC_J13,	0,	QUOTE_ENTER_SECTOR_WITH_FAN_1 },
+		{ SEC_J14,	1,	0 },
+	};
+
+	//loop through all the sectors that have the quotes
+	for( uiCnt=0; uiCnt<NUM_VALID_SECTORS; uiCnt++ )
+	{
+		//if this sector is the right x & y
+		if( PlayerSectorDescQuote[ uiCnt ].sSectorID == iSectorID )
+		{
+			//if is the right level
+			if( PlayerSectorDescQuote[ uiCnt ].bSectorZ == sSectorZ )
+			{
+				// ATE: If this sector is a custom sector, break out!
+				if ( !SectorInfo[ iSectorID ].fCampaignSector )
+				{
+					return;
+				}
+
+				// If the player has never said the "enter sector" desc before
+				if( GetSectorFlagStatus( sSectorX, sSectorY, ( UINT8 )sSectorZ, SF_HAVE_SAID_PLAYER_QUOTE_NEW_SECTOR ) != TRUE )
+				{
+					//Get # of valid mercs
+					bNumValidMercs = GetNumSoldierIdAndProfileIdOfTheNewMercsOnPlayerTeam( NULL, ubValidMercProfileIDArray );
+
+					//if there isnt any valid mercs
+					if( bNumValidMercs == 0 )
+					{
+						//exit
+						return;
+					}
+
+					//Switch on the town ID
+					switch( iSectorID )
+					{
+						case SEC_I10:
+							{
+								UINT8	cnt;
+	
+								for( cnt=0; cnt<bNumValidMercs; cnt++ )
+								{
+									//Say the qoute in a couple of seconds
+									DelayedMercQuote( ubValidMercProfileIDArray[ cnt ], PlayerSectorDescQuote[ uiCnt ].ubQuoteNum, GetWorldTotalSeconds() + DELAY_FOR_PLAYER_DESC_OF_SECTOR + cnt );
+								}
+							}
+							break;
+
+						case SEC_J13:
+							if( PlayerSectorDescQuote[ uiCnt ].bSectorZ == 0 )
+							{
+								//See if Manuel is on the team
+								pSoldier = FindSoldierByProfileID( MANUEL, TRUE );
+
+								//if he is ON the team
+								if( pSoldier != NULL )
+								{
+									//get manuel to say the quote
+									DelayedMercQuote( MANUEL, PlayerSectorDescQuote[ uiCnt ].ubQuoteNum, GetWorldTotalSeconds() + DELAY_FOR_PLAYER_DESC_OF_SECTOR );
+
+									//get manuel to say his additional quote
+									DelayedMercQuote( MANUEL, QUOTE_ENTER_SECTOR_WITH_FAN_2, GetWorldTotalSeconds() + DELAY_FOR_PLAYER_DESC_OF_SECTOR );
+								}
+								else
+								{
+									//else if Biggens is not on the team, check for biggens
+									pSoldier = FindSoldierByProfileID( BIGGENS, TRUE );
+
+									//if he is ON the team
+									if( pSoldier != NULL )
+									{
+										//get manuel to say the quote
+										DelayedMercQuote( BIGGENS, PlayerSectorDescQuote[ uiCnt ].ubQuoteNum, GetWorldTotalSeconds() + DELAY_FOR_PLAYER_DESC_OF_SECTOR );
+
+										//Remember he said
+										SetJa25GeneralFlag( JA_GF__BIGGENS_SAID_QUOTE_117 );
+									}
+								}
+
+								//Remeber the quote was said
+								SetFactTrue( FACT_PLAYER_KNOWS_ABOUT_FAN_STOPPING );
+							}
+							break;
+						case SEC_J14:
+							{
+								//first underground sector
+								HandlePlayerQuotesWhenEnteringFirstTunnelSector();
+							}
+							break;
+						default:
+							{
+								//Get a random merc from the list
+								UINT8	ubMercToSayQuote = RandomProfileIdFromNewMercsOnPlayerTeam();
+
+								//Say the qoute in a couple of seconds
+								DelayedMercQuote( ubMercToSayQuote, PlayerSectorDescQuote[ uiCnt ].ubQuoteNum, GetWorldTotalSeconds() + DELAY_FOR_PLAYER_DESC_OF_SECTOR );
+							}
+							break;
+					}
+
+					//if this sector is one of the fields before the town, only say the quote once for both sectors
+					if( ( iSectorID == SEC_I9 || iSectorID == SEC_H10 ) && sSectorZ == 0 )
+					{
+						//Remeber that we said the quote
+						SetSectorFlag( 9, 9, 0, SF_HAVE_SAID_PLAYER_QUOTE_NEW_SECTOR );
+						SetSectorFlag( 10, 8, 0, SF_HAVE_SAID_PLAYER_QUOTE_NEW_SECTOR );
+					}
+
+					//default
+					else
+					{
+						//Remeber that we said the quote
+						SetSectorFlag( sSectorX, sSectorY, ( UINT8 )sSectorZ, SF_HAVE_SAID_PLAYER_QUOTE_NEW_SECTOR );
+					}
+				}
+
+				//we are done here, leave
+				return;
+			}
+		}
+	}
+}
+void HandlePlayerQuotesWhenEnteringFirstTunnelSector()
+{
+	UINT8 ubID;
+
+	//if the player got through using the timed method
+	if( gJa25SaveStruct.ubHowPlayerGotThroughFan == PG__PLAYER_STOPPED_FAN_TO_GET_THROUGH )
+	{
+		UINT8 ubNumPlayersInSector = NumActiveAndConsciousTeamMembers( OUR_TEAM );
+		UINT8 ubNumPlayersOnTeam = NumberOfMercsOnPlayerTeam();
+
+		//Get a random qualified merc to say the quote
+		ubID = RandomSoldierIdFromNewMercsOnPlayerTeam();
+
+		//if there is no valid merc
+		if( ubID == -1 )
+			return;
+
+		//if not all the players made it through
+		if( ubNumPlayersInSector < ubNumPlayersOnTeam )
+		{
+//			TacticalCharacterDialogue( &Menptr[ ubID ], QUOTE_CONTRACTS_OVER );
+			DelayedMercQuote( Menptr[ ubID ].ubProfile, QUOTE_CONTRACTS_OVER, GetWorldTotalSeconds() + DELAY_FOR_PLAYER_DESC_OF_SECTOR );
+		}
+
+		//if ALL mercs made it through
+		else if( ubNumPlayersInSector == ubNumPlayersOnTeam )
+		{
+			DelayedMercQuote( Menptr[ ubID ].ubProfile, QUOTE_CONTRACT_ACCEPTANCE, GetWorldTotalSeconds() + DELAY_FOR_PLAYER_DESC_OF_SECTOR );
+//			TacticalCharacterDialogue( &Menptr[ ubID ], QUOTE_CONTRACT_ACCEPTANCE );
+		}
+	}
+
+	else if( gJa25SaveStruct.ubHowPlayerGotThroughFan == PG__PLAYER_BLEW_UP_FAN_TO_GET_THROUGH )
+	{
+/*
+Chnaged to be played when fan blows up
+		//Get a random qualified merc to say the quote
+		ubID = RandomSoldierIdFromNewMercsOnPlayerTeam();
+
+		DelayedMercQuote( Menptr[ ubID ].ubProfile, QUOTE_ACCEPT_CONTRACT_RENEWAL, GetWorldTotalSeconds() + DELAY_FOR_PLAYER_DESC_OF_SECTOR );
+*/
+	}
+
+	else
+	{
+		Assert( 0 );
+	}
+}
 
 void HandleEmailBeingSentWhenEnteringSector( INT16 sMapX, INT16 sMapY, INT8 bMapZ, BOOLEAN fLaptopJustGotFixed )
 {
