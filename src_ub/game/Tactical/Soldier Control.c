@@ -10582,15 +10582,15 @@ void MercStealFromMerc( SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTarget )
 		sActionGridNo =  FindAdjacentGridEx( pSoldier, sGridNo, &ubDirection, &sAdjustedGridNo, TRUE, FALSE );
 		if ( sActionGridNo != -1 )
 		{
-			// CHECK IF WE ARE AT THIS GRIDNO NOW
-			if ( pSoldier->sGridNo != sActionGridNo )
-			{
 				// SEND PENDING ACTION
 				pSoldier->ubPendingAction = MERC_STEAL;
 				pSoldier->sPendingActionData2  = pTarget->sGridNo;
 				pSoldier->bPendingActionData3  = ubDirection;
 				pSoldier->ubPendingActionAnimCount = 0;
 
+			// CHECK IF WE ARE AT THIS GRIDNO NOW
+			if ( pSoldier->sGridNo != sActionGridNo )
+			{
 				// WALK UP TO DEST FIRST
 				SendGetNewSoldierPathEvent( pSoldier, sActionGridNo, pSoldier->usUIMovementMode );
 			}
@@ -10602,6 +10602,8 @@ void MercStealFromMerc( SOLDIERTYPE *pSoldier, SOLDIERTYPE *pTarget )
 
 			// OK, set UI
 			gTacticalStatus.ubAttackBusyCount++;
+			// reset attacking item (hand)
+			pSoldier->usAttackingWeapon = 0;
 			DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String("!!!!!!! Starting STEAL attack, attack count now %d", gTacticalStatus.ubAttackBusyCount) );
 
 			SetUIBusy( pSoldier->ubID );
