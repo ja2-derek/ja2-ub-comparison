@@ -2495,12 +2495,33 @@ UINT32 CalcChanceToHitGun(SOLDIERTYPE *pSoldier, UINT16 sGridNo, UINT8 ubAimTime
 	// penalize marksmanship for fatigue
 	iMarksmanship -= GetSkillCheckPenaltyForFatigue( pSoldier, iMarksmanship );
 
+	if( iGunCondition < MAX_CONDITION_FOR_PENALTY_WHEN_FIRING )
+	{
+		// base chance is equal to the average of marksmanship & gun's condition!
+
+		//DEF: 12/3/99: Changed cause I dont think a merc with 100 marksmanship shout get penalized
+		//for shooting a gun in condition 98
+		//iChance = (iMarksmanship + iGunCondition) / 2;
+		iChance = ( iMarksmanship + MAX_CONDITION_FOR_PENALTY_WHEN_FIRING ) / 2;
+	}
+	else
+	{
+		iChance = iMarksmanship;
+	}
+
+/*
+Ja25
 	if (iGunCondition >= iMarksmanship)
+	{
 		// base chance is equal to the shooter's marksmanship skill
 		iChance = iMarksmanship;
+	}
 	else
+	{
 		// base chance is equal to the average of marksmanship & gun's condition!
 		iChance = (iMarksmanship + iGunCondition) / 2;
+	}
+*/
 
 	// if shooting same target as the last shot
 	if (sGridNo == pSoldier->sLastTarget )
