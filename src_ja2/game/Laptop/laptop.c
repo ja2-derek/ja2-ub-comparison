@@ -1812,6 +1812,7 @@ UINT32 LaptopScreenHandle()
 	 EnterLaptop();
 	 CreateLaptopButtons();
    gfEnterLapTop=FALSE;
+	 fPausedReDrawScreenFlag = TRUE;
 	}
 
 	if( gfStartMapScreenToLaptopTransition )
