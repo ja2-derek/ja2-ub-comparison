@@ -2081,6 +2081,7 @@ Ja25 no loyalty
 					// trigger quote!
 					//TriggerNPCWithIHateYouQuote( pSoldier->ubProfile );
 					AddToShouldBecomeHostileOrSayQuoteList( pSoldier->ubID );
+					DeleteTalkingMenu();
 				}
 				break;
 
