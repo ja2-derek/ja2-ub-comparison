@@ -655,20 +655,22 @@ Ja25: No meanwhiles
 */
 
 	// This is the string to return, but...
-	sprintf( bString, "%s%s%s.DAT", pVertStrings[sMapY], pHortStrings[sMapX], bExtensionString );
+		sprintf( bString, "%S%s%s%s.DAT", JA25_EXP_MAP_NAME_PREFIX, pVertStrings[sMapY], pHortStrings[sMapX], bExtensionString );
 
 	// We will test against this string
-	sprintf( bTestString, "MAPS\\%s", bString );
 
-	if( fUsePlaceholder && !FileExists( bTestString ) )
-	{
+		sprintf( bTestString, "%s\\%s", GetMapsDirectory( ), bString );
+
+		//if( fUsePlaceholder && !FileExists( bTestString ) )
+		//{
 		// Debug str
-		DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "Map does not exist for %s, using default.", bTestString ) );
+		//	DebugMsg( TOPIC_JA2, DBG_LEVEL_3, String( "Map does not exist for %s, using default.", bTestString ) );
 		// Set to a string we know!
-		sprintf(bString, "H10.DAT",pVertStrings[sMapY],pHortStrings[sMapX]);
-		ScreenMsg( FONT_YELLOW, MSG_DEBUG, L"Using PLACEHOLDER map!");
+		//	sprintf(bString, "H10.DAT",pVertStrings[sMapY],pHortStrings[sMapX]);
+		//	ScreenMsg( FONT_YELLOW, MSG_DEBUG, L"Using PLACEHOLDER map!");
+		//}
+		return;
 	}
-	return;
 }
 
 void GetCurrentWorldSector( INT16 *psMapX, INT16 *psMapY )
