@@ -1124,6 +1124,13 @@ void UpdateSMPanel( )
 		EnableButton( iSMPanelButtons[ SM_MAP_SCREEN_BUTTON ] );
 	}
 
+	//if we are in the item desc poanel, disable the done and mapscreen button
+	if( InItemDescriptionBox( ) )
+	{
+		DisableButton( iSMPanelButtons[ SM_DONE_BUTTON ] );
+		DisableButton( iSMPanelButtons[ SM_MAP_SCREEN_BUTTON ] );
+	}
+
 }
 
 extern BOOLEAN CanItemFitInPosition( SOLDIERTYPE *pSoldier, OBJECTTYPE *pObj, INT8 bPos, BOOLEAN fDoingPlacement );
